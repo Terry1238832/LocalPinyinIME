@@ -1,0 +1,82 @@
+# Build trees and generated package output
+build/
+build-*/
+out/
+dist/
+
+# CMake generated files
+CMakeFiles/
+CMakeCache.txt
+Testing/
+CTestTestfile.cmake
+install_manifest.txt
+compile_commands.json
+
+# Visual Studio and MSVC generated files
+.vs/
+.vscode/
+*.suo
+*.user
+*.vcxproj.user
+*.VC.db
+*.opendb
+*.db
+*.ipch
+*.tlog
+*.lastbuildstate
+
+# Native build artifacts
+*.dll
+*.exe
+*.pdb
+*.lib
+*.exp
+*.obj
+*.idb
+*.ilk
+*.ipdb
+*.iobj
+*.res
+*.manifest
+*.map
+
+# Release archives and installer outputs
+*.zip
+*.7z
+*.msi
+*.msix
+*.appx
+
+# Logs, diagnostics, and crash dumps
+*.log
+status.log
+LocalPinyinIME.log
+*.dmp
+*.etl
+*.trace
+
+# Local user data, learning state, and temporary extraction output
+local-data/
+user-data/
+user_learning/
+learning-data/
+tmp/
+temp/
+*.sqlite
+*.sqlite3
+*.userdb
+*.userdict
+*.learned
+*.learned.tsv
+*.tmp
+*.temp
+
+# PowerShell local state
+*.ps1xml
+*.pssc
+*.psrc
+
+# Keep source-controlled dictionary resources explicit.
+!resources/
+!resources/dictionary/
+!resources/dictionary/core_zh_pinyin.tsv
