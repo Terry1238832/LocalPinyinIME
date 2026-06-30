@@ -112,16 +112,25 @@ function Copy-ReleaseTextFile {
 
 function Assert-BuiltDictionaryResources {
     $sourceDictionary = Join-Path $SourceRoot "resources\dictionary\core_zh_pinyin.tsv"
+    $sourceLocalCoreDictionary = Join-Path $SourceRoot "resources\dictionary\local_core_zh_pinyin.tsv"
     $sourceHash = Get-FileHash -LiteralPath $sourceDictionary -Algorithm SHA256
+    $sourceLocalCoreHash = Get-FileHash -LiteralPath $sourceLocalCoreDictionary -Algorithm SHA256
     foreach ($name in $BuildTargetsWithDictionary) {
         $builtFile = Resolve-BuiltFile $name
         $dictionary = Join-Path (Split-Path -Parent $builtFile) "dictionary\core_zh_pinyin.tsv"
+        $localCoreDictionary = Join-Path (Split-Path -Parent $builtFile) "dictionary\local_core_zh_pinyin.tsv"
         $stats = Assert-LocalPinyinDictionaryFile -Path $dictionary -MinimumEntries $MinimumDictionaryEntries
         $hash = Get-FileHash -LiteralPath $dictionary -Algorithm SHA256
         if ($hash.Hash -ne $sourceHash.Hash) {
             throw "Built dictionary hash mismatch beside $name. expected=$($sourceHash.Hash) actual=$($hash.Hash)"
         }
+        $localCoreStats = Get-LocalPinyinDictionaryStats -Path $localCoreDictionary
+        $localCoreHash = Get-FileHash -LiteralPath $localCoreDictionary -Algorithm SHA256
+        if ($localCoreHash.Hash -ne $sourceLocalCoreHash.Hash) {
+            throw "Built local core dictionary hash mismatch beside $name. expected=$($sourceLocalCoreHash.Hash) actual=$($localCoreHash.Hash)"
+        }
         Write-Host "Dictionary beside ${name}: validEntries=$($stats.validEntries), duplicateRows=$($stats.duplicateRows)"
+        Write-Host "Local core dictionary beside ${name}: validEntries=$($localCoreStats.validEntries), duplicateRows=$($localCoreStats.duplicateRows)"
     }
 }
 
@@ -211,11 +220,18 @@ try {
 
         $dictionarySource = Join-Path $SourceRoot "resources\dictionary\core_zh_pinyin.tsv"
         $dictionaryStage = Join-Path $StageRoot "bin\dictionary\core_zh_pinyin.tsv"
+        $localCoreDictionarySource = Join-Path $SourceRoot "resources\dictionary\local_core_zh_pinyin.tsv"
+        $localCoreDictionaryStage = Join-Path $StageRoot "bin\dictionary\local_core_zh_pinyin.tsv"
         Copy-RequiredFile -Source $dictionarySource -Destination $dictionaryStage
+        Copy-RequiredFile -Source $localCoreDictionarySource -Destination $localCoreDictionaryStage
         $dictionaryStats = Assert-LocalPinyinDictionaryFile -Path $dictionaryStage -MinimumEntries $MinimumDictionaryEntries
+        $localCoreDictionaryStats = Get-LocalPinyinDictionaryStats -Path $localCoreDictionaryStage
         Write-Host "Dictionary staged: $dictionaryStage"
         Write-Host "Dictionary validEntries: $($dictionaryStats.validEntries)"
         Write-Host "Dictionary duplicateRows: $($dictionaryStats.duplicateRows)"
+        Write-Host "Local core dictionary staged: $localCoreDictionaryStage"
+        Write-Host "Local core dictionary validEntries: $($localCoreDictionaryStats.validEntries)"
+        Write-Host "Local core dictionary duplicateRows: $($localCoreDictionaryStats.duplicateRows)"
 
         foreach ($script in @("Install-LocalPinyinIME.ps1", "Uninstall-LocalPinyinIME.ps1", "Verify-LocalPinyinIME.ps1", "Build-Release.ps1", "LocalPinyinRelease.ps1", "Test-ReleasePackage.ps1")) {
             Copy-RequiredFile -Source (Join-Path $SourceRoot "scripts\$script") -Destination (Join-Path $StageRoot "scripts\$script")
@@ -230,8 +246,11 @@ try {
 
     Invoke-Step "Write release manifest and hashes" {
         $dictionaryStage = Join-Path $StageRoot "bin\dictionary\core_zh_pinyin.tsv"
+        $localCoreDictionaryStage = Join-Path $StageRoot "bin\dictionary\local_core_zh_pinyin.tsv"
         $dictionaryStats = Assert-LocalPinyinDictionaryFile -Path $dictionaryStage -MinimumEntries $MinimumDictionaryEntries
+        $localCoreDictionaryStats = Get-LocalPinyinDictionaryStats -Path $localCoreDictionaryStage
         $dictionaryHash = Get-FileHash -LiteralPath $dictionaryStage -Algorithm SHA256
+        $localCoreDictionaryHash = Get-FileHash -LiteralPath $localCoreDictionaryStage -Algorithm SHA256
         $manifest = [ordered]@{
             product = "LocalPinyinIME"
             displayName = $DisplayName
@@ -254,6 +273,16 @@ try {
                 invalidRows = $dictionaryStats.invalidRows
                 validEntries = $dictionaryStats.validEntries
                 sha256 = $dictionaryHash.Hash
+            }
+            localCoreDictionary = [ordered]@{
+                path = "bin/dictionary/local_core_zh_pinyin.tsv"
+                sourceRows = $localCoreDictionaryStats.sourceRows
+                commentRows = $localCoreDictionaryStats.commentRows
+                blankRows = $localCoreDictionaryStats.blankRows
+                duplicateRows = $localCoreDictionaryStats.duplicateRows
+                invalidRows = $localCoreDictionaryStats.invalidRows
+                validEntries = $localCoreDictionaryStats.validEntries
+                sha256 = $localCoreDictionaryHash.Hash
             }
         }
         $manifest | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $StageRoot "release-manifest.json") -Encoding UTF8

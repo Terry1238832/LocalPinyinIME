@@ -2,8 +2,11 @@
 #include "../src/engine/pinyin_engine.h"
 
 int main() {
+    const auto user_lexicon_root = use_temp_user_lexicon_override();
+
     localpinyin::PinyinEngine engine;
     REQUIRE_EQ(engine.lookup(L"nihao").front().text, std::wstring(L"\u4F60\u597D"));
+    REQUIRE_EQ(engine.lookup(L"henbang").front().text, std::wstring(L"\u5F88\u68D2"));
     auto nihao_world = engine.lookup(L"nihaoshijie");
     REQUIRE_EQ(nihao_world.front().text, std::wstring(L"\u4F60\u597D\u4E16\u754C"));
     REQUIRE_EQ(engine.lookup(L"zhongguo").front().text, std::wstring(L"\u4E2D\u56FD"));
@@ -27,5 +30,6 @@ int main() {
         }
     }
     REQUIRE_EQ(nihao_world_count, 1);
+    std::filesystem::remove_all(user_lexicon_root);
     return 0;
 }

@@ -7,8 +7,30 @@
 
 #include <algorithm>
 #include <cwctype>
+#include <sstream>
 
 namespace localpinyin {
+namespace {
+
+const wchar_t* bool_text(bool value) noexcept {
+    return value ? L"true" : L"false";
+}
+
+bool usable_anchor_rect(const RECT& rect) noexcept {
+    return rect.right >= rect.left && rect.bottom > rect.top && !(rect.left == rect.right && rect.top == rect.bottom);
+}
+
+std::wstring caret_rect_failure_reason(HRESULT hr) {
+    if (hr == TF_E_NOLAYOUT) {
+        return L"tf_e_nolayout";
+    }
+    if (hr == S_FALSE) {
+        return L"no_active_composition";
+    }
+    return L"get_text_ext_failed";
+}
+
+}  // namespace
 
 TextService::TextService() {
     dll_add_ref();
@@ -71,10 +93,11 @@ HRESULT TextService::ActivateEx(ITfThreadMgr* thread_mgr, TfClientId client_id, 
 
 HRESULT TextService::Deactivate() {
     unadvise_key_event_sink();
-    candidate_window_.hide();
+    candidate_window_.hide(L"deactivate");
     composition_.clear();
     composing_.clear();
     candidates_.clear();
+    has_last_caret_rect_ = false;
     if (thread_mgr_) {
         thread_mgr_->Release();
         thread_mgr_ = nullptr;
@@ -150,6 +173,11 @@ HRESULT TextService::OnKeyDown(ITfContext* context, WPARAM wparam, LPARAM, BOOL*
     if ((GetKeyState(VK_CONTROL) & 0x8000) && wparam == VK_SPACE) {
         mode_ = mode_ == InputMode::Chinese ? InputMode::English : InputMode::Chinese;
         *eaten = TRUE;
+        if (mode_ == InputMode::English) {
+            candidate_window_.hide(L"english_mode");
+        } else {
+            update_candidate_window(context);
+        }
         log_status(L"mode", mode_ == InputMode::Chinese ? L"Chinese" : L"English");
         return S_OK;
     }
@@ -188,7 +216,8 @@ HRESULT TextService::OnCompositionTerminated(TfEditCookie, ITfComposition*) {
     composition_.clear();
     composing_.clear();
     candidates_.clear();
-    candidate_window_.hide();
+    has_last_caret_rect_ = false;
+    candidate_window_.hide(L"composition_terminated");
     return S_OK;
 }
 
@@ -278,14 +307,14 @@ bool TextService::handle_chinese_key(ITfContext* context, WPARAM wparam, BOOL* e
 
     if (wparam == VK_LEFT && !candidates_.empty()) {
         selected_index_ = selected_index_ == 0 ? candidates_.size() - 1 : selected_index_ - 1;
-        candidate_window_.show(candidates_, selected_index_, default_anchor());
+        update_candidate_window(context);
         *eaten = TRUE;
         return true;
     }
 
     if (wparam == VK_RIGHT && !candidates_.empty()) {
         selected_index_ = (selected_index_ + 1) % candidates_.size();
-        candidate_window_.show(candidates_, selected_index_, default_anchor());
+        update_candidate_window(context);
         *eaten = TRUE;
         return true;
     }
@@ -303,12 +332,38 @@ HRESULT TextService::update_composition(ITfContext* context) {
         log_status(L"composition", L"set_text failed " + hresult_hex(hr));
         return hr;
     }
-    if (!candidates_.empty()) {
-        candidate_window_.show(candidates_, selected_index_, default_anchor());
-    } else {
-        candidate_window_.hide();
-    }
+    update_candidate_window(context);
     return S_OK;
+}
+
+void TextService::update_candidate_window(ITfContext* context) {
+    RECT anchor_rect{};
+    bool anchor_available = false;
+    if (mode_ == InputMode::Chinese && !composing_.empty() && !candidates_.empty()) {
+        anchor_available = candidate_anchor_rect(context, &anchor_rect);
+    }
+
+    const CandidateDisplayDecision decision = decide_candidate_display(CandidateDisplayState{
+        mode_ == InputMode::English,
+        !composing_.empty(),
+        candidates_.size(),
+        anchor_available
+    });
+
+    std::wstringstream stream;
+    stream << L"request_show=" << bool_text(decision.request_show)
+           << L" composition_active=" << bool_text(!composing_.empty())
+           << L" candidate_count=" << candidates_.size()
+           << L" caret_rect_available=" << bool_text(anchor_available)
+           << L" hide_reason=" << candidate_hide_reason_to_string(decision.hide_reason);
+    log_status(L"candidate-ui", stream.str());
+
+    if (!decision.request_show) {
+        const std::wstring reason = candidate_hide_reason_to_string(decision.hide_reason);
+        candidate_window_.hide(reason.c_str());
+        return;
+    }
+    candidate_window_.show(composing_, candidates_, selected_index_, anchor_rect);
 }
 
 HRESULT TextService::commit_selected(ITfContext* context) {
@@ -325,7 +380,8 @@ HRESULT TextService::commit_selected(ITfContext* context) {
     composing_.clear();
     candidates_.clear();
     selected_index_ = 0;
-    candidate_window_.hide();
+    has_last_caret_rect_ = false;
+    candidate_window_.hide(L"commit");
     return S_OK;
 }
 
@@ -337,14 +393,89 @@ HRESULT TextService::cancel_composition(ITfContext* context) {
     composing_.clear();
     candidates_.clear();
     selected_index_ = 0;
-    candidate_window_.hide();
+    has_last_caret_rect_ = false;
+    candidate_window_.hide(L"cancel");
     return hr;
 }
 
-POINT TextService::default_anchor() const {
-    POINT point{};
-    GetCursorPos(&point);
-    return point;
+bool TextService::candidate_anchor_rect(ITfContext* context, RECT* rect) {
+    if (!rect) {
+        return false;
+    }
+
+    if (context) {
+        RECT tsf_rect{};
+        const HRESULT hr = composition_.caret_rect(context, client_id_, &tsf_rect);
+        std::wstringstream stream;
+        stream << L"get_text_ext_hr=" << hresult_hex(hr);
+        if (hr == S_OK && usable_anchor_rect(tsf_rect)) {
+            *rect = tsf_rect;
+            last_caret_rect_ = tsf_rect;
+            has_last_caret_rect_ = true;
+            stream << L" caret_rect_valid=true caret_source=tsf";
+            log_status(L"candidate-ui", stream.str());
+            return true;
+        }
+
+        stream << L" caret_rect_valid=false caret_source=tsf";
+        if (hr == S_OK) {
+            stream << L" reason=empty_rect";
+        } else {
+            stream << L" reason=" << caret_rect_failure_reason(hr);
+        }
+        log_status(L"candidate-ui", stream.str());
+    } else {
+        log_status(L"candidate-ui", L"get_text_ext_hr=not_called caret_rect_valid=false caret_source=tsf reason=null_context");
+    }
+
+    RECT gui_rect{};
+    if (gui_caret_rect(&gui_rect)) {
+        *rect = gui_rect;
+        last_caret_rect_ = gui_rect;
+        has_last_caret_rect_ = true;
+        log_status(L"candidate-ui", L"caret_rect_valid=true caret_source=gui_caret fallback=true");
+        return true;
+    }
+
+    if (has_last_caret_rect_ && usable_anchor_rect(last_caret_rect_)) {
+        *rect = last_caret_rect_;
+        log_status(L"candidate-ui", L"caret_rect_valid=true caret_source=last_valid fallback=true");
+        return true;
+    }
+
+    log_status(L"candidate-ui", L"caret_rect_valid=false caret_source=none fallback=false");
+    return false;
+}
+
+bool TextService::gui_caret_rect(RECT* rect) const {
+    if (!rect) {
+        return false;
+    }
+
+    GUITHREADINFO info{};
+    info.cbSize = sizeof(info);
+    if (!GetGUIThreadInfo(0, &info) || !info.hwndCaret) {
+        return false;
+    }
+
+    POINT top_left{info.rcCaret.left, info.rcCaret.top};
+    POINT bottom_right{info.rcCaret.right, info.rcCaret.bottom};
+    if (!ClientToScreen(info.hwndCaret, &top_left) || !ClientToScreen(info.hwndCaret, &bottom_right)) {
+        return false;
+    }
+
+    RECT screen_rect{top_left.x, top_left.y, bottom_right.x, bottom_right.y};
+    if (screen_rect.right < screen_rect.left || screen_rect.bottom < screen_rect.top) {
+        return false;
+    }
+    if (screen_rect.left == screen_rect.right) {
+        screen_rect.right = screen_rect.left + 1;
+    }
+    if (screen_rect.top == screen_rect.bottom) {
+        screen_rect.bottom = screen_rect.top + 1;
+    }
+    *rect = screen_rect;
+    return usable_anchor_rect(*rect);
 }
 
 }  // namespace localpinyin

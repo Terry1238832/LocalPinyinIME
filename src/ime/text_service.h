@@ -44,9 +44,11 @@ private:
     bool handle_chinese_key(ITfContext* context, WPARAM wparam, BOOL* eaten);
     void refresh_candidates();
     HRESULT update_composition(ITfContext* context);
+    void update_candidate_window(ITfContext* context);
     HRESULT commit_selected(ITfContext* context);
     HRESULT cancel_composition(ITfContext* context);
-    POINT default_anchor() const;
+    bool candidate_anchor_rect(ITfContext* context, RECT* rect);
+    bool gui_caret_rect(RECT* rect) const;
 
     long ref_count_ = 1;
     ITfThreadMgr* thread_mgr_ = nullptr;
@@ -59,6 +61,8 @@ private:
     PinyinEngine engine_;
     CompositionManager composition_;
     CandidateWindow candidate_window_;
+    RECT last_caret_rect_{};
+    bool has_last_caret_rect_ = false;
 };
 
 }  // namespace localpinyin

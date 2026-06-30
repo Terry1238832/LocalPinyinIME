@@ -23,6 +23,19 @@ struct DictionaryStats {
     size_t valid_entries = 0;
 };
 
+struct DictionaryLayerStats {
+    std::wstring layer_name;
+    DictionaryStats stats;
+    bool loaded = false;
+    bool missing = false;
+    bool created = false;
+};
+
+enum class UserLexiconCreateMode {
+    CreateIfMissing,
+    DoNotCreate
+};
+
 class Dictionary {
 public:
     Dictionary();
@@ -31,24 +44,51 @@ public:
     void clear();
     bool load_from_default_resource();
     bool load_from_resource_directory(const std::wstring& directory);
+    bool load_from_resource_directory(const std::wstring& directory, const std::wstring& user_lexicon_path);
+    bool load_from_layered_files(const std::wstring& core_path,
+                                 const std::wstring& local_core_path,
+                                 const std::wstring& user_lexicon_path,
+                                 UserLexiconCreateMode create_mode = UserLexiconCreateMode::CreateIfMissing);
     bool load_from_json_file(const std::wstring& path);
     bool load_from_tsv_file(const std::wstring& path);
     [[nodiscard]] std::vector<Candidate> lookup(const std::wstring& pinyin) const;
     [[nodiscard]] std::vector<std::wstring> matching_pinyins_at(const std::wstring& input, size_t offset) const;
     [[nodiscard]] size_t entry_count() const noexcept;
     [[nodiscard]] const DictionaryStats& stats() const noexcept { return stats_; }
+    [[nodiscard]] const std::vector<DictionaryLayerStats>& layer_stats() const noexcept { return layer_stats_; }
+    [[nodiscard]] const std::vector<std::wstring>& layer_log_messages() const noexcept { return layer_log_messages_; }
     [[nodiscard]] bool using_fallback() const noexcept { return using_fallback_; }
     [[nodiscard]] const std::wstring& loaded_resource_path() const noexcept { return loaded_resource_path_; }
     [[nodiscard]] static std::wstring default_resource_path();
+    [[nodiscard]] static std::wstring default_local_core_resource_path();
+    [[nodiscard]] static std::wstring default_user_lexicon_path();
 
 private:
+    enum class EntryAddMode {
+        KeepExisting,
+        ReplaceExisting
+    };
+
     void load_minimal_fallback();
-    void add_entry(const std::wstring& pinyin, const std::wstring& word, int base_frequency);
+    bool load_tsv_file_into(const std::wstring& path,
+                            DictionaryStats& layer_stats,
+                            EntryAddMode mode);
+    DictionaryLayerStats load_layer(const std::wstring& layer_name,
+                                    const std::wstring& path,
+                                    EntryAddMode mode,
+                                    bool required,
+                                    bool create_if_missing);
+    bool add_entry(const std::wstring& pinyin,
+                   const std::wstring& word,
+                   int base_frequency,
+                   EntryAddMode mode = EntryAddMode::KeepExisting);
     void add_entry(const std::wstring& pinyin, const std::vector<std::wstring>& words);
 
     std::unordered_map<std::wstring, std::vector<Candidate>> entries_;
     size_t entry_count_ = 0;
     DictionaryStats stats_;
+    std::vector<DictionaryLayerStats> layer_stats_;
+    std::vector<std::wstring> layer_log_messages_;
     bool using_fallback_ = false;
     std::wstring loaded_resource_path_;
 };

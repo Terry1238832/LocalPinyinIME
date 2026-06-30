@@ -29,10 +29,12 @@ if ([string]::IsNullOrWhiteSpace($Version)) {
 $SetupSource = Join-Path $PackageBin "LocalPinyinImeSetup.exe"
 $DllSource = Join-Path $PackageBin "LocalPinyinIME.dll"
 $DictionarySource = Join-Path $PackageBin "dictionary\core_zh_pinyin.tsv"
+$LocalCoreDictionarySource = Join-Path $PackageBin "dictionary\local_core_zh_pinyin.tsv"
 $VersionDir = Join-Path $InstallRoot "releases\$Version\x64"
 $DllTarget = Join-Path $VersionDir "LocalPinyinIME.dll"
 $DictionaryTargetDir = Join-Path $VersionDir "dictionary"
 $DictionaryTarget = Join-Path $DictionaryTargetDir "core_zh_pinyin.tsv"
+$LocalCoreDictionaryTarget = Join-Path $DictionaryTargetDir "local_core_zh_pinyin.tsv"
 
 function Assert-Admin {
     $principal = [Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()
@@ -136,13 +138,20 @@ Assert-Admin
 if (!(Test-Path -LiteralPath $SetupSource)) { throw "Missing setup tool: $SetupSource" }
 if (!(Test-Path -LiteralPath $DllSource)) { throw "Missing DLL: $DllSource" }
 $sourceDictionaryStats = Assert-LocalPinyinDictionaryFile -Path $DictionarySource -MinimumEntries 300
+$sourceLocalCoreDictionaryStats = Get-LocalPinyinDictionaryStats -Path $LocalCoreDictionarySource
 $sourceDictionaryHash = Get-FileHash -LiteralPath $DictionarySource -Algorithm SHA256
+$sourceLocalCoreDictionaryHash = Get-FileHash -LiteralPath $LocalCoreDictionarySource -Algorithm SHA256
 Write-Host "Package dictionary: $DictionarySource"
 Write-Host "Package dictionary SHA256: $($sourceDictionaryHash.Hash)"
 Write-Host "Package dictionary sourceRows: $($sourceDictionaryStats.sourceRows)"
 Write-Host "Package dictionary duplicateRows: $($sourceDictionaryStats.duplicateRows)"
 Write-Host "Package dictionary invalidRows: $($sourceDictionaryStats.invalidRows)"
 Write-Host "Package dictionary validEntries: $($sourceDictionaryStats.validEntries)"
+Write-Host "Package local core dictionary: $LocalCoreDictionarySource"
+Write-Host "Package local core dictionary SHA256: $($sourceLocalCoreDictionaryHash.Hash)"
+Write-Host "Package local core dictionary duplicateRows: $($sourceLocalCoreDictionaryStats.duplicateRows)"
+Write-Host "Package local core dictionary invalidRows: $($sourceLocalCoreDictionaryStats.invalidRows)"
+Write-Host "Package local core dictionary validEntries: $($sourceLocalCoreDictionaryStats.validEntries)"
 
 $currentDll = Get-CurrentInprocServer
 if ($currentDll) {
@@ -165,6 +174,7 @@ if ($PSCmdlet.ShouldProcess($VersionDir, "copy release files into versioned inst
     Copy-Item -LiteralPath (Join-Path $PackageBin "LocalPinyinImeAudit.exe") -Destination $VersionDir -Force
     Copy-Item -LiteralPath (Join-Path $PackageBin "LocalPinyinSettings.exe") -Destination $VersionDir -Force
     Copy-Item -LiteralPath $DictionarySource -Destination $DictionaryTarget -Force
+    Copy-Item -LiteralPath $LocalCoreDictionarySource -Destination $LocalCoreDictionaryTarget -Force
 }
 
 if (!(Test-Path -LiteralPath $DllTarget)) {
@@ -173,10 +183,18 @@ if (!(Test-Path -LiteralPath $DllTarget)) {
 if (!(Test-Path -LiteralPath $DictionaryTarget)) {
     throw "Post-copy verification failed: dictionary is missing from version directory: $DictionaryTarget"
 }
+if (!(Test-Path -LiteralPath $LocalCoreDictionaryTarget)) {
+    throw "Post-copy verification failed: local core dictionary is missing from version directory: $LocalCoreDictionaryTarget"
+}
 $targetDictionaryStats = Assert-LocalPinyinDictionaryFile -Path $DictionaryTarget -MinimumEntries 300
+$targetLocalCoreDictionaryStats = Get-LocalPinyinDictionaryStats -Path $LocalCoreDictionaryTarget
 $targetDictionaryHash = Get-FileHash -LiteralPath $DictionaryTarget -Algorithm SHA256
+$targetLocalCoreDictionaryHash = Get-FileHash -LiteralPath $LocalCoreDictionaryTarget -Algorithm SHA256
 if ($targetDictionaryHash.Hash -ne $sourceDictionaryHash.Hash) {
     throw "Post-copy verification failed: dictionary SHA256 mismatch. source=$($sourceDictionaryHash.Hash) target=$($targetDictionaryHash.Hash)"
+}
+if ($targetLocalCoreDictionaryHash.Hash -ne $sourceLocalCoreDictionaryHash.Hash) {
+    throw "Post-copy verification failed: local core dictionary SHA256 mismatch. source=$($sourceLocalCoreDictionaryHash.Hash) target=$($targetLocalCoreDictionaryHash.Hash)"
 }
 Write-Host "Installed dictionary target: $DictionaryTarget"
 Write-Host "Installed dictionary SHA256: $($targetDictionaryHash.Hash)"
@@ -184,6 +202,11 @@ Write-Host "Installed dictionary sourceRows: $($targetDictionaryStats.sourceRows
 Write-Host "Installed dictionary duplicateRows: $($targetDictionaryStats.duplicateRows)"
 Write-Host "Installed dictionary invalidRows: $($targetDictionaryStats.invalidRows)"
 Write-Host "Installed dictionary validEntries: $($targetDictionaryStats.validEntries)"
+Write-Host "Installed local core dictionary target: $LocalCoreDictionaryTarget"
+Write-Host "Installed local core dictionary SHA256: $($targetLocalCoreDictionaryHash.Hash)"
+Write-Host "Installed local core dictionary duplicateRows: $($targetLocalCoreDictionaryStats.duplicateRows)"
+Write-Host "Installed local core dictionary invalidRows: $($targetLocalCoreDictionaryStats.invalidRows)"
+Write-Host "Installed local core dictionary validEntries: $($targetLocalCoreDictionaryStats.validEntries)"
 
 $SetupTarget = Join-Path $VersionDir "LocalPinyinImeSetup.exe"
 

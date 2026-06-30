@@ -27,8 +27,15 @@ configure_file(
     @ONLY
 )
 
-set(LOCALPINYINIME_DICTIONARY_RESOURCE
+set(LOCALPINYINIME_CORE_DICTIONARY_RESOURCE
     "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/core_zh_pinyin.tsv"
+)
+set(LOCALPINYINIME_LOCAL_CORE_DICTIONARY_RESOURCE
+    "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/local_core_zh_pinyin.tsv"
+)
+set(LOCALPINYINIME_DICTIONARY_RESOURCES
+    "${LOCALPINYINIME_CORE_DICTIONARY_RESOURCE}"
+    "${LOCALPINYINIME_LOCAL_CORE_DICTIONARY_RESOURCE}"
 )
 
 function(localpinyin_add_version_resource target file_description original_filename file_type)
@@ -49,8 +56,11 @@ function(localpinyin_copy_dictionary_resource target)
     add_custom_command(TARGET ${target} POST_BUILD
         COMMAND "${CMAKE_COMMAND}" -E make_directory "$<TARGET_FILE_DIR:${target}>/dictionary"
         COMMAND "${CMAKE_COMMAND}" -E copy_if_different
-            "${LOCALPINYINIME_DICTIONARY_RESOURCE}"
+            "${LOCALPINYINIME_CORE_DICTIONARY_RESOURCE}"
             "$<TARGET_FILE_DIR:${target}>/dictionary/core_zh_pinyin.tsv"
+        COMMAND "${CMAKE_COMMAND}" -E copy_if_different
+            "${LOCALPINYINIME_LOCAL_CORE_DICTIONARY_RESOURCE}"
+            "$<TARGET_FILE_DIR:${target}>/dictionary/local_core_zh_pinyin.tsv"
         VERBATIM
     )
 endfunction()
@@ -70,6 +80,7 @@ set(IME_SOURCES
     src/ime/candidate_window.cpp
     src/ime/language_bar.cpp
     src/ime/input_mode.cpp
+    src/settings/settings_store.cpp
     src/engine/pinyin_engine.cpp
     src/engine/dictionary.cpp
     src/engine/candidate_ranker.cpp
@@ -81,7 +92,7 @@ set(IME_SOURCES
 )
 
 add_library(LocalPinyinIME SHARED ${IME_SOURCES})
-target_include_directories(LocalPinyinIME PRIVATE src src/ime src/engine src/common)
+target_include_directories(LocalPinyinIME PRIVATE src src/ime src/engine src/common src/settings)
 target_link_libraries(LocalPinyinIME PRIVATE ole32 uuid advapi32 user32 gdi32 shlwapi)
 localpinyin_add_version_resource(LocalPinyinIME
     "${LOCALPINYINIME_DISPLAY_NAME}"
@@ -101,6 +112,7 @@ add_executable(LocalPinyinSettings WIN32
     src/settings/main.cpp
     src/settings/settings_window.cpp
     src/settings/settings_store.cpp
+    src/ime/candidate_ui.cpp
     src/common/utf_utils.cpp
     src/common/win32_utils.cpp
 )
@@ -190,7 +202,7 @@ set(TEST_SUPPORT
     src/common/win32_utils.cpp
 )
 
-foreach(test_name IN ITEMS test_dictionary test_pinyin_engine test_candidate_ranker test_user_learning test_candidate_selection test_dictionary_resource_layout)
+foreach(test_name IN ITEMS test_dictionary test_pinyin_engine test_candidate_ranker test_user_learning test_candidate_selection test_dictionary_resource_layout test_dictionary_layers)
     add_executable(${test_name} tests/${test_name}.cpp ${TEST_SUPPORT})
     target_include_directories(${test_name} PRIVATE src src/engine src/common)
     target_link_libraries(${test_name} PRIVATE shlwapi)
@@ -199,13 +211,50 @@ foreach(test_name IN ITEMS test_dictionary test_pinyin_engine test_candidate_ran
     add_test(NAME ${test_name} COMMAND ${test_name})
 endforeach()
 
+add_executable(test_candidate_ui tests/test_candidate_ui.cpp src/ime/candidate_ui.cpp)
+target_include_directories(test_candidate_ui PRIVATE src src/ime)
+target_link_libraries(test_candidate_ui PRIVATE user32)
+set_target_properties(test_candidate_ui PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+add_test(NAME test_candidate_ui COMMAND test_candidate_ui)
+
+add_executable(test_settings_store
+    tests/test_settings_store.cpp
+    src/settings/settings_store.cpp
+    src/ime/candidate_ui.cpp
+    src/common/utf_utils.cpp
+    src/common/win32_utils.cpp
+)
+target_include_directories(test_settings_store PRIVATE src src/settings src/ime src/common)
+target_link_libraries(test_settings_store PRIVATE user32 shell32 shlwapi)
+set_target_properties(test_settings_store PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+add_test(NAME test_settings_store COMMAND test_settings_store)
+
 add_test(
     NAME dictionary_smoke_tool
     COMMAND LocalPinyinImeDictionarySmoke
-        --dictionary "$<TARGET_FILE_DIR:LocalPinyinImeDictionarySmoke>/dictionary/core_zh_pinyin.tsv"
+        --resource-dir "$<TARGET_FILE_DIR:LocalPinyinImeDictionarySmoke>"
 )
 
 install(TARGETS LocalPinyinIME LocalPinyinSettings LocalPinyinImeEnable LocalPinyinImeAudit LocalPinyinImeSetup LocalPinyinImeDictionarySmoke
         RUNTIME DESTINATION bin)
 install(DIRECTORY data/ DESTINATION data)
-install(FILES "${LOCALPINYINIME_DICTIONARY_RESOURCE}" DESTINATION bin/dictionary)
+install(FILES ${LOCALPINYINIME_DICTIONARY_RESOURCES} DESTINATION bin/dictionary)
+
+find_package(Python3 COMPONENTS Interpreter)
+if (Python3_Interpreter_FOUND)
+    add_test(
+        NAME test_manage_user_lexicon
+        COMMAND "${Python3_EXECUTABLE}"
+            "${CMAKE_CURRENT_SOURCE_DIR}/tests/test_manage_user_lexicon.py"
+            --script "${CMAKE_CURRENT_SOURCE_DIR}/tools/manage_user_lexicon.py"
+    )
+    add_test(
+        NAME test_local_core_lexicon
+        COMMAND "${Python3_EXECUTABLE}"
+            "${CMAKE_CURRENT_SOURCE_DIR}/tools/validate_local_core_lexicon.py"
+            --path "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/local_core_zh_pinyin.tsv"
+            --metadata "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/local_core_zh_pinyin.metadata.json"
+            --min-entries 1500
+            --max-entries 2500
+    )
+endif()

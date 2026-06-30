@@ -36,8 +36,11 @@ int require_first_candidate(const std::wstring& pinyin, const std::wstring& expe
 }  // namespace
 
 int main() {
+    const auto user_lexicon_root = use_temp_user_lexicon_override();
     const auto source_dictionary = executable_directory() / L"dictionary" / L"core_zh_pinyin.tsv";
+    const auto source_local_core_dictionary = executable_directory() / L"dictionary" / L"local_core_zh_pinyin.tsv";
     REQUIRE_TRUE(std::filesystem::exists(source_dictionary));
+    REQUIRE_TRUE(std::filesystem::exists(source_local_core_dictionary));
 
     const auto layout_root = make_temp_directory();
     const auto unrelated_cwd = make_temp_directory();
@@ -47,15 +50,20 @@ int main() {
     std::filesystem::copy_file(source_dictionary,
                                fake_dictionary_dir / L"core_zh_pinyin.tsv",
                                std::filesystem::copy_options::overwrite_existing);
+    std::filesystem::copy_file(source_local_core_dictionary,
+                               fake_dictionary_dir / L"local_core_zh_pinyin.tsv",
+                               std::filesystem::copy_options::overwrite_existing);
 
     SetCurrentDirectoryW(unrelated_cwd.c_str());
 
     localpinyin::Dictionary explicit_layout(localpinyin::DictionaryLoadMode::Empty);
-    REQUIRE_TRUE(explicit_layout.load_from_resource_directory(fake_x64.wstring()));
+    REQUIRE_TRUE(explicit_layout.load_from_resource_directory(fake_x64.wstring(), (layout_root / L"user_lexicon.tsv").wstring()));
     REQUIRE_TRUE(explicit_layout.entry_count() >= 300);
     REQUIRE_EQ(explicit_layout.lookup(L"nihao").front().text, std::wstring(L"\u4F60\u597D"));
+    REQUIRE_EQ(explicit_layout.lookup(L"henbang").front().text, std::wstring(L"\u5F88\u68D2"));
 
     REQUIRE_EQ(require_first_candidate(L"nihao", L"\u4F60\u597D"), 0);
+    REQUIRE_EQ(require_first_candidate(L"henbang", L"\u5F88\u68D2"), 0);
     REQUIRE_EQ(require_first_candidate(L"nihaoshijie", L"\u4F60\u597D\u4E16\u754C"), 0);
     REQUIRE_EQ(require_first_candidate(L"woxiangqubeijing", L"\u6211\u60F3\u53BB\u5317\u4EAC"), 0);
 
@@ -66,5 +74,6 @@ int main() {
     SetCurrentDirectoryW(executable_directory().c_str());
     std::filesystem::remove_all(layout_root);
     std::filesystem::remove_all(unrelated_cwd);
+    std::filesystem::remove_all(user_lexicon_root);
     return 0;
 }

@@ -20,6 +20,8 @@ std::wstring normalize_input(const std::wstring& input) {
             normalized.push_back(static_cast<wchar_t>(ch - L'A' + L'a'));
         } else if (ch >= L'a' && ch <= L'z') {
             normalized.push_back(ch);
+        } else if (ch >= L'0' && ch <= L'9') {
+            normalized.push_back(ch);
         }
     }
     return normalized;
@@ -124,6 +126,12 @@ bool PinyinEngine::load_dictionary(const std::wstring& path) {
         return dictionary_.load_from_tsv_file(path);
     }
     return dictionary_.load_from_json_file(path);
+}
+
+bool PinyinEngine::load_dictionary_resource_directory(const std::wstring& directory,
+                                                      const std::wstring& user_lexicon_path) {
+    dictionary_.clear();
+    return dictionary_.load_from_resource_directory(directory, user_lexicon_path);
 }
 
 std::vector<Candidate> PinyinEngine::lookup(const std::wstring& pinyin) const {

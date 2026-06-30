@@ -2,6 +2,8 @@
 #include "../src/engine/pinyin_engine.h"
 
 int main() {
+    const auto user_lexicon_root = use_temp_user_lexicon_override();
+
     {
         localpinyin::CandidateRanker ranker;
         std::vector<localpinyin::Candidate> candidates = {
@@ -33,5 +35,6 @@ int main() {
     engine.learn(L"shoudujingmaodaxue", target);
     auto after = engine.lookup(L"shoudujingmaodaxue");
     REQUIRE_EQ(after.front().text, target);
+    std::filesystem::remove_all(user_lexicon_root);
     return 0;
 }

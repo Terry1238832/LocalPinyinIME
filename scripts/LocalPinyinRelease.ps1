@@ -74,7 +74,7 @@ function Get-LocalPinyinDictionaryStats {
             [string]::IsNullOrWhiteSpace($parts[0]) -or
             [string]::IsNullOrWhiteSpace($parts[1]) -or
             ![int]::TryParse($parts[2].Trim(), [ref]$frequency) -or
-            $frequency -le 0) {
+            $frequency -lt 0) {
             $stats.invalidRows++
             continue
         }
