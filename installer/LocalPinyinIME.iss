@@ -2,6 +2,8 @@
 
 #define MyAppName "LocalPinyinIME"
 #define MyAppPublisher "LocalPinyinIME contributors"
+#define MyAppExeName "LocalPinyinIME.dll"
+#define MySetupToolName "LocalPinyinImeSetup.exe"
 
 [Setup]
 AppId={{7C0B4B75-80B0-4E1F-A4A5-4D49A5440D8A}
@@ -9,13 +11,19 @@ AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 AppPublisher={#MyAppPublisher}
 DefaultDirName={autopf}\LocalPinyinIME\releases\{#MyAppVersion}\x64
+UsePreviousAppDir=no
+DisableDirPage=yes
+DirExistsWarning=no
 DefaultGroupName=LocalPinyinIME
 ArchitecturesAllowed=x64
 ArchitecturesInstallIn64BitMode=x64
 PrivilegesRequired=admin
-OutputBaseFilename=LocalPinyinIMESetup-{#MyAppVersion}-x64
+OutputDir={#MyAppOutputDir}
+OutputBaseFilename={#MyAppSetupBaseFilename}
 Compression=lzma
 SolidCompression=yes
+UninstallDisplayName={#MyAppName}
+UninstallDisplayIcon={app}\LocalPinyinSettings.exe
 
 [Files]
 Source: "{#MyAppPackageDir}\bin\LocalPinyinIME.dll"; DestDir: "{app}"; Flags: ignoreversion
@@ -23,12 +31,224 @@ Source: "{#MyAppPackageDir}\bin\LocalPinyinImeSetup.exe"; DestDir: "{app}"; Flag
 Source: "{#MyAppPackageDir}\bin\LocalPinyinImeAudit.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MyAppPackageDir}\bin\LocalPinyinSettings.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MyAppPackageDir}\bin\dictionary\core_zh_pinyin.tsv"; DestDir: "{app}\dictionary"; Flags: ignoreversion
+Source: "{#MyAppPackageDir}\bin\dictionary\local_core_zh_pinyin.tsv"; DestDir: "{app}\dictionary"; Flags: ignoreversion
+Source: "{#MyAppPackageDir}\release-manifest.json"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MyAppPackageDir}\SHA256SUMS.txt"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MyAppPackageDir}\docs\*.md"; DestDir: "{app}\docs"; Flags: ignoreversion
 
 [Icons]
 Name: "{group}\LocalPinyinIME Settings"; Filename: "{app}\LocalPinyinSettings.exe"
 
-[Run]
-Filename: "{app}\LocalPinyinImeSetup.exe"; Parameters: "--register-system --dll ""{app}\LocalPinyinIME.dll"""; StatusMsg: "Registering LocalPinyinIME..."
+[Code]
+const
+  LocalPinyinClsid = '{7C0B4B75-80B0-4E1F-A4A5-4D49A5440D8A}';
 
-[UninstallRun]
-Filename: "{app}\LocalPinyinImeSetup.exe"; Parameters: "--unregister-system --dll ""{app}\LocalPinyinIME.dll"""; RunOnceId: "UnregisterLocalPinyinIME"
+function QuoteArg(Value: String): String;
+begin
+  Result := '"' + Value + '"';
+end;
+
+function BoolText(Value: Boolean): String;
+begin
+  if Value then
+    Result := 'TRUE'
+  else
+    Result := 'FALSE';
+end;
+
+function SetupToolPath(): String;
+begin
+  Result := ExpandConstant('{app}\{#MySetupToolName}');
+end;
+
+function SetupWorkingDir(): String;
+begin
+  Result := ExpandConstant('{app}');
+end;
+
+function InstalledDllPath(): String;
+begin
+  Result := ExpandConstant('{app}\{#MyAppExeName}');
+end;
+
+procedure ShowStepFailure(StepName: String; Params: String; Started: Boolean;
+  ResultCode: Integer; Detail: String);
+begin
+  MsgBox('LocalPinyinIME setup step failed: ' + StepName + #13#10 +
+         'Program: ' + SetupToolPath() + #13#10 +
+         'Parameters: ' + Params + #13#10 +
+         'Working directory: ' + SetupWorkingDir() + #13#10 +
+         'Started: ' + BoolText(Started) + #13#10 +
+         'Exit code: ' + IntToStr(ResultCode) + #13#10 +
+         Detail, mbError, MB_OK);
+end;
+
+function RunSetupTool(Params: String; StepName: String; var ResultCode: Integer): Boolean;
+var
+  Started: Boolean;
+begin
+  ResultCode := -1;
+  Log('LocalPinyinIME step: ' + StepName);
+  Log('LocalPinyinIME program: ' + SetupToolPath());
+  Log('LocalPinyinIME params: ' + Params);
+  Log('LocalPinyinIME workdir: ' + SetupWorkingDir());
+  Started := Exec(SetupToolPath(), Params, SetupWorkingDir(), SW_HIDE,
+                  ewWaitUntilTerminated, ResultCode);
+  Log('LocalPinyinIME started: ' + BoolText(Started));
+  if Started then
+    Log('LocalPinyinIME exit code: ' + IntToStr(ResultCode))
+  else
+    Log('LocalPinyinIME process did not start');
+  Result := Started;
+end;
+
+procedure RunBestEffort(Params: String; StepName: String);
+var
+  ResultCode: Integer;
+begin
+  if RunSetupTool(Params, StepName, ResultCode) then
+    Log('LocalPinyinIME best-effort step finished: ' + StepName +
+        ', exit code: ' + IntToStr(ResultCode));
+end;
+
+function CurrentRegisteredDll(): String;
+var
+  Value: String;
+begin
+  Result := '';
+  if RegQueryStringValue(HKCR, 'CLSID\' + LocalPinyinClsid + '\InprocServer32', '', Value) then
+    Result := Value;
+end;
+
+function RegisteredDllMatches(ExpectedDll: String): Boolean;
+var
+  ActualDll: String;
+begin
+  ActualDll := CurrentRegisteredDll();
+  Log('LocalPinyinIME current InprocServer32: ' + ActualDll);
+  Log('LocalPinyinIME expected InprocServer32: ' + ExpectedDll);
+  Result := (ActualDll <> '') and (CompareText(ActualDll, ExpectedDll) = 0);
+  Log('LocalPinyinIME InprocServer32 matches installed DLL: ' + BoolText(Result));
+end;
+
+procedure TryRestorePreviousRegistration(PreviousDll: String);
+var
+  ResultCode: Integer;
+begin
+  if PreviousDll = '' then
+    Exit;
+
+  Log('LocalPinyinIME attempting to restore previous registration: ' + PreviousDll);
+  if RunSetupTool('--register-system --dll ' + QuoteArg(PreviousDll),
+                  'restore previous registration', ResultCode) then
+  begin
+    Log('LocalPinyinIME restore previous registration exit code: ' + IntToStr(ResultCode));
+    if ResultCode = 0 then
+      RunBestEffort('--verify', 'verify restored previous registration');
+  end;
+end;
+
+procedure AbortWithDiagnostics(Params: String; StepName: String; Started: Boolean;
+  ResultCode: Integer; Detail: String; PreviousDll: String);
+begin
+  ShowStepFailure(StepName, Params, Started, ResultCode, Detail);
+  TryRestorePreviousRegistration(PreviousDll);
+  Abort;
+end;
+
+procedure RunOrAbort(Params: String; StepName: String);
+var
+  ResultCode: Integer;
+begin
+  if not RunSetupTool(Params, StepName, ResultCode) then
+    AbortWithDiagnostics(Params, StepName, False, ResultCode,
+      'The setup tool process could not be started.', '');
+
+  if ResultCode <> 0 then
+    AbortWithDiagnostics(Params, StepName, True, ResultCode,
+      'The setup tool returned a non-zero exit code.', '');
+end;
+
+procedure VerifySystemRegistrationAfterRegister(NewDll: String; RegisterCode: Integer;
+  PreviousDll: String);
+var
+  DiagnosticVerifyCode: Integer;
+begin
+  if RegisterCode <> 0 then
+    AbortWithDiagnostics('--register-system --dll ' + QuoteArg(NewDll), 'register system',
+      True, RegisterCode, 'The setup tool returned a non-zero exit code.', PreviousDll);
+
+  if not RegisteredDllMatches(NewDll) then
+    AbortWithDiagnostics('--register-system --dll ' + QuoteArg(NewDll),
+      'verify system registration after register-system', True, RegisterCode,
+      'InprocServer32 does not point to the installed DLL after register-system.', PreviousDll);
+
+  { Native --verify also queries current-user enabled state. Before enable-current-user,
+    a non-zero diagnostic verify exit must not be treated as system registration failure. }
+  if RunSetupTool('--verify', 'diagnostic verify after register-system', DiagnosticVerifyCode) then
+    Log('LocalPinyinIME diagnostic verify after register-system exit code: ' +
+        IntToStr(DiagnosticVerifyCode));
+end;
+
+procedure RunRegisterAndVerify(NewDll: String; PreviousDll: String);
+var
+  RegisterParams: String;
+  RegisterCode: Integer;
+begin
+  RegisterParams := '--register-system --dll ' + QuoteArg(NewDll);
+
+  if not RunSetupTool(RegisterParams, 'register system', RegisterCode) then
+    AbortWithDiagnostics(RegisterParams, 'register system', False, RegisterCode,
+      'The setup tool process could not be started.', PreviousDll);
+
+  VerifySystemRegistrationAfterRegister(NewDll, RegisterCode, PreviousDll);
+end;
+
+procedure RunEnableAndVerify;
+var
+  EnableCode: Integer;
+  VerifyCode: Integer;
+begin
+  if not RunSetupTool('--enable-current-user', 'enable current user', EnableCode) then
+    AbortWithDiagnostics('--enable-current-user', 'enable current user', False, EnableCode,
+      'The setup tool process could not be started.', '');
+
+  if EnableCode <> 0 then
+    AbortWithDiagnostics('--enable-current-user', 'enable current user', True, EnableCode,
+      'The setup tool did not confirm current user enabled state.', '');
+
+  if not RunSetupTool('--verify', 'verify after enable-current-user', VerifyCode) then
+    AbortWithDiagnostics('--verify', 'verify after enable-current-user', False, VerifyCode,
+      'The setup tool process could not be started.', '');
+
+  if VerifyCode <> 0 then
+    AbortWithDiagnostics('--verify', 'verify after enable-current-user', True, VerifyCode,
+      'Final verification failed after enable-current-user.', '');
+end;
+
+procedure CurStepChanged(CurStep: TSetupStep);
+var
+  CurrentDll: String;
+  NewDll: String;
+begin
+  if CurStep = ssPostInstall then
+  begin
+    NewDll := InstalledDllPath();
+    CurrentDll := CurrentRegisteredDll();
+    if (CurrentDll <> '') and (CompareText(CurrentDll, NewDll) <> 0) then
+      RunOrAbort('--unregister-system --dll ' + QuoteArg(CurrentDll), 'unregister previous version');
+
+    RunRegisterAndVerify(NewDll, CurrentDll);
+    RunEnableAndVerify();
+  end;
+end;
+
+procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
+begin
+  if CurUninstallStep = usUninstall then
+  begin
+    RunBestEffort('--disable-current-user', 'disable current user');
+    RunBestEffort('--unregister-system --dll ' + QuoteArg(InstalledDllPath()),
+                  'unregister system');
+  end;
+end;
