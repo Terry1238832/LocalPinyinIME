@@ -113,6 +113,17 @@ void merge_stats(DictionaryStats& target, const DictionaryStats& source) {
     target.invalid_rows += source.invalid_rows;
 }
 
+DictionaryStats to_dictionary_stats(const UserLexiconStats& source) {
+    DictionaryStats stats;
+    stats.source_rows = source.source_rows;
+    stats.comment_rows = source.comment_rows;
+    stats.blank_rows = source.blank_rows;
+    stats.duplicate_rows = source.duplicate_rows;
+    stats.invalid_rows = source.invalid_rows;
+    stats.valid_entries = source.valid_entries;
+    return stats;
+}
+
 std::wstring make_layer_log_message(const DictionaryLayerStats& layer) {
     std::wstringstream stream;
     stream << L"dictionary_layer=" << layer.layer_name
@@ -125,27 +136,6 @@ std::wstring make_layer_log_message(const DictionaryLayerStats& layer) {
            << L" comment_rows=" << layer.stats.comment_rows
            << L" blank_rows=" << layer.stats.blank_rows;
     return stream.str();
-}
-
-bool write_empty_user_lexicon(const std::wstring& path) {
-    const std::filesystem::path file_path(path);
-    const auto parent = file_path.parent_path();
-    if (!parent.empty()) {
-        std::error_code ec;
-        std::filesystem::create_directories(parent, ec);
-        if (ec) {
-            return false;
-        }
-    }
-
-    std::ofstream file(file_path, std::ios::binary | std::ios::trunc);
-    if (!file) {
-        return false;
-    }
-    file << "# LocalPinyinIME user lexicon\n"
-         << "# UTF-8 TSV format: pinyin<TAB>word<TAB>frequency\n"
-         << "# Lines beginning with # are comments. Keep this file private to the current Windows user.\n";
-    return static_cast<bool>(file);
 }
 
 }  // namespace
@@ -168,6 +158,9 @@ void Dictionary::clear() {
     layer_log_messages_.clear();
     using_fallback_ = false;
     loaded_resource_path_.clear();
+    user_lexicon_path_.clear();
+    user_lexicon_overlays_.clear();
+    has_user_lexicon_write_time_ = false;
 }
 
 bool Dictionary::add_entry(const std::wstring& pinyin,
@@ -224,19 +217,7 @@ std::wstring Dictionary::default_local_core_resource_path() {
 }
 
 std::wstring Dictionary::default_user_lexicon_path() {
-    std::array<wchar_t, MAX_PATH> override_path{};
-    const DWORD override_size = GetEnvironmentVariableW(L"LOCALPINYINIME_USER_LEXICON_PATH",
-                                                        override_path.data(),
-                                                        static_cast<DWORD>(override_path.size()));
-    if (override_size > 0 && override_size < override_path.size()) {
-        return override_path.data();
-    }
-
-    const std::wstring base = local_app_data_path();
-    if (base.empty()) {
-        return L"";
-    }
-    return join_path(join_path(base, L"LocalPinyinIME"), L"user_lexicon.tsv");
+    return ::localpinyin::default_user_lexicon_path();
 }
 
 bool Dictionary::load_from_default_resource() {
@@ -308,6 +289,13 @@ DictionaryLayerStats Dictionary::load_layer(const std::wstring& layer_name,
                                             bool create_if_missing) {
     DictionaryLayerStats layer;
     layer.layer_name = layer_name;
+    if (layer_name == L"local_user") {
+        load_user_lexicon_layer(path, layer, create_if_missing);
+        layer_log_messages_.push_back(make_layer_log_message(layer));
+        log_status(L"dictionary", layer_log_messages_.back());
+        return layer;
+    }
+
     if (path.empty()) {
         layer.missing = true;
         layer_log_messages_.push_back(make_layer_log_message(layer));
@@ -316,11 +304,7 @@ DictionaryLayerStats Dictionary::load_layer(const std::wstring& layer_name,
     }
 
     std::error_code exists_error;
-    bool exists = std::filesystem::exists(std::filesystem::path(path), exists_error);
-    if (!exists && !exists_error && create_if_missing) {
-        layer.created = write_empty_user_lexicon(path);
-        exists = layer.created;
-    }
+    const bool exists = std::filesystem::exists(std::filesystem::path(path), exists_error);
     if (!exists || exists_error) {
         layer.missing = true;
         layer_log_messages_.push_back(make_layer_log_message(layer));
@@ -332,6 +316,185 @@ DictionaryLayerStats Dictionary::load_layer(const std::wstring& layer_name,
     layer_log_messages_.push_back(make_layer_log_message(layer));
     log_status(L"dictionary", layer_log_messages_.back());
     return layer;
+}
+
+bool Dictionary::load_user_lexicon_layer(const std::wstring& path,
+                                         DictionaryLayerStats& layer,
+                                         bool create_if_missing) {
+    user_lexicon_path_ = path;
+    const UserLexiconLoadResult loaded = load_user_lexicon_file(path, create_if_missing);
+    layer.created = loaded.created;
+    layer.missing = loaded.missing;
+    layer.stats = to_dictionary_stats(loaded.stats);
+
+    if (loaded.failed) {
+        layer.loaded = false;
+        remember_user_lexicon_write_time();
+        return false;
+    }
+
+    for (const auto& entry : loaded.entries) {
+        add_user_lexicon_entry(entry, layer.stats);
+    }
+    layer.stats.valid_entries = loaded.entries.size();
+    layer.loaded = loaded.loaded;
+    remember_user_lexicon_write_time();
+    return true;
+}
+
+bool Dictionary::add_user_lexicon_entry(const UserLexiconEntry& entry, DictionaryStats& layer_stats) {
+    const std::wstring key = normalize_pinyin_key(entry.pinyin);
+    if (key.empty() || entry.word.empty() || entry.frequency < 0) {
+        return false;
+    }
+
+    auto& candidates = entries_[key];
+    const auto it = std::find_if(candidates.begin(), candidates.end(), [&](const Candidate& candidate) {
+        return candidate.text == entry.word;
+    });
+
+    UserLexiconOverlay overlay;
+    overlay.pinyin = key;
+    overlay.word = entry.word;
+    overlay.had_previous = it != candidates.end();
+    if (overlay.had_previous) {
+        overlay.previous_score = it->base_score;
+        it->base_score = entry.frequency;
+        ++layer_stats.duplicate_rows;
+    } else {
+        candidates.push_back(Candidate{entry.word, entry.frequency, 0});
+        ++entry_count_;
+    }
+    user_lexicon_overlays_.push_back(overlay);
+
+    std::stable_sort(candidates.begin(), candidates.end(), [](const Candidate& left, const Candidate& right) {
+        return left.base_score > right.base_score;
+    });
+    return true;
+}
+
+void Dictionary::revert_user_lexicon_entries() {
+    for (auto it = user_lexicon_overlays_.rbegin(); it != user_lexicon_overlays_.rend(); ++it) {
+        auto candidates_it = entries_.find(it->pinyin);
+        if (candidates_it == entries_.end()) {
+            continue;
+        }
+
+        auto& candidates = candidates_it->second;
+        const auto candidate_it = std::find_if(candidates.begin(), candidates.end(), [&](const Candidate& candidate) {
+            return candidate.text == it->word;
+        });
+        if (candidate_it == candidates.end()) {
+            continue;
+        }
+
+        if (it->had_previous) {
+            candidate_it->base_score = it->previous_score;
+        } else {
+            candidates.erase(candidate_it);
+            if (entry_count_ > 0) {
+                --entry_count_;
+            }
+        }
+
+        if (candidates.empty()) {
+            entries_.erase(candidates_it);
+        } else {
+            std::stable_sort(candidates.begin(), candidates.end(), [](const Candidate& left, const Candidate& right) {
+                return left.base_score > right.base_score;
+            });
+        }
+    }
+    user_lexicon_overlays_.clear();
+}
+
+void Dictionary::remember_user_lexicon_write_time() {
+    has_user_lexicon_write_time_ = false;
+    if (user_lexicon_path_.empty()) {
+        return;
+    }
+
+    std::error_code ec;
+    const auto time = std::filesystem::last_write_time(std::filesystem::path(user_lexicon_path_), ec);
+    if (!ec) {
+        user_lexicon_write_time_ = time;
+        has_user_lexicon_write_time_ = true;
+    }
+}
+
+bool Dictionary::user_lexicon_file_changed() const {
+    if (user_lexicon_path_.empty()) {
+        return false;
+    }
+
+    std::error_code ec;
+    const auto time = std::filesystem::last_write_time(std::filesystem::path(user_lexicon_path_), ec);
+    if (ec) {
+        return has_user_lexicon_write_time_;
+    }
+    return !has_user_lexicon_write_time_ || time != user_lexicon_write_time_;
+}
+
+void Dictionary::recompute_stats_from_layers() {
+    stats_ = {};
+    for (const auto& layer : layer_stats_) {
+        merge_stats(stats_, layer.stats);
+    }
+    stats_.valid_entries = entry_count_;
+}
+
+UserLexiconRefreshResult Dictionary::refresh_user_lexicon_if_changed(bool composition_active) {
+    UserLexiconRefreshResult result;
+    result.checked = true;
+    if (!user_lexicon_file_changed()) {
+        return result;
+    }
+
+    result.changed = true;
+    if (composition_active) {
+        result.skipped_active_composition = true;
+        log_status(L"dictionary", L"user_lexicon_refresh skipped active_composition=true");
+        return result;
+    }
+
+    const UserLexiconLoadResult loaded = load_user_lexicon_file(user_lexicon_path_, true);
+    result.stats = loaded.stats;
+    if (loaded.failed) {
+        result.failed = true;
+        log_status(L"dictionary", L"user_lexicon_refresh failed");
+        return result;
+    }
+
+    DictionaryLayerStats layer;
+    layer.layer_name = L"local_user";
+    layer.created = loaded.created;
+    layer.missing = loaded.missing;
+    layer.loaded = loaded.loaded;
+    layer.stats = to_dictionary_stats(loaded.stats);
+
+    revert_user_lexicon_entries();
+    for (const auto& entry : loaded.entries) {
+        add_user_lexicon_entry(entry, layer.stats);
+    }
+    layer.stats.valid_entries = loaded.entries.size();
+
+    bool replaced = false;
+    for (auto& existing : layer_stats_) {
+        if (existing.layer_name == L"local_user") {
+            existing = layer;
+            replaced = true;
+            break;
+        }
+    }
+    if (!replaced) {
+        layer_stats_.push_back(layer);
+    }
+
+    recompute_stats_from_layers();
+    remember_user_lexicon_write_time();
+    result.reloaded = true;
+    log_status(L"dictionary", make_layer_log_message(layer));
+    return result;
 }
 
 bool Dictionary::load_tsv_file_into(const std::wstring& path,

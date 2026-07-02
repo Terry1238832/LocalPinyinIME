@@ -18,6 +18,7 @@ public:
     bool load_dictionary_resource_directory(const std::wstring& directory,
                                             const std::wstring& user_lexicon_path = L"");
     [[nodiscard]] std::vector<Candidate> lookup(const std::wstring& pinyin) const;
+    UserLexiconRefreshResult refresh_user_lexicon_if_needed(bool composition_active);
     void learn(const std::wstring& pinyin, const std::wstring& selected_word);
 
 private:

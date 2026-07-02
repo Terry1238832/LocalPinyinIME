@@ -42,7 +42,12 @@ def default_lexicon_path() -> Path:
 
 
 def normalize_pinyin(value: str) -> str:
-    return "".join(ch for ch in value.strip().lower() if ("a" <= ch <= "z") or ("0" <= ch <= "9"))
+    normalized = value.strip().lower()
+    if not normalized:
+        raise ValueError("pinyin must not be empty")
+    if any(ch < "a" or ch > "z" for ch in normalized):
+        raise ValueError("pinyin must contain only a-z letters")
+    return normalized
 
 
 def reject_control_text(name: str, value: str) -> None:
@@ -87,10 +92,14 @@ def read_entries(path: Path) -> tuple[list[Entry], LexiconStats]:
             if len(parts) != 3:
                 stats.invalid_rows += 1
                 continue
-            pinyin = normalize_pinyin(parts[0])
+            try:
+                pinyin = normalize_pinyin(parts[0])
+            except ValueError:
+                stats.invalid_rows += 1
+                continue
             word = parts[1].strip()
             frequency = parse_frequency(parts[2])
-            if not pinyin or not word or frequency is None:
+            if not word or "\r" in word or "\n" in word or frequency is None:
                 stats.invalid_rows += 1
                 continue
             key = (pinyin, word)
@@ -107,8 +116,14 @@ def write_entries(path: Path, entries: Iterable[Entry]) -> None:
     ordered = sorted(entries, key=lambda entry: (entry.pinyin, entry.word))
     lines = [HEADER.rstrip("\n")]
     for entry in ordered:
+        normalize_pinyin(entry.pinyin)
+        reject_control_text("word", entry.word)
+        if entry.frequency < 0:
+            raise ValueError("frequency must be a non-negative integer")
         lines.append(f"{entry.pinyin}\t{entry.word}\t{entry.frequency}")
-    path.write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
+    temp_path = path.with_name(path.name + ".tmp")
+    temp_path.write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
+    temp_path.replace(path)
 
 
 def print_stats(stats: LexiconStats) -> None:
@@ -143,8 +158,6 @@ def command_add(path: Path, pinyin: str, word: str, frequency: int) -> int:
     reject_control_text("pinyin", pinyin)
     reject_control_text("word", word)
     normalized_pinyin = normalize_pinyin(pinyin)
-    if not normalized_pinyin:
-        raise ValueError("pinyin must contain at least one ASCII letter or digit")
     if frequency < 0:
         raise ValueError("frequency must be a non-negative integer")
 

@@ -14,6 +14,14 @@ from pathlib import Path
 PINYIN_RE = re.compile(r"^[a-z]+$")
 
 REQUIRED_ENTRIES = {
+    "kaihui": "\u5f00\u4f1a",
+    "fangjia": "\u653e\u5047",
+    "biancheng": "\u53d8\u6210",
+    "shenle": "\u795e\u4e86",
+    "zhiyou": "\u53ea\u6709",
+    "bucuo": "\u4e0d\u9519",
+    "bianji": "\u7f16\u8f91",
+    "huode": "\u83b7\u5f97",
     "nihao": "你好",
     "xiexie": "谢谢",
     "zaijian": "再见",
@@ -28,6 +36,28 @@ REQUIRED_ENTRIES = {
     "xuexi": "学习",
     "kaoshi": "考试",
     "zuoye": "作业",
+    "nihaoshijie": "你好世界",
+    "woxiangqubeijing": "我想去北京",
+    "jintiantianqihenhao": "今天天气很好",
+    "woxiangchiwanfan": "我想吃晚饭",
+    "qingbangwokankan": "请帮我看看",
+    "zhegeshishenme": "这个是什么",
+    "woxianzaiyouyidianmang": "我现在有一点忙",
+}
+
+REQUIRED_CATEGORIES = {
+    "common_words_2char",
+    "common_words_3char",
+    "common_words_4plus",
+    "daily_phrases",
+    "spoken_patterns",
+    "time_weather",
+    "shopping_food_transport",
+    "study_work_technology",
+    "common_actions",
+    "common_questions",
+    "common_connectors",
+    "targeted_product_baseline_036",
 }
 
 REQUIRED_METADATA_FIELDS = {
@@ -66,6 +96,8 @@ def validate_lexicon(path: Path, min_entries: int, max_entries: int) -> tuple[Va
     stats = ValidationStats()
     seen: set[tuple[str, str]] = set()
     entries: dict[str, set[str]] = {}
+    category_counts: dict[str, int] = {}
+    current_category = ""
 
     with path.open("r", encoding="utf-8", newline="") as handle:
         for line_number, raw_line in enumerate(handle, start=1):
@@ -77,6 +109,10 @@ def validate_lexicon(path: Path, min_entries: int, max_entries: int) -> tuple[Va
                 continue
             if stripped.startswith("#"):
                 stats.comment_rows += 1
+                prefix = "# category:"
+                if stripped.lower().startswith(prefix):
+                    current_category = stripped[len(prefix):].strip()
+                    category_counts.setdefault(current_category, 0)
                 continue
 
             fields = line.split("\t")
@@ -100,6 +136,8 @@ def validate_lexicon(path: Path, min_entries: int, max_entries: int) -> tuple[Va
             seen.add(key)
             entries.setdefault(pinyin, set()).add(word)
             stats.valid_entries += 1
+            if current_category:
+                category_counts[current_category] = category_counts.get(current_category, 0) + 1
 
     if not (min_entries <= stats.valid_entries <= max_entries):
         raise ValueError(f"valid entry count out of range: {stats.valid_entries}")
@@ -112,6 +150,13 @@ def validate_lexicon(path: Path, min_entries: int, max_entries: int) -> tuple[Va
     if missing:
         names = ", ".join(sorted(missing))
         raise ValueError(f"missing required entries: {names}")
+    missing_categories = {
+        category
+        for category in REQUIRED_CATEGORIES
+        if category_counts.get(category, 0) <= 0
+    }
+    if missing_categories:
+        raise ValueError(f"missing required categories: {', '.join(sorted(missing_categories))}")
     return stats, {pinyin: next(iter(words)) for pinyin, words in entries.items()}
 
 
@@ -124,21 +169,34 @@ def validate_metadata(metadata_path: Path, entry_count: int, expected_sha256: st
         raise ValueError("metadata entry_count does not match TSV")
     if str(metadata["sha256"]).upper() != expected_sha256:
         raise ValueError("metadata sha256 does not match TSV")
+    if str(metadata.get("review_status", "")).lower().find("approved") < 0:
+        raise ValueError("metadata review_status must state approved")
+    category_counts = metadata.get("category_counts")
+    if not isinstance(category_counts, dict):
+        raise ValueError("metadata category_counts must be present")
+    missing_categories = {
+        category
+        for category in REQUIRED_CATEGORIES
+        if int(category_counts.get(category, 0)) <= 0
+    }
+    if missing_categories:
+        raise ValueError(f"metadata category_counts missing: {', '.join(sorted(missing_categories))}")
     source_policy = str(metadata["source_policy"]).lower()
-    for token in ("third-party", "rime", "sogou", "baidu", "microsoft", "google"):
+    for token in ("third-party", "rime", "sogou", "baidu", "microsoft", "google", "github"):
         if token not in source_policy:
             raise ValueError(f"metadata source_policy does not mention {token}")
     frequency_policy = str(metadata["frequency_policy"]).lower()
-    if "relative" not in frequency_policy or "not" not in frequency_policy or "corpus" not in frequency_policy:
-        raise ValueError("metadata frequency_policy must describe relative non-corpus weights")
+    for token in ("relative", "not", "corpus", "internet", "search", "commercial"):
+        if token not in frequency_policy:
+            raise ValueError("metadata frequency_policy must describe relative non-corpus weights")
 
 
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--path", type=Path, required=True)
     parser.add_argument("--metadata", type=Path, required=True)
-    parser.add_argument("--min-entries", type=int, default=1500)
-    parser.add_argument("--max-entries", type=int, default=2500)
+    parser.add_argument("--min-entries", type=int, default=8000)
+    parser.add_argument("--max-entries", type=int, default=12000)
     args = parser.parse_args()
 
     stats, _ = validate_lexicon(args.path, args.min_entries, args.max_entries)

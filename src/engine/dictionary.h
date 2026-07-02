@@ -1,8 +1,10 @@
 #pragma once
 
 #include "candidate.h"
+#include "user_lexicon.h"
 
 #include <cstddef>
+#include <filesystem>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -31,6 +33,15 @@ struct DictionaryLayerStats {
     bool created = false;
 };
 
+struct UserLexiconRefreshResult {
+    bool checked = false;
+    bool changed = false;
+    bool skipped_active_composition = false;
+    bool reloaded = false;
+    bool failed = false;
+    UserLexiconStats stats;
+};
+
 enum class UserLexiconCreateMode {
     CreateIfMissing,
     DoNotCreate
@@ -53,6 +64,7 @@ public:
     bool load_from_tsv_file(const std::wstring& path);
     [[nodiscard]] std::vector<Candidate> lookup(const std::wstring& pinyin) const;
     [[nodiscard]] std::vector<std::wstring> matching_pinyins_at(const std::wstring& input, size_t offset) const;
+    UserLexiconRefreshResult refresh_user_lexicon_if_changed(bool composition_active);
     [[nodiscard]] size_t entry_count() const noexcept;
     [[nodiscard]] const DictionaryStats& stats() const noexcept { return stats_; }
     [[nodiscard]] const std::vector<DictionaryLayerStats>& layer_stats() const noexcept { return layer_stats_; }
@@ -70,6 +82,14 @@ private:
     };
 
     void load_minimal_fallback();
+    bool user_lexicon_file_changed() const;
+    void remember_user_lexicon_write_time();
+    void revert_user_lexicon_entries();
+    bool add_user_lexicon_entry(const UserLexiconEntry& entry, DictionaryStats& layer_stats);
+    bool load_user_lexicon_layer(const std::wstring& path,
+                                 DictionaryLayerStats& layer,
+                                 bool create_if_missing);
+    void recompute_stats_from_layers();
     bool load_tsv_file_into(const std::wstring& path,
                             DictionaryStats& layer_stats,
                             EntryAddMode mode);
@@ -91,6 +111,16 @@ private:
     std::vector<std::wstring> layer_log_messages_;
     bool using_fallback_ = false;
     std::wstring loaded_resource_path_;
+    struct UserLexiconOverlay {
+        std::wstring pinyin;
+        std::wstring word;
+        bool had_previous = false;
+        int previous_score = 0;
+    };
+    std::wstring user_lexicon_path_;
+    std::vector<UserLexiconOverlay> user_lexicon_overlays_;
+    std::filesystem::file_time_type user_lexicon_write_time_{};
+    bool has_user_lexicon_write_time_ = false;
 };
 
 }  // namespace localpinyin

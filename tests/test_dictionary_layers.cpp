@@ -47,7 +47,7 @@ int main() {
     write_utf8_text(user_path,
                     L"# user\n"
                     L"userwins\t\u79C1\u6709\t5000\n"
-                    L"csc108\tCSC108\t5000\n"
+                    L"csc\tCSC108\t5000\n"
                     L"secretpinyin\t\u79C1\u5BC6\u8BCD\t321\n"
                     L"\t\u7A7A\u62FC\u97F3\t1\n"
                     L"emptyword\t\t1\n"
@@ -68,7 +68,7 @@ int main() {
     REQUIRE_EQ(dictionary.lookup(L"localonly").front().text, std::wstring(L"\u5185\u7F6E"));
     REQUIRE_EQ(dictionary.lookup(L"xing").front().text, std::wstring(L"\u884C"));
     REQUIRE_EQ(dictionary.lookup(L"hang").front().text, std::wstring(L"\u884C"));
-    REQUIRE_EQ(dictionary.lookup(L"csc108").front().text, std::wstring(L"CSC108"));
+    REQUIRE_EQ(dictionary.lookup(L"csc").front().text, std::wstring(L"CSC108"));
     REQUIRE_EQ(dictionary.lookup(sensitive_pinyin).front().text, sensitive_word);
 
     const auto& user_layer = layer_named(dictionary, L"local_user");

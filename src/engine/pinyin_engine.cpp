@@ -7,7 +7,7 @@
 namespace localpinyin {
 namespace {
 
-constexpr int kExactMatchBonus = 20000;
+constexpr int kExactMatchBonus = 100000;
 constexpr int kCompleteSegmentationBonus = 2000;
 constexpr int kExcessiveSegmentationPenalty = 5000;
 constexpr int kFallbackScore = 1;
@@ -156,6 +156,10 @@ std::vector<Candidate> PinyinEngine::lookup(const std::wstring& pinyin) const {
     }
 
     return deduplicate_and_limit(ranker_.rank(normalized, std::move(candidates)));
+}
+
+UserLexiconRefreshResult PinyinEngine::refresh_user_lexicon_if_needed(bool composition_active) {
+    return dictionary_.refresh_user_lexicon_if_changed(composition_active);
 }
 
 void PinyinEngine::learn(const std::wstring& pinyin, const std::wstring& selected_word) {

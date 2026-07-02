@@ -37,6 +37,8 @@ def main() -> int:
     args = parser.parse_args()
     script = args.script
 
+    private_word = "\u5bc6\u897f\u6c99\u52a0\u5927\u5b66"
+
     with tempfile.TemporaryDirectory(prefix="LocalPinyinIME-lexicon-test-") as temp:
         lexicon = Path(temp) / "user_lexicon.tsv"
 
@@ -45,25 +47,24 @@ def main() -> int:
         if not lexicon.exists():
             raise AssertionError("validate did not create the missing lexicon")
 
-        run_tool(script, lexicon, "add", "--pinyin", "UTM", "--word", "密西沙加大学", "--frequency", "5000")
-        run_tool(script, lexicon, "add", "--pinyin", "utm", "--word", "密西沙加大学", "--frequency", "6000")
-        run_tool(script, lexicon, "add", "--pinyin", "csc108", "--word", "CSC108", "--frequency", "5000")
+        run_tool(script, lexicon, "add", "--pinyin", "UTM", "--word", private_word, "--frequency", "5000")
+        run_tool(script, lexicon, "add", "--pinyin", "utm", "--word", private_word, "--frequency", "6000")
         run_tool(script, lexicon, "add", "--pinyin", "csc", "--word", "CSC108", "--frequency", "4000")
 
         listing = run_tool(script, lexicon, "list").stdout.splitlines()
         expected = [
             "csc\tCSC108\t4000",
-            "csc108\tCSC108\t5000",
-            "utm\t密西沙加大学\t6000",
+            f"utm\t{private_word}\t6000",
         ]
         if listing != expected:
             raise AssertionError(f"list output was not stable\nexpected={expected!r}\nactual={listing!r}")
 
         report = run_tool(script, lexicon, "report").stdout
-        require_contains(report, "valid_entries: 3")
+        require_contains(report, "valid_entries: 2")
         require_contains(report, "invalid_rows: 0")
 
-        run_tool(script, lexicon, "add", "--pinyin", "", "--word", "空", "--frequency", "1", expect=2)
+        run_tool(script, lexicon, "add", "--pinyin", "csc108", "--word", "CSC108", "--frequency", "5000", expect=2)
+        run_tool(script, lexicon, "add", "--pinyin", "", "--word", "\u7a7a", "--frequency", "1", expect=2)
         run_tool(script, lexicon, "add", "--pinyin", "bad", "--word", "bad\tword", "--frequency", "1", expect=2)
         run_tool(script, lexicon, "add", "--pinyin", "bad", "--word", "bad", "--frequency", "-1", expect=2)
 

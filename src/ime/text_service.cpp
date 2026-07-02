@@ -156,9 +156,12 @@ HRESULT TextService::OnTestKeyDown(ITfContext*, WPARAM wparam, LPARAM, BOOL* eat
         *eaten = can_select_candidate_by_digit(wparam, candidates_.size(), !composing_.empty(), candidate_window_.is_visible());
         return S_OK;
     }
+    if (wparam == VK_SPACE || wparam == VK_RETURN) {
+        *eaten = should_eat_composition_commit_key(wparam, candidates_.size(), !composing_.empty());
+        return S_OK;
+    }
     if ((wparam >= L'A' && wparam <= L'Z') || (wparam == VK_OEM_7 && !composing_.empty()) ||
-        wparam == VK_BACK || wparam == VK_ESCAPE || wparam == VK_SPACE || wparam == VK_RETURN ||
-        wparam == VK_LEFT || wparam == VK_RIGHT) {
+        wparam == VK_BACK || wparam == VK_ESCAPE || wparam == VK_LEFT || wparam == VK_RIGHT) {
         *eaten = TRUE;
     }
     return S_OK;
@@ -240,6 +243,9 @@ bool TextService::handle_chinese_key(ITfContext* context, WPARAM wparam, BOOL* e
     }
 
     if (wparam >= L'A' && wparam <= L'Z') {
+        if (composing_.empty()) {
+            engine_.refresh_user_lexicon_if_needed(false);
+        }
         composing_.push_back(static_cast<wchar_t>(std::towlower(static_cast<wint_t>(wparam))));
         selected_index_ = 0;
         refresh_candidates();
@@ -283,10 +289,9 @@ bool TextService::handle_chinese_key(ITfContext* context, WPARAM wparam, BOOL* e
     }
 
     if (wparam == VK_SPACE || wparam == VK_RETURN) {
-        if (!composing_.empty() && !candidates_.empty()) {
-            if (wparam == VK_RETURN) {
-                selected_index_ = 0;
-            }
+        const int commit_index = candidate_commit_index_for_key(wparam, candidates_.size(), !composing_.empty(), selected_index_);
+        if (commit_index >= 0) {
+            selected_index_ = static_cast<size_t>(commit_index);
             commit_selected(context);
             *eaten = TRUE;
             return true;
@@ -323,6 +328,7 @@ bool TextService::handle_chinese_key(ITfContext* context, WPARAM wparam, BOOL* e
 }
 
 void TextService::refresh_candidates() {
+    engine_.refresh_user_lexicon_if_needed(!composing_.empty());
     candidates_ = engine_.lookup(composing_);
 }
 

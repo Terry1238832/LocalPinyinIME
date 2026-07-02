@@ -14,6 +14,9 @@ namespace localpinyin {
 namespace {
 
 constexpr wchar_t kWindowClassName[] = L"LocalPinyinCandidateWindow";
+constexpr wchar_t kSettingsWindowClassName[] = L"LocalPinyinSettingsWindow";
+constexpr wchar_t kSettingsExecutableName[] = L"LocalPinyinSettings.exe";
+constexpr wchar_t kSettingsButtonText[] = L"\u2699";
 constexpr wchar_t kHintText[] = L"Space \u9009\u9996\u9879 \u00B7 1-9 \u9009\u8BCD \u00B7 Esc \u53D6\u6D88";
 
 bool windows_apps_use_dark_theme() {
@@ -70,6 +73,19 @@ void fill_round_rect(HDC hdc, const RECT& rect, int radius, HBRUSH brush, HPEN p
     SelectObject(hdc, old_brush);
 }
 
+COLORREF blend_color(COLORREF from, COLORREF to, int percent_to) {
+    const int keep = 100 - percent_to;
+    return RGB((GetRValue(from) * keep + GetRValue(to) * percent_to) / 100,
+               (GetGValue(from) * keep + GetGValue(to) * percent_to) / 100,
+               (GetBValue(from) * keep + GetBValue(to) * percent_to) / 100);
+}
+
+HFONT create_candidate_font(int height_px, LONG weight) {
+    return CreateFontW(-height_px, 0, 0, 0, weight, FALSE, FALSE, FALSE,
+                       DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
+                       CLEARTYPE_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Segoe UI Variable");
+}
+
 int measure_text_width_px(HWND hwnd, HFONT font, const std::wstring& text, int fallback_font_px) {
     HDC hdc = GetDC(hwnd);
     if (!hdc) {
@@ -98,6 +114,32 @@ int measure_text_width_px(HWND hwnd, HFONT font, const std::wstring& text, int f
         return width;
     }
     return estimate_candidate_text_width_px(text, fallback_font_px);
+}
+
+std::wstring settings_executable_path_from_module() {
+    wchar_t module_path[MAX_PATH]{};
+    constexpr DWORD buffer_size = static_cast<DWORD>(sizeof(module_path) / sizeof(module_path[0]));
+    const DWORD size = GetModuleFileNameW(g_instance, module_path, buffer_size);
+    if (size == 0 || size >= buffer_size) {
+        return {};
+    }
+
+    std::wstring path(module_path, size);
+    const size_t slash = path.find_last_of(L"\\/");
+    if (slash == std::wstring::npos) {
+        return kSettingsExecutableName;
+    }
+    path.resize(slash + 1);
+    path += kSettingsExecutableName;
+    return path;
+}
+
+std::wstring parent_directory_of(const std::wstring& path) {
+    const size_t slash = path.find_last_of(L"\\/");
+    if (slash == std::wstring::npos) {
+        return {};
+    }
+    return path.substr(0, slash);
 }
 
 }  // namespace
@@ -243,6 +285,9 @@ void CandidateWindow::show(const std::wstring& composition_text,
 
 void CandidateWindow::hide(const wchar_t* reason) {
     if (hwnd_) {
+        settings_button_hot_ = false;
+        settings_button_pressed_ = false;
+        tracking_mouse_leave_ = false;
         ShowWindow(hwnd_, SW_HIDE);
         std::wstringstream stream;
         stream << L"hidden=true reason=" << (reason ? reason : L"unspecified");
@@ -271,6 +316,55 @@ LRESULT CandidateWindow::handle_message(HWND hwnd, UINT message, WPARAM wparam, 
     switch (message) {
         case WM_MOUSEACTIVATE:
             return MA_NOACTIVATE;
+        case WM_MOUSEMOVE: {
+            const POINTS points = MAKEPOINTS(lparam);
+            const POINT point{points.x, points.y};
+            update_settings_button_hot(hit_test_settings_button(point));
+            track_mouse_leave();
+            return 0;
+        }
+        case WM_MOUSELEAVE:
+            tracking_mouse_leave_ = false;
+            update_settings_button_hot(false);
+            if (settings_button_pressed_) {
+                settings_button_pressed_ = false;
+                InvalidateRect(hwnd_, &layout_.action_button_rect, FALSE);
+            }
+            return 0;
+        case WM_LBUTTONDOWN: {
+            const POINTS points = MAKEPOINTS(lparam);
+            const POINT point{points.x, points.y};
+            if (hit_test_settings_button(point)) {
+                settings_button_pressed_ = true;
+                SetCapture(hwnd_);
+                InvalidateRect(hwnd_, &layout_.action_button_rect, FALSE);
+                return 0;
+            }
+            break;
+        }
+        case WM_LBUTTONUP: {
+            const POINTS points = MAKEPOINTS(lparam);
+            const POINT point{points.x, points.y};
+            const bool activate_settings = settings_button_pressed_ && hit_test_settings_button(point);
+            if (settings_button_pressed_) {
+                settings_button_pressed_ = false;
+                if (GetCapture() == hwnd_) {
+                    ReleaseCapture();
+                }
+                InvalidateRect(hwnd_, &layout_.action_button_rect, FALSE);
+            }
+            if (activate_settings) {
+                open_settings_window();
+                return 0;
+            }
+            break;
+        }
+        case WM_SETCURSOR:
+            if (settings_button_hot_) {
+                SetCursor(LoadCursorW(nullptr, IDC_HAND));
+                return TRUE;
+            }
+            break;
         case WM_ERASEBKGND:
             return 1;
         case WM_PAINT:
@@ -279,6 +373,7 @@ LRESULT CandidateWindow::handle_message(HWND hwnd, UINT message, WPARAM wparam, 
         default:
             return DefWindowProcW(hwnd, message, wparam, lparam);
     }
+    return DefWindowProcW(hwnd, message, wparam, lparam);
 }
 
 void CandidateWindow::reload_options() {
@@ -288,21 +383,120 @@ void CandidateWindow::reload_options() {
 }
 
 void CandidateWindow::update_fonts(int dpi) {
-    if (candidate_font_ && hint_font_ && font_dpi_ == dpi && font_text_size_ == options_.text_size) {
+    if (composition_font_ && candidate_font_ && hint_font_ && font_dpi_ == dpi && font_text_size_ == options_.text_size) {
         return;
     }
     release_fonts();
     font_dpi_ = dpi;
     font_text_size_ = options_.text_size;
 
-    const int candidate_height = -candidate_font_px_for_size(options_.text_size, dpi);
-    const int hint_height = -scale_dip(12, dpi);
-    candidate_font_ = CreateFontW(candidate_height, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
-                                  DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
-                                  CLEARTYPE_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Segoe UI");
-    hint_font_ = CreateFontW(hint_height, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
-                             DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
-                             CLEARTYPE_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Segoe UI");
+    composition_font_ = create_candidate_font(scale_dip(15, dpi), FW_NORMAL);
+    candidate_font_ = create_candidate_font(candidate_font_px_for_size(options_.text_size, dpi), FW_MEDIUM);
+    hint_font_ = create_candidate_font(scale_dip(13, dpi), FW_NORMAL);
+}
+
+bool CandidateWindow::hit_test_settings_button(POINT point) const noexcept {
+    const RECT& rect = layout_.action_button_rect;
+    return layout_.action_button_visible &&
+           point.x >= rect.left && point.x < rect.right &&
+           point.y >= rect.top && point.y < rect.bottom;
+}
+
+void CandidateWindow::update_settings_button_hot(bool hot) {
+    if (settings_button_hot_ == hot) {
+        return;
+    }
+    settings_button_hot_ = hot;
+    InvalidateRect(hwnd_, &layout_.action_button_rect, FALSE);
+}
+
+void CandidateWindow::track_mouse_leave() {
+    if (tracking_mouse_leave_ || !hwnd_) {
+        return;
+    }
+    TRACKMOUSEEVENT event{};
+    event.cbSize = sizeof(event);
+    event.dwFlags = TME_LEAVE;
+    event.hwndTrack = hwnd_;
+    if (TrackMouseEvent(&event)) {
+        tracking_mouse_leave_ = true;
+    }
+}
+
+void CandidateWindow::open_settings_window() {
+    HWND existing = FindWindowW(kSettingsWindowClassName, nullptr);
+    if (existing) {
+        ShowWindow(existing, SW_SHOWNORMAL);
+        SetForegroundWindow(existing);
+        return;
+    }
+
+    const std::wstring executable_path = settings_executable_path_from_module();
+    if (executable_path.empty() || GetFileAttributesW(executable_path.c_str()) == INVALID_FILE_ATTRIBUTES) {
+        log_status(L"candidate-ui", L"settings_open=false reason=settings_exe_not_found");
+        return;
+    }
+
+    std::wstring command_line = L"\"" + executable_path + L"\"";
+    const std::wstring working_directory = parent_directory_of(executable_path);
+    STARTUPINFOW startup{};
+    startup.cb = sizeof(startup);
+    PROCESS_INFORMATION process{};
+    const BOOL created = CreateProcessW(executable_path.c_str(),
+                                        command_line.data(),
+                                        nullptr,
+                                        nullptr,
+                                        FALSE,
+                                        0,
+                                        nullptr,
+                                        working_directory.empty() ? nullptr : working_directory.c_str(),
+                                        &startup,
+                                        &process);
+    if (!created) {
+        std::wstringstream stream;
+        stream << L"settings_open=false create_process_last_error=" << GetLastError();
+        log_status(L"candidate-ui", stream.str());
+        return;
+    }
+    CloseHandle(process.hThread);
+    CloseHandle(process.hProcess);
+}
+
+void CandidateWindow::draw_settings_button(HDC hdc) {
+    if (!layout_.action_button_visible) {
+        return;
+    }
+
+    const RECT rect = layout_.action_button_rect;
+    COLORREF fill = palette_.dark ? RGB(0x2E, 0x31, 0x38) : RGB(0xF4, 0xF7, 0xFB);
+    if (settings_button_hot_) {
+        fill = blend_color(fill, palette_.selected_background, palette_.dark ? 28 : 16);
+    }
+    if (settings_button_pressed_) {
+        fill = blend_color(fill, RGB(0, 0, 0), palette_.dark ? 18 : 8);
+    }
+    const COLORREF border_color = settings_button_hot_ ? palette_.selected_border : palette_.border;
+    HBRUSH brush = CreateSolidBrush(fill);
+    HPEN pen = CreatePen(PS_SOLID, std::max(1, scale_dip(1, layout_.dpi)), border_color);
+    fill_round_rect(hdc, rect, scale_dip(8, layout_.dpi) * 2, brush, pen);
+    DeleteObject(pen);
+    DeleteObject(brush);
+
+    HGDIOBJ old_font = nullptr;
+    if (candidate_font_) {
+        old_font = SelectObject(hdc, candidate_font_);
+    }
+    RECT text_rect = rect;
+    SetBkMode(hdc, TRANSPARENT);
+    SetTextColor(hdc, settings_button_hot_ ? palette_.number_text : palette_.muted_text);
+    DrawTextW(hdc,
+              kSettingsButtonText,
+              static_cast<int>(wcslen(kSettingsButtonText)),
+              &text_rect,
+              DT_SINGLELINE | DT_CENTER | DT_VCENTER | DT_NOPREFIX);
+    if (old_font) {
+        SelectObject(hdc, old_font);
+    }
 }
 
 void CandidateWindow::paint() {
@@ -320,18 +514,23 @@ void CandidateWindow::paint() {
     HPEN border = CreatePen(PS_SOLID, std::max(1, scale_dip(1, layout_.dpi)), palette_.border);
     fill_round_rect(memory_dc, rect, layout_.corner_radius * 2, background, border);
 
+    if (composition_font_) {
+        SelectObject(memory_dc, composition_font_);
+    }
+    SetTextColor(memory_dc, palette_.muted_text);
+    if (!composition_text_.empty() && layout_.composition_rect.bottom > layout_.composition_rect.top) {
+        DrawTextW(memory_dc, composition_text_.c_str(), static_cast<int>(composition_text_.size()),
+                  &layout_.composition_rect, DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS | DT_NOPREFIX);
+    }
+
     if (candidate_font_) {
         SelectObject(memory_dc, candidate_font_);
     }
-    SetTextColor(memory_dc, palette_.muted_text);
-    DrawTextW(memory_dc, composition_text_.c_str(), static_cast<int>(composition_text_.size()),
-              &layout_.composition_rect, DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS | DT_NOPREFIX);
-
     for (const auto& item : layout_.items) {
         if (item.selected) {
             HBRUSH selected_brush = CreateSolidBrush(palette_.selected_background);
             HPEN selected_pen = CreatePen(PS_SOLID, std::max(1, scale_dip(1, layout_.dpi)), palette_.selected_border);
-            fill_round_rect(memory_dc, item.bounds, scale_dip(7, layout_.dpi) * 2, selected_brush, selected_pen);
+            fill_round_rect(memory_dc, item.bounds, layout_.selected_corner_radius * 2, selected_brush, selected_pen);
             DeleteObject(selected_pen);
             DeleteObject(selected_brush);
         }
@@ -348,12 +547,14 @@ void CandidateWindow::paint() {
                   candidate_text_draw_flags(item.truncated));
     }
 
+    draw_settings_button(memory_dc);
+
     if (layout_.show_hint) {
         if (hint_font_) {
             SelectObject(memory_dc, hint_font_);
         }
         RECT hint_rect = layout_.hint_rect;
-        SetTextColor(memory_dc, palette_.muted_text);
+        SetTextColor(memory_dc, palette_.hint_text);
         DrawTextW(memory_dc, kHintText, static_cast<int>(wcslen(kHintText)), &hint_rect,
                   DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS | DT_NOPREFIX);
     }
@@ -384,6 +585,10 @@ void CandidateWindow::log_show_event(bool set_window_pos_ok, DWORD set_window_po
 }
 
 void CandidateWindow::release_fonts() {
+    if (composition_font_) {
+        DeleteObject(composition_font_);
+        composition_font_ = nullptr;
+    }
     if (candidate_font_) {
         DeleteObject(candidate_font_);
         candidate_font_ = nullptr;

@@ -83,6 +83,7 @@ struct CandidateThemePalette {
     COLORREF border = RGB(210, 210, 210);
     COLORREF text = RGB(24, 24, 24);
     COLORREF muted_text = RGB(105, 105, 105);
+    COLORREF hint_text = RGB(120, 120, 120);
     COLORREF number_text = RGB(0, 92, 180);
     COLORREF selected_background = RGB(220, 236, 255);
     COLORREF selected_border = RGB(120, 170, 230);
@@ -120,15 +121,26 @@ struct CandidateLayoutResult {
     CandidatePlacement placement = CandidatePlacement::Hidden;
     RECT window_rect{};
     RECT composition_rect{};
+    RECT candidate_area_rect{};
+    RECT action_button_rect{};
     RECT hint_rect{};
     bool show_hint = false;
     int width = 0;
     int height = 0;
     int dpi = 96;
     int corner_radius = 0;
+    int selected_corner_radius = 0;
+    int panel_padding_px = 0;
+    int item_gap_px = 0;
+    int row_gap_px = 0;
+    int composition_font_px = 0;
     int candidate_font_px = 0;
     int hint_font_px = 0;
     bool rect_clamped = false;
+    bool reserves_action_icon_space = false;
+    bool action_button_visible = false;
+    int action_button_size_px = 0;
+    int action_button_gap_px = 0;
     std::vector<CandidateItemLayout> items;
 };
 

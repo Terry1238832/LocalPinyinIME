@@ -79,12 +79,12 @@ int scale_dip(int value, int dpi) noexcept {
 int candidate_font_px_for_size(CandidateTextSize size, int dpi) noexcept {
     switch (size) {
         case CandidateTextSize::Small:
-            return scale_dip(14, dpi);
+            return scale_dip(16, dpi);
         case CandidateTextSize::Large:
-            return scale_dip(18, dpi);
+            return scale_dip(20, dpi);
         case CandidateTextSize::Standard:
         default:
-            return scale_dip(16, dpi);
+            return scale_dip(18, dpi);
     }
 }
 
@@ -274,16 +274,27 @@ CandidateThemePalette make_candidate_palette(CandidateThemeMode mode, bool syste
     if (dark) {
         return CandidateThemePalette{
             true,
-            RGB(34, 34, 34),
-            RGB(78, 78, 78),
-            RGB(242, 242, 242),
-            RGB(174, 174, 174),
-            RGB(133, 186, 255),
-            RGB(50, 88, 132),
-            RGB(95, 150, 220)
+            RGB(0x24, 0x26, 0x2B),
+            RGB(58, 61, 68),
+            RGB(0xF4, 0xF6, 0xF8),
+            RGB(0xB8, 0xC0, 0xCC),
+            RGB(0x8D, 0x96, 0xA3),
+            RGB(176, 205, 255),
+            RGB(0x34, 0x7F, 0xE8),
+            RGB(0x76, 0xAF, 0xFF)
         };
     }
-    return CandidateThemePalette{};
+    return CandidateThemePalette{
+        false,
+        RGB(255, 255, 255),
+        RGB(224, 228, 235),
+        RGB(24, 29, 36),
+        RGB(97, 108, 122),
+        RGB(117, 126, 140),
+        RGB(0, 95, 184),
+        RGB(224, 238, 255),
+        RGB(122, 172, 235)
+    };
 }
 
 CandidateLayoutResult make_candidate_layout(const CandidateLayoutInput& input) {
@@ -302,25 +313,40 @@ CandidateLayoutResult make_candidate_layout(const CandidateLayoutInput& input) {
     }
 
     const int dpi = result.dpi;
-    const int padding = scale_dip(12, dpi);
-    const int row_gap = scale_dip(6, dpi);
-    const int item_gap = scale_dip(8, dpi);
-    const int item_pad_x = scale_dip(8, dpi);
-    const int item_pad_y = scale_dip(5, dpi);
-    const int number_gap = scale_dip(5, dpi);
-    const int placement_gap = scale_dip(5, dpi);
-    result.corner_radius = scale_dip(8, dpi);
+    const int padding = scale_dip(14, dpi);
+    const int row_gap = scale_dip(8, dpi);
+    const int item_gap = scale_dip(9, dpi);
+    const int item_pad_x = scale_dip(10, dpi);
+    const int item_pad_y = scale_dip(6, dpi);
+    const int number_gap = scale_dip(6, dpi);
+    const int placement_gap = scale_dip(6, dpi);
+    const int action_button_size = scale_dip(30, dpi);
+    const int action_button_gap = scale_dip(10, dpi);
+    const int action_reserved_width = action_button_size + action_button_gap;
+    result.corner_radius = scale_dip(14, dpi);
+    result.selected_corner_radius = scale_dip(9, dpi);
+    result.panel_padding_px = padding;
+    result.item_gap_px = item_gap;
+    result.row_gap_px = row_gap;
+    result.composition_font_px = scale_dip(15, dpi);
     result.candidate_font_px = candidate_font_px_for_size(input.options.text_size, dpi);
-    result.hint_font_px = scale_dip(12, dpi);
+    result.hint_font_px = scale_dip(13, dpi);
+    result.reserves_action_icon_space = true;
+    result.action_button_visible = true;
+    result.action_button_size_px = action_button_size;
+    result.action_button_gap_px = action_button_gap;
     const int text_slack = std::max(scale_dip(10, dpi), result.candidate_font_px / 2);
 
-    const int composition_height = result.candidate_font_px + scale_dip(4, dpi);
+    const int composition_height = input.composition_text.empty()
+                                       ? 0
+                                       : result.composition_font_px + scale_dip(4, dpi);
     const int candidate_row_height = result.candidate_font_px + item_pad_y * 2;
     const int hint_height = input.options.show_key_hints ? result.hint_font_px + scale_dip(4, dpi) : 0;
-    const int min_width = std::min(scale_dip(240, dpi), work_width);
+    const int min_width = std::min(scale_dip(176, dpi), work_width);
     const int max_width = std::max(min_width, std::min(scale_dip(760, dpi), work_width));
     const int inner_max_width = std::max(1, max_width - padding * 2);
-    const int max_item_width = std::max(scale_dip(96, dpi), inner_max_width);
+    const int candidate_inner_max_width = std::max(scale_dip(96, dpi), inner_max_width - action_reserved_width);
+    const int max_item_width = std::max(scale_dip(96, dpi), candidate_inner_max_width);
 
     std::vector<CandidateItemLayout> items;
     int row_x = 0;
@@ -343,7 +369,7 @@ CandidateLayoutResult make_candidate_layout(const CandidateLayoutInput& input) {
         item_width = std::max(item_width, scale_dip(58, dpi));
         const int text_available_width = std::max(0, item_width - item_pad_x * 2 - number_width - number_gap);
 
-        if (row_x > 0 && row_x + item_gap + item_width > inner_max_width) {
+        if (row_x > 0 && row_x + item_gap + item_width > candidate_inner_max_width) {
             content_width = std::max(content_width, row_width);
             row_x = 0;
             row_width = 0;
@@ -380,15 +406,16 @@ CandidateLayoutResult make_candidate_layout(const CandidateLayoutInput& input) {
     }
 
     content_width = std::max(content_width, row_width);
-    int width = clamp_int(content_width + padding * 2, min_width, max_width);
+    int width = clamp_int(content_width + action_reserved_width + padding * 2, min_width, max_width);
     const int rows_height = row_y + candidate_row_height;
-    int height = padding + composition_height + scale_dip(7, dpi) + rows_height + padding;
+    const int composition_gap = composition_height > 0 ? scale_dip(8, dpi) : 0;
+    int height = padding + composition_height + composition_gap + rows_height + padding;
     bool show_hint = input.options.show_key_hints;
     if (show_hint) {
-        height += row_gap + hint_height;
+        height += scale_dip(8, dpi) + hint_height;
         if (height > work_height * 3 / 5) {
             show_hint = false;
-            height -= row_gap + hint_height;
+            height -= scale_dip(8, dpi) + hint_height;
         }
     }
 
@@ -397,8 +424,17 @@ CandidateLayoutResult make_candidate_layout(const CandidateLayoutInput& input) {
     result.height = std::min(height, work_height);
     result.show_hint = show_hint;
 
-    const int candidate_top = padding + composition_height + scale_dip(7, dpi);
+    const int candidate_top = padding + composition_height + composition_gap;
     result.composition_rect = RECT{padding, padding, width - padding, padding + composition_height};
+    result.candidate_area_rect = RECT{padding,
+                                      candidate_top,
+                                      width - padding - action_reserved_width,
+                                      candidate_top + rows_height};
+    const int action_top = candidate_top + std::max(0, candidate_row_height - action_button_size) / 2;
+    result.action_button_rect = RECT{width - padding - action_button_size,
+                                     action_top,
+                                     width - padding,
+                                     action_top + action_button_size};
     if (show_hint) {
         result.hint_rect = RECT{
             padding,

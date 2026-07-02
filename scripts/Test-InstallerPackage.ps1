@@ -56,26 +56,162 @@ function Assert-NoFileName {
 
 function Get-InnoFilesSectionLines {
     param([string]$Path)
+    return Get-InnoSectionLines -Path $Path -SectionName "Files"
+}
+
+function Get-InnoSectionLines {
+    param([string]$Path, [string]$SectionName)
     if (!(Test-Path -LiteralPath $Path)) {
         throw "Inno Setup script is missing: $Path"
     }
 
-    $inFilesSection = $false
+    $inSection = $false
     $lineNumber = 0
     foreach ($line in Get-Content -LiteralPath $Path -Encoding UTF8) {
         $lineNumber++
         $trimmed = ([string]$line).Trim()
         if ($trimmed -match '^\[(.+)\]$') {
-            $inFilesSection = ($Matches[1] -ieq "Files")
+            $inSection = ($Matches[1] -ieq $SectionName)
             continue
         }
-        if (!$inFilesSection -or [string]::IsNullOrWhiteSpace($trimmed) -or $trimmed.StartsWith(";")) {
+        if (!$inSection -or [string]::IsNullOrWhiteSpace($trimmed) -or $trimmed.StartsWith(";")) {
             continue
         }
         [PSCustomObject]@{
             LineNumber = $lineNumber
             Text = [string]$line
         }
+    }
+}
+
+function Get-InnoDefines {
+    param([string]$ScriptText)
+
+    $defines = @{}
+    foreach ($match in [regex]::Matches($ScriptText, '(?im)^\s*#define\s+([A-Za-z_][A-Za-z0-9_]*)\s+"([^"]*)"\s*$')) {
+        $defines[$match.Groups[1].Value] = $match.Groups[2].Value
+    }
+    return $defines
+}
+
+function Resolve-InnoPreprocessorValue {
+    param([string]$Value, [hashtable]$Defines)
+
+    $resolved = $Value
+    foreach ($name in $Defines.Keys) {
+        $resolved = $resolved.Replace("{#$name}", [string]$Defines[$name])
+    }
+    return $resolved
+}
+
+function Split-InnoParameters {
+    param([string]$Text)
+
+    $parts = New-Object System.Collections.Generic.List[string]
+    $current = New-Object System.Text.StringBuilder
+    $inQuote = $false
+    for ($i = 0; $i -lt $Text.Length; $i++) {
+        $ch = $Text[$i]
+        if ($ch -eq '"') {
+            $inQuote = !$inQuote
+            [void]$current.Append($ch)
+            continue
+        }
+        if ($ch -eq ';' -and !$inQuote) {
+            $part = $current.ToString().Trim()
+            if ($part.Length -gt 0) {
+                $parts.Add($part)
+            }
+            [void]$current.Clear()
+            continue
+        }
+        [void]$current.Append($ch)
+    }
+    $last = $current.ToString().Trim()
+    if ($last.Length -gt 0) {
+        $parts.Add($last)
+    }
+    return $parts
+}
+
+function Convert-InnoDirective {
+    param([string]$Text, [hashtable]$Defines)
+
+    $fields = @{}
+    foreach ($part in Split-InnoParameters -Text $Text) {
+        if ($part -notmatch '^\s*([A-Za-z0-9_]+)\s*:\s*(.*)\s*$') {
+            continue
+        }
+        $key = $Matches[1]
+        $value = $Matches[2].Trim()
+        if ($value.Length -ge 2 -and $value.StartsWith('"') -and $value.EndsWith('"')) {
+            $value = $value.Substring(1, $value.Length - 2)
+        }
+        $fields[$key] = Resolve-InnoPreprocessorValue -Value $value -Defines $Defines
+    }
+    return $fields
+}
+
+function Assert-InnoIconShortcuts {
+    param([string]$Path, [string]$ScriptText)
+
+    $iconLines = @(Get-InnoSectionLines -Path $Path -SectionName "Icons")
+    if ($iconLines.Count -eq 0) {
+        throw "Inno Setup script has no [Icons] entries: $Path"
+    }
+
+    $defines = Get-InnoDefines -ScriptText $ScriptText
+    $settingsShortcutName = "{group}\LocalPinyinIME " + [string][char]0x8BBE + [string][char]0x7F6E
+    $uninstallShortcutName = "{group}\" + [string][char]0x5378 + [string][char]0x8F7D + " LocalPinyinIME"
+    $settingEntries = @()
+    $uninstallEntries = @()
+    foreach ($entry in $iconLines) {
+        $fields = Convert-InnoDirective -Text ([string]$entry.Text) -Defines $defines
+        $name = [string]$fields["Name"]
+        $filename = [string]$fields["Filename"]
+        $workingDir = [string]$fields["WorkingDir"]
+
+        foreach ($value in @($name, $filename, $workingDir)) {
+            if ($value -match '(?i)(^|\\)(build|dist)(\\|$)|LocalPinyinIME\.sln|user_lexicon\.tsv|user_learning\.sqlite|\.pdb|test_') {
+                throw "Inno [Icons] line $($entry.LineNumber) references forbidden content: $($entry.Text)"
+            }
+            if ($value -match '(?i)[A-Z]:\\.*LocalPinyinIME') {
+                throw "Inno [Icons] line $($entry.LineNumber) uses a hard-coded LocalPinyinIME path instead of an Inno constant: $($entry.Text)"
+            }
+        }
+
+        if (($name -ieq $settingsShortcutName) -and
+            ($filename -ieq "{app}\LocalPinyinSettings.exe")) {
+            $settingEntries += [PSCustomObject]@{
+                LineNumber = $entry.LineNumber
+                WorkingDir = $workingDir
+                Text = [string]$entry.Text
+            }
+        }
+        if (($name -ieq $uninstallShortcutName) -and
+            ($filename -ieq "{uninstallexe}")) {
+            $uninstallEntries += [PSCustomObject]@{
+                LineNumber = $entry.LineNumber
+                Text = [string]$entry.Text
+            }
+        }
+    }
+
+    if ($settingEntries.Count -eq 0) {
+        throw "Inno script is missing a Start Menu Settings shortcut with Name {group}\LocalPinyinIME <settings> and Filename {app}\LocalPinyinSettings.exe."
+    }
+    $settingsWithWorkingDir = @($settingEntries | Where-Object { $_.WorkingDir -ieq "{app}" })
+    if ($settingsWithWorkingDir.Count -eq 0) {
+        $sample = ($settingEntries | Select-Object -First 1).Text
+        throw "Inno script Settings shortcut must use WorkingDir {app}. entry=$sample"
+    }
+    if ($uninstallEntries.Count -eq 0) {
+        throw "Inno script is missing a Start Menu uninstall shortcut with Name {group}\<uninstall> LocalPinyinIME and Filename {uninstallexe}."
+    }
+
+    $iconsText = ($iconLines | ForEach-Object { $_.Text }) -join "`n"
+    if ($iconsText -match '(?i)(\{commondesktop\}|\{userdesktop\}|Desktop)') {
+        throw "Inno script must not create a desktop shortcut."
     }
 }
 
@@ -173,6 +309,7 @@ function Assert-InnoInstallerScript {
     if ($scriptText -match '(?im)^\s*\[Run\]') {
         throw "Inno script should use explicit [Code] setup flow instead of [Run]."
     }
+    Assert-InnoIconShortcuts -Path $Path -ScriptText $scriptText
 
     $idxRegister = $scriptText.IndexOf("RegisterParams := '--register-system --dll '", [StringComparison]::OrdinalIgnoreCase)
     $idxRegisterExec = $scriptText.IndexOf("RunSetupTool(RegisterParams, 'register system', RegisterCode)", [StringComparison]::OrdinalIgnoreCase)

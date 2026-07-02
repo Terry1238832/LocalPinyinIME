@@ -38,6 +38,16 @@ bool candidate_items_do_not_overlap(const std::vector<localpinyin::CandidateItem
     return true;
 }
 
+bool rects_do_not_overlap(const RECT& first, const RECT& second) {
+    if (first.right <= first.left || first.bottom <= first.top ||
+        second.right <= second.left || second.bottom <= second.top) {
+        return true;
+    }
+    const bool separate_horizontally = first.right <= second.left || second.right <= first.left;
+    const bool separate_vertically = first.bottom <= second.top || second.bottom <= first.top;
+    return separate_horizontally || separate_vertically;
+}
+
 localpinyin::CandidateLayoutResult layout_for(const std::vector<std::wstring>& candidates,
                                               RECT caret,
                                               RECT work,
@@ -182,8 +192,30 @@ int main() {
     REQUIRE_TRUE(three.visible);
     REQUIRE_EQ(three.items.size(), size_t{3});
     REQUIRE_TRUE(is_inside(work, three.window_rect));
+    REQUIRE_TRUE(three.panel_padding_px >= scale_dip(12, three.dpi));
+    REQUIRE_TRUE(three.corner_radius >= scale_dip(14, three.dpi));
+    REQUIRE_TRUE(three.selected_corner_radius >= scale_dip(8, three.dpi));
+    REQUIRE_EQ(three.composition_font_px, scale_dip(15, three.dpi));
+    REQUIRE_EQ(three.candidate_font_px, scale_dip(18, three.dpi));
+    REQUIRE_EQ(three.hint_font_px, scale_dip(13, three.dpi));
+    REQUIRE_TRUE(three.candidate_font_px > three.composition_font_px);
+    REQUIRE_TRUE(three.composition_font_px > three.hint_font_px);
+    REQUIRE_TRUE(three.reserves_action_icon_space);
+    REQUIRE_TRUE(three.action_button_visible);
+    REQUIRE_TRUE(three.action_button_size_px >= scale_dip(28, three.dpi));
+    REQUIRE_TRUE(three.action_button_gap_px >= scale_dip(8, three.dpi));
+    REQUIRE_TRUE(width(three.action_button_rect) == three.action_button_size_px);
+    REQUIRE_TRUE(height(three.action_button_rect) == three.action_button_size_px);
+    REQUIRE_TRUE(is_inside(make_rect(0, 0, three.width, three.height), three.action_button_rect));
+    REQUIRE_TRUE(rects_do_not_overlap(three.composition_rect, three.candidate_area_rect));
+    REQUIRE_TRUE(!three.show_hint || rects_do_not_overlap(three.candidate_area_rect, three.hint_rect));
+    REQUIRE_TRUE(rects_do_not_overlap(three.candidate_area_rect, three.action_button_rect));
+    REQUIRE_TRUE(!three.show_hint || rects_do_not_overlap(three.action_button_rect, three.hint_rect));
     REQUIRE_TRUE(three.items.front().selected);
     REQUIRE_TRUE(candidate_items_do_not_overlap(three.items));
+    for (const auto& item : three.items) {
+        REQUIRE_TRUE(rects_do_not_overlap(item.bounds, three.action_button_rect));
+    }
 
     const auto nine = layout_for({
         L"\u4E00", L"\u4E8C", L"\u4E09", L"\u56DB", L"\u4E94",
@@ -229,11 +261,20 @@ int main() {
         REQUIRE_TRUE(dpi_layout.visible);
         REQUIRE_TRUE(dpi_layout.dpi == dpi);
         REQUIRE_TRUE(dpi_layout.width > previous_width);
+        REQUIRE_TRUE(dpi_layout.action_button_visible);
+        REQUIRE_TRUE(dpi_layout.action_button_size_px == scale_dip(30, dpi));
         previous_width = dpi_layout.width;
     }
 
     REQUIRE_TRUE(!make_candidate_palette(CandidateThemeMode::Light, true).dark);
-    REQUIRE_TRUE(make_candidate_palette(CandidateThemeMode::Dark, false).dark);
+    const auto dark_palette = make_candidate_palette(CandidateThemeMode::Dark, false);
+    REQUIRE_TRUE(dark_palette.dark);
+    REQUIRE_EQ(dark_palette.background, RGB(0x24, 0x26, 0x2B));
+    REQUIRE_EQ(dark_palette.muted_text, RGB(0xB8, 0xC0, 0xCC));
+    REQUIRE_EQ(dark_palette.hint_text, RGB(0x8D, 0x96, 0xA3));
+    REQUIRE_EQ(dark_palette.text, RGB(0xF4, 0xF6, 0xF8));
+    REQUIRE_EQ(dark_palette.selected_background, RGB(0x34, 0x7F, 0xE8));
+    REQUIRE_EQ(dark_palette.selected_border, RGB(0x76, 0xAF, 0xFF));
     REQUIRE_TRUE(make_candidate_palette(CandidateThemeMode::System, true).dark);
     REQUIRE_TRUE(!make_candidate_palette(CandidateThemeMode::System, false).dark);
     REQUIRE_EQ(candidate_theme_mode_to_string(parse_candidate_theme_mode(L"dark")), std::wstring(L"dark"));

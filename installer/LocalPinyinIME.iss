@@ -37,7 +37,8 @@ Source: "{#MyAppPackageDir}\SHA256SUMS.txt"; DestDir: "{app}"; Flags: ignorevers
 Source: "{#MyAppPackageDir}\docs\*.md"; DestDir: "{app}\docs"; Flags: ignoreversion
 
 [Icons]
-Name: "{group}\LocalPinyinIME Settings"; Filename: "{app}\LocalPinyinSettings.exe"
+Name: "{group}\LocalPinyinIME 设置"; Filename: "{app}\LocalPinyinSettings.exe"; WorkingDir: "{app}"
+Name: "{group}\卸载 LocalPinyinIME"; Filename: "{uninstallexe}"
 
 [Code]
 const
