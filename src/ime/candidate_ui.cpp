@@ -1,5 +1,7 @@
 #include "candidate_ui.h"
 
+#include "local_pinyin_blue_theme.h"
+
 #include <algorithm>
 #include <cwctype>
 #include <sstream>
@@ -274,26 +276,26 @@ CandidateThemePalette make_candidate_palette(CandidateThemeMode mode, bool syste
     if (dark) {
         return CandidateThemePalette{
             true,
-            RGB(0x24, 0x26, 0x2B),
-            RGB(58, 61, 68),
-            RGB(0xF4, 0xF6, 0xF8),
-            RGB(0xB8, 0xC0, 0xCC),
-            RGB(0x8D, 0x96, 0xA3),
-            RGB(176, 205, 255),
-            RGB(0x34, 0x7F, 0xE8),
-            RGB(0x76, 0xAF, 0xFF)
+            brand::kLocalPinyinBlueDarkCard_background,
+            brand::kLocalPinyinBlueDarkCard_border,
+            brand::kLocalPinyinBlueDarkPrimary,
+            brand::kLocalPinyinBlueDarkMuted,
+            brand::kLocalPinyinBlueDarkWeak,
+            brand::kLocalPinyinBlueCyan_highlight,
+            brand::kLocalPinyinBlueDarkAccent_soft,
+            brand::kLocalPinyinBlueDarkAccent_border
         };
     }
     return CandidateThemePalette{
         false,
-        RGB(255, 255, 255),
-        RGB(224, 228, 235),
-        RGB(24, 29, 36),
-        RGB(97, 108, 122),
-        RGB(117, 126, 140),
-        RGB(0, 95, 184),
-        RGB(224, 238, 255),
-        RGB(122, 172, 235)
+        brand::kLocalPinyinBlueLightCard_background,
+        brand::kLocalPinyinBlueLightCard_border,
+        brand::kLocalPinyinBlueLightPrimary,
+        brand::kLocalPinyinBlueLightMuted,
+        brand::kLocalPinyinBlueLightWeak,
+        brand::kLocalPinyinBlueAzure_blue,
+        brand::kLocalPinyinBlueLightAccent_soft,
+        brand::kLocalPinyinBlueLightAccent_border
     };
 }
 

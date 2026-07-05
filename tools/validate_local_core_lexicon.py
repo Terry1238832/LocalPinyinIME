@@ -22,6 +22,17 @@ REQUIRED_ENTRIES = {
     "bucuo": "\u4e0d\u9519",
     "bianji": "\u7f16\u8f91",
     "huode": "\u83b7\u5f97",
+    "an": "\u6309",
+    "anxia": "\u6309\u4e0b",
+    "xiamian": "\u4e0b\u9762",
+    "mian": "\u9762",
+    "mianfei": "\u514d\u8d39",
+    "mianfen": "\u9762\u7c89",
+    "shouxian": "\u9996\u5148",
+    "xian": "\u5148",
+    "xianjiuzheng": "\u5148\u7ea0\u6b63",
+    "yixie": "\u4e00\u4e9b",
+    "qisiwole": "\u6c14\u6b7b\u6211\u4e86",
     "nihao": "你好",
     "xiexie": "谢谢",
     "zaijian": "再见",
@@ -58,6 +69,7 @@ REQUIRED_CATEGORIES = {
     "common_questions",
     "common_connectors",
     "targeted_product_baseline_036",
+    "targeted_input_mode_037",
 }
 
 REQUIRED_METADATA_FIELDS = {

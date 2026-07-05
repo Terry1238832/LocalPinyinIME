@@ -2,6 +2,8 @@
 
 #include "../common/logging.h"
 #include "localpinyin_version.h"
+#include "local_pinyin_blue_theme.h"
+#include "resource.h"
 
 #include <commctrl.h>
 #include <shellapi.h>
@@ -24,6 +26,7 @@ constexpr int kIdThemeSystem = 1101;
 constexpr int kIdThemeLight = 1102;
 constexpr int kIdThemeDark = 1103;
 constexpr int kIdShowKeyHints = 1201;
+constexpr int kIdShiftToggle = 1202;
 constexpr int kIdTextSmall = 1301;
 constexpr int kIdTextStandard = 1302;
 constexpr int kIdTextLarge = 1303;
@@ -485,56 +488,56 @@ SettingsThemePalette settings_theme_palette(SettingsResolvedTheme theme) {
     if (theme == SettingsResolvedTheme::Dark) {
         return SettingsThemePalette{
             true,
-            rgb_hex(0x1E2024),
-            rgb_hex(0x181A1E),
-            rgb_hex(0x25282E),
-            rgb_hex(0x3A3E46),
-            rgb_hex(0xF2F4F7),
-            rgb_hex(0xB9C0CA),
-            rgb_hex(0x8D96A3),
-            rgb_hex(0x3B82F6),
-            rgb_hex(0x173A66),
-            rgb_hex(0x4F8DFF),
-            rgb_hex(0x202329),
-            rgb_hex(0x454B55),
-            rgb_hex(0x2B2F36),
-            rgb_hex(0x343841),
-            rgb_hex(0x2563EB),
-            rgb_hex(0xFCA5A5),
-            rgb_hex(0x3B2328),
-            rgb_hex(0x73424A),
-            rgb_hex(0x2A2D33),
-            rgb_hex(0x737B87),
-            rgb_hex(0x202329),
-            rgb_hex(0xDCE6F4),
-            rgb_hex(0x303640)
+            brand::kLocalPinyinBlueDarkWindow_background,
+            brand::kLocalPinyinBlueDarkSidebar_background,
+            brand::kLocalPinyinBlueDarkCard_background,
+            brand::kLocalPinyinBlueDarkCard_border,
+            brand::kLocalPinyinBlueDarkPrimary,
+            brand::kLocalPinyinBlueDarkMuted,
+            brand::kLocalPinyinBlueDarkWeak,
+            brand::kLocalPinyinBlueDarkAccent,
+            brand::kLocalPinyinBlueDarkAccent_soft,
+            brand::kLocalPinyinBlueDarkAccent_border,
+            brand::kLocalPinyinBlueDarkInput_background,
+            brand::kLocalPinyinBlueDarkInput_border,
+            brand::kLocalPinyinBlueDarkSecondary_button,
+            brand::kLocalPinyinBlueDarkSecondary_button_pressed,
+            brand::kLocalPinyinBlueDarkPrimary_button_pressed,
+            brand::kLocalPinyinBlueDarkDanger,
+            brand::kLocalPinyinBlueDarkDanger_soft,
+            brand::kLocalPinyinBlueDarkDanger_border,
+            brand::kLocalPinyinBlueDarkDisabled_background,
+            brand::kLocalPinyinBlueDarkDisabled_text,
+            brand::kLocalPinyinBlueDarkList_header_background,
+            brand::kLocalPinyinBlueDarkList_header,
+            brand::kLocalPinyinBlueDarkInactive_selection
         };
     }
     return SettingsThemePalette{
         false,
-        rgb_hex(0xF7F8FA),
-        rgb_hex(0xF2F4F7),
-        rgb_hex(0xFFFFFF),
-        rgb_hex(0xDEE3EA),
-        rgb_hex(0x18212F),
-        rgb_hex(0x627083),
-        rgb_hex(0x7B8798),
-        rgb_hex(0x0A66C2),
-        rgb_hex(0xDCEEFF),
-        rgb_hex(0x9BCBFF),
-        rgb_hex(0xFFFFFF),
-        rgb_hex(0xDEE3EA),
-        rgb_hex(0xF7F9FC),
-        rgb_hex(0xEFF3F8),
-        rgb_hex(0x0050A4),
-        rgb_hex(0xB3343F),
-        rgb_hex(0xFFF4F5),
-        rgb_hex(0xEEBCC2),
-        rgb_hex(0xE7EBF1),
-        rgb_hex(0x9DA6B1),
-        rgb_hex(0xF4F6F9),
-        rgb_hex(0x18212F),
-        rgb_hex(0xF1F4F8)
+        brand::kLocalPinyinBlueLightWindow_background,
+        brand::kLocalPinyinBlueLightSidebar_background,
+        brand::kLocalPinyinBlueLightCard_background,
+        brand::kLocalPinyinBlueLightCard_border,
+        brand::kLocalPinyinBlueLightPrimary,
+        brand::kLocalPinyinBlueLightMuted,
+        brand::kLocalPinyinBlueLightWeak,
+        brand::kLocalPinyinBlueLightAccent,
+        brand::kLocalPinyinBlueLightAccent_soft,
+        brand::kLocalPinyinBlueLightAccent_border,
+        brand::kLocalPinyinBlueLightInput_background,
+        brand::kLocalPinyinBlueLightInput_border,
+        brand::kLocalPinyinBlueLightSecondary_button,
+        brand::kLocalPinyinBlueLightSecondary_button_pressed,
+        brand::kLocalPinyinBlueLightPrimary_button_pressed,
+        brand::kLocalPinyinBlueLightDanger,
+        brand::kLocalPinyinBlueLightDanger_soft,
+        brand::kLocalPinyinBlueLightDanger_border,
+        brand::kLocalPinyinBlueLightDisabled_background,
+        brand::kLocalPinyinBlueLightDisabled_text,
+        brand::kLocalPinyinBlueLightList_header_background,
+        brand::kLocalPinyinBlueLightList_header,
+        brand::kLocalPinyinBlueLightInactive_selection
     };
 }
 
@@ -861,6 +864,7 @@ int SettingsWindow::run(HINSTANCE instance, int show_command) {
 
     store_.ensure_data_dir();
     options_ = store_.load_candidate_options();
+    input_mode_options_ = store_.load_input_mode_options();
     palette_ = settings_theme_palette(resolve_settings_theme(options_.theme_mode, windows_apps_use_dark_theme()));
 
     WNDCLASSEXW wc{};
@@ -870,6 +874,20 @@ int SettingsWindow::run(HINSTANCE instance, int show_command) {
     wc.hCursor = LoadCursorW(nullptr, IDC_ARROW);
     wc.hbrBackground = nullptr;
     wc.lpszClassName = L"LocalPinyinSettingsWindow";
+    app_icon_big_ = static_cast<HICON>(LoadImageW(instance,
+                                                  MAKEINTRESOURCEW(IDI_LOCALPINYINIME_APP),
+                                                  IMAGE_ICON,
+                                                  GetSystemMetrics(SM_CXICON),
+                                                  GetSystemMetrics(SM_CYICON),
+                                                  LR_DEFAULTCOLOR));
+    app_icon_small_ = static_cast<HICON>(LoadImageW(instance,
+                                                    MAKEINTRESOURCEW(IDI_LOCALPINYINIME_APP),
+                                                    IMAGE_ICON,
+                                                    GetSystemMetrics(SM_CXSMICON),
+                                                    GetSystemMetrics(SM_CYSMICON),
+                                                    LR_DEFAULTCOLOR));
+    wc.hIcon = app_icon_big_;
+    wc.hIconSm = app_icon_small_;
     RegisterClassExW(&wc);
 
     constexpr DWORD kSettingsWindowStyle = WS_OVERLAPPEDWINDOW;
@@ -896,6 +914,12 @@ int SettingsWindow::run(HINSTANCE instance, int show_command) {
                             this);
     if (!hwnd_) {
         return 1;
+    }
+    if (app_icon_big_) {
+        SendMessageW(hwnd_, WM_SETICON, ICON_BIG, reinterpret_cast<LPARAM>(app_icon_big_));
+    }
+    if (app_icon_small_) {
+        SendMessageW(hwnd_, WM_SETICON, ICON_SMALL, reinterpret_cast<LPARAM>(app_icon_small_));
     }
     ShowWindow(hwnd_, show_command);
     UpdateWindow(hwnd_);
@@ -999,13 +1023,18 @@ LRESULT SettingsWindow::handle_message(UINT message, WPARAM wparam, LPARAM lpara
                     options_.theme_mode = LOWORD(wparam) == kIdThemeLight ? CandidateThemeMode::Light :
                                           LOWORD(wparam) == kIdThemeDark ? CandidateThemeMode::Dark :
                                           CandidateThemeMode::System;
-                    store_.save_candidate_options(options_);
+                    store_.save_options(options_, input_mode_options_);
                     refresh_theme();
                     return 0;
                 case kIdShowKeyHints:
                     options_.show_key_hints = !options_.show_key_hints;
-                    store_.save_candidate_options(options_);
+                    store_.save_options(options_, input_mode_options_);
                     InvalidateRect(GetDlgItem(hwnd_, kIdShowKeyHints), nullptr, TRUE);
+                    return 0;
+                case kIdShiftToggle:
+                    input_mode_options_.shift_toggle_enabled = !input_mode_options_.shift_toggle_enabled;
+                    store_.save_options(options_, input_mode_options_);
+                    InvalidateRect(GetDlgItem(hwnd_, kIdShiftToggle), nullptr, TRUE);
                     return 0;
                 case kIdTextSmall:
                 case kIdTextStandard:
@@ -1013,7 +1042,7 @@ LRESULT SettingsWindow::handle_message(UINT message, WPARAM wparam, LPARAM lpara
                     options_.text_size = LOWORD(wparam) == kIdTextSmall ? CandidateTextSize::Small :
                                          LOWORD(wparam) == kIdTextLarge ? CandidateTextSize::Large :
                                          CandidateTextSize::Standard;
-                    store_.save_candidate_options(options_);
+                    store_.save_options(options_, input_mode_options_);
                     InvalidateRect(hwnd_, nullptr, FALSE);
                     return 0;
                 case kIdClearLearning:
@@ -1157,6 +1186,14 @@ LRESULT SettingsWindow::handle_message(UINT message, WPARAM wparam, LPARAM lpara
             }
             destroy_theme_brushes();
             destroy_fonts();
+            if (app_icon_big_) {
+                DestroyIcon(app_icon_big_);
+                app_icon_big_ = nullptr;
+            }
+            if (app_icon_small_) {
+                DestroyIcon(app_icon_small_);
+                app_icon_small_ = nullptr;
+            }
             PostQuitMessage(0);
             return 0;
         default:
@@ -1380,7 +1417,7 @@ SettingsControlRole SettingsWindow::control_role_for_id(int id) const {
         return SettingsControlRole::Navigation;
     }
     if (id == kIdThemeSystem || id == kIdThemeLight || id == kIdThemeDark ||
-        id == kIdShowKeyHints || id == kIdTextSmall ||
+        id == kIdShowKeyHints || id == kIdShiftToggle || id == kIdTextSmall ||
         id == kIdTextStandard || id == kIdTextLarge) {
         return SettingsControlRole::Option;
     }
@@ -1638,6 +1675,8 @@ void SettingsWindow::draw_button(const DRAWITEMSTRUCT& item) {
         checked = options_.theme_mode == CandidateThemeMode::Dark;
     } else if (id == kIdShowKeyHints) {
         checked = options_.show_key_hints;
+    } else if (id == kIdShiftToggle) {
+        checked = input_mode_options_.shift_toggle_enabled;
     } else if (id == kIdTextSmall) {
         checked = options_.text_size == CandidateTextSize::Small;
     } else if (id == kIdTextStandard) {
@@ -1653,7 +1692,7 @@ void SettingsWindow::draw_button(const DRAWITEMSTRUCT& item) {
     const bool is_nav = id == kIdNavAppearance || id == kIdNavCandidate ||
                         id == kIdNavUserLexicon || id == kIdNavLearning || id == kIdNavAbout;
     const bool is_option = id == kIdThemeSystem || id == kIdThemeLight || id == kIdThemeDark ||
-                           id == kIdShowKeyHints || id == kIdTextSmall ||
+                           id == kIdShowKeyHints || id == kIdShiftToggle || id == kIdTextSmall ||
                            id == kIdTextStandard || id == kIdTextLarge;
     SettingsControlDrawState state;
     state.checked = checked;
@@ -1741,6 +1780,7 @@ void SettingsWindow::create_controls() {
     track(SettingsPage::Candidate, make_group(hwnd_, L"\u663E\u793A", kIdCandidateCard, section_font_));
     track(SettingsPage::Candidate, make_static(hwnd_, L"\u6309\u952E\u63D0\u793A", kIdCandidateHintLabel, section_font_));
     track(SettingsPage::Candidate, make_button(hwnd_, L"\u663E\u793A\u6309\u952E\u63D0\u793A", kIdShowKeyHints, BS_AUTOCHECKBOX, body_font_));
+    track(SettingsPage::Candidate, make_button(hwnd_, L"\u5355\u72EC\u6309 Shift \u5207\u6362\u4E2D\u82F1\u6587", kIdShiftToggle, BS_AUTOCHECKBOX, body_font_));
     track(SettingsPage::Candidate, make_static(hwnd_, L"\u5019\u9009\u6587\u5B57\u5927\u5C0F", kIdCandidateTextSizeLabel, section_font_));
     track(SettingsPage::Candidate, make_button(hwnd_, L"\u5C0F", kIdTextSmall, BS_AUTORADIOBUTTON, body_font_));
     track(SettingsPage::Candidate, make_button(hwnd_, L"\u6807\u51C6", kIdTextStandard, BS_AUTORADIOBUTTON, body_font_));
@@ -1864,6 +1904,8 @@ void SettingsWindow::layout_controls() {
     const int s48 = scale_settings_value(48, dpi_);
     const int s68 = scale_settings_value(68, dpi_);
     const int s72 = scale_settings_value(72, dpi_);
+    const int s74 = scale_settings_value(74, dpi_);
+    const int s76 = scale_settings_value(76, dpi_);
     const int s84 = scale_settings_value(84, dpi_);
     const int s86 = scale_settings_value(86, dpi_);
     const int s100 = scale_settings_value(100, dpi_);
@@ -1894,10 +1936,11 @@ void SettingsWindow::layout_controls() {
     move_child(hwnd_, kIdCandidateCard, layout.primary_card);
     move_child(hwnd_, kIdCandidateHintLabel, layout.primary_card.x + s24, layout.primary_card.y + s36, scale_settings_value(180, dpi_), s24);
     move_child(hwnd_, kIdShowKeyHints, layout.primary_card.x + scale_settings_value(220, dpi_), layout.primary_card.y + s34, scale_settings_value(200, dpi_), s28);
-    move_child(hwnd_, kIdCandidateTextSizeLabel, layout.primary_card.x + s24, layout.primary_card.y + s86, scale_settings_value(180, dpi_), s24);
-    move_child(hwnd_, kIdTextSmall, layout.primary_card.x + scale_settings_value(220, dpi_), layout.primary_card.y + s84, scale_settings_value(70, dpi_), s28);
-    move_child(hwnd_, kIdTextStandard, layout.primary_card.x + scale_settings_value(300, dpi_), layout.primary_card.y + s84, scale_settings_value(90, dpi_), s28);
-    move_child(hwnd_, kIdTextLarge, layout.primary_card.x + scale_settings_value(400, dpi_), layout.primary_card.y + s84, scale_settings_value(70, dpi_), s28);
+    move_child(hwnd_, kIdCandidateTextSizeLabel, layout.primary_card.x + s24, layout.primary_card.y + s76, scale_settings_value(180, dpi_), s24);
+    move_child(hwnd_, kIdTextSmall, layout.primary_card.x + scale_settings_value(220, dpi_), layout.primary_card.y + s74, scale_settings_value(70, dpi_), s28);
+    move_child(hwnd_, kIdTextStandard, layout.primary_card.x + scale_settings_value(300, dpi_), layout.primary_card.y + s74, scale_settings_value(90, dpi_), s28);
+    move_child(hwnd_, kIdTextLarge, layout.primary_card.x + scale_settings_value(400, dpi_), layout.primary_card.y + s74, scale_settings_value(70, dpi_), s28);
+    move_child(hwnd_, kIdShiftToggle, layout.primary_card.x + s24, layout.primary_card.y + scale_settings_value(116, dpi_), scale_settings_value(310, dpi_), s28);
 
     place_page_header(kIdUserLexiconTitle, kIdUserLexiconDescription);
     move_window(lexicon_search_, SettingsRect{layout.search_box.x + s12,
@@ -1991,6 +2034,7 @@ void SettingsWindow::apply_options_to_controls() {
                      options_.theme_mode == CandidateThemeMode::Light ? kIdThemeLight :
                      options_.theme_mode == CandidateThemeMode::Dark ? kIdThemeDark : kIdThemeSystem);
     set_checked(hwnd_, kIdShowKeyHints, options_.show_key_hints);
+    set_checked(hwnd_, kIdShiftToggle, input_mode_options_.shift_toggle_enabled);
     CheckRadioButton(hwnd_, kIdTextSmall, kIdTextLarge,
                      options_.text_size == CandidateTextSize::Small ? kIdTextSmall :
                      options_.text_size == CandidateTextSize::Large ? kIdTextLarge : kIdTextStandard);
@@ -2006,6 +2050,7 @@ void SettingsWindow::save_options_from_controls() {
     }
 
     options_.show_key_hints = is_checked(hwnd_, kIdShowKeyHints);
+    input_mode_options_.shift_toggle_enabled = is_checked(hwnd_, kIdShiftToggle);
     if (is_checked(hwnd_, kIdTextSmall)) {
         options_.text_size = CandidateTextSize::Small;
     } else if (is_checked(hwnd_, kIdTextLarge)) {
@@ -2014,7 +2059,7 @@ void SettingsWindow::save_options_from_controls() {
         options_.text_size = CandidateTextSize::Standard;
     }
 
-    store_.save_candidate_options(options_);
+    store_.save_options(options_, input_mode_options_);
 }
 
 void SettingsWindow::open_data_dir() {

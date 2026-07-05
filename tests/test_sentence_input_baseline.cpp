@@ -1,6 +1,7 @@
 #include "test_common.h"
 #include "../src/engine/pinyin_engine.h"
 
+#include <algorithm>
 #include <array>
 #include <filesystem>
 #include <iostream>
@@ -60,6 +61,21 @@ bool expect_sentence(localpinyin::PinyinEngine& engine, const SentenceCase& test
     return passed;
 }
 
+bool expect_candidate_contains(localpinyin::PinyinEngine& engine,
+                               const std::wstring& pinyin,
+                               const std::wstring& expected) {
+    const auto candidates = engine.lookup(pinyin);
+    const bool passed = std::any_of(candidates.begin(), candidates.end(), [&](const localpinyin::Candidate& candidate) {
+        return candidate.text == expected;
+    });
+    std::wcout << L"candidate_contains pinyin=" << pinyin
+               << L" passed=" << (passed ? L"true" : L"false") << L"\n";
+    if (!passed) {
+        std::cout << "expected_codepoints=" << codepoints(expected) << "\n";
+    }
+    return passed;
+}
+
 }  // namespace
 
 int main() {
@@ -79,6 +95,17 @@ int main() {
         {L"bucuo", L"\u4E0D\u9519", L"targeted"},
         {L"bianji", L"\u7F16\u8F91", L"targeted"},
         {L"huode", L"\u83B7\u5F97", L"targeted"},
+        {L"an", L"\u6309", L"targeted"},
+        {L"anxia", L"\u6309\u4E0B", L"targeted"},
+        {L"xiamian", L"\u4E0B\u9762", L"targeted"},
+        {L"mian", L"\u9762", L"targeted"},
+        {L"mianfei", L"\u514D\u8D39", L"targeted"},
+        {L"mianfen", L"\u9762\u7C89", L"targeted"},
+        {L"shouxian", L"\u9996\u5148", L"targeted"},
+        {L"xian", L"\u5148", L"targeted"},
+        {L"xianjiuzheng", L"\u5148\u7EA0\u6B63", L"targeted"},
+        {L"yixie", L"\u4E00\u4E9B", L"targeted"},
+        {L"qisiwole", L"\u6C14\u6B7B\u6211\u4E86", L"targeted"},
         {L"nihaoshijie", L"\u4F60\u597D\u4E16\u754C", L"required"},
         {L"woxiangqubeijing", L"\u6211\u60F3\u53BB\u5317\u4EAC", L"required"},
         {L"jintiantianqihenhao", L"\u4ECA\u5929\u5929\u6C14\u5F88\u597D", L"required"},
@@ -110,6 +137,7 @@ int main() {
     for (const auto& test_case : cases) {
         all_passed = expect_sentence(engine, test_case) && all_passed;
     }
+    all_passed = expect_candidate_contains(engine, L"mian", L"\u514D") && all_passed;
 
     std::filesystem::remove_all(user_lexicon_root);
     return all_passed ? 0 : 1;

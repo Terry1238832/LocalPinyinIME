@@ -30,17 +30,21 @@ int main() {
 
     const auto root = make_temp_directory();
     SettingsStore store(root.wstring());
+    REQUIRE_TRUE(store.load_input_mode_options().shift_toggle_enabled);
 
     CandidateWindowOptions options;
     options.theme_mode = CandidateThemeMode::Dark;
     options.show_key_hints = false;
     options.text_size = CandidateTextSize::Large;
-    REQUIRE_TRUE(store.save_candidate_options(options));
+    InputModeOptions input_options;
+    input_options.shift_toggle_enabled = false;
+    REQUIRE_TRUE(store.save_options(options, input_options));
 
     const CandidateWindowOptions loaded = store.load_candidate_options();
     REQUIRE_EQ(loaded.theme_mode, CandidateThemeMode::Dark);
     REQUIRE_TRUE(!loaded.show_key_hints);
     REQUIRE_EQ(loaded.text_size, CandidateTextSize::Large);
+    REQUIRE_TRUE(!store.load_input_mode_options().shift_toggle_enabled);
 
     const auto dictionary = root / L"core_zh_pinyin.tsv";
     const auto learning = std::filesystem::path(store.learning_data_path());
@@ -53,6 +57,15 @@ int main() {
     REQUIRE_TRUE(store.save_candidate_options(options));
     REQUIRE_TRUE(std::filesystem::exists(dictionary));
     REQUIRE_TRUE(std::filesystem::exists(learning));
+    REQUIRE_TRUE(!store.load_input_mode_options().shift_toggle_enabled);
+
+    input_options.shift_toggle_enabled = true;
+    REQUIRE_TRUE(store.save_input_mode_options(input_options));
+    const CandidateWindowOptions preserved = store.load_candidate_options();
+    REQUIRE_EQ(preserved.theme_mode, CandidateThemeMode::Light);
+    REQUIRE_TRUE(preserved.show_key_hints);
+    REQUIRE_EQ(preserved.text_size, CandidateTextSize::Small);
+    REQUIRE_TRUE(store.load_input_mode_options().shift_toggle_enabled);
 
     REQUIRE_TRUE(store.clear_learning_data());
     REQUIRE_TRUE(std::filesystem::exists(dictionary));

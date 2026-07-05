@@ -1,5 +1,6 @@
 #include "test_common.h"
 #include "../src/ime/candidate_ui.h"
+#include "local_pinyin_blue_theme.h"
 
 #include <string>
 #include <vector>
@@ -269,12 +270,12 @@ int main() {
     REQUIRE_TRUE(!make_candidate_palette(CandidateThemeMode::Light, true).dark);
     const auto dark_palette = make_candidate_palette(CandidateThemeMode::Dark, false);
     REQUIRE_TRUE(dark_palette.dark);
-    REQUIRE_EQ(dark_palette.background, RGB(0x24, 0x26, 0x2B));
-    REQUIRE_EQ(dark_palette.muted_text, RGB(0xB8, 0xC0, 0xCC));
-    REQUIRE_EQ(dark_palette.hint_text, RGB(0x8D, 0x96, 0xA3));
-    REQUIRE_EQ(dark_palette.text, RGB(0xF4, 0xF6, 0xF8));
-    REQUIRE_EQ(dark_palette.selected_background, RGB(0x34, 0x7F, 0xE8));
-    REQUIRE_EQ(dark_palette.selected_border, RGB(0x76, 0xAF, 0xFF));
+    REQUIRE_EQ(dark_palette.background, brand::kLocalPinyinBlueDarkCard_background);
+    REQUIRE_EQ(dark_palette.muted_text, brand::kLocalPinyinBlueDarkMuted);
+    REQUIRE_EQ(dark_palette.hint_text, brand::kLocalPinyinBlueDarkWeak);
+    REQUIRE_EQ(dark_palette.text, brand::kLocalPinyinBlueDarkPrimary);
+    REQUIRE_EQ(dark_palette.selected_background, brand::kLocalPinyinBlueDarkAccent_soft);
+    REQUIRE_EQ(dark_palette.selected_border, brand::kLocalPinyinBlueDarkAccent_border);
     REQUIRE_TRUE(make_candidate_palette(CandidateThemeMode::System, true).dark);
     REQUIRE_TRUE(!make_candidate_palette(CandidateThemeMode::System, false).dark);
     REQUIRE_EQ(candidate_theme_mode_to_string(parse_candidate_theme_mode(L"dark")), std::wstring(L"dark"));

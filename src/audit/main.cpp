@@ -2,6 +2,8 @@
 #include <msctf.h>
 
 #include "../ime/guids.h"
+#include "../ime/registration.h"
+#include "../ime/tsf_profile_categories.h"
 
 #include <array>
 #include <cstdint>
@@ -12,11 +14,6 @@
 namespace {
 
 constexpr LANGID kLangId = MAKELANGID(LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED);
-
-struct CategoryCheck {
-    const wchar_t* name;
-    const GUID& guid;
-};
 
 std::wstring bool_text(bool value) {
     return value ? L"TRUE" : L"FALSE";
@@ -83,7 +80,8 @@ void print_static_registration_implementation() {
                << L"- uses legacy Register: FALSE\n"
                << L"- uses legacy AddLanguageProfile: FALSE\n"
                << L"- uses RegisterProfile: TRUE\n"
-               << L"- uses RegisterCategory: TRUE\n";
+               << L"- treats profile caps as diagnostic-only verification data: TRUE\n"
+               << L"- uses RegisterCategory for explicit category items: TRUE\n";
 }
 
 HRESULT audit_profiles() {
@@ -138,7 +136,7 @@ HRESULT audit_profiles() {
     return FAILED(hr) ? hr : enum_hr;
 }
 
-HRESULT audit_category(const CategoryCheck& check) {
+HRESULT audit_category(const localpinyin::TsfProfileCategory& check) {
     ITfCategoryMgr* category_mgr = nullptr;
     HRESULT hr = CoCreateInstance(CLSID_TF_CategoryMgr, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&category_mgr));
     if (FAILED(hr)) {
@@ -149,7 +147,7 @@ HRESULT audit_category(const CategoryCheck& check) {
     }
 
     IEnumGUID* enum_items = nullptr;
-    hr = category_mgr->EnumItemsInCategory(check.guid, &enum_items);
+    hr = category_mgr->EnumItemsInCategory(*check.category_guid, &enum_items);
     bool contains = false;
     HRESULT next_hr = hr;
     if (SUCCEEDED(hr) && enum_items) {
@@ -160,7 +158,7 @@ HRESULT audit_category(const CategoryCheck& check) {
             if (next_hr != S_OK || fetched == 0) {
                 break;
             }
-            if (IsEqualGUID(item, localpinyin::CLSID_LocalPinyinTextService)) {
+            if (IsEqualGUID(item, *check.item_guid)) {
                 contains = true;
             }
         }
@@ -168,6 +166,8 @@ HRESULT audit_category(const CategoryCheck& check) {
     }
 
     std::wcout << L"Category: " << check.name << L"\n"
+               << L"Category GUID: " << guid_to_string(*check.category_guid) << L"\n"
+               << L"Item GUID: " << guid_to_string(*check.item_guid) << L"\n"
                << L"HRESULT: " << hresult_hex(hr) << L"\n"
                << L"EnumItemsInCategory.Next final HRESULT: " << hresult_hex(next_hr) << L"\n"
                << L"Contains LocalPinyinIME CLSID: " << bool_text(contains) << L"\n";
@@ -177,23 +177,28 @@ HRESULT audit_category(const CategoryCheck& check) {
 }
 
 HRESULT audit_categories() {
-    const std::array<CategoryCheck, 6> categories{{
-        {L"GUID_TFCAT_TIP_KEYBOARD", GUID_TFCAT_TIP_KEYBOARD},
-        {L"GUID_TFCAT_TIPCAP_IMMERSIVESUPPORT", GUID_TFCAT_TIPCAP_IMMERSIVESUPPORT},
-        {L"GUID_TFCAT_TIPCAP_UIELEMENTENABLED", GUID_TFCAT_TIPCAP_UIELEMENTENABLED},
-        {L"GUID_TFCAT_TIPCAP_INPUTMODECOMPARTMENT", GUID_TFCAT_TIPCAP_INPUTMODECOMPARTMENT},
-        {L"GUID_TFCAT_TIPCAP_SYSTRAYSUPPORT", GUID_TFCAT_TIPCAP_SYSTRAYSUPPORT},
-        {L"GUID_TFCAT_DISPLAYATTRIBUTEPROVIDER", GUID_TFCAT_DISPLAYATTRIBUTEPROVIDER},
-    }};
-
     HRESULT first_failure = S_OK;
-    for (const auto& category : categories) {
+    for (const auto& category : localpinyin::required_tsf_profile_categories()) {
         const HRESULT hr = audit_category(category);
         if (SUCCEEDED(first_failure) && FAILED(hr)) {
             first_failure = hr;
         }
     }
     return first_failure;
+}
+
+void print_required_capabilities() {
+    std::wcout << L"Required TSF category/capability table:\n";
+    for (const auto& capability : localpinyin::required_tsf_profile_capabilities()) {
+        const auto caps = localpinyin::observe_profile_caps(capability.profile_caps,
+                                                            localpinyin::required_tsf_profile_caps());
+        std::wcout << L"- name: " << capability.name << L"\n"
+                   << L"  category_guid: " << guid_to_string(*capability.category_guid) << L"\n"
+                   << L"  item_guid: " << guid_to_string(*capability.item_guid) << L"\n"
+                   << L"  allow_register_category: " << bool_text(capability.allow_register_category) << L"\n"
+                   << L"  profile_caps: " << dword_hex(capability.profile_caps) << L"\n"
+                   << L"  expected_internal_caps_overlap: " << dword_hex(caps.observed_caps) << L"\n";
+    }
 }
 
 }  // namespace
@@ -216,6 +221,7 @@ int wmain(int argc, wchar_t** argv) {
 
     std::wcout << L"LocalPinyinIME TSF audit: read-only\n";
     print_static_registration_implementation();
+    print_required_capabilities();
 
     const HRESULT profile_hr = audit_profiles();
     const HRESULT category_hr = audit_categories();

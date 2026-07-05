@@ -7,6 +7,7 @@ param(
     [string]$CMakePath = "cmake",
     [string]$CTestPath = "ctest",
     [string]$NinjaPath = "",
+    [string]$PythonExecutable = "",
     [string]$PackageTimestampUtc = "2026-01-01T00:00:00Z"
 )
 
@@ -25,6 +26,9 @@ $DistRoot = Join-Path $SourceRoot $DistDir
 $PackageName = "LocalPinyinIME-$Version-win-x64"
 $StageRoot = Join-Path $DistRoot $PackageName
 $ZipPath = Join-Path $DistRoot "$PackageName.zip"
+$ArtifactEvidenceDir = Join-Path $StageRoot "evidence"
+$ArtifactSymbolsDir = Join-Path $ArtifactEvidenceDir "symbols"
+$ArtifactManifestPath = Join-Path $ArtifactEvidenceDir "ARTIFACT-MANIFEST.json"
 $DisplayName = "LocalPinyinIME - " +
     [string]([char]0x79BB) +
     [string]([char]0x7EBF) +
@@ -63,6 +67,41 @@ function Assert-UnderRoot {
     }
 }
 
+function Assert-NonEmptyFile {
+    param([string]$Path, [string]$Description)
+    if (!(Test-Path -LiteralPath $Path)) {
+        throw "$Description is missing: $Path"
+    }
+    $item = Get-Item -LiteralPath $Path
+    if ($item.Length -le 0) {
+        throw "$Description is empty: $Path"
+    }
+}
+
+function Get-ArtifactFileEvidence {
+    param([string]$Path)
+
+    Assert-NonEmptyFile -Path $Path -Description "Artifact"
+    $item = Get-Item -LiteralPath $Path
+    $hash = Get-FileHash -LiteralPath $item.FullName -Algorithm SHA256
+    return [ordered]@{
+        path = $item.FullName
+        sha256 = $hash.Hash
+        size = $item.Length
+        creationTimeUtc = $item.CreationTimeUtc.ToString("o")
+        lastWriteTimeUtc = $item.LastWriteTimeUtc.ToString("o")
+    }
+}
+
+function Assert-SameFileHash {
+    param([string]$Source, [string]$Destination, [string]$Description)
+    $sourceHash = Get-FileHash -LiteralPath $Source -Algorithm SHA256
+    $destinationHash = Get-FileHash -LiteralPath $Destination -Algorithm SHA256
+    if ($sourceHash.Hash -ne $destinationHash.Hash) {
+        throw "$Description hash mismatch. source=$($sourceHash.Hash) destination=$($destinationHash.Hash)"
+    }
+}
+
 function Invoke-Native {
     param([string]$FileName, [string[]]$Arguments)
     & $FileName @Arguments
@@ -79,6 +118,7 @@ function Invoke-Step {
 
 function Resolve-BuiltFile {
     param([string]$Name)
+    $buildRoot = Join-Path $SourceRoot $BuildDir
     $candidates = @(
         (Join-Path $SourceRoot "$BuildDir\bin\Release\$Name"),
         (Join-Path $SourceRoot "$BuildDir\bin\$Name"),
@@ -86,18 +126,43 @@ function Resolve-BuiltFile {
     )
     foreach ($candidate in $candidates) {
         if (Test-Path -LiteralPath $candidate) {
-            return (Resolve-Path -LiteralPath $candidate).Path
+            $resolved = (Resolve-Path -LiteralPath $candidate).Path
+            Assert-UnderRoot -Path $resolved -Root $buildRoot
+            Assert-NonEmptyFile -Path $resolved -Description "Required Release build output"
+            return $resolved
         }
     }
     throw "Required Release build output was not found: $Name"
 }
 
+function Resolve-BuiltPdb {
+    param([string]$BinaryName)
+    $pdbName = [IO.Path]::GetFileNameWithoutExtension($BinaryName) + ".pdb"
+    $binaryPath = Resolve-BuiltFile $BinaryName
+    $binaryDir = Split-Path -Parent $binaryPath
+    $buildRoot = Join-Path $SourceRoot $BuildDir
+    $candidates = @(
+        (Join-Path $binaryDir $pdbName),
+        (Join-Path $SourceRoot "$BuildDir\bin\Release\$pdbName"),
+        (Join-Path $SourceRoot "$BuildDir\bin\$pdbName"),
+        (Join-Path $SourceRoot "$BuildDir\Release\$pdbName")
+    )
+    foreach ($candidate in $candidates) {
+        if (Test-Path -LiteralPath $candidate) {
+            $resolved = (Resolve-Path -LiteralPath $candidate).Path
+            Assert-UnderRoot -Path $resolved -Root $buildRoot
+            Assert-NonEmptyFile -Path $resolved -Description "Required private PDB for $BinaryName"
+            return $resolved
+        }
+    }
+    throw "Required private PDB was not found for $BinaryName in build directory '$BuildDir'."
+}
+
 function Copy-RequiredFile {
     param([string]$Source, [string]$Destination)
-    if (!(Test-Path -LiteralPath $Source)) {
-        throw "Required file is missing: $Source"
-    }
+    Assert-NonEmptyFile -Path $Source -Description "Required file"
     Copy-Item -LiteralPath $Source -Destination $Destination -Force
+    Assert-NonEmptyFile -Path $Destination -Description "Copied file"
 }
 
 function Copy-ReleaseTextFile {
@@ -108,6 +173,85 @@ function Copy-ReleaseTextFile {
     $text = Get-Content -LiteralPath $Source -Encoding UTF8 -Raw
     $expanded = Expand-LocalPinyinReleaseText -Text $text -Version $ReleaseVersion
     Set-Content -LiteralPath $Destination -Value $expanded -Encoding UTF8
+}
+
+function Copy-ReleaseBinaryToStage {
+    param([string]$Name)
+    $source = Resolve-BuiltFile $Name
+    $destination = Join-Path $StageRoot "bin\$Name"
+    if (Test-Path -LiteralPath $destination) {
+        throw "Staging destination already contains a same-name binary before copy: $destination"
+    }
+    Copy-RequiredFile -Source $source -Destination $destination
+    Assert-SameFileHash -Source $source -Destination $destination -Description "Staged $Name"
+}
+
+function Copy-PrivatePdbEvidence {
+    param([string]$BinaryName)
+    $sourcePdb = Resolve-BuiltPdb $BinaryName
+    New-Item -ItemType Directory -Force -Path $ArtifactSymbolsDir | Out-Null
+    $destinationPdb = Join-Path $ArtifactSymbolsDir (Split-Path -Leaf $sourcePdb)
+    Copy-RequiredFile -Source $sourcePdb -Destination $destinationPdb
+    Assert-SameFileHash -Source $sourcePdb -Destination $destinationPdb -Description "Private PDB for $BinaryName"
+    return [ordered]@{
+        source = Get-ArtifactFileEvidence -Path $sourcePdb
+        private = Get-ArtifactFileEvidence -Path $destinationPdb
+        exists = $true
+    }
+}
+
+function New-BinaryArtifactTrace {
+    param([string]$BinaryName)
+    $source = Resolve-BuiltFile $BinaryName
+    $staged = Join-Path $StageRoot "bin\$BinaryName"
+    Assert-NonEmptyFile -Path $staged -Description "Staged $BinaryName"
+    $sourceEvidence = Get-ArtifactFileEvidence -Path $source
+    $stagedEvidence = Get-ArtifactFileEvidence -Path $staged
+    return [ordered]@{
+        source = $sourceEvidence
+        staged = $stagedEvidence
+        source_staging_hash_match = ($sourceEvidence.sha256 -eq $stagedEvidence.sha256)
+    }
+}
+
+function Write-ArtifactEvidenceManifest {
+    $buildRoot = Join-Path $SourceRoot $BuildDir
+    New-Item -ItemType Directory -Force -Path $ArtifactEvidenceDir | Out-Null
+    New-Item -ItemType Directory -Force -Path $ArtifactSymbolsDir | Out-Null
+
+    $dllTrace = New-BinaryArtifactTrace -BinaryName "LocalPinyinIME.dll"
+    $setupTrace = New-BinaryArtifactTrace -BinaryName "LocalPinyinImeSetup.exe"
+    if (!$dllTrace.source_staging_hash_match) {
+        throw "LocalPinyinIME.dll source/staging SHA-256 mismatch."
+    }
+    if (!$setupTrace.source_staging_hash_match) {
+        throw "LocalPinyinImeSetup.exe source/staging SHA-256 mismatch."
+    }
+
+    $dllPdb = Copy-PrivatePdbEvidence -BinaryName "LocalPinyinIME.dll"
+    $setupPdb = Copy-PrivatePdbEvidence -BinaryName "LocalPinyinImeSetup.exe"
+
+    $dllTrace["pdb"] = $dllPdb
+    $setupTrace["pdb"] = $setupPdb
+
+    $manifest = [ordered]@{
+        candidate_version = $ReleaseVersion.Package
+        numeric_version = $ReleaseVersion.Numeric
+        generated_at_utc = (Get-Date).ToUniversalTime().ToString("o")
+        build_directory = (Resolve-Path -LiteralPath $buildRoot).Path
+        staging_directory = (Resolve-Path -LiteralPath $StageRoot).Path
+        artifact_manifest_path = $ArtifactManifestPath
+        artifacts = [ordered]@{
+            LocalPinyinIME_dll = $dllTrace
+            LocalPinyinImeSetup_exe = $setupTrace
+        }
+    }
+    $manifest | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath $ArtifactManifestPath -Encoding UTF8
+
+    Write-Host "Artifact evidence manifest: $ArtifactManifestPath"
+    Write-Host "LocalPinyinIME.dll source/staging hash_match: $($dllTrace.source_staging_hash_match)"
+    Write-Host "LocalPinyinImeSetup.exe source/staging hash_match: $($setupTrace.source_staging_hash_match)"
+    Write-Host "Private symbols: $ArtifactSymbolsDir"
 }
 
 function Assert-BuiltDictionaryResources {
@@ -143,7 +287,13 @@ function New-DeterministicZip {
     $timestamp = [DateTimeOffset]::Parse($TimestampUtc).ToUniversalTime()
     $archive = [System.IO.Compression.ZipFile]::Open($Destination, [System.IO.Compression.ZipArchiveMode]::Create)
     try {
-        $files = Get-ChildItem -LiteralPath $Root -Recurse -File | Sort-Object FullName
+        $evidenceRoot = [IO.Path]::GetFullPath((Join-Path $Root "evidence")).TrimEnd('\') + '\'
+        $files = Get-ChildItem -LiteralPath $Root -Recurse -File |
+            Where-Object {
+                $fullName = [IO.Path]::GetFullPath($_.FullName)
+                !$fullName.StartsWith($evidenceRoot, [StringComparison]::OrdinalIgnoreCase)
+            } |
+            Sort-Object FullName
         foreach ($file in $files) {
             $relative = $file.FullName.Substring($Root.Length + 1).Replace('\', '/')
             $entryName = "$PackageName/$relative"
@@ -181,9 +331,16 @@ try {
             if ($NinjaPath) {
                 $configureArgs += "-DCMAKE_MAKE_PROGRAM=$NinjaPath"
             }
+            if ($PythonExecutable) {
+                $configureArgs += "-DLOCALPINYINIME_PYTHON_EXECUTABLE=$PythonExecutable"
+            }
             Invoke-Native -FileName $CMakePath -Arguments $configureArgs
         } else {
-            Invoke-Native -FileName $CMakePath -Arguments @("-S", ".", "-B", $BuildDir, "-A", "x64")
+            $configureArgs = @("-S", ".", "-B", $BuildDir, "-A", "x64")
+            if ($PythonExecutable) {
+                $configureArgs += "-DLOCALPINYINIME_PYTHON_EXECUTABLE=$PythonExecutable"
+            }
+            Invoke-Native -FileName $CMakePath -Arguments $configureArgs
         }
     }
 
@@ -215,7 +372,7 @@ try {
         New-Item -ItemType Directory -Force -Path (Join-Path $StageRoot "docs") | Out-Null
 
         foreach ($binary in $ReleaseBinaries) {
-            Copy-RequiredFile -Source (Resolve-BuiltFile $binary) -Destination (Join-Path $StageRoot "bin\$binary")
+            Copy-ReleaseBinaryToStage -Name $binary
         }
 
         $dictionarySource = Join-Path $SourceRoot "resources\dictionary\core_zh_pinyin.tsv"
@@ -297,6 +454,10 @@ try {
             $hashLines.Add("$($hash.Hash)  $relative")
         }
         Set-Content -LiteralPath (Join-Path $StageRoot "SHA256SUMS.txt") -Value $hashLines -Encoding ASCII
+    }
+
+    Invoke-Step "Write private artifact evidence" {
+        Write-ArtifactEvidenceManifest
     }
 
     Invoke-Step "Write Inno auxiliary version config" {

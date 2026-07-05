@@ -54,6 +54,19 @@ function Assert-NoFileName {
     }
 }
 
+function Assert-NoUnexpectedPdb {
+    $allowedRoot = [IO.Path]::GetFullPath((Join-Path $StagingRoot "evidence\symbols")).TrimEnd('\') + '\'
+    $matches = @(Get-ChildItem -LiteralPath $StagingRoot -Recurse -Force -File -ErrorAction SilentlyContinue |
+        Where-Object {
+            $_.Extension -ieq ".pdb" -and
+            !([IO.Path]::GetFullPath($_.FullName).StartsWith($allowedRoot, [StringComparison]::OrdinalIgnoreCase))
+        })
+    if ($matches.Count -gt 0) {
+        $sample = ($matches | Select-Object -First 5 | ForEach-Object { $_.FullName }) -join "; "
+        throw "Forbidden PDB outside private evidence symbols found in staging. sample=$sample"
+    }
+}
+
 function Get-InnoFilesSectionLines {
     param([string]$Path)
     return Get-InnoSectionLines -Path $Path -SectionName "Files"
@@ -170,8 +183,9 @@ function Assert-InnoIconShortcuts {
         $name = [string]$fields["Name"]
         $filename = [string]$fields["Filename"]
         $workingDir = [string]$fields["WorkingDir"]
+        $iconFilename = [string]$fields["IconFilename"]
 
-        foreach ($value in @($name, $filename, $workingDir)) {
+        foreach ($value in @($name, $filename, $workingDir, $iconFilename)) {
             if ($value -match '(?i)(^|\\)(build|dist)(\\|$)|LocalPinyinIME\.sln|user_lexicon\.tsv|user_learning\.sqlite|\.pdb|test_') {
                 throw "Inno [Icons] line $($entry.LineNumber) references forbidden content: $($entry.Text)"
             }
@@ -185,6 +199,7 @@ function Assert-InnoIconShortcuts {
             $settingEntries += [PSCustomObject]@{
                 LineNumber = $entry.LineNumber
                 WorkingDir = $workingDir
+                IconFilename = $iconFilename
                 Text = [string]$entry.Text
             }
         }
@@ -192,6 +207,7 @@ function Assert-InnoIconShortcuts {
             ($filename -ieq "{uninstallexe}")) {
             $uninstallEntries += [PSCustomObject]@{
                 LineNumber = $entry.LineNumber
+                IconFilename = $iconFilename
                 Text = [string]$entry.Text
             }
         }
@@ -205,8 +221,18 @@ function Assert-InnoIconShortcuts {
         $sample = ($settingEntries | Select-Object -First 1).Text
         throw "Inno script Settings shortcut must use WorkingDir {app}. entry=$sample"
     }
+    $settingsWithIcon = @($settingEntries | Where-Object { $_.IconFilename -ieq "{app}\LocalPinyinSettings.exe" })
+    if ($settingsWithIcon.Count -eq 0) {
+        $sample = ($settingEntries | Select-Object -First 1).Text
+        throw "Inno script Settings shortcut must use IconFilename {app}\LocalPinyinSettings.exe. entry=$sample"
+    }
     if ($uninstallEntries.Count -eq 0) {
         throw "Inno script is missing a Start Menu uninstall shortcut with Name {group}\<uninstall> LocalPinyinIME and Filename {uninstallexe}."
+    }
+    $uninstallWithIcon = @($uninstallEntries | Where-Object { $_.IconFilename -ieq "{app}\LocalPinyinSettings.exe" })
+    if ($uninstallWithIcon.Count -eq 0) {
+        $sample = ($uninstallEntries | Select-Object -First 1).Text
+        throw "Inno script uninstall shortcut must use IconFilename {app}\LocalPinyinSettings.exe. entry=$sample"
     }
 
     $iconsText = ($iconLines | ForEach-Object { $_.Text }) -join "`n"
@@ -275,6 +301,8 @@ function Assert-InnoInstallerScript {
 
     $requiredText = @(
         "PrivilegesRequired=admin",
+        "SetupIconFile=..\assets\branding\icon\LocalPinyinIME.ico",
+        "UninstallDisplayIcon={app}\LocalPinyinSettings.exe",
         "DisableDirPage=yes",
         "DirExistsWarning=no",
         "UsePreviousAppDir=no",
@@ -284,15 +312,27 @@ function Assert-InnoInstallerScript {
         "ExpandConstant('{app}')",
         "function InstalledDllPath(): String",
         "ExpandConstant('{app}\{#MyAppExeName}')",
-        "Exec(SetupToolPath(), Params, SetupWorkingDir()",
-        "ResultCode <> 0",
+        "function SetupDiagnosticLogPath(): String",
+        "setup-diagnostics.log",
+        "function RegistrationStatusLogPath(): String",
+        "LocalPinyinIME\logs\status.log",
+        "ParamsWithDiagnostics(Params)",
+        "--diagnostic-log",
+        "LoadStringFromFile(SetupDiagnosticLogPath(), Contents)",
+        "Exec(SetupToolPath(), ExecParams, SetupWorkingDir()",
+        "RegisterCode <> 0",
+        "TargetVerifyCode <> 0",
+        "EnableCode <> 0",
+        "VerifyCode <> 0",
         "ShowStepFailure",
         "RegisteredDllMatches(NewDll)",
         "VerifySystemRegistrationAfterRegister(NewDll, RegisterCode, PreviousDll)",
-        "Native --verify also queries current-user enabled state",
-        "diagnostic verify after register-system",
+        "--verify --expected-dll",
+        "verify target DLL after register-system",
+        "--require-current-user-enabled",
         "RunRegisterAndVerify(NewDll, CurrentDll)",
-        "RunEnableAndVerify()"
+        "RunEnableAndVerify(NewDll)",
+        "preserving previous registration until new target verifies"
     )
     foreach ($text in $requiredText) {
         if ($scriptText.IndexOf($text, [StringComparison]::OrdinalIgnoreCase) -lt 0) {
@@ -303,7 +343,10 @@ function Assert-InnoInstallerScript {
     if ($scriptText -match '(?i)cmd\.exe') {
         throw "Inno script must not invoke cmd.exe."
     }
-    if ($scriptText -match '(?i)(\{localappdata\}|%LOCALAPPDATA%|LocalAppData|user_lexicon|user_learning|DelTree|RemoveDir)') {
+    $scriptTextWithoutAllowedDiagnostics = $scriptText.Replace(
+        "ExpandConstant('{localappdata}\LocalPinyinIME\logs\status.log')",
+        "")
+    if ($scriptTextWithoutAllowedDiagnostics -match '(?i)(\{localappdata\}|%LOCALAPPDATA%|LocalAppData|user_lexicon|user_learning|DelTree|RemoveDir)') {
         throw "Inno script appears to touch local user data or delete directories."
     }
     if ($scriptText -match '(?im)^\s*\[Run\]') {
@@ -314,13 +357,13 @@ function Assert-InnoInstallerScript {
     $idxRegister = $scriptText.IndexOf("RegisterParams := '--register-system --dll '", [StringComparison]::OrdinalIgnoreCase)
     $idxRegisterExec = $scriptText.IndexOf("RunSetupTool(RegisterParams, 'register system', RegisterCode)", [StringComparison]::OrdinalIgnoreCase)
     $idxSystemVerifyAfterRegister = $scriptText.IndexOf("VerifySystemRegistrationAfterRegister(NewDll, RegisterCode, PreviousDll)", [StringComparison]::OrdinalIgnoreCase)
-    $idxDiagnosticVerifyAfterRegister = $scriptText.IndexOf("'diagnostic verify after register-system'", [StringComparison]::OrdinalIgnoreCase)
+    $idxTargetVerifyAfterRegister = $scriptText.IndexOf("'verify target DLL after register-system'", [StringComparison]::OrdinalIgnoreCase)
     $idxEnable = $scriptText.IndexOf("'--enable-current-user', 'enable current user'", [StringComparison]::OrdinalIgnoreCase)
     $idxVerifyAfterEnable = $scriptText.IndexOf("'verify after enable-current-user'", [StringComparison]::OrdinalIgnoreCase)
     $idxRunRegister = $scriptText.IndexOf("RunRegisterAndVerify(NewDll, CurrentDll)", [StringComparison]::OrdinalIgnoreCase)
-    $idxRunEnable = $scriptText.IndexOf("RunEnableAndVerify()", [StringComparison]::OrdinalIgnoreCase)
+    $idxRunEnable = $scriptText.IndexOf("RunEnableAndVerify(NewDll)", [StringComparison]::OrdinalIgnoreCase)
     if ($idxRegister -lt 0 -or $idxSystemVerifyAfterRegister -lt 0 -or
-        $idxRegisterExec -lt 0 -or $idxDiagnosticVerifyAfterRegister -lt 0 -or
+        $idxRegisterExec -lt 0 -or $idxTargetVerifyAfterRegister -lt 0 -or
         $idxEnable -lt 0 -or $idxVerifyAfterEnable -lt 0 -or
         $idxRunRegister -lt 0 -or $idxRunEnable -lt 0) {
         throw "Inno script is missing the expected register/verify/enable/verify sequence."
@@ -331,11 +374,23 @@ function Assert-InnoInstallerScript {
           $idxRunRegister -lt $idxRunEnable)) {
         throw "Inno script register/verify/enable/verify sequence is out of order."
     }
-    if ($scriptText -match "(?s)'diagnostic verify after register-system'.{0,400}AbortWithDiagnostics") {
-        throw "Diagnostic verify after register-system must not abort before enable-current-user."
+    $curStepMatch = [regex]::Match(
+        $scriptText,
+        '(?is)procedure\s+CurStepChanged\b.*?(?=\r?\nprocedure\s+|\r?\nfunction\s+|\r?\n\[[A-Za-z]+\]|\z)')
+    if (!$curStepMatch.Success) {
+        throw "Inno script is missing CurStepChanged."
+    }
+    if ($curStepMatch.Value -match '(?i)--unregister-system') {
+        throw "Inno CurStepChanged must not unregister the previous DLL before the new DLL verifies."
+    }
+    if ($scriptText -notmatch "(?s)--verify --expected-dll.{0,200}verify target DLL after register-system") {
+        throw "Target DLL verification after register-system must use --verify --expected-dll."
+    }
+    if ($scriptText -notmatch "(?s)--verify --expected-dll.{0,200}--require-current-user-enabled") {
+        throw "Final verification after enable-current-user must require current-user enabled state."
     }
 
-    $exitCodeVariables = @("RegisterCode", "DiagnosticVerifyCode", "EnableCode", "VerifyCode")
+    $exitCodeVariables = @("RegisterCode", "TargetVerifyCode", "EnableCode", "VerifyCode")
     foreach ($name in $exitCodeVariables) {
         if ($scriptText.IndexOf($name + ": Integer", [StringComparison]::OrdinalIgnoreCase) -lt 0) {
             throw "Inno script is missing independent exit code variable: $name"
@@ -363,7 +418,7 @@ Assert-NoFileName -Name "user_learning.sqlite" -Description "user learning datab
 Assert-AbsentPattern -Pattern (Join-Path $StagingRoot "*\logs\*") -Description "logs directory"
 Assert-AbsentPattern -Pattern (Join-Path $StagingRoot "*\build\*") -Description "build directory"
 Assert-AbsentPattern -Pattern (Join-Path $StagingRoot "*.zip") -Description "dist ZIP"
-Assert-AbsentPattern -Pattern (Join-Path $StagingRoot "*.pdb") -Description "PDB"
+Assert-NoUnexpectedPdb
 Assert-AbsentPattern -Pattern (Join-Path $StagingRoot "*\test_*.exe") -Description "test EXE"
 
 if ($StaticOnly) {

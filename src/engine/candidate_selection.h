@@ -7,7 +7,7 @@ namespace localpinyin {
 enum class CompositionCommitAction {
     PassThrough,
     CommitSelectedCandidate,
-    CommitFirstCandidate,
+    CommitRawComposition,
 };
 
 inline constexpr int candidate_index_from_digit_key(unsigned long key) noexcept {
@@ -33,7 +33,7 @@ inline constexpr CompositionCommitAction composition_commit_action_for_key(unsig
         return CompositionCommitAction::CommitSelectedCandidate;
     }
     if (key == 0x0D) {
-        return CompositionCommitAction::CommitFirstCandidate;
+        return CompositionCommitAction::CommitRawComposition;
     }
     return CompositionCommitAction::PassThrough;
 }
@@ -52,8 +52,7 @@ inline constexpr int candidate_commit_index_for_key(unsigned long key,
     switch (composition_commit_action_for_key(key, candidate_count, has_composition)) {
         case CompositionCommitAction::CommitSelectedCandidate:
             return candidate_count == 0 ? -1 : static_cast<int>(selected_index < candidate_count ? selected_index : 0);
-        case CompositionCommitAction::CommitFirstCandidate:
-            return 0;
+        case CompositionCommitAction::CommitRawComposition:
         case CompositionCommitAction::PassThrough:
         default:
             return -1;

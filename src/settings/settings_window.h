@@ -306,6 +306,8 @@ private:
     HBRUSH card_background_brush_ = nullptr;
     HBRUSH border_background_brush_ = nullptr;
     HBRUSH edit_background_brush_ = nullptr;
+    HICON app_icon_big_ = nullptr;
+    HICON app_icon_small_ = nullptr;
     int dpi_ = 96;
     SettingsThemePalette palette_;
     SettingsPage active_page_ = SettingsPage::UserLexicon;
@@ -321,6 +323,7 @@ private:
     HWND lexicon_status_ = nullptr;
     SettingsStore store_;
     CandidateWindowOptions options_;
+    InputModeOptions input_mode_options_;
     std::vector<UserLexiconEntry> user_lexicon_entries_;
     std::vector<size_t> filtered_user_lexicon_indexes_;
 };

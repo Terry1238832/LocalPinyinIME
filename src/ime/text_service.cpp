@@ -6,6 +6,7 @@
 #include "../engine/candidate_selection.h"
 
 #include <algorithm>
+#include <cwchar>
 #include <cwctype>
 #include <sstream>
 
@@ -30,6 +31,15 @@ std::wstring caret_rect_failure_reason(HRESULT hr) {
     return L"get_text_ext_failed";
 }
 
+ModifierKeyState current_modifier_key_state() {
+    ModifierKeyState modifiers;
+    modifiers.ctrl = (GetKeyState(VK_CONTROL) & 0x8000) != 0;
+    modifiers.shift = (GetKeyState(VK_SHIFT) & 0x8000) != 0;
+    modifiers.alt = (GetKeyState(VK_MENU) & 0x8000) != 0;
+    modifiers.win = (GetKeyState(VK_LWIN) & 0x8000) != 0 || (GetKeyState(VK_RWIN) & 0x8000) != 0;
+    return modifiers;
+}
+
 }  // namespace
 
 TextService::TextService() {
@@ -37,6 +47,7 @@ TextService::TextService() {
 }
 
 TextService::~TextService() {
+    unpreserve_ctrl_space_key();
     unadvise_key_event_sink();
     if (thread_mgr_) {
         thread_mgr_->Release();
@@ -85,18 +96,27 @@ HRESULT TextService::ActivateEx(ITfThreadMgr* thread_mgr, TfClientId client_id, 
     thread_mgr_ = thread_mgr;
     thread_mgr_->AddRef();
     client_id_ = client_id;
+    language_bar_.set_mode(mode_);
 
     const HRESULT hr = advise_key_event_sink();
-    log_status(L"tsf", FAILED(hr) ? L"ActivateEx failed " + hresult_hex(hr) : L"ActivateEx succeeded");
-    return hr;
+    HRESULT preserve_hr = S_OK;
+    if (SUCCEEDED(hr)) {
+        preserve_hr = preserve_ctrl_space_key();
+    }
+    const HRESULT result = FAILED(hr) ? hr : preserve_hr;
+    log_status(L"tsf", FAILED(result) ? L"ActivateEx failed " + hresult_hex(result) : L"ActivateEx succeeded");
+    return result;
 }
 
 HRESULT TextService::Deactivate() {
+    const HRESULT unpreserve_hr = unpreserve_ctrl_space_key();
     unadvise_key_event_sink();
     candidate_window_.hide(L"deactivate");
     composition_.clear();
     composing_.clear();
     candidates_.clear();
+    ctrl_space_toggle_ = CtrlSpaceToggleTracker{};
+    shift_toggle_ = ShiftToggleTracker{};
     has_last_caret_rect_ = false;
     if (thread_mgr_) {
         thread_mgr_->Release();
@@ -104,7 +124,7 @@ HRESULT TextService::Deactivate() {
     }
     client_id_ = TF_CLIENTID_NULL;
     log_status(L"tsf", L"Deactivate");
-    return S_OK;
+    return FAILED(unpreserve_hr) ? unpreserve_hr : S_OK;
 }
 
 HRESULT TextService::advise_key_event_sink() {
@@ -136,6 +156,59 @@ void TextService::unadvise_key_event_sink() {
     key_sink_advised_ = false;
 }
 
+HRESULT TextService::preserve_ctrl_space_key() {
+    if (!thread_mgr_ || ctrl_space_preserved_) {
+        return S_OK;
+    }
+
+    ITfKeystrokeMgr* keystroke_mgr = nullptr;
+    HRESULT hr = thread_mgr_->QueryInterface(IID_PPV_ARGS(&keystroke_mgr));
+    if (FAILED(hr)) {
+        log_status(L"tsf", L"PreserveKey QueryInterface failed " + hresult_hex(hr));
+        return hr;
+    }
+
+    const TF_PRESERVEDKEY key = ctrl_space_preserved_key();
+    const wchar_t* description = ctrl_space_preserved_key_description();
+    hr = keystroke_mgr->PreserveKey(client_id_,
+                                    GUID_LocalPinyinCtrlSpacePreservedKey,
+                                    &key,
+                                    description,
+                                    static_cast<ULONG>(std::wcslen(description)));
+    if (SUCCEEDED(hr)) {
+        ctrl_space_preserved_ = true;
+        log_status(L"tsf", L"PreserveKey Ctrl+Space succeeded");
+    } else {
+        log_status(L"tsf", L"PreserveKey Ctrl+Space failed " + hresult_hex(hr));
+    }
+    keystroke_mgr->Release();
+    return hr;
+}
+
+HRESULT TextService::unpreserve_ctrl_space_key() {
+    if (!thread_mgr_ || !ctrl_space_preserved_) {
+        return S_OK;
+    }
+
+    ITfKeystrokeMgr* keystroke_mgr = nullptr;
+    HRESULT hr = thread_mgr_->QueryInterface(IID_PPV_ARGS(&keystroke_mgr));
+    if (FAILED(hr)) {
+        log_status(L"tsf", L"UnpreserveKey QueryInterface failed " + hresult_hex(hr));
+        return hr;
+    }
+
+    const TF_PRESERVEDKEY key = ctrl_space_preserved_key();
+    hr = keystroke_mgr->UnpreserveKey(GUID_LocalPinyinCtrlSpacePreservedKey, &key);
+    if (SUCCEEDED(hr)) {
+        ctrl_space_preserved_ = false;
+        log_status(L"tsf", L"UnpreserveKey Ctrl+Space succeeded");
+    } else {
+        log_status(L"tsf", L"UnpreserveKey Ctrl+Space failed " + hresult_hex(hr));
+    }
+    keystroke_mgr->Release();
+    return hr;
+}
+
 HRESULT TextService::OnSetFocus(BOOL) {
     return S_OK;
 }
@@ -145,7 +218,12 @@ HRESULT TextService::OnTestKeyDown(ITfContext*, WPARAM wparam, LPARAM, BOOL* eat
         return E_POINTER;
     }
     *eaten = FALSE;
-    if ((GetKeyState(VK_CONTROL) & 0x8000) && wparam == VK_SPACE) {
+    const ModifierKeyState modifiers = current_modifier_key_state();
+    if (is_ctrl_space(static_cast<unsigned long>(wparam), modifiers)) {
+        *eaten = TRUE;
+        return S_OK;
+    }
+    if (can_start_shift_toggle(static_cast<unsigned long>(wparam), modifiers, shift_toggle_enabled())) {
         *eaten = TRUE;
         return S_OK;
     }
@@ -160,8 +238,12 @@ HRESULT TextService::OnTestKeyDown(ITfContext*, WPARAM wparam, LPARAM, BOOL* eat
         *eaten = should_eat_composition_commit_key(wparam, candidates_.size(), !composing_.empty());
         return S_OK;
     }
+    if (wparam == VK_BACK) {
+        *eaten = should_eat_backspace_for_composition(mode_, !composing_.empty(), false);
+        return S_OK;
+    }
     if ((wparam >= L'A' && wparam <= L'Z') || (wparam == VK_OEM_7 && !composing_.empty()) ||
-        wparam == VK_BACK || wparam == VK_ESCAPE || wparam == VK_LEFT || wparam == VK_RIGHT) {
+        wparam == VK_ESCAPE || wparam == VK_LEFT || wparam == VK_RIGHT) {
         *eaten = TRUE;
     }
     return S_OK;
@@ -173,15 +255,18 @@ HRESULT TextService::OnKeyDown(ITfContext* context, WPARAM wparam, LPARAM, BOOL*
     }
     *eaten = FALSE;
 
-    if ((GetKeyState(VK_CONTROL) & 0x8000) && wparam == VK_SPACE) {
-        mode_ = mode_ == InputMode::Chinese ? InputMode::English : InputMode::Chinese;
+    const ModifierKeyState modifiers = current_modifier_key_state();
+    const bool shift_enabled = shift_toggle_enabled();
+
+    if (is_ctrl_space(static_cast<unsigned long>(wparam), modifiers)) {
+        handle_ctrl_space_toggle(context, ctrl_space_preserved_ ? L"ctrl_space_keydown" : L"ctrl_space_fallback");
         *eaten = TRUE;
-        if (mode_ == InputMode::English) {
-            candidate_window_.hide(L"english_mode");
-        } else {
-            update_candidate_window(context);
-        }
-        log_status(L"mode", mode_ == InputMode::Chinese ? L"Chinese" : L"English");
+        return S_OK;
+    }
+
+    shift_toggle_on_key_down(shift_toggle_, static_cast<unsigned long>(wparam), modifiers, shift_enabled);
+    if (can_start_shift_toggle(static_cast<unsigned long>(wparam), modifiers, shift_enabled)) {
+        *eaten = TRUE;
         return S_OK;
     }
 
@@ -191,27 +276,40 @@ HRESULT TextService::OnKeyDown(ITfContext* context, WPARAM wparam, LPARAM, BOOL*
     return handle_chinese_key(context, wparam, eaten) ? S_OK : S_OK;
 }
 
-HRESULT TextService::OnTestKeyUp(ITfContext*, WPARAM, LPARAM, BOOL* eaten) {
+HRESULT TextService::OnTestKeyUp(ITfContext*, WPARAM wparam, LPARAM, BOOL* eaten) {
     if (!eaten) {
         return E_POINTER;
     }
-    *eaten = FALSE;
+    *eaten = is_shift_key(static_cast<unsigned long>(wparam)) && shift_toggle_.pending ? TRUE : FALSE;
     return S_OK;
 }
 
-HRESULT TextService::OnKeyUp(ITfContext*, WPARAM, LPARAM, BOOL* eaten) {
+HRESULT TextService::OnKeyUp(ITfContext* context, WPARAM wparam, LPARAM, BOOL* eaten) {
     if (!eaten) {
         return E_POINTER;
     }
     *eaten = FALSE;
+    ctrl_space_toggle_on_key_up(ctrl_space_toggle_, static_cast<unsigned long>(wparam));
+    const ModifierKeyState modifiers = current_modifier_key_state();
+    if (shift_toggle_on_key_up(shift_toggle_,
+                               static_cast<unsigned long>(wparam),
+                               modifiers,
+                               shift_toggle_enabled())) {
+        toggle_input_mode(context, L"shift_toggle");
+        *eaten = TRUE;
+    }
     return S_OK;
 }
 
-HRESULT TextService::OnPreservedKey(ITfContext*, REFGUID, BOOL* eaten) {
+HRESULT TextService::OnPreservedKey(ITfContext* context, REFGUID guid, BOOL* eaten) {
     if (!eaten) {
         return E_POINTER;
     }
     *eaten = FALSE;
+    if (preserved_key_action_for_guid(guid) == PreservedKeyAction::ToggleInputMode) {
+        handle_ctrl_space_toggle(context, L"ctrl_space_preserved_key");
+        *eaten = TRUE;
+    }
     return S_OK;
 }
 
@@ -225,16 +323,49 @@ HRESULT TextService::OnCompositionTerminated(TfEditCookie, ITfComposition*) {
 }
 
 bool TextService::should_pass_through(WPARAM wparam) const {
-    const bool ctrl = (GetKeyState(VK_CONTROL) & 0x8000) != 0;
-    const bool alt = (GetKeyState(VK_MENU) & 0x8000) != 0;
-    const bool win = (GetKeyState(VK_LWIN) & 0x8000) != 0 || (GetKeyState(VK_RWIN) & 0x8000) != 0;
-    if (alt || win) {
+    const ModifierKeyState modifiers = current_modifier_key_state();
+    if (modifiers.alt || modifiers.win) {
         return true;
     }
-    if (ctrl && wparam != VK_SPACE) {
+    if (modifiers.ctrl && wparam != VK_SPACE) {
         return true;
     }
     return false;
+}
+
+bool TextService::shift_toggle_enabled() const {
+    return settings_store_.load_input_mode_options().shift_toggle_enabled;
+}
+
+bool TextService::handle_ctrl_space_toggle(ITfContext* context, const wchar_t* reason) {
+    if (!ctrl_space_toggle_should_fire(ctrl_space_toggle_, true)) {
+        log_status(L"mode", L"Ctrl+Space duplicate event ignored until key release");
+        return false;
+    }
+    toggle_input_mode(context, reason);
+    return true;
+}
+
+HRESULT TextService::toggle_input_mode(ITfContext* context, const wchar_t* reason) {
+    if (!composing_.empty()) {
+        cancel_composition(context);
+    } else {
+        candidates_.clear();
+        selected_index_ = 0;
+        has_last_caret_rect_ = false;
+        candidate_window_.hide(reason);
+    }
+
+    mode_ = toggled_input_mode(mode_);
+    language_bar_.set_mode(mode_);
+    std::wstringstream stream;
+    stream << (mode_ == InputMode::Chinese ? L"Chinese" : L"English")
+           << L" reason=" << (reason ? reason : L"unknown");
+    log_status(L"mode", stream.str());
+    if (mode_ == InputMode::Chinese) {
+        update_candidate_window(context);
+    }
+    return S_OK;
 }
 
 bool TextService::handle_chinese_key(ITfContext* context, WPARAM wparam, BOOL* eaten) {
@@ -288,7 +419,16 @@ bool TextService::handle_chinese_key(ITfContext* context, WPARAM wparam, BOOL* e
         return false;
     }
 
-    if (wparam == VK_SPACE || wparam == VK_RETURN) {
+    if (wparam == VK_RETURN) {
+        if (composing_.empty()) {
+            return false;
+        }
+        commit_raw_composition(context);
+        *eaten = TRUE;
+        return true;
+    }
+
+    if (wparam == VK_SPACE) {
         const int commit_index = candidate_commit_index_for_key(wparam, candidates_.size(), !composing_.empty(), selected_index_);
         if (commit_index >= 0) {
             selected_index_ = static_cast<size_t>(commit_index);
@@ -388,6 +528,24 @@ HRESULT TextService::commit_selected(ITfContext* context) {
     selected_index_ = 0;
     has_last_caret_rect_ = false;
     candidate_window_.hide(L"commit");
+    return S_OK;
+}
+
+HRESULT TextService::commit_raw_composition(ITfContext* context) {
+    if (composing_.empty()) {
+        return S_FALSE;
+    }
+    const std::wstring committed = composing_;
+    const HRESULT hr = composition_.commit_text(context, client_id_, committed);
+    if (FAILED(hr)) {
+        log_status(L"composition", L"commit raw failed " + hresult_hex(hr));
+        return hr;
+    }
+    composing_.clear();
+    candidates_.clear();
+    selected_index_ = 0;
+    has_last_caret_rect_ = false;
+    candidate_window_.hide(L"commit_raw");
     return S_OK;
 }
 

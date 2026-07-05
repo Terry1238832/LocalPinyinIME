@@ -22,11 +22,45 @@ set(LOCALPINYINIME_DISPLAY_NAME "LocalPinyinIME - Offline Pinyin IME")
 set(LOCALPINYINIME_COMPANY_NAME "LocalPinyinIME contributors")
 set(LOCALPINYINIME_COPYRIGHT "Copyright (c) 2026 LocalPinyinIME contributors")
 
+if (LOCALPINYINIME_PYTHON_EXECUTABLE)
+    set(Python3_EXECUTABLE "${LOCALPINYINIME_PYTHON_EXECUTABLE}" CACHE FILEPATH "Python 3 interpreter" FORCE)
+endif()
+
+find_package(Python3 COMPONENTS Interpreter QUIET)
+if (NOT Python3_Interpreter_FOUND AND DEFINED ENV{USERPROFILE})
+    set(_localpinyin_codex_python "$ENV{USERPROFILE}/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe")
+    if (EXISTS "${_localpinyin_codex_python}")
+        set(Python3_EXECUTABLE "${_localpinyin_codex_python}" CACHE FILEPATH "Python 3 interpreter" FORCE)
+        find_package(Python3 COMPONENTS Interpreter QUIET)
+    endif()
+endif()
+if (NOT Python3_Interpreter_FOUND)
+    message(FATAL_ERROR "Python3 interpreter is required for generated branding resources and CTest Python checks. Set LOCALPINYINIME_PYTHON_EXECUTABLE to a Python 3 executable if auto-detection fails.")
+endif()
+
 configure_file(
     cmake/LocalPinyinVersion.h.in
     "${CMAKE_BINARY_DIR}/generated/localpinyin_version.h"
     @ONLY
 )
+
+set(LOCALPINYINIME_BRAND_THEME_RESOURCE
+    "${CMAKE_CURRENT_SOURCE_DIR}/assets/branding/theme/local_pinyin_blue_theme.json"
+)
+set(LOCALPINYINIME_BRAND_THEME_HEADER
+    "${CMAKE_BINARY_DIR}/generated/local_pinyin_blue_theme.h"
+)
+execute_process(
+    COMMAND "${Python3_EXECUTABLE}"
+        "${CMAKE_CURRENT_SOURCE_DIR}/tools/generate_brand_theme_header.py"
+        --input "${LOCALPINYINIME_BRAND_THEME_RESOURCE}"
+        --output "${LOCALPINYINIME_BRAND_THEME_HEADER}"
+    RESULT_VARIABLE LOCALPINYINIME_BRAND_THEME_RESULT
+)
+if (NOT LOCALPINYINIME_BRAND_THEME_RESULT EQUAL 0)
+    message(FATAL_ERROR "Failed to generate LocalPinyinIME brand theme header.")
+endif()
+include_directories("${CMAKE_BINARY_DIR}/generated")
 
 set(LOCALPINYINIME_CORE_DICTIONARY_RESOURCE
     "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/core_zh_pinyin.tsv"
@@ -94,6 +128,7 @@ set(IME_SOURCES
 )
 
 add_library(LocalPinyinIME SHARED ${IME_SOURCES})
+target_sources(LocalPinyinIME PRIVATE src/ime/LocalPinyinIME.rc)
 target_include_directories(LocalPinyinIME PRIVATE src src/ime src/engine src/common src/settings)
 target_link_libraries(LocalPinyinIME PRIVATE ole32 uuid advapi32 user32 gdi32 shlwapi)
 localpinyin_add_version_resource(LocalPinyinIME
@@ -112,6 +147,7 @@ set_target_properties(LocalPinyinIME PROPERTIES
 
 add_executable(LocalPinyinSettings WIN32
     src/settings/main.cpp
+    src/settings/LocalPinyinSettings.rc
     src/settings/settings_window.cpp
     src/settings/settings_store.cpp
     src/engine/user_lexicon.cpp
@@ -160,10 +196,11 @@ localpinyin_copy_dictionary_resource(LocalPinyinImeAudit)
 
 add_executable(LocalPinyinImeSetup
     src/setup/main.cpp
+    src/setup/verify_expected_dll.cpp
     src/ime/guids.cpp
 )
 target_include_directories(LocalPinyinImeSetup PRIVATE src src/ime "${CMAKE_BINARY_DIR}/generated")
-target_link_libraries(LocalPinyinImeSetup PRIVATE ole32 uuid advapi32)
+target_link_libraries(LocalPinyinImeSetup PRIVATE ole32 uuid advapi32 shell32)
 set_target_properties(LocalPinyinImeSetup PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 localpinyin_add_version_resource(LocalPinyinImeSetup
     "LocalPinyinIME Setup and Verification Tool"
@@ -171,6 +208,19 @@ localpinyin_add_version_resource(LocalPinyinImeSetup
     "VFT_APP"
 )
 localpinyin_copy_dictionary_resource(LocalPinyinImeSetup)
+
+function(localpinyin_enable_release_private_symbols target_name)
+    if (MSVC)
+        target_compile_options(${target_name} PRIVATE $<$<CONFIG:Release>:/Zi>)
+        target_link_options(${target_name} PRIVATE $<$<CONFIG:Release>:/DEBUG:FULL>)
+        set_target_properties(${target_name} PROPERTIES
+            PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+        )
+    endif()
+endfunction()
+
+localpinyin_enable_release_private_symbols(LocalPinyinIME)
+localpinyin_enable_release_private_symbols(LocalPinyinImeSetup)
 
 add_executable(LocalPinyinImeDictionarySmoke
     src/tools/dictionary_smoke.cpp
@@ -250,6 +300,66 @@ target_link_libraries(test_settings_window_layout PRIVATE user32 gdi32 shell32 s
 set_target_properties(test_settings_window_layout PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 add_test(NAME test_settings_window_layout COMMAND test_settings_window_layout)
 
+add_executable(test_preserved_key_registration
+    tests/test_preserved_key_registration.cpp
+    src/ime/guids.cpp
+    src/ime/text_service.cpp
+    src/ime/composition_manager.cpp
+    src/ime/candidate_ui.cpp
+    src/ime/candidate_window.cpp
+    src/ime/globals.cpp
+    src/ime/input_mode.cpp
+    src/ime/language_bar.cpp
+    src/settings/settings_store.cpp
+    src/engine/pinyin_engine.cpp
+    src/engine/dictionary.cpp
+    src/engine/user_lexicon.cpp
+    src/engine/candidate_ranker.cpp
+    src/engine/user_learning.cpp
+    src/engine/sqlite_database.cpp
+    src/common/logging.cpp
+    src/common/utf_utils.cpp
+    src/common/win32_utils.cpp
+)
+target_include_directories(test_preserved_key_registration PRIVATE src src/ime src/settings src/engine src/common)
+target_link_libraries(test_preserved_key_registration PRIVATE ole32 uuid user32 gdi32 shell32 shlwapi)
+set_target_properties(test_preserved_key_registration PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+add_test(NAME test_preserved_key_registration COMMAND test_preserved_key_registration)
+
+add_executable(test_registration_transaction tests/test_registration_transaction.cpp src/ime/guids.cpp)
+target_include_directories(test_registration_transaction PRIVATE src src/ime)
+target_link_libraries(test_registration_transaction PRIVATE uuid)
+set_target_properties(test_registration_transaction PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+add_test(NAME test_registration_transaction COMMAND test_registration_transaction)
+
+add_executable(test_tsf_category_registration_logic
+    tests/test_tsf_category_registration_logic.cpp
+    src/ime/guids.cpp
+)
+target_include_directories(test_tsf_category_registration_logic PRIVATE src src/ime)
+target_link_libraries(test_tsf_category_registration_logic PRIVATE uuid)
+set_target_properties(test_tsf_category_registration_logic PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+add_test(NAME test_tsf_category_registration_logic COMMAND test_tsf_category_registration_logic)
+
+add_executable(test_logging
+    tests/test_logging.cpp
+    src/common/logging.cpp
+    src/common/utf_utils.cpp
+    src/common/win32_utils.cpp
+)
+target_include_directories(test_logging PRIVATE src src/common)
+target_link_libraries(test_logging PRIVATE shell32 shlwapi)
+set_target_properties(test_logging PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+add_test(NAME test_logging COMMAND test_logging)
+
+add_executable(test_verify_expected_dll
+    tests/test_verify_expected_dll.cpp
+    src/setup/verify_expected_dll.cpp
+)
+target_include_directories(test_verify_expected_dll PRIVATE src)
+set_target_properties(test_verify_expected_dll PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+add_test(NAME test_verify_expected_dll COMMAND test_verify_expected_dll)
+
 add_test(
     NAME dictionary_smoke_tool
     COMMAND LocalPinyinImeDictionarySmoke
@@ -260,22 +370,6 @@ install(TARGETS LocalPinyinIME LocalPinyinSettings LocalPinyinImeEnable LocalPin
         RUNTIME DESTINATION bin)
 install(DIRECTORY data/ DESTINATION data)
 install(FILES ${LOCALPINYINIME_DICTIONARY_RESOURCES} DESTINATION bin/dictionary)
-
-if (LOCALPINYINIME_PYTHON_EXECUTABLE)
-    set(Python3_EXECUTABLE "${LOCALPINYINIME_PYTHON_EXECUTABLE}" CACHE FILEPATH "Python 3 interpreter" FORCE)
-endif()
-
-find_package(Python3 COMPONENTS Interpreter QUIET)
-if (NOT Python3_Interpreter_FOUND AND DEFINED ENV{USERPROFILE})
-    set(_localpinyin_codex_python "$ENV{USERPROFILE}/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe")
-    if (EXISTS "${_localpinyin_codex_python}")
-        set(Python3_EXECUTABLE "${_localpinyin_codex_python}" CACHE FILEPATH "Python 3 interpreter" FORCE)
-        find_package(Python3 COMPONENTS Interpreter QUIET)
-    endif()
-endif()
-if (NOT Python3_Interpreter_FOUND)
-    message(FATAL_ERROR "Python3 interpreter is required so CTest registers test_manage_user_lexicon and test_local_core_lexicon. Set LOCALPINYINIME_PYTHON_EXECUTABLE to a Python 3 executable if auto-detection fails.")
-endif()
 
 add_test(
     NAME test_manage_user_lexicon
@@ -311,4 +405,26 @@ add_test(
         "${CMAKE_CURRENT_SOURCE_DIR}/tests/test_first_party_lexicon_audit.py"
         --script "${CMAKE_CURRENT_SOURCE_DIR}/tools/audit_first_party_lexicon.py"
         --root "${CMAKE_CURRENT_SOURCE_DIR}"
+)
+add_test(
+    NAME test_merge_local_core_lexicon_patch
+    COMMAND "${Python3_EXECUTABLE}"
+        "${CMAKE_CURRENT_SOURCE_DIR}/tests/test_merge_local_core_lexicon_patch.py"
+        --script "${CMAKE_CURRENT_SOURCE_DIR}/tools/merge_local_core_lexicon_patch.py"
+        --root "${CMAKE_CURRENT_SOURCE_DIR}"
+)
+add_test(
+    NAME test_branding_assets
+    COMMAND "${Python3_EXECUTABLE}"
+        "${CMAKE_CURRENT_SOURCE_DIR}/tests/test_branding_assets.py"
+        --root "${CMAKE_CURRENT_SOURCE_DIR}"
+        --generated-header "${LOCALPINYINIME_BRAND_THEME_HEADER}"
+)
+add_test(
+    NAME test_profile_icon_resource
+    COMMAND "${Python3_EXECUTABLE}"
+        "${CMAKE_CURRENT_SOURCE_DIR}/tests/test_profile_icon_resource.py"
+        --dll "$<TARGET_FILE:LocalPinyinIME>"
+        --preview "${CMAKE_BINARY_DIR}/evidence/localpinyinime-dll-profile-icon-preview.png"
+        --json "${CMAKE_BINARY_DIR}/evidence/localpinyinime-dll-profile-icon-resource.json"
 )

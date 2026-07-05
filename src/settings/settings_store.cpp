@@ -101,7 +101,22 @@ CandidateWindowOptions SettingsStore::load_candidate_options() const {
     return options;
 }
 
-bool SettingsStore::save_candidate_options(const CandidateWindowOptions& options) const {
+InputModeOptions SettingsStore::load_input_mode_options() const {
+    InputModeOptions options;
+    const std::wstring text = read_utf8_file(settings_path());
+    if (text.empty()) {
+        return options;
+    }
+
+    const std::wstring shift_toggle_enabled = setting_value(text, L"shiftToggleEnabled");
+    if (!shift_toggle_enabled.empty()) {
+        options.shift_toggle_enabled = parse_bool(shift_toggle_enabled, options.shift_toggle_enabled);
+    }
+    return options;
+}
+
+bool SettingsStore::save_options(const CandidateWindowOptions& candidate_options,
+                                 const InputModeOptions& input_mode_options) const {
     if (!ensure_data_dir()) {
         return false;
     }
@@ -109,11 +124,16 @@ bool SettingsStore::save_candidate_options(const CandidateWindowOptions& options
     std::wstring text;
     text += L"{\n";
     text += L"  \"candidateWindow\": {\n";
-    text += L"    \"theme\": \"" + candidate_theme_mode_to_string(options.theme_mode) + L"\",\n";
+    text += L"    \"theme\": \"" + candidate_theme_mode_to_string(candidate_options.theme_mode) + L"\",\n";
     text += L"    \"showKeyHints\": ";
-    text += options.show_key_hints ? L"true" : L"false";
+    text += candidate_options.show_key_hints ? L"true" : L"false";
     text += L",\n";
-    text += L"    \"textSize\": \"" + candidate_text_size_to_string(options.text_size) + L"\"\n";
+    text += L"    \"textSize\": \"" + candidate_text_size_to_string(candidate_options.text_size) + L"\"\n";
+    text += L"  },\n";
+    text += L"  \"inputMode\": {\n";
+    text += L"    \"shiftToggleEnabled\": ";
+    text += input_mode_options.shift_toggle_enabled ? L"true" : L"false";
+    text += L"\n";
     text += L"  }\n";
     text += L"}\n";
 
@@ -123,6 +143,14 @@ bool SettingsStore::save_candidate_options(const CandidateWindowOptions& options
     }
     file << wide_to_utf8(text);
     return true;
+}
+
+bool SettingsStore::save_candidate_options(const CandidateWindowOptions& options) const {
+    return save_options(options, load_input_mode_options());
+}
+
+bool SettingsStore::save_input_mode_options(const InputModeOptions& options) const {
+    return save_options(load_candidate_options(), options);
 }
 
 bool SettingsStore::clear_learning_data() const {
