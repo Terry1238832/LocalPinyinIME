@@ -22,6 +22,8 @@ struct Candidate {
     // Reference unigram prior used by sentence decoding; the visible default
     // word order remains governed by the project/user base_score.
     int decoding_frequency = 0;
+    // Explicit personal dictionary provenance, including built-in overrides.
+    bool is_user_lexicon_entry = false;
 
     [[nodiscard]] int total_score() const noexcept {
         const long long score = static_cast<long long>(base_score) + user_frequency + exact_match_bonus + complete_segmentation_bonus - segmentation_penalty;

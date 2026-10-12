@@ -1,0 +1,55 @@
+{
+  "file": "daily_dialogue_context.txt",
+  "rights": "MIT; original first-party authored prose",
+  "license": "MIT",
+  "author": "LocalPinyinIME contributors",
+  "source_type": "first_party_original",
+  "permission_confirmed": true,
+  "purpose": "Natural daily dialogue character-context training; family, friendship, work, travel, emotions, conditions, shopping, learning, neighborhood and everyday decisions",
+  "full_sentence_dictionary_entries": false,
+  "runtime_use": "Only 1-4 character counts are derived; prose is not installed as sentence candidates",
+  "lines": 500,
+  "sentence_count": 500,
+  "han_characters": 8340,
+  "utf8_bytes": 28882,
+  "sha256": "0a5502454548100c9f60d1fcfb8a63420f054e7799c6f66097511f121fe68584",
+  "categories": {
+    "家庭与相处": 50,
+    "日常聊天与朋友": 50,
+    "工作协作与沟通": 50,
+    "出行与路上": 50,
+    "情绪与安慰": 50,
+    "原因、条件与转折": 50,
+    "饮食、购物与办事": 50,
+    "学习、兴趣与个人安排": 50,
+    "邻里与生活细节": 50,
+    "对话补充与生活选择": 50
+  },
+  "writing_principles": [
+    "Each sentence was written as a plausible everyday exchange, with varied situations, roles, tone and grammatical structure.",
+    "No copied articles, dictionary sentence imports, Cartesian phrase assembly or template expansion.",
+    "Written before mechanical test-answer exclusion; test expected answers were not inspected for composition.",
+    "Includes natural causes, conditions, concessions, clarification, coordination and reassurance; does not force target homophones.",
+    "Test answers are excluded after normalization to Han characters, including matches crossing punctuation boundaries.",
+    "Exact duplicate sentences are removed within this file and against existing daily original corpora."
+  ],
+  "initial_sentence_count": 500,
+  "removed_test_overlap_count": 0,
+  "removed_duplicate_count": 0,
+  "removed_existing_daily_duplicate_count": 0,
+  "duplicate_lines": 0,
+  "test_exact_overlap": [],
+  "test_substring_overlap_at_least_6_han": [],
+  "training_excluded_from_tests": true,
+  "verified_case_files": [
+    {
+      "file": "tests/data/typing_holdout.tsv",
+      "sha256": "533db2c1baa72ab8624906783545125131b3b99b015cf46be3bd27c4e0e64f7c"
+    },
+    {
+      "file": "tests/data/typing_fresh.tsv",
+      "sha256": "d3f98fb17c845e34f15153fb8973a19e5f8f4e78c77e55973dd4cab9acb9537e"
+    }
+  ],
+  "created_date": "2026-10-12"
+}

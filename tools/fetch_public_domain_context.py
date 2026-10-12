@@ -17,8 +17,8 @@ from urllib.request import Request, urlopen
 WORKS = ["秋夜 (鲁迅)", "好的故事", "风筝 (鲁迅)", "聪明人和傻子和奴才",
          "从百草园到三味书屋", "藤野先生", "阿长与山海经", "五猖会", "社戏",
          "兔和猫", "鸭的喜剧", "孔乙己", "药", "明天", "头发的故事", "一件小事"]
-# 一件小事 is evaluated, so it must never be fetched as training.
-WORKS = [work for work in WORKS if work not in {"一件小事", "背影", "故乡"}]
+HELDOUT_WORKS = {"一件小事", "背影", "故乡", "荷塘月色", "风筝", "风筝 (鲁迅)", "風箏"}
+WORKS = [work for work in WORKS if work not in HELDOUT_WORKS]
 
 
 class ArticleParser(HTMLParser):
@@ -85,21 +85,30 @@ def main():
     p.add_argument("--destination", type=Path, required=True)
     a = p.parse_args()
     a.destination.mkdir(parents=True, exist_ok=True)
-    sources = [{"file": path.name, "rights": "MIT; original authored prose", "author": "LocalPinyinIME contributors"}
-               for path in sorted(a.destination.glob("daily_*.txt"))]
+    manifest_path = a.destination / "sources.json"
+    previous = json.loads(manifest_path.read_text(encoding="utf-8")) if manifest_path.exists() else {}
+    # Preserve reviewed sources imported separately, detailed first-party metadata,
+    # and a previously downloaded work when a refresh fails.
+    heldout = HELDOUT_WORKS | set(previous.get("heldout_works_excluded", []))
+    sources = {item["file"]: item for item in previous.get("sources", [])
+               if (a.destination / item["file"]).is_file() and item.get("title") not in heldout}
+    for path in sorted(a.destination.glob("daily_*.txt")):
+        sources.setdefault(path.name, {"file": path.name, "rights": "MIT; original authored prose",
+                                      "author": "LocalPinyinIME contributors"})
     failures = []
     with ThreadPoolExecutor(max_workers=3) as pool:
-        futures = [(work, pool.submit(fetch, work, a.destination)) for work in WORKS]
+        futures = [(work, pool.submit(fetch, work, a.destination)) for work in WORKS if work not in heldout]
         for work, future in futures:
             try:
-                sources.append(future.result())
+                item = future.result()
+                sources[item["file"]] = item
             except Exception as error:
                 failures.append({"title": work, "error": str(error)})
-    manifest = {"format_version": 1, "heldout_works_excluded": ["背影", "故乡", "一件小事"],
-                "runtime_artifact": "../context_zh.tsv; only 1-4 character counts are packaged", "sources": sources,
+    manifest = {**previous, "format_version": 1, "heldout_works_excluded": sorted(heldout),
+                "runtime_artifact": "../context_zh.tsv; only 1-4 character counts are packaged", "sources": list(sources.values()),
                 "fetch_failures": failures}
-    (a.destination / "sources.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
-    print(json.dumps({"fetched": sum("source" in item for item in sources), "failures": failures}, ensure_ascii=True))
+    manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
+    print(json.dumps({"attributed_sources": len(sources), "failures": failures}, ensure_ascii=True))
 
 
 if __name__ == "__main__":

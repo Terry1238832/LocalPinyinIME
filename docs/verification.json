@@ -1,21 +1,22 @@
 {
-  "version": "0.5.0",
+  "version": "0.5.1",
   "clientDate": "2026-10-12",
-  "installer": "https://github.com/Terry1238832/LocalPinyinIME/releases/download/v0.5.0/LocalPinyinIME-0.5.0-x64.exe",
-  "installerBytes": 3859355,
-  "installedPayloadBytes": 5943889,
-  "sha256": "8100E26364E93FC94EA4F680F5EBA670AE1FE241D8BC6C5FB739D76A4C5D1DF6",
-  "testsPassed": 31,
+  "installer": "https://github.com/Terry1238832/LocalPinyinIME/releases/download/v0.5.1/LocalPinyinIME-0.5.1-x64.exe",
+  "installerBytes": 3949273,
+  "installedPayloadBytes": 6346907,
+  "sha256": "832C154C1E4657E0DB8BEE664DC61E3AEFBC92702D24E1FFD02A77C40992AE78",
+  "testsPassed": 32,
   "testsFailed": 0,
   "interfaceScreenshotsChecked": 30,
-  "dictionaryEntries": 81104,
+  "dictionaryEntries": 83062,
   "verified": [
-    "31 offline regressions: dictionary layers, contextual decoding, boundary parsing, learning and cache invalidation",
+    "32 offline regressions: dictionary layers, contextual decoding, boundary parsing, learning and cache invalidation",
+    "Personal 5-20 character complete-key phrases at recommended frequency 5000, real child-process restart, contexts, homophone learning and overlay removal",
     "DLL COM creation and real Windows TSF document/context/edit sessions with in-memory key-registration adapter",
     "Chinese punctuation, prefix selection with editable suffix, 257-letter input and separator length boundary",
     "30 native light/dark captures including live candidate preview and all seven font sizes on a long sentence",
     "Native control names/check state/Space/Tab and candidate pointer/no-focus-steal hidden probes",
-    "Inno Setup compilation; nine-file staged payload; product versions 0.5.0.0; installer SHA-256",
+    "Inno Setup compilation; nine-file staged payload; product versions 0.5.1.0; installer SHA-256",
     "All three runtime binaries import Windows system DLLs only"
   ],
   "notTested": [
@@ -31,6 +32,8 @@
   "gitHistoryRetained": true,
   "sourceDirectory": ".",
   "cleanCheckoutBuildVerified": false,
-  "contextNgrams": 93088,
-  "typingEvaluation": "typing-evaluation.json"
+  "contextNgrams": 119220,
+  "typingEvaluation": "typing-evaluation.json",
+  "cleanSourceSnapshotBuildVerified": true,
+  "sourceSnapshotFiles": 234
 }

@@ -67,7 +67,11 @@ def main() -> int:
     report = {
         "evaluation": {"personal_data_isolated": True, "expected_answers_learned": False,
                        "engine_sha256": hashlib.sha256(args.engine.read_bytes()).hexdigest(),
-                       "cases_sha256": hashlib.sha256(args.cases.read_bytes()).hexdigest()},
+                       "cases_sha256": hashlib.sha256(args.cases.read_bytes()).hexdigest(),
+                       "resource_sha256": {name: hashlib.sha256(path.read_bytes()).hexdigest()
+                           for name in ("core_zh_pinyin.tsv", "local_core_zh_pinyin.tsv",
+                                        "standard_zh_pinyin.tsv", "context_zh.tsv")
+                           for path in [args.resources / "dictionary" / name] if path.is_file()}},
         "summary": summarize(rows),
         "groups": {group: summarize(values) for group, values in groups.items()},
         "failures": [{"source": row["source"], "pinyin": row["pinyin"], "expected": row["expected"],

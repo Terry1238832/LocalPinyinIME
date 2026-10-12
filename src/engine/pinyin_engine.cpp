@@ -306,10 +306,17 @@ std::vector<Candidate> PinyinEngine::lookup(const std::wstring& pinyin, const st
     auto dp = decode(dictionary_, ranker_, learning_, context_model_, parsed, preceding_text);
     std::vector<Candidate> candidates;
     for (const auto& path : dp.back()) candidates.push_back(candidate_from_path(path, context_model_));
-    // A standalone dictionary word keeps its familiar frequency order. Long
-    // sentence rows use the same contextual score as newly composed sentences.
+    // A standalone short word keeps its familiar frequency order. An explicit
+    // personal phrase at the recommended common-word frequency also preserves
+    // a complete key match, even if sentence decoding pruned that whole phrase.
+    // Lower-frequency personal phrases and system sentences keep their normal
+    // contextual ranking.
     for (auto candidate : dictionary_.lookup(normalized)) {
-        if (!preceding_text.empty() || candidate.text.size() > 4 || !dictionary_.reading_matches_boundaries(normalized, candidate.text, parsed.boundaries)) continue;
+        const bool standalone_word = preceding_text.empty() && candidate.text.size() <= 4;
+        const bool preferred_personal_phrase = candidate.is_user_lexicon_entry && candidate.text.size() > 4 &&
+                                               candidate.base_score >= kPreferredUserLexiconFrequency;
+        if ((!standalone_word && !preferred_personal_phrase) ||
+            !dictionary_.reading_matches_boundaries(normalized, candidate.text, parsed.boundaries)) continue;
         candidate.exact_match_bonus = kExactMatchBonus;
         candidate.complete_segmentation_bonus = kCompleteSegmentationBonus;
         candidates.push_back(std::move(candidate));

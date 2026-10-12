@@ -2125,5 +2125,1295 @@
         "rank": 4
       }
     ]
+  },
+  "fixed_0_5_1": {
+    "evaluation": {
+      "personal_data_isolated": true,
+      "expected_answers_learned": false,
+      "engine_sha256": "57d93cb321eab338c2d50f45feb55911e5c1050ae06426d76f62eff849bb2a9a",
+      "cases_sha256": "533db2c1baa72ab8624906783545125131b3b99b015cf46be3bd27c4e0e64f7c",
+      "resource_sha256": {
+        "core_zh_pinyin.tsv": "167b2356dcf36ca0134ebfde17f428504c43cbc3b33fbafdd96a9f2990d9bd9d",
+        "local_core_zh_pinyin.tsv": "f79230ff886612d1d78a66b1908e58250c936b3963def870becbecf804b0e0a1",
+        "standard_zh_pinyin.tsv": "9dbc97aacdad2bd21bfbd6d2dad7f7ed61e0dd95bbf213030f7d7973d25c3e15",
+        "context_zh.tsv": "7fb97a138b74402f2e082e5bdf56f5dbba83c8452976e480fcd41fdcde045cf8"
+      }
+    },
+    "summary": {
+      "cases": 138,
+      "top1_correct": 89,
+      "top9_present": 121,
+      "top1_percent": 64.49,
+      "top9_percent": 87.68,
+      "character_error_rate": 0.0482,
+      "p50_lookup_ms": 18.031,
+      "p95_lookup_ms": 30.163,
+      "max_lookup_ms": 43.843
+    },
+    "groups": {
+      "article": {
+        "cases": 47,
+        "top1_correct": 20,
+        "top9_present": 34,
+        "top1_percent": 42.55,
+        "top9_percent": 72.34,
+        "character_error_rate": 0.1,
+        "p50_lookup_ms": 12.217,
+        "p95_lookup_ms": 30.163,
+        "max_lookup_ms": 33.344
+      },
+      "daily": {
+        "cases": 91,
+        "top1_correct": 69,
+        "top9_present": 87,
+        "top1_percent": 75.82,
+        "top9_percent": 95.6,
+        "character_error_rate": 0.0254,
+        "p50_lookup_ms": 19.396,
+        "p95_lookup_ms": 29.683,
+        "max_lookup_ms": 43.843
+      }
+    },
+    "keystrokes": {
+      "count": 4477,
+      "first_key_ms": 18.095,
+      "p50_ms": 7.384,
+      "p95_ms": 22.453,
+      "max_ms": 51.547,
+      "measurement": "Engine lookup only; no OS event dispatch or edit-session time"
+    },
+    "failures": [
+      {
+        "source": "article:beiying:01",
+        "pinyin": "wozuibunengwangjideshitadebeiying",
+        "expected": "我最不能忘记的是他的背影",
+        "actual": "我最不能忘记得是他的背影",
+        "rank": 0
+      },
+      {
+        "source": "article:beiying:03",
+        "pinyin": "daonanjingshiyoupengyouyuequyouguang",
+        "expected": "到南京时有朋友约去游逛",
+        "actual": "到南京时有朋友约去油光",
+        "rank": 4
+      },
+      {
+        "source": "article:beiying:04",
+        "pinyin": "qishiwonanianyiershisui",
+        "expected": "其实我那年已二十岁",
+        "actual": "其实我那年一二十岁",
+        "rank": 0
+      },
+      {
+        "source": "article:beiying:05",
+        "pinyin": "tachouchuleyihuizhongyujuedinghaishizijisongwoqu",
+        "expected": "他踌躇了一会终于决定还是自己送我去",
+        "actual": "他抽出了一会终于决定还是自己送我去",
+        "rank": 0
+      },
+      {
+        "source": "article:beiying:06",
+        "pinyin": "womenguolejiangjinlechezhan",
+        "expected": "我们过了江进了车站",
+        "actual": "我们过了将近了车站",
+        "rank": 0
+      },
+      {
+        "source": "article:beiying:08",
+        "pinyin": "tabianyoumangzhehetamenjiangjiaqian",
+        "expected": "他便又忙着和他们讲价钱",
+        "actual": "他便又忙着和他们将价钱",
+        "rank": 5
+      },
+      {
+        "source": "article:beiying:09",
+        "pinyin": "keshitachuanguotiedaoyaopashangnabianyuetaijiuburongyile",
+        "expected": "可是他穿过铁道要爬上那边月台就不容易了",
+        "actual": "可是她穿过铁道要爬上那边月台就不容易了",
+        "rank": 2
+      },
+      {
+        "source": "article:beiying:10",
+        "pinyin": "woganjinshiganleleipatakanjianyepabierenkanjian",
+        "expected": "我赶紧拭干了泪怕他看见也怕别人看见",
+        "actual": "我赶紧实干了类怕他看见也怕别人看见",
+        "rank": 0
+      },
+      {
+        "source": "article:beiying:12",
+        "pinyin": "wodeyanleiyoulaile",
+        "expected": "我的眼泪又来了",
+        "actual": "我的眼泪有来了",
+        "rank": 2
+      },
+      {
+        "source": "article:beiying:13",
+        "pinyin": "fuqinhewodoushidongbenxizou",
+        "expected": "父亲和我都是东奔西走",
+        "actual": "父亲和我都是动本息走",
+        "rank": 0
+      },
+      {
+        "source": "article:guxiang:04",
+        "pinyin": "jiezhebianfeichulebasuidezhier",
+        "expected": "接着便飞出了八岁的侄儿",
+        "actual": "接着便飞出了八岁的之二",
+        "rank": 3
+      },
+      {
+        "source": "article:guxiang:05",
+        "pinyin": "woyijingjiangnidaojiadedayueriqitongzhita",
+        "expected": "我已经将你到家的大约日期通知他",
+        "actual": "我已经讲你到家的大约日期通知他",
+        "rank": 6
+      },
+      {
+        "source": "article:guxiang:06",
+        "pinyin": "wosaochuyikuaikongdilai",
+        "expected": "我扫出一块空地来",
+        "actual": "我扫除一块空地来",
+        "rank": 2
+      },
+      {
+        "source": "article:guxiang:13",
+        "pinyin": "wozhidaowuhuakeshuole",
+        "expected": "我知道无话可说了",
+        "actual": "我知道无话客说了",
+        "rank": 2
+      },
+      {
+        "source": "article:guxiang:14",
+        "pinyin": "woyimianyingchoutoukongbianshoushixiexingli",
+        "expected": "我一面应酬偷空便收拾些行李",
+        "actual": "我一面应酬头空便收拾写行李",
+        "rank": 0
+      },
+      {
+        "source": "article:guxiang:16",
+        "pinyin": "muqinhehongerdoushuizhaole",
+        "expected": "母亲和宏儿都睡着了",
+        "actual": "母亲和红而都睡着了",
+        "rank": 0
+      },
+      {
+        "source": "article:guxiang:17",
+        "pinyin": "zouderenduoleyebianchenglelu",
+        "expected": "走的人多了也便成了路",
+        "actual": "走的人多了也变成了路",
+        "rank": 2
+      },
+      {
+        "source": "article:yijian:04",
+        "pinyin": "woyinweishengjiguanxibudebuyizaozailushangzou",
+        "expected": "我因为生计关系不得不一早在路上走",
+        "actual": "我因为生机关系不得不一早在路上走",
+        "rank": 0
+      },
+      {
+        "source": "article:yijian:05",
+        "pinyin": "yilujihuyubujianren",
+        "expected": "一路几乎遇不见人",
+        "actual": "一路几乎于不见人",
+        "rank": 2
+      },
+      {
+        "source": "article:yijian:06",
+        "pinyin": "lushangfuchenzaoyiguajing",
+        "expected": "路上浮尘早已刮净",
+        "actual": "路上浮沉早已挂静",
+        "rank": 0
+      },
+      {
+        "source": "article:yijian:08",
+        "pinyin": "diedaodeshiyigenvren",
+        "expected": "跌倒的是一个女人",
+        "actual": "跌到的是一个女人",
+        "rank": 2
+      },
+      {
+        "source": "article:yijian:09",
+        "pinyin": "woxiangwoyanjiannimanmandaodizenmehuishuaihuaine",
+        "expected": "我想我眼见你慢慢倒地怎么会摔坏呢",
+        "actual": "我想我眼见你慢慢到底怎么回率坏呢",
+        "rank": 0
+      },
+      {
+        "source": "article:yijian:11",
+        "pinyin": "chefutinglezhelaonvrendehuaquehaobuchouchu",
+        "expected": "车夫听了这老女人的话却毫不踌躇",
+        "actual": "车夫停了这老女人的话却毫不抽出",
+        "rank": 6
+      },
+      {
+        "source": "article:yijian:12",
+        "pinyin": "wozheshiturangandaoyizhongyiyangdeganjue",
+        "expected": "我这时突然感到一种异样的感觉",
+        "actual": "我这时突然感到一种一样的感觉",
+        "rank": 0
+      },
+      {
+        "source": "article:yijian:13",
+        "pinyin": "zuozhemeiyoudongyemeiyouxiang",
+        "expected": "坐着没有动也没有想",
+        "actual": "坐着没有东也没有想",
+        "rank": 3
+      },
+      {
+        "source": "article:yijian:14",
+        "pinyin": "nizijiguchebatabunenglanile",
+        "expected": "你自己雇车罢他不能拉你了",
+        "actual": "你自己股车把它不能啦你了",
+        "rank": 0
+      },
+      {
+        "source": "article:yijian:15",
+        "pinyin": "fengquanzhulelushanghaihenjing",
+        "expected": "风全住了路上还很静",
+        "actual": "奉劝住了路上还很静",
+        "rank": 2
+      },
+      {
+        "source": "daily:005",
+        "pinyin": "mingtianzaoshangwoyaoquyiyuanjianchashenti",
+        "expected": "明天早上我要去医院检查身体",
+        "actual": "明天早上我要区医院检查身体",
+        "rank": 2
+      },
+      {
+        "source": "daily:011",
+        "pinyin": "fujinyoumeiyoupianyiyidiandefandian",
+        "expected": "附近有没有便宜一点的饭店",
+        "actual": "附近有没有偏移一点的饭店",
+        "rank": 2
+      },
+      {
+        "source": "daily:014",
+        "pinyin": "zhebenshuwoyijingkanguoliangbianle",
+        "expected": "这本书我已经看过两遍了",
+        "actual": "这本书我已经看过两变了",
+        "rank": 7
+      },
+      {
+        "source": "daily:024",
+        "pinyin": "shoujimeidianlewodeizhaogechongdianqi",
+        "expected": "手机没电了我得找个充电器",
+        "actual": "手机没点了我得找个充电器",
+        "rank": 2
+      },
+      {
+        "source": "daily:029",
+        "pinyin": "xiabanzhihouwozhunbeiquchaoshimaishuiguo",
+        "expected": "下班之后我准备去超市买水果",
+        "actual": "下班之后我准备去超时买水果",
+        "rank": 2
+      },
+      {
+        "source": "daily:036",
+        "pinyin": "laoshirangwomenxiazhoujiaoyifenzuoye",
+        "expected": "老师让我们下周交一份作业",
+        "actual": "老师让我们下周叫一份作业",
+        "rank": 0
+      },
+      {
+        "source": "daily:038",
+        "pinyin": "woyijingbaxuyaodedongxidoumaiqile",
+        "expected": "我已经把需要的东西都买齐了",
+        "actual": "我已经吧需要的东西都买齐了",
+        "rank": 2
+      },
+      {
+        "source": "daily:039",
+        "pinyin": "zhelideditiezhanlixuexiaoyuanbuyuan",
+        "expected": "这里的地铁站离学校远不远",
+        "actual": "这里的地铁站离学校园不远",
+        "rank": 2
+      },
+      {
+        "source": "daily:043",
+        "pinyin": "tazaiyangtaishanggeihuajiaoshui",
+        "expected": "她在阳台上给花浇水",
+        "actual": "他在阳台上给话浇水",
+        "rank": 0
+      },
+      {
+        "source": "daily:044",
+        "pinyin": "zhetiaoluzoudaodiyouzhuanjiudaole",
+        "expected": "这条路走到底右转就到了",
+        "actual": "这条路走到第右转就到了",
+        "rank": 2
+      },
+      {
+        "source": "daily:049",
+        "pinyin": "wodasuancongmingtiankaishizaodianqichuang",
+        "expected": "我打算从明天开始早点起床",
+        "actual": "我打算聪明天开始早点起床",
+        "rank": 2
+      },
+      {
+        "source": "daily:050",
+        "pinyin": "ruguoxiayudehuawomenjiudaizaijiali",
+        "expected": "如果下雨的话我们就待在家里",
+        "actual": "如果下雨的话我们就呆在家里",
+        "rank": 2
+      },
+      {
+        "source": "daily:051",
+        "pinyin": "jiranyijingjuedinglejiurenzhenzuoxiaqu",
+        "expected": "既然已经决定了就认真做下去",
+        "actual": "既然已经决定了就认真坐下去",
+        "rank": 2
+      },
+      {
+        "source": "daily:053",
+        "pinyin": "wojuedenihaishixianwenqingchubijiaohao",
+        "expected": "我觉得你还是先问清楚比较好",
+        "actual": "我觉得你还是现问清楚比较好",
+        "rank": 2
+      },
+      {
+        "source": "daily:055",
+        "pinyin": "wobenlaiyiweijintianbuhuiyourenlai",
+        "expected": "我本来以为今天不会有人来",
+        "actual": "我本来一位今天不会有人来",
+        "rank": 2
+      },
+      {
+        "source": "daily:060",
+        "pinyin": "woyijingshiguohaojicilehaishibuxing",
+        "expected": "我已经试过好几次了还是不行",
+        "actual": "我已经是过好几次了还是不行",
+        "rank": 2
+      },
+      {
+        "source": "daily:067",
+        "pinyin": "woxiangzhidaoweishenmehuichuxianzhegewenti",
+        "expected": "我想知道为什么会出现这个问题",
+        "actual": "我想知道为什么回出现这个问题",
+        "rank": 2
+      },
+      {
+        "source": "daily:068",
+        "pinyin": "zhegeshurufayinggainenggoudachuwanzhengdejuzi",
+        "expected": "这个输入法应该能够打出完整的句子",
+        "actual": "这个输入法应该能够打出完整的橘子",
+        "rank": 3
+      },
+      {
+        "source": "daily:072",
+        "pinyin": "yinhangzaichaoshidepangbian",
+        "expected": "银行在超市的旁边",
+        "actual": "银行载超时的旁边",
+        "rank": 0
+      },
+      {
+        "source": "daily:075",
+        "pinyin": "tayijingbajiedeqianhuangeiwole",
+        "expected": "他已经把借的钱还给我了",
+        "actual": "他已经八戒的钱还给我了",
+        "rank": 0
+      },
+      {
+        "source": "daily:079",
+        "pinyin": "nihuilaideshihoushunbianbangwonayixia",
+        "expected": "你回来的时候顺便帮我拿一下",
+        "actual": "你回来的时候顺便帮我那一下",
+        "rank": 2
+      },
+      {
+        "source": "daily:087",
+        "pinyin": "womenxianzaixianbuyaotaolunzhegewenti",
+        "expected": "我们现在先不要讨论这个问题",
+        "actual": "我们先在先不要讨论这个问题",
+        "rank": 2
+      }
+    ]
+  },
+  "fresh_0_5_1": {
+    "evaluation": {
+      "personal_data_isolated": true,
+      "expected_answers_learned": false,
+      "engine_sha256": "57d93cb321eab338c2d50f45feb55911e5c1050ae06426d76f62eff849bb2a9a",
+      "cases_sha256": "d3f98fb17c845e34f15153fb8973a19e5f8f4e78c77e55973dd4cab9acb9537e",
+      "resource_sha256": {
+        "core_zh_pinyin.tsv": "167b2356dcf36ca0134ebfde17f428504c43cbc3b33fbafdd96a9f2990d9bd9d",
+        "local_core_zh_pinyin.tsv": "f79230ff886612d1d78a66b1908e58250c936b3963def870becbecf804b0e0a1",
+        "standard_zh_pinyin.tsv": "9dbc97aacdad2bd21bfbd6d2dad7f7ed61e0dd95bbf213030f7d7973d25c3e15",
+        "context_zh.tsv": "7fb97a138b74402f2e082e5bdf56f5dbba83c8452976e480fcd41fdcde045cf8"
+      }
+    },
+    "summary": {
+      "cases": 67,
+      "top1_correct": 37,
+      "top9_present": 52,
+      "top1_percent": 55.22,
+      "top9_percent": 77.61,
+      "character_error_rate": 0.0915,
+      "p50_lookup_ms": 10.755,
+      "p95_lookup_ms": 17.422,
+      "max_lookup_ms": 22.213
+    },
+    "groups": {
+      "article": {
+        "cases": 47,
+        "top1_correct": 24,
+        "top9_present": 32,
+        "top1_percent": 51.06,
+        "top9_percent": 68.09,
+        "character_error_rate": 0.1265,
+        "p50_lookup_ms": 8.365,
+        "p95_lookup_ms": 15.49,
+        "max_lookup_ms": 17.195
+      },
+      "daily": {
+        "cases": 20,
+        "top1_correct": 13,
+        "top9_present": 20,
+        "top1_percent": 65.0,
+        "top9_percent": 100.0,
+        "character_error_rate": 0.0424,
+        "p50_lookup_ms": 15.359,
+        "p95_lookup_ms": 22.213,
+        "max_lookup_ms": 22.213
+      }
+    },
+    "failures": [
+      {
+        "source": "article:hetang:03",
+        "pinyin": "huranxiangqiririzouguodehetang",
+        "expected": "忽然想起日日走过的荷塘",
+        "actual": "忽然想起日日走过的喝汤",
+        "rank": 0
+      },
+      {
+        "source": "article:hetang:05",
+        "pinyin": "zonggailingyouyifanyangziba",
+        "expected": "总该另有一番样子吧",
+        "actual": "总该另有一番样子罢",
+        "rank": 5
+      },
+      {
+        "source": "article:hetang:06",
+        "pinyin": "yueliangjianjiandeshenggaole",
+        "expected": "月亮渐渐地升高了",
+        "actual": "月亮渐渐的升高了",
+        "rank": 4
+      },
+      {
+        "source": "article:hetang:07",
+        "pinyin": "qiangwaimalushanghaizimendehuanxiao",
+        "expected": "墙外马路上孩子们的欢笑",
+        "actual": "强外马路上孩子们的欢笑",
+        "rank": 2
+      },
+      {
+        "source": "article:hetang:09",
+        "pinyin": "qizaiwulipaizheruner",
+        "expected": "妻在屋里拍着闰儿",
+        "actual": "其在屋里排着润儿",
+        "rank": 0
+      },
+      {
+        "source": "article:hetang:10",
+        "pinyin": "mimihuhudehengzhemiange",
+        "expected": "迷迷糊糊地哼着眠歌",
+        "actual": "迷迷糊糊的横着棉个",
+        "rank": 0
+      },
+      {
+        "source": "article:hetang:11",
+        "pinyin": "woqiaoqiaodepiledashan",
+        "expected": "我悄悄地披了大衫",
+        "actual": "我悄悄地皮了大衫",
+        "rank": 0
+      },
+      {
+        "source": "article:hetang:13",
+        "pinyin": "yanzhehetang",
+        "expected": "沿着荷塘",
+        "actual": "沿着喝汤",
+        "rank": 0
+      },
+      {
+        "source": "article:hetang:14",
+        "pinyin": "shiyitiaoquzhedexiaomeixielu",
+        "expected": "是一条曲折的小煤屑路",
+        "actual": "是一条曲折的小妹泄露",
+        "rank": 0
+      },
+      {
+        "source": "article:hetang:15",
+        "pinyin": "zheshiyitiaoyoupidelu",
+        "expected": "这是一条幽僻的路",
+        "actual": "这是一条有匹的路",
+        "rank": 0
+      },
+      {
+        "source": "article:hetang:18",
+        "pinyin": "hetangsimian",
+        "expected": "荷塘四面",
+        "actual": "喝汤四面",
+        "rank": 0
+      },
+      {
+        "source": "article:hetang:19",
+        "pinyin": "zhangzhexuduoshu",
+        "expected": "长着许多树",
+        "actual": "长着许多书",
+        "rank": 2
+      },
+      {
+        "source": "article:hetang:20",
+        "pinyin": "wengwengyuyude",
+        "expected": "蓊蓊郁郁的",
+        "actual": "嗡嗡与语的",
+        "rank": 0
+      },
+      {
+        "source": "article:hetang:23",
+        "pinyin": "heyixiebuzhidaomingzideshu",
+        "expected": "和一些不知道名字的树",
+        "actual": "和一些不知道名字的书",
+        "rank": 2
+      },
+      {
+        "source": "article:hetang:30",
+        "pinyin": "beizheshouduozhe",
+        "expected": "背着手踱着",
+        "actual": "背着收躲着",
+        "rank": 0
+      },
+      {
+        "source": "article:hetang:31",
+        "pinyin": "zheyipiantiandihaoxiangshiwode",
+        "expected": "这一片天地好像是我的",
+        "actual": "这一篇天的好像是我的",
+        "rank": 0
+      },
+      {
+        "source": "article:hetang:32",
+        "pinyin": "woyexiangchaochulepingchangdeziji",
+        "expected": "我也像超出了平常的自己",
+        "actual": "我也想超出了平常的自己",
+        "rank": 0
+      },
+      {
+        "source": "article:hetang:36",
+        "pinyin": "aiqunju",
+        "expected": "爱群居",
+        "actual": "爱群句",
+        "rank": 0
+      },
+      {
+        "source": "article:hetang:38",
+        "pinyin": "xiangjinwanshang",
+        "expected": "像今晚上",
+        "actual": "向今晚上",
+        "rank": 2
+      },
+      {
+        "source": "article:hetang:42",
+        "pinyin": "bianjueshigeziyouderen",
+        "expected": "便觉是个自由的人",
+        "actual": "便觉十个字有的人",
+        "rank": 0
+      },
+      {
+        "source": "article:hetang:43",
+        "pinyin": "baitianliyidingyaozuodeshi",
+        "expected": "白天里一定要做的事",
+        "actual": "白天理一定要做的事",
+        "rank": 2
+      },
+      {
+        "source": "article:hetang:46",
+        "pinyin": "zheshiduchudemiaochu",
+        "expected": "这是独处的妙处",
+        "actual": "这是独处的妙出",
+        "rank": 3
+      },
+      {
+        "source": "article:hetang:47",
+        "pinyin": "woqieshouyongzhewubiandehexiangyuesehaole",
+        "expected": "我且受用这无边的荷香月色好了",
+        "actual": "我且受用这无边的盒想月色好了",
+        "rank": 0
+      },
+      {
+        "source": "daily:fresh:10",
+        "pinyin": "fujinyoumeiyoukeyixiushoujidedifang",
+        "expected": "附近有没有可以修手机的地方",
+        "actual": "附近有没有可以休手机的地方",
+        "rank": 2
+      },
+      {
+        "source": "daily:fresh:11",
+        "pinyin": "haizidezuoyehaimeiyouxiewan",
+        "expected": "孩子的作业还没有写完",
+        "actual": "孩子的作业还没有些晚",
+        "rank": 6
+      },
+      {
+        "source": "daily:fresh:12",
+        "pinyin": "mingtianzaoshangwoquchezhanjieni",
+        "expected": "明天早上我去车站接你",
+        "actual": "明天早上我去车站解腻",
+        "rank": 3
+      },
+      {
+        "source": "daily:fresh:14",
+        "pinyin": "nixianxiuxiyixiawoquzuowanfan",
+        "expected": "你先休息一下我去做晚饭",
+        "actual": "你先休息一下我去做完饭",
+        "rank": 3
+      },
+      {
+        "source": "daily:fresh:15",
+        "pinyin": "wodeerjihaoxiangmeiyoulianjieshang",
+        "expected": "我的耳机好像没有连接上",
+        "actual": "我的耳机好像没有链接上",
+        "rank": 2
+      },
+      {
+        "source": "daily:fresh:17",
+        "pinyin": "woganggangzaiwangshangmaileyibenshu",
+        "expected": "我刚刚在网上买了一本书",
+        "actual": "我刚刚再往上买了一本书",
+        "rank": 2
+      },
+      {
+        "source": "daily:fresh:19",
+        "pinyin": "wobutaiqingchuyinggaixuanzenayige",
+        "expected": "我不太清楚应该选择哪一个",
+        "actual": "我不太清楚应该选择那一个",
+        "rank": 3
+      }
+    ]
+  },
+  "independent_0_5_0": {
+    "evaluation": {
+      "personal_data_isolated": true,
+      "expected_answers_learned": false,
+      "engine_sha256": "ad932a90e8dd060cf91c2a1f798f25d94856c89702f2b4acf75e115431d5dd5f",
+      "cases_sha256": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98",
+      "resource_sha256": {
+        "core_zh_pinyin.tsv": "167b2356dcf36ca0134ebfde17f428504c43cbc3b33fbafdd96a9f2990d9bd9d",
+        "local_core_zh_pinyin.tsv": "c281f53d2908712ee1f6811df275c055b8869f31f7655d442460604ad0a51e3d",
+        "standard_zh_pinyin.tsv": "9dbc97aacdad2bd21bfbd6d2dad7f7ed61e0dd95bbf213030f7d7973d25c3e15",
+        "context_zh.tsv": "2f96ebd05cdf771f9c6a8d4324f489cc89e8ea5a2c06ced9091f967429bbee88"
+      }
+    },
+    "summary": {
+      "cases": 62,
+      "top1_correct": 25,
+      "top9_present": 33,
+      "top1_percent": 40.32,
+      "top9_percent": 53.23,
+      "character_error_rate": 0.142,
+      "p50_lookup_ms": 17.603,
+      "p95_lookup_ms": 41.052,
+      "max_lookup_ms": 47.083
+    },
+    "groups": {
+      "article": {
+        "cases": 42,
+        "top1_correct": 14,
+        "top9_present": 19,
+        "top1_percent": 33.33,
+        "top9_percent": 45.24,
+        "character_error_rate": 0.1944,
+        "p50_lookup_ms": 12.905,
+        "p95_lookup_ms": 32.227,
+        "max_lookup_ms": 47.083
+      },
+      "daily": {
+        "cases": 20,
+        "top1_correct": 11,
+        "top9_present": 14,
+        "top1_percent": 55.0,
+        "top9_percent": 70.0,
+        "character_error_rate": 0.0814,
+        "p50_lookup_ms": 27.986,
+        "p95_lookup_ms": 46.904,
+        "max_lookup_ms": 46.904
+      }
+    },
+    "failures": [
+      {
+        "source": "article:fengzheng:01",
+        "pinyin": "beijingdedongji",
+        "expected": "北京的冬季",
+        "actual": "北京的动机",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:02",
+        "pinyin": "dishanghaiyoujixue",
+        "expected": "地上还有积雪",
+        "actual": "地上还有几学",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:03",
+        "pinyin": "huiheisedetushuzhiyachayuqinglangdetiankongzhong",
+        "expected": "灰黑色的秃树枝丫叉于晴朗的天空中",
+        "actual": "会黑色的图书质押差与晴朗的天空中",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:05",
+        "pinyin": "zaiwoshiyizhongjingyihebeiai",
+        "expected": "在我是一种惊异和悲哀",
+        "actual": "在我是一种敬意和悲哀",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:08",
+        "pinyin": "tangtingdaoshashadefenglunsheng",
+        "expected": "倘听到沙沙的风轮声",
+        "actual": "汤听到傻傻的风论生",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:09",
+        "pinyin": "yangtoubiannengkanjianyigedanmosedexiefengzhenghuonenlansedewugongfengzheng",
+        "expected": "仰头便能看见一个淡墨色的蟹风筝或嫩蓝色的蜈蚣风筝",
+        "actual": "仰头便能看见一个淡漠色的鞋风筝或嫩蓝色的无功风筝",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:10",
+        "pinyin": "haiyoujimodewapianfengzheng",
+        "expected": "还有寂寞的瓦片风筝",
+        "actual": "还有几末得瓦片风筝",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:11",
+        "pinyin": "meiyoufenglun",
+        "expected": "没有风轮",
+        "actual": "没有风论",
+        "rank": 4
+      },
+      {
+        "source": "article:fengzheng:12",
+        "pinyin": "youfangdehendi",
+        "expected": "又放得很低",
+        "actual": "有放得很低",
+        "rank": 2
+      },
+      {
+        "source": "article:fengzheng:13",
+        "pinyin": "lingdingdexianchuqiaocuikelianmuyang",
+        "expected": "伶仃地显出憔悴可怜模样",
+        "actual": "另定的显出憔悴可怜模样",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:15",
+        "pinyin": "zaodeshantaoyeduotulei",
+        "expected": "早的山桃也多吐蕾",
+        "actual": "早的山套也多图类",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:16",
+        "pinyin": "hehaizimendetianshangdedianzhuixiangzhaoying",
+        "expected": "和孩子们的天上的点缀相照应",
+        "actual": "和孩子们的天上的点缀想找应",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:17",
+        "pinyin": "dachengyipianchunridewenhe",
+        "expected": "打成一片春日的温和",
+        "actual": "大成一篇春日的问和",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:18",
+        "pinyin": "woxianzaizainaline",
+        "expected": "我现在在那里呢",
+        "actual": "我现在在哪里呢",
+        "rank": 2
+      },
+      {
+        "source": "article:fengzheng:19",
+        "pinyin": "simiandouhaishiyandongdesusha",
+        "expected": "四面都还是严冬的肃杀",
+        "actual": "四面都还是严冬的宿杀",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:20",
+        "pinyin": "erjiujingjuebiedeguxiangdejiujingshiqudechuntian",
+        "expected": "而久经诀别的故乡的久经逝去的春天",
+        "actual": "而究竟觉别的故乡的究竟是去的春天",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:21",
+        "pinyin": "quejiuzaizhetiankongzhongdangyangle",
+        "expected": "却就在这天空中荡漾了",
+        "actual": "却就在这天空中档样了",
+        "rank": 2
+      },
+      {
+        "source": "article:fengzheng:24",
+        "pinyin": "bingqiexianwuta",
+        "expected": "并且嫌恶他",
+        "actual": "并且先无他",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:25",
+        "pinyin": "yinweiwoyiweizheshimeichuxihaizisuozuodewanyi",
+        "expected": "因为我以为这是没出息孩子所做的玩艺",
+        "actual": "因为我以为这是没出息孩子所做的玩意",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:26",
+        "pinyin": "hewoxiangfandeshiwodexiaoxiongdi",
+        "expected": "和我相反的是我的小兄弟",
+        "actual": "和我想饭的时我的小兄弟",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:27",
+        "pinyin": "tanashidagaishisuineiwaiba",
+        "expected": "他那时大概十岁内外罢",
+        "actual": "他那是大概是随内外吧",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:29",
+        "pinyin": "shoudebukan",
+        "expected": "瘦得不堪",
+        "actual": "收的不看",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:33",
+        "pinyin": "tazhidezhangzhexiaozui",
+        "expected": "他只得张着小嘴",
+        "actual": "他只得长着小嘴",
+        "rank": 3
+      },
+      {
+        "source": "article:fengzheng:34",
+        "pinyin": "daikanzhekongzhongchushen",
+        "expected": "呆看着空中出神",
+        "actual": "大看着空中出身",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:36",
+        "pinyin": "yuanchudexiefengzhengturanluoxialaile",
+        "expected": "远处的蟹风筝突然落下来了",
+        "actual": "远处的鞋风筝突然落下来了",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:39",
+        "pinyin": "tagaoxingdetiaoyue",
+        "expected": "他高兴得跳跃",
+        "actual": "他高兴的跳跃",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:41",
+        "pinyin": "zaiwokanlaidoushixiaobing",
+        "expected": "在我看来都是笑柄",
+        "actual": "在我看来都是小兵",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:42",
+        "pinyin": "kebide",
+        "expected": "可鄙的",
+        "actual": "可比的",
+        "rank": 0
+      },
+      {
+        "source": "daily:independent:02",
+        "pinyin": "mafanbakaochuangdezuoweiliugeidaihaizidechengke",
+        "expected": "麻烦把靠窗的座位留给带孩子的乘客",
+        "actual": "麻烦吧靠窗的作为留给带孩子的乘客",
+        "rank": 0
+      },
+      {
+        "source": "daily:independent:05",
+        "pinyin": "wogangbafapiaochuangeifuzebaoxiaodetongshi",
+        "expected": "我刚把发票传给负责报销的同事",
+        "actual": "我刚吧发票传给负责爆笑的同时",
+        "rank": 0
+      },
+      {
+        "source": "daily:independent:06",
+        "pinyin": "dianyuanjianyixianshichuanzaijuedingyaonayigechima",
+        "expected": "店员建议先试穿再决定要哪一个尺码",
+        "actual": "店员建议显示传再决定要那一个尺码",
+        "rank": 0
+      },
+      {
+        "source": "daily:independent:09",
+        "pinyin": "zhefenhetongdeidengzhuguanhuilaiyihouzaiqian",
+        "expected": "这份合同得等主管回来以后再签",
+        "actual": "这份合同得灯主管回来以后再钱",
+        "rank": 8
+      },
+      {
+        "source": "daily:independent:11",
+        "pinyin": "nibashiyifuguadetaijinleburongyigan",
+        "expected": "你把湿衣服挂得太近了不容易干",
+        "actual": "你八十一副挂得太近了不容易干",
+        "rank": 0
+      },
+      {
+        "source": "daily:independent:12",
+        "pinyin": "nengbunengbazheduanluyinjianchenglianggebufen",
+        "expected": "能不能把这段录音剪成两个部分",
+        "actual": "能不能把这段录音简称两个部分",
+        "rank": 0
+      },
+      {
+        "source": "daily:independent:13",
+        "pinyin": "wopabazhengjiannongdiusuoyizhuanmenzhunbeileyigedaizi",
+        "expected": "我怕把证件弄丢所以专门准备了一个袋子",
+        "actual": "我怕吧证件弄丢所以专门准备了一个袋子",
+        "rank": 2
+      },
+      {
+        "source": "daily:independent:14",
+        "pinyin": "louxiadezaocandianmeizhouyidoubuyingye",
+        "expected": "楼下的早餐店每周一都不营业",
+        "actual": "楼下的早餐点没周一都不影也",
+        "rank": 4
+      },
+      {
+        "source": "daily:independent:20",
+        "pinyin": "zhezhangzhaopianpaideyoudiananbuguodajiadebiaoqinghenziran",
+        "expected": "这张照片拍得有点暗不过大家的表情很自然",
+        "actual": "这张照片拍得有点按不过大家的表情很自然",
+        "rank": 0
+      }
+    ]
+  },
+  "independent_0_5_1": {
+    "evaluation": {
+      "personal_data_isolated": true,
+      "expected_answers_learned": false,
+      "engine_sha256": "57d93cb321eab338c2d50f45feb55911e5c1050ae06426d76f62eff849bb2a9a",
+      "cases_sha256": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98",
+      "resource_sha256": {
+        "core_zh_pinyin.tsv": "167b2356dcf36ca0134ebfde17f428504c43cbc3b33fbafdd96a9f2990d9bd9d",
+        "local_core_zh_pinyin.tsv": "f79230ff886612d1d78a66b1908e58250c936b3963def870becbecf804b0e0a1",
+        "standard_zh_pinyin.tsv": "9dbc97aacdad2bd21bfbd6d2dad7f7ed61e0dd95bbf213030f7d7973d25c3e15",
+        "context_zh.tsv": "7fb97a138b74402f2e082e5bdf56f5dbba83c8452976e480fcd41fdcde045cf8"
+      }
+    },
+    "summary": {
+      "cases": 62,
+      "top1_correct": 24,
+      "top9_present": 30,
+      "top1_percent": 38.71,
+      "top9_percent": 48.39,
+      "character_error_rate": 0.1375,
+      "p50_lookup_ms": 12.444,
+      "p95_lookup_ms": 27.718,
+      "max_lookup_ms": 32.887
+    },
+    "groups": {
+      "article": {
+        "cases": 42,
+        "top1_correct": 12,
+        "top9_present": 18,
+        "top1_percent": 28.57,
+        "top9_percent": 42.86,
+        "character_error_rate": 0.2,
+        "p50_lookup_ms": 8.07,
+        "p95_lookup_ms": 20.019,
+        "max_lookup_ms": 31.002
+      },
+      "daily": {
+        "cases": 20,
+        "top1_correct": 12,
+        "top9_present": 12,
+        "top1_percent": 60.0,
+        "top9_percent": 60.0,
+        "character_error_rate": 0.0651,
+        "p50_lookup_ms": 18.932,
+        "p95_lookup_ms": 32.887,
+        "max_lookup_ms": 32.887
+      }
+    },
+    "failures": [
+      {
+        "source": "article:fengzheng:01",
+        "pinyin": "beijingdedongji",
+        "expected": "北京的冬季",
+        "actual": "北京的动机",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:02",
+        "pinyin": "dishanghaiyoujixue",
+        "expected": "地上还有积雪",
+        "actual": "地上还有几学",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:03",
+        "pinyin": "huiheisedetushuzhiyachayuqinglangdetiankongzhong",
+        "expected": "灰黑色的秃树枝丫叉于晴朗的天空中",
+        "actual": "会黑色的图书质押差与晴朗的天空中",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:05",
+        "pinyin": "zaiwoshiyizhongjingyihebeiai",
+        "expected": "在我是一种惊异和悲哀",
+        "actual": "在我是一种敬意和悲哀",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:06",
+        "pinyin": "guxiangdefengzhengshijie",
+        "expected": "故乡的风筝时节",
+        "actual": "故乡的风筝世界",
+        "rank": 2
+      },
+      {
+        "source": "article:fengzheng:08",
+        "pinyin": "tangtingdaoshashadefenglunsheng",
+        "expected": "倘听到沙沙的风轮声",
+        "actual": "汤听到傻傻的风论生",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:09",
+        "pinyin": "yangtoubiannengkanjianyigedanmosedexiefengzhenghuonenlansedewugongfengzheng",
+        "expected": "仰头便能看见一个淡墨色的蟹风筝或嫩蓝色的蜈蚣风筝",
+        "actual": "仰头便能看见一个淡漠色的鞋风筝或嫩蓝色的无功风筝",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:10",
+        "pinyin": "haiyoujimodewapianfengzheng",
+        "expected": "还有寂寞的瓦片风筝",
+        "actual": "还有几末的瓦片风筝",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:11",
+        "pinyin": "meiyoufenglun",
+        "expected": "没有风轮",
+        "actual": "没有风论",
+        "rank": 4
+      },
+      {
+        "source": "article:fengzheng:12",
+        "pinyin": "youfangdehendi",
+        "expected": "又放得很低",
+        "actual": "有放得很低",
+        "rank": 2
+      },
+      {
+        "source": "article:fengzheng:13",
+        "pinyin": "lingdingdexianchuqiaocuikelianmuyang",
+        "expected": "伶仃地显出憔悴可怜模样",
+        "actual": "令定的显出憔悴可怜模样",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:14",
+        "pinyin": "dancishidishangdeyangliuyijingfaya",
+        "expected": "但此时地上的杨柳已经发芽",
+        "actual": "单词实地上的杨柳已经发芽",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:15",
+        "pinyin": "zaodeshantaoyeduotulei",
+        "expected": "早的山桃也多吐蕾",
+        "actual": "早的山套也多图类",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:16",
+        "pinyin": "hehaizimendetianshangdedianzhuixiangzhaoying",
+        "expected": "和孩子们的天上的点缀相照应",
+        "actual": "和孩子们的天上的点缀想找应",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:17",
+        "pinyin": "dachengyipianchunridewenhe",
+        "expected": "打成一片春日的温和",
+        "actual": "大成一片春日的问和",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:18",
+        "pinyin": "woxianzaizainaline",
+        "expected": "我现在在那里呢",
+        "actual": "我现在在哪里呢",
+        "rank": 2
+      },
+      {
+        "source": "article:fengzheng:19",
+        "pinyin": "simiandouhaishiyandongdesusha",
+        "expected": "四面都还是严冬的肃杀",
+        "actual": "四面都还是严冬的素杀",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:20",
+        "pinyin": "erjiujingjuebiedeguxiangdejiujingshiqudechuntian",
+        "expected": "而久经诀别的故乡的久经逝去的春天",
+        "actual": "而究竟觉别的故乡的究竟是去的春天",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:21",
+        "pinyin": "quejiuzaizhetiankongzhongdangyangle",
+        "expected": "却就在这天空中荡漾了",
+        "actual": "却就在这天空中档样了",
+        "rank": 2
+      },
+      {
+        "source": "article:fengzheng:22",
+        "pinyin": "danwoshixianglaibuaifangfengzhengde",
+        "expected": "但我是向来不爱放风筝的",
+        "actual": "但我是想来不爱放风筝的",
+        "rank": 2
+      },
+      {
+        "source": "article:fengzheng:24",
+        "pinyin": "bingqiexianwuta",
+        "expected": "并且嫌恶他",
+        "actual": "并且显无他",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:25",
+        "pinyin": "yinweiwoyiweizheshimeichuxihaizisuozuodewanyi",
+        "expected": "因为我以为这是没出息孩子所做的玩艺",
+        "actual": "因为我以为这是没出息孩子所做的玩意",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:27",
+        "pinyin": "tanashidagaishisuineiwaiba",
+        "expected": "他那时大概十岁内外罢",
+        "actual": "他那是大概是随内外吧",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:29",
+        "pinyin": "shoudebukan",
+        "expected": "瘦得不堪",
+        "actual": "收的不看",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:33",
+        "pinyin": "tazhidezhangzhexiaozui",
+        "expected": "他只得张着小嘴",
+        "actual": "他值得长着小嘴",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:34",
+        "pinyin": "daikanzhekongzhongchushen",
+        "expected": "呆看着空中出神",
+        "actual": "带看着空中出身",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:36",
+        "pinyin": "yuanchudexiefengzhengturanluoxialaile",
+        "expected": "远处的蟹风筝突然落下来了",
+        "actual": "远处的鞋风筝突然落下来了",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:39",
+        "pinyin": "tagaoxingdetiaoyue",
+        "expected": "他高兴得跳跃",
+        "actual": "他高兴的跳跃",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:41",
+        "pinyin": "zaiwokanlaidoushixiaobing",
+        "expected": "在我看来都是笑柄",
+        "actual": "在我看来都是小兵",
+        "rank": 0
+      },
+      {
+        "source": "article:fengzheng:42",
+        "pinyin": "kebide",
+        "expected": "可鄙的",
+        "actual": "可比的",
+        "rank": 0
+      },
+      {
+        "source": "daily:independent:02",
+        "pinyin": "mafanbakaochuangdezuoweiliugeidaihaizidechengke",
+        "expected": "麻烦把靠窗的座位留给带孩子的乘客",
+        "actual": "麻烦吧靠窗的作为留给带孩子的乘客",
+        "rank": 0
+      },
+      {
+        "source": "daily:independent:05",
+        "pinyin": "wogangbafapiaochuangeifuzebaoxiaodetongshi",
+        "expected": "我刚把发票传给负责报销的同事",
+        "actual": "我刚吧发票传给负责爆笑的同时",
+        "rank": 0
+      },
+      {
+        "source": "daily:independent:06",
+        "pinyin": "dianyuanjianyixianshichuanzaijuedingyaonayigechima",
+        "expected": "店员建议先试穿再决定要哪一个尺码",
+        "actual": "店员建议显示传再决定要哪一个尺码",
+        "rank": 0
+      },
+      {
+        "source": "daily:independent:09",
+        "pinyin": "zhefenhetongdeidengzhuguanhuilaiyihouzaiqian",
+        "expected": "这份合同得等主管回来以后再签",
+        "actual": "这份合同得等主管回来以后再钱",
+        "rank": 0
+      },
+      {
+        "source": "daily:independent:11",
+        "pinyin": "nibashiyifuguadetaijinleburongyigan",
+        "expected": "你把湿衣服挂得太近了不容易干",
+        "actual": "你把事衣服挂得太紧了不容易干",
+        "rank": 0
+      },
+      {
+        "source": "daily:independent:12",
+        "pinyin": "nengbunengbazheduanluyinjianchenglianggebufen",
+        "expected": "能不能把这段录音剪成两个部分",
+        "actual": "能不能把这段录音简称两个部分",
+        "rank": 0
+      },
+      {
+        "source": "daily:independent:13",
+        "pinyin": "wopabazhengjiannongdiusuoyizhuanmenzhunbeileyigedaizi",
+        "expected": "我怕把证件弄丢所以专门准备了一个袋子",
+        "actual": "我怕爸正见弄丢所以专门准备了一个袋子",
+        "rank": 0
+      },
+      {
+        "source": "daily:independent:20",
+        "pinyin": "zhezhangzhaopianpaideyoudiananbuguodajiadebiaoqinghenziran",
+        "expected": "这张照片拍得有点暗不过大家的表情很自然",
+        "actual": "这张照片排得有点按不过大家的表情很自然",
+        "rank": 0
+      }
+    ]
   }
 }

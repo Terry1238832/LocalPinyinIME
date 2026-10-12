@@ -93,7 +93,7 @@ def main():
         "LocalPinyinIME modifications: filtered short Han words, normalized pinyin, scaled frequency weights, removed duplicates.\n"
         "Apache License 2.0 follows.\n\n"+license_text.decode("utf-8")+"\n"
         "\nCharacter context statistics\n"
-        "The compact context model contains 1-4 character counts derived from original project-authored prose (MIT) and public-domain original prose by Lu Xun (1881-1936).\n"
+        "The compact context model contains 1-4 character counts derived from original project-authored prose (MIT) and public-domain original prose by Lu Xun (1881-1936) and Zhu Ziqing (1898-1948).\n"
         "The full prose and Python authoring dependencies are not included in the installer.\n"
         "Source titles, authors, links, rights review and checksums: https://github.com/Terry1238832/LocalPinyinIME/blob/main/resources/dictionary/authoring/sources.json\n"
         "Model transformation and checksums: resources/dictionary/context_zh.metadata.json in the source repository.\n"

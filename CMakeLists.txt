@@ -89,7 +89,7 @@ if(BUILD_TESTING)
         add_test(NAME ${name} COMMAND ${name})
     endfunction()
     foreach(name IN ITEMS test_dictionary test_pinyin_engine test_candidate_ranker test_user_learning
-        test_candidate_selection test_dictionary_resource_layout test_dictionary_layers test_user_lexicon test_sentence_input_baseline test_contextual_engine)
+        test_candidate_selection test_dictionary_resource_layout test_dictionary_layers test_user_lexicon test_sentence_input_baseline test_contextual_engine test_personal_phrases)
         pinyin_test(${name} pinyin_engine)
     endforeach()
     foreach(name IN ITEMS test_candidate_ui test_cross_app_compatibility test_settings_store)

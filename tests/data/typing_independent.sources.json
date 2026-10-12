@@ -1,0 +1,157 @@
+{
+  "format_version": 1,
+  "cases": 62,
+  "article_cases": 42,
+  "daily_cases": 20,
+  "prepared_at": "2026-10-12",
+  "purpose": "Third independent blind verification, prepared before any lookup/output observation for these cases; keep distinct from both existing fixtures",
+  "sha256": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98",
+  "frozen_chinese_sha256": "16cf94adc44e62b98a41f68b9774d61debb0cd2f9985d5602300232a48af9e22",
+  "source": {
+    "work": "风筝",
+    "work_aliases_excluded_from_training": [
+      "风筝",
+      "风筝 (鲁迅)",
+      "風箏"
+    ],
+    "author": "鲁迅",
+    "author_died": 1936,
+    "work_date": "1925-01-24",
+    "work_date_basis": "Date printed below the work and in the primary source page header; not asserted to be the first publication date",
+    "url": "https://zh.wikisource.org/zh-hans/風箏",
+    "fixed_revision": "https://zh.wikisource.org/w/index.php?title=風箏&oldid=2629511&variant=zh-hans",
+    "revision_id": 2629511,
+    "rights": "Public-domain original prose; primary source notice explicitly states public-domain status in the United States and life-plus-80-or-shorter territories",
+    "rights_verification": "Fixed-revision HTML public-domain notice verified; author death year 1936; the first three simplified prose paragraphs exactly match the fetched revision",
+    "source_html_sha256": "814707afa653a12aeb971c395ca0c9f2e8e21e5fd517d7bc2f31447ee74f4f06",
+    "selected_paragraphs_sha256": "fd236294253e70dbe65bf038e7828e35d63046be3be217c42e72f0c41177248e",
+    "selection": "The first three consecutive prose paragraphs; split at Chinese punctuation, strip punctuation and zero-width formatting; retain every nonempty clause in order; no model-driven selection",
+    "selected_paragraphs": [
+      "北京的冬季，地上还有积雪，灰黑色的秃树枝丫叉于晴朗的天空中，而远处有一二风筝浮动，在我是一种惊异和悲哀。",
+      "故乡的风筝时节，是春二月，倘听到沙沙的风轮声，仰头便能看见一个淡墨色的蟹风筝或嫩蓝色的蜈蚣风筝。还有寂寞的瓦片风筝，没有风轮，又放得很低，伶仃地显出憔悴可怜模样。但此时地上的杨柳已经发芽，早的山桃也多吐蕾，和孩子们的天上的点缀相照应，打成一片春日的温和。我现在在那里呢？四面都还是严冬的肃杀，而久经诀别的故乡的久经逝去的春天，却就在这天空中荡漾了。",
+      "但我是向来不爱放风筝的，不但不爱，并且嫌恶他，因为我以为这是没出息孩子所做的玩艺。和我相反的是我的小兄弟，他那时大概十岁内外罢，多病，瘦得不堪，然而最喜欢风筝，自己买不起，我又不许放，他只得张着小嘴，呆看着空中出神，有时至于小半日。远处的蟹风筝突然落下来了，他惊呼；两个瓦片风筝的缠绕解开了，他高兴得跳跃，他的这些，在我看来都是笑柄，可鄙的。"
+    ],
+    "article_han_characters": 355,
+    "alternative_not_used": {
+      "work": "春 (朱自清)",
+      "url": "https://zh.wikisource.org/wiki/春_(朱自清)",
+      "reason": "Primary source explicitly says United States copyright lasts until 2029-01-01; a clearly public-domain alternative was selected."
+    }
+  },
+  "daily_rights": "MIT; original first-party examples authored and frozen before Pinyin conversion and before engine observation",
+  "pronunciation": "pypinyin 0.55.0, authoring only; each of 62 keys reviewed against contextual pronunciation; no runtime dependency",
+  "pronunciation_review_corrections": [
+    {
+      "case": "article:fengzheng:13",
+      "review": "Adverbial 地 in 伶仃地显出 is de; locative 地上 remains di."
+    },
+    {
+      "case": "article:fengzheng:36",
+      "review": "The kite falls down: 落下来 is luo xia lai, not la xia lai."
+    },
+    {
+      "case": "daily:independent:09",
+      "review": "Modal 得等 (must wait) is dei deng; complement 得 remains de."
+    }
+  ],
+  "pronunciation_review_kept": [
+    "嫌恶: xian wu; 只得: zhi de; 瘦得 and 高兴得: de; 模样: mu yang; locative 地上: di shang; 传给: chuan gei; 干 in 衣服不容易干: gan; 着急: zhao ji"
+  ],
+  "existing_fixtures_unchanged": {
+    "tests/data/typing_holdout.tsv": "533db2c1baa72ab8624906783545125131b3b99b015cf46be3bd27c4e0e64f7c",
+    "tests/data/typing_fresh.tsv": "d3f98fb17c845e34f15153fb8973a19e5f8f4e78c77e55973dd4cab9acb9537e"
+  },
+  "existing_fixture_full_answer_overlap": [],
+  "training_full_clause_overlap": [],
+  "training_full_answer_substring_overlap_at_least_6_han": [],
+  "checked_training_files": [
+    {
+      "file": "daily_context.txt",
+      "sha256": "7a668389c53669cc943f5b74cab1a2e5a2902c2c427a09319f12e459b4621f1a"
+    },
+    {
+      "file": "daily_dialogue_context.txt",
+      "sha256": "0a5502454548100c9f60d1fcfb8a63420f054e7799c6f66097511f121fe68584"
+    },
+    {
+      "file": "daily_food_home.txt",
+      "sha256": "3d7fc09edb09cf88928bf096d7c874187ef9e88bb7dfc04780729ebf35126153"
+    },
+    {
+      "file": "daily_technology_context.txt",
+      "sha256": "05a770bf925116eba142d50a668af616acf6f5026888ea54a248b1ff6fce4b95"
+    },
+    {
+      "file": "daily_work_life.txt",
+      "sha256": "83a0774776c6786b9ff7a83169b125979b185ac378b6804a5e506b43f390ae42"
+    },
+    {
+      "file": "luxun_五猖会.txt",
+      "sha256": "a63985b7b440a730373fe5d6da28a7c30d183e493e81901aadb9c171b40464d6"
+    },
+    {
+      "file": "luxun_从百草园到三味书屋.txt",
+      "sha256": "14f4e55b73b941811322b995fdf418eb1183f04253614d5a15b62ee2fd5268d5"
+    },
+    {
+      "file": "luxun_兔和猫.txt",
+      "sha256": "92cf2f4074c59a2c0a5a48a5ce4516e8c055d770238169c4f79320c4c85375be"
+    },
+    {
+      "file": "luxun_头发的故事.txt",
+      "sha256": "2a545e9f844f7bf24ca6c79b4384b0c339b436ac35535ef5ce6ddfb5cc151b73"
+    },
+    {
+      "file": "luxun_好的故事.txt",
+      "sha256": "329c88684f6aa1480b36995826b23dcaf09c55c0c0e3dd8c29bdd85b78af4ace"
+    },
+    {
+      "file": "luxun_孔乙己.txt",
+      "sha256": "df0b7621e2bf519782da4b243c5130b77f9db85464d7b6827406c92857af94af"
+    },
+    {
+      "file": "luxun_明天.txt",
+      "sha256": "99a7aec3a6170012e700fb69ab01ff2a5afe71dfde6ea971529001f50db987a7"
+    },
+    {
+      "file": "luxun_社戏.txt",
+      "sha256": "85a206361046995651f2449fce7d7c73fe730951b285594fe3529a00ac7eaff4"
+    },
+    {
+      "file": "luxun_秋夜__鲁迅_.txt",
+      "sha256": "40be5c3bebafacadc6ebd50eeb267973d85d27e2b25c60b214fa2f78af9ba293"
+    },
+    {
+      "file": "luxun_聪明人和傻子和奴才.txt",
+      "sha256": "c90e40d44ef17d6028c0c6302373eceb7543f00956b612bb021647a39a27b23a"
+    },
+    {
+      "file": "luxun_药.txt",
+      "sha256": "9f12d4e9684853ef42c97dd00062c5046cd5abdafc6a03d5b51ca00eb43b8849"
+    },
+    {
+      "file": "luxun_藤野先生.txt",
+      "sha256": "9c61972fb41e9cc6f1511149799c066ad5e784393d96378eb728f1a922cd7874"
+    },
+    {
+      "file": "luxun_阿长与山海经.txt",
+      "sha256": "67c69b3a1e6ed2857a0963bcdb859ac0302333d3648f4f1f41a09df3e0408de9"
+    },
+    {
+      "file": "luxun_鸭的喜剧.txt",
+      "sha256": "5ad2055896154d6f05ba1be64c26c4edddab52c189a496bac066a6631a60cb43"
+    },
+    {
+      "file": "zhuz_匆匆.txt",
+      "sha256": "b0c6b042cc3eca57669c5e5eca6b21021b0fdd112003baa40c41ca5511da972a"
+    },
+    {
+      "file": "zhuz_桨声灯影里的秦淮河.txt",
+      "sha256": "309fcd876f10ba327d65bca95e1fd73c16a8be8b46324938ab8e5f075c37d538"
+    }
+  ],
+  "training_excluded": true,
+  "expected_answers_learned": false,
+  "engine_outputs_observed_during_preparation": false,
+  "daily_expected_han_characters": 307
+}

@@ -127,7 +127,7 @@ constexpr wchar_t kCandidateOptionsChangedMessageName[] = L"LocalPinyinIME.Candi
 constexpr UINT_PTR kShortcutTestTimerId = 4101;
 constexpr UINT kShortcutTestTimerMs = 45;
 constexpr wchar_t kUserLexiconFrequencyHelpText[] =
-    L"\u9891\u7387\u8D8A\u9AD8\uFF0C\u521D\u59CB\u5019\u9009\u4F4D\u7F6E\u8D8A\u9760\u524D\u3002\u5EFA\u8BAE\u5E38\u7528\u8BCD\u586B 5000\uFF1B\u8F93\u5165\u6CD5\u4F1A\u7ED3\u5408\u4F7F\u7528\u4E60\u60EF\u7EE7\u7EED\u8C03\u6574\u6392\u5E8F\u3002";
+    L"常用词建议填 5000。完整拼音输入时，长个人词优先出现；同音词结合频率和选词习惯排序。";
 
 COLORREF rgb_hex(int value) {
     return RGB((value >> 16) & 0xFF, (value >> 8) & 0xFF, value & 0xFF);

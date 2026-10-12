@@ -8,6 +8,10 @@
 
 namespace localpinyin {
 
+// Recommended frequency for personal entries used regularly. A complete key
+// at this frequency preserves a long phrase alongside ordinary short words.
+inline constexpr int kPreferredUserLexiconFrequency = 5000;
+
 struct UserLexiconEntry {
     std::wstring pinyin;
     std::wstring word;

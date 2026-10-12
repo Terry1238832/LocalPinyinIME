@@ -142,6 +142,7 @@ private:
         bool had_previous = false;
         int previous_score = 0;
         int previous_decoding_frequency = 0;
+        bool previous_user_lexicon_entry = false;
     };
     std::wstring user_lexicon_path_;
     std::vector<UserLexiconOverlay> user_lexicon_overlays_;

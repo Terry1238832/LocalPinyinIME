@@ -441,12 +441,15 @@ bool Dictionary::add_user_lexicon_entry(const UserLexiconEntry& entry, Dictionar
     if (overlay.had_previous) {
         overlay.previous_score = it->base_score;
         overlay.previous_decoding_frequency = it->decoding_frequency;
+        overlay.previous_user_lexicon_entry = it->is_user_lexicon_entry;
         it->base_score = entry.frequency;
         it->decoding_frequency = entry.frequency;
+        it->is_user_lexicon_entry = true;
         ++layer_stats.duplicate_rows;
     } else {
         candidates.push_back(Candidate{entry.word, entry.frequency, 0});
         candidates.back().decoding_frequency = entry.frequency;
+        candidates.back().is_user_lexicon_entry = true;
         ++entry_count_;
     }
     user_lexicon_overlays_.push_back(overlay);
@@ -476,6 +479,7 @@ void Dictionary::revert_user_lexicon_entries() {
         if (it->had_previous) {
             candidate_it->base_score = it->previous_score;
             candidate_it->decoding_frequency = it->previous_decoding_frequency;
+            candidate_it->is_user_lexicon_entry = it->previous_user_lexicon_entry;
         } else {
             candidates.erase(candidate_it);
             if (entry_count_ > 0) {

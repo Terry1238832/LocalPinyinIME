@@ -295,6 +295,13 @@ struct Session {
     void key(WPARAM value, bool expected_eaten = true) {
         BOOL tested = FALSE, eaten = FALSE;
         check(keys->OnTestKeyDown(context.Get(), value, 0, &tested), "OnTestKeyDown");
+        if ((tested != FALSE) != expected_eaten) {
+            std::cerr << "Unexpected key test: vk=" << value << " expected=" << expected_eaten
+                      << " eaten=" << tested << " modifiers(ctrl/alt/shift/win)="
+                      << GetAsyncKeyState(VK_CONTROL) << '/' << GetAsyncKeyState(VK_MENU) << '/'
+                      << GetAsyncKeyState(VK_SHIFT) << '/' << GetAsyncKeyState(VK_LWIN) << '/'
+                      << GetAsyncKeyState(VK_RWIN) << '\n';
+        }
         require((tested != FALSE) == expected_eaten, "test key consumption");
         check(keys->OnKeyDown(context.Get(), value, 0, &eaten), "OnKeyDown");
         require((eaten != FALSE) == expected_eaten, "key consumption");

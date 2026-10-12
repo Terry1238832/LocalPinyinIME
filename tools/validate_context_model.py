@@ -27,13 +27,15 @@ for n, line in enumerate(model.read_text(encoding="utf-8").splitlines(), 1):
     seen.add(gram)
 assert len(seen) == meta["entry_count"] and len(seen) <= 200000
 sources = json.loads((root / "authoring/sources.json").read_text(encoding="utf-8"))
-attributed = {s["file"] for s in sources["sources"] if s.get("rights") and s.get("author")}
+attributed = {s["file"]: s for s in sources["sources"] if s.get("rights") and s.get("author")}
+heldout_works = set(sources["heldout_works_excluded"])
 for item in meta["inputs"]:
     assert Path(item["file"]).name == item["file"] and item["file"] in attributed
+    assert attributed[item["file"]].get("title") not in heldout_works
     path = root / "authoring" / item["file"]
     assert hashlib.sha256(path.read_bytes()).hexdigest() == item["sha256"]
 excluded = {item["file"] for item in meta["excluded_case_files"]}
-assert {"typing_holdout.tsv", "typing_fresh.tsv"} <= excluded
+assert {"typing_holdout.tsv", "typing_fresh.tsv", "typing_independent.tsv"} <= excluded
 for item in meta["excluded_case_files"]:
     assert Path(item["file"]).name == item["file"]
     path = a.cases_dir / item["file"]
