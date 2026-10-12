@@ -1,6 +1,7 @@
 #include "text_service.h"
 
 #include "globals.h"
+#include "chinese_punctuation.h"
 #include "../common/logging.h"
 #include "../common/win32_utils.h"
 #include "../engine/candidate_selection.h"
@@ -282,6 +283,18 @@ void read_open_close_compartment(ITfThreadMgr* thread_mgr, HRESULT* hr, bool* op
 
 TextService::TextService() {
     dll_add_ref();
+    candidate_window_.set_selection_callback([this](size_t index) {
+        if (mode_ != InputMode::Chinese || !candidate_context_ || composing_.empty() ||
+            !composition_.active() || index >= candidates_.size()) return;
+        // Committing hides the candidate window and releases its context.
+        // Keep the edit context alive across that lifecycle and any prefix tail.
+        ITfContext* context = candidate_context_;
+        context->AddRef();
+        selected_index_ = index;
+        const HRESULT hr = commit_selected(context);
+        if (FAILED(hr)) log_status(L"candidate-ui", L"mouse commit failed " + hresult_hex(hr));
+        context->Release();
+    });
 }
 
 void TextService::set_key_state_reader_for_testing(KeyStateReader reader,
@@ -291,6 +304,7 @@ void TextService::set_key_state_reader_for_testing(KeyStateReader reader,
 }
 
 TextService::~TextService() {
+    candidate_window_.set_selection_callback({});
     end_candidate_ui_element(L"teardown");
     clear_transient_contexts();
     language_bar_.clear_callbacks();
@@ -835,12 +849,18 @@ HRESULT TextService::OnTestKeyDown(ITfContext* context, WPARAM wparam, LPARAM, B
     if (mode_ == InputMode::English || should_pass_through(wparam)) {
         return S_OK;
     }
+    if (chinese_punctuation_for_key(wparam, modifiers.shift, !composing_.empty(),
+                                    opening_double_quote_, opening_single_quote_)) {
+        *eaten = TRUE;
+        return S_OK;
+    }
     if (wparam >= L'1' && wparam <= L'9') {
-        *eaten = can_select_candidate_by_digit(wparam, candidates_.size(), !composing_.empty(), candidate_window_.is_visible());
+        *eaten = can_select_candidate_by_digit(key, candidates_.size(), !composing_.empty(),
+            candidate_window_.is_visible() || candidate_ui_element_session_.host_managed());
         return S_OK;
     }
     if (wparam == VK_SPACE || wparam == VK_RETURN) {
-        *eaten = should_eat_composition_commit_key(wparam, candidates_.size(), !composing_.empty());
+        *eaten = should_eat_composition_commit_key(key, candidates_.size(), !composing_.empty());
         return S_OK;
     }
     if (wparam == VK_BACK) {
@@ -848,7 +868,7 @@ HRESULT TextService::OnTestKeyDown(ITfContext* context, WPARAM wparam, LPARAM, B
         return S_OK;
     }
     if ((wparam >= L'A' && wparam <= L'Z') || (wparam == VK_OEM_7 && !composing_.empty()) ||
-        wparam == VK_ESCAPE) {
+        (wparam == VK_ESCAPE && !composing_.empty())) {
         *eaten = TRUE;
     } else if (wparam == VK_LEFT || wparam == VK_RIGHT) {
         *eaten = should_eat_candidate_navigation_key(
@@ -1077,10 +1097,25 @@ bool TextService::handle_chinese_key(ITfContext* context, WPARAM wparam, BOOL* e
         return false;
     }
 
+    const auto modifiers = current_modifier_key_state(key_state_reader_, key_state_reader_context_);
+    const wchar_t punctuation = chinese_punctuation_for_key(wparam, modifiers.shift, !composing_.empty(),
+        opening_double_quote_, opening_single_quote_);
+    if (punctuation) {
+        const HRESULT hr = commit_punctuation(context, punctuation);
+        if (FAILED(hr)) log_status(L"composition", L"punctuation failed " + hresult_hex(hr));
+        *eaten = TRUE;
+        return true;
+    }
+
     if (wparam >= L'A' && wparam <= L'Z') {
         if (composing_.empty()) {
             engine_.refresh_user_lexicon_if_needed(false);
             set_composition_context(context);
+            preceding_committed_text_.clear();
+        }
+        if (FAILED(make_composition_room(context))) {
+            *eaten = FALSE;
+            return false;
         }
         composing_.push_back(static_cast<wchar_t>(std::towlower(static_cast<wint_t>(wparam))));
         selected_index_ = 0;
@@ -1091,6 +1126,12 @@ bool TextService::handle_chinese_key(ITfContext* context, WPARAM wparam, BOOL* e
     }
 
     if (wparam == VK_OEM_7 && !composing_.empty()) {
+        if (FAILED(make_composition_room(context))) {
+            *eaten = FALSE;
+            return false;
+        }
+        // A separator at an automatically committed boundary is already fulfilled.
+        if (composing_.empty()) { *eaten = TRUE; return true; }
         composing_.push_back(L'\'');
         selected_index_ = 0;
         refresh_candidates();
@@ -1134,7 +1175,7 @@ bool TextService::handle_chinese_key(ITfContext* context, WPARAM wparam, BOOL* e
     }
 
     if (wparam == VK_SPACE) {
-        const int commit_index = candidate_commit_index_for_key(wparam, candidates_.size(), !composing_.empty(), selected_index_);
+        const int commit_index = candidate_commit_index_for_key(static_cast<unsigned long>(wparam), candidates_.size(), !composing_.empty(), selected_index_);
         if (commit_index >= 0) {
             selected_index_ = static_cast<size_t>(commit_index);
             commit_selected(context);
@@ -1145,8 +1186,9 @@ bool TextService::handle_chinese_key(ITfContext* context, WPARAM wparam, BOOL* e
     }
 
     if (wparam >= L'1' && wparam <= L'9') {
-        if (can_select_candidate_by_digit(wparam, candidates_.size(), !composing_.empty(), candidate_window_.is_visible())) {
-            const size_t index = static_cast<size_t>(candidate_index_from_digit_key(wparam));
+        if (can_select_candidate_by_digit(static_cast<unsigned long>(wparam), candidates_.size(), !composing_.empty(),
+            candidate_window_.is_visible() || candidate_ui_element_session_.host_managed())) {
+            const size_t index = static_cast<size_t>(candidate_index_from_digit_key(static_cast<unsigned long>(wparam)));
             selected_index_ = index;
             commit_selected(context);
             *eaten = TRUE;
@@ -1178,7 +1220,7 @@ bool TextService::handle_chinese_key(ITfContext* context, WPARAM wparam, BOOL* e
 
 void TextService::refresh_candidates() {
     engine_.refresh_user_lexicon_if_needed(!composing_.empty());
-    candidates_ = engine_.lookup(composing_);
+    candidates_ = engine_.lookup(composing_, preceding_committed_text_);
 }
 
 HRESULT TextService::update_composition(ITfContext* context) {
@@ -1323,8 +1365,15 @@ HRESULT TextService::commit_selected(ITfContext* context) {
     if (candidates_.empty()) {
         return S_FALSE;
     }
-    const std::wstring committed = candidates_[selected_index_].text;
-    const std::wstring learned_pinyin = composing_;
+    selected_index_ = std::min(selected_index_, candidates_.size() - 1);
+    const auto selected = candidates_[selected_index_];
+    const std::wstring committed = selected.text;
+    const size_t consumed = selected.consumed_pinyin
+        ? std::min(selected.consumed_pinyin, composing_.size()) : composing_.size();
+    const std::wstring learned_pinyin = composing_.substr(0, consumed);
+    std::wstring suffix = composing_.substr(consumed);
+    const std::wstring preceding = preceding_committed_text_ + committed;
+    while (!suffix.empty() && suffix.front() == L'\'') suffix.erase(0, 1);
     const HRESULT hr = composition_.commit_text(context, client_id_, committed);
     if (FAILED(hr)) {
         log_status(L"composition", L"commit failed " + hresult_hex(hr));
@@ -1335,7 +1384,51 @@ HRESULT TextService::commit_selected(ITfContext* context) {
     }
     engine_.learn(learned_pinyin, committed);
     reset_transient_input_state(L"commit");
+    if (!suffix.empty()) {
+        set_composition_context(context);
+        preceding_committed_text_ = preceding.substr(preceding.size() > 128 ? preceding.size() - 128 : 0);
+        composing_ = std::move(suffix);
+        refresh_candidates();
+        return update_composition(context);
+    }
     return S_OK;
+}
+
+HRESULT TextService::make_composition_room(ITfContext* context) {
+    if (composing_.size() < 256) return S_OK;
+    const size_t before = composing_.size();
+    const Candidate* selected = candidates_.empty() ? nullptr
+        : &candidates_[std::min(selected_index_, candidates_.size() - 1)];
+    const bool raw = !selected || std::any_of(selected->text.begin(), selected->text.end(),
+        [](wchar_t ch) { return ch >= L'a' && ch <= L'z'; });
+    const std::wstring committed = raw ? composing_ : selected->text;
+    const std::wstring preceding = preceding_committed_text_ + committed;
+    const HRESULT hr = raw ? commit_raw_composition(context) : commit_selected(context);
+    if (FAILED(hr)) return hr;
+    if (composing_.size() >= before) return E_UNEXPECTED;
+    if (composing_.empty()) {
+        set_composition_context(context);
+        preceding_committed_text_ = preceding.substr(preceding.size() > 128 ? preceding.size() - 128 : 0);
+    }
+    return S_OK;
+}
+
+HRESULT TextService::commit_punctuation(ITfContext* context, wchar_t punctuation) {
+    // A prefix candidate may leave an unresolved suffix. Finish it before placing
+    // punctuation so the document never loses the remainder of typed pinyin.
+    for (size_t attempt = 0; !composing_.empty() && attempt < 256; ++attempt) {
+        const size_t before = composing_.size();
+        const HRESULT hr = candidates_.empty() ? commit_raw_composition(context) : commit_selected(context);
+        if (FAILED(hr)) return hr;
+        if (!composing_.empty() && composing_.size() >= before) return E_UNEXPECTED;
+    }
+    if (!composing_.empty()) return E_UNEXPECTED;
+    const HRESULT hr = composition_.insert_text(context, client_id_, std::wstring(1, punctuation));
+    if (SUCCEEDED(hr)) {
+        if (punctuation == L'“' || punctuation == L'”') opening_double_quote_ = !opening_double_quote_;
+        if (punctuation == L'‘' || punctuation == L'’') opening_single_quote_ = !opening_single_quote_;
+    }
+    return hr;
 }
 
 HRESULT TextService::commit_raw_composition(ITfContext* context) {
@@ -1400,6 +1493,7 @@ void TextService::reset_transient_input_state(const wchar_t* reason) {
     end_candidate_ui_element(reason ? reason : L"transient_reset");
     composition_.clear();
     composing_.clear();
+    preceding_committed_text_.clear();
     candidates_.clear();
     selected_index_ = 0;
     has_last_caret_rect_ = false;

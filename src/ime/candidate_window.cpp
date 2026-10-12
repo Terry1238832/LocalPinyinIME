@@ -243,12 +243,7 @@ void CandidateWindow::destroy_hwnd_for_recreate() {
     if (!hwnd_) {
         return;
     }
-    if (GetCapture() == hwnd_) {
-        ReleaseCapture();
-    }
-    settings_button_hot_ = false;
-    settings_button_pressed_ = false;
-    tracking_mouse_leave_ = false;
+    cancel_pointer_interaction();
     const HWND old_hwnd = hwnd_;
     notify_ime_window_hidden(old_hwnd);
     DestroyWindow(old_hwnd);
@@ -307,6 +302,7 @@ void CandidateWindow::show(const std::wstring& composition_text,
                            const RECT& caret_rect,
                            const CandidateWindowOwnerInfo& owner_info) {
     const bool continuing_session = has_cached_show_state_;
+    cancel_pointer_interaction();
     reset_presentation_state();
     if (!continuing_session) {
         shell_cloak_recovery_attempts_ = 0;
@@ -356,10 +352,8 @@ void CandidateWindow::show(const std::wstring& composition_text,
 }
 
 void CandidateWindow::hide(const wchar_t*) {
+    cancel_pointer_interaction();
     if (hwnd_) {
-        settings_button_hot_ = false;
-        settings_button_pressed_ = false;
-        tracking_mouse_leave_ = false;
         ShowWindow(hwnd_, SW_HIDE);
         notify_ime_window_hidden(hwnd_);
     }
@@ -397,6 +391,12 @@ void CandidateWindow::cancel_layout_retry() {
 
 bool CandidateWindow::is_visible() const noexcept {
     return hwnd_ && IsWindowVisible(hwnd_);
+}
+
+void CandidateWindow::set_selection_callback(std::function<void(size_t)> callback) {
+    cancel_pointer_interaction();
+    selection_callback_ = std::move(callback);
+    if (hwnd_) InvalidateRect(hwnd_, nullptr, FALSE);
 }
 
 void CandidateWindow::reset_presentation_state() noexcept {
@@ -531,25 +531,35 @@ LRESULT CandidateWindow::handle_message(HWND hwnd, UINT message, WPARAM wparam, 
             const POINTS points = MAKEPOINTS(lparam);
             const POINT point{points.x, points.y};
             update_settings_button_hot(hit_test_settings_button(point));
+            update_candidate_hot(point);
             track_mouse_leave();
             return 0;
         }
         case WM_MOUSELEAVE:
             tracking_mouse_leave_ = false;
             update_settings_button_hot(false);
-            if (settings_button_pressed_) {
-                settings_button_pressed_ = false;
-                InvalidateRect(hwnd_, &layout_.action_button_rect, FALSE);
-            }
+            cancel_pointer_interaction();
+            InvalidateRect(hwnd_, nullptr, FALSE);
             return 0;
         case WM_LBUTTONDOWN: {
             const POINTS points = MAKEPOINTS(lparam);
             const POINT point{points.x, points.y};
             if (hit_test_settings_button(point)) {
+                candidate_pointer_.cancel();
                 settings_button_pressed_ = true;
                 SetCapture(hwnd_);
                 InvalidateRect(hwnd_, &layout_.action_button_rect, FALSE);
                 return 0;
+            }
+            if (selection_callback_) {
+                const auto index = candidate_index_at_point(layout_, point);
+                if (index) {
+                    candidate_pointer_.press(index);
+                    SetCapture(hwnd_);
+                    track_mouse_leave();
+                    InvalidateRect(hwnd_, nullptr, FALSE);
+                    return 0;
+                }
             }
             break;
         }
@@ -557,33 +567,55 @@ LRESULT CandidateWindow::handle_message(HWND hwnd, UINT message, WPARAM wparam, 
             const POINTS points = MAKEPOINTS(lparam);
             const POINT point{points.x, points.y};
             const bool activate_settings = settings_button_pressed_ && hit_test_settings_button(point);
-            if (settings_button_pressed_) {
-                settings_button_pressed_ = false;
-                if (GetCapture() == hwnd_) {
-                    ReleaseCapture();
-                }
-                InvalidateRect(hwnd_, &layout_.action_button_rect, FALSE);
-            }
+            const auto display_index = candidate_pointer_.release(
+                selection_callback_ ? candidate_index_at_point(layout_, point) : std::nullopt);
+            const auto model_index = display_index ? candidate_model_index(layout_, *display_index, candidate_texts_)
+                                                    : std::nullopt;
+            settings_button_pressed_ = false;
+            if (GetCapture() == hwnd_) ReleaseCapture();
+            update_candidate_hot(point);
+            track_mouse_leave();
+            InvalidateRect(hwnd_, nullptr, FALSE);
             if (activate_settings) {
                 open_settings_window();
                 return 0;
             }
+            if (model_index && selection_callback_) {
+                // Committing may hide the popup or destroy the service. Do not
+                // access window members after invoking the copied callback.
+                const auto callback = selection_callback_;
+                callback(*model_index);
+                return 0;
+            }
             break;
         }
+        case WM_CAPTURECHANGED:
+        case WM_CANCELMODE:
+            cancel_pointer_interaction();
+            InvalidateRect(hwnd_, nullptr, FALSE);
+            return 0;
         case WM_SETCURSOR:
-            if (settings_button_hot_) {
+            if (settings_button_hot_ || (selection_callback_ && candidate_pointer_.hovered())) {
                 SetCursor(LoadCursorW(nullptr, IDC_HAND));
                 return TRUE;
             }
             break;
         case WM_DESTROY:
+            cancel_pointer_interaction();
             notify_ime_window_hidden(hwnd);
             break;
+        case WM_NCDESTROY:
+            SetWindowLongPtrW(hwnd, GWLP_USERDATA, 0);
+            if (hwnd_ == hwnd) hwnd_ = nullptr;
+            return DefWindowProcW(hwnd, message, wparam, lparam);
         case WM_ERASEBKGND:
             return 1;
         case WM_PAINT:
             paint_seen_ = true;
             paint();
+            return 0;
+        case WM_PRINTCLIENT:
+            render(reinterpret_cast<HDC>(wparam));
             return 0;
         default:
             return DefWindowProcW(hwnd, message, wparam, lparam);
@@ -623,6 +655,7 @@ void CandidateWindow::update_fonts(int dpi) {
 }
 
 bool CandidateWindow::rebuild_layout(int dpi) {
+    cancel_pointer_interaction();
     update_fonts(dpi);
     const int fallback_font_px = candidate_font_px_for_size(options_.text_size, dpi);
     std::vector<int> candidate_text_widths;
@@ -630,9 +663,11 @@ bool CandidateWindow::rebuild_layout(int dpi) {
     candidate_text_widths.reserve(candidate_texts_.size());
     number_text_widths.reserve(candidate_texts_.size());
     for (size_t i = 0; i < candidate_texts_.size(); ++i) {
-        candidate_text_widths.push_back(measure_text_width_px(hwnd_, candidate_font_, candidate_texts_[i], fallback_font_px));
+        const int measured = renderer_.measure_text(candidate_texts_[i], static_cast<float>(fallback_font_px), FW_MEDIUM);
+        candidate_text_widths.push_back(measured > 0 ? measured : measure_text_width_px(hwnd_, candidate_font_, candidate_texts_[i], fallback_font_px));
         const std::wstring number = std::to_wstring(i + 1);
-        number_text_widths.push_back(measure_text_width_px(hwnd_, candidate_font_, number, fallback_font_px));
+        const int number_width = renderer_.measure_text(number, static_cast<float>(fallback_font_px));
+        number_text_widths.push_back(number_width > 0 ? number_width : measure_text_width_px(hwnd_, candidate_font_, number, fallback_font_px));
     }
 
     CandidateLayoutInput input;
@@ -698,6 +733,28 @@ void CandidateWindow::update_settings_button_hot(bool hot) {
     }
     settings_button_hot_ = hot;
     InvalidateRect(hwnd_, &layout_.action_button_rect, FALSE);
+}
+
+void CandidateWindow::update_candidate_hot(POINT point) {
+    const auto index = selection_callback_ ? candidate_index_at_point(layout_, point) : std::nullopt;
+    if (candidate_pointer_.hovered() == index) return;
+    candidate_pointer_.move(index);
+    if (hwnd_) InvalidateRect(hwnd_, nullptr, FALSE);
+}
+
+void CandidateWindow::cancel_pointer_interaction() noexcept {
+    candidate_pointer_.cancel();
+    settings_button_hot_ = false;
+    settings_button_pressed_ = false;
+    if (tracking_mouse_leave_ && hwnd_) {
+        TRACKMOUSEEVENT event{};
+        event.cbSize = sizeof(event);
+        event.dwFlags = TME_LEAVE | TME_CANCEL;
+        event.hwndTrack = hwnd_;
+        TrackMouseEvent(&event);
+    }
+    tracking_mouse_leave_ = false;
+    if (hwnd_ && GetCapture() == hwnd_) ReleaseCapture();
 }
 
 void CandidateWindow::track_mouse_leave() {
@@ -766,6 +823,14 @@ void CandidateWindow::draw_settings_button(HDC hdc) {
         fill = blend_color(fill, RGB(0, 0, 0), palette_.dark ? 18 : 8);
     }
     const COLORREF border_color = settings_button_hot_ ? palette_.selected_border : palette_.border;
+    if (auto* canvas = active_modern_renderer()) {
+        canvas->rounded(rect, static_cast<float>(scale_dip(7, layout_.dpi)), fill, border_color);
+        RECT icon = rect;
+        InflateRect(&icon, -scale_dip(6, layout_.dpi), -scale_dip(6, layout_.dpi));
+        canvas->icon(8, icon, settings_button_hot_ ? palette_.number_text : palette_.muted_text,
+                       scale_dip(1, layout_.dpi) * 1.5f);
+        return;
+    }
     HBRUSH brush = CreateSolidBrush(fill);
     HPEN pen = CreatePen(PS_SOLID, std::max(1, scale_dip(1, layout_.dpi)), border_color);
     fill_round_rect(hdc, rect, scale_dip(8, layout_.dpi) * 2, brush, pen);
@@ -803,13 +868,61 @@ void CandidateWindow::draw_settings_button(HDC hdc) {
 void CandidateWindow::paint() {
     PAINTSTRUCT ps{};
     HDC hdc = BeginPaint(hwnd_, &ps);
+    render(hdc);
+    EndPaint(hwnd_, &ps);
+}
+
+void CandidateWindow::render(HDC hdc) {
+    if (!hdc || !hwnd_) return;
     RECT rect{};
     GetClientRect(hwnd_, &rect);
+    if (rect.right <= rect.left || rect.bottom <= rect.top) return;
 
     HDC memory_dc = CreateCompatibleDC(hdc);
-    HBITMAP bitmap = CreateCompatibleBitmap(hdc, rect.right - rect.left, rect.bottom - rect.top);
+    HBITMAP bitmap = memory_dc ? CreateCompatibleBitmap(hdc, rect.right - rect.left, rect.bottom - rect.top) : nullptr;
+    if (!bitmap) {
+        if (memory_dc) DeleteDC(memory_dc);
+        return;
+    }
     HGDIOBJ old_bitmap = SelectObject(memory_dc, bitmap);
     SetBkMode(memory_dc, TRANSPARENT);
+
+    ModernRenderScope modern(renderer_, memory_dc, rect);
+    if (modern.active()) {
+        renderer_.fill(rect, palette_.background);
+        renderer_.rounded(rect, static_cast<float>(layout_.corner_radius), palette_.background, palette_.border);
+        renderer_.text(composition_text_, layout_.composition_rect, palette_.muted_text,
+                         static_cast<float>(layout_.composition_font_px));
+        for (const auto& item : layout_.items) {
+            if (item.selected) renderer_.rounded(item.bounds, static_cast<float>(layout_.selected_corner_radius),
+                                                 palette_.selected_background, palette_.selected_border);
+            else if (candidate_pointer_.hovered() == item.candidate_index) {
+                const int tint = candidate_pointer_.pressed() == item.candidate_index ? 22 : 12;
+                const COLORREF hover = blend_color(palette_.background, palette_.selected_background, tint);
+                renderer_.rounded(item.bounds, static_cast<float>(layout_.selected_corner_radius), hover, hover);
+            }
+            renderer_.text(std::to_wstring(item.candidate_index + 1), item.number_bounds,
+                             item.selected ? palette_.selected_text : palette_.number_text,
+                             static_cast<float>(layout_.candidate_font_px));
+            renderer_.text(item.display_text, item.text_bounds,
+                             item.selected ? palette_.selected_text : palette_.text,
+                             static_cast<float>(layout_.candidate_font_px), FW_MEDIUM, candidate_text_draw_flags(item.truncated));
+        }
+        draw_settings_button(memory_dc);
+        if (layout_.show_hint) {
+            const float y = static_cast<float>(layout_.hint_rect.top - scale_dip(4, layout_.dpi));
+            renderer_.line(static_cast<float>(layout_.hint_rect.left), y,
+                             static_cast<float>(layout_.hint_rect.right), y, palette_.border, 1);
+            renderer_.text(kHintText, layout_.hint_rect, palette_.hint_text,
+                             static_cast<float>(layout_.hint_font_px));
+        }
+        modern.finish();
+        BitBlt(hdc, 0, 0, rect.right, rect.bottom, memory_dc, 0, 0, SRCCOPY);
+        SelectObject(memory_dc, old_bitmap);
+        DeleteObject(bitmap);
+        DeleteDC(memory_dc);
+        return;
+    }
 
     HBRUSH background = CreateSolidBrush(palette_.background);
     HPEN border = CreatePen(PS_SOLID, std::max(1, scale_dip(1, layout_.dpi)), palette_.border);
@@ -834,6 +947,14 @@ void CandidateWindow::paint() {
             fill_round_rect(memory_dc, item.bounds, layout_.selected_corner_radius * 2, selected_brush, selected_pen);
             DeleteObject(selected_pen);
             DeleteObject(selected_brush);
+        } else if (candidate_pointer_.hovered() == item.candidate_index) {
+            const int tint = candidate_pointer_.pressed() == item.candidate_index ? 22 : 12;
+            const COLORREF hover = blend_color(palette_.background, palette_.selected_background, tint);
+            HBRUSH hover_brush = CreateSolidBrush(hover);
+            HPEN hover_pen = CreatePen(PS_SOLID, 1, hover);
+            fill_round_rect(memory_dc, item.bounds, layout_.selected_corner_radius * 2, hover_brush, hover_pen);
+            DeleteObject(hover_pen);
+            DeleteObject(hover_brush);
         }
 
         const std::wstring number = std::to_wstring(item.candidate_index + 1);
@@ -874,7 +995,6 @@ void CandidateWindow::paint() {
     DeleteObject(bitmap);
     DeleteDC(memory_dc);
 
-    EndPaint(hwnd_, &ps);
 }
 
 void CandidateWindow::release_fonts() {

@@ -370,34 +370,36 @@ std::wstring candidate_text_size_to_string(CandidateTextSize size) {
 }
 
 CandidateThemePalette make_candidate_palette(CandidateThemeMode mode, bool system_dark) {
-    const bool dark = mode == CandidateThemeMode::Dark ||
-                      (mode == CandidateThemeMode::System && system_dark);
-    if (dark) {
-        return CandidateThemePalette{
-            true,
-            brand::kLocalPinyinBlueDarkCard_background,
-            brand::kLocalPinyinBlueDarkCard_border,
-            brand::kLocalPinyinBlueDarkPrimary,
-            brand::kLocalPinyinBlueDarkMuted,
-            brand::kLocalPinyinBlueDarkWeak,
-            brand::kLocalPinyinBlueCyan_highlight,
-            brand::kLocalPinyinBlueDarkAccent,
-            brand::kLocalPinyinBlueDarkAccent,
-            RGB(255, 255, 255)
-        };
+    const bool dark = mode == CandidateThemeMode::Dark || (mode == CandidateThemeMode::System && system_dark);
+    if (dark) return CandidateThemePalette{true,
+        RGB(38,38,42), RGB(57,57,63), RGB(246,247,250), RGB(176,178,187), RGB(140,143,156),
+        RGB(96,175,255), RGB(96,175,255), RGB(96,175,255), RGB(17,35,56)};
+    return CandidateThemePalette{false,
+        RGB(255,255,255), RGB(215,218,225), RGB(26,28,34), RGB(100,104,116), RGB(138,143,154),
+        RGB(0,103,192), RGB(0,103,192), RGB(0,103,192), RGB(255,255,255)};
+}
+
+std::optional<size_t> candidate_index_at_point(const CandidateLayoutResult& layout, POINT point) noexcept {
+    if (!layout.visible) return std::nullopt;
+    for (const auto& item : layout.items) {
+        const RECT& bounds = item.bounds;
+        if (point.x >= bounds.left && point.x < bounds.right &&
+            point.y >= bounds.top && point.y < bounds.bottom) return item.candidate_index;
     }
-    return CandidateThemePalette{
-        false,
-        brand::kLocalPinyinBlueLightCard_background,
-        brand::kLocalPinyinBlueLightCard_border,
-        brand::kLocalPinyinBlueLightPrimary,
-        brand::kLocalPinyinBlueLightMuted,
-        brand::kLocalPinyinBlueLightWeak,
-        brand::kLocalPinyinBlueAzure_blue,
-        brand::kLocalPinyinBlueLightAccent,
-        brand::kLocalPinyinBlueLightAccent,
-        RGB(255, 255, 255)
-    };
+    return std::nullopt;
+}
+
+std::optional<size_t> candidate_model_index(const CandidateLayoutResult& layout, size_t display_index,
+    const std::vector<std::wstring>& candidates) noexcept {
+    for (const auto& item : layout.items) {
+        if (item.candidate_index != display_index) continue;
+        // Layout removes duplicate labels. Resolve the visible word back to its
+        // original model index instead of committing a different duplicate slot.
+        const auto found = std::find(candidates.begin(), candidates.end(), item.display_text);
+        if (found != candidates.end()) return static_cast<size_t>(found - candidates.begin());
+        break;
+    }
+    return std::nullopt;
 }
 
 CandidateLayoutResult make_candidate_layout(const CandidateLayoutInput& input) {

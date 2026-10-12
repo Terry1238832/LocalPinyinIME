@@ -3,6 +3,8 @@
 #include <string>
 #include <filesystem>
 #include <unordered_map>
+#include <vector>
+#include <utility>
 
 namespace localpinyin {
 
@@ -13,6 +15,8 @@ public:
     bool record_selection(const std::wstring& pinyin, const std::wstring& word);
     bool clear();
     void refresh_if_changed();
+    [[nodiscard]] size_t revision() const noexcept { return revision_; }
+    [[nodiscard]] std::vector<std::pair<std::wstring, int>> selected_texts() const;
 
 private:
     struct Record {
@@ -29,6 +33,7 @@ private:
     std::unordered_map<std::wstring, Record> records_;
     std::filesystem::file_time_type write_time_{};
     bool has_write_time_ = false;
+    size_t revision_ = 0;
 };
 
 }  // namespace localpinyin

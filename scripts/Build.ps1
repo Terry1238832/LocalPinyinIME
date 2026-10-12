@@ -79,8 +79,9 @@ New-Item -ItemType Directory -Path $outputRoot -Force | Out-Null
 foreach ($binary in @('LocalPinyinIME.dll', 'LocalPinyinSettings.exe', 'LocalPinyinImeSetup.exe')) {
     Copy-Item -LiteralPath (Join-Path $buildRoot "bin\$binary") -Destination (Join-Path $stageRoot 'bin')
 }
-Copy-Item -LiteralPath (Join-Path $sourceRoot 'resources\dictionary\core_zh_pinyin.tsv'), (Join-Path $sourceRoot 'resources\dictionary\local_core_zh_pinyin.tsv') -Destination (Join-Path $stageRoot 'bin\dictionary')
+Copy-Item -LiteralPath (Join-Path $sourceRoot 'resources\dictionary\core_zh_pinyin.tsv'), (Join-Path $sourceRoot 'resources\dictionary\local_core_zh_pinyin.tsv'), (Join-Path $sourceRoot 'resources\dictionary\context_zh.tsv'), (Join-Path $sourceRoot 'resources\dictionary\standard_zh_pinyin.tsv') -Destination (Join-Path $stageRoot 'bin\dictionary')
 Copy-Item -LiteralPath (Join-Path $sourceRoot 'LICENSE') -Destination $stageRoot
+Copy-Item -LiteralPath (Join-Path $sourceRoot 'resources\THIRD_PARTY_NOTICES.txt') -Destination $stageRoot
 $versionHeader = Get-Content -LiteralPath (Join-Path $buildRoot 'generated\localpinyin_version.h') -Raw
 $version = [regex]::Match($versionHeader, '#define LOCALPINYINIME_VERSION_STRING_UTF8 "([^"]+)"').Groups[1].Value
 if (!$version) { throw 'Cannot read generated release version' }

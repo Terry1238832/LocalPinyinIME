@@ -1,13 +1,16 @@
 #pragma once
 
 #include "../engine/user_lexicon.h"
+#include "../engine/pinyin_engine.h"
 #include "dictionary_catalog.h"
 #include "settings_store.h"
+#include "modern_renderer.h"
 
 #include <windows.h>
 #include <commctrl.h>
 
 #include <array>
+#include <functional>
 #include <string>
 #include <vector>
 
@@ -81,6 +84,8 @@ struct SettingsWindowLayout {
     SettingsRect candidate_size_label_right;
     SettingsRect search_box;
     SettingsRect refresh_button;
+    SettingsRect builtin_dictionary_button;
+    SettingsRect personal_dictionary_title;
     SettingsRect user_table;
     SettingsRect user_empty_state;
     SettingsRect user_editor_card;
@@ -346,6 +351,7 @@ struct SettingsKeyboardState {
 [[nodiscard]] SettingsPageVisibilityPolicy settings_page_visibility_policy();
 [[nodiscard]] SettingsAboutPathPolicy settings_about_path_policy();
 void apply_settings_dark_title_bar(HWND hwnd, bool dark);
+void apply_settings_control_theme(HWND hwnd, bool dark);
 [[nodiscard]] CandidateSizeSliderMetrics calculate_candidate_size_slider_metrics(
     const SettingsRect& bounds,
     int level,
@@ -393,9 +399,10 @@ void apply_settings_dark_title_bar(HWND hwnd, bool dark);
 
 class SettingsWindow {
 public:
-    int run(HINSTANCE instance, int show_command);
+    int run(HINSTANCE instance, int show_command, std::function<void(HWND)> ready = {});
 
 private:
+    friend class SettingsWindowCapture;
     static LRESULT CALLBACK window_proc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam);
     LRESULT handle_message(UINT message, WPARAM wparam, LPARAM lparam);
     void create_controls();
@@ -414,17 +421,23 @@ private:
     SettingsControlSurface control_surface_for_id(int id) const;
     void paint();
     void render(HDC hdc);
+    void install_modern_controls();
+    void render_static_control(HWND control, HDC hdc);
+    void render_edit_hint(HWND control, HDC hdc, bool printing = false);
+    static LRESULT CALLBACK modern_static_subclass_proc(HWND, UINT, WPARAM, LPARAM, UINT_PTR, DWORD_PTR);
+    static LRESULT CALLBACK modern_edit_subclass_proc(HWND, UINT, WPARAM, LPARAM, UINT_PTR, DWORD_PTR);
+    static LRESULT CALLBACK modern_button_subclass_proc(HWND, UINT, WPARAM, LPARAM, UINT_PTR, DWORD_PTR);
     void draw_button(const DRAWITEMSTRUCT& item);
     bool draw_list_header_item(const NMCUSTOMDRAW& custom_draw);
     void paint_list_header(HWND header, HDC hdc);
     void layout_controls();
     void show_page(SettingsPage page);
     void apply_options_to_controls();
-    void save_options_from_controls();
     void sync_candidate_text_size_controls();
     void persist_candidate_display_options();
     void update_candidate_text_size_from_level(int level);
     void invalidate_candidate_size_preview();
+    void update_candidate_preview();
     void draw_candidate_size_slider(HDC hdc, const RECT& paint_rect, const CandidateSizeSliderDrawState& state);
     void draw_shortcut_test_keys(HDC hdc, const SettingsWindowLayout& layout);
     void update_shortcut_test_key_state();
@@ -484,6 +497,8 @@ private:
     HICON app_icon_small_ = nullptr;
     int dpi_ = 96;
     SettingsThemePalette palette_;
+    ModernRenderer renderer_;
+    HIMAGELIST lexicon_row_metrics_ = nullptr;
     SettingsPage active_page_ = SettingsPage::Appearance;
     HWND lexicon_search_ = nullptr;
     HWND lexicon_list_ = nullptr;
@@ -493,6 +508,12 @@ private:
     HWND lexicon_frequency_ = nullptr;
     HWND candidate_size_slider_ = nullptr;
     HWND candidate_size_value_ = nullptr;
+    HWND candidate_preview_input_ = nullptr;
+    PinyinEngine candidate_preview_engine_{DictionaryLoadMode::Empty};
+    bool candidate_preview_ready_ = false;
+    std::wstring candidate_preview_pinyin_;
+    std::vector<std::wstring> candidate_preview_texts_;
+    CandidateLayoutResult candidate_preview_layout_;
     bool candidate_size_slider_dragging_ = false;
     bool shortcut_test_timer_active_ = false;
     ShortcutTestKeyState shortcut_test_key_state_;

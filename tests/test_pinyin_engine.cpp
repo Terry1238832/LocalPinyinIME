@@ -16,7 +16,9 @@ int main() {
     REQUIRE_EQ(engine.lookup(L"zhongguo").front().text, std::wstring(L"\u4E2D\u56FD"));
     REQUIRE_EQ(engine.lookup(L"beijing").front().text, std::wstring(L"\u5317\u4EAC"));
     REQUIRE_EQ(engine.lookup(L"woxiangqubeijing").front().text, std::wstring(L"\u6211\u60F3\u53BB\u5317\u4EAC"));
-    REQUIRE_EQ(engine.lookup(L"jintianxingtianqihenhao").front().text, std::wstring(L"\u4ECA\u5929\u661F\u671F\u5929\u5F88\u597D"));
+    // 星期天 is xingqitian. The previous xingtianqi spelling swapped
+    // syllables and passed only because a whole-sentence patch hid the error.
+    REQUIRE_EQ(engine.lookup(L"jintianxingqitianhenhao").front().text, std::wstring(L"\u4ECA\u5929\u661F\u671F\u5929\u5F88\u597D"));
     REQUIRE_EQ(engine.lookup(L"xuesheng").front().text, std::wstring(L"\u5B66\u751F"));
     REQUIRE_EQ(engine.lookup(L"wo").front().text, std::wstring(L"\u6211"));
 

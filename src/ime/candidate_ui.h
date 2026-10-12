@@ -5,6 +5,7 @@
 #include <string>
 #include <array>
 #include <vector>
+#include <optional>
 
 namespace localpinyin {
 
@@ -192,6 +193,32 @@ struct CandidateLayoutResult {
     int action_button_gap_px = 0;
     std::vector<CandidateItemLayout> items;
 };
+
+// Pointer feedback does not change the keyboard selection. A press only commits
+// when it is released on the same item; capture loss or a changed model cancels it.
+class CandidatePointerState {
+public:
+    [[nodiscard]] std::optional<size_t> hovered() const noexcept { return hovered_; }
+    [[nodiscard]] std::optional<size_t> pressed() const noexcept { return pressed_; }
+    void move(std::optional<size_t> index) noexcept { hovered_ = index; }
+    void press(std::optional<size_t> index) noexcept { hovered_ = pressed_ = index; }
+    [[nodiscard]] std::optional<size_t> release(std::optional<size_t> index) noexcept {
+        const auto result = index && index == pressed_ ? index : std::nullopt;
+        pressed_.reset();
+        hovered_ = index;
+        return result;
+    }
+    void cancel() noexcept { hovered_.reset(); pressed_.reset(); }
+private:
+    std::optional<size_t> hovered_;
+    std::optional<size_t> pressed_;
+};
+
+[[nodiscard]] std::optional<size_t> candidate_index_at_point(
+    const CandidateLayoutResult& layout, POINT point) noexcept;
+[[nodiscard]] std::optional<size_t> candidate_model_index(
+    const CandidateLayoutResult& layout, size_t display_index,
+    const std::vector<std::wstring>& candidates) noexcept;
 
 int scale_dip(int value, int dpi) noexcept;
 int candidate_text_size_min_level() noexcept;

@@ -1,0 +1,29 @@
+{
+  "format_version": 1,
+  "source_repository": "rime/rime-pinyin-simp",
+  "upstream_commit": "0c6861ef7420ee780270ca6d993d18d4101049d0",
+  "upstream_sha256": "e341598343a0f0f2035bb1aafc34a7f3bb7887deeecb3f60796262aaa2983e6b",
+  "license": "Apache-2.0",
+  "upstream_authors_sha256": "f4cff0fcbca4668ac449c24a53be547e162bc60cce63fdc5d5906801a452edc4",
+  "entry_count": 55716,
+  "missing_entries_added": 46718,
+  "length_distribution": {
+    "1": 7638,
+    "2": 34072,
+    "3": 7379,
+    "4": 6627
+  },
+  "sha256": "9dbc97aacdad2bd21bfbd6d2dad7f7ed61e0dd95bbf213030f7d7973d25c3e15",
+  "skipped": {
+    "rare": 9408,
+    "existing_reference_only": 8998,
+    "characters": 1
+  },
+  "heldout_sentences_excluded": true,
+  "project_overrides_preserved": true,
+  "weight_transform": "5000 + round(4500 * ln(1 + frequency) / max_ln); single/multi maxima calibrated separately",
+  "normalization_max_ln": {
+    "single": 15.390003961238465,
+    "multi": 12.831625975516875
+  }
+}

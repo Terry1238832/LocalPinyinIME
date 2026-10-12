@@ -28,6 +28,14 @@ int main() {
     REQUIRE_EQ(defaults.front().source, DictionaryCatalogSource::LocalCore);
     REQUIRE_EQ(catalog.preview(L"xie", 500).size(), static_cast<size_t>(1));
     REQUIRE_EQ(catalog.preview(L"\u4F60\u597D", 500).size(), static_cast<size_t>(1));
+    { std::ofstream out(root / L"standard_zh_pinyin.tsv", std::ios::binary);
+      out << "nihao\t你好\t9500\nsuibian\t随便\t8000\n"; }
+    REQUIRE_TRUE(catalog.load(root.wstring()));
+    REQUIRE_EQ(catalog.stats().standard_entries, size_t{2});
+    REQUIRE_EQ(catalog.stats().total_unique_entries, size_t{4});
+    REQUIRE_EQ(catalog.preview(L"nihao", 500).front().weight, 7000);
+    REQUIRE_EQ(catalog.preview(L"nihao", 500).front().source, DictionaryCatalogSource::LocalCore);
+    REQUIRE_EQ(catalog.preview(L"随便", 500).front().source, DictionaryCatalogSource::Standard);
     std::filesystem::remove_all(root);
     return 0;
 }

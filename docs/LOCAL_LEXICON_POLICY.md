@@ -4,7 +4,8 @@ LocalPinyinIME uses a small layered dictionary model:
 
 1. `resources/dictionary/core_zh_pinyin.tsv`
 2. `resources/dictionary/local_core_zh_pinyin.tsv`
-3. `%LOCALAPPDATA%\LocalPinyinIME\user_lexicon.tsv`
+3. `resources/dictionary/standard_zh_pinyin.tsv` (Apache-2.0 Rime/AOSP short vocabulary and decoding reference)
+4. `%LOCALAPPDATA%\LocalPinyinIME\user_lexicon.tsv`
 
 `local_core_zh_pinyin.tsv` is reserved for project-maintained entries that are small, explicit, and publicly reviewable. It is not a place to bulk-import third-party dictionaries.
 
@@ -16,7 +17,9 @@ The v2 lexicon is reviewed for file format, duplicate `pinyin + word` keys, requ
 
 The current user lexicon is private to the Windows user account. It lives at `%LOCALAPPDATA%\LocalPinyinIME\user_lexicon.tsv`, must not be committed to Git, must not be packaged into releases, and must not be uploaded by project tools.
 
-This project does not import rime-ice, Sogou, Baidu, Microsoft, Google, scraped web corpus data, or any other third-party bulk lexicon in this foundation stage.
+The project-maintained local layer contains first-party entries. Version 0.5 adds a separate, pinned Apache-2.0 Rime/AOSP standard layer; it does not import rime-ice or commercial IME dictionaries. Existing project direct-candidate weights remain intact, and user entries override references. The source, transformations, checksum, and full license are recorded in `standard_zh_pinyin.metadata.json` and `resources/THIRD_PARTY_NOTICES.txt`.
+
+`context_zh.tsv` contains only short character statistics from attributed public-domain prose and original daily text. Its training works exclude the three article validation works. No frozen validation sentence is inserted as a new full-sentence dictionary candidate. Training sources and weights are recorded in `authoring/sources.json` and `context_zh.metadata.json`.
 
 Before any future import, the project must record:
 

@@ -6,7 +6,7 @@
 
 namespace localpinyin {
 
-enum class DictionaryCatalogSource { Core, LocalCore };
+enum class DictionaryCatalogSource { Core, LocalCore, Standard };
 
 struct DictionaryCatalogEntry {
     std::wstring pinyin;
@@ -18,6 +18,7 @@ struct DictionaryCatalogEntry {
 struct DictionaryCatalogStats {
     size_t core_entries = 0;
     size_t local_core_entries = 0;
+    size_t standard_entries = 0;
     size_t total_unique_entries = 0;
     size_t invalid_rows = 0;
 };

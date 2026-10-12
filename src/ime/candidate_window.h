@@ -2,6 +2,7 @@
 
 #include "candidate_ui.h"
 #include "../engine/candidate.h"
+#include "../settings/modern_renderer.h"
 
 #include <windows.h>
 
@@ -117,8 +118,10 @@ public:
                                UINT delay_ms);
     void cancel_layout_retry();
     [[nodiscard]] bool is_visible() const noexcept;
+    void set_selection_callback(std::function<void(size_t)> callback);
 
 private:
+    friend class SettingsWindowCapture;
     static LRESULT CALLBACK window_proc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam);
     LRESULT handle_message(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam);
     bool create_with_owner(HWND requested_owner);
@@ -133,9 +136,12 @@ private:
     bool rebuild_layout(int dpi);
     void apply_options_changed();
     void paint();
+    void render(HDC hdc);
     void draw_settings_button(HDC hdc);
     bool hit_test_settings_button(POINT point) const noexcept;
     void update_settings_button_hot(bool hot);
+    void update_candidate_hot(POINT point);
+    void cancel_pointer_interaction() noexcept;
     void track_mouse_leave();
     void open_settings_window();
     void reset_presentation_state() noexcept;
@@ -152,6 +158,7 @@ private:
     bool has_cached_show_state_ = false;
     CandidateWindowOptions options_;
     CandidateThemePalette palette_;
+    ModernRenderer renderer_;
     CandidateLayoutResult layout_;
     HFONT composition_font_ = nullptr;
     HFONT candidate_font_ = nullptr;
@@ -161,6 +168,8 @@ private:
     bool settings_button_hot_ = false;
     bool settings_button_pressed_ = false;
     bool tracking_mouse_leave_ = false;
+    CandidatePointerState candidate_pointer_;
+    std::function<void(size_t)> selection_callback_;
     UINT_PTR layout_retry_timer_ = 0;
     unsigned int layout_retry_attempt_ = 0;
     std::function<void()> layout_retry_callback_;

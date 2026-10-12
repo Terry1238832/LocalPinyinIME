@@ -19,7 +19,7 @@ namespace {
 
 // Legal Mandarin syllables, shared by all dictionary layers. Derive initials
 // against the character count so xian (先) is not incorrectly split as xi'an.
-std::wstring initials_for(const std::wstring& pinyin, size_t character_count) {
+const std::unordered_set<std::wstring>& syllable_set() {
     static const std::unordered_set<std::wstring> syllables = [] {
         std::wistringstream stream(
             L"a ai an ang ao ba bai ban bang bao bei ben beng bi bian biao bie bin bing bo bu "
@@ -45,20 +45,32 @@ std::wstring initials_for(const std::wstring& pinyin, size_t character_count) {
         for (std::wstring syllable; stream >> syllable;) result.insert(syllable);
         return result;
     }();
-    if (character_count < 2 || character_count > 16 || pinyin.size() > 96) return {};
-    std::vector<std::vector<bool>> failed(pinyin.size() + 1,
-                                         std::vector<bool>(character_count + 1));
+    return syllables;
+}
+
+std::wstring initials_for(const std::wstring& pinyin, size_t character_count,
+                         const std::vector<size_t>& boundaries = {}, std::vector<size_t>* ends = nullptr) {
+    const auto& syllables = syllable_set();
+    if (character_count < 1 || character_count > 32 || pinyin.size() > 128) return {};
+    // One bit per attempted character count avoids an allocation for every
+    // pinyin position during the many small prediction-index queries.
+    std::array<unsigned long long, 129> failed{};
     std::wstring result;
     const auto solve = [&](auto&& self, size_t offset, size_t count) -> bool {
         if (offset == pinyin.size()) return count == character_count;
-        if (count == character_count || failed[offset][count]) return false;
+        if (count == character_count || (failed[offset] & (1ULL << count))) return false;
         for (size_t length = std::min<size_t>(6, pinyin.size() - offset); length > 0; --length) {
+            if (std::any_of(boundaries.begin(), boundaries.end(), [&](size_t boundary) {
+                return boundary > offset && boundary < offset + length;
+            })) continue;
             if (!syllables.contains(pinyin.substr(offset, length))) continue;
             result.push_back(pinyin[offset]);
+            if (ends) ends->push_back(offset + length);
             if (self(self, offset + length, count + 1)) return true;
             result.pop_back();
+            if (ends) ends->pop_back();
         }
-        failed[offset][count] = true;
+        failed[offset] |= 1ULL << count;
         return false;
     };
     return solve(solve, 0, 0) ? result : L"";
@@ -202,8 +214,9 @@ void Dictionary::clear() {
     entries_.clear();
     max_key_length_ = 0;
     prediction_index_dirty_ = true;
-    sorted_keys_.clear();
+    prediction_partitions_.clear();
     initials_index_.clear();
+    prediction_readings_.clear();
     entry_count_ = 0;
     stats_ = {};
     layer_stats_.clear();
@@ -232,13 +245,16 @@ bool Dictionary::add_entry(const std::wstring& pinyin,
     });
     const bool added = it == candidates.end();
     if (!added) {
-        if (mode == EntryAddMode::ReplaceExisting) {
+        if (mode == EntryAddMode::ReferenceFrequency) {
+            it->decoding_frequency = base_frequency;
+        } else if (mode == EntryAddMode::ReplaceExisting) {
             it->base_score = base_frequency;
         } else {
             it->base_score = std::max(it->base_score, base_frequency);
         }
     } else {
         candidates.push_back(Candidate{word, base_frequency, 0});
+        if (mode == EntryAddMode::ReferenceFrequency) candidates.back().decoding_frequency = base_frequency;
         ++entry_count_;
     }
 
@@ -279,7 +295,8 @@ bool Dictionary::load_from_default_resource() {
     if (load_from_layered_files(core_path,
                                 default_local_core_resource_path(),
                                 default_user_lexicon_path(),
-                                UserLexiconCreateMode::CreateIfMissing)) {
+                                UserLexiconCreateMode::CreateIfMissing,
+                                join_path(join_path(module_directory(), L"dictionary"), L"standard_zh_pinyin.tsv"))) {
         return true;
     }
 
@@ -303,13 +320,15 @@ bool Dictionary::load_from_resource_directory(const std::wstring& directory,
     return load_from_layered_files(join_path(dictionary_dir, L"core_zh_pinyin.tsv"),
                                    join_path(dictionary_dir, L"local_core_zh_pinyin.tsv"),
                                    user_lexicon_path,
-                                   UserLexiconCreateMode::CreateIfMissing);
+                                   UserLexiconCreateMode::CreateIfMissing,
+                                   join_path(dictionary_dir, L"standard_zh_pinyin.tsv"));
 }
 
 bool Dictionary::load_from_layered_files(const std::wstring& core_path,
                                          const std::wstring& local_core_path,
                                          const std::wstring& user_lexicon_path,
-                                         UserLexiconCreateMode create_mode) {
+                                         UserLexiconCreateMode create_mode,
+                                         const std::wstring& standard_path) {
     clear();
 
     const auto core = load_layer(L"core", core_path, EntryAddMode::KeepExisting, true, false);
@@ -319,6 +338,12 @@ bool Dictionary::load_from_layered_files(const std::wstring& core_path,
     const auto local_core = load_layer(L"local_core", local_core_path, EntryAddMode::ReplaceExisting, false, false);
     merge_stats(stats_, local_core.stats);
     layer_stats_.push_back(local_core);
+
+    if (!standard_path.empty()) {
+        const auto standard = load_layer(L"standard", standard_path, EntryAddMode::ReferenceFrequency, false, false);
+        merge_stats(stats_, standard.stats);
+        layer_stats_.push_back(standard);
+    }
 
     const auto user = load_layer(L"local_user",
                                  user_lexicon_path,
@@ -415,10 +440,13 @@ bool Dictionary::add_user_lexicon_entry(const UserLexiconEntry& entry, Dictionar
     overlay.had_previous = it != candidates.end();
     if (overlay.had_previous) {
         overlay.previous_score = it->base_score;
+        overlay.previous_decoding_frequency = it->decoding_frequency;
         it->base_score = entry.frequency;
+        it->decoding_frequency = entry.frequency;
         ++layer_stats.duplicate_rows;
     } else {
         candidates.push_back(Candidate{entry.word, entry.frequency, 0});
+        candidates.back().decoding_frequency = entry.frequency;
         ++entry_count_;
     }
     user_lexicon_overlays_.push_back(overlay);
@@ -447,6 +475,7 @@ void Dictionary::revert_user_lexicon_entries() {
 
         if (it->had_previous) {
             candidate_it->base_score = it->previous_score;
+            candidate_it->decoding_frequency = it->previous_decoding_frequency;
         } else {
             candidates.erase(candidate_it);
             if (entry_count_ > 0) {
@@ -698,41 +727,82 @@ std::vector<std::wstring> Dictionary::matching_pinyins_at(const std::wstring& in
     return matches;
 }
 
-void Dictionary::rebuild_prediction_index() const {
-    if (!prediction_index_dirty_) return;
-    sorted_keys_.clear();
-    initials_index_.clear();
-    sorted_keys_.reserve(entries_.size());
+const Dictionary::PredictionPartition& Dictionary::rebuild_prediction_index(wchar_t first_letter) const {
+    if (prediction_index_dirty_) {
+        prediction_partitions_.clear();
+        initials_index_.clear();
+        prediction_readings_.clear();
+        prediction_index_dirty_ = false;
+    }
+    const auto cached = prediction_partitions_.find(first_letter);
+    if (cached != prediction_partitions_.end()) return cached->second;
+
+    // Ordinary typing touches one initial at a time. Completion and initials
+    // share that initial's sorted keys, without sorting every other initial on
+    // the first keystroke. Empty partitions are cached as well.
+    PredictionPartition partition;
     for (const auto& [key, candidates] : entries_) {
-        if (candidates.empty()) continue;
-        sorted_keys_.push_back(key);
-        std::unordered_set<size_t> character_counts;
-        for (const auto& candidate : candidates) {
-            const auto& text = candidate.text;
-            if (text.size() < 2 || text.size() > 16 ||
-                !std::all_of(text.begin(), text.end(), [](wchar_t ch) { return ch >= 0x3400 && ch <= 0x9FFF; }) ||
-                !character_counts.insert(text.size()).second) continue;
-            const auto initials = initials_for(key, text.size());
-            if (!initials.empty() && initials != key) initials_index_[initials].push_back(key);
+        if (key.empty() || key.front() != first_letter || candidates.empty()) continue;
+        partition.sorted_keys.push_back(key);
+        for (size_t length = 1; length <= std::min<size_t>(2, key.size()); ++length) {
+            partition.short_prefix_index[key.substr(0, length)].push_back(key);
         }
     }
-    std::sort(sorted_keys_.begin(), sorted_keys_.end());
-    for (auto& [initials, keys] : initials_index_) {
+    std::sort(partition.sorted_keys.begin(), partition.sorted_keys.end());
+    for (auto& [prefix, keys] : partition.short_prefix_index) {
+        const size_t retained = std::min<size_t>(64, keys.size());
+        std::partial_sort(keys.begin(), keys.begin() + retained, keys.end(), [&](const auto& left, const auto& right) {
+            const int left_score = entries_.at(left).front().base_score;
+            const int right_score = entries_.at(right).front().base_score;
+            if (left_score != right_score) return left_score > right_score;
+            return left.size() != right.size() ? left.size() < right.size() : left < right;
+        });
+        keys.resize(retained);
+    }
+    return prediction_partitions_.emplace(first_letter, std::move(partition)).first->second;
+}
+
+const Dictionary::PredictionReading& Dictionary::prediction_reading(const std::wstring& key, size_t character_count) const {
+    auto& readings = prediction_readings_[key];
+    const auto found = std::find_if(readings.begin(), readings.end(), [&](const auto& reading) {
+        return reading.character_count == character_count;
+    });
+    if (found != readings.end()) return *found;
+    std::vector<size_t> ends;
+    auto initials = initials_for(key, character_count, {}, &ends);
+    const size_t final_begin = ends.size() <= 1 ? 0 : ends[ends.size() - 2];
+    readings.push_back({character_count, final_begin, std::move(initials)});
+    return readings.back();
+}
+
+std::vector<Candidate> Dictionary::lookup_abbreviation(const std::wstring& initials) const {
+    if (initials.size() < 2 || initials.size() > 16) return {};
+    const auto& partition = rebuild_prediction_index(initials.front());
+    auto it = initials_index_.find(initials);
+    if (it == initials_index_.end()) {
+        // Query only the relevant first-letter range and character count.
+        // Full dictionary syllabification is unnecessary for an ordinary key
+        // or for the first two-letter abbreviation the user enters.
+        std::vector<std::wstring> keys;
+        for (const auto& key : partition.sorted_keys) {
+            for (const auto& candidate : entries_.at(key)) {
+                if (candidate.text.size() != initials.size() ||
+                    !std::all_of(candidate.text.begin(), candidate.text.end(), [](wchar_t ch) { return ch >= 0x3400 && ch <= 0x9FFF; })) continue;
+                const auto& reading = prediction_reading(key, candidate.text.size());
+                if (reading.initials != initials || reading.initials == key) continue;
+                keys.push_back(key);
+                break;
+            }
+        }
         std::sort(keys.begin(), keys.end(), [&](const auto& left, const auto& right) {
             const int left_score = entries_.at(left).front().base_score;
             const int right_score = entries_.at(right).front().base_score;
             return left_score != right_score ? left_score > right_score : left < right;
         });
         if (keys.size() > 32) keys.resize(32);
+        if (initials_index_.size() >= 256) initials_index_.clear();
+        it = initials_index_.emplace(initials, std::move(keys)).first;
     }
-    prediction_index_dirty_ = false;
-}
-
-std::vector<Candidate> Dictionary::lookup_abbreviation(const std::wstring& initials) const {
-    if (initials.size() < 2 || initials.size() > 16) return {};
-    rebuild_prediction_index();
-    const auto it = initials_index_.find(initials);
-    if (it == initials_index_.end()) return {};
     std::vector<Candidate> result;
     for (const auto& key : it->second) {
         const auto& candidates = entries_.at(key);
@@ -746,17 +816,53 @@ std::vector<Candidate> Dictionary::lookup_abbreviation(const std::wstring& initi
     return result;
 }
 
-std::vector<Candidate> Dictionary::lookup_completion(const std::wstring& prefix) const {
-    if (prefix.size() < 2 || prefix.size() > 32) return {};
-    rebuild_prediction_index();
+std::vector<Candidate> Dictionary::lookup_completion(const std::wstring& prefix, bool final_syllable_only) const {
+    if (prefix.empty() || prefix.size() > 32) return {};
+    const auto& partition = rebuild_prediction_index(prefix.front());
     std::vector<Candidate> result;
+    const auto add_key = [&](const std::wstring& key) {
+        if (key.size() <= prefix.size() || key.size() - prefix.size() > 6) return false;
+        const auto& candidates = entries_.at(key);
+        size_t added = 0;
+        for (const auto& candidate : candidates) {
+            if (final_syllable_only) {
+                if (candidate.text.empty() || candidate.text.size() > 16 ||
+                    !std::all_of(candidate.text.begin(), candidate.text.end(), [](wchar_t ch) { return ch >= 0x3400 && ch <= 0x9FFF; })) continue;
+                const auto& reading = prediction_reading(key, candidate.text.size());
+                if (reading.initials.empty() || prefix.size() <= reading.final_syllable_begin) continue;
+            }
+            result.push_back(candidate);
+            if (++added >= 3) break;
+        }
+        return added != 0;
+    };
+    if (prefix.size() <= 2) {
+        const auto found = partition.short_prefix_index.find(prefix);
+        if (found != partition.short_prefix_index.end()) {
+            size_t matched = 0;
+            for (const auto& key : found->second) {
+                if (add_key(key) && ++matched >= 32) break;
+            }
+        }
+        return result;
+    }
     size_t matched_keys = 0;
-    for (auto it = std::lower_bound(sorted_keys_.begin(), sorted_keys_.end(), prefix);
-         it != sorted_keys_.end() && it->starts_with(prefix) && matched_keys < 32; ++it, ++matched_keys) {
-        const auto& candidates = entries_.at(*it);
-        result.insert(result.end(), candidates.begin(), candidates.begin() + std::min<size_t>(3, candidates.size()));
+    size_t scanned_keys = 0;
+    for (auto it = std::lower_bound(partition.sorted_keys.begin(), partition.sorted_keys.end(), prefix);
+         it != partition.sorted_keys.end() && it->starts_with(prefix) && matched_keys < 32 && scanned_keys < 128; ++it, ++scanned_keys) {
+        if (add_key(*it)) ++matched_keys;
     }
     return result;
+}
+
+bool Dictionary::reading_matches_boundaries(const std::wstring& pinyin, const std::wstring& word,
+                                             const std::vector<size_t>& boundaries) const {
+    if (boundaries.empty() || !std::all_of(word.begin(), word.end(), [](wchar_t ch) { return ch >= 0x3400 && ch <= 0x9FFF; })) return true;
+    return !initials_for(pinyin, word.size(), boundaries).empty();
+}
+
+bool Dictionary::is_syllable(const std::wstring& pinyin) {
+    return syllable_set().contains(pinyin);
 }
 
 size_t Dictionary::entry_count() const noexcept {

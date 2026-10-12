@@ -24,8 +24,8 @@ void CandidateRanker::increment_frequency(const std::wstring& pinyin, const std:
     count = std::min(count + 1, 100000);
 }
 
-std::vector<Candidate> CandidateRanker::rank(const std::wstring& pinyin, std::vector<Candidate> candidates,
-                                          const UserLearning* learning) const {
+void CandidateRanker::apply_learning(const std::wstring& pinyin, std::vector<Candidate>& candidates,
+                                     const UserLearning* learning) const {
     for (auto& candidate : candidates) {
         int frequency = learning ? learning->frequency(pinyin, candidate.text) : 0;
         const auto it = frequency_.find(key_for(pinyin, candidate.text));
@@ -34,6 +34,11 @@ std::vector<Candidate> CandidateRanker::rank(const std::wstring& pinyin, std::ve
         }
         candidate.user_frequency = std::min(frequency, kMaxUserLearningScore / kUserLearningScoreUnit) * kUserLearningScoreUnit;
     }
+}
+
+std::vector<Candidate> CandidateRanker::rank(const std::wstring& pinyin, std::vector<Candidate> candidates,
+                                          const UserLearning* learning) const {
+    apply_learning(pinyin, candidates, learning);
 
     std::stable_sort(candidates.begin(), candidates.end(), [](const Candidate& left, const Candidate& right) {
         return left.total_score() > right.total_score();

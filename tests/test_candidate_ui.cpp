@@ -95,6 +95,53 @@ localpinyin::CandidateLayoutResult layout_for(const std::vector<std::wstring>& c
 int main() {
     using namespace localpinyin;
 
+    // Pointer selection must preserve keyboard selection and target the word
+    // actually displayed, including duplicate and empty model entries.
+    const std::vector<std::wstring> pointer_candidates{L"", L"你好", L"你好", L"您好", L"世界"};
+    const auto pointer_layout = layout_for(pointer_candidates, make_rect(200, 200, 202, 220),
+                                            make_rect(0, 0, 1920, 1080));
+    REQUIRE_EQ(pointer_layout.items.size(), size_t{3});
+    for (const auto& item : pointer_layout.items) {
+        const POINT center{(item.bounds.left + item.bounds.right) / 2,
+                             (item.bounds.top + item.bounds.bottom) / 2};
+        REQUIRE_EQ(candidate_index_at_point(pointer_layout, center), std::optional<size_t>{item.candidate_index});
+        REQUIRE_EQ(candidate_index_at_point(pointer_layout, POINT{item.bounds.left, item.bounds.top}),
+                     std::optional<size_t>{item.candidate_index});
+    }
+    REQUIRE_TRUE(!candidate_index_at_point(pointer_layout, POINT{-1, -1}));
+    REQUIRE_TRUE(!candidate_index_at_point(pointer_layout,
+        POINT{pointer_layout.items.back().bounds.right, pointer_layout.items.back().bounds.bottom}));
+    REQUIRE_TRUE(!candidate_index_at_point(pointer_layout,
+        POINT{pointer_layout.action_button_rect.left + 1, pointer_layout.action_button_rect.top + 1}));
+    REQUIRE_EQ(candidate_model_index(pointer_layout, 0, pointer_candidates), std::optional<size_t>{1});
+    REQUIRE_EQ(candidate_model_index(pointer_layout, 1, pointer_candidates), std::optional<size_t>{3});
+    REQUIRE_EQ(candidate_model_index(pointer_layout, 2, pointer_candidates), std::optional<size_t>{4});
+    REQUIRE_TRUE(!candidate_model_index(pointer_layout, 9, pointer_candidates));
+    auto hidden_pointer_layout = pointer_layout;
+    hidden_pointer_layout.visible = false;
+    REQUIRE_TRUE(!candidate_index_at_point(hidden_pointer_layout,
+        POINT{pointer_layout.items.front().bounds.left, pointer_layout.items.front().bounds.top}));
+
+    CandidatePointerState pointer;
+    pointer.move(1);
+    REQUIRE_EQ(pointer.hovered(), std::optional<size_t>{1});
+    REQUIRE_TRUE(!pointer.pressed());
+    REQUIRE_TRUE(!pointer.release(1));
+    REQUIRE_TRUE(pointer_layout.items.front().selected);
+    REQUIRE_TRUE(!pointer_layout.items[1].selected);
+    pointer.press(1);
+    REQUIRE_EQ(pointer.release(1), std::optional<size_t>{1});
+    REQUIRE_TRUE(!pointer.pressed());
+    pointer.press(1);
+    pointer.move(2);
+    REQUIRE_TRUE(!pointer.release(2));
+    pointer.press(1);
+    REQUIRE_TRUE(!pointer.release(std::nullopt));
+    pointer.press(1);
+    pointer.cancel();
+    REQUIRE_TRUE(!pointer.hovered());
+    REQUIRE_TRUE(!pointer.release(1));
+
     REQUIRE_TRUE(!should_show_candidate_window(L"", 3, false));
     REQUIRE_TRUE(!should_show_candidate_window(L"nihao", 0, false));
     REQUIRE_TRUE(!should_show_candidate_window(L"nihao", 3, true));
@@ -400,13 +447,13 @@ int main() {
     REQUIRE_TRUE(!make_candidate_palette(CandidateThemeMode::Light, true).dark);
     const auto dark_palette = make_candidate_palette(CandidateThemeMode::Dark, false);
     REQUIRE_TRUE(dark_palette.dark);
-    REQUIRE_EQ(dark_palette.background, brand::kLocalPinyinBlueDarkCard_background);
-    REQUIRE_EQ(dark_palette.muted_text, brand::kLocalPinyinBlueDarkMuted);
-    REQUIRE_EQ(dark_palette.hint_text, brand::kLocalPinyinBlueDarkWeak);
-    REQUIRE_EQ(dark_palette.text, brand::kLocalPinyinBlueDarkPrimary);
-    REQUIRE_EQ(dark_palette.selected_background, brand::kLocalPinyinBlueDarkAccent);
-    REQUIRE_EQ(dark_palette.selected_border, brand::kLocalPinyinBlueDarkAccent);
-    REQUIRE_EQ(dark_palette.selected_text, RGB(255, 255, 255));
+    REQUIRE_EQ(dark_palette.background, RGB(38,38,42));
+    REQUIRE_EQ(dark_palette.muted_text, RGB(176,178,187));
+    REQUIRE_EQ(dark_palette.hint_text, RGB(140,143,156));
+    REQUIRE_EQ(dark_palette.text, RGB(246,247,250));
+    REQUIRE_EQ(dark_palette.selected_background, RGB(96,175,255));
+    REQUIRE_EQ(dark_palette.selected_border, RGB(96,175,255));
+    REQUIRE_EQ(dark_palette.selected_text, RGB(17,35,56));
     REQUIRE_TRUE(make_candidate_palette(CandidateThemeMode::System, true).dark);
     REQUIRE_TRUE(!make_candidate_palette(CandidateThemeMode::System, false).dark);
     REQUIRE_EQ(candidate_theme_mode_to_string(parse_candidate_theme_mode(L"dark")), std::wstring(L"dark"));

@@ -69,6 +69,8 @@ bool DictionaryCatalog::load(const std::wstring& resource_directory) {
     stats_ = {};
     std::map<std::pair<std::wstring, std::wstring>, DictionaryCatalogEntry> merged;
     const std::filesystem::path directory(resource_directory);
+    load_file(directory / L"standard_zh_pinyin.tsv", DictionaryCatalogSource::Standard,
+              &merged, &stats_.standard_entries, &stats_.invalid_rows);
     load_file(directory / L"core_zh_pinyin.tsv", DictionaryCatalogSource::Core,
               &merged, &stats_.core_entries, &stats_.invalid_rows);
     load_file(directory / L"local_core_zh_pinyin.tsv", DictionaryCatalogSource::LocalCore,
@@ -96,7 +98,12 @@ std::vector<DictionaryCatalogEntry> DictionaryCatalog::preview(std::wstring_view
 }
 
 std::wstring dictionary_catalog_source_text(DictionaryCatalogSource source) {
-    return source == DictionaryCatalogSource::Core ? L"基础词库" : L"扩展词库";
+    switch (source) {
+        case DictionaryCatalogSource::Core: return L"项目基础";
+        case DictionaryCatalogSource::LocalCore: return L"项目扩展";
+        case DictionaryCatalogSource::Standard: return L"开源基础";
+    }
+    return L"词库";
 }
 
 }  // namespace localpinyin

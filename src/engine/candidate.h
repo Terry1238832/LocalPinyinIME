@@ -16,6 +16,12 @@ struct Candidate {
     int exact_match_bonus = 0;
     int complete_segmentation_bonus = 0;
     int segmentation_penalty = 0;
+    // Zero consumes the entire composition. Prefix candidates specify a raw
+    // character count (including apostrophes) so the TSF host retains the rest.
+    size_t consumed_pinyin = 0;
+    // Reference unigram prior used by sentence decoding; the visible default
+    // word order remains governed by the project/user base_score.
+    int decoding_frequency = 0;
 
     [[nodiscard]] int total_score() const noexcept {
         const long long score = static_cast<long long>(base_score) + user_frequency + exact_match_bonus + complete_segmentation_bonus - segmentation_penalty;

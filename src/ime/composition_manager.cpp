@@ -12,6 +12,7 @@ namespace localpinyin {
 enum class EditAction {
     SetText,
     CommitText,
+    InsertText,
     Cancel
 };
 
@@ -63,6 +64,8 @@ public:
                 return manager_->do_set_text(cookie, context_, sink_, text_);
             case EditAction::CommitText:
                 return manager_->do_commit_text(cookie, context_, text_);
+            case EditAction::InsertText:
+                return manager_->do_insert_text(cookie, context_, text_);
             case EditAction::Cancel:
                 return manager_->do_cancel(cookie, context_);
         }
@@ -249,6 +252,16 @@ HRESULT CompositionManager::commit_text(ITfContext* context, TfClientId client_i
     return last_edit_session_result_.effective_hr();
 }
 
+HRESULT CompositionManager::insert_text(ITfContext* context, TfClientId client_id, const std::wstring& text) {
+    if (!context) return E_POINTER;
+    if (composition_) return E_UNEXPECTED;
+    auto* session = new (std::nothrow) CompositionEditSession(this, context, nullptr, text, EditAction::InsertText);
+    if (!session) return E_OUTOFMEMORY;
+    last_edit_session_result_ = request_session(context, client_id, session);
+    session->Release();
+    return last_edit_session_result_.effective_hr();
+}
+
 HRESULT CompositionManager::cancel(ITfContext* context, TfClientId client_id) {
     if (!context) {
         return E_POINTER;
@@ -348,6 +361,25 @@ HRESULT CompositionManager::do_commit_text(TfEditCookie cookie, ITfContext* cont
         return selection_hr;
     }
     return end_hr;
+}
+
+HRESULT CompositionManager::do_insert_text(TfEditCookie cookie, ITfContext* context, const std::wstring& text) {
+    ITfInsertAtSelection* insert = nullptr;
+    HRESULT hr = context->QueryInterface(IID_PPV_ARGS(&insert));
+    if (FAILED(hr)) return hr;
+    ITfRange* range = nullptr;
+    hr = insert->InsertTextAtSelection(cookie, 0, text.c_str(), static_cast<LONG>(text.size()), &range);
+    insert->Release();
+    if (FAILED(hr)) return hr;
+    hr = range->Collapse(cookie, TF_ANCHOR_END);
+    if (SUCCEEDED(hr)) {
+        TF_SELECTION selection{};
+        selection.range = range;
+        selection.style.ase = TF_AE_NONE;
+        hr = context->SetSelection(cookie, 1, &selection);
+    }
+    range->Release();
+    return hr;
 }
 
 HRESULT CompositionManager::do_cancel(TfEditCookie cookie, ITfContext* context) {

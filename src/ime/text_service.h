@@ -77,7 +77,9 @@ private:
     void update_candidate_window(ITfContext* context);
     void end_candidate_ui_element(const wchar_t* reason);
     HRESULT commit_selected(ITfContext* context);
+    HRESULT make_composition_room(ITfContext* context);
     HRESULT commit_raw_composition(ITfContext* context);
+    HRESULT commit_punctuation(ITfContext* context, wchar_t punctuation);
     HRESULT cancel_composition(ITfContext* context);
     bool candidate_anchor_rect(ITfContext* context, RECT* rect);
     CandidateWindowOwnerInfo candidate_owner_info(ITfContext* context) const;
@@ -107,6 +109,9 @@ private:
     KeyStateReader key_state_reader_ = nullptr;
     void* key_state_reader_context_ = nullptr;
     std::wstring composing_;
+    std::wstring preceding_committed_text_;
+    bool opening_double_quote_ = true;
+    bool opening_single_quote_ = true;
     std::vector<Candidate> candidates_;
     size_t selected_index_ = 0;
     PinyinEngine engine_;

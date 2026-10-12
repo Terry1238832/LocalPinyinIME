@@ -7,6 +7,9 @@
 #include <cwctype>
 #include <cstdlib>
 #include <vector>
+#include <set>
+#include <cstdint>
+#include <cmath>
 
 namespace {
 
@@ -35,10 +38,117 @@ int color_distance(COLORREF left, COLORREF right) {
            std::abs(GetBValue(left) - GetBValue(right));
 }
 
+double text_contrast(COLORREF text, COLORREF background) {
+    const auto luminance = [](COLORREF color) {
+        const auto linear = [](int value) {
+            const double component = value / 255.0;
+            return component <= 0.04045 ? component / 12.92 : std::pow((component + 0.055) / 1.055, 2.4);
+        };
+        return 0.2126 * linear(GetRValue(color)) + 0.7152 * linear(GetGValue(color)) + 0.0722 * linear(GetBValue(color));
+    };
+    const double first = luminance(text);
+    const double second = luminance(background);
+    return (std::max(first, second) + 0.05) / (std::min(first, second) + 0.05);
+}
+
+int verify_modern_rendering() {
+    using namespace localpinyin;
+    HDC dc = CreateCompatibleDC(nullptr);
+    REQUIRE_TRUE(dc != nullptr);
+    BITMAPINFO bitmap_info{};
+    bitmap_info.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+    bitmap_info.bmiHeader.biWidth = 480;
+    bitmap_info.bmiHeader.biHeight = -160;
+    bitmap_info.bmiHeader.biPlanes = 1;
+    bitmap_info.bmiHeader.biBitCount = 32;
+    bitmap_info.bmiHeader.biCompression = BI_RGB;
+    void* bits = nullptr;
+    HBITMAP bitmap = CreateDIBSection(dc, &bitmap_info, DIB_RGB_COLORS, &bits, nullptr, 0);
+    REQUIRE_TRUE(bitmap && bits);
+    HGDIOBJ previous = SelectObject(dc, bitmap);
+    ModernRenderer renderer;
+    REQUIRE_TRUE(renderer.begin(dc, RECT{0, 0, 480, 160}));
+    renderer.fill(RECT{0, 0, 480, 160}, RGB(255,255,255));
+    renderer.rounded(RECT{20, 20, 140, 110}, 17.5f, RGB(0,103,192), RGB(0,103,192));
+    renderer.text(L"本地拼音 · 中文输入", RECT{170, 35, 470, 100}, RGB(20,25,35), 24);
+    renderer.finish();
+    GdiFlush();
+    auto* pixels = static_cast<std::uint32_t*>(bits);
+    size_t colored_pixels = 0;
+    std::set<std::uint32_t> colors;
+    for (int i = 0; i < 480 * 160; ++i) {
+        const auto color = pixels[i] & 0xFFFFFF;
+        colors.insert(color);
+        if (color != 0xFFFFFF) ++colored_pixels;
+    }
+    // Verify the actual Windows drawing backend and its antialiasing rather
+    // than only checking design constants or rendering a static mockup.
+    REQUIRE_TRUE(colored_pixels > 8000);
+    REQUIRE_TRUE(colors.size() > 20);
+    REQUIRE_TRUE(renderer.measure_text(L"本地拼音", 24) > renderer.measure_text(L"本地", 24));
+    REQUIRE_TRUE(renderer.begin(dc, RECT{10, 10, 310, 110}));
+    renderer.fill(RECT{10, 10, 310, 110}, RGB(20,40,60));
+    renderer.finish();
+    GdiFlush();
+    REQUIRE_EQ(pixels[20 * 480 + 20] & 0xFFFFFF, std::uint32_t{0x14283C});
+    {
+        ModernRenderScope outer(renderer, dc, RECT{0, 0, 480, 160});
+        REQUIRE_TRUE(outer.active());
+        REQUIRE_TRUE(active_modern_renderer() == &renderer);
+        {
+            ModernRenderScope nested(renderer, dc, RECT{0, 0, 480, 160});
+            REQUIRE_TRUE(!nested.active());
+            REQUIRE_TRUE(active_modern_renderer() == nullptr);
+        }
+        REQUIRE_TRUE(active_modern_renderer() == &renderer);
+    }
+    REQUIRE_TRUE(active_modern_renderer() == nullptr);
+    SelectObject(dc, previous);
+    DeleteObject(bitmap);
+    DeleteDC(dc);
+    return 0;
+}
+
 }  // namespace
 
 int main() {
     using namespace localpinyin;
+    REQUIRE_EQ(verify_modern_rendering(), 0);
+
+    for (const int dpi : {96, 120, 144, 192}) {
+        for (const auto size : {std::pair<int, int>{740, 490}, std::pair<int, int>{900, 640}}) {
+            const int width = scale_settings_value(size.first, dpi);
+            const int height = scale_settings_value(size.second, dpi);
+            const auto layout = calculate_dictionary_preview_layout(width, height, dpi);
+            const auto contained = [](const RECT& outer, const RECT& inner) {
+                return inner.left >= outer.left && inner.top >= outer.top && inner.right <= outer.right &&
+                       inner.bottom <= outer.bottom && inner.right > inner.left && inner.bottom > inner.top;
+            };
+            const RECT window{0, 0, width, height};
+            REQUIRE_TRUE(contained(window, layout.title));
+            REQUIRE_TRUE(contained(window, layout.subtitle));
+            REQUIRE_TRUE(contained(window, layout.badge));
+            REQUIRE_TRUE(contained(window, layout.search_frame));
+            REQUIRE_TRUE(contained(layout.search_frame, layout.search_edit));
+            REQUIRE_TRUE(contained(window, layout.table_frame));
+            REQUIRE_TRUE(contained(layout.table_frame, layout.list));
+            REQUIRE_TRUE(contained(window, layout.status));
+            REQUIRE_TRUE(layout.title.right <= layout.badge.left);
+            REQUIRE_TRUE(layout.subtitle.bottom < layout.search_frame.top);
+            REQUIRE_TRUE(layout.search_frame.bottom < layout.table_frame.top);
+            REQUIRE_TRUE(layout.table_frame.bottom < layout.status.top);
+        }
+    }
+    for (const auto theme : {SettingsResolvedTheme::Light, SettingsResolvedTheme::Dark}) {
+        for (int interaction = 0; interaction < 3; ++interaction) {
+            SettingsControlDrawState state;
+            state.hot = interaction == 1;
+            state.pressed = interaction == 2;
+            const auto style = settings_control_draw_style(settings_theme_palette(theme),
+                SettingsControlRole::PrimaryButton, SettingsControlSurface::Card, state);
+            REQUIRE_TRUE(text_contrast(style.text, style.fill) >= 4.5);
+        }
+    }
 
     const UserLexiconEntry entry{L"nihao", L"\u4F60\u597D", 5000};
     const UserLexiconTableRow row = make_user_lexicon_table_row(entry);
@@ -433,6 +543,8 @@ int main() {
         REQUIRE_TRUE(positive_rect(layout.candidate_size_label_right));
         REQUIRE_TRUE(positive_rect(layout.search_box));
         REQUIRE_TRUE(positive_rect(layout.refresh_button));
+        REQUIRE_TRUE(positive_rect(layout.builtin_dictionary_button));
+        REQUIRE_TRUE(positive_rect(layout.personal_dictionary_title));
         REQUIRE_TRUE(positive_rect(layout.user_table));
         REQUIRE_TRUE(positive_rect(layout.user_editor_card));
         REQUIRE_TRUE(positive_rect(layout.user_editor_title));
@@ -465,8 +577,8 @@ int main() {
         REQUIRE_TRUE(rect_inside(layout.candidate_options_card, layout.candidate_shift_description));
         REQUIRE_TRUE(rect_inside(layout.candidate_options_card, layout.candidate_shift_toggle));
         REQUIRE_TRUE(rect_inside(layout.candidate_options_card, layout.candidate_shift_note));
-        REQUIRE_EQ(layout.candidate_hint_toggle.width, scale_settings_value(48, dpi));
-        REQUIRE_EQ(layout.candidate_hint_toggle.height, scale_settings_value(26, dpi));
+        REQUIRE_EQ(layout.candidate_hint_toggle.width, scale_settings_value(44, dpi));
+        REQUIRE_EQ(layout.candidate_hint_toggle.height, scale_settings_value(24, dpi));
         REQUIRE_EQ(layout.candidate_shift_toggle.width, layout.candidate_hint_toggle.width);
         REQUIRE_EQ(layout.candidate_shift_toggle.height, layout.candidate_hint_toggle.height);
         const SettingsSwitchMetrics off_switch_metrics =
@@ -506,6 +618,8 @@ int main() {
         REQUIRE_TRUE(rect_inside(layout.appearance_theme_card, layout.candidate_size_label_right));
         REQUIRE_TRUE(rect_inside(layout.content, layout.search_box));
         REQUIRE_TRUE(rect_inside(layout.content, layout.refresh_button));
+        REQUIRE_TRUE(rect_inside(layout.content, layout.builtin_dictionary_button));
+        REQUIRE_TRUE(rect_inside(layout.content, layout.personal_dictionary_title));
         REQUIRE_TRUE(rect_inside(layout.content, layout.user_table));
         REQUIRE_TRUE(rect_right(layout.user_table) <= rect_right(layout.content));
         REQUIRE_TRUE(rect_right(layout.search_box) <= rect_right(layout.content));
@@ -531,6 +645,9 @@ int main() {
         REQUIRE_TRUE(rect_right(layout.about_open_data_button) <= rect_right(layout.about_card));
         REQUIRE_TRUE(rect_right(layout.about_copy_data_button) <= rect_right(layout.about_card));
         REQUIRE_TRUE(!settings_rects_overlap(layout.search_box, layout.refresh_button));
+        REQUIRE_TRUE(!settings_rects_overlap(layout.refresh_button, layout.builtin_dictionary_button));
+        REQUIRE_TRUE(!settings_rects_overlap(layout.personal_dictionary_title, layout.user_table));
+        REQUIRE_TRUE(rect_bottom(layout.search_box) < layout.personal_dictionary_title.y);
         REQUIRE_TRUE(!settings_rects_overlap(layout.candidate_options_card, layout.shortcut_test_card));
         REQUIRE_TRUE(!settings_rects_overlap(layout.candidate_hint_title, layout.candidate_shift_title));
         REQUIRE_TRUE(!settings_rects_overlap(layout.candidate_hint_description, layout.candidate_shift_description));

@@ -26,11 +26,6 @@ std::filesystem::path executable_directory() {
     return std::filesystem::path(path.data()).parent_path();
 }
 
-std::wstring first_candidate(localpinyin::PinyinEngine& engine, const std::wstring& pinyin) {
-    const auto candidates = engine.lookup(pinyin);
-    return candidates.empty() ? L"" : candidates.front().text;
-}
-
 std::string codepoints(const std::wstring& value) {
     std::ostringstream output;
     output << "len=" << value.size() << " [";
@@ -49,7 +44,8 @@ std::string codepoints(const std::wstring& value) {
 }
 
 bool expect_sentence(localpinyin::PinyinEngine& engine, const SentenceCase& test_case) {
-    const std::wstring actual = first_candidate(engine, test_case.pinyin);
+    const auto candidates = engine.lookup(test_case.pinyin);
+    const std::wstring actual = candidates.empty() ? L"" : candidates.front().text;
     const bool passed = actual == test_case.expected;
     std::wcout << L"sentence_baseline category=" << test_case.category
                << L" pinyin=" << test_case.pinyin
@@ -57,6 +53,13 @@ bool expect_sentence(localpinyin::PinyinEngine& engine, const SentenceCase& test
     if (!passed) {
         std::cout << "expected_codepoints=" << codepoints(test_case.expected) << "\n"
                   << "actual_codepoints=" << codepoints(actual) << "\n";
+        for (size_t index = 0; index < candidates.size(); ++index) {
+            const auto& candidate = candidates[index];
+            std::cout << "candidate_rank=" << index + 1 << " base=" << candidate.base_score
+                      << " exact=" << candidate.exact_match_bonus << " complete=" << candidate.complete_segmentation_bonus
+                      << " learning=" << candidate.user_frequency << " total=" << candidate.total_score()
+                      << " text=" << codepoints(candidate.text) << "\n";
+        }
     }
     return passed;
 }

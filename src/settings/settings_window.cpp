@@ -16,6 +16,7 @@
 #include <array>
 #include <cwchar>
 #include <cstring>
+#include <cmath>
 #include <filesystem>
 #include <sstream>
 #include <vector>
@@ -43,11 +44,13 @@ constexpr int kIdShortcutModeValue = 1211;
 constexpr int kIdShortcutInputLabel = 1212;
 constexpr int kIdShortcutInput = 1213;
 constexpr int kIdShortcutBoundaryNote = 1214;
+constexpr int kIdOpenInputTest = 1215;
 constexpr int kIdCandidateSizeSlider = 1301;
 constexpr int kIdCandidateSizeValue = 1302;
 constexpr int kIdCandidateSizeSmallLabel = 1303;
 constexpr int kIdCandidateSizeStandardLabel = 1304;
 constexpr int kIdCandidateSizeLargeLabel = 1305;
+constexpr int kIdCandidatePreviewInput = 1306;
 constexpr int kIdClearLearning = 1401;
 constexpr int kIdLexiconSearch = 1501;
 constexpr int kIdLexiconList = 1502;
@@ -60,6 +63,7 @@ constexpr int kIdLexiconRefresh = 1508;
 constexpr int kIdLexiconStatus = 1509;
 constexpr int kIdLexiconEmptyState = 1510;
 constexpr int kIdLexiconNew = 1511;
+constexpr int kIdBuiltinDictionary = 1512;
 
 constexpr int kIdNavAppearance = 2001;
 constexpr int kIdNavCandidate = 2002;
@@ -89,6 +93,7 @@ constexpr int kIdLexiconWordLabel = 3206;
 constexpr int kIdLexiconFrequencyLabel = 3207;
 constexpr int kIdUserLexiconEditorTitle = 3208;
 constexpr int kIdLexiconFrequencyHelp = 3209;
+constexpr int kIdPersonalDictionaryTitle = 3210;
 
 constexpr int kIdLearningTitle = 3301;
 constexpr int kIdLearningDescription = 3302;
@@ -208,12 +213,20 @@ COLORREF blend(COLORREF from, COLORREF to, int percent_to) {
 }
 
 void fill_rect(HDC hdc, const RECT& rect, COLORREF color) {
+    if (auto* renderer = active_modern_renderer()) {
+        renderer->fill(rect, color);
+        return;
+    }
     HBRUSH brush = CreateSolidBrush(color);
     FillRect(hdc, &rect, brush);
     DeleteObject(brush);
 }
 
 void draw_round_rect(HDC hdc, const RECT& rect, int radius, COLORREF fill, COLORREF border) {
+    if (auto* renderer = active_modern_renderer()) {
+        renderer->rounded(rect, static_cast<float>(radius), fill, border);
+        return;
+    }
     HBRUSH brush = CreateSolidBrush(fill);
     HPEN pen = CreatePen(PS_SOLID, 1, border);
     HGDIOBJ old_brush = SelectObject(hdc, brush);
@@ -226,6 +239,14 @@ void draw_round_rect(HDC hdc, const RECT& rect, int radius, COLORREF fill, COLOR
 }
 
 void draw_text_in_rect(HDC hdc, const std::wstring& text, const RECT& rect, COLORREF color, HFONT font, UINT flags) {
+    if (auto* renderer = active_modern_renderer()) {
+        LOGFONTW metrics{};
+        const bool has_font = font && GetObjectW(font, sizeof(metrics), &metrics) != 0;
+        renderer->text(text, rect, color,
+                         has_font ? static_cast<float>(std::abs(metrics.lfHeight)) : 14.0f,
+                         has_font ? metrics.lfWeight : FW_NORMAL, flags);
+        return;
+    }
     HGDIOBJ old_font = nullptr;
     if (font) {
         old_font = SelectObject(hdc, font);
@@ -240,6 +261,10 @@ void draw_text_in_rect(HDC hdc, const std::wstring& text, const RECT& rect, COLO
 }
 
 void draw_navigation_icon(HDC hdc, int id, const RECT& rect, COLORREF color, int dpi) {
+    if (auto* renderer = active_modern_renderer()) {
+        renderer->icon(id - kIdNavAppearance, rect, color, scale_settings_value(1, dpi) * 1.5f);
+        return;
+    }
     const int unit = std::max(1, scale_settings_value(1, dpi));
     HPEN pen = CreatePen(PS_SOLID, unit * 2, color);
     HGDIOBJ old_pen = SelectObject(hdc, pen);
@@ -287,11 +312,13 @@ HFONT create_candidate_preview_font(int height_px, LONG weight) {
                        CLEARTYPE_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Microsoft YaHei UI");
 }
 
-void draw_candidate_preview(HDC hdc,
+CandidateLayoutResult draw_candidate_preview(HDC hdc,
                             const SettingsWindowLayout& settings_layout,
                             const CandidateWindowOptions& options,
                             bool system_dark,
-                            int dpi) {
+                            int dpi,
+                            const std::wstring& pinyin,
+                            const std::vector<std::wstring>& candidates) {
     const CandidateThemePalette candidate_palette = make_candidate_palette(options.theme_mode, system_dark);
     const RECT preview_outer = to_win_rect(settings_layout.appearance_preview_window);
     // Use enough virtual screen height to keep the real candidate-window hint
@@ -304,21 +331,31 @@ void draw_candidate_preview(HDC hdc,
                           preview_outer.top + scale_settings_value(46, dpi)};
 
     CandidateLayoutInput input;
-    input.composition_text = L"ni hao";
-    input.candidate_texts = {
-        L"\u4F60\u597D",
-        L"\u4F60\u597D\u554A",
-        L"\u4F60\u53F7",
-        L"\u62DF\u597D"
-    };
+    input.composition_text = pinyin;
+    // The settings card shows a compact sample of the actual lookup. Keep the
+    // first four real results within the two-row space used by this preview.
+    input.candidate_texts.assign(candidates.begin(), candidates.begin() + std::min<size_t>(4, candidates.size()));
     input.selected_index = 0;
     input.caret_rect = caret_rect;
     input.work_area = work_area;
     input.dpi = dpi;
     input.options = options;
+    if (auto* canvas = active_modern_renderer()) {
+        const int font_size = candidate_font_px_for_size(options.text_size, dpi);
+        for (size_t i = 0; i < input.candidate_texts.size(); ++i) {
+            input.candidate_text_widths_px.push_back(canvas->measure_text(input.candidate_texts[i], static_cast<float>(font_size), FW_MEDIUM));
+            input.number_text_widths_px.push_back(canvas->measure_text(std::to_wstring(i + 1), static_cast<float>(font_size)));
+        }
+    }
     CandidateLayoutResult layout = make_candidate_layout(input);
+    // Long sentence candidates can occupy a complete row. Reduce only the
+    // displayed tail so every font size stays inside the fixed preview card.
+    while (layout.height > rect_height(preview_outer) && input.candidate_texts.size() > 1) {
+        input.candidate_texts.pop_back();
+        layout = make_candidate_layout(input);
+    }
     if (!layout.visible) {
-        return;
+        return layout;
     }
 
     const int origin_x = preview_outer.left + std::max(0, (rect_width(preview_outer) - layout.width) / 2);
@@ -334,22 +371,7 @@ void draw_candidate_preview(HDC hdc,
         OffsetRect(&item.text_bounds, origin_x, origin_y);
     }
 
-    RECT window_rect = layout.window_rect;
-    const int max_right = preview_outer.right - scale_settings_value(18, dpi);
-    if (window_rect.right > max_right) {
-        OffsetRect(&window_rect, max_right - window_rect.right, 0);
-    }
-
-    HPEN border = CreatePen(PS_SOLID, std::max(1, scale_settings_value(1, dpi)), candidate_palette.border);
-    HBRUSH background = CreateSolidBrush(candidate_palette.background);
-    HGDIOBJ old_pen = SelectObject(hdc, border);
-    HGDIOBJ old_brush = SelectObject(hdc, background);
-    RoundRect(hdc, window_rect.left, window_rect.top, window_rect.right, window_rect.bottom,
-              layout.corner_radius * 2, layout.corner_radius * 2);
-    SelectObject(hdc, old_brush);
-    SelectObject(hdc, old_pen);
-    DeleteObject(background);
-    DeleteObject(border);
+    draw_round_rect(hdc, layout.window_rect, layout.corner_radius, candidate_palette.background, candidate_palette.border);
 
     HFONT composition_font = create_candidate_preview_font(layout.composition_font_px, FW_NORMAL);
     HFONT candidate_font = create_candidate_preview_font(layout.candidate_font_px, FW_MEDIUM);
@@ -382,38 +404,18 @@ void draw_candidate_preview(HDC hdc,
         const RECT& icon_rect = layout.action_button_rect;
         const COLORREF button_fill = blend(candidate_palette.background, candidate_palette.border, 30);
         draw_round_rect(hdc, icon_rect, scale_settings_value(8, dpi), button_fill, candidate_palette.border);
-        const int center_x = (icon_rect.left + icon_rect.right) / 2;
-        const int center_y = (icon_rect.top + icon_rect.bottom) / 2;
-        HPEN icon_pen = CreatePen(PS_SOLID, std::max(1, scale_settings_value(2, dpi)), candidate_palette.muted_text);
-        HGDIOBJ old_icon_pen = SelectObject(hdc, icon_pen);
-        HGDIOBJ old_icon_brush = SelectObject(hdc, GetStockObject(NULL_BRUSH));
-        const int radius = scale_settings_value(5, dpi);
-        const int inner = scale_settings_value(2, dpi);
-        const int outer = scale_settings_value(8, dpi);
-        Ellipse(hdc, center_x - radius, center_y - radius, center_x + radius, center_y + radius);
-        Ellipse(hdc, center_x - inner, center_y - inner, center_x + inner, center_y + inner);
-        const POINT spokes[][2] = {
-            {{center_x - outer, center_y}, {center_x - radius, center_y}},
-            {{center_x + radius, center_y}, {center_x + outer, center_y}},
-            {{center_x, center_y - outer}, {center_x, center_y - radius}},
-            {{center_x, center_y + radius}, {center_x, center_y + outer}}
-        };
-        for (const auto& spoke : spokes) {
-            MoveToEx(hdc, spoke[0].x, spoke[0].y, nullptr);
-            LineTo(hdc, spoke[1].x, spoke[1].y);
+        if (auto* canvas = active_modern_renderer()) {
+            RECT icon = icon_rect;
+            InflateRect(&icon, -scale_settings_value(6, dpi), -scale_settings_value(6, dpi));
+            canvas->icon(8, icon, candidate_palette.muted_text, scale_settings_value(1, dpi) * 1.5f);
         }
-        SelectObject(hdc, old_icon_brush);
-        SelectObject(hdc, old_icon_pen);
-        DeleteObject(icon_pen);
     }
     if (layout.show_hint) {
-        HPEN separator = CreatePen(PS_SOLID, 1, candidate_palette.border);
-        HGDIOBJ old_separator = SelectObject(hdc, separator);
-        const int y = layout.hint_rect.top - scale_settings_value(4, dpi);
-        MoveToEx(hdc, layout.hint_rect.left, y, nullptr);
-        LineTo(hdc, layout.hint_rect.right, y);
-        SelectObject(hdc, old_separator);
-        DeleteObject(separator);
+        if (auto* canvas = active_modern_renderer()) {
+            const float y = static_cast<float>(layout.hint_rect.top - scale_settings_value(4, dpi));
+            canvas->line(static_cast<float>(layout.hint_rect.left), y, static_cast<float>(layout.hint_rect.right), y,
+                         candidate_palette.border, 1);
+        }
         draw_text_in_rect(hdc,
                           L"\u7A7A\u683C \u786E\u8BA4  \u00B7  \u6570\u5B57 \u9009\u8BCD  \u00B7  Esc \u53D6\u6D88",
                           layout.hint_rect,
@@ -425,6 +427,7 @@ void draw_candidate_preview(HDC hdc,
     DeleteObject(hint_font);
     DeleteObject(candidate_font);
     DeleteObject(composition_font);
+    return layout;
 }
 
 void move_window(HWND hwnd, const SettingsRect& rect) {
@@ -495,7 +498,11 @@ HWND make_group(HWND parent, const wchar_t* text, int id, HFONT font) {
 
 HWND make_button(HWND parent, const wchar_t* text, int id, DWORD style, HFONT font) {
     // For child controls, CreateWindowExW's hMenu parameter carries the integer control ID.
-    return make_control(parent, L"BUTTON", text, id, (style & ~0x0000000FL) | BS_OWNERDRAW | WS_TABSTOP, 0, font);
+    // Preserve the native role, selection state and keyboard behavior. The
+    // subclass paints the control without replacing checkbox/radio semantics.
+    const DWORD group = id == kIdNavAppearance || id == kIdThemeSystem || id == kIdShowKeyHints ||
+                        id == kIdOpenInputTest ? WS_GROUP : 0;
+    return make_control(parent, L"BUTTON", text, id, style | WS_TABSTOP | group, 0, font);
 }
 
 HWND make_edit(HWND parent, int id, HFONT font) {
@@ -503,7 +510,7 @@ HWND make_edit(HWND parent, int id, HFONT font) {
                         L"EDIT",
                         L"",
                         id,
-                        ES_AUTOHSCROLL,
+                        ES_AUTOHSCROLL | WS_TABSTOP,
                         0,
                         font);
 }
@@ -513,7 +520,7 @@ HWND make_list_view(HWND parent, int id, HFONT font) {
                              WC_LISTVIEWW,
                              L"",
                              id,
-                             LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS,
+                             LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS | WS_TABSTOP,
                              0,
                              font);
     const SettingsThemePalette palette = settings_theme_palette(SettingsResolvedTheme::Light);
@@ -529,7 +536,7 @@ HWND make_trackbar(HWND parent, int id, HFONT font) {
                                L"STATIC",
                                L"",
                                id,
-                               SS_NOTIFY | WS_TABSTOP,
+                               SS_NOTIFY | WS_TABSTOP | WS_GROUP,
                                0,
                                font);
     return slider;
@@ -562,6 +569,7 @@ void set_control_text(HWND parent, int id, const std::wstring& text) {
 }
 
 void set_cue_banner(HWND edit, const wchar_t* text) {
+    SetPropW(edit, L"LocalPinyin.ModernCue", reinterpret_cast<HANDLE>(const_cast<wchar_t*>(text)));
     SendMessageW(edit, EM_SETCUEBANNER, TRUE, reinterpret_cast<LPARAM>(text));
 }
 
@@ -685,7 +693,7 @@ SettingsSize settings_minimum_client_size(int dpi) {
 SettingsSize settings_initial_client_size(int dpi) {
     const int safe_dpi = dpi <= 0 ? kBaseDpi : dpi;
     const SettingsSize minimum = settings_minimum_client_size(safe_dpi);
-    return SettingsSize{std::max(minimum.width, scale_settings_value(1040, safe_dpi)),
+    return SettingsSize{std::max(minimum.width, scale_settings_value(1080, safe_dpi)),
                         std::max(minimum.height, scale_settings_value(760, safe_dpi))};
 }
 
@@ -729,60 +737,33 @@ SettingsResolvedTheme resolve_settings_theme(CandidateThemeMode mode, bool syste
 }
 
 SettingsThemePalette settings_theme_palette(SettingsResolvedTheme theme) {
-    if (theme == SettingsResolvedTheme::Dark) {
-        return SettingsThemePalette{
-            true,
-            brand::kLocalPinyinBlueDarkWindow_background,
-            brand::kLocalPinyinBlueDarkSidebar_background,
-            brand::kLocalPinyinBlueDarkCard_background,
-            brand::kLocalPinyinBlueDarkCard_border,
-            brand::kLocalPinyinBlueDarkPrimary,
-            brand::kLocalPinyinBlueDarkMuted,
-            brand::kLocalPinyinBlueDarkWeak,
-            brand::kLocalPinyinBlueDarkAccent,
-            brand::kLocalPinyinBlueDarkAccent_soft,
-            brand::kLocalPinyinBlueDarkAccent_border,
-            brand::kLocalPinyinBlueDarkInput_background,
-            brand::kLocalPinyinBlueDarkInput_border,
-            brand::kLocalPinyinBlueDarkSecondary_button,
-            brand::kLocalPinyinBlueDarkSecondary_button_pressed,
-            brand::kLocalPinyinBlueDarkPrimary_button_pressed,
-            brand::kLocalPinyinBlueDarkDanger,
-            brand::kLocalPinyinBlueDarkDanger_soft,
-            brand::kLocalPinyinBlueDarkDanger_border,
-            brand::kLocalPinyinBlueDarkDisabled_background,
-            brand::kLocalPinyinBlueDarkDisabled_text,
-            brand::kLocalPinyinBlueDarkList_header_background,
-            brand::kLocalPinyinBlueDarkList_header,
-            brand::kLocalPinyinBlueDarkInactive_selection
-        };
-    }
-    return SettingsThemePalette{
-        false,
-        brand::kLocalPinyinBlueLightWindow_background,
-        brand::kLocalPinyinBlueLightSidebar_background,
-        brand::kLocalPinyinBlueLightCard_background,
-        brand::kLocalPinyinBlueLightCard_border,
-        brand::kLocalPinyinBlueLightPrimary,
-        brand::kLocalPinyinBlueLightMuted,
-        brand::kLocalPinyinBlueLightWeak,
-        brand::kLocalPinyinBlueLightAccent,
-        brand::kLocalPinyinBlueLightAccent_soft,
-        brand::kLocalPinyinBlueLightAccent_border,
-        brand::kLocalPinyinBlueLightInput_background,
-        brand::kLocalPinyinBlueLightInput_border,
-        brand::kLocalPinyinBlueLightSecondary_button,
-        brand::kLocalPinyinBlueLightSecondary_button_pressed,
-        brand::kLocalPinyinBlueLightPrimary_button_pressed,
-        brand::kLocalPinyinBlueLightDanger,
-        brand::kLocalPinyinBlueLightDanger_soft,
-        brand::kLocalPinyinBlueLightDanger_border,
-        brand::kLocalPinyinBlueLightDisabled_background,
-        brand::kLocalPinyinBlueLightDisabled_text,
-        brand::kLocalPinyinBlueLightList_header_background,
-        brand::kLocalPinyinBlueLightList_header,
-        brand::kLocalPinyinBlueLightInactive_selection
-    };
+    const bool dark = theme == SettingsResolvedTheme::Dark;
+    SettingsThemePalette p;
+    p.dark = dark;
+    p.window_background = dark ? RGB(29, 29, 32) : RGB(247, 248, 250);
+    p.sidebar_background = dark ? RGB(24, 24, 27) : RGB(242, 243, 246);
+    p.card_background = dark ? RGB(38, 38, 42) : RGB(255, 255, 255);
+    p.card_border = dark ? RGB(57, 57, 63) : RGB(231, 233, 237);
+    p.text = dark ? RGB(246, 247, 250) : RGB(26, 28, 34);
+    p.muted_text = dark ? RGB(176, 178, 187) : RGB(100, 104, 116);
+    p.weak_text = dark ? RGB(140, 143, 156) : RGB(138, 143, 154);
+    p.accent = dark ? RGB(96, 175, 255) : RGB(0, 103, 192);
+    p.accent_soft = dark ? RGB(38, 55, 75) : RGB(227, 239, 252);
+    p.accent_border = dark ? RGB(81, 135, 190) : RGB(107, 165, 219);
+    p.input_background = dark ? RGB(29, 29, 32) : RGB(250, 251, 253);
+    p.input_border = dark ? RGB(68, 68, 76) : RGB(215, 218, 225);
+    p.secondary_button = p.card_background;
+    p.secondary_button_pressed = dark ? RGB(48, 49, 55) : RGB(239, 241, 245);
+    p.primary_button_pressed = dark ? RGB(79, 151, 222) : RGB(0, 82, 156);
+    p.danger = dark ? RGB(255, 152, 161) : RGB(183, 43, 57);
+    p.danger_soft = dark ? RGB(50, 36, 40) : RGB(255, 248, 248);
+    p.danger_border = dark ? RGB(103, 61, 67) : RGB(238, 211, 215);
+    p.disabled_background = dark ? RGB(43, 43, 47) : RGB(243, 244, 247);
+    p.disabled_text = dark ? RGB(106, 109, 118) : RGB(170, 174, 184);
+    p.list_header_background = dark ? RGB(32, 32, 36) : RGB(247, 248, 250);
+    p.list_header_text = p.muted_text;
+    p.inactive_selection = dark ? RGB(47, 47, 53) : RGB(241, 244, 248);
+    return p;
 }
 
 SettingsControlDrawStyle settings_control_draw_style(
@@ -837,7 +818,8 @@ SettingsControlDrawStyle settings_control_draw_style(
                          state.hot ? blend(palette.accent, RGB(255, 255, 255), palette.dark ? 8 : 5) :
                          palette.accent;
             style.border = style.fill;
-            style.text = state.disabled ? palette.disabled_text : RGB(255, 255, 255);
+            style.text = state.disabled ? palette.disabled_text :
+                         palette.dark ? RGB(17, 35, 56) : RGB(255, 255, 255);
             break;
         case SettingsControlRole::DangerButton:
             style.fill = state.disabled ? palette.disabled_background :
@@ -951,6 +933,14 @@ void apply_settings_dark_title_bar(HWND hwnd, bool dark) {
     apply_dark_title_bar(hwnd, dark);
 }
 
+void apply_settings_control_theme(HWND hwnd, bool dark) {
+    if (!hwnd) return;
+    using SetTheme = HRESULT(WINAPI*)(HWND, LPCWSTR, LPCWSTR);
+    static const HMODULE module = LoadLibraryW(L"uxtheme.dll");
+    static const auto set_theme = module ? reinterpret_cast<SetTheme>(GetProcAddress(module, "SetWindowTheme")) : nullptr;
+    if (set_theme) set_theme(hwnd, dark ? L"DarkMode_Explorer" : L"Explorer", nullptr);
+}
+
 CandidateSizeSliderMetrics calculate_candidate_size_slider_metrics(
     const SettingsRect& bounds,
     int level,
@@ -958,7 +948,7 @@ CandidateSizeSliderMetrics calculate_candidate_size_slider_metrics(
     const int safe_dpi = dpi <= 0 ? kBaseDpi : dpi;
     const int clamped_level = std::max(candidate_text_size_min_level(),
                                        std::min(level, candidate_text_size_max_level()));
-    const int thumb_size = scale_settings_value(18, safe_dpi);
+    const int thumb_size = scale_settings_value(20, safe_dpi);
     const int stop_size = scale_settings_value(8, safe_dpi);
     const int track_height = scale_settings_value(6, safe_dpi);
     const int left = bounds.x + thumb_size / 2;
@@ -1024,11 +1014,11 @@ SettingsVisualSpec settings_visual_spec(int dpi) {
     const int safe_dpi = dpi <= 0 ? kBaseDpi : dpi;
     SettingsVisualSpec spec;
     spec.body_font_px = scale_settings_value(14, safe_dpi);
-    spec.title_font_px = scale_settings_value(24, safe_dpi);
+    spec.title_font_px = scale_settings_value(32, safe_dpi);
     spec.section_font_px = scale_settings_value(15, safe_dpi);
-    spec.card_corner_radius = scale_settings_value(14, safe_dpi);
+    spec.card_corner_radius = scale_settings_value(12, safe_dpi);
     spec.control_corner_radius = scale_settings_value(8, safe_dpi);
-    spec.nav_corner_radius = scale_settings_value(10, safe_dpi);
+    spec.nav_corner_radius = scale_settings_value(8, safe_dpi);
     spec.parent_paints_cards = true;
     spec.parent_uses_double_buffering = true;
     spec.owner_draw_buttons = true;
@@ -1085,9 +1075,9 @@ SettingsWindowLayout calculate_settings_window_layout(int client_width, int clie
     const SettingsSize minimum = settings_minimum_client_size(safe_dpi);
     const int width = std::max(client_width, minimum.width);
     const int height = std::max(client_height, minimum.height);
-    const int sidebar_width = scale_settings_value(208, safe_dpi);
-    const int margin = scale_settings_value(28, safe_dpi);
-    const int gap = scale_settings_value(16, safe_dpi);
+    const int sidebar_width = scale_settings_value(184, safe_dpi);
+    const int margin = scale_settings_value(32, safe_dpi);
+    const int gap = scale_settings_value(20, safe_dpi);
 
     SettingsWindowLayout layout;
     layout.dpi = safe_dpi;
@@ -1096,16 +1086,16 @@ SettingsWindowLayout calculate_settings_window_layout(int client_width, int clie
     layout.page_title = SettingsRect{sidebar_width + margin,
                                      margin,
                                      width - sidebar_width - margin * 2,
-                                     scale_settings_value(34, safe_dpi)};
+                                     scale_settings_value(48, safe_dpi)};
     layout.page_description = SettingsRect{layout.page_title.x,
                                            rect_bottom(layout.page_title) + scale_settings_value(4, safe_dpi),
                                            layout.page_title.width,
                                            scale_settings_value(28, safe_dpi)};
 
-    const int nav_x = scale_settings_value(16, safe_dpi);
-    int nav_y = scale_settings_value(112, safe_dpi);
+    const int nav_x = scale_settings_value(12, safe_dpi);
+    int nav_y = scale_settings_value(124, safe_dpi);
     const int nav_width = sidebar_width - nav_x * 2;
-    const int nav_height = scale_settings_value(44, safe_dpi);
+    const int nav_height = scale_settings_value(42, safe_dpi);
     const int nav_gap = scale_settings_value(8, safe_dpi);
     for (int i = 0; i < kSettingsPageCount; ++i) {
         layout.nav_items[static_cast<size_t>(i)] = SettingsRect{nav_x, nav_y, nav_width, nav_height};
@@ -1125,8 +1115,8 @@ SettingsWindowLayout calculate_settings_window_layout(int client_width, int clie
                                           height - rect_bottom(layout.primary_card) - margin - gap};
     const int candidate_content_width = std::min(content_width, scale_settings_value(760, safe_dpi));
     const int candidate_card_padding = scale_settings_value(24, safe_dpi);
-    const int candidate_toggle_width = scale_settings_value(48, safe_dpi);
-    const int candidate_toggle_height = scale_settings_value(26, safe_dpi);
+    const int candidate_toggle_width = scale_settings_value(44, safe_dpi);
+    const int candidate_toggle_height = scale_settings_value(24, safe_dpi);
     layout.candidate_options_card = SettingsRect{content_x,
                                                  content_top,
                                                  candidate_content_width,
@@ -1211,51 +1201,46 @@ SettingsWindowLayout calculate_settings_window_layout(int client_width, int clie
                                                       rect_bottom(layout.shortcut_test_input_box) + scale_settings_value(10, safe_dpi),
                                                       candidate_content_width - candidate_card_padding * 2,
                                                       scale_settings_value(28, safe_dpi)};
-    layout.appearance_preview_card = SettingsRect{content_x,
-                                                  content_top,
-                                                  content_width,
-                                                  scale_settings_value(230, safe_dpi)};
-    layout.appearance_theme_card = SettingsRect{content_x,
-                                                rect_bottom(layout.appearance_preview_card) + gap,
-                                                content_width,
-                                                std::max(scale_settings_value(230, safe_dpi),
-                                                         std::min(scale_settings_value(286, safe_dpi), height - rect_bottom(layout.appearance_preview_card) - margin - gap))};
-    layout.appearance_preview_window = SettingsRect{layout.appearance_preview_card.x + scale_settings_value(24, safe_dpi),
-                                                    layout.appearance_preview_card.y + scale_settings_value(54, safe_dpi),
-                                                    std::min(scale_settings_value(620, safe_dpi),
-                                                             layout.appearance_preview_card.width - scale_settings_value(48, safe_dpi)),
-                                                    scale_settings_value(150, safe_dpi)};
+    const int appearance_settings_width = std::min(scale_settings_value(360, safe_dpi), content_width * 47 / 100);
+    const int appearance_height = scale_settings_value(510, safe_dpi);
+    layout.appearance_theme_card = SettingsRect{content_x, content_top, appearance_settings_width, appearance_height};
+    layout.appearance_preview_card = SettingsRect{content_x + appearance_settings_width + gap, content_top,
+                                                  content_width - appearance_settings_width - gap, appearance_height};
+    layout.appearance_preview_window = SettingsRect{layout.appearance_preview_card.x + scale_settings_value(20, safe_dpi),
+                                                    layout.appearance_preview_card.y + scale_settings_value(172, safe_dpi),
+                                                    layout.appearance_preview_card.width - scale_settings_value(40, safe_dpi),
+                                                    scale_settings_value(176, safe_dpi)};
     layout.candidate_size_slider = SettingsRect{layout.appearance_theme_card.x + scale_settings_value(24, safe_dpi),
-                                                layout.appearance_theme_card.y + scale_settings_value(132, safe_dpi),
-                                                std::min(scale_settings_value(430, safe_dpi),
-                                                         layout.appearance_theme_card.width - scale_settings_value(48, safe_dpi)),
-                                                scale_settings_value(46, safe_dpi)};
-    layout.candidate_size_value = SettingsRect{layout.candidate_size_slider.x,
-                                               rect_bottom(layout.candidate_size_slider) + scale_settings_value(26, safe_dpi),
-                                               scale_settings_value(300, safe_dpi),
-                                               scale_settings_value(28, safe_dpi)};
+                                                layout.appearance_theme_card.y + scale_settings_value(258, safe_dpi),
+                                                appearance_settings_width - scale_settings_value(48, safe_dpi),
+                                                scale_settings_value(40, safe_dpi)};
     layout.candidate_size_label_left = SettingsRect{layout.candidate_size_slider.x,
-                                                    rect_bottom(layout.candidate_size_slider) + scale_settings_value(6, safe_dpi),
-                                                    scale_settings_value(80, safe_dpi),
-                                                    scale_settings_value(22, safe_dpi)};
-    layout.candidate_size_label_middle = SettingsRect{layout.candidate_size_slider.x + layout.candidate_size_slider.width / 2 - scale_settings_value(40, safe_dpi),
+                                                    rect_bottom(layout.candidate_size_slider) + scale_settings_value(8, safe_dpi),
+                                                    scale_settings_value(72, safe_dpi), scale_settings_value(24, safe_dpi)};
+    layout.candidate_size_label_middle = SettingsRect{layout.candidate_size_slider.x + layout.candidate_size_slider.width / 2 - scale_settings_value(36, safe_dpi),
                                                       layout.candidate_size_label_left.y,
-                                                      scale_settings_value(80, safe_dpi),
-                                                      scale_settings_value(20, safe_dpi)};
-    layout.candidate_size_label_right = SettingsRect{rect_right(layout.candidate_size_slider) - scale_settings_value(80, safe_dpi),
+                                                      scale_settings_value(72, safe_dpi), scale_settings_value(24, safe_dpi)};
+    layout.candidate_size_label_right = SettingsRect{rect_right(layout.candidate_size_slider) - scale_settings_value(72, safe_dpi),
                                                      layout.candidate_size_label_left.y,
-                                                     scale_settings_value(80, safe_dpi),
-                                                     scale_settings_value(22, safe_dpi)};
+                                                     scale_settings_value(72, safe_dpi), scale_settings_value(24, safe_dpi)};
+    layout.candidate_size_value = SettingsRect{layout.candidate_size_slider.x,
+                                               rect_bottom(layout.candidate_size_label_left) + scale_settings_value(12, safe_dpi),
+                                               appearance_settings_width - scale_settings_value(48, safe_dpi), scale_settings_value(28, safe_dpi)};
     layout.search_box = SettingsRect{content_x,
                                      content_top,
-                                     content_width - scale_settings_value(108, safe_dpi),
-                                     scale_settings_value(38, safe_dpi)};
+                                     content_width - scale_settings_value(244, safe_dpi),
+                                     scale_settings_value(44, safe_dpi)};
     layout.refresh_button = SettingsRect{rect_right(layout.search_box) + scale_settings_value(12, safe_dpi),
                                          content_top,
-                                         scale_settings_value(96, safe_dpi),
-                                         scale_settings_value(38, safe_dpi)};
+                                         scale_settings_value(72, safe_dpi),
+                                         scale_settings_value(44, safe_dpi)};
+    layout.builtin_dictionary_button = SettingsRect{rect_right(layout.refresh_button) + scale_settings_value(12, safe_dpi),
+                                                      content_top, scale_settings_value(148, safe_dpi),
+                                                      scale_settings_value(44, safe_dpi)};
+    layout.personal_dictionary_title = SettingsRect{content_x, rect_bottom(layout.search_box) + scale_settings_value(8, safe_dpi),
+                                                      content_width, scale_settings_value(24, safe_dpi)};
 
-    const int editor_height = scale_settings_value(320, safe_dpi);
+    const int editor_height = scale_settings_value(278, safe_dpi);
     layout.user_editor_card = SettingsRect{content_x,
                                            height - margin - editor_height,
                                            content_width,
@@ -1267,7 +1252,7 @@ SettingsWindowLayout calculate_settings_window_layout(int client_width, int clie
     layout.user_frequency_help = SettingsRect{layout.user_editor_card.x + scale_settings_value(24, safe_dpi),
                                               rect_bottom(layout.user_editor_title) + scale_settings_value(82, safe_dpi),
                                               layout.user_editor_card.width - scale_settings_value(48, safe_dpi),
-                                              scale_settings_value(68, safe_dpi)};
+                                              scale_settings_value(38, safe_dpi)};
     const int user_action_y = rect_bottom(layout.user_frequency_help) + scale_settings_value(14, safe_dpi);
     layout.user_new_button = SettingsRect{layout.user_frequency_help.x,
                                           user_action_y,
@@ -1285,20 +1270,20 @@ SettingsWindowLayout calculate_settings_window_layout(int client_width, int clie
                                       rect_bottom(layout.user_new_button) + scale_settings_value(16, safe_dpi),
                                       layout.user_frequency_help.width,
                                       scale_settings_value(36, safe_dpi)};
-    const int table_y = rect_bottom(layout.search_box) + scale_settings_value(12, safe_dpi);
+    const int table_y = rect_bottom(layout.personal_dictionary_title) + scale_settings_value(4, safe_dpi);
     const int table_height = std::max(scale_settings_value(140, safe_dpi),
                                       layout.user_editor_card.y - gap - table_y);
     layout.user_table = SettingsRect{content_x, table_y, content_width, table_height};
     layout.user_empty_state = layout.user_table;
 
-    const int about_card_height = scale_settings_value(312, safe_dpi);
+    const int about_card_height = scale_settings_value(300, safe_dpi);
     layout.about_card = SettingsRect{content_x,
                                      content_top,
                                      content_width,
                                      std::min(about_card_height, height - content_top - margin)};
     const int about_padding = scale_settings_value(24, safe_dpi);
     const int about_label_width = scale_settings_value(112, safe_dpi);
-    const int about_row_height = scale_settings_value(28, safe_dpi);
+    const int about_row_height = scale_settings_value(26, safe_dpi);
     const int about_action_height = scale_settings_value(34, safe_dpi);
     const int about_action_gap = scale_settings_value(12, safe_dpi);
     const int about_value_x = layout.about_card.x + about_padding + about_label_width + scale_settings_value(12, safe_dpi);
@@ -1329,7 +1314,7 @@ SettingsWindowLayout calculate_settings_window_layout(int client_width, int clie
     layout.about_dictionary_card = SettingsRect{content_x,
                                                 rect_bottom(layout.about_card) + gap,
                                                 content_width,
-                                                scale_settings_value(100, safe_dpi)};
+                                                scale_settings_value(88, safe_dpi)};
     layout.about_dictionary_title = SettingsRect{layout.about_dictionary_card.x + about_padding,
                                                  layout.about_dictionary_card.y + scale_settings_value(18, safe_dpi),
                                                  scale_settings_value(190, safe_dpi),
@@ -1345,7 +1330,7 @@ SettingsWindowLayout calculate_settings_window_layout(int client_width, int clie
     layout.about_offline_card = SettingsRect{content_x,
                                              rect_bottom(layout.about_dictionary_card) + gap,
                                              content_width,
-                                             scale_settings_value(130, safe_dpi)};
+                                             scale_settings_value(110, safe_dpi)};
     return layout;
 }
 
@@ -1448,7 +1433,7 @@ UserLexiconEditorState user_lexicon_editor_state_for_selection(
     return state;
 }
 
-int SettingsWindow::run(HINSTANCE instance, int show_command) {
+int SettingsWindow::run(HINSTANCE instance, int show_command, std::function<void(HWND)> ready) {
     instance_ = instance;
     SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
 
@@ -1461,6 +1446,8 @@ int SettingsWindow::run(HINSTANCE instance, int show_command) {
     options_ = store_.load_candidate_options();
     input_mode_options_ = store_.load_input_mode_options();
     load_dictionary_catalog();
+    candidate_preview_ready_ = candidate_preview_engine_.load_dictionary_resource_directory(
+        std::filesystem::path(module_path(instance)).parent_path().wstring());
     palette_ = settings_theme_palette(resolve_settings_theme(options_.theme_mode, windows_apps_use_dark_theme()));
 
     WNDCLASSEXW wc{};
@@ -1519,6 +1506,7 @@ int SettingsWindow::run(HINSTANCE instance, int show_command) {
     }
     ShowWindow(hwnd_, show_command);
     UpdateWindow(hwnd_);
+    if (ready) ready(hwnd_);
 
     MSG message{};
     while (GetMessageW(&message, nullptr, 0, 0) > 0) {
@@ -1527,6 +1515,10 @@ int SettingsWindow::run(HINSTANCE instance, int show_command) {
                                                             current_settings_keyboard_state())) {
             continue;
         }
+        if (dictionary_preview_hwnd_ && IsWindow(dictionary_preview_hwnd_) &&
+            (message.hwnd == dictionary_preview_hwnd_ || IsChild(dictionary_preview_hwnd_, message.hwnd)) &&
+            IsDialogMessageW(dictionary_preview_hwnd_, &message)) continue;
+        if (IsDialogMessageW(hwnd_, &message)) continue;
         TranslateMessage(&message);
         DispatchMessageW(&message);
     }
@@ -1571,6 +1563,7 @@ LRESULT SettingsWindow::handle_message(UINT message, WPARAM wparam, LPARAM lpara
             destroy_fonts();
             create_fonts();
             apply_fonts();
+            install_modern_controls();
             refresh_theme();
             const RECT* suggested = reinterpret_cast<const RECT*>(lparam);
             SetWindowPos(hwnd_,
@@ -1629,11 +1622,17 @@ LRESULT SettingsWindow::handle_message(UINT message, WPARAM wparam, LPARAM lpara
             break;
         case WM_COMMAND:
             switch (LOWORD(wparam)) {
+                case kIdCandidatePreviewInput:
+                    if (HIWORD(wparam) == EN_CHANGE) update_candidate_preview();
+                    if (HIWORD(wparam) == EN_SETFOCUS || HIWORD(wparam) == EN_KILLFOCUS)
+                        invalidate_candidate_size_preview();
+                    return 0;
                 case kIdNavAppearance:
                 case kIdNavCandidate:
                 case kIdNavUserLexicon:
                 case kIdNavLearning:
                 case kIdNavAbout:
+                    if (HIWORD(wparam) != BN_CLICKED) return 0;
                     show_page(page_for_nav_id(LOWORD(wparam)));
                     return 0;
                 case kIdOpenDataFolder:
@@ -1643,11 +1642,17 @@ LRESULT SettingsWindow::handle_message(UINT message, WPARAM wparam, LPARAM lpara
                     copy_data_dir_to_clipboard();
                     return 0;
                 case kIdAboutDictionaryPreview:
+                case kIdBuiltinDictionary:
                     open_dictionary_preview();
+                    return 0;
+                case kIdOpenInputTest:
+                    show_page(SettingsPage::Candidate);
+                    SetFocus(shortcut_test_input_);
                     return 0;
                 case kIdThemeSystem:
                 case kIdThemeLight:
                 case kIdThemeDark:
+                    if (HIWORD(wparam) != BN_CLICKED) return 0;
                     options_.theme_mode = LOWORD(wparam) == kIdThemeLight ? CandidateThemeMode::Light :
                                           LOWORD(wparam) == kIdThemeDark ? CandidateThemeMode::Dark :
                                           CandidateThemeMode::System;
@@ -1655,12 +1660,14 @@ LRESULT SettingsWindow::handle_message(UINT message, WPARAM wparam, LPARAM lpara
                     refresh_theme();
                     return 0;
                 case kIdShowKeyHints:
-                    options_.show_key_hints = !options_.show_key_hints;
+                    if (HIWORD(wparam) != BN_CLICKED) return 0;
+                    options_.show_key_hints = is_checked(hwnd_, kIdShowKeyHints);
                     persist_candidate_display_options();
                     InvalidateRect(GetDlgItem(hwnd_, kIdShowKeyHints), nullptr, FALSE);
                     return 0;
                 case kIdShiftToggle:
-                    input_mode_options_.shift_toggle_enabled = !input_mode_options_.shift_toggle_enabled;
+                    if (HIWORD(wparam) != BN_CLICKED) return 0;
+                    input_mode_options_.shift_toggle_enabled = is_checked(hwnd_, kIdShiftToggle);
                     store_.save_options(options_, input_mode_options_);
                     InvalidateRect(GetDlgItem(hwnd_, kIdShiftToggle), nullptr, FALSE);
                     return 0;
@@ -1739,7 +1746,30 @@ LRESULT SettingsWindow::handle_message(UINT message, WPARAM wparam, LPARAM lpara
                     const auto style = user_lexicon_row_visual_style(palette_, selected, list_has_focus);
                     custom->clrText = style.text;
                     custom->clrTextBk = style.background;
-                    return CDRF_NEWFONT;
+                    RECT bounds{};
+                    if (!ListView_GetItemRect(lexicon_list_, row, &bounds, LVIR_BOUNDS)) return CDRF_NEWFONT;
+                    ModernRenderScope modern(renderer_, custom->nmcd.hdc, bounds);
+                    if (!modern.active()) return CDRF_NEWFONT;
+                    fill_rect(custom->nmcd.hdc, bounds, style.background);
+                    int column_left = bounds.left;
+                    for (int column = 0; column < 3; ++column) {
+                        const int column_width = ListView_GetColumnWidth(lexicon_list_, column);
+                        RECT cell{column_left, bounds.top, column_left + column_width, bounds.bottom};
+                        column_left += column_width;
+                        wchar_t text[2048]{};
+                        ListView_GetItemText(lexicon_list_, row, column, text, static_cast<int>(std::size(text)));
+                        cell.left += scale_settings_value(12, dpi_);
+                        cell.right -= scale_settings_value(12, dpi_);
+                        draw_text_in_rect(custom->nmcd.hdc, text, cell, style.text, body_font_,
+                            DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS | (column == 2 ? DT_RIGHT : DT_LEFT));
+                    }
+                    if (selected) {
+                        renderer_.line(static_cast<float>(bounds.left + scale_settings_value(2, dpi_)),
+                            static_cast<float>(bounds.top + scale_settings_value(8, dpi_)),
+                            static_cast<float>(bounds.left + scale_settings_value(2, dpi_)),
+                            static_cast<float>(bounds.bottom - scale_settings_value(8, dpi_)), palette_.accent, static_cast<float>(scale_settings_value(2, dpi_)));
+                    }
+                    return CDRF_SKIPDEFAULT;
                 }
             }
             if (header && header->idFrom == kIdLexiconList && header->code == LVN_ITEMCHANGED) {
@@ -1773,6 +1803,7 @@ LRESULT SettingsWindow::handle_message(UINT message, WPARAM wparam, LPARAM lpara
                                   id == kIdCandidateTextSizeLabel || id == kIdLexiconPinyinLabel ||
                                   id == kIdLexiconWordLabel || id == kIdLexiconFrequencyLabel ||
                                    id == kIdUserLexiconEditorTitle ||
+                                   id == kIdPersonalDictionaryTitle ||
                                    id == kIdAboutProductKey || id == kIdAboutVersionKey ||
                                    id == kIdAboutArchKey || id == kIdAboutOfflineKey ||
                                    id == kIdAboutStatusKey || id == kIdAboutDataDirKey ||
@@ -1819,6 +1850,10 @@ LRESULT SettingsWindow::handle_message(UINT message, WPARAM wparam, LPARAM lpara
             render(reinterpret_cast<HDC>(wparam));
             return 0;
         case WM_DESTROY:
+            if (lexicon_row_metrics_) {
+                ImageList_Destroy(lexicon_row_metrics_);
+                lexicon_row_metrics_ = nullptr;
+            }
             if (dictionary_preview_hwnd_ && IsWindow(dictionary_preview_hwnd_)) {
                 DestroyWindow(dictionary_preview_hwnd_);
             }
@@ -1855,9 +1890,121 @@ LRESULT SettingsWindow::handle_message(UINT message, WPARAM wparam, LPARAM lpara
 }
 
 void SettingsWindow::create_fonts() {
-    body_font_ = create_ui_font(dpi_, 10, FW_NORMAL);
-    title_font_ = create_ui_font(dpi_, 18, FW_SEMIBOLD);
-    section_font_ = create_ui_font(dpi_, 11, FW_SEMIBOLD);
+    body_font_ = create_ui_font(dpi_, 11, FW_NORMAL);
+    title_font_ = create_ui_font(dpi_, 23, FW_NORMAL);
+    section_font_ = create_ui_font(dpi_, 11, FW_MEDIUM);
+}
+
+void SettingsWindow::install_modern_controls() {
+    for (const auto& controls : page_controls_) {
+        for (HWND control : controls) {
+            wchar_t type[32]{};
+            GetClassNameW(control, type, static_cast<int>(std::size(type)));
+            if (_wcsicmp(type, L"Static") == 0 && GetDlgCtrlID(control) != kIdCandidateSizeSlider) {
+                SetWindowSubclass(control, modern_static_subclass_proc, 21, reinterpret_cast<DWORD_PTR>(this));
+            } else if (_wcsicmp(type, L"Edit") == 0) {
+                SetWindowSubclass(control, modern_edit_subclass_proc, 22, reinterpret_cast<DWORD_PTR>(this));
+            } else if (_wcsicmp(type, L"Button") == 0) {
+                SetWindowSubclass(control, modern_button_subclass_proc, 23, reinterpret_cast<DWORD_PTR>(this));
+            }
+        }
+    }
+    // A one-pixel image supplies a comfortable native list-row height. Row
+    // selection and accessibility stay with ListView; DirectWrite paints it.
+    for (HWND nav : nav_buttons_) SetWindowSubclass(nav, modern_button_subclass_proc, 23, reinterpret_cast<DWORD_PTR>(this));
+    if (lexicon_row_metrics_) {
+        ListView_SetImageList(lexicon_list_, nullptr, LVSIL_SMALL);
+        ImageList_Destroy(lexicon_row_metrics_);
+    }
+    lexicon_row_metrics_ = ImageList_Create(1, scale_settings_value(36, dpi_), ILC_COLOR32, 1, 0);
+    if (lexicon_row_metrics_) {
+        HBITMAP bitmap = CreateBitmap(1, scale_settings_value(36, dpi_), 1, 32, nullptr);
+        if (bitmap) {
+            ImageList_Add(lexicon_row_metrics_, bitmap, nullptr);
+            DeleteObject(bitmap);
+        }
+        ListView_SetImageList(lexicon_list_, lexicon_row_metrics_, LVSIL_SMALL);
+    }
+}
+
+void SettingsWindow::render_static_control(HWND control, HDC hdc) {
+    RECT bounds{};
+    GetClientRect(control, &bounds);
+    ModernRenderScope modern(renderer_, hdc, bounds);
+    const int id = GetDlgCtrlID(control);
+    const bool title = id == kIdAppearanceTitle || id == kIdCandidateTitle ||
+                       id == kIdUserLexiconTitle || id == kIdLearningTitle || id == kIdAboutTitle;
+    const bool description = id == kIdAppearanceDescription || id == kIdCandidateDescription ||
+                             id == kIdUserLexiconDescription || id == kIdLearningDescription || id == kIdAboutDescription;
+    const HBRUSH background = brush_for_static_control(id);
+    fill_rect(hdc, bounds, background == window_background_brush_ ? palette_.window_background : palette_.card_background);
+    HFONT font = reinterpret_cast<HFONT>(SendMessageW(control, WM_GETFONT, 0, 0));
+    UINT flags = DT_VCENTER | DT_SINGLELINE | DT_END_ELLIPSIS;
+    if (id == kIdLexiconEmptyState) flags |= DT_CENTER;
+    if (id == kIdCandidateSizeStandardLabel) flags |= DT_CENTER;
+    if (id == kIdCandidateSizeLargeLabel) flags |= DT_RIGHT;
+    if (id == kIdLexiconFrequencyHelp || id == kIdShortcutTestDescription || id == kIdLearningCardText) {
+        flags = DT_WORDBREAK;
+    }
+    LOGFONTW metrics{};
+    const bool strong = font && GetObjectW(font, sizeof(metrics), &metrics) && metrics.lfWeight >= FW_MEDIUM;
+    draw_text_in_rect(hdc, control_text(control), bounds,
+                       title || strong ? palette_.text : description ? palette_.muted_text : palette_.muted_text,
+                       font, flags);
+}
+
+void SettingsWindow::render_edit_hint(HWND control, HDC hdc, bool printing) {
+    const std::wstring value = control_text(control);
+    if (!printing && (!value.empty() || GetFocus() == control)) return;
+    const auto* cue = reinterpret_cast<const wchar_t*>(GetPropW(control, L"LocalPinyin.ModernCue"));
+    if (value.empty() && (!cue || !*cue)) return;
+    RECT bounds{};
+    GetClientRect(control, &bounds);
+    ModernRenderScope modern(renderer_, hdc, bounds);
+    fill_rect(hdc, bounds, palette_.input_background);
+    HFONT font = reinterpret_cast<HFONT>(SendMessageW(control, WM_GETFONT, 0, 0));
+    bounds.left += scale_settings_value(2, dpi_);
+    draw_text_in_rect(hdc, value.empty() ? std::wstring(cue) : value, bounds,
+                       value.empty() ? palette_.weak_text : palette_.text, font,
+                       DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS);
+}
+
+LRESULT CALLBACK SettingsWindow::modern_static_subclass_proc(
+    HWND control, UINT message, WPARAM wparam, LPARAM lparam, UINT_PTR id, DWORD_PTR data) {
+    auto* self = reinterpret_cast<SettingsWindow*>(data);
+    if (message == WM_PAINT && self) {
+        PAINTSTRUCT paint{};
+        HDC dc = BeginPaint(control, &paint);
+        self->render_static_control(control, dc);
+        EndPaint(control, &paint);
+        return 0;
+    }
+    if (message == WM_PRINTCLIENT && self) {
+        self->render_static_control(control, reinterpret_cast<HDC>(wparam));
+        return 0;
+    }
+    if (message == WM_ERASEBKGND) return 1;
+    if (message == WM_NCDESTROY) RemoveWindowSubclass(control, modern_static_subclass_proc, id);
+    return DefSubclassProc(control, message, wparam, lparam);
+}
+
+LRESULT CALLBACK SettingsWindow::modern_edit_subclass_proc(
+    HWND control, UINT message, WPARAM wparam, LPARAM lparam, UINT_PTR id, DWORD_PTR data) {
+    auto* self = reinterpret_cast<SettingsWindow*>(data);
+    const LRESULT result = DefSubclassProc(control, message, wparam, lparam);
+    if (message == WM_PAINT && self) {
+        HDC dc = GetDC(control);
+        self->render_edit_hint(control, dc);
+        ReleaseDC(control, dc);
+    } else if (message == WM_PRINTCLIENT && self) {
+        self->render_edit_hint(control, reinterpret_cast<HDC>(wparam), true);
+    } else if (message == WM_SETFOCUS || message == WM_KILLFOCUS) {
+        InvalidateRect(control, nullptr, FALSE);
+    } else if (message == WM_NCDESTROY) {
+        RemovePropW(control, L"LocalPinyin.ModernCue");
+        RemoveWindowSubclass(control, modern_edit_subclass_proc, id);
+    }
+    return result;
 }
 
 void SettingsWindow::destroy_fonts() {
@@ -1873,6 +2020,58 @@ void SettingsWindow::destroy_fonts() {
         DeleteObject(section_font_);
         section_font_ = nullptr;
     }
+}
+
+LRESULT CALLBACK SettingsWindow::modern_button_subclass_proc(
+    HWND control, UINT message, WPARAM wparam, LPARAM lparam, UINT_PTR id, DWORD_PTR data) {
+    auto* self = reinterpret_cast<SettingsWindow*>(data);
+    const auto render = [&](HDC dc) {
+        DRAWITEMSTRUCT item{};
+        item.CtlType = ODT_BUTTON;
+        item.CtlID = static_cast<UINT>(GetDlgCtrlID(control));
+        item.itemAction = ODA_DRAWENTIRE;
+        item.hwndItem = control;
+        item.hDC = dc;
+        GetClientRect(control, &item.rcItem);
+        const LRESULT state = SendMessageW(control, BM_GETSTATE, 0, 0);
+        if (state & BST_PUSHED) item.itemState |= ODS_SELECTED;
+        if (SendMessageW(control, BM_GETCHECK, 0, 0) == BST_CHECKED) item.itemState |= ODS_CHECKED;
+        if (!IsWindowEnabled(control)) item.itemState |= ODS_DISABLED;
+        if (GetFocus() == control && (SendMessageW(control, WM_QUERYUISTATE, 0, 0) & UISF_HIDEFOCUS) == 0)
+            item.itemState |= ODS_FOCUS;
+        if (GetPropW(control, L"LocalPinyin.Hot")) item.itemState |= ODS_HOTLIGHT;
+        self->draw_button(item);
+    };
+    if (self && message == WM_PAINT) {
+        PAINTSTRUCT paint{};
+        HDC dc = BeginPaint(control, &paint);
+        render(dc);
+        EndPaint(control, &paint);
+        return 0;
+    }
+    if (self && (message == WM_PRINTCLIENT || (message == WM_PRINT && (lparam & PRF_CLIENT)))) {
+        render(reinterpret_cast<HDC>(wparam));
+        return 0;
+    }
+    if (message == WM_ERASEBKGND) return 1;
+    if (message == WM_MOUSEMOVE && !GetPropW(control, L"LocalPinyin.Hot")) {
+        SetPropW(control, L"LocalPinyin.Hot", reinterpret_cast<HANDLE>(1));
+        TRACKMOUSEEVENT tracking{sizeof(tracking), TME_LEAVE, control, 0};
+        TrackMouseEvent(&tracking);
+        InvalidateRect(control, nullptr, FALSE);
+    } else if (message == WM_MOUSELEAVE) {
+        RemovePropW(control, L"LocalPinyin.Hot");
+        InvalidateRect(control, nullptr, FALSE);
+    } else if (message == WM_NCDESTROY) {
+        RemovePropW(control, L"LocalPinyin.Hot");
+        RemoveWindowSubclass(control, modern_button_subclass_proc, id);
+    }
+    const LRESULT result = DefSubclassProc(control, message, wparam, lparam);
+    if (message == BM_SETCHECK || message == BM_SETSTATE || message == WM_SETFOCUS || message == WM_KILLFOCUS ||
+        message == WM_ENABLE || message == WM_UPDATEUISTATE || message == WM_THEMECHANGED) {
+        InvalidateRect(control, nullptr, FALSE);
+    }
+    return result;
 }
 
 void SettingsWindow::apply_fonts() {
@@ -1893,8 +2092,13 @@ void SettingsWindow::apply_fonts() {
     const int section_ids[] = {
         kIdAppearanceThemeLabel,
         kIdCandidateHintLabel,
+        kIdShiftToggleLabel,
+        kIdShortcutTestTitle,
+        kIdShortcutModeValue,
+        kIdShortcutInputLabel,
         kIdCandidateTextSizeLabel,
         kIdUserLexiconEditorTitle,
+        kIdPersonalDictionaryTitle,
         kIdLexiconPinyinLabel,
         kIdLexiconWordLabel,
         kIdLexiconFrequencyLabel,
@@ -1950,6 +2154,7 @@ void SettingsWindow::refresh_theme() {
     palette_ = settings_theme_palette(resolve_settings_theme(options_.theme_mode, windows_apps_use_dark_theme()));
     apply_theme_to_controls();
     apply_title_bar_theme();
+    DictionaryPreviewWindow::set_theme(dictionary_preview_hwnd_, palette_.dark);
 
     const SettingsThemeRefreshPlan plan = settings_theme_refresh_plan();
     if (plan.redraw_list_view && lexicon_list_) {
@@ -1979,6 +2184,7 @@ void SettingsWindow::apply_theme_to_controls() {
     edit_background_brush_ = CreateSolidBrush(palette_.input_background);
 
     if (lexicon_list_) {
+        apply_settings_control_theme(lexicon_list_, palette_.dark);
         ListView_SetBkColor(lexicon_list_, palette_.card_background);
         ListView_SetTextBkColor(lexicon_list_, palette_.card_background);
         ListView_SetTextColor(lexicon_list_, palette_.text);
@@ -2054,6 +2260,7 @@ HBRUSH SettingsWindow::brush_for_static_control(int id) const {
         case kIdCandidateDescription:
         case kIdUserLexiconTitle:
         case kIdUserLexiconDescription:
+        case kIdPersonalDictionaryTitle:
         case kIdLearningTitle:
         case kIdLearningDescription:
         case kIdAboutTitle:
@@ -2073,7 +2280,7 @@ SettingsControlRole SettingsWindow::control_role_for_id(int id) const {
         id == kIdShowKeyHints || id == kIdShiftToggle) {
         return SettingsControlRole::Option;
     }
-    if (id == kIdLexiconSave) {
+    if (id == kIdLexiconSave || id == kIdOpenInputTest) {
         return SettingsControlRole::PrimaryButton;
     }
     if (id == kIdLexiconDelete || id == kIdClearLearning) {
@@ -2087,7 +2294,7 @@ SettingsControlSurface SettingsWindow::control_surface_for_id(int id) const {
         id == kIdNavUserLexicon || id == kIdNavLearning || id == kIdNavAbout) {
         return SettingsControlSurface::Sidebar;
     }
-    if (id == kIdLexiconRefresh) {
+    if (id == kIdLexiconRefresh || id == kIdBuiltinDictionary) {
         return SettingsControlSurface::Window;
     }
     return SettingsControlSurface::Card;
@@ -2096,6 +2303,17 @@ SettingsControlSurface SettingsWindow::control_surface_for_id(int id) const {
 void SettingsWindow::apply_title_bar_theme() {
     if (hwnd_) {
         apply_dark_title_bar(hwnd_, palette_.dark);
+        using SetAttribute = HRESULT(WINAPI*)(HWND, DWORD, LPCVOID, DWORD);
+        static HMODULE module = LoadLibraryW(L"dwmapi.dll");
+        const auto set_attribute = module ? reinterpret_cast<SetAttribute>(GetProcAddress(module, "DwmSetWindowAttribute")) : nullptr;
+        if (set_attribute) {
+            const DWORD rounded = 2;
+            const DWORD backdrop = 2;
+            set_attribute(hwnd_, 33, &rounded, sizeof(rounded));
+            set_attribute(hwnd_, 35, &palette_.window_background, sizeof(palette_.window_background));
+            set_attribute(hwnd_, 36, &palette_.text, sizeof(palette_.text));
+            set_attribute(hwnd_, 38, &backdrop, sizeof(backdrop));
+        }
     }
 }
 
@@ -2115,6 +2333,7 @@ bool SettingsWindow::draw_list_header_item(const NMCUSTOMDRAW& custom_draw) {
 
     const SettingsHeaderDrawStyle style = settings_header_draw_style(palette_);
     RECT rect = custom_draw.rc;
+    ModernRenderScope modern(renderer_, custom_draw.hdc, rect);
     fill_rect(custom_draw.hdc, rect, style.background);
     RECT text_rect = rect;
     text_rect.left += scale_settings_value(12, dpi_);
@@ -2126,6 +2345,11 @@ bool SettingsWindow::draw_list_header_item(const NMCUSTOMDRAW& custom_draw) {
                       body_font_,
                       DT_SINGLELINE | DT_VCENTER | DT_LEFT | DT_END_ELLIPSIS);
 
+    if (auto* canvas = active_modern_renderer()) {
+        canvas->line(static_cast<float>(rect.left), static_cast<float>(rect.bottom - 1),
+                     static_cast<float>(rect.right), static_cast<float>(rect.bottom - 1), style.separator, 1);
+        return true;
+    }
     HPEN pen = CreatePen(PS_SOLID, 1, style.separator);
     HGDIOBJ old_pen = SelectObject(custom_draw.hdc, pen);
     MoveToEx(custom_draw.hdc, rect.right - 1, rect.top + scale_settings_value(5, dpi_), nullptr);
@@ -2145,6 +2369,7 @@ void SettingsWindow::paint_list_header(HWND header, HDC hdc) {
     const SettingsHeaderDrawStyle style = settings_header_draw_style(palette_);
     RECT client{};
     GetClientRect(header, &client);
+    ModernRenderScope modern(renderer_, hdc, client);
     fill_rect(hdc, client, style.background);
 
     const int item_count = Header_GetItemCount(header);
@@ -2170,8 +2395,9 @@ void SettingsWindow::paint_list_header(HWND header, HDC hdc) {
                           text_rect,
                           style.text,
                           body_font_,
-                          DT_SINGLELINE | DT_VCENTER | DT_LEFT | DT_END_ELLIPSIS);
+                          DT_SINGLELINE | DT_VCENTER | (column == 2 ? DT_RIGHT : DT_LEFT) | DT_END_ELLIPSIS);
 
+        if (active_modern_renderer()) continue;
         HPEN pen = CreatePen(PS_SOLID, 1, style.separator);
         HGDIOBJ old_pen = SelectObject(hdc, pen);
         MoveToEx(hdc, item_rect.right - 1, item_rect.top + scale_settings_value(5, dpi_), nullptr);
@@ -2180,6 +2406,11 @@ void SettingsWindow::paint_list_header(HWND header, HDC hdc) {
         DeleteObject(pen);
     }
 
+    if (auto* canvas = active_modern_renderer()) {
+        canvas->line(static_cast<float>(client.left), static_cast<float>(client.bottom - 1),
+                     static_cast<float>(client.right), static_cast<float>(client.bottom - 1), style.border, 1);
+        return;
+    }
     HPEN border_pen = CreatePen(PS_SOLID, 1, style.border);
     HGDIOBJ old_pen = SelectObject(hdc, border_pen);
     MoveToEx(hdc, client.left, client.bottom - 1, nullptr);
@@ -2213,6 +2444,9 @@ LRESULT CALLBACK SettingsWindow::list_header_subclass_proc(
         case WM_SETTINGCHANGE:
             InvalidateRect(hwnd, nullptr, TRUE);
             break;
+        case WM_PRINTCLIENT:
+            if (self) self->paint_list_header(hwnd, reinterpret_cast<HDC>(wparam));
+            return 0;
         case WM_NCDESTROY:
             RemoveWindowSubclass(hwnd, SettingsWindow::list_header_subclass_proc, kUserLexiconHeaderSubclassId);
             break;
@@ -2307,6 +2541,16 @@ LRESULT CALLBACK SettingsWindow::candidate_size_slider_subclass_proc(
             EndPaint(hwnd, &ps);
             return 0;
         }
+        case WM_PRINTCLIENT: {
+            RECT bounds{};
+            GetClientRect(hwnd, &bounds);
+            CandidateSizeSliderDrawState state;
+            state.focused = GetFocus() == hwnd;
+            state.pressed = self->candidate_size_slider_dragging_;
+            state.disabled = !IsWindowEnabled(hwnd);
+            self->draw_candidate_size_slider(reinterpret_cast<HDC>(wparam), bounds, state);
+            return 0;
+        }
         case WM_NCDESTROY:
             RemoveWindowSubclass(hwnd,
                                  SettingsWindow::candidate_size_slider_subclass_proc,
@@ -2332,6 +2576,26 @@ void SettingsWindow::draw_candidate_size_slider(HDC hdc,
         candidate_text_size_level(options_.text_size),
         dpi_);
     const CandidateSizeSliderDrawStyle style = candidate_size_slider_draw_style(palette_, state);
+
+    ModernRenderScope modern(renderer_, hdc, client);
+    if (auto* canvas = active_modern_renderer()) {
+        canvas->fill(client, palette_.card_background);
+        const float center_y = static_cast<float>(client.bottom) / 2;
+        const float left = static_cast<float>(metrics.track.x);
+        const float right = static_cast<float>(metrics.track.x + metrics.track.width);
+        const float thumb_x = static_cast<float>(metrics.thumb.x + metrics.thumb.width / 2);
+        canvas->line(left, center_y, right, center_y, palette_.card_border, static_cast<float>(scale_settings_value(4, dpi_)));
+        canvas->line(left, center_y, thumb_x, center_y, palette_.accent, static_cast<float>(scale_settings_value(4, dpi_)));
+        const float thumb_radius = static_cast<float>(scale_settings_value(10, dpi_));
+        canvas->ellipse(thumb_x, center_y, thumb_radius, thumb_radius, palette_.card_background);
+        const float accent_radius = static_cast<float>(scale_settings_value(state.pressed ? 4 : 5, dpi_));
+        canvas->ellipse(thumb_x, center_y, accent_radius, accent_radius, palette_.accent);
+        const RECT outline{static_cast<int>(thumb_x - thumb_radius), static_cast<int>(center_y - thumb_radius),
+                             static_cast<int>(thumb_x + thumb_radius), static_cast<int>(center_y + thumb_radius)};
+        canvas->outline(outline, thumb_radius, state.focused ? palette_.accent : palette_.input_border,
+                           state.focused ? scale_settings_value(2, dpi_) : 1.0f);
+        return;
+    }
 
     fill_rect(hdc, client, style.background);
     draw_round_rect(hdc,
@@ -2536,183 +2800,137 @@ void SettingsWindow::paint() {
 }
 
 void SettingsWindow::render(HDC hdc) {
-    if (!hdc) {
-        return;
-    }
+    if (!hdc) return;
     RECT client{};
     GetClientRect(hwnd_, &client);
-    const int client_width = rect_width(client);
-    const int client_height = rect_height(client);
-
-    HDC paint_dc = hdc;
-    HDC memory_dc = nullptr;
-    HBITMAP bitmap = nullptr;
-    HGDIOBJ old_bitmap = nullptr;
-    if (client_width > 0 && client_height > 0) {
-        memory_dc = CreateCompatibleDC(hdc);
-        bitmap = memory_dc ? CreateCompatibleBitmap(hdc, client_width, client_height) : nullptr;
-        if (memory_dc && bitmap) {
-            old_bitmap = SelectObject(memory_dc, bitmap);
-            paint_dc = memory_dc;
-        } else {
-            if (bitmap) {
-                DeleteObject(bitmap);
-                bitmap = nullptr;
-            }
-            if (memory_dc) {
-                DeleteDC(memory_dc);
-                memory_dc = nullptr;
-            }
-        }
-    }
-
-    const auto layout = calculate_settings_window_layout(client_width, client_height, dpi_);
+    if (client.right <= 0 || client.bottom <= 0) return;
+    HDC memory = CreateCompatibleDC(hdc);
+    HBITMAP bitmap = memory ? CreateCompatibleBitmap(hdc, client.right, client.bottom) : nullptr;
+    HGDIOBJ previous_bitmap = bitmap ? SelectObject(memory, bitmap) : nullptr;
+    HDC dc = bitmap ? memory : hdc;
+    ModernRenderScope modern(renderer_, dc, client);
+    const auto layout = calculate_settings_window_layout(client.right, client.bottom, dpi_);
     const auto spec = settings_visual_spec(dpi_);
-    fill_rect(paint_dc, client, palette_.window_background);
-    fill_rect(paint_dc, to_win_rect(layout.sidebar), palette_.sidebar_background);
-
     const auto s = [this](int value) { return scale_settings_value(value, dpi_); };
-    if (app_icon_big_) {
-        DrawIconEx(paint_dc, s(20), s(25), app_icon_big_, s(34), s(34), 0, nullptr, DI_NORMAL);
-    }
-    draw_text_in_rect(paint_dc, L"\u672C\u5730\u62FC\u97F3",
-                       RECT{s(65), s(23), layout.sidebar.width - s(16), s(49)},
-                       palette_.text, section_font_, DT_SINGLELINE | DT_VCENTER);
-    draw_text_in_rect(paint_dc, L"\u8F7B\u5DE7 \u00B7 \u667A\u80FD \u00B7 \u672C\u5730",
-                       RECT{s(65), s(48), layout.sidebar.width - s(10), s(70)},
-                       palette_.muted_text, body_font_, DT_SINGLELINE | DT_VCENTER);
-
-    const int sidebar_help_top = rect_bottom(layout.nav_items.back()) + s(36);
-    draw_text_in_rect(paint_dc, L"\u5E38\u7528\u5FEB\u6377\u952E",
-                       RECT{s(24), sidebar_help_top, layout.sidebar.width - s(18), sidebar_help_top + s(24)},
-                       palette_.weak_text, body_font_, DT_SINGLELINE | DT_VCENTER);
-    draw_text_in_rect(paint_dc, L"Ctrl + Space   \u4E2D\u82F1\u5207\u6362\nSpace             \u786E\u8BA4\u9009\u8BCD\n1\u20139                  \u9009\u62E9\u5019\u9009",
-                       RECT{s(24), sidebar_help_top + s(34), layout.sidebar.width - s(12), sidebar_help_top + s(118)},
-                       palette_.muted_text, body_font_, DT_LEFT | DT_WORDBREAK);
-
-    const RECT offline_badge{s(16), client_height - s(93), layout.sidebar.width - s(16), client_height - s(45)};
-    draw_round_rect(paint_dc, offline_badge, s(10), palette_.card_background, palette_.card_border);
-    draw_round_rect(paint_dc,
-                     RECT{offline_badge.left + s(12), offline_badge.top + s(20), offline_badge.left + s(20), offline_badge.top + s(28)},
-                     s(4), RGB(35, 153, 108), RGB(35, 153, 108));
-    draw_text_in_rect(paint_dc, L"\u8F93\u5165\u53EA\u7559\u5728\u672C\u673A",
-                       RECT{offline_badge.left + s(29), offline_badge.top, offline_badge.right - s(8), offline_badge.bottom},
-                       palette_.muted_text, body_font_, DT_SINGLELINE | DT_VCENTER);
-    draw_text_in_rect(paint_dc, L"LocalPinyinIME  " LOCALPINYINIME_VERSION_STRING,
-                       RECT{s(24), client_height - s(35), layout.sidebar.width - s(10), client_height - s(12)},
-                       palette_.weak_text, body_font_, DT_SINGLELINE | DT_VCENTER);
-
-    RECT divider{layout.sidebar.x + layout.sidebar.width - 1, 0, layout.sidebar.x + layout.sidebar.width, layout.sidebar.height};
-    fill_rect(paint_dc, divider, palette_.card_border);
-
-    const auto draw_card = [&](const SettingsRect& settings_rect) {
-        draw_round_rect(paint_dc, to_win_rect(settings_rect), spec.card_corner_radius, palette_.card_background, palette_.card_border);
+    const auto label = [&](const wchar_t* value, const RECT& bounds, COLORREF color, HFONT font,
+                           UINT flags = DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS) {
+        draw_text_in_rect(dc, value, bounds, color, font, flags);
     };
-
-    const auto draw_edit_frame = [&](const SettingsRect& settings_rect, HWND edit) {
-        const bool focused = GetFocus() == edit;
-        draw_round_rect(paint_dc,
-                        to_win_rect(settings_rect),
-                        spec.control_corner_radius,
-                        palette_.input_background,
-                        focused ? palette_.accent : palette_.input_border);
+    const auto card = [&](const SettingsRect& r) {
+        draw_round_rect(dc, to_win_rect(r), spec.card_corner_radius, palette_.card_background, palette_.card_border);
     };
-
-    if (active_page_ == SettingsPage::Appearance) {
-        draw_card(layout.appearance_preview_card);
-        draw_card(layout.appearance_theme_card);
-    } else if (active_page_ == SettingsPage::UserLexicon) {
-        draw_edit_frame(layout.search_box, lexicon_search_);
-        draw_card(layout.user_table);
-        draw_card(layout.user_editor_card);
-    } else if (active_page_ == SettingsPage::About) {
-        draw_card(layout.about_card);
-        draw_card(layout.about_dictionary_card);
-        draw_card(layout.about_offline_card);
-    } else if (active_page_ == SettingsPage::Candidate) {
-        draw_card(layout.candidate_options_card);
-        draw_card(layout.shortcut_test_card);
-        draw_edit_frame(layout.shortcut_test_input_box, shortcut_test_input_);
-    } else {
-        draw_card(layout.primary_card);
-        draw_card(SettingsRect{layout.secondary_card.x, layout.secondary_card.y,
-                                layout.secondary_card.width, s(260)});
-    }
-
-    if (active_page_ == SettingsPage::Appearance) {
-        RECT preview_title{layout.appearance_preview_card.x + scale_settings_value(24, dpi_),
-                           layout.appearance_preview_card.y + scale_settings_value(18, dpi_),
-                           layout.appearance_preview_card.x + layout.appearance_preview_card.width - scale_settings_value(24, dpi_),
-                           layout.appearance_preview_card.y + scale_settings_value(46, dpi_)};
-        draw_text_in_rect(paint_dc,
-                          L"\u5019\u9009\u7A97\u9884\u89C8",
-                          preview_title,
-                          palette_.text,
-                          section_font_,
-                          DT_SINGLELINE | DT_VCENTER | DT_LEFT | DT_END_ELLIPSIS);
-        draw_candidate_preview(paint_dc, layout, options_, windows_apps_use_dark_theme(), dpi_);
-        draw_text_in_rect(paint_dc, L"\u771F\u5B9E\u5019\u9009\u7A97\u6548\u679C \u00B7 \u62D6\u52A8\u4E0B\u65B9\u6ED1\u5757\u8C03\u6574\u5B57\u53F7",
-                           RECT{layout.appearance_preview_card.x + s(24), rect_bottom(layout.appearance_preview_card) - s(32),
-                                rect_right(layout.appearance_preview_card) - s(24), rect_bottom(layout.appearance_preview_card) - s(10)},
-                           palette_.weak_text, body_font_, DT_SINGLELINE | DT_VCENTER);
-        draw_text_in_rect(paint_dc, L"\u4FEE\u6539\u4F1A\u81EA\u52A8\u4FDD\u5B58",
-                           RECT{layout.appearance_theme_card.x + s(24), rect_bottom(layout.appearance_theme_card) - s(34),
-                                rect_right(layout.appearance_theme_card) - s(24), rect_bottom(layout.appearance_theme_card) - s(12)},
-                           palette_.weak_text, body_font_, DT_SINGLELINE | DT_VCENTER);
-    }
-
-    if (active_page_ == SettingsPage::Learning) {
-        draw_text_in_rect(paint_dc, L"\u91CD\u7F6E\u4E2A\u4EBA\u6392\u5E8F",
-                           RECT{layout.primary_card.x + s(24), layout.primary_card.y + s(16),
-                                rect_right(layout.primary_card) - s(24), layout.primary_card.y + s(40)},
-                           palette_.text, section_font_, DT_SINGLELINE | DT_VCENTER);
-        const int x = layout.secondary_card.x + s(24);
-        int y = layout.secondary_card.y + s(22);
-        const wchar_t* titles[] = {L"\u8BB0\u4F4F\u5E38\u7528\u8BCD", L"\u6574\u53E5\u8F93\u5165", L"\u4F60\u7684\u4E13\u5C5E\u8BCD\u5E93"};
-        const wchar_t* descriptions[] = {
-            L"\u6839\u636E\u9009\u8BCD\u4E60\u60EF\u8C03\u6574\u6392\u5E8F\uFF0C\u5E38\u7528\u7684\u8868\u8FBE\u66F4\u5BB9\u6613\u627E\u5230\u3002",
-            L"\u8FDE\u7EED\u8F93\u5165\u62FC\u97F3\uFF0C\u7EC4\u5408\u8BCD\u8BED\u751F\u6210\u6574\u53E5\u5019\u9009\u3002",
-            L"\u5728\u300C\u6211\u7684\u8BCD\u5E93\u300D\u4E2D\u6DFB\u52A0\u4EBA\u540D\u4E0E\u4E13\u4E1A\u672F\u8BED\uFF0C\u4FDD\u5B58\u540E\u5373\u53EF\u4F7F\u7528\u3002"
-        };
-        for (size_t i = 0; i < std::size(titles); ++i) {
-            draw_navigation_icon(paint_dc, i == 2 ? kIdNavUserLexicon : kIdNavLearning,
-                                   RECT{x, y, x + s(22), y + s(22)}, palette_.accent, dpi_);
-            draw_text_in_rect(paint_dc, titles[i], RECT{x + s(36), y, rect_right(layout.secondary_card) - s(24), y + s(24)},
-                               palette_.text, section_font_, DT_SINGLELINE | DT_VCENTER);
-            draw_text_in_rect(paint_dc, descriptions[i], RECT{x + s(36), y + s(29), rect_right(layout.secondary_card) - s(24), y + s(55)},
-                               palette_.muted_text, body_font_, DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS);
-            y += s(76);
+    const auto input = [&](const SettingsRect& r, HWND edit) {
+        draw_round_rect(dc, to_win_rect(r), s(6), palette_.input_background,
+                          GetFocus() == edit ? palette_.accent : palette_.input_border);
+        if (GetFocus() == edit && active_modern_renderer()) {
+            active_modern_renderer()->line(static_cast<float>(r.x + s(6)), static_cast<float>(r.y + r.height - 1),
+                static_cast<float>(r.x + r.width - s(6)), static_cast<float>(r.y + r.height - 1), palette_.accent, static_cast<float>(s(2)));
         }
+    };
+    fill_rect(dc, client, palette_.window_background);
+    fill_rect(dc, to_win_rect(layout.sidebar), palette_.sidebar_background);
+    draw_round_rect(dc, RECT{s(20), s(28), s(52), s(60)}, s(9), palette_.accent, palette_.accent);
+    label(L"P", RECT{s(20), s(28), s(52), s(60)}, palette_.dark ? RGB(17,35,56) : RGB(255,255,255),
+          section_font_, DT_SINGLELINE | DT_VCENTER | DT_CENTER);
+    label(L"本地拼音", RECT{s(64), s(24), layout.sidebar.width - s(12), s(49)}, palette_.text, section_font_);
+    label(L"离线智能输入", RECT{s(64), s(47), layout.sidebar.width - s(8), s(72)}, palette_.muted_text, body_font_);
+    if (auto* canvas = active_modern_renderer()) {
+        canvas->text(L"设置", RECT{s(22), s(94), layout.sidebar.width - s(12), s(116)}, palette_.weak_text, static_cast<float>(s(12)));
     }
-    if (active_page_ == SettingsPage::About) {
+    const RECT status{s(16), client.bottom - s(156), layout.sidebar.width - s(16), client.bottom - s(60)};
+    draw_round_rect(dc, status, s(10), palette_.accent_soft, palette_.accent_soft);
+    label(L"完全本地", RECT{status.left + s(14), status.top + s(11), status.right - s(10), status.top + s(33)}, palette_.text, section_font_);
+    label(L"输入和学习记录\n只保存在你的电脑", RECT{status.left + s(14), status.top + s(37), status.right - s(10), status.bottom - s(8)},
+          palette_.muted_text, body_font_, DT_WORDBREAK);
+    if (auto* canvas = active_modern_renderer()) {
+        canvas->text(L"LocalPinyinIME  " LOCALPINYINIME_VERSION_STRING,
+                     RECT{s(22), client.bottom - s(42), layout.sidebar.width - s(10), client.bottom - s(18)},
+                     palette_.weak_text, static_cast<float>(s(11)));
+    }
+
+    if (active_page_ == SettingsPage::Appearance) {
+        card(layout.appearance_theme_card);
+        card(layout.appearance_preview_card);
+        const auto& theme = layout.appearance_theme_card;
+        const auto& preview = layout.appearance_preview_card;
+        if (auto* canvas = active_modern_renderer()) {
+            canvas->line(static_cast<float>(theme.x + s(24)), static_cast<float>(theme.y + s(198)),
+                         static_cast<float>(rect_right(theme) - s(24)), static_cast<float>(theme.y + s(198)), palette_.card_border, 1);
+        }
+        label(L"候选窗预览", RECT{preview.x + s(24), preview.y + s(23), rect_right(preview) - s(24), preview.y + s(51)}, palette_.text, section_font_);
+        label(L"与真实候选窗使用相同的显示设置", RECT{preview.x + s(24), preview.y + s(55), rect_right(preview) - s(24), preview.y + s(83)}, palette_.muted_text, body_font_);
+        label(L"试填拼音", RECT{preview.x + s(24), preview.y + s(101), rect_right(preview) - s(24), preview.y + s(123)}, palette_.weak_text, body_font_);
+        const RECT sample{preview.x + s(20), preview.y + s(133), rect_right(preview) - s(20), preview.y + s(178)};
+        draw_round_rect(dc, sample, s(7), palette_.input_background,
+                        GetFocus() == candidate_preview_input_ ? palette_.accent : palette_.input_border);
+        candidate_preview_layout_ = draw_candidate_preview(dc, layout, options_, windows_apps_use_dark_theme(), dpi_,
+                                                          candidate_preview_pinyin_, candidate_preview_texts_);
+        if (candidate_preview_texts_.empty()) {
+            label(candidate_preview_ready_ ? L"输入拼音查看真实候选" : L"词库未能加载，请重新打开设置",
+                  to_win_rect(layout.appearance_preview_window), palette_.muted_text, body_font_,
+                  DT_SINGLELINE | DT_VCENTER | DT_CENTER);
+        }
+        label(L"空格确认首选词 · 数字键选词", RECT{preview.x + s(24), preview.y + s(369), rect_right(preview) - s(24), preview.y + s(393)}, palette_.muted_text, body_font_);
+        label(L"点击下方按钮，试试实际中文输入", RECT{preview.x + s(24), preview.y + s(397), rect_right(preview) - s(24), preview.y + s(421)}, palette_.weak_text, body_font_);
+        const RECT note{theme.x + s(24), theme.y + s(407), rect_right(theme) - s(24), theme.y + s(457)};
+        label(L"主题会同时应用到设置和候选窗。\n字号调整即时生效。", note, palette_.muted_text, body_font_, DT_WORDBREAK);
+        label(L"设置会自动保存", RECT{theme.x + s(24), theme.y + s(465), rect_right(theme) - s(24), theme.y + s(487)}, palette_.weak_text, body_font_);
+    } else if (active_page_ == SettingsPage::Candidate) {
+        card(layout.candidate_options_card);
+        card(layout.shortcut_test_card);
+        input(layout.shortcut_test_input_box, shortcut_test_input_);
+        draw_shortcut_test_keys(dc, layout);
+        if (auto* canvas = active_modern_renderer()) {
+            canvas->line(static_cast<float>(layout.candidate_options_card.x + s(24)), static_cast<float>(layout.candidate_options_card.y + s(92)),
+                         static_cast<float>(rect_right(layout.candidate_options_card) - s(24)), static_cast<float>(layout.candidate_options_card.y + s(92)), palette_.card_border, 1);
+        }
+    } else if (active_page_ == SettingsPage::UserLexicon) {
+        input(layout.search_box, lexicon_search_);
+        card(layout.user_table);
+        card(layout.user_editor_card);
+        input(user_lexicon_input_frame_rect(layout, UserLexiconInputField::Pinyin, dpi_), lexicon_pinyin_);
+        input(user_lexicon_input_frame_rect(layout, UserLexiconInputField::Word, dpi_), lexicon_word_);
+        input(user_lexicon_input_frame_rect(layout, UserLexiconInputField::Frequency, dpi_), lexicon_frequency_);
+        if (filtered_user_lexicon_indexes_.empty() && active_modern_renderer()) {
+            const int cx = layout.user_table.x + layout.user_table.width / 2;
+            const int cy = layout.user_table.y + s(46);
+            draw_round_rect(dc, RECT{cx - s(24), cy - s(24), cx + s(24), cy + s(24)}, s(14), palette_.input_background, palette_.input_background);
+            active_modern_renderer()->icon(2, RECT{cx - s(12), cy - s(12), cx + s(12), cy + s(12)}, palette_.weak_text, s(1) * 1.5f);
+        }
+    } else if (active_page_ == SettingsPage::Learning) {
+        card(layout.primary_card);
+        label(L"重置个人排序", RECT{layout.primary_card.x + s(24), layout.primary_card.y + s(25), rect_right(layout.primary_card) - s(220), layout.primary_card.y + s(53)}, palette_.text, section_font_);
+        const SettingsRect features{layout.secondary_card.x, layout.secondary_card.y, layout.secondary_card.width, s(258)};
+        card(features);
+        const wchar_t* titles[] = {L"候选学习", L"整句输入", L"专属词库"};
+        const wchar_t* descriptions[] = {L"根据选词习惯调整排序，让常用的表达更容易找到。", L"连续输入拼音，组合词语生成整句候选。", L"添加人名、专业术语和常用语，保存后即可使用。"};
+        const int column = (features.width - s(48) - s(32)) / 3;
+        for (int i = 0; i < 3; ++i) {
+            const int x = features.x + s(24) + i * (column + s(16));
+            const int y = features.y + s(24);
+            draw_round_rect(dc, RECT{x, y, x + s(42), y + s(42)}, s(12), palette_.accent_soft, palette_.accent_soft);
+            draw_navigation_icon(dc, i == 2 ? kIdNavUserLexicon : kIdNavLearning, RECT{x + s(10), y + s(10), x + s(32), y + s(32)}, palette_.accent, dpi_);
+            label(titles[i], RECT{x, y + s(61), x + column, y + s(87)}, palette_.text, section_font_);
+            label(descriptions[i], RECT{x, y + s(101), x + column, y + s(183)}, palette_.muted_text, body_font_, DT_WORDBREAK);
+        }
+    } else if (active_page_ == SettingsPage::About) {
+        card(layout.about_card);
+        card(layout.about_dictionary_card);
+        card(layout.about_offline_card);
         const int x = layout.about_offline_card.x + s(24);
-        const int y = layout.about_offline_card.y + s(18);
-        draw_text_in_rect(paint_dc, L"\u5F00\u59CB\u8F93\u5165", RECT{x, y, rect_right(layout.about_offline_card) - s(24), y + s(26)},
-                           palette_.text, section_font_, DT_SINGLELINE | DT_VCENTER);
-        draw_text_in_rect(paint_dc,
-                           L"Win + \u7A7A\u683C\u9009\u62E9\u672C\u5730\u62FC\u97F3\uFF0CCtrl + Space \u5207\u6362\u4E2D\u82F1\u6587\u3002\n\u8F93\u5165\u62FC\u97F3\uFF0C\u7A7A\u683C\u786E\u8BA4\uFF1B\u6570\u5B57 1\u20139 \u9009\u8BCD\uFF0CEsc \u53D6\u6D88\u5F53\u524D\u8F93\u5165\u3002",
-                           RECT{x, y + s(38), rect_right(layout.about_offline_card) - s(24), rect_bottom(layout.about_offline_card) - s(18)},
-                           palette_.muted_text, body_font_, DT_LEFT | DT_WORDBREAK);
+        const int y = layout.about_offline_card.y + s(15);
+        label(L"开始输入", RECT{x, y, rect_right(layout.about_offline_card) - s(24), y + s(25)}, palette_.text, section_font_);
+        label(L"Win + 空格选择本地拼音，Ctrl + Space 切换中英文。\n输入拼音，空格确认；数字 1–9 选词，Esc 取消当前输入。",
+              RECT{x, y + s(35), rect_right(layout.about_offline_card) - s(24), rect_bottom(layout.about_offline_card) - s(10)},
+              palette_.muted_text, body_font_, DT_WORDBREAK);
     }
-
-    if (active_page_ == SettingsPage::UserLexicon) {
-        draw_edit_frame(user_lexicon_input_frame_rect(layout, UserLexiconInputField::Pinyin, dpi_),
-                        lexicon_pinyin_);
-        draw_edit_frame(user_lexicon_input_frame_rect(layout, UserLexiconInputField::Word, dpi_),
-                        lexicon_word_);
-        draw_edit_frame(user_lexicon_input_frame_rect(layout, UserLexiconInputField::Frequency, dpi_),
-                        lexicon_frequency_);
-    }
-    if (active_page_ == SettingsPage::Candidate) {
-        draw_shortcut_test_keys(paint_dc, layout);
-    }
-
-    if (memory_dc && bitmap) {
-        BitBlt(hdc, 0, 0, client_width, client_height, memory_dc, 0, 0, SRCCOPY);
-        SelectObject(memory_dc, old_bitmap);
+    modern.finish();
+    if (bitmap) {
+        BitBlt(hdc, 0, 0, client.right, client.bottom, memory, 0, 0, SRCCOPY);
+        SelectObject(memory, previous_bitmap);
         DeleteObject(bitmap);
-        DeleteDC(memory_dc);
     }
+    if (memory) DeleteDC(memory);
 }
 
 void SettingsWindow::draw_button(const DRAWITEMSTRUCT& item) {
@@ -2721,22 +2939,11 @@ void SettingsWindow::draw_button(const DRAWITEMSTRUCT& item) {
     }
 
     const int id = static_cast<int>(item.CtlID);
+    ModernRenderScope modern(renderer_, item.hDC, item.rcItem);
     const bool disabled = (item.itemState & ODS_DISABLED) != 0 || !IsWindowEnabled(item.hwndItem);
     const bool pressed = (item.itemState & ODS_SELECTED) != 0;
-    const bool hot = (item.itemState & ODS_HOTLIGHT) != 0;
-    bool checked = id == nav_id_for_page(active_page_);
-    if (id == kIdThemeSystem) {
-        checked = options_.theme_mode == CandidateThemeMode::System;
-    } else if (id == kIdThemeLight) {
-        checked = options_.theme_mode == CandidateThemeMode::Light;
-    } else if (id == kIdThemeDark) {
-        checked = options_.theme_mode == CandidateThemeMode::Dark;
-    } else if (id == kIdShowKeyHints) {
-        checked = options_.show_key_hints;
-    } else if (id == kIdShiftToggle) {
-        checked = input_mode_options_.shift_toggle_enabled;
-
-    }
+    const bool hot = (item.itemState & ODS_HOTLIGHT) != 0 || GetPropW(item.hwndItem, L"LocalPinyin.Hot") != nullptr;
+    const bool checked = SendMessageW(item.hwndItem, BM_GETCHECK, 0, 0) == BST_CHECKED;
     const bool focused = (item.itemState & ODS_FOCUS) != 0;
     const std::wstring text = control_text(item.hwndItem);
     RECT rect = item.rcItem;
@@ -2780,6 +2987,36 @@ void SettingsWindow::draw_button(const DRAWITEMSTRUCT& item) {
                         switch_style.thumb_border);
         return;
     }
+    if (id == kIdThemeSystem || id == kIdThemeLight || id == kIdThemeDark) {
+        draw_round_rect(item.hDC, rect, scale_settings_value(9, dpi_),
+                          hot ? palette_.input_background : palette_.card_background,
+                          checked ? palette_.accent : palette_.card_border);
+        const int inset = scale_settings_value(12, dpi_);
+        RECT miniature{rect.left + inset, rect.top + inset, rect.right - inset,
+                         rect.top + scale_settings_value(56, dpi_)};
+        const bool dark_miniature = id == kIdThemeDark || (id == kIdThemeSystem && windows_apps_use_dark_theme());
+        const COLORREF miniature_bg = dark_miniature ? RGB(39, 41, 47) : RGB(245, 247, 250);
+        const COLORREF miniature_line = dark_miniature ? RGB(65, 69, 77) : RGB(222, 226, 233);
+        draw_round_rect(item.hDC, miniature, scale_settings_value(5, dpi_), miniature_bg, miniature_line);
+        if (auto* canvas = active_modern_renderer()) {
+            canvas->line(static_cast<float>(miniature.left + scale_settings_value(16, dpi_)),
+                         static_cast<float>(miniature.top + scale_settings_value(8, dpi_)),
+                         static_cast<float>(miniature.left + scale_settings_value(16, dpi_)),
+                         static_cast<float>(miniature.bottom - scale_settings_value(8, dpi_)), miniature_line, 1);
+            const int x = miniature.left + scale_settings_value(24, dpi_);
+            const COLORREF miniature_accent = dark_miniature ? RGB(96, 175, 255) : RGB(0, 103, 192);
+            draw_round_rect(item.hDC,
+                RECT{x, miniature.top + scale_settings_value(10, dpi_), miniature.right - scale_settings_value(9, dpi_), miniature.top + scale_settings_value(17, dpi_)},
+                scale_settings_value(3, dpi_), miniature_accent, miniature_accent);
+            canvas->line(static_cast<float>(x), static_cast<float>(miniature.top + scale_settings_value(25, dpi_)),
+                         static_cast<float>(miniature.right - scale_settings_value(10, dpi_)),
+                         static_cast<float>(miniature.top + scale_settings_value(25, dpi_)), miniature_line, 2);
+        }
+        RECT caption{rect.left + scale_settings_value(4, dpi_), rect.top + scale_settings_value(68, dpi_),
+                       rect.right - scale_settings_value(4, dpi_), rect.bottom - scale_settings_value(8, dpi_)};
+        draw_text_in_rect(item.hDC, text, caption, palette_.text, body_font_, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+        return;
+    }
     draw_round_rect(item.hDC, rect, radius, style.fill, style.border);
 
     RECT text_rect = rect;
@@ -2818,18 +3055,17 @@ void SettingsWindow::draw_button(const DRAWITEMSTRUCT& item) {
 }
 
 void SettingsWindow::create_controls() {
-    make_static(hwnd_, L"", kIdSidebarDivider, body_font_);
 
     nav_buttons_[page_index(SettingsPage::Appearance)] =
         make_button(hwnd_, L"\u5916\u89C2", kIdNavAppearance, BS_AUTORADIOBUTTON | BS_PUSHLIKE | BS_LEFT, body_font_);
     nav_buttons_[page_index(SettingsPage::Candidate)] =
-        make_button(hwnd_, L"\u8F93\u5165\u4E0E\u5FEB\u6377\u952E", kIdNavCandidate, BS_AUTORADIOBUTTON | BS_PUSHLIKE | BS_LEFT, body_font_);
+        make_button(hwnd_, L"输入", kIdNavCandidate, BS_AUTORADIOBUTTON | BS_PUSHLIKE | BS_LEFT, body_font_);
     nav_buttons_[page_index(SettingsPage::UserLexicon)] =
-        make_button(hwnd_, L"\u6211\u7684\u8BCD\u5E93", kIdNavUserLexicon, BS_AUTORADIOBUTTON | BS_PUSHLIKE | BS_LEFT, body_font_);
+        make_button(hwnd_, L"词库", kIdNavUserLexicon, BS_AUTORADIOBUTTON | BS_PUSHLIKE | BS_LEFT, body_font_);
     nav_buttons_[page_index(SettingsPage::Learning)] =
-        make_button(hwnd_, L"\u4E2A\u6027\u5316\u5B66\u4E60", kIdNavLearning, BS_AUTORADIOBUTTON | BS_PUSHLIKE | BS_LEFT, body_font_);
+        make_button(hwnd_, L"学习", kIdNavLearning, BS_AUTORADIOBUTTON | BS_PUSHLIKE | BS_LEFT, body_font_);
     nav_buttons_[page_index(SettingsPage::About)] =
-        make_button(hwnd_, L"\u5173\u4E8E\u4E0E\u5E2E\u52A9", kIdNavAbout, BS_AUTORADIOBUTTON | BS_PUSHLIKE | BS_LEFT, body_font_);
+        make_button(hwnd_, L"关于", kIdNavAbout, BS_AUTORADIOBUTTON | BS_PUSHLIKE | BS_LEFT, body_font_);
 
     auto track = [&](SettingsPage page, HWND control) {
         if (control) {
@@ -2838,18 +3074,18 @@ void SettingsWindow::create_controls() {
         return control;
     };
 
-    track(SettingsPage::Appearance, make_static(hwnd_, L"\u8BA9\u8F93\u5165\u66F4\u5408\u5FC3\u610F", kIdAppearanceTitle, title_font_));
+    track(SettingsPage::Appearance, make_static(hwnd_, L"外观", kIdAppearanceTitle, title_font_));
     track(SettingsPage::Appearance,
           make_static(hwnd_,
-                      L"\u9009\u62E9\u559C\u6B22\u7684\u5916\u89C2\u548C\u5B57\u53F7\uFF0C\u8BBE\u7F6E\u5373\u65F6\u751F\u6548\u3002",
+                      L"选一个舒服的主题，调整候选字号。",
                       kIdAppearanceDescription,
                       body_font_));
     track(SettingsPage::Appearance, make_group(hwnd_, L"\u5019\u9009\u7A97\u9884\u89C8", kIdAppearanceCard, section_font_));
-    track(SettingsPage::Appearance, make_static(hwnd_, L"\u5916\u89C2\u6A21\u5F0F", kIdAppearanceThemeLabel, section_font_));
+    track(SettingsPage::Appearance, make_static(hwnd_, L"主题", kIdAppearanceThemeLabel, section_font_));
     track(SettingsPage::Appearance, make_button(hwnd_, L"\u8DDF\u968F\u7CFB\u7EDF", kIdThemeSystem, BS_AUTORADIOBUTTON, body_font_));
     track(SettingsPage::Appearance, make_button(hwnd_, L"\u6D45\u8272", kIdThemeLight, BS_AUTORADIOBUTTON, body_font_));
     track(SettingsPage::Appearance, make_button(hwnd_, L"\u6DF1\u8272", kIdThemeDark, BS_AUTORADIOBUTTON, body_font_));
-    track(SettingsPage::Appearance, make_static(hwnd_, L"\u5019\u9009\u6587\u5B57\u5927\u5C0F", kIdCandidateTextSizeLabel, section_font_));
+    track(SettingsPage::Appearance, make_static(hwnd_, L"候选字号", kIdCandidateTextSizeLabel, section_font_));
     candidate_size_slider_ = track(SettingsPage::Appearance, make_trackbar(hwnd_, kIdCandidateSizeSlider, body_font_));
     SetWindowSubclass(candidate_size_slider_,
                       SettingsWindow::candidate_size_slider_subclass_proc,
@@ -2859,11 +3095,17 @@ void SettingsWindow::create_controls() {
     track(SettingsPage::Appearance, make_static(hwnd_, L"\u5C0F", kIdCandidateSizeSmallLabel, body_font_));
     track(SettingsPage::Appearance, make_static(hwnd_, L"\u6807\u51C6", kIdCandidateSizeStandardLabel, body_font_));
     track(SettingsPage::Appearance, make_static(hwnd_, L"\u5927", kIdCandidateSizeLargeLabel, body_font_));
+    candidate_preview_input_ = track(SettingsPage::Appearance,
+        make_edit(hwnd_, kIdCandidatePreviewInput, body_font_));
+    SendMessageW(candidate_preview_input_, EM_SETLIMITTEXT, 256, 0);
+    set_cue_banner(candidate_preview_input_, L"输入拼音，如 suibian");
+    SetWindowTextW(candidate_preview_input_, L"nihao");
+    track(SettingsPage::Appearance, make_button(hwnd_, L"打开输入体验", kIdOpenInputTest, BS_PUSHBUTTON, body_font_));
 
-    track(SettingsPage::Candidate, make_static(hwnd_, L"\u8F93\u5165\u4E0E\u5FEB\u6377\u952E", kIdCandidateTitle, title_font_));
+    track(SettingsPage::Candidate, make_static(hwnd_, L"输入", kIdCandidateTitle, title_font_));
     track(SettingsPage::Candidate,
           make_static(hwnd_,
-                      L"\u8C03\u6574\u9009\u8BCD\u63D0\u793A\uFF0C\u5728\u8FD9\u91CC\u8BD5\u8BD5\u4E2D\u6587\u8F93\u5165\u3002",
+                      L"设置切换方式，直接体验中文输入。",
                       kIdCandidateDescription,
                       body_font_));
     track(SettingsPage::Candidate, make_group(hwnd_, L"\u6309\u952E\u63D0\u793A / \u5207\u6362\u65B9\u5F0F", kIdCandidateCard, section_font_));
@@ -2873,14 +3115,14 @@ void SettingsWindow::create_controls() {
                       L"\u5728\u5019\u9009\u7A97\u5E95\u90E8\u663E\u793A\u9009\u8BCD\u4E0E\u786E\u8BA4\u7684\u5FEB\u6377\u952E\u3002",
                       kIdCandidateHintDescription,
                       body_font_));
-    track(SettingsPage::Candidate, make_button(hwnd_, L"", kIdShowKeyHints, BS_AUTOCHECKBOX, body_font_));
+    track(SettingsPage::Candidate, make_button(hwnd_, L"按键提示", kIdShowKeyHints, BS_AUTOCHECKBOX, body_font_));
     track(SettingsPage::Candidate, make_static(hwnd_, L"Shift \u5207\u6362\u4E2D\u82F1\u6587", kIdShiftToggleLabel, section_font_));
     track(SettingsPage::Candidate,
           make_static(hwnd_,
                       L"\u5F00\u542F\u540E\uFF0C\u8F7B\u6309\u4E00\u6B21 Shift \u5373\u53EF\u5207\u6362\u3002",
                       kIdShiftToggleDescription,
                       body_font_));
-    track(SettingsPage::Candidate, make_button(hwnd_, L"", kIdShiftToggle, BS_AUTOCHECKBOX, body_font_));
+    track(SettingsPage::Candidate, make_button(hwnd_, L"Shift 切换中英文", kIdShiftToggle, BS_AUTOCHECKBOX, body_font_));
     track(SettingsPage::Candidate,
           make_static(hwnd_,
                       L"\u968F\u65F6\u53EF\u4EE5\u4F7F\u7528 Ctrl + Space \u5207\u6362\u3002",
@@ -2904,19 +3146,23 @@ void SettingsWindow::create_controls() {
                       kIdShortcutBoundaryNote,
                       body_font_));
 
-    track(SettingsPage::UserLexicon, make_static(hwnd_, L"\u6211\u7684\u8BCD\u5E93", kIdUserLexiconTitle, title_font_));
+    track(SettingsPage::UserLexicon, make_static(hwnd_, L"词库", kIdUserLexiconTitle, title_font_));
+    const std::wstring lexicon_description = L"内置 " + std::to_wstring(dictionary_catalog_.stats().total_unique_entries) +
+                                             L" 条词语；下方管理你的个人词条。";
     track(SettingsPage::UserLexicon,
           make_static(hwnd_,
-                      L"\u6DFB\u52A0\u540D\u5B57\u3001\u672F\u8BED\u548C\u5E38\u7528\u8BED\uFF0C\u8BA9\u8F93\u5165\u66F4\u61C2\u4F60\u3002",
+                      lexicon_description.c_str(),
                       kIdUserLexiconDescription,
                       body_font_));
     lexicon_search_ = track(SettingsPage::UserLexicon, make_edit(hwnd_, kIdLexiconSearch, body_font_));
-    set_cue_banner(lexicon_search_, L"\u641C\u7D22\u62FC\u97F3\u6216\u8BCD\u8BED");
+    set_cue_banner(lexicon_search_, L"搜索个人词条（拼音或中文）");
     track(SettingsPage::UserLexicon, make_button(hwnd_, L"\u5237\u65B0", kIdLexiconRefresh, BS_PUSHBUTTON, body_font_));
+    track(SettingsPage::UserLexicon, make_button(hwnd_, L"浏览内置词库", kIdBuiltinDictionary, BS_PUSHBUTTON, body_font_));
+    track(SettingsPage::UserLexicon, make_static(hwnd_, L"个人词库", kIdPersonalDictionaryTitle, section_font_));
     lexicon_list_ = track(SettingsPage::UserLexicon, make_list_view(hwnd_, kIdLexiconList, body_font_));
     lexicon_empty_state_ = track(SettingsPage::UserLexicon,
                                  make_static(hwnd_,
-                                             L"\u8FD8\u6CA1\u6709\u7528\u6237\u8BCD\u6761\u3002\u53EF\u4EE5\u5728\u4E0B\u65B9\u6DFB\u52A0\u7B2C\u4E00\u6761\u3002",
+                                             L"还没有个人词条，可以在下方添加。",
                                              kIdLexiconEmptyState,
                                              body_font_));
     track(SettingsPage::UserLexicon, make_group(hwnd_, L"\u65B0\u5EFA\u6216\u7F16\u8F91\u8BCD\u6761", kIdUserLexiconEditorCard, section_font_));
@@ -2954,10 +3200,10 @@ void SettingsWindow::create_controls() {
     ListView_InsertColumn(lexicon_list_, 2, &column);
     install_list_header_theme_subclass();
 
-    track(SettingsPage::Learning, make_static(hwnd_, L"\u4E2A\u6027\u5316\u5B66\u4E60", kIdLearningTitle, title_font_));
+    track(SettingsPage::Learning, make_static(hwnd_, L"学习", kIdLearningTitle, title_font_));
     track(SettingsPage::Learning,
           make_static(hwnd_,
-                      L"\u5E38\u7528\u8BCD\u4F1A\u9010\u6E10\u9760\u524D\uFF0C\u5B66\u4E60\u8BB0\u5F55\u4FDD\u5B58\u5728\u4F60\u7684\u7535\u8111\u4E0A\u3002",
+                      L"了解本地输入法怎样记住你的用词习惯。",
                       kIdLearningDescription,
                       body_font_));
     track(SettingsPage::Learning, make_group(hwnd_, L"\u5371\u9669\u64CD\u4F5C", kIdLearningCard, section_font_));
@@ -2966,12 +3212,12 @@ void SettingsWindow::create_controls() {
                       L"\u91CD\u65B0\u5F00\u59CB\u5B66\u4E60\u4F60\u7684\u7528\u8BCD\u4E60\u60EF\u3002\u81EA\u5B9A\u4E49\u8BCD\u5E93\u4F1A\u4FDD\u7559\u3002",
                       kIdLearningCardText,
                       body_font_));
-    track(SettingsPage::Learning, make_button(hwnd_, L"\u6E05\u7A7A\u5B66\u4E60\u6570\u636E", kIdClearLearning, BS_PUSHBUTTON, body_font_));
+    track(SettingsPage::Learning, make_button(hwnd_, L"重置学习记录", kIdClearLearning, BS_PUSHBUTTON, body_font_));
 
-    track(SettingsPage::About, make_static(hwnd_, L"\u5173\u4E8E\u4E0E\u5E2E\u52A9", kIdAboutTitle, title_font_));
+    track(SettingsPage::About, make_static(hwnd_, L"关于", kIdAboutTitle, title_font_));
     track(SettingsPage::About,
           make_static(hwnd_,
-                      L"\u8F7B\u5DE7\u7684\u672C\u5730\u4E2D\u6587\u8F93\u5165\u6CD5\uFF0C\u5B89\u88C5\u540E\u5373\u53EF\u79BB\u7EBF\u4F7F\u7528\u3002",
+                      L"一个轻巧、完全本地的中文输入法。",
                       kIdAboutDescription,
                       body_font_));
     track(SettingsPage::About, make_group(hwnd_, L"\u4FE1\u606F", kIdAboutCard, section_font_));
@@ -2993,9 +3239,11 @@ void SettingsWindow::create_controls() {
     track(SettingsPage::About, make_button(hwnd_, L"\u590D\u5236\u8DEF\u5F84", kIdCopyDataFolder, BS_PUSHBUTTON, body_font_));
     track(SettingsPage::About, make_static(hwnd_, L"\u5185\u7F6E\u8BCD\u5E93", kIdAboutDictionaryTitle, section_font_));
     const std::wstring dictionary_count = std::to_wstring(dictionary_catalog_.stats().total_unique_entries) +
-                                           L" \u6761\u672C\u5730\u8BCD\u6761 \u00B7 \u968F\u5B89\u88C5\u5305\u63D0\u4F9B";
+                                           L" 条本地词条 · 常用基础 " +
+                                           std::to_wstring(dictionary_catalog_.stats().standard_entries) + L" 条";
     track(SettingsPage::About, make_static(hwnd_, dictionary_count.c_str(), kIdAboutDictionaryCount, body_font_));
     track(SettingsPage::About, make_button(hwnd_, L"\u9884\u89C8\u8BCD\u5E93", kIdAboutDictionaryPreview, BS_PUSHBUTTON, body_font_));
+    install_modern_controls();
     update_user_lexicon_action_controls();
 }
 
@@ -3044,19 +3292,22 @@ void SettingsWindow::layout_controls() {
 
     place_page_header(kIdAppearanceTitle, kIdAppearanceDescription);
     move_child(hwnd_, kIdAppearanceCard, layout.appearance_preview_card);
-    move_child(hwnd_, kIdAppearanceThemeLabel,
-               layout.appearance_theme_card.x + s24,
-               layout.appearance_theme_card.y + s28,
-               scale_settings_value(180, dpi_),
-               s24);
-    move_child(hwnd_, kIdThemeSystem, layout.appearance_theme_card.x + s24, layout.appearance_theme_card.y + scale_settings_value(64, dpi_), scale_settings_value(150, dpi_), s28);
-    move_child(hwnd_, kIdThemeLight, layout.appearance_theme_card.x + scale_settings_value(190, dpi_), layout.appearance_theme_card.y + scale_settings_value(64, dpi_), scale_settings_value(90, dpi_), s28);
-    move_child(hwnd_, kIdThemeDark, layout.appearance_theme_card.x + scale_settings_value(300, dpi_), layout.appearance_theme_card.y + scale_settings_value(64, dpi_), scale_settings_value(90, dpi_), s28);
-    move_child(hwnd_, kIdCandidateTextSizeLabel,
-               layout.appearance_theme_card.x + s24,
-               layout.appearance_theme_card.y + scale_settings_value(104, dpi_),
-               scale_settings_value(180, dpi_),
-               s24);
+    move_child(hwnd_, kIdAppearanceThemeLabel, layout.appearance_theme_card.x + s24,
+               layout.appearance_theme_card.y + s24, layout.appearance_theme_card.width - s48, s28);
+    const int theme_width = (layout.appearance_theme_card.width - s48 - s12 * 2) / 3;
+    const int theme_y = layout.appearance_theme_card.y + scale_settings_value(74, dpi_);
+    move_child(hwnd_, kIdThemeSystem, layout.appearance_theme_card.x + s24, theme_y, theme_width, scale_settings_value(106, dpi_));
+    move_child(hwnd_, kIdThemeLight, layout.appearance_theme_card.x + s24 + theme_width + s12, theme_y, theme_width, scale_settings_value(106, dpi_));
+    move_child(hwnd_, kIdThemeDark, layout.appearance_theme_card.x + s24 + (theme_width + s12) * 2, theme_y, theme_width, scale_settings_value(106, dpi_));
+    move_child(hwnd_, kIdCandidateTextSizeLabel, layout.appearance_theme_card.x + s24,
+               layout.appearance_theme_card.y + scale_settings_value(222, dpi_), layout.appearance_theme_card.width - s48, s28);
+    move_child(hwnd_, kIdOpenInputTest, layout.appearance_preview_card.x + s24,
+               layout.appearance_preview_card.y + scale_settings_value(446, dpi_), layout.appearance_preview_card.width - s48, scale_settings_value(40, dpi_));
+    move_window(candidate_preview_input_, SettingsRect{
+        layout.appearance_preview_card.x + scale_settings_value(35, dpi_),
+        layout.appearance_preview_card.y + scale_settings_value(145, dpi_),
+        layout.appearance_preview_card.width - scale_settings_value(67, dpi_),
+        scale_settings_value(23, dpi_)});
     move_window(candidate_size_slider_, layout.candidate_size_slider);
     move_window(candidate_size_value_, layout.candidate_size_value);
     move_child(hwnd_, kIdCandidateSizeSmallLabel, layout.candidate_size_label_left);
@@ -3090,14 +3341,16 @@ void SettingsWindow::layout_controls() {
                                               layout.search_box.width - s24,
                                               layout.search_box.height - s6 * 2});
     move_child(hwnd_, kIdLexiconRefresh, layout.refresh_button);
+    move_child(hwnd_, kIdBuiltinDictionary, layout.builtin_dictionary_button);
+    move_child(hwnd_, kIdPersonalDictionaryTitle, layout.personal_dictionary_title);
     move_window(lexicon_list_, SettingsRect{layout.user_table.x + 1,
                                             layout.user_table.y + 1,
                                             layout.user_table.width - 2,
                                             layout.user_table.height - 2});
     move_window(lexicon_empty_state_, SettingsRect{layout.user_empty_state.x + s24,
-                                                   layout.user_empty_state.y + s40,
+                                                   layout.user_empty_state.y + scale_settings_value(82, dpi_),
                                                    layout.user_empty_state.width - s48,
-                                                   s44});
+                                                   scale_settings_value(58, dpi_)});
     move_child(hwnd_, kIdUserLexiconEditorCard, layout.user_editor_card);
     move_child(hwnd_, kIdUserLexiconEditorTitle, layout.user_editor_title);
 
@@ -3128,14 +3381,14 @@ void SettingsWindow::layout_controls() {
     move_child(hwnd_, kIdLearningCard, layout.primary_card);
     move_child(hwnd_, kIdLearningCardText,
                layout.primary_card.x + s24,
-               layout.primary_card.y + s40,
-               layout.primary_card.width - s48,
-               s44);
+               layout.primary_card.y + scale_settings_value(62, dpi_),
+               layout.primary_card.width - scale_settings_value(260, dpi_),
+               scale_settings_value(56, dpi_));
     move_child(hwnd_, kIdClearLearning,
-               layout.primary_card.x + s24,
-               layout.primary_card.y + s100,
-               scale_settings_value(180, dpi_),
-               s32);
+               rect_right(layout.primary_card) - s24 - scale_settings_value(170, dpi_),
+               layout.primary_card.y + scale_settings_value(55, dpi_),
+               scale_settings_value(170, dpi_),
+               scale_settings_value(40, dpi_));
 
     place_page_header(kIdAboutTitle, kIdAboutDescription);
     move_child(hwnd_, kIdAboutCard, layout.about_card);
@@ -3169,15 +3422,6 @@ void SettingsWindow::show_page(SettingsPage page) {
                              settings_page_control_visible(page, owner_page);
         for (HWND control : page_controls_[static_cast<size_t>(i)]) {
             ShowWindow(control, visible ? SW_SHOW : SW_HIDE);
-            if (visible) {
-                SetWindowPos(control,
-                             HWND_TOP,
-                             0,
-                             0,
-                             0,
-                             0,
-                             SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
-            }
         }
     }
     if (page == SettingsPage::UserLexicon) {
@@ -3209,18 +3453,16 @@ void SettingsWindow::apply_options_to_controls() {
     sync_candidate_text_size_controls();
 }
 
-void SettingsWindow::save_options_from_controls() {
-    if (is_checked(hwnd_, kIdThemeLight)) {
-        options_.theme_mode = CandidateThemeMode::Light;
-    } else if (is_checked(hwnd_, kIdThemeDark)) {
-        options_.theme_mode = CandidateThemeMode::Dark;
-    } else {
-        options_.theme_mode = CandidateThemeMode::System;
+void SettingsWindow::update_candidate_preview() {
+    candidate_preview_pinyin_ = control_text(candidate_preview_input_);
+    candidate_preview_texts_.clear();
+    if (candidate_preview_ready_) {
+        for (const auto& candidate : candidate_preview_engine_.lookup(candidate_preview_pinyin_))
+            candidate_preview_texts_.push_back(candidate.text);
     }
-
-    options_.show_key_hints = is_checked(hwnd_, kIdShowKeyHints);
-    input_mode_options_.shift_toggle_enabled = is_checked(hwnd_, kIdShiftToggle);
-    persist_candidate_display_options();
+    // Look up only when the edit changes. Font and theme repaints reuse this
+    // result and never write learning records or commit text to an application.
+    invalidate_candidate_size_preview();
 }
 
 void SettingsWindow::sync_candidate_text_size_controls() {

@@ -48,6 +48,7 @@ enum class UserLexiconCreateMode {
 };
 
 class Dictionary {
+    friend class ContextModel;
 public:
     Dictionary();
     explicit Dictionary(DictionaryLoadMode mode);
@@ -59,12 +60,17 @@ public:
     bool load_from_layered_files(const std::wstring& core_path,
                                  const std::wstring& local_core_path,
                                  const std::wstring& user_lexicon_path,
-                                 UserLexiconCreateMode create_mode = UserLexiconCreateMode::CreateIfMissing);
+                                 UserLexiconCreateMode create_mode = UserLexiconCreateMode::CreateIfMissing,
+                                 const std::wstring& standard_path = L"");
     bool load_from_json_file(const std::wstring& path);
     bool load_from_tsv_file(const std::wstring& path);
     [[nodiscard]] std::vector<Candidate> lookup(const std::wstring& pinyin) const;
     [[nodiscard]] std::vector<Candidate> lookup_abbreviation(const std::wstring& initials) const;
-    [[nodiscard]] std::vector<Candidate> lookup_completion(const std::wstring& prefix) const;
+    [[nodiscard]] std::vector<Candidate> lookup_completion(const std::wstring& prefix,
+                                                          bool final_syllable_only = false) const;
+    [[nodiscard]] bool reading_matches_boundaries(const std::wstring& pinyin, const std::wstring& word,
+                                                  const std::vector<size_t>& boundaries) const;
+    [[nodiscard]] static bool is_syllable(const std::wstring& pinyin);
     [[nodiscard]] std::vector<std::wstring> matching_pinyins_at(const std::wstring& input, size_t offset) const;
     UserLexiconRefreshResult refresh_user_lexicon_if_changed(bool composition_active);
     [[nodiscard]] size_t entry_count() const noexcept;
@@ -80,7 +86,8 @@ public:
 private:
     enum class EntryAddMode {
         KeepExisting,
-        ReplaceExisting
+        ReplaceExisting,
+        ReferenceFrequency
     };
 
     void load_minimal_fallback();
@@ -105,13 +112,24 @@ private:
                    int base_frequency,
                    EntryAddMode mode = EntryAddMode::KeepExisting);
     void add_entry(const std::wstring& pinyin, const std::vector<std::wstring>& words);
-    void rebuild_prediction_index() const;
+    struct PredictionPartition {
+        std::vector<std::wstring> sorted_keys;
+        std::unordered_map<std::wstring, std::vector<std::wstring>> short_prefix_index;
+    };
+    const PredictionPartition& rebuild_prediction_index(wchar_t first_letter) const;
+    struct PredictionReading {
+        size_t character_count = 0;
+        size_t final_syllable_begin = 0;
+        std::wstring initials;
+    };
+    const PredictionReading& prediction_reading(const std::wstring& key, size_t character_count) const;
 
     std::unordered_map<std::wstring, std::vector<Candidate>> entries_;
     size_t max_key_length_ = 0;
     mutable bool prediction_index_dirty_ = true;
-    mutable std::vector<std::wstring> sorted_keys_;
+    mutable std::unordered_map<wchar_t, PredictionPartition> prediction_partitions_;
     mutable std::unordered_map<std::wstring, std::vector<std::wstring>> initials_index_;
+    mutable std::unordered_map<std::wstring, std::vector<PredictionReading>> prediction_readings_;
     size_t entry_count_ = 0;
     DictionaryStats stats_;
     std::vector<DictionaryLayerStats> layer_stats_;
@@ -123,6 +141,7 @@ private:
         std::wstring word;
         bool had_previous = false;
         int previous_score = 0;
+        int previous_decoding_frequency = 0;
     };
     std::wstring user_lexicon_path_;
     std::vector<UserLexiconOverlay> user_lexicon_overlays_;

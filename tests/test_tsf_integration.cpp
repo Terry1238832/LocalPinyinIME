@@ -361,16 +361,45 @@ int wmain(int argc, wchar_t** argv) {
             require(s.store->text == L"你好", "Esc removes uncommitted text");
             s.key(L'N'); s.key(L'I'); s.key(VK_RETURN);
             require(s.store->text == L"你好ni", "Enter commits raw pinyin");
+            // Unknown trailing syllables stay editable after a prefix selection.
+            for (const auto letter : std::wstring(L"NIHAOZZZZ")) s.key(letter);
+            s.key(VK_SPACE);
+            require(s.store->text == L"你好ni你好zzzz", "partial commit retains unresolved pinyin");
+            s.key(VK_ESCAPE);
+            require(s.store->text == L"你好ni你好", "Esc only removes retained suffix");
+            // Punctuation commits a pending Chinese candidate before insertion,
+            // and inserts directly at the caret when no composition is active.
+            for (const auto letter : std::wstring(L"SUIBIAN")) s.key(letter);
+            s.key(VK_OEM_COMMA);
+            require(s.store->text == L"你好ni你好随便，", "punctuation converts then inserts");
+            s.key(VK_OEM_PERIOD);
+            require(s.store->text == L"你好ni你好随便，。", "idle punctuation insertion");
+            s.key(VK_ESCAPE, false);
+            // A long run must keep every key when the composition buffer rolls over.
+            const std::wstring before_long_input = s.store->text;
+            for (size_t index = 0; index < 257; ++index) s.key(L'Z');
+            require(s.store->text == before_long_input + std::wstring(257, L'z'),
+                "composition length boundary preserves the next letter");
+            s.key(VK_RETURN);
+            const std::wstring before_separator_limit = s.store->text;
+            for (size_t index = 0; index < 255; ++index) s.key(L'Z');
+            s.key(VK_OEM_7);
+            s.key(L'Z');
+            require(s.store->text == before_separator_limit + std::wstring(255, L'z') + L"'z",
+                "composition length boundary includes separators and preserves raw text");
+            s.key(VK_RETURN);
+            const std::wstring before_english = s.store->text;
             BOOL eaten = FALSE;
             check(s.keys->OnPreservedKey(s.context.Get(), kCtrlSpace, &eaten), "English mode toggle");
             require(eaten != FALSE, "preserved key consumed");
             s.key(L'A', false);
-            require(s.store->text == L"你好ni", "English keys pass through without composition");
+            s.key(VK_OEM_PERIOD, false);
+            require(s.store->text == before_english, "English keys pass through without composition");
             require(s.store->composition_starts == s.store->composition_ends,
                 "all real TSF compositions ended");
             check(s.service->Deactivate(), "text service deactivation");
             s.service_active = false;
-            std::cout << "PASS: DLL COM creation, real TSF context/edit sessions, Chinese commit, Backspace, Esc, Enter and English passthrough.\n"
+            std::cout << "PASS: DLL COM creation, real TSF edit sessions, Chinese/prefix commit, retained suffix, punctuation, Backspace, Esc, Enter and English passthrough.\n"
                 << "Scope: key-sink registration is in memory; OS profile loading/key routing and candidate presentation require desktop acceptance.\n";
         }
         std::filesystem::remove_all(isolated);

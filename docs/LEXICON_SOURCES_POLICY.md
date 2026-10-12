@@ -2,7 +2,7 @@
 
 LocalPinyinIME must keep dictionary sources auditable before any entry is included in a release.
 
-The current built-in self-maintained lexicon is tracked as `first_party_curated` and `first_party_curated_v2` in `resources/dictionary/sources/lexicon_sources.json`. These entries are project-maintained content for LocalPinyinIME and do not import rime-ice, Sogou, Baidu, Microsoft, Google, scraped web data, public GitHub dictionary data, or any other third-party bulk lexicon.
+The project-maintained layer is tracked as `first_party_curated` and `first_party_curated_v2` in `resources/dictionary/sources/lexicon_sources.json`. Its contents remain first-party authored. Version 0.5 also includes an independently reviewed Apache-2.0 Rime/AOSP standard layer with a pinned upstream commit, normalization recipe, checksums, and bundled license. The standard layer supplies missing short vocabulary and sentence-decoding reference frequencies; it preserves project/user direct-candidate overrides. It does not use rime-ice or proprietary commercial input-method data.
 
 Future sources must be reviewed before import. A source may enter a release dictionary only when:
 

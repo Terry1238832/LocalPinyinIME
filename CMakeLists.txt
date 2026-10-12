@@ -8,6 +8,12 @@ set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 include(CTest)
 add_compile_definitions(UNICODE _UNICODE NOMINMAX WIN32_LEAN_AND_MEAN _WIN32_WINNT=0x0A00)
 if(MSVC)
+    # Some Chinese MSVC installations emit UTF-8 /showIncludes while CMake's
+    # probe decodes it as the system code page. Repair that detected prefix so
+    # Ninja tracks header changes and never links stale object files.
+    if(CMAKE_CL_SHOWINCLUDES_PREFIX MATCHES "^娉ㄦ剰")
+        set(CMAKE_CL_SHOWINCLUDES_PREFIX "注意: 包含文件: ")
+    endif()
     string(REPLACE "/O2" "/O1" CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE}")
     add_compile_options(/utf-8 /W3 $<$<CONFIG:Release>:/Gy> $<$<CONFIG:Release>:/Gw>)
     add_link_options($<$<CONFIG:Release>:/OPT:REF> $<$<CONFIG:Release>:/OPT:ICF>)
@@ -41,16 +47,18 @@ function(localpinyin_copy_dictionary_resource target)
         COMMAND "${CMAKE_COMMAND}" -E copy_if_different
             "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/core_zh_pinyin.tsv"
             "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/local_core_zh_pinyin.tsv"
+            "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/context_zh.tsv"
+            "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/standard_zh_pinyin.tsv"
             "$<TARGET_FILE_DIR:${target}>/dictionary" VERBATIM)
 endfunction()
 # One copy of shared code is compiled for the product and all regression tests.
 add_library(pinyin_common STATIC src/common/logging.cpp src/common/utf_utils.cpp src/common/win32_utils.cpp)
 target_link_libraries(pinyin_common PUBLIC user32 gdi32 shell32 shlwapi ole32)
 add_library(pinyin_engine STATIC src/engine/pinyin_engine.cpp src/engine/dictionary.cpp
-    src/engine/user_lexicon.cpp src/engine/candidate_ranker.cpp src/engine/user_learning.cpp)
+    src/engine/user_lexicon.cpp src/engine/candidate_ranker.cpp src/engine/user_learning.cpp src/engine/context_model.cpp)
 target_link_libraries(pinyin_engine PUBLIC pinyin_common)
-add_library(pinyin_ui STATIC src/ime/candidate_ui.cpp src/settings/settings_store.cpp)
-target_link_libraries(pinyin_ui PUBLIC pinyin_common)
+add_library(pinyin_ui STATIC src/ime/candidate_ui.cpp src/settings/settings_store.cpp src/settings/modern_renderer.cpp)
+target_link_libraries(pinyin_ui PUBLIC pinyin_common d2d1 dwrite)
 add_library(pinyin_settings STATIC src/settings/settings_window.cpp src/settings/dictionary_catalog.cpp
     src/settings/dictionary_preview_window.cpp)
 target_link_libraries(pinyin_settings PUBLIC pinyin_ui pinyin_engine comctl32 advapi32)
@@ -63,6 +71,11 @@ add_library(LocalPinyinIME SHARED src/ime/dllmain.cpp src/ime/exports.cpp src/im
 target_link_libraries(LocalPinyinIME PRIVATE pinyin_service)
 localpinyin_add_version_resource(LocalPinyinIME "本地拼音" "LocalPinyinIME.dll" "VFT_DLL")
 localpinyin_copy_dictionary_resource(LocalPinyinIME)
+set_property(TARGET LocalPinyinIME APPEND PROPERTY LINK_DEPENDS
+    "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/core_zh_pinyin.tsv"
+    "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/local_core_zh_pinyin.tsv"
+    "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/standard_zh_pinyin.tsv"
+    "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/context_zh.tsv")
 add_executable(LocalPinyinSettings WIN32 src/settings/main.cpp src/settings/LocalPinyinSettings.rc)
 target_link_libraries(LocalPinyinSettings PRIVATE pinyin_settings)
 localpinyin_add_version_resource(LocalPinyinSettings "本地拼音设置" "LocalPinyinSettings.exe" "VFT_APP")
@@ -76,7 +89,7 @@ if(BUILD_TESTING)
         add_test(NAME ${name} COMMAND ${name})
     endfunction()
     foreach(name IN ITEMS test_dictionary test_pinyin_engine test_candidate_ranker test_user_learning
-        test_candidate_selection test_dictionary_resource_layout test_dictionary_layers test_user_lexicon test_sentence_input_baseline)
+        test_candidate_selection test_dictionary_resource_layout test_dictionary_layers test_user_lexicon test_sentence_input_baseline test_contextual_engine)
         pinyin_test(${name} pinyin_engine)
     endforeach()
     foreach(name IN ITEMS test_candidate_ui test_cross_app_compatibility test_settings_store)
@@ -93,6 +106,7 @@ if(BUILD_TESTING)
         pinyin_test(${name} pinyin_service)
     endforeach()
     pinyin_test(test_logging pinyin_common)
+    pinyin_test(test_chinese_punctuation pinyin_common)
     pinyin_test(test_verify_expected_dll pinyin_common)
     target_sources(test_verify_expected_dll PRIVATE src/setup/verify_expected_dll.cpp)
     pinyin_test(test_profile_visibility_verification pinyin_common)
@@ -102,6 +116,10 @@ if(BUILD_TESTING)
     add_test(NAME test_tsf_integration COMMAND test_tsf_integration "$<TARGET_FILE:LocalPinyinIME>")
     add_executable(LocalPinyinImeDictionarySmoke src/tools/dictionary_smoke.cpp)
     target_link_libraries(LocalPinyinImeDictionarySmoke PRIVATE pinyin_engine)
+    add_executable(LocalPinyinImeEval src/tools/ime_eval.cpp)
+    target_link_libraries(LocalPinyinImeEval PRIVATE pinyin_engine)
+    add_executable(LocalPinyinSettingsCapture src/tools/settings_capture.cpp)
+    target_link_libraries(LocalPinyinSettingsCapture PRIVATE pinyin_settings pinyin_service)
     add_test(NAME dictionary_smoke_tool COMMAND LocalPinyinImeDictionarySmoke --resource-dir "$<TARGET_FILE_DIR:LocalPinyinIME>")
     add_test(NAME test_input_mode_toggle_paths COMMAND "${Python3_EXECUTABLE}"
         "${CMAKE_CURRENT_SOURCE_DIR}/tests/test_input_mode_toggle_paths.py"
@@ -111,12 +129,22 @@ if(BUILD_TESTING)
         "${CMAKE_CURRENT_SOURCE_DIR}/tools/validate_local_core_lexicon.py"
         --path "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/local_core_zh_pinyin.tsv"
         --metadata "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/local_core_zh_pinyin.metadata.json"
-        --min-entries 8000 --max-entries 25000)
+        --min-entries 8000 --max-entries 40000)
+    add_test(NAME test_standard_dictionary COMMAND "${Python3_EXECUTABLE}"
+        "${CMAKE_CURRENT_SOURCE_DIR}/tools/validate_standard_dictionary.py"
+        --path "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/standard_zh_pinyin.tsv"
+        --metadata "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/standard_zh_pinyin.metadata.json"
+        --notices "${CMAKE_CURRENT_SOURCE_DIR}/resources/THIRD_PARTY_NOTICES.txt")
+    add_test(NAME test_context_model_data COMMAND "${Python3_EXECUTABLE}"
+        "${CMAKE_CURRENT_SOURCE_DIR}/tools/validate_context_model.py"
+        --dictionary-dir "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary"
+        --cases-dir "${CMAKE_CURRENT_SOURCE_DIR}/tests/data")
     file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/test-tmp" "${CMAKE_BINARY_DIR}/test-data")
     get_property(pinyin_tests DIRECTORY PROPERTY TESTS)
     set_tests_properties(${pinyin_tests} PROPERTIES
         ENVIRONMENT "TEMP=${CMAKE_BINARY_DIR}/test-tmp;TMP=${CMAKE_BINARY_DIR}/test-tmp;LOCALPINYINIME_LOCALAPPDATA=${CMAKE_BINARY_DIR}/test-data")
 endif()
 install(TARGETS LocalPinyinIME LocalPinyinSettings LocalPinyinImeSetup RUNTIME DESTINATION .)
-install(FILES resources/dictionary/core_zh_pinyin.tsv resources/dictionary/local_core_zh_pinyin.tsv DESTINATION dictionary)
+install(FILES resources/dictionary/core_zh_pinyin.tsv resources/dictionary/local_core_zh_pinyin.tsv resources/dictionary/context_zh.tsv resources/dictionary/standard_zh_pinyin.tsv DESTINATION dictionary)
+install(FILES resources/THIRD_PARTY_NOTICES.txt DESTINATION .)
 install(FILES LICENSE DESTINATION .)

@@ -22,7 +22,7 @@ std::wstring key_for(const std::wstring& pinyin, const std::wstring& word) {
 }
 
 bool valid_selection(const std::wstring& pinyin, const std::wstring& word) {
-    return !pinyin.empty() && pinyin.size() <= 128 && !word.empty() && word.size() <= 128 &&
+    return !pinyin.empty() && pinyin.size() <= 256 && !word.empty() && word.size() <= 128 &&
            pinyin.find_first_not_of(L"abcdefghijklmnopqrstuvwxyz0123456789") == std::wstring::npos &&
            word.find_first_of(L"\t\r\n") == std::wstring::npos;
 }
@@ -77,6 +77,16 @@ int UserLearning::frequency(const std::wstring& pinyin, const std::wstring& word
     return it == records_.end() ? 0 : it->second.selection_count;
 }
 
+std::vector<std::pair<std::wstring, int>> UserLearning::selected_texts() const {
+    std::vector<std::pair<std::wstring, int>> result;
+    result.reserve(records_.size());
+    for (const auto& [key, record] : records_) {
+        const auto tab = key.find(L'\t');
+        if (tab != std::wstring::npos) result.emplace_back(key.substr(tab + 1), record.selection_count);
+    }
+    return result;
+}
+
 bool UserLearning::record_selection(const std::wstring& pinyin, const std::wstring& word) {
     if (storage_path_.empty() || !valid_selection(pinyin, word)) return false;
     LearningFileLock lock(storage_path_);
@@ -95,6 +105,7 @@ bool UserLearning::clear() {
     LearningFileLock lock(storage_path_);
     if (!lock.acquired()) return false;
     records_.clear();
+    ++revision_;
     const bool saved = flush();
     if (saved) remember_write_time();
     return saved;
@@ -127,6 +138,7 @@ void UserLearning::prune() {
 
 bool UserLearning::load() {
     records_.clear();
+    ++revision_;
     std::error_code size_error;
     const auto size = std::filesystem::file_size(std::filesystem::path(storage_path_), size_error);
     if (!size_error && size > 2 * 1024 * 1024) { remember_write_time(); return true; }
