@@ -1,6 +1,9 @@
 #include "test_common.h"
 #include "../src/ime/candidate_ui.h"
+#include "../src/ime/candidate_window.h"
 #include "local_pinyin_blue_theme.h"
+
+#include <dwmapi.h>
 
 #include <string>
 #include <vector>
@@ -49,6 +52,28 @@ bool rects_do_not_overlap(const RECT& first, const RECT& second) {
     return separate_horizontally || separate_vertically;
 }
 
+struct RecordedImeWinEvent {
+    DWORD event = 0;
+    HWND hwnd = nullptr;
+    LONG object_id = 0;
+    LONG child_id = 0;
+};
+
+struct ImeWinEventRecorder {
+    std::vector<RecordedImeWinEvent> events;
+};
+
+void record_ime_win_event(DWORD event,
+                          HWND hwnd,
+                          LONG object_id,
+                          LONG child_id,
+                          void* context) noexcept {
+    auto* recorder = static_cast<ImeWinEventRecorder*>(context);
+    if (recorder) {
+        recorder->events.push_back(RecordedImeWinEvent{event, hwnd, object_id, child_id});
+    }
+}
+
 localpinyin::CandidateLayoutResult layout_for(const std::vector<std::wstring>& candidates,
                                               RECT caret,
                                               RECT work,
@@ -74,6 +99,21 @@ int main() {
     REQUIRE_TRUE(!should_show_candidate_window(L"nihao", 0, false));
     REQUIRE_TRUE(!should_show_candidate_window(L"nihao", 3, true));
     REQUIRE_TRUE(should_show_candidate_window(L"nihao", 1, false));
+    REQUIRE_EQ(candidate_text_size_min_level(), 1);
+    REQUIRE_EQ(candidate_text_size_max_level(), 7);
+    REQUIRE_EQ(candidate_text_size_default_level(), 4);
+    REQUIRE_EQ(candidate_text_size_level(CandidateTextSize::Standard), 4);
+    REQUIRE_EQ(candidate_text_size_from_level(0), CandidateTextSize::Level1);
+    REQUIRE_EQ(candidate_text_size_from_level(8), CandidateTextSize::Level7);
+    REQUIRE_EQ(candidate_text_size_dip(CandidateTextSize::Standard), 18);
+    REQUIRE_EQ(candidate_font_px_for_size(CandidateTextSize::Standard, 96), 18);
+    REQUIRE_EQ(candidate_font_px_for_size(CandidateTextSize::Level7, 192), scale_dip(24, 192));
+    REQUIRE_EQ(candidate_text_size_to_string(CandidateTextSize::Level5), std::wstring(L"level5"));
+    REQUIRE_EQ(parse_candidate_text_size(L"level5"), CandidateTextSize::Level5);
+    REQUIRE_EQ(parse_candidate_text_size(L"6"), CandidateTextSize::Level6);
+    REQUIRE_EQ(parse_candidate_text_size(L"small"), CandidateTextSize::Small);
+    REQUIRE_EQ(parse_candidate_text_size(L"large"), CandidateTextSize::Large);
+    REQUIRE_TRUE(candidate_text_size_display_text(CandidateTextSize::Standard).find(L"18 px") != std::wstring::npos);
 
     const auto show_decision = decide_candidate_display(CandidateDisplayState{false, true, 3, true});
     REQUIRE_TRUE(show_decision.request_show);
@@ -124,28 +164,118 @@ int main() {
     REQUIRE_TRUE(message_config.parent == nullptr);
     REQUIRE_EQ(message_config.parent_kind, CandidateCreateParentKind::RejectedInvalidOwner);
 
-    const std::wstring attempt_log = make_candidate_window_create_attempt_log(popup_config);
-    REQUIRE_TRUE(attempt_log.find(L"create_parent_kind=null") != std::wstring::npos);
-    REQUIRE_TRUE(attempt_log.find(L"create_menu_is_null=true") != std::wstring::npos);
-    REQUIRE_TRUE(attempt_log.find(L"create_style_popup=true") != std::wstring::npos);
-    REQUIRE_TRUE(attempt_log.find(L"create_ex_noactivate=true") != std::wstring::npos);
-    REQUIRE_TRUE(attempt_log.find(L"create_ex_toolwindow=true") != std::wstring::npos);
+    CandidateShellCloakRecoveryInput inactive_recovery_input;
+    inactive_recovery_input.candidate_cloak_hr = S_OK;
+    inactive_recovery_input.candidate_cloak_value = kCandidateDwmCloakedShell;
+    auto inactive_recovery = decide_candidate_shell_cloak_recovery(inactive_recovery_input);
+    REQUIRE_EQ(inactive_recovery.reason, std::wstring(L"candidate_model_invalid"));
+    inactive_recovery_input.candidate_model_valid = true;
+    inactive_recovery = decide_candidate_shell_cloak_recovery(inactive_recovery_input);
+    REQUIRE_EQ(inactive_recovery.reason, std::wstring(L"candidate_show_not_requested"));
 
-    const std::wstring failure_log = make_candidate_window_create_result_log(false, ERROR_INVALID_WINDOW_HANDLE);
-    REQUIRE_TRUE(failure_log.find(L"window_created=false") != std::wstring::npos);
-    REQUIRE_TRUE(failure_log.find(L"create_last_error=1400") != std::wstring::npos);
-    REQUIRE_TRUE(failure_log.find(L"nihao") == std::wstring::npos);
-    REQUIRE_TRUE(failure_log.find(L"\u4F60\u597D") == std::wstring::npos);
+    CandidateShellCloakRecoveryInput recovery_input;
+    recovery_input.candidate_model_valid = true;
+    recovery_input.candidate_show_requested = true;
+    recovery_input.candidate_hwnd_valid = true;
+    recovery_input.candidate_hwnd_visible = true;
+    recovery_input.current_process_id = 100;
+    recovery_input.candidate_process_id = 100;
+    recovery_input.candidate_cloak_hr = S_OK;
+    recovery_input.owner_root_valid = true;
+    recovery_input.owner_root_cloak_hr = S_OK;
 
-    const auto shown_status = make_candidate_window_show_status(true);
-    REQUIRE_TRUE(shown_status.set_window_pos_ok);
-    REQUIRE_TRUE(shown_status.show_window_called);
-    REQUIRE_TRUE(shown_status.shown);
+    auto recovery = decide_candidate_shell_cloak_recovery(recovery_input);
+    REQUIRE_TRUE(!recovery.shell_cloak_detected);
+    REQUIRE_TRUE(!recovery.recovery_eligible);
+    REQUIRE_TRUE(!recovery.recovery_attempt_allowed);
+    REQUIRE_EQ(recovery.reason, std::wstring(L"candidate_not_shell_cloaked"));
 
-    const auto failed_show_status = make_candidate_window_show_status(false);
-    REQUIRE_TRUE(!failed_show_status.set_window_pos_ok);
-    REQUIRE_TRUE(!failed_show_status.show_window_called);
-    REQUIRE_TRUE(!failed_show_status.shown);
+    recovery_input.candidate_cloak_value = DWM_CLOAKED_APP;
+    recovery = decide_candidate_shell_cloak_recovery(recovery_input);
+    REQUIRE_TRUE(!recovery.shell_cloak_detected);
+    REQUIRE_TRUE(!recovery.recovery_eligible);
+    REQUIRE_EQ(recovery.reason, std::wstring(L"candidate_not_shell_cloaked"));
+
+    recovery_input.candidate_cloak_value = DWM_CLOAKED_INHERITED;
+    recovery = decide_candidate_shell_cloak_recovery(recovery_input);
+    REQUIRE_TRUE(!recovery.shell_cloak_detected);
+    REQUIRE_TRUE(!recovery.recovery_eligible);
+    REQUIRE_EQ(recovery.reason, std::wstring(L"candidate_not_shell_cloaked"));
+
+    recovery_input.candidate_cloak_value = kCandidateDwmCloakedShell;
+    recovery_input.owner_root_valid = false;
+    recovery = decide_candidate_shell_cloak_recovery(recovery_input);
+    REQUIRE_TRUE(recovery.shell_cloak_detected);
+    REQUIRE_TRUE(!recovery.recovery_eligible);
+    REQUIRE_EQ(recovery.reason, std::wstring(L"owner_root_invalid"));
+
+    recovery_input.owner_root_valid = true;
+    recovery_input.recovery_attempts = 0;
+    recovery_input.owner_root_process_id = 100;
+    recovery = decide_candidate_shell_cloak_recovery(recovery_input);
+    REQUIRE_TRUE(recovery.shell_cloak_detected);
+    REQUIRE_TRUE(recovery.recovery_eligible);
+    REQUIRE_TRUE(recovery.recovery_attempt_allowed);
+    REQUIRE_TRUE(recovery.owner_same_process);
+    REQUIRE_EQ(recovery.strategy, CandidateShellCloakRecoveryStrategy::SameProcessContextRootOwner);
+    REQUIRE_EQ(candidate_shell_cloak_recovery_strategy_to_string(recovery.strategy),
+               std::wstring(L"same_process_context_root_owner"));
+    REQUIRE_EQ(recovery.reason, std::wstring(L"eligible_context_root"));
+
+    recovery_input.owner_root_process_id = 200;
+    recovery = decide_candidate_shell_cloak_recovery(recovery_input);
+    REQUIRE_TRUE(recovery.shell_cloak_detected);
+    REQUIRE_TRUE(!recovery.recovery_eligible);
+    REQUIRE_TRUE(!recovery.recovery_attempt_allowed);
+    REQUIRE_TRUE(!recovery.owner_same_process);
+    REQUIRE_EQ(recovery.strategy, CandidateShellCloakRecoveryStrategy::None);
+    REQUIRE_EQ(recovery.reason, std::wstring(L"owner_root_cross_process"));
+
+    recovery_input.recovery_attempts = 1;
+    recovery = decide_candidate_shell_cloak_recovery(recovery_input);
+    REQUIRE_TRUE(recovery.shell_cloak_detected);
+    REQUIRE_TRUE(!recovery.recovery_eligible);
+    REQUIRE_TRUE(!recovery.recovery_attempt_allowed);
+    REQUIRE_EQ(recovery.strategy, CandidateShellCloakRecoveryStrategy::None);
+    REQUIRE_EQ(recovery.reason, std::wstring(L"recovery_attempt_limit_reached"));
+
+    recovery_input.recovery_attempts = 0;
+    recovery_input.owner_root_process_id = 100;
+    recovery_input.owner_root_cloak_value = kCandidateDwmCloakedShell;
+    recovery = decide_candidate_shell_cloak_recovery(recovery_input);
+    REQUIRE_TRUE(recovery.shell_cloak_detected);
+    REQUIRE_TRUE(!recovery.recovery_eligible);
+    REQUIRE_EQ(recovery.reason, std::wstring(L"owner_root_shell_cloaked"));
+    recovery_input.owner_root_cloak_value = 0;
+
+    CandidateReplacementCommitInput commit_input;
+    commit_input.replacement_hwnd_valid = true;
+    commit_input.replacement_visible = true;
+    commit_input.owner_verified = true;
+    commit_input.dwm_query_succeeded = true;
+    commit_input.shell_cloaked = false;
+    commit_input.rect_on_monitor = true;
+    REQUIRE_TRUE(should_commit_candidate_replacement(commit_input));
+    commit_input.owner_verified = false;
+    REQUIRE_TRUE(!should_commit_candidate_replacement(commit_input));
+    commit_input.owner_verified = true;
+    commit_input.shell_cloaked = true;
+    REQUIRE_TRUE(!should_commit_candidate_replacement(commit_input));
+    commit_input.shell_cloaked = false;
+    commit_input.replacement_visible = false;
+    REQUIRE_TRUE(!should_commit_candidate_replacement(commit_input));
+
+    const auto first_retry = decide_candidate_layout_retry(true, false, 0);
+    REQUIRE_TRUE(first_retry.schedule);
+    REQUIRE_EQ(first_retry.next_attempt, 1U);
+    REQUIRE_EQ(first_retry.delay_ms, 50U);
+    const auto last_retry = decide_candidate_layout_retry(true, false, 2);
+    REQUIRE_TRUE(last_retry.schedule);
+    REQUIRE_EQ(last_retry.next_attempt, 3U);
+    REQUIRE_EQ(last_retry.delay_ms, 300U);
+    REQUIRE_TRUE(!decide_candidate_layout_retry(true, false, 3).schedule);
+    REQUIRE_TRUE(!decide_candidate_layout_retry(true, true, 0).schedule);
+    REQUIRE_TRUE(!decide_candidate_layout_retry(false, false, 0).schedule);
 
     const RECT work = make_rect(0, 0, 800, 600);
     const RECT middle = make_rect(100, 100, 101, 122);
@@ -194,8 +324,8 @@ int main() {
     REQUIRE_EQ(three.items.size(), size_t{3});
     REQUIRE_TRUE(is_inside(work, three.window_rect));
     REQUIRE_TRUE(three.panel_padding_px >= scale_dip(12, three.dpi));
-    REQUIRE_TRUE(three.corner_radius >= scale_dip(14, three.dpi));
-    REQUIRE_TRUE(three.selected_corner_radius >= scale_dip(8, three.dpi));
+    REQUIRE_TRUE(three.corner_radius >= scale_dip(12, three.dpi));
+    REQUIRE_TRUE(three.selected_corner_radius >= scale_dip(7, three.dpi));
     REQUIRE_EQ(three.composition_font_px, scale_dip(15, three.dpi));
     REQUIRE_EQ(three.candidate_font_px, scale_dip(18, three.dpi));
     REQUIRE_EQ(three.hint_font_px, scale_dip(13, three.dpi));
@@ -274,12 +404,104 @@ int main() {
     REQUIRE_EQ(dark_palette.muted_text, brand::kLocalPinyinBlueDarkMuted);
     REQUIRE_EQ(dark_palette.hint_text, brand::kLocalPinyinBlueDarkWeak);
     REQUIRE_EQ(dark_palette.text, brand::kLocalPinyinBlueDarkPrimary);
-    REQUIRE_EQ(dark_palette.selected_background, brand::kLocalPinyinBlueDarkAccent_soft);
-    REQUIRE_EQ(dark_palette.selected_border, brand::kLocalPinyinBlueDarkAccent_border);
+    REQUIRE_EQ(dark_palette.selected_background, brand::kLocalPinyinBlueDarkAccent);
+    REQUIRE_EQ(dark_palette.selected_border, brand::kLocalPinyinBlueDarkAccent);
+    REQUIRE_EQ(dark_palette.selected_text, RGB(255, 255, 255));
     REQUIRE_TRUE(make_candidate_palette(CandidateThemeMode::System, true).dark);
     REQUIRE_TRUE(!make_candidate_palette(CandidateThemeMode::System, false).dark);
     REQUIRE_EQ(candidate_theme_mode_to_string(parse_candidate_theme_mode(L"dark")), std::wstring(L"dark"));
-    REQUIRE_EQ(candidate_text_size_to_string(parse_candidate_text_size(L"large")), std::wstring(L"large"));
+    REQUIRE_EQ(candidate_text_size_to_string(parse_candidate_text_size(L"large")), std::wstring(L"level7"));
+
+    const HWND first_candidate_hwnd = reinterpret_cast<HWND>(static_cast<INT_PTR>(0x101));
+    const HWND replacement_candidate_hwnd = reinterpret_cast<HWND>(static_cast<INT_PTR>(0x202));
+    const RECT initial_candidate_rect = make_rect(10, 20, 210, 120);
+    const RECT moved_candidate_rect = make_rect(30, 40, 230, 140);
+    const RECT resized_candidate_rect = make_rect(30, 40, 260, 160);
+
+    ImeWinEventRecorder event_recorder;
+    event_recorder.events.reserve(16);
+    CandidateImeWinEventState event_state(record_ime_win_event, &event_recorder);
+
+    REQUIRE_TRUE(event_state.notify_visible(first_candidate_hwnd, initial_candidate_rect));
+    REQUIRE_EQ(event_recorder.events.size(), size_t{1});
+    REQUIRE_EQ(event_recorder.events[0].event, static_cast<DWORD>(EVENT_OBJECT_IME_SHOW));
+    REQUIRE_TRUE(event_recorder.events[0].hwnd == first_candidate_hwnd);
+    REQUIRE_EQ(event_recorder.events[0].object_id, static_cast<LONG>(OBJID_CLIENT));
+    REQUIRE_EQ(event_recorder.events[0].child_id, static_cast<LONG>(CHILDID_SELF));
+
+    REQUIRE_TRUE(!event_state.notify_visible(first_candidate_hwnd, initial_candidate_rect));
+    REQUIRE_TRUE(!event_state.notify_rect_changed(first_candidate_hwnd, initial_candidate_rect));
+    REQUIRE_EQ(event_recorder.events.size(), size_t{1});
+
+    REQUIRE_TRUE(event_state.notify_rect_changed(first_candidate_hwnd, moved_candidate_rect));
+    REQUIRE_EQ(event_recorder.events.size(), size_t{2});
+    REQUIRE_EQ(event_recorder.events[1].event, static_cast<DWORD>(EVENT_OBJECT_IME_CHANGE));
+    REQUIRE_TRUE(event_recorder.events[1].hwnd == first_candidate_hwnd);
+    REQUIRE_EQ(event_recorder.events[1].object_id, static_cast<LONG>(OBJID_CLIENT));
+    REQUIRE_EQ(event_recorder.events[1].child_id, static_cast<LONG>(CHILDID_SELF));
+    REQUIRE_TRUE(!event_state.notify_rect_changed(first_candidate_hwnd, moved_candidate_rect));
+
+    REQUIRE_TRUE(event_state.notify_rect_changed(first_candidate_hwnd, resized_candidate_rect));
+    REQUIRE_EQ(event_recorder.events.size(), size_t{3});
+    REQUIRE_EQ(event_recorder.events[2].event, static_cast<DWORD>(EVENT_OBJECT_IME_CHANGE));
+
+    REQUIRE_TRUE(event_state.notify_hidden(first_candidate_hwnd));
+    REQUIRE_EQ(event_recorder.events.size(), size_t{4});
+    REQUIRE_EQ(event_recorder.events[3].event, static_cast<DWORD>(EVENT_OBJECT_IME_HIDE));
+    REQUIRE_TRUE(event_recorder.events[3].hwnd == first_candidate_hwnd);
+    REQUIRE_EQ(event_recorder.events[3].object_id, static_cast<LONG>(OBJID_CLIENT));
+    REQUIRE_EQ(event_recorder.events[3].child_id, static_cast<LONG>(CHILDID_SELF));
+    REQUIRE_TRUE(!event_state.notify_hidden(first_candidate_hwnd));
+    REQUIRE_TRUE(!event_state.notify_rect_changed(first_candidate_hwnd, moved_candidate_rect));
+    REQUIRE_EQ(event_recorder.events.size(), size_t{4});
+
+    ImeWinEventRecorder failed_show_recorder;
+    CandidateImeWinEventState failed_show_state(record_ime_win_event, &failed_show_recorder);
+    REQUIRE_TRUE(!failed_show_state.notify_visible(first_candidate_hwnd, initial_candidate_rect, false));
+    REQUIRE_TRUE(failed_show_recorder.events.empty());
+    REQUIRE_TRUE(!failed_show_state.notify_hidden(first_candidate_hwnd));
+
+    ImeWinEventRecorder destroy_recorder;
+    CandidateImeWinEventState destroy_state(record_ime_win_event, &destroy_recorder);
+    REQUIRE_TRUE(destroy_state.notify_visible(first_candidate_hwnd, initial_candidate_rect));
+    REQUIRE_TRUE(destroy_state.notify_hidden(first_candidate_hwnd));
+    REQUIRE_EQ(destroy_recorder.events.size(), size_t{2});
+    REQUIRE_EQ(destroy_recorder.events[0].event, static_cast<DWORD>(EVENT_OBJECT_IME_SHOW));
+    REQUIRE_EQ(destroy_recorder.events[1].event, static_cast<DWORD>(EVENT_OBJECT_IME_HIDE));
+
+    ImeWinEventRecorder destroy_without_show_recorder;
+    CandidateImeWinEventState destroy_without_show_state(record_ime_win_event,
+                                                          &destroy_without_show_recorder);
+    REQUIRE_TRUE(!destroy_without_show_state.notify_hidden(first_candidate_hwnd));
+    REQUIRE_TRUE(destroy_without_show_recorder.events.empty());
+
+    ImeWinEventRecorder replacement_recorder;
+    replacement_recorder.events.reserve(4);
+    CandidateImeWinEventState replacement_state(record_ime_win_event, &replacement_recorder);
+    REQUIRE_TRUE(replacement_state.notify_visible(first_candidate_hwnd, initial_candidate_rect));
+    REQUIRE_TRUE(replacement_state.notify_visible(replacement_candidate_hwnd, moved_candidate_rect));
+    REQUIRE_EQ(replacement_recorder.events.size(), size_t{3});
+    REQUIRE_EQ(replacement_recorder.events[0].event, static_cast<DWORD>(EVENT_OBJECT_IME_SHOW));
+    REQUIRE_EQ(replacement_recorder.events[1].event, static_cast<DWORD>(EVENT_OBJECT_IME_HIDE));
+    REQUIRE_TRUE(replacement_recorder.events[1].hwnd == first_candidate_hwnd);
+    REQUIRE_EQ(replacement_recorder.events[2].event, static_cast<DWORD>(EVENT_OBJECT_IME_SHOW));
+    REQUIRE_TRUE(replacement_recorder.events[2].hwnd == replacement_candidate_hwnd);
+
+    ImeWinEventRecorder failed_replacement_recorder;
+    CandidateImeWinEventState failed_replacement_state(record_ime_win_event,
+                                                        &failed_replacement_recorder);
+    REQUIRE_TRUE(failed_replacement_state.notify_visible(first_candidate_hwnd,
+                                                         initial_candidate_rect));
+    REQUIRE_TRUE(!failed_replacement_state.notify_visible(replacement_candidate_hwnd,
+                                                          moved_candidate_rect,
+                                                          false));
+    REQUIRE_EQ(failed_replacement_recorder.events.size(), size_t{1});
+    REQUIRE_TRUE(failed_replacement_state.notified_hwnd() == first_candidate_hwnd);
+
+    ImeWinEventRecorder host_managed_recorder;
+    CandidateImeWinEventState host_managed_state(record_ime_win_event, &host_managed_recorder);
+    REQUIRE_TRUE(!host_managed_state.show_notified());
+    REQUIRE_TRUE(host_managed_recorder.events.empty());
 
     return 0;
 }

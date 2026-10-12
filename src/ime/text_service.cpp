@@ -8,10 +8,15 @@
 #include <algorithm>
 #include <cwchar>
 #include <cwctype>
+#include <cstdint>
+#include <oleauto.h>
 #include <sstream>
+#include <string>
 
 namespace localpinyin {
 namespace {
+
+thread_local TextService* g_thread_keyboard_hook_service = nullptr;
 
 const wchar_t* bool_text(bool value) noexcept {
     return value ? L"true" : L"false";
@@ -21,23 +26,256 @@ bool usable_anchor_rect(const RECT& rect) noexcept {
     return rect.right >= rect.left && rect.bottom > rect.top && !(rect.left == rect.right && rect.top == rect.bottom);
 }
 
-std::wstring caret_rect_failure_reason(HRESULT hr) {
-    if (hr == TF_E_NOLAYOUT) {
-        return L"tf_e_nolayout";
-    }
-    if (hr == S_FALSE) {
-        return L"no_active_composition";
-    }
-    return L"get_text_ext_failed";
+bool win32_key_is_down(int virtual_key) noexcept {
+    return (GetKeyState(virtual_key) & 0x8000) != 0 ||
+           (GetAsyncKeyState(virtual_key) & 0x8000) != 0;
 }
 
-ModifierKeyState current_modifier_key_state() {
+bool key_is_down(TextService::KeyStateReader reader,
+                 void* context,
+                 int virtual_key) noexcept {
+    return reader ? reader(virtual_key, context) : win32_key_is_down(virtual_key);
+}
+
+std::wstring same_directory_settings_path(const std::wstring& dll_path) {
+    if (dll_path.empty()) {
+        return L"";
+    }
+    const size_t slash = dll_path.find_last_of(L"\\/");
+    if (slash == std::wstring::npos) {
+        return L"LocalPinyinSettings.exe";
+    }
+    return dll_path.substr(0, slash + 1) + L"LocalPinyinSettings.exe";
+}
+
+struct RouteThreadSnapshot {
+    DWORD process_id = 0;
+    DWORD current_thread_id = 0;
+    DWORD hook_target_thread_id = 0;
+    DWORD foreground_window_thread_id = 0;
+    DWORD focus_window_thread_id = 0;
+};
+
+DWORD thread_id_for_window(HWND hwnd) noexcept {
+    return hwnd ? GetWindowThreadProcessId(hwnd, nullptr) : 0;
+}
+
+RouteThreadSnapshot current_route_thread_snapshot(DWORD hook_target_thread_id) noexcept {
+    RouteThreadSnapshot snapshot{};
+    snapshot.process_id = GetCurrentProcessId();
+    snapshot.current_thread_id = GetCurrentThreadId();
+    snapshot.hook_target_thread_id = hook_target_thread_id;
+    snapshot.foreground_window_thread_id = thread_id_for_window(GetForegroundWindow());
+
+    GUITHREADINFO gui_info{};
+    gui_info.cbSize = sizeof(gui_info);
+    if (GetGUIThreadInfo(0, &gui_info)) {
+        snapshot.focus_window_thread_id = thread_id_for_window(gui_info.hwndFocus ? gui_info.hwndFocus : gui_info.hwndActive);
+    }
+    return snapshot;
+}
+
+const wchar_t* input_mode_text(InputMode mode) noexcept {
+    return mode == InputMode::Chinese ? L"Chinese" : L"English";
+}
+
+bool is_ctrl_space_key(unsigned long key) noexcept {
+    return key == VK_SPACE || is_ctrl_key(key);
+}
+
+ModifierKeyState current_modifier_key_state(TextService::KeyStateReader reader,
+                                            void* context) {
+    return modifier_key_state_from_readings(ModifierKeyReadings{
+        key_is_down(reader, context, VK_CONTROL),
+        key_is_down(reader, context, VK_LCONTROL),
+        key_is_down(reader, context, VK_RCONTROL),
+        key_is_down(reader, context, VK_SHIFT),
+        key_is_down(reader, context, VK_LSHIFT),
+        key_is_down(reader, context, VK_RSHIFT),
+        key_is_down(reader, context, VK_MENU),
+        key_is_down(reader, context, VK_LMENU),
+        key_is_down(reader, context, VK_RMENU),
+        key_is_down(reader, context, VK_LWIN),
+        key_is_down(reader, context, VK_RWIN)
+    });
+}
+
+struct CtrlSpaceRuntimeState {
     ModifierKeyState modifiers;
-    modifiers.ctrl = (GetKeyState(VK_CONTROL) & 0x8000) != 0;
-    modifiers.shift = (GetKeyState(VK_SHIFT) & 0x8000) != 0;
-    modifiers.alt = (GetKeyState(VK_MENU) & 0x8000) != 0;
-    modifiers.win = (GetKeyState(VK_LWIN) & 0x8000) != 0 || (GetKeyState(VK_RWIN) & 0x8000) != 0;
-    return modifiers;
+    bool generic_ctrl_down = false;
+    bool left_ctrl_down = false;
+    bool right_ctrl_down = false;
+    bool space_down = false;
+};
+
+CtrlSpaceRuntimeState current_ctrl_space_runtime_state(TextService::KeyStateReader reader,
+                                                       void* context) {
+    CtrlSpaceRuntimeState state{};
+    state.generic_ctrl_down = key_is_down(reader, context, VK_CONTROL);
+    state.left_ctrl_down = key_is_down(reader, context, VK_LCONTROL);
+    state.right_ctrl_down = key_is_down(reader, context, VK_RCONTROL);
+    state.space_down = key_is_down(reader, context, VK_SPACE);
+    state.modifiers = modifier_key_state_from_readings(ModifierKeyReadings{
+        state.generic_ctrl_down,
+        state.left_ctrl_down,
+        state.right_ctrl_down,
+        key_is_down(reader, context, VK_SHIFT),
+        key_is_down(reader, context, VK_LSHIFT),
+        key_is_down(reader, context, VK_RSHIFT),
+        key_is_down(reader, context, VK_MENU),
+        key_is_down(reader, context, VK_LMENU),
+        key_is_down(reader, context, VK_RMENU),
+        key_is_down(reader, context, VK_LWIN),
+        key_is_down(reader, context, VK_RWIN)
+    });
+    return state;
+}
+
+std::wstring hook_lifecycle_message(const wchar_t* event_name,
+                                    HHOOK hook,
+                                    DWORD thread_id,
+                                    bool result,
+                                    DWORD win32_error,
+                                    bool uninstall_failed) {
+    const RouteThreadSnapshot threads = current_route_thread_snapshot(thread_id);
+    std::wstringstream stream;
+    stream << L"event=" << (event_name ? event_name : L"unknown")
+           << L" hook_type=WH_KEYBOARD"
+           << L" hook_scope=current_thread"
+           << L" process_id=" << threads.process_id
+           << L" current_thread_id=" << threads.current_thread_id
+           << L" hook_thread_id=" << thread_id
+           << L" hook_target_thread_id=" << threads.hook_target_thread_id
+           << L" foreground_window_thread_id=" << threads.foreground_window_thread_id
+           << L" focus_window_thread_id=" << threads.focus_window_thread_id
+           << L" hook_handle=0x" << std::hex
+           << reinterpret_cast<std::uintptr_t>(hook)
+           << std::dec
+           << L" result=" << bool_text(result)
+           << L" win32_error=" << win32_error
+           << L" uninstall_failed=" << bool_text(uninstall_failed);
+    return stream.str();
+}
+
+std::wstring activation_lifecycle_message(const wchar_t* event_name,
+                                          HHOOK hook,
+                                          DWORD hook_target_thread_id,
+                                          bool hook_installed,
+                                          InputMode mode,
+                                          bool runtime_active_before,
+                                          bool runtime_active_after,
+                                          bool pending_release,
+                                          bool hook_uninstall_failed) {
+    const RouteThreadSnapshot threads = current_route_thread_snapshot(hook_target_thread_id);
+    std::wstringstream stream;
+    stream << L"event=" << (event_name ? event_name : L"unknown")
+           << L" process_id=" << threads.process_id
+           << L" current_thread_id=" << threads.current_thread_id
+           << L" hook_target_thread_id=" << threads.hook_target_thread_id
+           << L" foreground_window_thread_id=" << threads.foreground_window_thread_id
+           << L" focus_window_thread_id=" << threads.focus_window_thread_id
+           << L" hook_handle=0x" << std::hex << reinterpret_cast<std::uintptr_t>(hook) << std::dec
+           << L" hook_installed=" << bool_text(hook_installed)
+           << L" input_mode=" << input_mode_text(mode)
+           << L" runtime_status_active_before=" << bool_text(runtime_active_before)
+           << L" runtime_status_active_after=" << bool_text(runtime_active_after)
+           << L" pending_release=" << bool_text(pending_release)
+           << L" hook_uninstall_failed=" << bool_text(hook_uninstall_failed);
+    return stream.str();
+}
+
+void query_focus_context(ITfThreadMgr* thread_mgr,
+                         ITfDocumentMgr** document_mgr,
+                         ITfContext** context,
+                         HRESULT* focus_hr,
+                         HRESULT* top_hr) {
+    if (document_mgr) {
+        *document_mgr = nullptr;
+    }
+    if (context) {
+        *context = nullptr;
+    }
+    if (focus_hr) {
+        *focus_hr = E_POINTER;
+    }
+    if (top_hr) {
+        *top_hr = E_POINTER;
+    }
+    if (!thread_mgr || !document_mgr) {
+        return;
+    }
+    ITfDocumentMgr* focused = nullptr;
+    const HRESULT get_focus_hr = thread_mgr->GetFocus(&focused);
+    if (focus_hr) {
+        *focus_hr = get_focus_hr;
+    }
+    if (FAILED(get_focus_hr) || !focused) {
+        return;
+    }
+    *document_mgr = focused;
+    if (context) {
+        const HRESULT get_top_hr = focused->GetTop(context);
+        if (top_hr) {
+            *top_hr = get_top_hr;
+        }
+    }
+}
+
+std::uintptr_t document_mgr_identity_for_context(ITfContext* context) noexcept {
+    if (!context) {
+        return 0;
+    }
+    ITfDocumentMgr* document_mgr = nullptr;
+    if (FAILED(context->GetDocumentMgr(&document_mgr)) || !document_mgr) {
+        return 0;
+    }
+    const auto identity = reinterpret_cast<std::uintptr_t>(document_mgr);
+    document_mgr->Release();
+    return identity;
+}
+
+void read_open_close_compartment(ITfThreadMgr* thread_mgr, HRESULT* hr, bool* open) {
+    if (hr) {
+        *hr = E_POINTER;
+    }
+    if (open) {
+        *open = false;
+    }
+    if (!thread_mgr) {
+        return;
+    }
+    ITfCompartmentMgr* compartments = nullptr;
+    HRESULT result = thread_mgr->GetGlobalCompartment(&compartments);
+    if (FAILED(result) || !compartments) {
+        if (hr) {
+            *hr = result;
+        }
+        return;
+    }
+    ITfCompartment* compartment = nullptr;
+    result = compartments->GetCompartment(GUID_COMPARTMENT_KEYBOARD_OPENCLOSE, &compartment);
+    compartments->Release();
+    if (FAILED(result) || !compartment) {
+        if (hr) {
+            *hr = result;
+        }
+        return;
+    }
+    VARIANT value;
+    VariantInit(&value);
+    result = compartment->GetValue(&value);
+    if (SUCCEEDED(result) && open) {
+        if (value.vt == VT_I4) {
+            *open = value.lVal != 0;
+        } else if (value.vt == VT_BOOL) {
+            *open = value.boolVal != VARIANT_FALSE;
+        }
+    }
+    VariantClear(&value);
+    compartment->Release();
+    if (hr) {
+        *hr = result;
+    }
 }
 
 }  // namespace
@@ -46,7 +284,18 @@ TextService::TextService() {
     dll_add_ref();
 }
 
+void TextService::set_key_state_reader_for_testing(KeyStateReader reader,
+                                                   void* context) noexcept {
+    key_state_reader_ = reader;
+    key_state_reader_context_ = reader ? context : nullptr;
+}
+
 TextService::~TextService() {
+    end_candidate_ui_element(L"teardown");
+    clear_transient_contexts();
+    language_bar_.clear_callbacks();
+    language_bar_.unregister_item();
+    uninstall_thread_keyboard_hook();
     unpreserve_ctrl_space_key();
     unadvise_key_event_sink();
     if (thread_mgr_) {
@@ -89,33 +338,112 @@ HRESULT TextService::Activate(ITfThreadMgr* thread_mgr, TfClientId client_id) {
     return ActivateEx(thread_mgr, client_id, 0);
 }
 
-HRESULT TextService::ActivateEx(ITfThreadMgr* thread_mgr, TfClientId client_id, DWORD) {
+HRESULT TextService::ActivateEx(ITfThreadMgr* thread_mgr, TfClientId client_id, DWORD flags) {
     if (!thread_mgr) {
         return E_POINTER;
     }
+    ActivationFocusDiagnostics activation{};
+    activation.text_service_activated = true;
+    activation.activation_flags = flags;
+    ITfThreadMgr2* thread_mgr2 = nullptr;
+    activation.thread_mgr2_qi_hr = thread_mgr->QueryInterface(IID_PPV_ARGS(&thread_mgr2));
+    activation.thread_mgr2_available = SUCCEEDED(activation.thread_mgr2_qi_hr) && thread_mgr2 != nullptr;
+    if (activation.thread_mgr2_available) {
+        activation.get_active_flags_called = true;
+        activation.get_active_flags_hr = thread_mgr2->GetActiveFlags(&activation.active_flags);
+        thread_mgr2->Release();
+    }
+    activation.thread_manager_identity = reinterpret_cast<std::uintptr_t>(thread_mgr);
+    activation.client_id = client_id;
+    activation.language_bar_update_requested = true;
+    activation.language_bar_state = mode_ == InputMode::Chinese ? L"Chinese" : L"English";
+    read_open_close_compartment(thread_mgr, &activation.compartment_read_hr,
+                                &activation.compartment_open_close_state);
+    log_status(L"ctrl-space",
+               activation_lifecycle_message(L"activate_begin",
+                                            keyboard_hook_,
+                                            GetCurrentThreadId(),
+                                            keyboard_hook_ != nullptr,
+                                            mode_,
+                                            false,
+                                            false,
+                                            ctrl_space_toggle_.pending_release,
+                                            keyboard_hook_uninstall_failed_));
     thread_mgr_ = thread_mgr;
     thread_mgr_->AddRef();
     client_id_ = client_id;
+    language_bar_.set_toggle_callback([this](const wchar_t* source) {
+        return toggle_input_mode_from_language_bar(source ? source : L"mode_icon");
+    });
+    language_bar_.set_settings_callback([this](const wchar_t* source) {
+        return open_settings_from_language_bar(source ? source : L"mode_icon");
+    });
     language_bar_.set_mode(mode_);
+    const HRESULT langbar_hr = language_bar_.register_item(thread_mgr_);
+    if (FAILED(langbar_hr)) {
+        log_status(L"tsf", L"LanguageBar AddItem failed " + hresult_hex(langbar_hr));
+    }
+    language_bar_.publish_initial_mode();
 
     const HRESULT hr = advise_key_event_sink();
+    activation.key_sink_advise_called = true;
+    activation.key_sink_advise_hr = hr;
+    activation.key_sink_advised = key_sink_advised_;
     HRESULT preserve_hr = S_OK;
     if (SUCCEEDED(hr)) {
         preserve_hr = preserve_ctrl_space_key();
     }
     const HRESULT result = FAILED(hr) ? hr : preserve_hr;
+    if (SUCCEEDED(result)) {
+        const bool hook_installed = install_thread_keyboard_hook();
+        log_status(L"ctrl-space",
+                   std::wstring(L"event=activate_hook_install_result hook_installed=") +
+                       bool_text(hook_installed));
+        publish_runtime_input_mode_status(L"activate", true);
+    }
+    log_status(L"ctrl-space",
+               activation_lifecycle_message(L"activate_complete",
+                                            keyboard_hook_,
+                                            keyboard_hook_thread_id_ ? keyboard_hook_thread_id_ : GetCurrentThreadId(),
+                                            keyboard_hook_ != nullptr,
+                                            mode_,
+                                            false,
+                                            SUCCEEDED(result),
+                                            ctrl_space_toggle_.pending_release,
+                                            keyboard_hook_uninstall_failed_));
     log_status(L"tsf", FAILED(result) ? L"ActivateEx failed " + hresult_hex(result) : L"ActivateEx succeeded");
+    log_activation_focus_diagnostics(activation);
     return result;
 }
 
 HRESULT TextService::Deactivate() {
+    ActivationFocusDiagnostics deactivation{};
+    deactivation.deactivation_started = true;
+    deactivation.text_service_activated = false;
+    deactivation.thread_manager_identity = reinterpret_cast<std::uintptr_t>(thread_mgr_);
+    deactivation.client_id = client_id_;
+    deactivation.key_sink_unadvise_called = key_sink_advised_;
+    log_status(L"ctrl-space",
+               activation_lifecycle_message(L"deactivate_begin",
+                                            keyboard_hook_,
+                                            keyboard_hook_thread_id_ ? keyboard_hook_thread_id_ : GetCurrentThreadId(),
+                                            keyboard_hook_ != nullptr,
+                                            mode_,
+                                            true,
+                                            true,
+                                            ctrl_space_toggle_.pending_release,
+                                            keyboard_hook_uninstall_failed_));
+    uninstall_thread_keyboard_hook();
     const HRESULT unpreserve_hr = unpreserve_ctrl_space_key();
+    language_bar_.clear_callbacks();
+    const HRESULT langbar_hr = language_bar_.unregister_item();
+    const bool was_key_sink_advised = key_sink_advised_;
     unadvise_key_event_sink();
-    candidate_window_.hide(L"deactivate");
-    composition_.clear();
-    composing_.clear();
-    candidates_.clear();
+    deactivation.key_sink_unadvise_called = was_key_sink_advised;
+    deactivation.key_sink_unadvise_hr = key_sink_advised_ ? E_FAIL : S_OK;
+    reset_transient_input_state(L"deactivate");
     ctrl_space_toggle_ = CtrlSpaceToggleTracker{};
+    ctrl_space_key_down_ = CtrlSpaceKeyDownState{};
     shift_toggle_ = ShiftToggleTracker{};
     has_last_caret_rect_ = false;
     if (thread_mgr_) {
@@ -123,8 +451,23 @@ HRESULT TextService::Deactivate() {
         thread_mgr_ = nullptr;
     }
     client_id_ = TF_CLIENTID_NULL;
+    publish_runtime_input_mode_status(L"deactivate", false);
+    log_status(L"ctrl-space",
+               activation_lifecycle_message(L"deactivate_complete",
+                                            keyboard_hook_,
+                                            keyboard_hook_thread_id_,
+                                            keyboard_hook_ != nullptr,
+                                            mode_,
+                                            true,
+                                            false,
+                                            ctrl_space_toggle_.pending_release,
+                                            keyboard_hook_uninstall_failed_));
     log_status(L"tsf", L"Deactivate");
-    return FAILED(unpreserve_hr) ? unpreserve_hr : S_OK;
+    log_activation_focus_diagnostics(deactivation);
+    if (FAILED(unpreserve_hr)) {
+        return unpreserve_hr;
+    }
+    return FAILED(langbar_hr) ? langbar_hr : S_OK;
 }
 
 HRESULT TextService::advise_key_event_sink() {
@@ -134,6 +477,9 @@ HRESULT TextService::advise_key_event_sink() {
     ITfKeystrokeMgr* keystroke_mgr = nullptr;
     HRESULT hr = thread_mgr_->QueryInterface(IID_PPV_ARGS(&keystroke_mgr));
     if (FAILED(hr)) {
+        log_status(L"compatibility",
+                   L"key_sink_advise_called=true key_sink_advise_hr=" + hresult_hex(hr) +
+                       L" key_sink_advised=false");
         return hr;
     }
     hr = keystroke_mgr->AdviseKeyEventSink(client_id_, static_cast<ITfKeyEventSink*>(this), TRUE);
@@ -141,6 +487,9 @@ HRESULT TextService::advise_key_event_sink() {
         key_sink_advised_ = true;
     }
     keystroke_mgr->Release();
+    log_status(L"compatibility",
+               L"key_sink_advise_called=true key_sink_advise_hr=" + hresult_hex(hr) +
+                   L" key_sink_advised=" + bool_text(key_sink_advised_));
     return hr;
 }
 
@@ -149,11 +498,14 @@ void TextService::unadvise_key_event_sink() {
         return;
     }
     ITfKeystrokeMgr* keystroke_mgr = nullptr;
+    HRESULT hr = E_NOINTERFACE;
     if (SUCCEEDED(thread_mgr_->QueryInterface(IID_PPV_ARGS(&keystroke_mgr)))) {
-        keystroke_mgr->UnadviseKeyEventSink(client_id_);
+        hr = keystroke_mgr->UnadviseKeyEventSink(client_id_);
         keystroke_mgr->Release();
     }
     key_sink_advised_ = false;
+    log_status(L"compatibility",
+               L"key_sink_unadvise_called=true key_sink_unadvise_hr=" + hresult_hex(hr));
 }
 
 HRESULT TextService::preserve_ctrl_space_key() {
@@ -209,20 +561,273 @@ HRESULT TextService::unpreserve_ctrl_space_key() {
     return hr;
 }
 
-HRESULT TextService::OnSetFocus(BOOL) {
+LRESULT CALLBACK TextService::thread_keyboard_hook_proc(int code, WPARAM wparam, LPARAM lparam) {
+    if (code == HC_ACTION && g_thread_keyboard_hook_service) {
+        if (g_thread_keyboard_hook_service->handle_thread_keyboard_hook(code, static_cast<unsigned long>(wparam), lparam)) {
+            return 1;
+        }
+    }
+    return CallNextHookEx(g_thread_keyboard_hook_service ? g_thread_keyboard_hook_service->keyboard_hook_ : nullptr,
+                          code,
+                          wparam,
+                          lparam);
+}
+
+bool TextService::install_thread_keyboard_hook() {
+    const DWORD thread_id = GetCurrentThreadId();
+    log_status(L"ctrl-space",
+               hook_lifecycle_message(L"hook_install_attempt",
+                                      keyboard_hook_,
+                                      thread_id,
+                                      false,
+                                      0,
+                                      keyboard_hook_uninstall_failed_));
+    if (keyboard_hook_) {
+        if (!g_thread_keyboard_hook_service) {
+            g_thread_keyboard_hook_service = this;
+        }
+        log_status(L"ctrl-space",
+                   hook_lifecycle_message(L"hook_install_existing",
+                                          keyboard_hook_,
+                                          thread_id,
+                                          true,
+                                          0,
+                                          keyboard_hook_uninstall_failed_));
+        return true;
+    }
+    GUITHREADINFO gui_info{};
+    gui_info.cbSize = sizeof(gui_info);
+    if (!GetGUIThreadInfo(thread_id, &gui_info)) {
+        const DWORD error = GetLastError();
+        log_status(L"ctrl-space",
+                   hook_lifecycle_message(L"hook_install_failed_no_gui_thread",
+                                          nullptr,
+                                          thread_id,
+                                          false,
+                                          error,
+                                          keyboard_hook_uninstall_failed_));
+        return false;
+    }
+    if (g_thread_keyboard_hook_service && g_thread_keyboard_hook_service != this) {
+        log_status(L"ctrl-space",
+                   hook_lifecycle_message(L"hook_install_failed_thread_already_has_service",
+                                          nullptr,
+                                          thread_id,
+                                          false,
+                                          ERROR_ALREADY_EXISTS,
+                                          keyboard_hook_uninstall_failed_));
+        return false;
+    }
+    SetLastError(ERROR_SUCCESS);
+    keyboard_hook_ = SetWindowsHookExW(WH_KEYBOARD,
+                                       &TextService::thread_keyboard_hook_proc,
+                                       nullptr,
+                                       thread_id);
+    if (!keyboard_hook_) {
+        const DWORD error = GetLastError();
+        log_status(L"ctrl-space",
+                   hook_lifecycle_message(L"hook_install_failed",
+                                          nullptr,
+                                          thread_id,
+                                          false,
+                                          error,
+                                          keyboard_hook_uninstall_failed_));
+        return false;
+    }
+    g_thread_keyboard_hook_service = this;
+    keyboard_hook_thread_id_ = thread_id;
+    keyboard_hook_uninstall_failed_ = false;
+    log_status(L"ctrl-space",
+               hook_lifecycle_message(L"hook_install_success",
+                                      keyboard_hook_,
+                                      thread_id,
+                                      true,
+                                      0,
+                                      false));
+    return true;
+}
+
+void TextService::uninstall_thread_keyboard_hook() {
+    if (!keyboard_hook_) {
+        log_status(L"ctrl-space",
+                   hook_lifecycle_message(L"hook_uninstall_skipped_no_hook",
+                                          nullptr,
+                                          GetCurrentThreadId(),
+                                          true,
+                                          0,
+                                          keyboard_hook_uninstall_failed_));
+        return;
+    }
+    const HHOOK hook = keyboard_hook_;
+    const DWORD thread_id = GetCurrentThreadId();
+    log_status(L"ctrl-space",
+               hook_lifecycle_message(L"hook_uninstall_attempt",
+                                      hook,
+                                      thread_id,
+                                      false,
+                                      0,
+                                      keyboard_hook_uninstall_failed_));
+    SetLastError(ERROR_SUCCESS);
+    if (!UnhookWindowsHookEx(hook)) {
+        const DWORD error = GetLastError();
+        keyboard_hook_uninstall_failed_ = true;
+        if (g_thread_keyboard_hook_service == this) {
+            g_thread_keyboard_hook_service = nullptr;
+        }
+        log_status(L"ctrl-space",
+                   hook_lifecycle_message(L"hook_uninstall_failed",
+                                          hook,
+                                          keyboard_hook_thread_id_ ? keyboard_hook_thread_id_ : thread_id,
+                                          false,
+                                          error,
+                                          true));
+        return;
+    }
+    keyboard_hook_ = nullptr;
+    keyboard_hook_uninstall_failed_ = false;
+    const DWORD hook_thread_id = keyboard_hook_thread_id_ ? keyboard_hook_thread_id_ : thread_id;
+    keyboard_hook_thread_id_ = 0;
+    if (g_thread_keyboard_hook_service == this) {
+        g_thread_keyboard_hook_service = nullptr;
+    }
+    log_status(L"ctrl-space",
+               hook_lifecycle_message(L"hook_uninstall_success",
+                                      hook,
+                                      hook_thread_id,
+                                      true,
+                                      0,
+                                      false));
+}
+
+bool TextService::handle_thread_keyboard_hook(int, unsigned long key, LPARAM lparam) {
+    const bool key_up = (static_cast<unsigned long long>(lparam) & 0x80000000ULL) != 0;
+    if (!is_ctrl_space_key(key)) {
+        return false;
+    }
+    if (key_up) {
+        if (is_ctrl_key(key)) {
+            handle_ctrl_space_ctrl_keyup_latch(key, lparam, L"thread_keyboard_hook");
+        }
+        if (key == VK_SPACE) {
+            handle_ctrl_space_keyup_fallback(nullptr, key, lparam, L"thread_keyboard_hook", nullptr);
+        }
+        const CtrlSpaceRuntimeState state =
+            current_ctrl_space_runtime_state(key_state_reader_, key_state_reader_context_);
+        ctrl_space_toggle_on_key_up(ctrl_space_toggle_, key, state.modifiers.ctrl, state.space_down);
+        return false;
+    }
+
+    const CtrlSpaceRuntimeState state =
+        current_ctrl_space_runtime_state(key_state_reader_, key_state_reader_context_);
+    ctrl_space_chord_on_key_down(ctrl_space_toggle_, key);
+    const bool chord_matched = is_ctrl_space(key, state.modifiers);
+    if (!thread_mgr_ || client_id_ == TF_CLIENTID_NULL) {
+        return false;
+    }
+    if (!chord_matched) {
+        return false;
+    }
+
+    handle_ctrl_space_toggle(nullptr, L"ctrl_space_thread_keyboard_hook");
+    return true;
+}
+
+bool TextService::handle_ctrl_space_ctrl_keyup_latch(unsigned long key,
+                                                     LPARAM,
+                                                     const wchar_t*) {
+    const CtrlSpaceRuntimeState state =
+        current_ctrl_space_runtime_state(key_state_reader_, key_state_reader_context_);
+    const CtrlSpaceCtrlKeyUpLatchDecision decision =
+        ctrl_space_chord_on_ctrl_key_up(ctrl_space_toggle_, key, state.modifiers, state.space_down);
+    return decision.allowed;
+}
+
+bool TextService::handle_ctrl_space_keyup_fallback(ITfContext* context,
+                                                   unsigned long key,
+                                                   LPARAM,
+                                                   const wchar_t*,
+                                                   bool* toggled) {
+    if (toggled) {
+        *toggled = false;
+    }
+    const CtrlSpaceRuntimeState state =
+        current_ctrl_space_runtime_state(key_state_reader_, key_state_reader_context_);
+    const CtrlSpaceKeyUpFallbackDecision decision =
+        ctrl_space_keyup_fallback_decision(ctrl_space_toggle_, key, state.modifiers);
+    if (!decision.allowed) {
+        return false;
+    }
+
+    const bool did_toggle = handle_ctrl_space_toggle(context, L"ctrl_space_keyup_fallback");
+    if (toggled) {
+        *toggled = did_toggle;
+    }
+    return did_toggle;
+}
+
+HRESULT TextService::OnSetFocus(BOOL foreground) {
+    ITfDocumentMgr* focus_document_mgr = nullptr;
+    ITfContext* top_context = nullptr;
+    HRESULT focus_hr = E_UNEXPECTED;
+    HRESULT top_hr = E_UNEXPECTED;
+    query_focus_context(thread_mgr_, &focus_document_mgr, &top_context, &focus_hr, &top_hr);
+    ActivationFocusDiagnostics focus{};
+    focus.thread_focus_set_received = foreground != FALSE;
+    focus.thread_focus_kill_received = foreground == FALSE;
+    focus.document_focus_changed = true;
+    focus.old_document_mgr_identity = document_mgr_identity_for_context(composition_context_);
+    focus.new_document_mgr_identity = reinterpret_cast<std::uintptr_t>(focus_document_mgr);
+    focus.document_mgr_identity = focus.new_document_mgr_identity;
+    focus.context_stack_top_hr = top_hr;
+    focus.context_stack_top_present = top_context != nullptr;
+    focus.context_identity = reinterpret_cast<std::uintptr_t>(top_context);
+    read_open_close_compartment(thread_mgr_, &focus.compartment_read_hr,
+                                &focus.compartment_open_close_state);
+    std::wstringstream stream;
+    stream << L"focus_change_received=true foreground=" << bool_text(foreground != FALSE)
+           << L" composition_active=" << bool_text(!composing_.empty())
+           << L" candidate_active=" << bool_text(!candidates_.empty())
+           << L" pending_edit_session=false"
+           << L" composition_context_identity="
+           << reinterpret_cast<std::uintptr_t>(composition_context_)
+           << L" candidate_context_identity="
+           << reinterpret_cast<std::uintptr_t>(candidate_context_)
+           << L" old_document_mgr_identity=" << focus.old_document_mgr_identity
+           << L" new_document_mgr_identity=" << focus.new_document_mgr_identity
+           << L" context_stack_top_hr=" << hresult_hex(top_hr)
+           << L" context_stack_top_present=" << bool_text(top_context != nullptr)
+           << L" context_identity=" << reinterpret_cast<std::uintptr_t>(top_context);
+    log_status(L"compatibility", stream.str());
+    log_activation_focus_diagnostics(focus);
+    if (top_context) {
+        top_context->Release();
+    }
+    if (focus_document_mgr) {
+        focus_document_mgr->Release();
+    }
     return S_OK;
 }
 
-HRESULT TextService::OnTestKeyDown(ITfContext*, WPARAM wparam, LPARAM, BOOL* eaten) {
+HRESULT TextService::OnTestKeyDown(ITfContext* context, WPARAM wparam, LPARAM, BOOL* eaten) {
     if (!eaten) {
         return E_POINTER;
     }
     *eaten = FALSE;
-    const ModifierKeyState modifiers = current_modifier_key_state();
-    if (is_ctrl_space(static_cast<unsigned long>(wparam), modifiers)) {
+    const CtrlSpaceRuntimeState ctrl_space_state =
+        current_ctrl_space_runtime_state(key_state_reader_, key_state_reader_context_);
+    const ModifierKeyState modifiers = ctrl_space_state.modifiers;
+    const unsigned long key = static_cast<unsigned long>(wparam);
+    const bool ctrl_space_relevant_key = is_ctrl_space_key(key);
+    if (ctrl_space_relevant_key) {
+        ctrl_space_chord_on_key_down(ctrl_space_toggle_, key);
+    }
+    if (is_ctrl_space(key, modifiers)) {
+        ctrl_space_key_down_.accepted_by_test_key_down = true;
+        handle_ctrl_space_toggle(context, L"ctrl_space_test_key_down");
         *eaten = TRUE;
         return S_OK;
     }
+    ctrl_space_key_down_.accepted_by_test_key_down = false;
     if (can_start_shift_toggle(static_cast<unsigned long>(wparam), modifiers, shift_toggle_enabled())) {
         *eaten = TRUE;
         return S_OK;
@@ -243,8 +848,14 @@ HRESULT TextService::OnTestKeyDown(ITfContext*, WPARAM wparam, LPARAM, BOOL* eat
         return S_OK;
     }
     if ((wparam >= L'A' && wparam <= L'Z') || (wparam == VK_OEM_7 && !composing_.empty()) ||
-        wparam == VK_ESCAPE || wparam == VK_LEFT || wparam == VK_RIGHT) {
+        wparam == VK_ESCAPE) {
         *eaten = TRUE;
+    } else if (wparam == VK_LEFT || wparam == VK_RIGHT) {
+        *eaten = should_eat_candidate_navigation_key(
+            static_cast<unsigned long>(wparam),
+            !composing_.empty(),
+            candidates_.size(),
+            transient_context_matches(context)) ? TRUE : FALSE;
     }
     return S_OK;
 }
@@ -254,15 +865,29 @@ HRESULT TextService::OnKeyDown(ITfContext* context, WPARAM wparam, LPARAM, BOOL*
         return E_POINTER;
     }
     *eaten = FALSE;
+    prepare_context_for_key(context);
 
-    const ModifierKeyState modifiers = current_modifier_key_state();
+    const CtrlSpaceRuntimeState ctrl_space_state =
+        current_ctrl_space_runtime_state(key_state_reader_, key_state_reader_context_);
+    const ModifierKeyState modifiers = ctrl_space_state.modifiers;
     const bool shift_enabled = shift_toggle_enabled();
+    const unsigned long key = static_cast<unsigned long>(wparam);
+    if (is_ctrl_space_key(key)) {
+        ctrl_space_chord_on_key_down(ctrl_space_toggle_, key);
+    }
 
-    if (is_ctrl_space(static_cast<unsigned long>(wparam), modifiers)) {
-        handle_ctrl_space_toggle(context, ctrl_space_preserved_ ? L"ctrl_space_keydown" : L"ctrl_space_fallback");
+    const bool ctrl_space_key_down = should_handle_ctrl_space_key_down(
+        key,
+        modifiers,
+        ctrl_space_key_down_);
+    if (ctrl_space_key_down) {
+        ctrl_space_key_down_.accepted_by_test_key_down = false;
+        const wchar_t* reason = ctrl_space_preserved_ ? L"ctrl_space_keydown" : L"ctrl_space_fallback";
+        handle_ctrl_space_toggle(context, reason);
         *eaten = TRUE;
         return S_OK;
     }
+    ctrl_space_key_down_.accepted_by_test_key_down = false;
 
     shift_toggle_on_key_down(shift_toggle_, static_cast<unsigned long>(wparam), modifiers, shift_enabled);
     if (can_start_shift_toggle(static_cast<unsigned long>(wparam), modifiers, shift_enabled)) {
@@ -273,7 +898,8 @@ HRESULT TextService::OnKeyDown(ITfContext* context, WPARAM wparam, LPARAM, BOOL*
     if (mode_ == InputMode::English || should_pass_through(wparam)) {
         return S_OK;
     }
-    return handle_chinese_key(context, wparam, eaten) ? S_OK : S_OK;
+    handle_chinese_key(context, wparam, eaten);
+    return S_OK;
 }
 
 HRESULT TextService::OnTestKeyUp(ITfContext*, WPARAM wparam, LPARAM, BOOL* eaten) {
@@ -284,19 +910,33 @@ HRESULT TextService::OnTestKeyUp(ITfContext*, WPARAM wparam, LPARAM, BOOL* eaten
     return S_OK;
 }
 
-HRESULT TextService::OnKeyUp(ITfContext* context, WPARAM wparam, LPARAM, BOOL* eaten) {
+HRESULT TextService::OnKeyUp(ITfContext* context, WPARAM wparam, LPARAM lparam, BOOL* eaten) {
     if (!eaten) {
         return E_POINTER;
     }
     *eaten = FALSE;
-    ctrl_space_toggle_on_key_up(ctrl_space_toggle_, static_cast<unsigned long>(wparam));
-    const ModifierKeyState modifiers = current_modifier_key_state();
+    const unsigned long key = static_cast<unsigned long>(wparam);
+    ctrl_space_key_down_.accepted_by_test_key_down = false;
+    const CtrlSpaceRuntimeState ctrl_space_state =
+        current_ctrl_space_runtime_state(key_state_reader_, key_state_reader_context_);
+    const ModifierKeyState modifiers = ctrl_space_state.modifiers;
+    if (is_ctrl_key(key)) {
+        handle_ctrl_space_ctrl_keyup_latch(key, lparam, L"OnKeyUp");
+    }
+    if (key == VK_SPACE) {
+        if (handle_ctrl_space_keyup_fallback(context, key, lparam, L"OnKeyUp", nullptr)) {
+            *eaten = TRUE;
+        }
+    }
     if (shift_toggle_on_key_up(shift_toggle_,
-                               static_cast<unsigned long>(wparam),
+                               key,
                                modifiers,
                                shift_toggle_enabled())) {
         toggle_input_mode(context, L"shift_toggle");
         *eaten = TRUE;
+    }
+    if (is_ctrl_space_key(key)) {
+        ctrl_space_toggle_on_key_up(ctrl_space_toggle_, key, ctrl_space_state.modifiers.ctrl, ctrl_space_state.space_down);
     }
     return S_OK;
 }
@@ -307,6 +947,7 @@ HRESULT TextService::OnPreservedKey(ITfContext* context, REFGUID guid, BOOL* eat
     }
     *eaten = FALSE;
     if (preserved_key_action_for_guid(guid) == PreservedKeyAction::ToggleInputMode) {
+        ctrl_space_key_down_.accepted_by_test_key_down = false;
         handle_ctrl_space_toggle(context, L"ctrl_space_preserved_key");
         *eaten = TRUE;
     }
@@ -314,16 +955,13 @@ HRESULT TextService::OnPreservedKey(ITfContext* context, REFGUID guid, BOOL* eat
 }
 
 HRESULT TextService::OnCompositionTerminated(TfEditCookie, ITfComposition*) {
-    composition_.clear();
-    composing_.clear();
-    candidates_.clear();
-    has_last_caret_rect_ = false;
-    candidate_window_.hide(L"composition_terminated");
+    reset_transient_input_state(L"composition_terminated");
     return S_OK;
 }
 
 bool TextService::should_pass_through(WPARAM wparam) const {
-    const ModifierKeyState modifiers = current_modifier_key_state();
+    const ModifierKeyState modifiers =
+        current_modifier_key_state(key_state_reader_, key_state_reader_context_);
     if (modifiers.alt || modifiers.win) {
         return true;
     }
@@ -339,11 +977,26 @@ bool TextService::shift_toggle_enabled() const {
 
 bool TextService::handle_ctrl_space_toggle(ITfContext* context, const wchar_t* reason) {
     if (!ctrl_space_toggle_should_fire(ctrl_space_toggle_, true)) {
-        log_status(L"mode", L"Ctrl+Space duplicate event ignored until key release");
         return false;
     }
     toggle_input_mode(context, reason);
     return true;
+}
+
+void TextService::publish_runtime_input_mode_status(const wchar_t* source, bool active) {
+    RuntimeInputModeStatus status;
+    status.schema_version = 1;
+    status.active = active;
+    status.mode = mode_;
+    status.source = source ? source : L"unknown";
+    status.process_id = GetCurrentProcessId();
+    status.thread_id = GetCurrentThreadId();
+    status.sequence = ++runtime_status_sequence_;
+    status.updated_at_utc_ms = runtime_status_current_utc_ms();
+    status.available = active;
+    if (!settings_store_.save_runtime_input_mode_status(status)) {
+        log_status(L"mode", L"runtime_status write failed");
+    }
 }
 
 HRESULT TextService::toggle_input_mode(ITfContext* context, const wchar_t* reason) {
@@ -353,11 +1006,13 @@ HRESULT TextService::toggle_input_mode(ITfContext* context, const wchar_t* reaso
         candidates_.clear();
         selected_index_ = 0;
         has_last_caret_rect_ = false;
+        end_candidate_ui_element(reason ? reason : L"mode_toggle");
         candidate_window_.hide(reason);
     }
 
     mode_ = toggled_input_mode(mode_);
     language_bar_.set_mode(mode_);
+    publish_runtime_input_mode_status(reason, true);
     std::wstringstream stream;
     stream << (mode_ == InputMode::Chinese ? L"Chinese" : L"English")
            << L" reason=" << (reason ? reason : L"unknown");
@@ -365,6 +1020,55 @@ HRESULT TextService::toggle_input_mode(ITfContext* context, const wchar_t* reaso
     if (mode_ == InputMode::Chinese) {
         update_candidate_window(context);
     }
+    return S_OK;
+}
+
+HRESULT TextService::toggle_input_mode_from_language_bar(const wchar_t* reason) {
+    log_status(L"language-bar", L"event=mode_icon_toggle_enter");
+    return toggle_input_mode(nullptr, reason ? reason : L"mode_icon_toggle");
+}
+
+HRESULT TextService::open_settings_from_language_bar(const wchar_t* source) {
+    const std::wstring settings_path = same_directory_settings_path(module_path(g_instance));
+    const std::wstring source_text = source ? source : L"unknown";
+    if (settings_path.empty()) {
+        log_status(L"language-bar", L"event=open_settings source=" + source_text + L" path= result=module_path_empty");
+        return HRESULT_FROM_WIN32(ERROR_PATH_NOT_FOUND);
+    }
+    const DWORD attributes = GetFileAttributesW(settings_path.c_str());
+    if (attributes == INVALID_FILE_ATTRIBUTES || (attributes & FILE_ATTRIBUTE_DIRECTORY) != 0) {
+        const DWORD error = attributes == INVALID_FILE_ATTRIBUTES ? GetLastError() : ERROR_FILE_NOT_FOUND;
+        log_status(L"language-bar",
+                   L"event=open_settings source=" + source_text +
+                       L" path=" + settings_path +
+                       L" result=missing error=" + std::to_wstring(error));
+        return HRESULT_FROM_WIN32(error);
+    }
+
+    std::wstring command_line = L"\"" + settings_path + L"\"";
+    STARTUPINFOW startup{};
+    startup.cb = sizeof(startup);
+    PROCESS_INFORMATION process{};
+    if (!CreateProcessW(settings_path.c_str(),
+                        command_line.data(),
+                        nullptr,
+                        nullptr,
+                        FALSE,
+                        0,
+                        nullptr,
+                        nullptr,
+                        &startup,
+                        &process)) {
+        const DWORD error = GetLastError();
+        log_status(L"language-bar",
+                   L"event=open_settings source=" + source_text +
+                       L" path=" + settings_path +
+                       L" result=failed error=" + std::to_wstring(error));
+        return HRESULT_FROM_WIN32(error);
+    }
+    CloseHandle(process.hThread);
+    CloseHandle(process.hProcess);
+    log_status(L"language-bar", L"event=open_settings source=" + source_text + L" path=" + settings_path + L" result=S_OK");
     return S_OK;
 }
 
@@ -376,6 +1080,7 @@ bool TextService::handle_chinese_key(ITfContext* context, WPARAM wparam, BOOL* e
     if (wparam >= L'A' && wparam <= L'Z') {
         if (composing_.empty()) {
             engine_.refresh_user_lexicon_if_needed(false);
+            set_composition_context(context);
         }
         composing_.push_back(static_cast<wchar_t>(std::towlower(static_cast<wint_t>(wparam))));
         selected_index_ = 0;
@@ -450,14 +1155,18 @@ bool TextService::handle_chinese_key(ITfContext* context, WPARAM wparam, BOOL* e
         return false;
     }
 
-    if (wparam == VK_LEFT && !candidates_.empty()) {
+    if (should_eat_candidate_navigation_key(
+            static_cast<unsigned long>(wparam), !composing_.empty(), candidates_.size(),
+            transient_context_matches(context)) && wparam == VK_LEFT) {
         selected_index_ = selected_index_ == 0 ? candidates_.size() - 1 : selected_index_ - 1;
         update_candidate_window(context);
         *eaten = TRUE;
         return true;
     }
 
-    if (wparam == VK_RIGHT && !candidates_.empty()) {
+    if (should_eat_candidate_navigation_key(
+            static_cast<unsigned long>(wparam), !composing_.empty(), candidates_.size(),
+            transient_context_matches(context)) && wparam == VK_RIGHT) {
         selected_index_ = (selected_index_ + 1) % candidates_.size();
         update_candidate_window(context);
         *eaten = TRUE;
@@ -483,11 +1192,42 @@ HRESULT TextService::update_composition(ITfContext* context) {
 }
 
 void TextService::update_candidate_window(ITfContext* context) {
+    const bool logical_show_requested =
+        mode_ == InputMode::Chinese && !composing_.empty() && !candidates_.empty();
+    if (logical_show_requested) {
+        if (candidate_context_ != context) {
+            end_candidate_ui_element(L"candidate_context_changed");
+            set_candidate_context(context);
+            candidate_layout_retry_attempts_ = 0;
+            has_last_caret_rect_ = false;
+        }
+    } else {
+        candidate_window_.cancel_layout_retry();
+        candidate_layout_retry_attempts_ = 0;
+        end_candidate_ui_element(L"candidate_model_inactive");
+        set_candidate_context(nullptr);
+    }
+
+    CandidateModelSnapshot snapshot =
+        make_candidate_model_snapshot(composing_, candidates_, selected_index_, context);
+    if (logical_show_requested) {
+        HRESULT ui_element_hr = S_OK;
+        if (!candidate_ui_element_session_.active()) {
+            ui_element_hr = candidate_ui_element_session_.begin(thread_mgr_, snapshot);
+        } else {
+            ui_element_hr = candidate_ui_element_session_.update(snapshot);
+        }
+        if (FAILED(ui_element_hr)) {
+            log_status(L"candidate-ui", L"ui_element_begin_or_update_failed hr=" + hresult_hex(ui_element_hr));
+        }
+    }
+
     RECT anchor_rect{};
     bool anchor_available = false;
     if (mode_ == InputMode::Chinese && !composing_.empty() && !candidates_.empty()) {
         anchor_available = candidate_anchor_rect(context, &anchor_rect);
     }
+    candidate_ui_element_session_.set_anchor_available(anchor_available);
 
     const CandidateDisplayDecision decision = decide_candidate_display(CandidateDisplayState{
         mode_ == InputMode::English,
@@ -496,20 +1236,87 @@ void TextService::update_candidate_window(ITfContext* context) {
         anchor_available
     });
 
-    std::wstringstream stream;
-    stream << L"request_show=" << bool_text(decision.request_show)
-           << L" composition_active=" << bool_text(!composing_.empty())
-           << L" candidate_count=" << candidates_.size()
-           << L" caret_rect_available=" << bool_text(anchor_available)
-           << L" hide_reason=" << candidate_hide_reason_to_string(decision.hide_reason);
-    log_status(L"candidate-ui", stream.str());
+    if (logical_show_requested && candidate_ui_element_session_.active() &&
+        candidate_ui_element_session_.host_managed()) {
+        candidate_layout_retry_attempts_ = 0;
+        candidate_window_.cancel_layout_retry();
+        candidate_window_.hide(L"host_managed_ui_element");
+        candidate_ui_element_session_.set_self_draw_enabled(false);
+        candidate_ui_element_session_.set_window_visible(false);
+        candidate_ui_element_session_.set_presentation(
+            CandidatePresentationMode::HostManagedUIElement,
+            CandidatePresentationFallbackReason::None,
+            false);
+        release_candidate_model_snapshot(snapshot);
+        return;
+    }
 
     if (!decision.request_show) {
         const std::wstring reason = candidate_hide_reason_to_string(decision.hide_reason);
         candidate_window_.hide(reason.c_str());
+        candidate_ui_element_session_.set_self_draw_enabled(true);
+        candidate_ui_element_session_.set_window_visible(false);
+        const bool ui_element_fallback_failed =
+            !candidate_ui_element_session_.active() &&
+            candidate_ui_element_session_.diagnostics().ui_element_begin_called &&
+            FAILED(candidate_ui_element_session_.diagnostics().ui_element_begin_hr);
+        const auto fallback_reason = ui_element_fallback_failed
+            ? CandidatePresentationFallbackReason::BeginFailed
+            : (candidate_ui_element_session_.diagnostics().ui_element_manager_available
+                   ? CandidatePresentationFallbackReason::NoSelfDrawAnchor
+                   : CandidatePresentationFallbackReason::UIElementManagerUnavailable);
+        candidate_ui_element_session_.set_presentation(
+            CandidatePresentationMode::None,
+            logical_show_requested ? fallback_reason : CandidatePresentationFallbackReason::ModelInactive,
+            logical_show_requested);
+        const CandidateLayoutRetryDecision retry = decide_candidate_layout_retry(
+            logical_show_requested, anchor_available, candidate_layout_retry_attempts_);
+        if (retry.schedule && candidate_context_) {
+            candidate_layout_retry_attempts_ = retry.next_attempt;
+            candidate_window_.schedule_layout_retry(
+                [this]() {
+                    if (candidate_context_ && mode_ == InputMode::Chinese &&
+                        !composing_.empty() && !candidates_.empty()) {
+                        update_candidate_window(candidate_context_);
+                    }
+                },
+                retry.next_attempt,
+                retry.delay_ms);
+        }
+        release_candidate_model_snapshot(snapshot);
         return;
     }
-    candidate_window_.show(composing_, candidates_, selected_index_, anchor_rect);
+    candidate_layout_retry_attempts_ = 0;
+    const CandidateWindowOwnerInfo owner_info = candidate_owner_info(context);
+    candidate_window_.show(composing_, candidates_, selected_index_, anchor_rect, owner_info);
+    candidate_ui_element_session_.set_self_draw_enabled(true);
+    candidate_ui_element_session_.set_window_visible(candidate_window_.is_visible());
+    const bool begin_failed =
+        candidate_ui_element_session_.diagnostics().ui_element_begin_called &&
+        FAILED(candidate_ui_element_session_.diagnostics().ui_element_begin_hr);
+    const auto show_fallback_reason =
+        candidate_ui_element_session_.active()
+            ? CandidatePresentationFallbackReason::None
+            : (begin_failed ? CandidatePresentationFallbackReason::BeginFailed
+                            : CandidatePresentationFallbackReason::UIElementManagerUnavailable);
+    candidate_ui_element_session_.set_presentation(
+        CandidatePresentationMode::SelfDrawnHwnd,
+        show_fallback_reason,
+        false);
+    release_candidate_model_snapshot(snapshot);
+}
+
+void TextService::end_candidate_ui_element(const wchar_t* reason) {
+    if (!candidate_ui_element_session_.active()) {
+        return;
+    }
+    const HRESULT hr = candidate_ui_element_session_.end();
+    if (FAILED(hr)) {
+        log_status(L"candidate-ui",
+                   L"ui_element_end_failed reason=" +
+                       std::wstring(reason ? reason : L"unknown") +
+                       L" hr=" + hresult_hex(hr));
+    }
 }
 
 HRESULT TextService::commit_selected(ITfContext* context) {
@@ -517,17 +1324,17 @@ HRESULT TextService::commit_selected(ITfContext* context) {
         return S_FALSE;
     }
     const std::wstring committed = candidates_[selected_index_].text;
+    const std::wstring learned_pinyin = composing_;
     const HRESULT hr = composition_.commit_text(context, client_id_, committed);
     if (FAILED(hr)) {
         log_status(L"composition", L"commit failed " + hresult_hex(hr));
+        if (!composition_.active()) {
+            reset_transient_input_state(L"commit_end_failed_after_clear");
+        }
         return hr;
     }
-    engine_.learn(composing_, committed);
-    composing_.clear();
-    candidates_.clear();
-    selected_index_ = 0;
-    has_last_caret_rect_ = false;
-    candidate_window_.hide(L"commit");
+    engine_.learn(learned_pinyin, committed);
+    reset_transient_input_state(L"commit");
     return S_OK;
 }
 
@@ -539,13 +1346,12 @@ HRESULT TextService::commit_raw_composition(ITfContext* context) {
     const HRESULT hr = composition_.commit_text(context, client_id_, committed);
     if (FAILED(hr)) {
         log_status(L"composition", L"commit raw failed " + hresult_hex(hr));
+        if (!composition_.active()) {
+            reset_transient_input_state(L"commit_raw_end_failed_after_clear");
+        }
         return hr;
     }
-    composing_.clear();
-    candidates_.clear();
-    selected_index_ = 0;
-    has_last_caret_rect_ = false;
-    candidate_window_.hide(L"commit_raw");
+    reset_transient_input_state(L"commit_raw");
     return S_OK;
 }
 
@@ -554,12 +1360,80 @@ HRESULT TextService::cancel_composition(ITfContext* context) {
     if (FAILED(hr)) {
         log_status(L"composition", L"cancel failed " + hresult_hex(hr));
     }
+    reset_transient_input_state(L"cancel");
+    return hr;
+}
+
+void TextService::set_composition_context(ITfContext* context) {
+    if (composition_context_ == context) {
+        return;
+    }
+    if (context) {
+        context->AddRef();
+    }
+    if (composition_context_) {
+        composition_context_->Release();
+    }
+    composition_context_ = context;
+}
+
+void TextService::set_candidate_context(ITfContext* context) {
+    if (candidate_context_ == context) {
+        return;
+    }
+    if (context) {
+        context->AddRef();
+    }
+    if (candidate_context_) {
+        candidate_context_->Release();
+    }
+    candidate_context_ = context;
+}
+
+void TextService::clear_transient_contexts() {
+    set_candidate_context(nullptr);
+    set_composition_context(nullptr);
+}
+
+void TextService::reset_transient_input_state(const wchar_t* reason) {
+    candidate_window_.cancel_layout_retry();
+    end_candidate_ui_element(reason ? reason : L"transient_reset");
+    composition_.clear();
     composing_.clear();
     candidates_.clear();
     selected_index_ = 0;
     has_last_caret_rect_ = false;
-    candidate_window_.hide(L"cancel");
-    return hr;
+    candidate_layout_retry_attempts_ = 0;
+    candidate_window_.hide(reason ? reason : L"transient_reset");
+    clear_transient_contexts();
+}
+
+void TextService::log_activation_focus_diagnostics(const ActivationFocusDiagnostics& diagnostics) {
+    log_status(L"compatibility", make_activation_focus_diagnostic_log(diagnostics));
+}
+
+bool TextService::transient_context_matches(ITfContext* context) const noexcept {
+    return !transient_context_changed(
+        reinterpret_cast<std::uintptr_t>(composition_context_),
+        reinterpret_cast<std::uintptr_t>(context),
+        !composing_.empty() || !candidates_.empty() || composition_.active());
+}
+
+void TextService::prepare_context_for_key(ITfContext* context) {
+    const bool active = !composing_.empty() || !candidates_.empty() || composition_.active();
+    if (!transient_context_changed(
+            reinterpret_cast<std::uintptr_t>(composition_context_),
+            reinterpret_cast<std::uintptr_t>(context), active)) {
+        return;
+    }
+
+    if (composition_.active() && composition_context_) {
+        const HRESULT cancel_hr = composition_.cancel(composition_context_, client_id_);
+        if (FAILED(cancel_hr)) {
+            log_status(L"composition", L"context change cancel failed " + hresult_hex(cancel_hr));
+        }
+    }
+    reset_transient_input_state(L"context_changed");
 }
 
 bool TextService::candidate_anchor_rect(ITfContext* context, RECT* rect) {
@@ -569,27 +1443,13 @@ bool TextService::candidate_anchor_rect(ITfContext* context, RECT* rect) {
 
     if (context) {
         RECT tsf_rect{};
-        const HRESULT hr = composition_.caret_rect(context, client_id_, &tsf_rect);
-        std::wstringstream stream;
-        stream << L"get_text_ext_hr=" << hresult_hex(hr);
+        const HRESULT hr = composition_.caret_rect(context, client_id_, &tsf_rect, nullptr);
         if (hr == S_OK && usable_anchor_rect(tsf_rect)) {
             *rect = tsf_rect;
             last_caret_rect_ = tsf_rect;
             has_last_caret_rect_ = true;
-            stream << L" caret_rect_valid=true caret_source=tsf";
-            log_status(L"candidate-ui", stream.str());
             return true;
         }
-
-        stream << L" caret_rect_valid=false caret_source=tsf";
-        if (hr == S_OK) {
-            stream << L" reason=empty_rect";
-        } else {
-            stream << L" reason=" << caret_rect_failure_reason(hr);
-        }
-        log_status(L"candidate-ui", stream.str());
-    } else {
-        log_status(L"candidate-ui", L"get_text_ext_hr=not_called caret_rect_valid=false caret_source=tsf reason=null_context");
     }
 
     RECT gui_rect{};
@@ -597,18 +1457,31 @@ bool TextService::candidate_anchor_rect(ITfContext* context, RECT* rect) {
         *rect = gui_rect;
         last_caret_rect_ = gui_rect;
         has_last_caret_rect_ = true;
-        log_status(L"candidate-ui", L"caret_rect_valid=true caret_source=gui_caret fallback=true");
         return true;
     }
 
     if (has_last_caret_rect_ && usable_anchor_rect(last_caret_rect_)) {
         *rect = last_caret_rect_;
-        log_status(L"candidate-ui", L"caret_rect_valid=true caret_source=last_valid fallback=true");
         return true;
     }
-
-    log_status(L"candidate-ui", L"caret_rect_valid=false caret_source=none fallback=false");
     return false;
+}
+
+CandidateWindowOwnerInfo TextService::candidate_owner_info(ITfContext* context) const {
+    CandidateWindowOwnerInfo owner_info{};
+    ITfContextView* view = nullptr;
+    if (context && SUCCEEDED(context->GetActiveView(&view)) && view) {
+        view->GetWnd(&owner_info.context_hwnd);
+        view->Release();
+    }
+
+    owner_info.context_valid = owner_info.context_hwnd && IsWindow(owner_info.context_hwnd);
+    if (owner_info.context_valid) {
+        owner_info.root_hwnd = GetAncestor(owner_info.context_hwnd, GA_ROOT);
+        owner_info.root_valid = owner_info.root_hwnd && IsWindow(owner_info.root_hwnd);
+    }
+
+    return owner_info;
 }
 
 bool TextService::gui_caret_rect(RECT* rect) const {

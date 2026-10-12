@@ -1,12 +1,14 @@
 #pragma once
 
 #include "../engine/user_lexicon.h"
+#include "dictionary_catalog.h"
 #include "settings_store.h"
 
 #include <windows.h>
 #include <commctrl.h>
 
 #include <array>
+#include <string>
 #include <vector>
 
 namespace localpinyin {
@@ -22,6 +24,12 @@ enum class SettingsPage {
 enum class UserLexiconEditorMode {
     NewEntry,
     EditExisting,
+};
+
+enum class UserLexiconInputField {
+    Pinyin,
+    Word,
+    Frequency,
 };
 
 struct SettingsRect {
@@ -45,20 +53,96 @@ struct SettingsWindowLayout {
     std::array<SettingsRect, 5> nav_items{};
     SettingsRect primary_card;
     SettingsRect secondary_card;
+    SettingsRect candidate_options_card;
+    SettingsRect candidate_hint_title;
+    SettingsRect candidate_hint_description;
+    SettingsRect candidate_hint_toggle;
+    SettingsRect candidate_shift_title;
+    SettingsRect candidate_shift_description;
+    SettingsRect candidate_shift_toggle;
+    SettingsRect candidate_shift_note;
+    SettingsRect shortcut_test_card;
+    SettingsRect shortcut_test_title;
+    SettingsRect shortcut_test_description;
+    SettingsRect shortcut_test_ctrl_key;
+    SettingsRect shortcut_test_space_key;
+    SettingsRect shortcut_test_mode_label;
+    SettingsRect shortcut_test_mode_value;
+    SettingsRect shortcut_test_input_label;
+    SettingsRect shortcut_test_input_box;
+    SettingsRect shortcut_test_boundary_note;
+    SettingsRect appearance_preview_card;
+    SettingsRect appearance_theme_card;
+    SettingsRect appearance_preview_window;
+    SettingsRect candidate_size_slider;
+    SettingsRect candidate_size_value;
+    SettingsRect candidate_size_label_left;
+    SettingsRect candidate_size_label_middle;
+    SettingsRect candidate_size_label_right;
     SettingsRect search_box;
     SettingsRect refresh_button;
     SettingsRect user_table;
     SettingsRect user_empty_state;
     SettingsRect user_editor_card;
     SettingsRect user_editor_title;
+    SettingsRect user_frequency_help;
+    SettingsRect user_new_button;
+    SettingsRect user_save_button;
+    SettingsRect user_delete_button;
     SettingsRect user_status;
     SettingsRect about_card;
     std::array<SettingsRect, 7> about_labels{};
     std::array<SettingsRect, 7> about_values{};
     SettingsRect about_open_data_button;
     SettingsRect about_copy_data_button;
-    SettingsRect about_open_github_button;
-    SettingsRect about_copy_github_button;
+    SettingsRect about_dictionary_card;
+    SettingsRect about_dictionary_title;
+    SettingsRect about_dictionary_count;
+    SettingsRect about_dictionary_preview_button;
+    SettingsRect about_offline_card;
+};
+
+struct CandidateSizeSliderMetrics {
+    SettingsRect track;
+    std::array<SettingsRect, 7> stops{};
+    SettingsRect thumb;
+};
+
+struct CandidateSizeSliderDrawState {
+    bool hot = false;
+    bool pressed = false;
+    bool focused = false;
+    bool disabled = false;
+};
+
+struct CandidateSizeSliderDrawStyle {
+    COLORREF background = 0;
+    COLORREF track = 0;
+    COLORREF track_active = 0;
+    COLORREF stop = 0;
+    COLORREF stop_active = 0;
+    COLORREF thumb = 0;
+    COLORREF thumb_border = 0;
+    COLORREF focus = 0;
+    bool focus_uses_dotted_frame = false;
+    bool focus_covers_entire_client_rect = false;
+};
+
+struct SettingsSwitchDrawStyle {
+    COLORREF track = 0;
+    COLORREF track_border = 0;
+    COLORREF thumb = 0;
+    COLORREF thumb_border = 0;
+    bool thumb_on_right = false;
+    bool uses_dotted_focus_frame = false;
+    bool uses_heavy_focus_ring = false;
+};
+
+struct SettingsSwitchMetrics {
+    SettingsRect track;
+    SettingsRect thumb;
+    int track_corner_radius = 0;
+    int thumb_corner_radius = 0;
 };
 
 struct SettingsVisualSpec {
@@ -74,6 +158,7 @@ struct SettingsVisualSpec {
     bool owner_draw_fills_client_rect = true;
     bool static_controls_use_theme_brushes = true;
     bool uses_legacy_group_boxes = false;
+    bool uses_full_card_child_windows = false;
     bool edit_uses_client_edge = false;
     bool list_view_uses_grid_lines = false;
     bool user_lexicon_status_inside_editor = true;
@@ -166,6 +251,16 @@ struct SettingsThemeRefreshPlan {
     bool change_active_page = false;
 };
 
+struct SettingsPageVisibilityPolicy {
+    bool show_only_active_page_controls = true;
+    bool hide_inactive_page_controls = true;
+    bool keep_card_surfaces_parent_painted = true;
+    bool page_switch_invalidates_content_only = true;
+    bool page_switch_erases_background = false;
+    bool shortcut_keys_invalidate_only_keycaps = true;
+    bool user_lexicon_focus_invalidates_only_input_frame = true;
+};
+
 struct SettingsAboutPathPolicy {
     bool uses_pixel_width_compaction = true;
     bool exposes_full_path_with_copy_button = true;
@@ -200,6 +295,22 @@ struct UserLexiconEditorState {
     std::wstring primary_action_text = L"\u65B0\u589E\u8BCD\u6761";
 };
 
+struct ShortcutTestKeyReadings {
+    bool left_ctrl_down = false;
+    bool right_ctrl_down = false;
+    bool space_down = false;
+};
+
+struct ShortcutTestKeyState {
+    bool ctrl_down = false;
+    bool space_down = false;
+};
+
+struct SettingsKeyboardState {
+    bool left_ctrl_down = false;
+    bool right_ctrl_down = false;
+};
+
 [[nodiscard]] int scale_settings_value(int value, int dpi);
 [[nodiscard]] SettingsSize settings_minimum_client_size(int dpi);
 [[nodiscard]] SettingsSize settings_initial_client_size(int dpi);
@@ -222,9 +333,40 @@ struct UserLexiconEditorState {
     SettingsControlRole role,
     SettingsControlSurface surface,
     const SettingsControlDrawState& state);
+[[nodiscard]] SettingsSwitchDrawStyle settings_switch_draw_style(
+    const SettingsThemePalette& palette,
+    bool checked,
+    bool focused);
+[[nodiscard]] SettingsSwitchMetrics settings_switch_metrics(
+    const SettingsRect& bounds,
+    bool checked,
+    int dpi);
 [[nodiscard]] SettingsHeaderDrawStyle settings_header_draw_style(const SettingsThemePalette& palette);
 [[nodiscard]] SettingsThemeRefreshPlan settings_theme_refresh_plan();
+[[nodiscard]] SettingsPageVisibilityPolicy settings_page_visibility_policy();
 [[nodiscard]] SettingsAboutPathPolicy settings_about_path_policy();
+void apply_settings_dark_title_bar(HWND hwnd, bool dark);
+[[nodiscard]] CandidateSizeSliderMetrics calculate_candidate_size_slider_metrics(
+    const SettingsRect& bounds,
+    int level,
+    int dpi);
+[[nodiscard]] int candidate_size_slider_level_from_x(const SettingsRect& bounds, int x, int dpi);
+[[nodiscard]] CandidateSizeSliderDrawStyle candidate_size_slider_draw_style(
+    const SettingsThemePalette& palette,
+    const CandidateSizeSliderDrawState& state);
+[[nodiscard]] bool settings_page_control_visible(SettingsPage active_page, SettingsPage owner_page);
+[[nodiscard]] SettingsRect settings_page_switch_dirty_rect(const SettingsWindowLayout& layout);
+[[nodiscard]] std::array<SettingsRect, 2> shortcut_test_key_dirty_rects(
+    const SettingsWindowLayout& layout,
+    int dpi);
+[[nodiscard]] SettingsRect user_lexicon_input_frame_rect(
+    const SettingsWindowLayout& layout,
+    UserLexiconInputField field,
+    int dpi);
+[[nodiscard]] bool settings_keyboard_suppresses_control_activation(
+    UINT message,
+    WPARAM key,
+    SettingsKeyboardState state) noexcept;
 [[nodiscard]] UserLexiconColumnWidths calculate_user_lexicon_column_widths(int table_width, int dpi);
 [[nodiscard]] UserLexiconRowVisualStyle user_lexicon_row_visual_style(bool selected, bool list_has_focus);
 [[nodiscard]] UserLexiconRowVisualStyle user_lexicon_row_visual_style(
@@ -238,6 +380,16 @@ struct UserLexiconEditorState {
     const std::vector<size_t>& filtered_indexes,
     int selected_row);
 [[nodiscard]] UserLexiconEditorState make_new_user_lexicon_editor_state(bool focus_pinyin);
+[[nodiscard]] constexpr ShortcutTestKeyState shortcut_test_key_state_from_readings(
+    ShortcutTestKeyReadings readings) noexcept {
+    return ShortcutTestKeyState{readings.left_ctrl_down || readings.right_ctrl_down, readings.space_down};
+}
+[[nodiscard]] constexpr ShortcutTestKeyState shortcut_test_key_state_after_focus_loss() noexcept {
+    return ShortcutTestKeyState{};
+}
+[[nodiscard]] constexpr ShortcutTestKeyState shortcut_test_key_state_after_sampling_stop() noexcept {
+    return ShortcutTestKeyState{};
+}
 
 class SettingsWindow {
 public:
@@ -261,6 +413,7 @@ private:
     SettingsControlRole control_role_for_id(int id) const;
     SettingsControlSurface control_surface_for_id(int id) const;
     void paint();
+    void render(HDC hdc);
     void draw_button(const DRAWITEMSTRUCT& item);
     bool draw_list_header_item(const NMCUSTOMDRAW& custom_draw);
     void paint_list_header(HWND header, HDC hdc);
@@ -268,10 +421,30 @@ private:
     void show_page(SettingsPage page);
     void apply_options_to_controls();
     void save_options_from_controls();
+    void sync_candidate_text_size_controls();
+    void persist_candidate_display_options();
+    void update_candidate_text_size_from_level(int level);
+    void invalidate_candidate_size_preview();
+    void draw_candidate_size_slider(HDC hdc, const RECT& paint_rect, const CandidateSizeSliderDrawState& state);
+    void draw_shortcut_test_keys(HDC hdc, const SettingsWindowLayout& layout);
+    void update_shortcut_test_key_state();
+    void update_runtime_input_mode_status();
+    void clear_shortcut_test_key_state();
+    void invalidate_shortcut_test_key_state_rects();
+    void invalidate_user_lexicon_input_frame(int control_id);
+    void set_shortcut_test_timer_enabled(bool enabled);
+    bool shortcut_test_should_sample() const;
+    static LRESULT CALLBACK candidate_size_slider_subclass_proc(
+        HWND hwnd,
+        UINT message,
+        WPARAM wparam,
+        LPARAM lparam,
+        UINT_PTR subclass_id,
+        DWORD_PTR ref_data);
     void open_data_dir();
     void copy_data_dir_to_clipboard();
-    void open_github_project();
-    void copy_github_url_to_clipboard();
+    void open_dictionary_preview();
+    void load_dictionary_catalog();
     bool copy_text_to_clipboard(const std::wstring& text, const wchar_t* success_message, const wchar_t* failure_message);
     void clear_learning_data();
     void load_user_lexicon();
@@ -296,6 +469,7 @@ private:
         DWORD_PTR ref_data);
 
     HWND hwnd_ = nullptr;
+    HINSTANCE instance_ = nullptr;
     std::array<HWND, 5> nav_buttons_{};
     std::array<std::vector<HWND>, 5> page_controls_{};
     HFONT body_font_ = nullptr;
@@ -310,13 +484,21 @@ private:
     HICON app_icon_small_ = nullptr;
     int dpi_ = 96;
     SettingsThemePalette palette_;
-    SettingsPage active_page_ = SettingsPage::UserLexicon;
+    SettingsPage active_page_ = SettingsPage::Appearance;
     HWND lexicon_search_ = nullptr;
     HWND lexicon_list_ = nullptr;
     HWND lexicon_empty_state_ = nullptr;
     HWND lexicon_pinyin_ = nullptr;
     HWND lexicon_word_ = nullptr;
     HWND lexicon_frequency_ = nullptr;
+    HWND candidate_size_slider_ = nullptr;
+    HWND candidate_size_value_ = nullptr;
+    bool candidate_size_slider_dragging_ = false;
+    bool shortcut_test_timer_active_ = false;
+    ShortcutTestKeyState shortcut_test_key_state_;
+    RuntimeInputModeStatus runtime_input_mode_status_;
+    HWND shortcut_test_input_ = nullptr;
+    HWND shortcut_mode_value_ = nullptr;
     HWND lexicon_new_button_ = nullptr;
     HWND lexicon_save_button_ = nullptr;
     HWND lexicon_delete_button_ = nullptr;
@@ -324,6 +506,8 @@ private:
     SettingsStore store_;
     CandidateWindowOptions options_;
     InputModeOptions input_mode_options_;
+    DictionaryCatalog dictionary_catalog_;
+    HWND dictionary_preview_hwnd_ = nullptr;
     std::vector<UserLexiconEntry> user_lexicon_entries_;
     std::vector<size_t> filtered_user_lexicon_indexes_;
 };

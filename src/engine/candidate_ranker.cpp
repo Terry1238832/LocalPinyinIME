@@ -1,4 +1,5 @@
 #include "candidate_ranker.h"
+#include "user_learning.h"
 
 #include <algorithm>
 
@@ -15,19 +16,23 @@ std::wstring key_for(const std::wstring& pinyin, const std::wstring& word) {
 }  // namespace
 
 void CandidateRanker::set_frequency(const std::wstring& pinyin, const std::wstring& word, int frequency) {
-    frequency_[key_for(pinyin, word)] = frequency;
+    frequency_[key_for(pinyin, word)] = std::clamp(frequency, 0, 100000);
 }
 
 void CandidateRanker::increment_frequency(const std::wstring& pinyin, const std::wstring& word) {
-    ++frequency_[key_for(pinyin, word)];
+    auto& count = frequency_[key_for(pinyin, word)];
+    count = std::min(count + 1, 100000);
 }
 
-std::vector<Candidate> CandidateRanker::rank(const std::wstring& pinyin, std::vector<Candidate> candidates) const {
+std::vector<Candidate> CandidateRanker::rank(const std::wstring& pinyin, std::vector<Candidate> candidates,
+                                          const UserLearning* learning) const {
     for (auto& candidate : candidates) {
+        int frequency = learning ? learning->frequency(pinyin, candidate.text) : 0;
         const auto it = frequency_.find(key_for(pinyin, candidate.text));
         if (it != frequency_.end()) {
-            candidate.user_frequency = std::min(it->second * kUserLearningScoreUnit, kMaxUserLearningScore);
+            frequency = std::max(frequency, it->second);
         }
+        candidate.user_frequency = std::min(frequency, kMaxUserLearningScore / kUserLearningScoreUnit) * kUserLearningScoreUnit;
     }
 
     std::stable_sort(candidates.begin(), candidates.end(), [](const Candidate& left, const Candidate& right) {

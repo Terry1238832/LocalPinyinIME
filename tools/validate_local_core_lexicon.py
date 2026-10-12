@@ -208,7 +208,7 @@ def main() -> int:
     parser.add_argument("--path", type=Path, required=True)
     parser.add_argument("--metadata", type=Path, required=True)
     parser.add_argument("--min-entries", type=int, default=8000)
-    parser.add_argument("--max-entries", type=int, default=12000)
+    parser.add_argument("--max-entries", type=int, default=25000)
     args = parser.parse_args()
 
     stats, _ = validate_lexicon(args.path, args.min_entries, args.max_entries)

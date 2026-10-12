@@ -14,10 +14,11 @@
 namespace localpinyin {
 namespace {
 
-constexpr wchar_t kDisplayName[] = L"LocalPinyinIME - \u79BB\u7EBF\u62FC\u97F3\u8F93\u5165\u6CD5";
+constexpr wchar_t kDisplayName[] = L"本地拼音";
 constexpr LANGID kLangId = MAKELANGID(LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED);
 
 std::wstring g_last_registration_diagnostic;
+std::wstring g_registration_warning;
 
 std::wstring guid_to_string(REFGUID guid) {
     wchar_t buffer[64]{};
@@ -58,8 +59,8 @@ void log_step_result(const std::wstring& step, HRESULT hr) {
 }
 
 void merge_failure(HRESULT hr, HRESULT& first_failure) {
-    if (FAILED(hr) && SUCCEEDED(first_failure)) {
-        first_failure = hr;
+    if (FAILED(hr)) {
+        first_failure = preserve_first_registration_failure(first_failure, hr);
     }
 }
 
@@ -83,6 +84,7 @@ void log_operation_result(const std::wstring& operation,
 
 void clear_last_registration_diagnostic() {
     g_last_registration_diagnostic.clear();
+    g_registration_warning.clear();
 }
 
 void set_last_registration_diagnostic(const std::wstring& stage,
@@ -136,10 +138,84 @@ bool has_last_registration_diagnostic() {
 std::wstring category_identity_fields(const TsfProfileCategory& category) {
     return L" category_name=" + std::wstring(category.name) +
            L" category_guid=" + guid_to_string(*category.category_guid) +
+           L" owner_clsid=" + guid_to_string(CLSID_LocalPinyinTextService) +
            L" item_guid=" + guid_to_string(*category.item_guid) +
            L" allow_register_category=" + bool_field(category.allow_register_category) +
+           L" allow_inconclusive_post_register_verification=" +
+               bool_field(category.allow_inconclusive_post_register_verification) +
            L" check_strategy=" + strategy_text(category.check_strategy) +
            L" profile_caps=" + format_hresult(static_cast<HRESULT>(category.profile_caps));
+}
+
+const wchar_t* category_verification_result_text(CategoryVerificationResult result) {
+    switch (result) {
+    case CategoryVerificationResult::RegisterCallFailed:
+        return L"RegisterCallFailed";
+    case CategoryVerificationResult::Verified:
+        return L"Verified";
+    case CategoryVerificationResult::VerificationInconclusive:
+        return L"Inconclusive";
+    }
+    return L"Unknown";
+}
+
+void log_bidirectional_category_verification(
+    const TsfProfileCategory& category,
+    const std::wstring& target_dll,
+    const BidirectionalCategoryVerification& verification,
+    unsigned int attempt,
+    bool continued_after_unobserved_registration) {
+    const std::wstring line =
+        L"stage=VerifyCategoryAfterRegister"
+        L" operation=VerifyCategoryAfterRegister" +
+        category_identity_fields(category) +
+        L" clsid=" + guid_to_string(CLSID_LocalPinyinTextService) +
+        L" profile=" + guid_to_string(GUID_LocalPinyinProfile) +
+        L" langid=" + format_langid(kLangId) +
+        L" register_called=TRUE"
+        L" register_hr=" + format_hresult(verification.register_hr) +
+        L" register_call_succeeded=" + bool_field(verification.register_call_succeeded) +
+        L" category_to_items_enum_hr=" +
+            format_hresult(verification.same_category_to_items.hr) +
+        L" category_to_items_count=" +
+            std::to_wstring(verification.same_category_to_items.count) +
+        L" category_to_items_found=" +
+            bool_field(verification.same_category_to_items.found) +
+        L" item_to_categories_enum_hr=" +
+            format_hresult(verification.same_item_to_categories.hr) +
+        L" item_to_categories_count=" +
+            std::to_wstring(verification.same_item_to_categories.count) +
+        L" item_to_categories_found=" +
+            bool_field(verification.same_item_to_categories.found) +
+        L" fresh_manager_checked=" + bool_field(verification.fresh_manager_checked) +
+        L" fresh_category_to_items_enum_hr=" +
+            format_hresult(verification.fresh_category_to_items.hr) +
+        L" fresh_category_to_items_count=" +
+            std::to_wstring(verification.fresh_category_to_items.count) +
+        L" fresh_category_to_items_found=" +
+            bool_field(verification.fresh_category_to_items.found) +
+        L" fresh_item_to_categories_enum_hr=" +
+            format_hresult(verification.fresh_item_to_categories.hr) +
+        L" fresh_item_to_categories_count=" +
+            std::to_wstring(verification.fresh_item_to_categories.count) +
+        L" fresh_item_to_categories_found=" +
+            bool_field(verification.fresh_item_to_categories.found) +
+        L" category_postcondition_observed=" +
+            bool_field(verification.category_postcondition_observed) +
+        L" verification_result=" +
+            category_verification_result_text(verification.result) +
+        L" verification_policy=" +
+            std::wstring(category.allow_inconclusive_post_register_verification
+                             ? L"keyboard_call_success_allows_inconclusive"
+                             : L"required_observation") +
+        L" continued_after_unobserved_registration=" +
+            bool_field(continued_after_unobserved_registration) +
+        L" verify_attempt=" + std::to_wstring(attempt) +
+        L" target_dll=" + target_dll;
+    log_status(L"registration", line);
+    if (continued_after_unobserved_registration) {
+        g_registration_warning = line;
+    }
 }
 
 void log_category_diagnostic(const std::wstring& stage,
@@ -150,11 +226,20 @@ void log_category_diagnostic(const std::wstring& stage,
                              bool exists_before,
                              bool register_called,
                              HRESULT register_hr,
-                             HRESULT enum_after_hr,
-                             bool exists_after,
-                             bool added_this_call,
-                             bool rollback_attempted = false,
-                             HRESULT rollback_hr = S_OK) {
+                              HRESULT enum_after_hr,
+                              bool exists_after,
+                              bool added_this_call,
+                              bool rollback_attempted = false,
+                              HRESULT rollback_hr = S_OK,
+                              bool fresh_manager_checked = false,
+                              HRESULT fresh_enum_after_hr = S_OK,
+                              bool fresh_exists_after = false,
+                              bool same_manager_stale = false,
+                              bool fresh_manager_verified = false,
+                              unsigned int verify_attempt = 0,
+                              const wchar_t* manager_source = L"same_manager",
+                              bool verification_fatal = true,
+                              const wchar_t* policy_reason = L"required_category") {
     std::wstring line =
         L"stage=" + stage +
         L" operation=" + stage +
@@ -170,13 +255,22 @@ void log_category_diagnostic(const std::wstring& stage,
         L" enum_after_hr=" + format_hresult(enum_after_hr) +
         L" exists_after=" + bool_field(exists_after) +
         L" added_this_call=" + bool_field(added_this_call) +
+        L" fresh_manager_checked=" + bool_field(fresh_manager_checked) +
+        L" fresh_enum_after_hr=" + format_hresult(fresh_enum_after_hr) +
+        L" fresh_exists_after=" + bool_field(fresh_exists_after) +
+        L" same_manager_stale=" + bool_field(same_manager_stale) +
+        L" fresh_manager_verified=" + bool_field(fresh_manager_verified) +
+        L" verify_attempt=" + std::to_wstring(verify_attempt) +
+        L" manager_source=" + (manager_source ? manager_source : L"unknown") +
+        L" verification_fatal=" + bool_field(verification_fatal) +
+        L" policy_reason=" + (policy_reason ? policy_reason : L"") +
         L" rollback_attempted=" + bool_field(rollback_attempted) +
         L" rollback_hr=" + format_hresult(rollback_hr);
     if (!target_dll.empty()) {
         line += L" target_dll=" + target_dll;
     }
     log_status(L"registration", line);
-    if (FAILED(hr)) {
+    if (FAILED(hr) && verification_fatal) {
         if (g_last_registration_diagnostic.empty()) {
             g_last_registration_diagnostic = line;
         } else {
@@ -454,6 +548,247 @@ bool category_registered(ITfCategoryMgr* category_mgr, REFGUID category, REFGUID
     return found;
 }
 
+CategoryMembershipObservation observe_category_to_items(
+    ITfCategoryMgr* category_mgr,
+    REFGUID category,
+    REFGUID expected_item) {
+    CategoryMembershipObservation observation{};
+    IEnumGUID* items = nullptr;
+    observation.hr = category_mgr->EnumItemsInCategory(category, &items);
+    if (FAILED(observation.hr) || !items) {
+        return observation;
+    }
+    for (;;) {
+        GUID current{};
+        ULONG fetched = 0;
+        const HRESULT next_hr = items->Next(1, &current, &fetched);
+        if (next_hr == S_FALSE || fetched == 0) {
+            break;
+        }
+        if (FAILED(next_hr)) {
+            observation.hr = next_hr;
+            break;
+        }
+        ++observation.count;
+        if (IsEqualGUID(current, expected_item)) {
+            observation.found = true;
+        }
+    }
+    items->Release();
+    return observation;
+}
+
+CategoryMembershipObservation observe_item_to_categories(
+    ITfCategoryMgr* category_mgr,
+    REFGUID item,
+    REFGUID expected_category) {
+    CategoryMembershipObservation observation{};
+    IEnumGUID* categories = nullptr;
+    observation.hr = category_mgr->EnumCategoriesInItem(item, &categories);
+    if (FAILED(observation.hr) || !categories) {
+        return observation;
+    }
+    for (;;) {
+        GUID current{};
+        ULONG fetched = 0;
+        const HRESULT next_hr = categories->Next(1, &current, &fetched);
+        if (next_hr == S_FALSE || fetched == 0) {
+            break;
+        }
+        if (FAILED(next_hr)) {
+            observation.hr = next_hr;
+            break;
+        }
+        ++observation.count;
+        if (IsEqualGUID(current, expected_category)) {
+            observation.found = true;
+        }
+    }
+    categories->Release();
+    return observation;
+}
+
+struct FreshCategoryObservations {
+    bool checked = false;
+    CategoryMembershipObservation category_to_items;
+    CategoryMembershipObservation item_to_categories;
+};
+
+FreshCategoryObservations observe_category_with_new_manager(
+    REFGUID category,
+    REFGUID item) {
+    FreshCategoryObservations observations{};
+    observations.checked = true;
+    ITfCategoryMgr* fresh_category_mgr = nullptr;
+    const HRESULT create_hr = CoCreateInstance(CLSID_TF_CategoryMgr,
+                                               nullptr,
+                                               CLSCTX_INPROC_SERVER,
+                                               IID_PPV_ARGS(&fresh_category_mgr));
+    if (FAILED(create_hr)) {
+        observations.category_to_items.hr = create_hr;
+        observations.item_to_categories.hr = create_hr;
+        return observations;
+    }
+    observations.category_to_items =
+        observe_category_to_items(fresh_category_mgr, category, item);
+    observations.item_to_categories =
+        observe_item_to_categories(fresh_category_mgr, item, category);
+    fresh_category_mgr->Release();
+    return observations;
+}
+
+BidirectionalCategoryVerification verify_category_bidirectionally_with_retry(
+    ITfCategoryMgr* category_mgr,
+    const TsfProfileCategory& category,
+    const std::wstring& target_dll,
+    bool existed_before,
+    HRESULT register_hr) {
+    BidirectionalCategoryVerification last{};
+    for (unsigned int attempt = 1;
+         attempt <= category_visibility_verification_attempts();
+         ++attempt) {
+        const CategoryMembershipObservation same_category_to_items =
+            observe_category_to_items(category_mgr,
+                                      *category.category_guid,
+                                      *category.item_guid);
+        const CategoryMembershipObservation same_item_to_categories =
+            observe_item_to_categories(category_mgr,
+                                       *category.item_guid,
+                                       *category.category_guid);
+
+        FreshCategoryObservations fresh{};
+        if (!same_category_to_items.found && !same_item_to_categories.found) {
+            fresh = observe_category_with_new_manager(*category.category_guid,
+                                                      *category.item_guid);
+        }
+
+        last = evaluate_bidirectional_category_verification(
+            register_hr,
+            existed_before,
+            same_category_to_items,
+            same_item_to_categories,
+            fresh.checked,
+            fresh.category_to_items,
+            fresh.item_to_categories);
+        const bool continue_after_unobserved =
+            last.result == CategoryVerificationResult::VerificationInconclusive &&
+            category.allow_inconclusive_post_register_verification &&
+            attempt == category_visibility_verification_attempts();
+        log_bidirectional_category_verification(category,
+                                                target_dll,
+                                                last,
+                                                attempt,
+                                                continue_after_unobserved);
+        if (last.result != CategoryVerificationResult::VerificationInconclusive ||
+            attempt == category_visibility_verification_attempts()) {
+            break;
+        }
+        Sleep(category_visibility_retry_delay_ms());
+    }
+    return last;
+}
+
+bool category_registered_with_new_manager(REFGUID category, REFGUID expected_item, HRESULT& enum_hr) {
+    enum_hr = S_OK;
+    ITfCategoryMgr* fresh_category_mgr = nullptr;
+    HRESULT hr = CoCreateInstance(CLSID_TF_CategoryMgr,
+                                  nullptr,
+                                  CLSCTX_INPROC_SERVER,
+                                  IID_PPV_ARGS(&fresh_category_mgr));
+    if (FAILED(hr)) {
+        enum_hr = hr;
+        return false;
+    }
+    const bool found = category_registered(fresh_category_mgr, category, expected_item, enum_hr);
+    fresh_category_mgr->Release();
+    return found;
+}
+
+CategoryFreshManagerVerification verify_category_after_register_with_retry(
+    ITfCategoryMgr* category_mgr,
+    const TsfProfileCategory& category,
+    const std::wstring& target_dll,
+    HRESULT enum_before_hr,
+    bool contains_before,
+    HRESULT register_hr,
+    bool verification_fatal = true) {
+    CategoryFreshManagerVerification last_verification{
+        HRESULT_FROM_WIN32(ERROR_NOT_FOUND),
+        false,
+        false,
+        true,
+        false,
+        false,
+        false,
+        false,
+    };
+
+    for (unsigned int attempt = 1; attempt <= category_visibility_verification_attempts(); ++attempt) {
+        HRESULT verify_hr = S_OK;
+        const bool contains_after =
+            category_registered(category_mgr, *category.category_guid, *category.item_guid, verify_hr);
+        const CategoryPostRegisterVerification same_manager_verification =
+            evaluate_category_after_register(verify_hr,
+                                             contains_before,
+                                             contains_after,
+                                             category.allow_register_category);
+
+        bool fresh_check_performed = false;
+        HRESULT fresh_verify_hr = S_OK;
+        bool fresh_contains_after = false;
+        if (FAILED(same_manager_verification.hr) &&
+            same_manager_verification.missing_required_item &&
+            category.allow_register_category) {
+            fresh_check_performed = true;
+            fresh_contains_after = category_registered_with_new_manager(
+                *category.category_guid,
+                *category.item_guid,
+                fresh_verify_hr);
+        }
+
+        last_verification =
+            evaluate_category_after_register_with_fresh_manager(verify_hr,
+                                                                contains_before,
+                                                                contains_after,
+                                                                category.allow_register_category,
+                                                                fresh_verify_hr,
+                                                                fresh_contains_after,
+                                                                fresh_check_performed);
+        log_category_diagnostic(L"VerifyCategoryAfterRegister",
+                                category,
+                                last_verification.hr,
+                                target_dll,
+                                enum_before_hr,
+                                contains_before,
+                                true,
+                                register_hr,
+                                verify_hr,
+                                contains_after,
+                                last_verification.added_this_call,
+                                false,
+                                S_OK,
+                                fresh_check_performed,
+                                fresh_verify_hr,
+                                fresh_contains_after,
+                                last_verification.same_manager_stale,
+                                last_verification.fresh_manager_verified,
+                                attempt,
+                                fresh_check_performed ? L"same_manager+fresh_manager" : L"same_manager",
+                                verification_fatal,
+                                verification_fatal ? L"required_category" : L"compatibility_capability_diagnostic");
+
+        if (SUCCEEDED(last_verification.hr) ||
+            last_verification.query_failed ||
+            !last_verification.missing_required_item ||
+            attempt == category_visibility_verification_attempts()) {
+            break;
+        }
+        Sleep(category_visibility_retry_delay_ms());
+    }
+
+    return last_verification;
+}
+
 void log_profile_caps_observation(const ProfilePostRegisterVerification& verification,
                                   const std::wstring& target_dll) {
     std::wstring line =
@@ -653,30 +988,176 @@ HRESULT register_tsf_categories(const std::wstring& target_dll,
             return hr;
         }
 
-        HRESULT verify_hr = S_OK;
-        const bool contains_after =
-            category_registered(category_mgr, *category.category_guid, *category.item_guid, verify_hr);
-        const CategoryPostRegisterVerification verification =
-            evaluate_category_after_register(verify_hr,
-                                             contains_before,
-                                             contains_after,
-                                             category.allow_register_category);
-        log_category_diagnostic(L"VerifyCategoryAfterRegister",
+        if (should_track_category_for_cleanup(true, hr, contains_before)) {
+            added_categories.push_back(&category);
+        }
+        const BidirectionalCategoryVerification verification =
+            verify_category_bidirectionally_with_retry(category_mgr,
+                                                       category,
+                                                       target_dll,
+                                                       contains_before,
+                                                       hr);
+        if (!category_verification_allows_continue(
+                verification.result,
+                category.allow_inconclusive_post_register_verification)) {
+            const HRESULT verification_hr =
+                verification.result == CategoryVerificationResult::RegisterCallFailed
+                    ? verification.register_hr
+                    : HRESULT_FROM_WIN32(ERROR_NOT_FOUND);
+            log_category_diagnostic(L"VerifyCategoryAfterRegisterFatal",
+                                    category,
+                                    verification_hr,
+                                    target_dll,
+                                    enum_hr,
+                                    contains_before,
+                                    true,
+                                    hr,
+                                    verification.same_category_to_items.hr,
+                                    verification.category_postcondition_observed,
+                                    verification.added_this_call,
+                                    false,
+                                    S_OK,
+                                    verification.fresh_manager_checked,
+                                    verification.fresh_category_to_items.hr,
+                                    verification.fresh_category_to_items.found,
+                                    false,
+                                    verification.category_postcondition_observed,
+                                    category_visibility_verification_attempts(),
+                                    verification.fresh_manager_checked
+                                        ? L"same_manager+fresh_manager"
+                                        : L"same_manager",
+                                    true,
+                                    L"required_category_observation");
+            category_mgr->Release();
+            return verification_hr;
+        }
+    }
+
+    for (const auto& category : compatibility_tsf_profile_categories()) {
+        HRESULT enum_hr = S_OK;
+        const bool contains_before =
+            category_registered(category_mgr, *category.category_guid, *category.item_guid, enum_hr);
+        const CategoryRegistrationDecision decision =
+            decide_category_registration(enum_hr, contains_before, category.allow_register_category);
+        log_category_diagnostic(L"EnumCompatibilityCategoryBeforeRegister",
                                 category,
-                                verification.hr,
+                                apply_category_verification_policy(enum_hr, false),
+                                target_dll,
+                                enum_hr,
+                                contains_before,
+                                false,
+                                S_OK,
+                                S_OK,
+                                contains_before,
+                                false,
+                                false,
+                                S_OK,
+                                false,
+                                S_OK,
+                                false,
+                                false,
+                                false,
+                                0,
+                                L"same_manager",
+                                false,
+                                L"compatibility_capability_diagnostic");
+        if (decision.query_failed) {
+            continue;
+        }
+        if (decision.skip_existing || !decision.should_register) {
+            log_category_diagnostic(L"CompatibilityCategorySkipExisting",
+                                    category,
+                                    S_OK,
+                                    target_dll,
+                                    enum_hr,
+                                    contains_before,
+                                    false,
+                                    S_OK,
+                                    enum_hr,
+                                    contains_before,
+                                    false,
+                                    false,
+                                    S_OK,
+                                    false,
+                                    S_OK,
+                                    false,
+                                    false,
+                                    false,
+                                    0,
+                                    L"same_manager",
+                                    false,
+                                    L"compatibility_capability_diagnostic");
+            continue;
+        }
+
+        hr = category_mgr->RegisterCategory(CLSID_LocalPinyinTextService,
+                                            *category.category_guid,
+                                            *category.item_guid);
+        if (hr == TF_E_ALREADY_EXISTS) {
+            hr = S_OK;
+        }
+        log_step_result(std::wstring(L"register diagnostic ") + category.name, hr);
+        log_category_diagnostic(L"RegisterCompatibilityCategory",
+                                category,
+                                apply_category_verification_policy(hr, false),
                                 target_dll,
                                 enum_hr,
                                 contains_before,
                                 true,
                                 hr,
-                                verify_hr,
-                                contains_after,
-                                verification.added_this_call);
-        if (FAILED(verification.hr)) {
-            category_mgr->Release();
-            return verification.hr;
+                                S_OK,
+                                contains_before,
+                                false,
+                                false,
+                                S_OK,
+                                false,
+                                S_OK,
+                                false,
+                                false,
+                                false,
+                                0,
+                                L"same_manager",
+                                false,
+                                L"compatibility_capability_diagnostic");
+        if (FAILED(hr)) {
+            continue;
         }
-        added_categories.push_back(&category);
+
+        const CategoryFreshManagerVerification verification =
+            verify_category_after_register_with_retry(category_mgr,
+                                                      category,
+                                                      target_dll,
+                                                      enum_hr,
+                                                      contains_before,
+                                                      hr,
+                                                      false);
+        if (verification.verified && verification.added_this_call) {
+            added_categories.push_back(&category);
+        }
+        if (FAILED(verification.hr)) {
+            log_category_diagnostic(L"CompatibilityCategoryVerificationNonFatal",
+                                    category,
+                                    apply_category_verification_policy(verification.hr, false),
+                                    target_dll,
+                                    enum_hr,
+                                    contains_before,
+                                    true,
+                                    hr,
+                                    verification.hr,
+                                    verification.verified,
+                                    verification.added_this_call,
+                                    false,
+                                    S_OK,
+                                    verification.fresh_manager_checked,
+                                    verification.hr,
+                                    verification.fresh_manager_verified,
+                                    verification.same_manager_stale,
+                                    verification.fresh_manager_verified,
+                                    category_visibility_verification_attempts(),
+                                    verification.fresh_manager_checked ? L"same_manager+fresh_manager" : L"same_manager",
+                                    false,
+                                    L"compatibility_capability_diagnostic");
+        }
     }
     category_mgr->Release();
     return S_OK;
@@ -760,12 +1241,16 @@ HRESULT unregister_tsf_categories() {
     HRESULT first_failure = S_OK;
     for (const auto& category : required_tsf_profile_categories()) {
         HRESULT enum_hr = S_OK;
-        if (!category_registered(category_mgr, *category.category_guid, *category.item_guid, enum_hr)) {
-            const HRESULT absent_hr = FAILED(enum_hr) ? enum_hr : S_OK;
-            log_step_result(std::wstring(L"unregister ") + category.name + L" absent", absent_hr);
-            merge_failure(absent_hr, first_failure);
-            continue;
-        }
+        const bool observed_before =
+            category_registered(category_mgr,
+                                *category.category_guid,
+                                *category.item_guid,
+                                enum_hr);
+        log_step_result(std::wstring(L"enumerate before unregister ") +
+                            category.name +
+                            (observed_before ? L" present" : L" unobserved"),
+                        enum_hr);
+        merge_failure(enum_hr, first_failure);
 
         hr = category_mgr->UnregisterCategory(CLSID_LocalPinyinTextService,
                                               *category.category_guid,
@@ -798,15 +1283,16 @@ HRESULT register_server() {
     ProfileSnapshot profile_before{};
     bool added_profile = false;
     std::vector<const TsfProfileCategory*> added_categories;
+    HRESULT final_profile_register_hr = E_UNEXPECTED;
+    bool final_profile_registered = false;
+    bool final_profile_visible = false;
 
     hr = query_current_profile_snapshot(profile_before);
     if (SUCCEEDED(hr)) {
-        hr = register_tsf_categories(target_dll, added_categories);
-    } else {
-        log_failure_line(L"SnapshotProfileBeforeRegister", hr, target_dll);
-    }
-    if (SUCCEEDED(hr)) {
         hr = register_tsf_profile(target_dll, profile_before, added_profile);
+        final_profile_register_hr = hr;
+        final_profile_registered = SUCCEEDED(hr);
+        final_profile_visible = SUCCEEDED(hr);
         if (FAILED(hr)) {
             if (should_overwrite_registration_diagnostic(has_last_registration_diagnostic())) {
                 log_failure_line(L"RegisterProfile", hr, target_dll, nullptr, added_profile);
@@ -819,6 +1305,11 @@ HRESULT register_server() {
             append_last_registration_diagnostic(
                 L"profile_registration_flags=" + format_dword(profile_registration_flags()));
         }
+    } else {
+        log_failure_line(L"SnapshotProfileBeforeRegister", hr, target_dll);
+    }
+    if (SUCCEEDED(hr)) {
+        hr = register_tsf_categories(target_dll, added_categories);
     }
     if (SUCCEEDED(hr)) {
         hr = register_com_class(target_dll);
@@ -828,6 +1319,7 @@ HRESULT register_server() {
     }
 
     if (FAILED(hr)) {
+        const HRESULT first_failure = hr;
         const HRESULT category_rollback_hr = rollback_added_tsf_categories(added_categories);
         const std::wstring profile_restore_icon = previous_dll.empty() ? target_dll : previous_dll;
         const HRESULT profile_rollback_hr = restore_tsf_profile(profile_before, profile_restore_icon, added_profile);
@@ -840,11 +1332,32 @@ HRESULT register_server() {
             std::wstring(rollback_succeeded ? L"TRUE" : L"FALSE") +
             L" rollback_categories=" + format_hresult(category_rollback_hr) +
             L" rollback_profile=" + format_hresult(profile_rollback_hr) +
-            L" rollback_com=" + format_hresult(com_rollback_hr));
+            L" rollback_com=" + format_hresult(com_rollback_hr) +
+            L" rollback_reason=first_failure_" + format_hresult(first_failure) +
+            L" final_profile_register_hr=" + format_hresult(final_profile_register_hr) +
+            L" final_profile_registered=" + bool_field(final_profile_registered) +
+            L" final_profile_visible=" + bool_field(final_profile_visible) +
+            L" final_expected_dll_verified=NOT_CHECKED");
+        if (!g_registration_warning.empty()) {
+            append_last_registration_diagnostic(
+                L" secondary_category_warning={" + g_registration_warning + L"}");
+        }
         log_status(L"registration",
                    L"rollback completed categories=" + format_hresult(category_rollback_hr) +
                        L" profile=" + format_hresult(profile_rollback_hr) +
                        L" com=" + format_hresult(com_rollback_hr));
+    } else {
+        const std::wstring final_success =
+            L"final_profile_register_hr=" + format_hresult(final_profile_register_hr) +
+            L" final_profile_registered=" + bool_field(final_profile_registered) +
+            L" final_profile_visible=" + bool_field(final_profile_visible) +
+            L" final_expected_dll_verified=NOT_CHECKED"
+            L" rollback_attempted=FALSE rollback_reason=none";
+        log_status(L"registration", final_success);
+        if (!g_registration_warning.empty()) {
+            g_last_registration_diagnostic =
+                g_registration_warning + L" " + final_success;
+        }
     }
 
     log_status(L"registration", FAILED(hr) ? L"register failed " + format_hresult(hr) : L"register succeeded");

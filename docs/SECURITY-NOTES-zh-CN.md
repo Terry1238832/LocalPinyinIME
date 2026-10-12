@@ -1,73 +1,40 @@
 # 安全说明
 
-LocalPinyinIME @LOCALPINYIN_VERSION_PACKAGE@ x64 是未签名开发版，不是正式签名发布版。
+本地拼音 0.4.0 是 Windows x64 未签名构建。安装需要管理员授权；当前版本尚未完成干净机器上的完整安装、卸载和逐款应用验收，验证范围见 [应用兼容性说明](COMPATIBILITY.md)。
 
-## 本包会做什么
+## 安装和个人数据
 
-- 安装到版本化目录：
-
-```text
-C:\Program Files\LocalPinyinIME\releases\<version>\x64\
-```
-
-- 注册本项目自己的 COM CLSID：
+安装器将三个运行组件、两份内置词库和 MIT 许可安装到版本目录：
 
 ```text
-{7C0B4B75-80B0-4E1F-A4A5-4D49A5440D8A}
+C:\Program Files\LocalPinyinIME\releases\0.4.0\x64\
 ```
 
-- 注册本项目自己的 TSF Language Profile：
+安装器注册本项目自己的 COM CLSID 和 TSF 中文语言 Profile，并通过原始用户执行启用及验证，将本地拼音加入当前用户可选输入法。该启用步骤会自动执行；安装后仍需按 Win + 空格选择本地拼音。注册失败时，安装器尝试恢复原有注册。
 
 ```text
-{84D58E7C-481E-4D20-A951-4ED39F01D8D5}
+COM CLSID: {7C0B4B75-80B0-4E1F-A4A5-4D49A5440D8A}
+TSF Profile: {84D58E7C-481E-4D20-A951-4ED39F01D8D5}
+LANGID: 0x0804
 ```
 
-- 使用 LANGID：
+个人设置、词库和学习记录保存在 `%LOCALAPPDATA%\LocalPinyinIME`。输入与学习在本地处理，不发送网络请求。卸载保留个人数据，并且仅在注册仍指向该版本时移除本项目的 TSF 注册。
 
-```text
-0x0804
-```
-
-- 可选地把本项目 Profile 加入当前用户输入法列表。
-
-## 本包不会做什么
-
-- 不设置默认输入法；
-- 不调用 `SetDefaultLayoutOrTip`；
-- 不调用 `ActivateProfile`；
-- 不修改 `Preload`、`Substitutes`、`Keyboard Layout`；
-- 不修改 Microsoft Pinyin、搜狗、QQ、微信输入法或其他输入法；
-- 不使用全局键盘 Hook；
-- 不使用 `SendInput`；
-- 不读取剪贴板；
-- 不发送网络请求；
-- 不安装服务、计划任务或开机启动项；
-- 不直接写入用户语言列表或伪造 `InputMethodTips`。
-
-## 当前用户列表验证
-
-`IsEnabledLanguageProfile` 只能证明 TSF Profile enabled / disabled，不能单独证明 `Win + Space` 可见。
-
-最终以只读检查为准：
-
-```text
-Get-WinUserLanguageList
--> zh-Hans-CN
--> InputMethodTips
-```
-
-必须包含精确 TIP：
-
-```text
-0804:{7C0B4B75-80B0-4E1F-A4A5-4D49A5440D8A}{84D58E7C-481E-4D20-A951-4ED39F01D8D5}
-```
+安装器不设置默认输入法，不修改其他输入法的注册，不安装服务、计划任务或开机启动项。运行时使用当前应用线程的键盘事件处理，不安装全局键盘 Hook，不使用 SendInput，也不读取剪贴板。
 
 ## 哈希与签名
 
-Release 包包含 `SHA256SUMS.txt`。当前 Authenticode 状态应为：
+发布的安装包及对应校验文件为：
 
 ```text
-NotSigned
+LocalPinyinIME-0.4.0-x64.exe
+LocalPinyinIME-0.4.0-x64.exe.sha256
 ```
 
-如果文件哈希与 `SHA256SUMS.txt` 不一致，请不要安装。
+校验文件包含安装包的 SHA-256 及文件名。可以在下载目录执行以下只读命令，将结果与 `.exe.sha256` 文件中的哈希比较：
+
+```powershell
+Get-FileHash -LiteralPath .\LocalPinyinIME-0.4.0-x64.exe -Algorithm SHA256
+```
+
+哈希不一致时不要运行该安装包。哈希用于核对下载文件；本版本没有 Authenticode 签名。

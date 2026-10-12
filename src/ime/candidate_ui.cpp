@@ -11,6 +11,10 @@ namespace localpinyin {
 namespace {
 
 constexpr int kMaxCandidates = 9;
+constexpr int kCandidateTextSizeMinLevel = 1;
+constexpr int kCandidateTextSizeMaxLevel = 7;
+constexpr int kCandidateTextSizeDefaultLevel = 4;
+constexpr int kCandidateTextSizeDipByLevel[] = {14, 16, 17, 18, 20, 22, 24};
 
 int rect_width(const RECT& rect) noexcept {
     return std::max<LONG>(0, rect.right - rect.left);
@@ -38,10 +42,6 @@ std::wstring lower_ascii(std::wstring value) {
 
 bool is_cjk_or_wide(wchar_t ch) noexcept {
     return ch >= 0x2E80;
-}
-
-const wchar_t* bool_text(bool value) noexcept {
-    return value ? L"true" : L"false";
 }
 
 std::vector<std::wstring> unique_candidates(const std::vector<std::wstring>& candidates) {
@@ -78,16 +78,56 @@ int scale_dip(int value, int dpi) noexcept {
     return MulDiv(value, std::max(1, dpi), 96);
 }
 
-int candidate_font_px_for_size(CandidateTextSize size, int dpi) noexcept {
-    switch (size) {
-        case CandidateTextSize::Small:
-            return scale_dip(16, dpi);
-        case CandidateTextSize::Large:
-            return scale_dip(20, dpi);
-        case CandidateTextSize::Standard:
-        default:
-            return scale_dip(18, dpi);
+int candidate_text_size_min_level() noexcept {
+    return kCandidateTextSizeMinLevel;
+}
+
+int candidate_text_size_max_level() noexcept {
+    return kCandidateTextSizeMaxLevel;
+}
+
+int candidate_text_size_default_level() noexcept {
+    return kCandidateTextSizeDefaultLevel;
+}
+
+int candidate_text_size_level(CandidateTextSize size) noexcept {
+    return clamp_int(static_cast<int>(size), kCandidateTextSizeMinLevel, kCandidateTextSizeMaxLevel);
+}
+
+CandidateTextSize candidate_text_size_from_level(int level) noexcept {
+    return static_cast<CandidateTextSize>(clamp_int(level, kCandidateTextSizeMinLevel, kCandidateTextSizeMaxLevel));
+}
+
+int candidate_text_size_dip(CandidateTextSize size) noexcept {
+    const int level = candidate_text_size_level(size);
+    return kCandidateTextSizeDipByLevel[level - 1];
+}
+
+std::wstring candidate_text_size_display_label(CandidateTextSize size) {
+    const int level = candidate_text_size_level(size);
+    if (level <= 2) {
+        return L"\u5C0F";
     }
+    if (level == kCandidateTextSizeDefaultLevel) {
+        return L"\u6807\u51C6";
+    }
+    if (level >= 6) {
+        return L"\u5927";
+    }
+    return L"\u7565" + std::wstring(level < kCandidateTextSizeDefaultLevel ? L"\u5C0F" : L"\u5927");
+}
+
+std::wstring candidate_text_size_display_text(CandidateTextSize size) {
+    std::wstringstream stream;
+    const int level = candidate_text_size_level(size);
+    stream << L"\u7B2C " << level << L" \u6863 \u00B7 "
+           << candidate_text_size_display_label(size) << L" \u00B7 "
+           << candidate_text_size_dip(size) << L" px";
+    return stream.str();
+}
+
+int candidate_font_px_for_size(CandidateTextSize size, int dpi) noexcept {
+    return scale_dip(candidate_text_size_dip(size), dpi);
 }
 
 int estimate_candidate_text_width_px(const std::wstring& text, int font_px) {
@@ -189,39 +229,91 @@ CandidateWindowCreateConfig make_candidate_window_create_config(HWND requested_o
     return config;
 }
 
-std::wstring candidate_create_parent_kind_to_string(CandidateCreateParentKind kind) {
-    switch (kind) {
-        case CandidateCreateParentKind::ValidOwner:
-            return L"valid_owner";
-        case CandidateCreateParentKind::RejectedInvalidOwner:
-            return L"rejected_invalid_owner";
-        case CandidateCreateParentKind::Null:
+CandidateShellCloakRecoveryDecision decide_candidate_shell_cloak_recovery(
+    const CandidateShellCloakRecoveryInput& input) {
+    CandidateShellCloakRecoveryDecision decision;
+    decision.shell_cloak_detected = SUCCEEDED(input.candidate_cloak_hr) &&
+                                    (input.candidate_cloak_value & kCandidateDwmCloakedShell) != 0;
+    decision.owner_same_process = input.current_process_id != 0 &&
+                                  input.current_process_id == input.owner_root_process_id;
+    if (!input.candidate_model_valid) {
+        decision.reason = L"candidate_model_invalid";
+        return decision;
+    }
+    if (!input.candidate_show_requested) {
+        decision.reason = L"candidate_show_not_requested";
+        return decision;
+    }
+    if (!input.candidate_hwnd_valid) {
+        decision.reason = L"candidate_hwnd_invalid";
+        return decision;
+    }
+    if (!input.candidate_hwnd_visible) {
+        decision.reason = L"candidate_hwnd_not_visible";
+        return decision;
+    }
+    if (FAILED(input.candidate_cloak_hr)) {
+        decision.reason = L"candidate_cloak_query_failed";
+        return decision;
+    }
+    if (!decision.shell_cloak_detected) {
+        decision.reason = L"candidate_not_shell_cloaked";
+        return decision;
+    }
+    if (!input.owner_root_valid) {
+        decision.reason = L"owner_root_invalid";
+        return decision;
+    }
+    if (input.current_process_id == 0 || input.owner_root_process_id == 0) {
+        decision.reason = L"owner_process_unknown";
+        return decision;
+    }
+    if (input.candidate_process_id != input.current_process_id) {
+        decision.reason = L"candidate_process_mismatch";
+        return decision;
+    }
+    if (input.recovery_attempts >= 1) {
+        decision.reason = L"recovery_attempt_limit_reached";
+        return decision;
+    }
+    if (decision.owner_same_process) {
+        if (FAILED(input.owner_root_cloak_hr)) {
+            decision.reason = L"owner_root_cloak_query_failed";
+            return decision;
+        }
+        if ((input.owner_root_cloak_value & kCandidateDwmCloakedShell) != 0) {
+            decision.reason = L"owner_root_shell_cloaked";
+            return decision;
+        }
+        decision.strategy = CandidateShellCloakRecoveryStrategy::SameProcessContextRootOwner;
+        decision.reason = L"eligible_context_root";
+    } else {
+        decision.reason = L"owner_root_cross_process";
+        return decision;
+    }
+    decision.recovery_eligible = true;
+    decision.recovery_attempt_allowed = true;
+    return decision;
+}
+
+std::wstring candidate_shell_cloak_recovery_strategy_to_string(
+    CandidateShellCloakRecoveryStrategy strategy) {
+    switch (strategy) {
+        case CandidateShellCloakRecoveryStrategy::SameProcessContextRootOwner:
+            return L"same_process_context_root_owner";
+        case CandidateShellCloakRecoveryStrategy::None:
         default:
-            return L"null";
+            return L"none";
     }
 }
 
-std::wstring make_candidate_window_create_attempt_log(const CandidateWindowCreateConfig& config) {
-    std::wstringstream stream;
-    stream << L"window_create_attempt=true"
-           << L" create_parent_kind=" << candidate_create_parent_kind_to_string(config.parent_kind)
-           << L" create_parent_is_window=" << bool_text(config.parent_is_window)
-           << L" create_menu_is_null=" << bool_text(config.menu == nullptr)
-           << L" create_style_popup=" << bool_text((config.style & WS_POPUP) == WS_POPUP)
-           << L" create_ex_noactivate=" << bool_text((config.ex_style & WS_EX_NOACTIVATE) == WS_EX_NOACTIVATE)
-           << L" create_ex_toolwindow=" << bool_text((config.ex_style & WS_EX_TOOLWINDOW) == WS_EX_TOOLWINDOW);
-    return stream.str();
-}
-
-std::wstring make_candidate_window_create_result_log(bool created, DWORD last_error) {
-    std::wstringstream stream;
-    stream << L"window_created=" << bool_text(created)
-           << L" create_last_error=" << last_error;
-    return stream.str();
-}
-
-CandidateWindowShowStatus make_candidate_window_show_status(bool set_window_pos_ok) noexcept {
-    return CandidateWindowShowStatus{set_window_pos_ok, set_window_pos_ok, set_window_pos_ok};
+bool should_commit_candidate_replacement(const CandidateReplacementCommitInput& input) noexcept {
+    return input.replacement_hwnd_valid &&
+           input.replacement_visible &&
+           input.owner_verified &&
+           input.dwm_query_succeeded &&
+           !input.shell_cloaked &&
+           input.rect_on_monitor;
 }
 
 CandidateThemeMode parse_candidate_theme_mode(const std::wstring& value) noexcept {
@@ -237,6 +329,21 @@ CandidateThemeMode parse_candidate_theme_mode(const std::wstring& value) noexcep
 
 CandidateTextSize parse_candidate_text_size(const std::wstring& value) noexcept {
     const std::wstring lowered = lower_ascii(value);
+    if (lowered.rfind(L"level", 0) == 0 && lowered.size() > 5) {
+        int level = 0;
+        for (size_t i = 5; i < lowered.size(); ++i) {
+            if (lowered[i] < L'0' || lowered[i] > L'9') {
+                return CandidateTextSize::Standard;
+            }
+            level = level * 10 + static_cast<int>(lowered[i] - L'0');
+        }
+        return candidate_text_size_from_level(level);
+    }
+    if (!lowered.empty() && std::all_of(lowered.begin(), lowered.end(), [](wchar_t ch) {
+            return ch >= L'0' && ch <= L'9';
+        })) {
+        return candidate_text_size_from_level(std::stoi(lowered));
+    }
     if (lowered == L"small") {
         return CandidateTextSize::Small;
     }
@@ -259,15 +366,7 @@ std::wstring candidate_theme_mode_to_string(CandidateThemeMode mode) {
 }
 
 std::wstring candidate_text_size_to_string(CandidateTextSize size) {
-    switch (size) {
-        case CandidateTextSize::Small:
-            return L"small";
-        case CandidateTextSize::Large:
-            return L"large";
-        case CandidateTextSize::Standard:
-        default:
-            return L"standard";
-    }
+    return L"level" + std::to_wstring(candidate_text_size_level(size));
 }
 
 CandidateThemePalette make_candidate_palette(CandidateThemeMode mode, bool system_dark) {
@@ -282,8 +381,9 @@ CandidateThemePalette make_candidate_palette(CandidateThemeMode mode, bool syste
             brand::kLocalPinyinBlueDarkMuted,
             brand::kLocalPinyinBlueDarkWeak,
             brand::kLocalPinyinBlueCyan_highlight,
-            brand::kLocalPinyinBlueDarkAccent_soft,
-            brand::kLocalPinyinBlueDarkAccent_border
+            brand::kLocalPinyinBlueDarkAccent,
+            brand::kLocalPinyinBlueDarkAccent,
+            RGB(255, 255, 255)
         };
     }
     return CandidateThemePalette{
@@ -294,8 +394,9 @@ CandidateThemePalette make_candidate_palette(CandidateThemeMode mode, bool syste
         brand::kLocalPinyinBlueLightMuted,
         brand::kLocalPinyinBlueLightWeak,
         brand::kLocalPinyinBlueAzure_blue,
-        brand::kLocalPinyinBlueLightAccent_soft,
-        brand::kLocalPinyinBlueLightAccent_border
+        brand::kLocalPinyinBlueLightAccent,
+        brand::kLocalPinyinBlueLightAccent,
+        RGB(255, 255, 255)
     };
 }
 
@@ -315,9 +416,9 @@ CandidateLayoutResult make_candidate_layout(const CandidateLayoutInput& input) {
     }
 
     const int dpi = result.dpi;
-    const int padding = scale_dip(14, dpi);
-    const int row_gap = scale_dip(8, dpi);
-    const int item_gap = scale_dip(9, dpi);
+    const int padding = scale_dip(12, dpi);
+    const int row_gap = scale_dip(6, dpi);
+    const int item_gap = scale_dip(6, dpi);
     const int item_pad_x = scale_dip(10, dpi);
     const int item_pad_y = scale_dip(6, dpi);
     const int number_gap = scale_dip(6, dpi);
@@ -325,8 +426,8 @@ CandidateLayoutResult make_candidate_layout(const CandidateLayoutInput& input) {
     const int action_button_size = scale_dip(30, dpi);
     const int action_button_gap = scale_dip(10, dpi);
     const int action_reserved_width = action_button_size + action_button_gap;
-    result.corner_radius = scale_dip(14, dpi);
-    result.selected_corner_radius = scale_dip(9, dpi);
+    result.corner_radius = scale_dip(12, dpi);
+    result.selected_corner_radius = scale_dip(7, dpi);
     result.panel_padding_px = padding;
     result.item_gap_px = item_gap;
     result.row_gap_px = row_gap;

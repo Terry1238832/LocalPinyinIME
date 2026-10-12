@@ -27,6 +27,11 @@ std::wstring format_status_log_line(const SYSTEMTIME& timestamp,
 }
 
 void log_status(const std::wstring& component, const std::wstring& message) {
+    // Routine typing does not write diagnostics or let logs grow indefinitely.
+    if (component != L"registration") {
+        wchar_t enabled[2]{};
+        if (GetEnvironmentVariableW(L"LOCALPINYINIME_DIAGNOSTICS", enabled, 2) != 1 || enabled[0] != L'1') return;
+    }
     const std::wstring base = local_app_data_path() + L"\\LocalPinyinIME";
     const std::wstring logs = base + L"\\logs";
     ensure_directory(base);
@@ -36,7 +41,11 @@ void log_status(const std::wstring& component, const std::wstring& message) {
     GetLocalTime(&now);
     const std::wstring line = format_status_log_line(now, component, message);
 
-    std::ofstream file(logs + L"\\status.log", std::ios::binary | std::ios::app);
+    const std::wstring log_path = logs + L"\\status.log";
+    WIN32_FILE_ATTRIBUTE_DATA info{};
+    if (GetFileAttributesExW(log_path.c_str(), GetFileExInfoStandard, &info) &&
+        (info.nFileSizeHigh != 0 || info.nFileSizeLow > 512 * 1024)) DeleteFileW(log_path.c_str());
+    std::ofstream file(log_path, std::ios::binary | std::ios::app);
     file << wide_to_utf8(line);
 }
 

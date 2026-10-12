@@ -1,6 +1,6 @@
-#include "..\dist\LocalPinyinIME-InnoVersion.iss"
+#include "..\.build\InstallerVersion.iss"
 
-#define MyAppName "LocalPinyinIME"
+#define MyAppName "本地拼音"
 #define MyAppPublisher "LocalPinyinIME contributors"
 #define MyAppExeName "LocalPinyinIME.dll"
 #define MySetupToolName "LocalPinyinImeSetup.exe"
@@ -13,33 +13,66 @@ AppPublisher={#MyAppPublisher}
 DefaultDirName={autopf}\LocalPinyinIME\releases\{#MyAppVersion}\x64
 UsePreviousAppDir=no
 DisableDirPage=yes
+DisableProgramGroupPage=yes
 DirExistsWarning=no
-DefaultGroupName=LocalPinyinIME
-ArchitecturesAllowed=x64
-ArchitecturesInstallIn64BitMode=x64
+DefaultGroupName=本地拼音
+ArchitecturesAllowed=x64os
+ArchitecturesInstallIn64BitMode=x64os
 PrivilegesRequired=admin
+CloseApplications=no
+RestartApplications=no
 OutputDir={#MyAppOutputDir}
 OutputBaseFilename={#MyAppSetupBaseFilename}
 SetupIconFile=..\assets\branding\icon\LocalPinyinIME.ico
-Compression=lzma
+Compression=lzma2/ultra64
 SolidCompression=yes
+WizardStyle=modern
+WizardSizePercent=110
+DisableWelcomePage=no
+LicenseFile=..\LICENSE
+SetupLogging=yes
 UninstallDisplayName={#MyAppName}
 UninstallDisplayIcon={app}\LocalPinyinSettings.exe
 
 [Files]
 Source: "{#MyAppPackageDir}\bin\LocalPinyinIME.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MyAppPackageDir}\bin\LocalPinyinImeSetup.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPackageDir}\bin\LocalPinyinImeAudit.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MyAppPackageDir}\bin\LocalPinyinSettings.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MyAppPackageDir}\bin\dictionary\core_zh_pinyin.tsv"; DestDir: "{app}\dictionary"; Flags: ignoreversion
 Source: "{#MyAppPackageDir}\bin\dictionary\local_core_zh_pinyin.tsv"; DestDir: "{app}\dictionary"; Flags: ignoreversion
-Source: "{#MyAppPackageDir}\release-manifest.json"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPackageDir}\SHA256SUMS.txt"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPackageDir}\docs\*.md"; DestDir: "{app}\docs"; Flags: ignoreversion
+Source: "{#MyAppPackageDir}\LICENSE"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
-Name: "{group}\LocalPinyinIME 设置"; Filename: "{app}\LocalPinyinSettings.exe"; WorkingDir: "{app}"; IconFilename: "{app}\LocalPinyinSettings.exe"
-Name: "{group}\卸载 LocalPinyinIME"; Filename: "{uninstallexe}"; IconFilename: "{app}\LocalPinyinSettings.exe"
+Name: "{group}\本地拼音设置"; Filename: "{app}\LocalPinyinSettings.exe"; WorkingDir: "{app}"; IconFilename: "{app}\LocalPinyinSettings.exe"
+Name: "{group}\卸载本地拼音"; Filename: "{uninstallexe}"; IconFilename: "{app}\LocalPinyinSettings.exe"
+
+[Messages]
+SetupAppTitle=安装本地拼音
+SetupWindowTitle=本地拼音安装向导
+UninstallAppTitle=卸载本地拼音
+UninstallAppFullTitle=卸载 %1
+ButtonBack=< 上一步
+ButtonNext=下一步 >
+ButtonInstall=安装
+ButtonCancel=取消
+ButtonFinish=完成
+ButtonOK=确定
+ButtonYes=是
+ButtonNo=否
+WizardLicense=许可协议
+LicenseLabel=请阅读许可协议。
+LicenseLabel3=继续安装前，请阅读并接受以下 MIT 许可协议。
+LicenseAccepted=我接受此协议
+LicenseNotAccepted=我不接受此协议
+WizardReady=准备安装
+ReadyLabel1=即将安装本地拼音。
+ReadyLabel2a=点击“安装”开始。
+WizardInstalling=正在安装
+InstallingLabel=正在安装本地拼音，请稍候。
+FinishedHeadingLabel=安装完成
+FinishedLabelNoIcons=本地拼音已安装。
+ConfirmUninstall=确定卸载本地拼音吗？个人词库和学习记录将保留。
+UninstallStatusLabel=正在卸载，请稍候。
 
 [Code]
 const
@@ -231,28 +264,28 @@ begin
   VerifySystemRegistrationAfterRegister(NewDll, RegisterCode, PreviousDll);
 end;
 
-procedure RunEnableAndVerify(NewDll: String);
+procedure RunEnableAndVerify(NewDll: String; PreviousDll: String);
 var
   EnableCode: Integer;
   VerifyCode: Integer;
   FinalVerifyParams: String;
 begin
-  if not RunSetupTool('--enable-current-user', 'enable current user', EnableCode) then
+  if not ExecAsOriginalUser(SetupToolPath(), '--enable-current-user', SetupWorkingDir(), SW_HIDE, ewWaitUntilTerminated, EnableCode) then
     AbortWithDiagnostics('--enable-current-user', 'enable current user', False, EnableCode,
-      'The setup tool process could not be started.', '');
+      'The setup tool process could not be started.', PreviousDll);
 
   if EnableCode <> 0 then
     AbortWithDiagnostics('--enable-current-user', 'enable current user', True, EnableCode,
-      'The setup tool did not confirm current user enabled state.', '');
+      'The setup tool did not confirm current user enabled state.', PreviousDll);
 
   FinalVerifyParams := '--verify --expected-dll ' + QuoteArg(NewDll) + ' --require-current-user-enabled';
-  if not RunSetupTool(FinalVerifyParams, 'verify after enable-current-user', VerifyCode) then
+  if not ExecAsOriginalUser(SetupToolPath(), FinalVerifyParams, SetupWorkingDir(), SW_HIDE, ewWaitUntilTerminated, VerifyCode) then
     AbortWithDiagnostics(FinalVerifyParams, 'verify after enable-current-user', False, VerifyCode,
-      'The setup tool process could not be started.', '');
+      'The setup tool process could not be started.', PreviousDll);
 
   if VerifyCode <> 0 then
     AbortWithDiagnostics(FinalVerifyParams, 'verify after enable-current-user', True, VerifyCode,
-      'Final verification failed after enable-current-user.', '');
+      'Final verification failed after enable-current-user.', PreviousDll);
 end;
 
 procedure CurStepChanged(CurStep: TSetupStep);
@@ -268,16 +301,28 @@ begin
       Log('LocalPinyinIME preserving previous registration until new target verifies: ' + CurrentDll);
 
     RunRegisterAndVerify(NewDll, CurrentDll);
-    RunEnableAndVerify(NewDll);
+    RunEnableAndVerify(NewDll, CurrentDll);
   end;
 end;
 
 procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
 begin
-  if CurUninstallStep = usUninstall then
+  if (CurUninstallStep = usUninstall) and RegisteredDllMatches(InstalledDllPath()) then
   begin
     RunBestEffort('--disable-current-user', 'disable current user');
     RunBestEffort('--unregister-system --dll ' + QuoteArg(InstalledDllPath()),
                   'unregister system');
   end;
+end;
+
+procedure InitializeWizard();
+begin
+  WizardForm.WelcomeLabel1.Caption := '欢迎使用本地拼音';
+  WizardForm.WelcomeLabel2.Caption := '轻巧、离线、越用越顺手。' + #13#10 + #13#10 +
+    '支持全拼、简拼、连续拼音、拼写容错和本地选词学习。' + #13#10 +
+    '安装后使用 Win + 空格切换到本地拼音。';
+  WizardForm.FinishedHeadingLabel.Caption := '本地拼音已安装';
+  WizardForm.FinishedLabel.Caption := '按 Win + 空格选择「本地拼音」。' + #13#10 +
+    '空格选首项，数字 1–9 选词，Esc 取消，Ctrl + Space 切换中英文。' + #13#10 + #13#10 +
+    '可从开始菜单打开「本地拼音设置」。已打开的应用如未刷新输入法，请关闭后重新打开。';
 end;

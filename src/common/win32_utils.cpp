@@ -18,6 +18,18 @@ std::wstring module_path(HINSTANCE instance) {
 }
 
 std::wstring local_app_data_path() {
+    // A process can choose an isolated data location for smoke tests or portable use.
+    const DWORD required = GetEnvironmentVariableW(L"LOCALPINYINIME_LOCALAPPDATA", nullptr, 0);
+    if (required > 1 && required < 32768) {
+        std::wstring override_path(required, L'\0');
+        const DWORD length = GetEnvironmentVariableW(L"LOCALPINYINIME_LOCALAPPDATA", override_path.data(), required);
+        if (length > 0 && length < required) {
+            override_path.resize(length);
+            if ((override_path.size() > 2 && override_path[1] == L':' &&
+                 (override_path[2] == L'\\' || override_path[2] == L'/')) ||
+                override_path.starts_with(L"\\\\")) return override_path;
+        }
+    }
     PWSTR path = nullptr;
     if (FAILED(SHGetKnownFolderPath(FOLDERID_LocalAppData, 0, nullptr, &path))) {
         return L"";

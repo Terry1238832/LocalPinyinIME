@@ -90,8 +90,9 @@ private:
 
 class CompositionCaretRectEditSession final : public ITfEditSession {
 public:
-    CompositionCaretRectEditSession(CompositionManager* manager, ITfContext* context, RECT* rect)
-        : manager_(manager), context_(context), rect_(rect) {
+    CompositionCaretRectEditSession(CompositionManager* manager, ITfContext* context, RECT* rect,
+                                    CaretRectDiagnostics* diagnostics)
+        : manager_(manager), context_(context), rect_(rect), diagnostics_(diagnostics) {
         dll_add_ref();
         if (context_) {
             context_->AddRef();
@@ -127,7 +128,7 @@ public:
         if (!manager_) {
             return E_UNEXPECTED;
         }
-        return manager_->do_caret_rect(cookie, context_, rect_);
+        return manager_->do_caret_rect(cookie, context_, rect_, diagnostics_);
     }
 
 private:
@@ -142,20 +143,21 @@ private:
     CompositionManager* manager_ = nullptr;
     ITfContext* context_ = nullptr;
     RECT* rect_ = nullptr;
+    CaretRectDiagnostics* diagnostics_ = nullptr;
 };
 
 namespace {
 
-HRESULT request_session(ITfContext* context, TfClientId client_id, ITfEditSession* session) {
+EditSessionRequestResult request_session(ITfContext* context, TfClientId client_id, ITfEditSession* session) {
     HRESULT session_result = E_FAIL;
     const HRESULT hr = context->RequestEditSession(client_id, session, TF_ES_SYNC | TF_ES_READWRITE, &session_result);
-    return FAILED(hr) ? hr : session_result;
+    return make_edit_session_request_result(hr, session_result);
 }
 
-HRESULT request_readonly_session(ITfContext* context, TfClientId client_id, ITfEditSession* session) {
+EditSessionRequestResult request_readonly_session(ITfContext* context, TfClientId client_id, ITfEditSession* session) {
     HRESULT session_result = E_FAIL;
     const HRESULT hr = context->RequestEditSession(client_id, session, TF_ES_SYNC | TF_ES_READ, &session_result);
-    return FAILED(hr) ? hr : session_result;
+    return make_edit_session_request_result(hr, session_result);
 }
 
 void log_composition_hr(const wchar_t* message, HRESULT hr) {
@@ -205,6 +207,11 @@ HRESULT set_selection_to_composition(ITfContext* context, ITfComposition* compos
 
 }  // namespace
 
+EditSessionRequestResult make_edit_session_request_result(HRESULT request_hr,
+                                                          HRESULT session_hr) noexcept {
+    return EditSessionRequestResult{request_hr, session_hr, SUCCEEDED(request_hr)};
+}
+
 CompositionManager::~CompositionManager() {
     clear();
 }
@@ -224,9 +231,9 @@ HRESULT CompositionManager::set_text(ITfContext* context, TfClientId client_id, 
     if (!session) {
         return E_OUTOFMEMORY;
     }
-    const HRESULT hr = request_session(context, client_id, session);
+    last_edit_session_result_ = request_session(context, client_id, session);
     session->Release();
-    return hr;
+    return last_edit_session_result_.effective_hr();
 }
 
 HRESULT CompositionManager::commit_text(ITfContext* context, TfClientId client_id, const std::wstring& text) {
@@ -237,9 +244,9 @@ HRESULT CompositionManager::commit_text(ITfContext* context, TfClientId client_i
     if (!session) {
         return E_OUTOFMEMORY;
     }
-    const HRESULT hr = request_session(context, client_id, session);
+    last_edit_session_result_ = request_session(context, client_id, session);
     session->Release();
-    return hr;
+    return last_edit_session_result_.effective_hr();
 }
 
 HRESULT CompositionManager::cancel(ITfContext* context, TfClientId client_id) {
@@ -250,25 +257,26 @@ HRESULT CompositionManager::cancel(ITfContext* context, TfClientId client_id) {
     if (!session) {
         return E_OUTOFMEMORY;
     }
-    const HRESULT hr = request_session(context, client_id, session);
+    last_edit_session_result_ = request_session(context, client_id, session);
     session->Release();
-    return hr;
+    return last_edit_session_result_.effective_hr();
 }
 
-HRESULT CompositionManager::caret_rect(ITfContext* context, TfClientId client_id, RECT* rect) {
+HRESULT CompositionManager::caret_rect(ITfContext* context, TfClientId client_id, RECT* rect,
+                                       CaretRectDiagnostics* diagnostics) {
     if (!context || !rect) {
         return E_POINTER;
     }
     if (!composition_) {
         return S_FALSE;
     }
-    auto* session = new (std::nothrow) CompositionCaretRectEditSession(this, context, rect);
+    auto* session = new (std::nothrow) CompositionCaretRectEditSession(this, context, rect, diagnostics);
     if (!session) {
         return E_OUTOFMEMORY;
     }
-    const HRESULT hr = request_readonly_session(context, client_id, session);
+    last_edit_session_result_ = request_readonly_session(context, client_id, session);
     session->Release();
-    return hr;
+    return last_edit_session_result_.effective_hr();
 }
 
 HRESULT CompositionManager::do_set_text(TfEditCookie cookie, ITfContext* context, ITfCompositionSink* sink, const std::wstring& text) {
@@ -368,7 +376,8 @@ HRESULT CompositionManager::do_cancel(TfEditCookie cookie, ITfContext* context) 
     return end_hr;
 }
 
-HRESULT CompositionManager::do_caret_rect(TfEditCookie cookie, ITfContext* context, RECT* rect) {
+HRESULT CompositionManager::do_caret_rect(TfEditCookie cookie, ITfContext* context, RECT* rect,
+                                          CaretRectDiagnostics* diagnostics) {
     if (!context || !rect || !composition_) {
         return E_POINTER;
     }
@@ -394,13 +403,28 @@ HRESULT CompositionManager::do_caret_rect(TfEditCookie cookie, ITfContext* conte
 
     ITfContextView* view = nullptr;
     hr = context->GetActiveView(&view);
+    if (diagnostics) {
+        diagnostics->active_view_hr = hr;
+    }
     if (FAILED(hr)) {
         caret_range->Release();
         return hr;
     }
 
+    HWND context_hwnd = nullptr;
+    const HRESULT get_wnd_hr = view->GetWnd(&context_hwnd);
+    if (diagnostics) {
+        diagnostics->get_wnd_hr = get_wnd_hr;
+        diagnostics->context_hwnd_present = SUCCEEDED(get_wnd_hr) && context_hwnd != nullptr;
+    }
+
     BOOL clipped = FALSE;
     hr = view->GetTextExt(cookie, caret_range, rect, &clipped);
+    if (diagnostics) {
+        diagnostics->get_text_ext_hr = hr;
+        diagnostics->get_text_ext_nolayout = hr == TF_E_NOLAYOUT;
+        diagnostics->text_ext_clipped = clipped != FALSE;
+    }
     view->Release();
     caret_range->Release();
     return hr;

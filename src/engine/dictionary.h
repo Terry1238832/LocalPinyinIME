@@ -63,6 +63,8 @@ public:
     bool load_from_json_file(const std::wstring& path);
     bool load_from_tsv_file(const std::wstring& path);
     [[nodiscard]] std::vector<Candidate> lookup(const std::wstring& pinyin) const;
+    [[nodiscard]] std::vector<Candidate> lookup_abbreviation(const std::wstring& initials) const;
+    [[nodiscard]] std::vector<Candidate> lookup_completion(const std::wstring& prefix) const;
     [[nodiscard]] std::vector<std::wstring> matching_pinyins_at(const std::wstring& input, size_t offset) const;
     UserLexiconRefreshResult refresh_user_lexicon_if_changed(bool composition_active);
     [[nodiscard]] size_t entry_count() const noexcept;
@@ -103,8 +105,13 @@ private:
                    int base_frequency,
                    EntryAddMode mode = EntryAddMode::KeepExisting);
     void add_entry(const std::wstring& pinyin, const std::vector<std::wstring>& words);
+    void rebuild_prediction_index() const;
 
     std::unordered_map<std::wstring, std::vector<Candidate>> entries_;
+    size_t max_key_length_ = 0;
+    mutable bool prediction_index_dirty_ = true;
+    mutable std::vector<std::wstring> sorted_keys_;
+    mutable std::unordered_map<std::wstring, std::vector<std::wstring>> initials_index_;
     size_t entry_count_ = 0;
     DictionaryStats stats_;
     std::vector<DictionaryLayerStats> layer_stats_;

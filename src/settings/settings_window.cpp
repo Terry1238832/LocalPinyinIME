@@ -1,16 +1,22 @@
 #include "settings_window.h"
 
 #include "../common/logging.h"
+#include "../common/utf_utils.h"
+#include "../common/win32_utils.h"
+#include "dictionary_preview_window.h"
 #include "localpinyin_version.h"
 #include "local_pinyin_blue_theme.h"
 #include "resource.h"
 
 #include <commctrl.h>
 #include <shellapi.h>
+#include <windowsx.h>
 
 #include <algorithm>
 #include <array>
+#include <cwchar>
 #include <cstring>
+#include <filesystem>
 #include <sstream>
 #include <vector>
 
@@ -20,16 +26,28 @@ namespace {
 constexpr int kBaseDpi = 96;
 constexpr int kIdOpenDataFolder = 1001;
 constexpr int kIdCopyDataFolder = 1002;
-constexpr int kIdOpenGithubProject = 1003;
-constexpr int kIdCopyGithubUrl = 1004;
 constexpr int kIdThemeSystem = 1101;
 constexpr int kIdThemeLight = 1102;
 constexpr int kIdThemeDark = 1103;
 constexpr int kIdShowKeyHints = 1201;
 constexpr int kIdShiftToggle = 1202;
-constexpr int kIdTextSmall = 1301;
-constexpr int kIdTextStandard = 1302;
-constexpr int kIdTextLarge = 1303;
+constexpr int kIdCandidateHintDescription = 1203;
+constexpr int kIdShiftToggleLabel = 1204;
+constexpr int kIdShiftToggleDescription = 1205;
+constexpr int kIdShiftDefaultNote = 1206;
+constexpr int kIdShortcutTestCard = 1207;
+constexpr int kIdShortcutTestTitle = 1208;
+constexpr int kIdShortcutTestDescription = 1209;
+constexpr int kIdShortcutModeLabel = 1210;
+constexpr int kIdShortcutModeValue = 1211;
+constexpr int kIdShortcutInputLabel = 1212;
+constexpr int kIdShortcutInput = 1213;
+constexpr int kIdShortcutBoundaryNote = 1214;
+constexpr int kIdCandidateSizeSlider = 1301;
+constexpr int kIdCandidateSizeValue = 1302;
+constexpr int kIdCandidateSizeSmallLabel = 1303;
+constexpr int kIdCandidateSizeStandardLabel = 1304;
+constexpr int kIdCandidateSizeLargeLabel = 1305;
 constexpr int kIdClearLearning = 1401;
 constexpr int kIdLexiconSearch = 1501;
 constexpr int kIdLexiconList = 1502;
@@ -70,6 +88,7 @@ constexpr int kIdLexiconPinyinLabel = 3205;
 constexpr int kIdLexiconWordLabel = 3206;
 constexpr int kIdLexiconFrequencyLabel = 3207;
 constexpr int kIdUserLexiconEditorTitle = 3208;
+constexpr int kIdLexiconFrequencyHelp = 3209;
 
 constexpr int kIdLearningTitle = 3301;
 constexpr int kIdLearningDescription = 3302;
@@ -91,12 +110,19 @@ constexpr int kIdAboutStatusKey = 3412;
 constexpr int kIdAboutStatusValue = 3413;
 constexpr int kIdAboutDataDirKey = 3414;
 constexpr int kIdAboutDataDirValue = 3415;
-constexpr int kIdAboutGithubKey = 3416;
-constexpr int kIdAboutGithubValue = 3417;
+constexpr int kIdAboutShortcutKey = 3416;
+constexpr int kIdAboutShortcutValue = 3417;
+constexpr int kIdAboutDictionaryTitle = 3420;
+constexpr int kIdAboutDictionaryCount = 3421;
+constexpr int kIdAboutDictionaryPreview = 3422;
 
 constexpr int kSettingsPageCount = 5;
 constexpr UINT_PTR kUserLexiconHeaderSubclassId = 1;
-constexpr wchar_t kGithubProjectUrl[] = L"https://github.com/Terry1238832/LocalPinyinIME";
+constexpr wchar_t kCandidateOptionsChangedMessageName[] = L"LocalPinyinIME.CandidateOptionsChanged";
+constexpr UINT_PTR kShortcutTestTimerId = 4101;
+constexpr UINT kShortcutTestTimerMs = 45;
+constexpr wchar_t kUserLexiconFrequencyHelpText[] =
+    L"\u9891\u7387\u8D8A\u9AD8\uFF0C\u521D\u59CB\u5019\u9009\u4F4D\u7F6E\u8D8A\u9760\u524D\u3002\u5EFA\u8BAE\u5E38\u7528\u8BCD\u586B 5000\uFF1B\u8F93\u5165\u6CD5\u4F1A\u7ED3\u5408\u4F7F\u7528\u4E60\u60EF\u7EE7\u7EED\u8C03\u6574\u6392\u5E8F\u3002";
 
 COLORREF rgb_hex(int value) {
     return RGB((value >> 16) & 0xFF, (value >> 8) & 0xFF, value & 0xFF);
@@ -137,6 +163,13 @@ SettingsPage page_for_nav_id(int id) {
         default:
             return SettingsPage::UserLexicon;
     }
+}
+
+SettingsKeyboardState current_settings_keyboard_state() {
+    const bool left = (GetKeyState(VK_LCONTROL) & 0x8000) != 0;
+    const bool right = (GetKeyState(VK_RCONTROL) & 0x8000) != 0;
+    const bool generic = (GetKeyState(VK_CONTROL) & 0x8000) != 0;
+    return SettingsKeyboardState{left || (generic && !right), right};
 }
 
 int rect_right(const SettingsRect& rect) {
@@ -206,6 +239,194 @@ void draw_text_in_rect(HDC hdc, const std::wstring& text, const RECT& rect, COLO
     }
 }
 
+void draw_navigation_icon(HDC hdc, int id, const RECT& rect, COLORREF color, int dpi) {
+    const int unit = std::max(1, scale_settings_value(1, dpi));
+    HPEN pen = CreatePen(PS_SOLID, unit * 2, color);
+    HGDIOBJ old_pen = SelectObject(hdc, pen);
+    HGDIOBJ old_brush = SelectObject(hdc, GetStockObject(NULL_BRUSH));
+    const int x = rect.left;
+    const int y = rect.top;
+    const auto s = [dpi](int value) { return scale_settings_value(value, dpi); };
+    const auto line = [&](int x1, int y1, int x2, int y2) {
+        MoveToEx(hdc, x + s(x1), y + s(y1), nullptr);
+        LineTo(hdc, x + s(x2), y + s(y2));
+    };
+    if (id == kIdNavAppearance) {
+        RoundRect(hdc, x + s(2), y + s(2), x + s(20), y + s(20), s(6), s(6));
+        line(3, 8, 19, 8);
+        line(9, 9, 9, 19);
+    } else if (id == kIdNavCandidate) {
+        RoundRect(hdc, x + s(1), y + s(3), x + s(21), y + s(18), s(5), s(5));
+        line(5, 8, 17, 8);
+        line(5, 13, 12, 13);
+        line(5, 18, 5, 21);
+    } else if (id == kIdNavUserLexicon) {
+        RoundRect(hdc, x + s(3), y + s(2), x + s(20), y + s(20), s(3), s(3));
+        line(8, 3, 8, 19);
+        line(11, 8, 16, 8);
+        line(11, 13, 16, 13);
+    } else if (id == kIdNavLearning) {
+        const POINT points[] = {{x + s(11), y + s(1)}, {x + s(14), y + s(8)},
+                                {x + s(21), y + s(11)}, {x + s(14), y + s(14)},
+                                {x + s(11), y + s(21)}, {x + s(8), y + s(14)},
+                                {x + s(1), y + s(11)}, {x + s(8), y + s(8)}};
+        Polygon(hdc, points, static_cast<int>(std::size(points)));
+    } else {
+        Ellipse(hdc, x + s(2), y + s(2), x + s(21), y + s(21));
+        line(11, 10, 11, 17);
+        line(11, 6, 11, 7);
+    }
+    SelectObject(hdc, old_brush);
+    SelectObject(hdc, old_pen);
+    DeleteObject(pen);
+}
+
+HFONT create_candidate_preview_font(int height_px, LONG weight) {
+    return CreateFontW(-height_px, 0, 0, 0, weight, FALSE, FALSE, FALSE,
+                       DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
+                       CLEARTYPE_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Microsoft YaHei UI");
+}
+
+void draw_candidate_preview(HDC hdc,
+                            const SettingsWindowLayout& settings_layout,
+                            const CandidateWindowOptions& options,
+                            bool system_dark,
+                            int dpi) {
+    const CandidateThemePalette candidate_palette = make_candidate_palette(options.theme_mode, system_dark);
+    const RECT preview_outer = to_win_rect(settings_layout.appearance_preview_window);
+    // Use enough virtual screen height to keep the real candidate-window hint
+    // policy enabled; the preview itself is still centered inside its card.
+    const RECT work_area{preview_outer.left, preview_outer.top, preview_outer.right,
+                          preview_outer.bottom + rect_height(preview_outer)};
+    const RECT caret_rect{preview_outer.left + scale_settings_value(28, dpi),
+                          preview_outer.top + scale_settings_value(24, dpi),
+                          preview_outer.left + scale_settings_value(29, dpi),
+                          preview_outer.top + scale_settings_value(46, dpi)};
+
+    CandidateLayoutInput input;
+    input.composition_text = L"ni hao";
+    input.candidate_texts = {
+        L"\u4F60\u597D",
+        L"\u4F60\u597D\u554A",
+        L"\u4F60\u53F7",
+        L"\u62DF\u597D"
+    };
+    input.selected_index = 0;
+    input.caret_rect = caret_rect;
+    input.work_area = work_area;
+    input.dpi = dpi;
+    input.options = options;
+    CandidateLayoutResult layout = make_candidate_layout(input);
+    if (!layout.visible) {
+        return;
+    }
+
+    const int origin_x = preview_outer.left + std::max(0, (rect_width(preview_outer) - layout.width) / 2);
+    const int origin_y = preview_outer.top + std::max(0, (rect_height(preview_outer) - layout.height) / 2);
+    layout.window_rect = RECT{origin_x, origin_y, origin_x + layout.width, origin_y + layout.height};
+    OffsetRect(&layout.composition_rect, origin_x, origin_y);
+    OffsetRect(&layout.candidate_area_rect, origin_x, origin_y);
+    OffsetRect(&layout.action_button_rect, origin_x, origin_y);
+    OffsetRect(&layout.hint_rect, origin_x, origin_y);
+    for (auto& item : layout.items) {
+        OffsetRect(&item.bounds, origin_x, origin_y);
+        OffsetRect(&item.number_bounds, origin_x, origin_y);
+        OffsetRect(&item.text_bounds, origin_x, origin_y);
+    }
+
+    RECT window_rect = layout.window_rect;
+    const int max_right = preview_outer.right - scale_settings_value(18, dpi);
+    if (window_rect.right > max_right) {
+        OffsetRect(&window_rect, max_right - window_rect.right, 0);
+    }
+
+    HPEN border = CreatePen(PS_SOLID, std::max(1, scale_settings_value(1, dpi)), candidate_palette.border);
+    HBRUSH background = CreateSolidBrush(candidate_palette.background);
+    HGDIOBJ old_pen = SelectObject(hdc, border);
+    HGDIOBJ old_brush = SelectObject(hdc, background);
+    RoundRect(hdc, window_rect.left, window_rect.top, window_rect.right, window_rect.bottom,
+              layout.corner_radius * 2, layout.corner_radius * 2);
+    SelectObject(hdc, old_brush);
+    SelectObject(hdc, old_pen);
+    DeleteObject(background);
+    DeleteObject(border);
+
+    HFONT composition_font = create_candidate_preview_font(layout.composition_font_px, FW_NORMAL);
+    HFONT candidate_font = create_candidate_preview_font(layout.candidate_font_px, FW_MEDIUM);
+    HFONT hint_font = create_candidate_preview_font(layout.hint_font_px, FW_NORMAL);
+
+    draw_text_in_rect(hdc, input.composition_text, layout.composition_rect, candidate_palette.muted_text, composition_font,
+                      DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS);
+    for (const auto& item : layout.items) {
+        if (item.selected) {
+            draw_round_rect(hdc,
+                            item.bounds,
+                            layout.selected_corner_radius,
+                            candidate_palette.selected_background,
+                            candidate_palette.selected_border);
+        }
+        draw_text_in_rect(hdc,
+                          std::to_wstring(item.candidate_index + 1),
+                          item.number_bounds,
+                          item.selected ? candidate_palette.selected_text : candidate_palette.number_text,
+                          candidate_font,
+                          DT_SINGLELINE | DT_VCENTER);
+        draw_text_in_rect(hdc,
+                          item.display_text,
+                          item.text_bounds,
+                          item.selected ? candidate_palette.selected_text : candidate_palette.text,
+                          candidate_font,
+                          candidate_text_draw_flags(item.truncated));
+    }
+    if (layout.action_button_visible) {
+        const RECT& icon_rect = layout.action_button_rect;
+        const COLORREF button_fill = blend(candidate_palette.background, candidate_palette.border, 30);
+        draw_round_rect(hdc, icon_rect, scale_settings_value(8, dpi), button_fill, candidate_palette.border);
+        const int center_x = (icon_rect.left + icon_rect.right) / 2;
+        const int center_y = (icon_rect.top + icon_rect.bottom) / 2;
+        HPEN icon_pen = CreatePen(PS_SOLID, std::max(1, scale_settings_value(2, dpi)), candidate_palette.muted_text);
+        HGDIOBJ old_icon_pen = SelectObject(hdc, icon_pen);
+        HGDIOBJ old_icon_brush = SelectObject(hdc, GetStockObject(NULL_BRUSH));
+        const int radius = scale_settings_value(5, dpi);
+        const int inner = scale_settings_value(2, dpi);
+        const int outer = scale_settings_value(8, dpi);
+        Ellipse(hdc, center_x - radius, center_y - radius, center_x + radius, center_y + radius);
+        Ellipse(hdc, center_x - inner, center_y - inner, center_x + inner, center_y + inner);
+        const POINT spokes[][2] = {
+            {{center_x - outer, center_y}, {center_x - radius, center_y}},
+            {{center_x + radius, center_y}, {center_x + outer, center_y}},
+            {{center_x, center_y - outer}, {center_x, center_y - radius}},
+            {{center_x, center_y + radius}, {center_x, center_y + outer}}
+        };
+        for (const auto& spoke : spokes) {
+            MoveToEx(hdc, spoke[0].x, spoke[0].y, nullptr);
+            LineTo(hdc, spoke[1].x, spoke[1].y);
+        }
+        SelectObject(hdc, old_icon_brush);
+        SelectObject(hdc, old_icon_pen);
+        DeleteObject(icon_pen);
+    }
+    if (layout.show_hint) {
+        HPEN separator = CreatePen(PS_SOLID, 1, candidate_palette.border);
+        HGDIOBJ old_separator = SelectObject(hdc, separator);
+        const int y = layout.hint_rect.top - scale_settings_value(4, dpi);
+        MoveToEx(hdc, layout.hint_rect.left, y, nullptr);
+        LineTo(hdc, layout.hint_rect.right, y);
+        SelectObject(hdc, old_separator);
+        DeleteObject(separator);
+        draw_text_in_rect(hdc,
+                          L"\u7A7A\u683C \u786E\u8BA4  \u00B7  \u6570\u5B57 \u9009\u8BCD  \u00B7  Esc \u53D6\u6D88",
+                          layout.hint_rect,
+                          candidate_palette.hint_text,
+                          hint_font,
+                          DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS);
+    }
+
+    DeleteObject(hint_font);
+    DeleteObject(candidate_font);
+    DeleteObject(composition_font);
+}
+
 void move_window(HWND hwnd, const SettingsRect& rect) {
     if (hwnd) {
         MoveWindow(hwnd, rect.x, rect.y, rect.width, rect.height, TRUE);
@@ -230,7 +451,7 @@ HFONT create_ui_font(int dpi, int point_size, LONG weight) {
     LOGFONTW font{};
     font.lfHeight = -MulDiv(point_size, dpi, 72);
     font.lfWeight = weight;
-    wcscpy_s(font.lfFaceName, L"Segoe UI Variable");
+    wcscpy_s(font.lfFaceName, L"Microsoft YaHei UI");
     return CreateFontIndirectW(&font);
 }
 
@@ -263,8 +484,13 @@ HWND make_static(HWND parent, const wchar_t* text, int id, HFONT font) {
 }
 
 HWND make_group(HWND parent, const wchar_t* text, int id, HFONT font) {
+    (void)parent;
     (void)text;
-    return make_control(parent, L"STATIC", L"", id, SS_LEFT, 0, font);
+    (void)id;
+    (void)font;
+    // Cards are painted by the parent backbuffer. A full-card child HWND would
+    // clip that paint pass and can leave stale pixels when pages are switched.
+    return nullptr;
 }
 
 HWND make_button(HWND parent, const wchar_t* text, int id, DWORD style, HFONT font) {
@@ -298,6 +524,17 @@ HWND make_list_view(HWND parent, int id, HFONT font) {
     return list;
 }
 
+HWND make_trackbar(HWND parent, int id, HFONT font) {
+    HWND slider = make_control(parent,
+                               L"STATIC",
+                               L"",
+                               id,
+                               SS_NOTIFY | WS_TABSTOP,
+                               0,
+                               font);
+    return slider;
+}
+
 bool is_checked(HWND parent, int id) {
     return SendMessageW(GetDlgItem(parent, id), BM_GETCHECK, 0, 0) == BST_CHECKED;
 }
@@ -326,6 +563,13 @@ void set_control_text(HWND parent, int id, const std::wstring& text) {
 
 void set_cue_banner(HWND edit, const wchar_t* text) {
     SendMessageW(edit, EM_SETCUEBANNER, TRUE, reinterpret_cast<LPARAM>(text));
+}
+
+void notify_candidate_options_changed() {
+    const UINT message = RegisterWindowMessageW(kCandidateOptionsChangedMessageName);
+    if (message != 0) {
+        PostMessageW(HWND_BROADCAST, message, 0, 0);
+    }
 }
 
 bool windows_apps_use_dark_theme() {
@@ -435,14 +679,14 @@ int scale_settings_value(int value, int dpi) {
 SettingsSize settings_minimum_client_size(int dpi) {
     const int safe_dpi = dpi <= 0 ? kBaseDpi : dpi;
     return SettingsSize{scale_settings_value(980, safe_dpi),
-                        scale_settings_value(700, safe_dpi)};
+                        scale_settings_value(720, safe_dpi)};
 }
 
 SettingsSize settings_initial_client_size(int dpi) {
     const int safe_dpi = dpi <= 0 ? kBaseDpi : dpi;
     const SettingsSize minimum = settings_minimum_client_size(safe_dpi);
     return SettingsSize{std::max(minimum.width, scale_settings_value(1040, safe_dpi)),
-                        std::max(minimum.height, scale_settings_value(740, safe_dpi))};
+                        std::max(minimum.height, scale_settings_value(760, safe_dpi))};
 }
 
 SettingsSize settings_outer_size_for_client(
@@ -571,6 +815,7 @@ SettingsControlDrawStyle settings_control_draw_style(
     switch (role) {
         case SettingsControlRole::Navigation:
             style.fill = state.checked ? palette.accent_soft : palette.sidebar_background;
+            style.text = state.checked ? palette.accent : palette.muted_text;
             if (state.hot && !state.checked && !state.disabled) {
                 style.fill = blend(style.fill, palette.text, palette.dark ? 7 : 4);
             }
@@ -624,6 +869,61 @@ SettingsControlDrawStyle settings_control_draw_style(
     return style;
 }
 
+SettingsSwitchDrawStyle settings_switch_draw_style(
+    const SettingsThemePalette& palette,
+    bool checked,
+    bool focused) {
+    SettingsSwitchDrawStyle style;
+    style.thumb_on_right = checked;
+    style.uses_dotted_focus_frame = false;
+    style.uses_heavy_focus_ring = false;
+    if (checked) {
+        style.track = palette.accent;
+        style.track_border = focused ? blend(palette.accent, RGB(255, 255, 255), palette.dark ? 16 : 10)
+                                     : palette.accent;
+        style.thumb = RGB(255, 255, 255);
+        style.thumb_border = blend(RGB(255, 255, 255), palette.accent, focused ? 18 : 10);
+        return style;
+    }
+
+    style.track = palette.dark
+        ? blend(palette.window_background, palette.card_border, 18)
+        : blend(palette.card_border, palette.card_background, 46);
+    style.track_border = focused ? blend(palette.card_border, palette.accent, palette.dark ? 18 : 12)
+                                 : blend(palette.card_border, style.track, 42);
+    style.thumb = palette.dark
+        ? blend(RGB(255, 255, 255), palette.card_background, 14)
+        : RGB(255, 255, 255);
+    style.thumb_border = blend(palette.muted_text, palette.card_background, palette.dark ? 45 : 65);
+    return style;
+}
+
+SettingsSwitchMetrics settings_switch_metrics(
+    const SettingsRect& bounds,
+    bool checked,
+    int dpi) {
+    const int safe_dpi = dpi <= 0 ? kBaseDpi : dpi;
+    const int track_inset_x = scale_settings_value(1, safe_dpi);
+    const int track_inset_y = scale_settings_value(1, safe_dpi);
+    const int thumb_inset = scale_settings_value(4, safe_dpi);
+    SettingsSwitchMetrics metrics;
+    metrics.track = SettingsRect{bounds.x + track_inset_x,
+                                 bounds.y + track_inset_y,
+                                 std::max(1, bounds.width - track_inset_x * 2),
+                                 std::max(1, bounds.height - track_inset_y * 2)};
+    const int thumb_size = std::max(1, metrics.track.height - thumb_inset * 2);
+    const int thumb_left = checked
+        ? metrics.track.x + metrics.track.width - thumb_inset - thumb_size
+        : metrics.track.x + thumb_inset;
+    metrics.thumb = SettingsRect{thumb_left,
+                                 metrics.track.y + thumb_inset,
+                                 thumb_size,
+                                 thumb_size};
+    metrics.track_corner_radius = metrics.track.height / 2;
+    metrics.thumb_corner_radius = thumb_size / 2;
+    return metrics;
+}
+
 SettingsHeaderDrawStyle settings_header_draw_style(const SettingsThemePalette& palette) {
     SettingsHeaderDrawStyle style;
     style.background = palette.list_header_background;
@@ -639,8 +939,85 @@ SettingsThemeRefreshPlan settings_theme_refresh_plan() {
     return SettingsThemeRefreshPlan{};
 }
 
+SettingsPageVisibilityPolicy settings_page_visibility_policy() {
+    return SettingsPageVisibilityPolicy{};
+}
+
 SettingsAboutPathPolicy settings_about_path_policy() {
     return SettingsAboutPathPolicy{};
+}
+
+void apply_settings_dark_title_bar(HWND hwnd, bool dark) {
+    apply_dark_title_bar(hwnd, dark);
+}
+
+CandidateSizeSliderMetrics calculate_candidate_size_slider_metrics(
+    const SettingsRect& bounds,
+    int level,
+    int dpi) {
+    const int safe_dpi = dpi <= 0 ? kBaseDpi : dpi;
+    const int clamped_level = std::max(candidate_text_size_min_level(),
+                                       std::min(level, candidate_text_size_max_level()));
+    const int thumb_size = scale_settings_value(18, safe_dpi);
+    const int stop_size = scale_settings_value(8, safe_dpi);
+    const int track_height = scale_settings_value(6, safe_dpi);
+    const int left = bounds.x + thumb_size / 2;
+    const int right = bounds.x + std::max(thumb_size, bounds.width - thumb_size / 2);
+    const int center_y = bounds.y + bounds.height / 2;
+    CandidateSizeSliderMetrics metrics;
+    metrics.track = SettingsRect{left,
+                                 center_y - track_height / 2,
+                                 std::max(1, right - left),
+                                 track_height};
+    for (int i = 0; i < 7; ++i) {
+        const int stop_x = metrics.track.x + MulDiv(metrics.track.width, i, 6);
+        metrics.stops[static_cast<size_t>(i)] = SettingsRect{stop_x - stop_size / 2,
+                                                             center_y - stop_size / 2,
+                                                             stop_size,
+                                                             stop_size};
+    }
+    const SettingsRect& selected_stop = metrics.stops[static_cast<size_t>(clamped_level - 1)];
+    const int selected_x = selected_stop.x + selected_stop.width / 2;
+    metrics.thumb = SettingsRect{selected_x - thumb_size / 2,
+                                 center_y - thumb_size / 2,
+                                 thumb_size,
+                                 thumb_size};
+    return metrics;
+}
+
+int candidate_size_slider_level_from_x(const SettingsRect& bounds, int x, int dpi) {
+    const CandidateSizeSliderMetrics metrics = calculate_candidate_size_slider_metrics(
+        bounds,
+        candidate_text_size_default_level(),
+        dpi);
+    if (metrics.track.width <= 0) {
+        return candidate_text_size_default_level();
+    }
+    const int relative = std::max(0, std::min(x - metrics.track.x, metrics.track.width));
+    const int index = static_cast<int>((static_cast<long long>(relative) * 6 + metrics.track.width / 2) /
+                                       metrics.track.width) + 1;
+    return std::max(candidate_text_size_min_level(), std::min(index, candidate_text_size_max_level()));
+}
+
+CandidateSizeSliderDrawStyle candidate_size_slider_draw_style(
+    const SettingsThemePalette& palette,
+    const CandidateSizeSliderDrawState& state) {
+    CandidateSizeSliderDrawStyle style;
+    style.background = palette.card_background;
+    style.track = palette.dark ? blend(palette.card_border, palette.text, 12)
+                               : blend(palette.card_border, palette.accent, 12);
+    style.track_active = state.disabled ? palette.disabled_background : palette.accent_soft;
+    style.stop = state.disabled ? palette.disabled_background : palette.card_border;
+    style.stop_active = state.disabled ? palette.disabled_text : palette.accent;
+    style.thumb = state.disabled ? palette.disabled_background :
+                  state.pressed ? palette.primary_button_pressed :
+                  state.hot ? blend(palette.accent, palette.accent_soft, 22) :
+                  palette.accent;
+    style.thumb_border = state.disabled ? palette.disabled_text : palette.accent_border;
+    style.focus = palette.accent;
+    style.focus_uses_dotted_frame = false;
+    style.focus_covers_entire_client_rect = false;
+    return style;
 }
 
 SettingsVisualSpec settings_visual_spec(int dpi) {
@@ -649,15 +1026,16 @@ SettingsVisualSpec settings_visual_spec(int dpi) {
     spec.body_font_px = scale_settings_value(14, safe_dpi);
     spec.title_font_px = scale_settings_value(24, safe_dpi);
     spec.section_font_px = scale_settings_value(15, safe_dpi);
-    spec.card_corner_radius = scale_settings_value(12, safe_dpi);
+    spec.card_corner_radius = scale_settings_value(14, safe_dpi);
     spec.control_corner_radius = scale_settings_value(8, safe_dpi);
-    spec.nav_corner_radius = scale_settings_value(8, safe_dpi);
+    spec.nav_corner_radius = scale_settings_value(10, safe_dpi);
     spec.parent_paints_cards = true;
     spec.parent_uses_double_buffering = true;
     spec.owner_draw_buttons = true;
     spec.owner_draw_fills_client_rect = true;
     spec.static_controls_use_theme_brushes = true;
     spec.uses_legacy_group_boxes = false;
+    spec.uses_full_card_child_windows = false;
     spec.edit_uses_client_edge = false;
     spec.list_view_uses_grid_lines = false;
     spec.user_lexicon_status_inside_editor = true;
@@ -707,9 +1085,9 @@ SettingsWindowLayout calculate_settings_window_layout(int client_width, int clie
     const SettingsSize minimum = settings_minimum_client_size(safe_dpi);
     const int width = std::max(client_width, minimum.width);
     const int height = std::max(client_height, minimum.height);
-    const int sidebar_width = scale_settings_value(220, safe_dpi);
-    const int margin = scale_settings_value(32, safe_dpi);
-    const int gap = scale_settings_value(20, safe_dpi);
+    const int sidebar_width = scale_settings_value(208, safe_dpi);
+    const int margin = scale_settings_value(28, safe_dpi);
+    const int gap = scale_settings_value(16, safe_dpi);
 
     SettingsWindowLayout layout;
     layout.dpi = safe_dpi;
@@ -722,13 +1100,13 @@ SettingsWindowLayout calculate_settings_window_layout(int client_width, int clie
     layout.page_description = SettingsRect{layout.page_title.x,
                                            rect_bottom(layout.page_title) + scale_settings_value(4, safe_dpi),
                                            layout.page_title.width,
-                                           scale_settings_value(42, safe_dpi)};
+                                           scale_settings_value(28, safe_dpi)};
 
     const int nav_x = scale_settings_value(16, safe_dpi);
-    int nav_y = scale_settings_value(92, safe_dpi);
+    int nav_y = scale_settings_value(112, safe_dpi);
     const int nav_width = sidebar_width - nav_x * 2;
-    const int nav_height = scale_settings_value(40, safe_dpi);
-    const int nav_gap = scale_settings_value(6, safe_dpi);
+    const int nav_height = scale_settings_value(44, safe_dpi);
+    const int nav_gap = scale_settings_value(8, safe_dpi);
     for (int i = 0; i < kSettingsPageCount; ++i) {
         layout.nav_items[static_cast<size_t>(i)] = SettingsRect{nav_x, nav_y, nav_width, nav_height};
         nav_y += nav_height + nav_gap;
@@ -742,9 +1120,132 @@ SettingsWindowLayout calculate_settings_window_layout(int client_width, int clie
                                        content_width,
                                        scale_settings_value(150, safe_dpi)};
     layout.secondary_card = SettingsRect{content_x,
-                                         rect_bottom(layout.primary_card) + gap,
-                                         content_width,
-                                         height - rect_bottom(layout.primary_card) - margin - gap};
+                                          rect_bottom(layout.primary_card) + gap,
+                                          content_width,
+                                          height - rect_bottom(layout.primary_card) - margin - gap};
+    const int candidate_content_width = std::min(content_width, scale_settings_value(760, safe_dpi));
+    const int candidate_card_padding = scale_settings_value(24, safe_dpi);
+    const int candidate_toggle_width = scale_settings_value(48, safe_dpi);
+    const int candidate_toggle_height = scale_settings_value(26, safe_dpi);
+    layout.candidate_options_card = SettingsRect{content_x,
+                                                 content_top,
+                                                 candidate_content_width,
+                                                 scale_settings_value(190, safe_dpi)};
+    const int candidate_text_width = std::max(scale_settings_value(220, safe_dpi),
+                                              candidate_content_width - candidate_card_padding * 3 - candidate_toggle_width);
+    const int candidate_row_one_y = layout.candidate_options_card.y + scale_settings_value(30, safe_dpi);
+    const int candidate_row_two_y = layout.candidate_options_card.y + scale_settings_value(100, safe_dpi);
+    layout.candidate_hint_title = SettingsRect{layout.candidate_options_card.x + candidate_card_padding,
+                                               candidate_row_one_y,
+                                               candidate_text_width,
+                                               scale_settings_value(24, safe_dpi)};
+    layout.candidate_hint_description = SettingsRect{layout.candidate_hint_title.x,
+                                                     rect_bottom(layout.candidate_hint_title) + scale_settings_value(2, safe_dpi),
+                                                     candidate_text_width,
+                                                     scale_settings_value(34, safe_dpi)};
+    layout.candidate_hint_toggle = SettingsRect{rect_right(layout.candidate_options_card) - candidate_card_padding - candidate_toggle_width,
+                                                candidate_row_one_y + scale_settings_value(8, safe_dpi),
+                                                candidate_toggle_width,
+                                                candidate_toggle_height};
+    layout.candidate_shift_title = SettingsRect{layout.candidate_hint_title.x,
+                                                candidate_row_two_y,
+                                                candidate_text_width,
+                                                scale_settings_value(24, safe_dpi)};
+    layout.candidate_shift_description = SettingsRect{layout.candidate_shift_title.x,
+                                                      rect_bottom(layout.candidate_shift_title) + scale_settings_value(2, safe_dpi),
+                                                      candidate_text_width,
+                                                      scale_settings_value(28, safe_dpi)};
+    layout.candidate_shift_toggle = SettingsRect{layout.candidate_hint_toggle.x,
+                                                 candidate_row_two_y + scale_settings_value(8, safe_dpi),
+                                                 candidate_toggle_width,
+                                                 candidate_toggle_height};
+    layout.candidate_shift_note = SettingsRect{layout.candidate_shift_title.x,
+                                               rect_bottom(layout.candidate_shift_description) + scale_settings_value(4, safe_dpi),
+                                               candidate_text_width,
+                                               scale_settings_value(24, safe_dpi)};
+    layout.shortcut_test_card = SettingsRect{content_x,
+                                             rect_bottom(layout.candidate_options_card) + gap,
+                                             candidate_content_width,
+                                             scale_settings_value(326, safe_dpi)};
+    layout.shortcut_test_title = SettingsRect{layout.shortcut_test_card.x + candidate_card_padding,
+                                              layout.shortcut_test_card.y + scale_settings_value(22, safe_dpi),
+                                              candidate_content_width - candidate_card_padding * 2,
+                                              scale_settings_value(42, safe_dpi)};
+    layout.shortcut_test_description = SettingsRect{layout.shortcut_test_title.x,
+                                                    rect_bottom(layout.shortcut_test_title) + scale_settings_value(8, safe_dpi),
+                                                    candidate_content_width - candidate_card_padding * 2,
+                                                    scale_settings_value(42, safe_dpi)};
+    const int key_width = scale_settings_value(132, safe_dpi);
+    const int key_height = scale_settings_value(46, safe_dpi);
+    const int key_gap = scale_settings_value(14, safe_dpi);
+    layout.shortcut_test_ctrl_key = SettingsRect{layout.shortcut_test_title.x,
+                                                 rect_bottom(layout.shortcut_test_description) + scale_settings_value(16, safe_dpi),
+                                                 key_width,
+                                                 key_height};
+    layout.shortcut_test_space_key = SettingsRect{rect_right(layout.shortcut_test_ctrl_key) + key_gap,
+                                                  layout.shortcut_test_ctrl_key.y,
+                                                  key_width,
+                                                  key_height};
+    const int mode_label_width = scale_settings_value(56, safe_dpi);
+    const int mode_gap = scale_settings_value(8, safe_dpi);
+    const int mode_left = rect_right(layout.shortcut_test_space_key) + scale_settings_value(26, safe_dpi);
+    const int mode_value_width = std::max(scale_settings_value(240, safe_dpi),
+                                          rect_right(layout.shortcut_test_card) - candidate_card_padding - mode_left - mode_label_width - mode_gap);
+    layout.shortcut_test_mode_label = SettingsRect{rect_right(layout.shortcut_test_space_key) + scale_settings_value(26, safe_dpi),
+                                                   layout.shortcut_test_ctrl_key.y,
+                                                   mode_label_width,
+                                                   key_height};
+    layout.shortcut_test_mode_value = SettingsRect{rect_right(layout.shortcut_test_mode_label) + mode_gap,
+                                                   layout.shortcut_test_ctrl_key.y,
+                                                   mode_value_width,
+                                                   key_height};
+    layout.shortcut_test_input_label = SettingsRect{layout.shortcut_test_title.x,
+                                                    rect_bottom(layout.shortcut_test_ctrl_key) + scale_settings_value(22, safe_dpi),
+                                                    candidate_content_width - candidate_card_padding * 2,
+                                                    scale_settings_value(22, safe_dpi)};
+    layout.shortcut_test_input_box = SettingsRect{layout.shortcut_test_title.x,
+                                                  rect_bottom(layout.shortcut_test_input_label) + scale_settings_value(8, safe_dpi),
+                                                  candidate_content_width - candidate_card_padding * 2,
+                                                  scale_settings_value(36, safe_dpi)};
+    layout.shortcut_test_boundary_note = SettingsRect{layout.shortcut_test_title.x,
+                                                      rect_bottom(layout.shortcut_test_input_box) + scale_settings_value(10, safe_dpi),
+                                                      candidate_content_width - candidate_card_padding * 2,
+                                                      scale_settings_value(28, safe_dpi)};
+    layout.appearance_preview_card = SettingsRect{content_x,
+                                                  content_top,
+                                                  content_width,
+                                                  scale_settings_value(230, safe_dpi)};
+    layout.appearance_theme_card = SettingsRect{content_x,
+                                                rect_bottom(layout.appearance_preview_card) + gap,
+                                                content_width,
+                                                std::max(scale_settings_value(230, safe_dpi),
+                                                         std::min(scale_settings_value(286, safe_dpi), height - rect_bottom(layout.appearance_preview_card) - margin - gap))};
+    layout.appearance_preview_window = SettingsRect{layout.appearance_preview_card.x + scale_settings_value(24, safe_dpi),
+                                                    layout.appearance_preview_card.y + scale_settings_value(54, safe_dpi),
+                                                    std::min(scale_settings_value(620, safe_dpi),
+                                                             layout.appearance_preview_card.width - scale_settings_value(48, safe_dpi)),
+                                                    scale_settings_value(150, safe_dpi)};
+    layout.candidate_size_slider = SettingsRect{layout.appearance_theme_card.x + scale_settings_value(24, safe_dpi),
+                                                layout.appearance_theme_card.y + scale_settings_value(132, safe_dpi),
+                                                std::min(scale_settings_value(430, safe_dpi),
+                                                         layout.appearance_theme_card.width - scale_settings_value(48, safe_dpi)),
+                                                scale_settings_value(46, safe_dpi)};
+    layout.candidate_size_value = SettingsRect{layout.candidate_size_slider.x,
+                                               rect_bottom(layout.candidate_size_slider) + scale_settings_value(26, safe_dpi),
+                                               scale_settings_value(300, safe_dpi),
+                                               scale_settings_value(28, safe_dpi)};
+    layout.candidate_size_label_left = SettingsRect{layout.candidate_size_slider.x,
+                                                    rect_bottom(layout.candidate_size_slider) + scale_settings_value(6, safe_dpi),
+                                                    scale_settings_value(80, safe_dpi),
+                                                    scale_settings_value(22, safe_dpi)};
+    layout.candidate_size_label_middle = SettingsRect{layout.candidate_size_slider.x + layout.candidate_size_slider.width / 2 - scale_settings_value(40, safe_dpi),
+                                                      layout.candidate_size_label_left.y,
+                                                      scale_settings_value(80, safe_dpi),
+                                                      scale_settings_value(20, safe_dpi)};
+    layout.candidate_size_label_right = SettingsRect{rect_right(layout.candidate_size_slider) - scale_settings_value(80, safe_dpi),
+                                                     layout.candidate_size_label_left.y,
+                                                     scale_settings_value(80, safe_dpi),
+                                                     scale_settings_value(22, safe_dpi)};
     layout.search_box = SettingsRect{content_x,
                                      content_top,
                                      content_width - scale_settings_value(108, safe_dpi),
@@ -754,7 +1255,7 @@ SettingsWindowLayout calculate_settings_window_layout(int client_width, int clie
                                          scale_settings_value(96, safe_dpi),
                                          scale_settings_value(38, safe_dpi)};
 
-    const int editor_height = scale_settings_value(230, safe_dpi);
+    const int editor_height = scale_settings_value(320, safe_dpi);
     layout.user_editor_card = SettingsRect{content_x,
                                            height - margin - editor_height,
                                            content_width,
@@ -763,9 +1264,26 @@ SettingsWindowLayout calculate_settings_window_layout(int client_width, int clie
                                             layout.user_editor_card.y + scale_settings_value(18, safe_dpi),
                                             layout.user_editor_card.width - scale_settings_value(48, safe_dpi),
                                             scale_settings_value(24, safe_dpi)};
-    layout.user_status = SettingsRect{layout.user_editor_card.x + scale_settings_value(24, safe_dpi),
-                                      rect_bottom(layout.user_editor_card) - scale_settings_value(54, safe_dpi),
-                                      layout.user_editor_card.width - scale_settings_value(48, safe_dpi),
+    layout.user_frequency_help = SettingsRect{layout.user_editor_card.x + scale_settings_value(24, safe_dpi),
+                                              rect_bottom(layout.user_editor_title) + scale_settings_value(82, safe_dpi),
+                                              layout.user_editor_card.width - scale_settings_value(48, safe_dpi),
+                                              scale_settings_value(68, safe_dpi)};
+    const int user_action_y = rect_bottom(layout.user_frequency_help) + scale_settings_value(14, safe_dpi);
+    layout.user_new_button = SettingsRect{layout.user_frequency_help.x,
+                                          user_action_y,
+                                          scale_settings_value(112, safe_dpi),
+                                          scale_settings_value(36, safe_dpi)};
+    layout.user_save_button = SettingsRect{rect_right(layout.user_new_button) + scale_settings_value(12, safe_dpi),
+                                           user_action_y,
+                                           scale_settings_value(128, safe_dpi),
+                                           layout.user_new_button.height};
+    layout.user_delete_button = SettingsRect{rect_right(layout.user_save_button) + scale_settings_value(12, safe_dpi),
+                                             user_action_y,
+                                             scale_settings_value(160, safe_dpi),
+                                             layout.user_new_button.height};
+    layout.user_status = SettingsRect{layout.user_frequency_help.x,
+                                      rect_bottom(layout.user_new_button) + scale_settings_value(16, safe_dpi),
+                                      layout.user_frequency_help.width,
                                       scale_settings_value(36, safe_dpi)};
     const int table_y = rect_bottom(layout.search_box) + scale_settings_value(12, safe_dpi);
     const int table_height = std::max(scale_settings_value(140, safe_dpi),
@@ -773,14 +1291,14 @@ SettingsWindowLayout calculate_settings_window_layout(int client_width, int clie
     layout.user_table = SettingsRect{content_x, table_y, content_width, table_height};
     layout.user_empty_state = layout.user_table;
 
-    const int about_card_height = scale_settings_value(400, safe_dpi);
+    const int about_card_height = scale_settings_value(312, safe_dpi);
     layout.about_card = SettingsRect{content_x,
                                      content_top,
                                      content_width,
                                      std::min(about_card_height, height - content_top - margin)};
     const int about_padding = scale_settings_value(24, safe_dpi);
     const int about_label_width = scale_settings_value(112, safe_dpi);
-    const int about_row_height = scale_settings_value(30, safe_dpi);
+    const int about_row_height = scale_settings_value(28, safe_dpi);
     const int about_action_height = scale_settings_value(34, safe_dpi);
     const int about_action_gap = scale_settings_value(12, safe_dpi);
     const int about_value_x = layout.about_card.x + about_padding + about_label_width + scale_settings_value(12, safe_dpi);
@@ -798,7 +1316,7 @@ SettingsWindowLayout calculate_settings_window_layout(int client_width, int clie
                                               about_row_height};
         about_row_y += about_row_height;
     }
-    const int about_button_y = std::min(rect_bottom(layout.about_card) - about_padding - about_action_height * 2 - about_action_gap,
+    const int about_button_y = std::min(rect_bottom(layout.about_card) - about_padding - about_action_height,
                                         about_row_y + scale_settings_value(18, safe_dpi));
     layout.about_open_data_button = SettingsRect{about_value_x,
                                                  about_button_y,
@@ -808,16 +1326,92 @@ SettingsWindowLayout calculate_settings_window_layout(int client_width, int clie
                                                  about_button_y,
                                                  scale_settings_value(112, safe_dpi),
                                                  about_action_height};
-    const int github_button_y = rect_bottom(layout.about_open_data_button) + about_action_gap;
-    layout.about_open_github_button = SettingsRect{about_value_x,
-                                                   github_button_y,
-                                                   scale_settings_value(152, safe_dpi),
-                                                   about_action_height};
-    layout.about_copy_github_button = SettingsRect{rect_right(layout.about_open_github_button) + about_action_gap,
-                                                   github_button_y,
-                                                   scale_settings_value(136, safe_dpi),
-                                                   about_action_height};
+    layout.about_dictionary_card = SettingsRect{content_x,
+                                                rect_bottom(layout.about_card) + gap,
+                                                content_width,
+                                                scale_settings_value(100, safe_dpi)};
+    layout.about_dictionary_title = SettingsRect{layout.about_dictionary_card.x + about_padding,
+                                                 layout.about_dictionary_card.y + scale_settings_value(18, safe_dpi),
+                                                 scale_settings_value(190, safe_dpi),
+                                                 scale_settings_value(26, safe_dpi)};
+    layout.about_dictionary_count = SettingsRect{layout.about_dictionary_title.x,
+                                                 rect_bottom(layout.about_dictionary_title) + scale_settings_value(6, safe_dpi),
+                                                 layout.about_dictionary_card.width - scale_settings_value(230, safe_dpi),
+                                                 scale_settings_value(28, safe_dpi)};
+    layout.about_dictionary_preview_button = SettingsRect{rect_right(layout.about_dictionary_card) - about_padding - scale_settings_value(120, safe_dpi),
+                                                          layout.about_dictionary_card.y + scale_settings_value(32, safe_dpi),
+                                                          scale_settings_value(120, safe_dpi),
+                                                          about_action_height};
+    layout.about_offline_card = SettingsRect{content_x,
+                                             rect_bottom(layout.about_dictionary_card) + gap,
+                                             content_width,
+                                             scale_settings_value(130, safe_dpi)};
     return layout;
+}
+
+bool settings_page_control_visible(SettingsPage active_page, SettingsPage owner_page) {
+    return active_page == owner_page;
+}
+
+SettingsRect settings_page_switch_dirty_rect(const SettingsWindowLayout& layout) {
+    return layout.content;
+}
+
+std::array<SettingsRect, 2> shortcut_test_key_dirty_rects(
+    const SettingsWindowLayout& layout,
+    int dpi) {
+    const int safe_dpi = dpi <= 0 ? kBaseDpi : dpi;
+    std::array<SettingsRect, 2> dirty{layout.shortcut_test_ctrl_key, layout.shortcut_test_space_key};
+    const int inflate = scale_settings_value(2, safe_dpi);
+    for (SettingsRect& rect : dirty) {
+        rect.x -= inflate;
+        rect.y -= inflate;
+        rect.width += inflate * 2;
+        rect.height += inflate * 2;
+    }
+    return dirty;
+}
+
+SettingsRect user_lexicon_input_frame_rect(
+    const SettingsWindowLayout& layout,
+    UserLexiconInputField field,
+    int dpi) {
+    const int safe_dpi = dpi <= 0 ? kBaseDpi : dpi;
+    const int s24 = scale_settings_value(24, safe_dpi);
+    const int s18 = scale_settings_value(18, safe_dpi);
+    const int s12 = scale_settings_value(12, safe_dpi);
+    const int s24h = scale_settings_value(24, safe_dpi);
+    const int s32 = scale_settings_value(32, safe_dpi);
+    const int editor_x = layout.user_editor_card.x + s24;
+    const int editor_y = rect_bottom(layout.user_editor_title) + s18;
+    const int editor_width = layout.user_editor_card.width - s24 * 2;
+    const int frequency_width = scale_settings_value(100, safe_dpi);
+    const int pinyin_width = scale_settings_value(160, safe_dpi);
+    const int word_width = std::max(scale_settings_value(220, safe_dpi),
+                                    editor_width - pinyin_width - frequency_width - s12 * 2);
+    if (field == UserLexiconInputField::Word) {
+        return SettingsRect{editor_x + pinyin_width + s12,
+                            editor_y + s24h,
+                            word_width,
+                            s32};
+    }
+    if (field == UserLexiconInputField::Frequency) {
+        return SettingsRect{editor_x + pinyin_width + s12 + word_width + s12,
+                            editor_y + s24h,
+                            frequency_width,
+                            s32};
+    }
+    return SettingsRect{editor_x, editor_y + s24h, pinyin_width, s32};
+}
+
+bool settings_keyboard_suppresses_control_activation(
+    UINT message,
+    WPARAM key,
+    SettingsKeyboardState state) noexcept {
+    if (message != WM_KEYDOWN && message != WM_SYSKEYDOWN) {
+        return false;
+    }
+    return key == VK_SPACE && (state.left_ctrl_down || state.right_ctrl_down);
 }
 
 UserLexiconTableRow make_user_lexicon_table_row(const UserLexiconEntry& entry) {
@@ -855,16 +1449,18 @@ UserLexiconEditorState user_lexicon_editor_state_for_selection(
 }
 
 int SettingsWindow::run(HINSTANCE instance, int show_command) {
+    instance_ = instance;
     SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
 
     INITCOMMONCONTROLSEX controls{};
     controls.dwSize = sizeof(controls);
-    controls.dwICC = ICC_STANDARD_CLASSES | ICC_LISTVIEW_CLASSES;
+    controls.dwICC = ICC_STANDARD_CLASSES | ICC_LISTVIEW_CLASSES | ICC_BAR_CLASSES;
     InitCommonControlsEx(&controls);
 
     store_.ensure_data_dir();
     options_ = store_.load_candidate_options();
     input_mode_options_ = store_.load_input_mode_options();
+    load_dictionary_catalog();
     palette_ = settings_theme_palette(resolve_settings_theme(options_.theme_mode, windows_apps_use_dark_theme()));
 
     WNDCLASSEXW wc{};
@@ -890,7 +1486,7 @@ int SettingsWindow::run(HINSTANCE instance, int show_command) {
     wc.hIconSm = app_icon_small_;
     RegisterClassExW(&wc);
 
-    constexpr DWORD kSettingsWindowStyle = WS_OVERLAPPEDWINDOW;
+    constexpr DWORD kSettingsWindowStyle = WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN;
     constexpr DWORD kSettingsWindowExStyle = 0;
     const UINT initial_dpi = GetDpiForSystem();
     const RECT work_area = primary_work_area_near_cursor();
@@ -902,7 +1498,7 @@ int SettingsWindow::run(HINSTANCE instance, int show_command) {
 
     hwnd_ = CreateWindowExW(kSettingsWindowExStyle,
                             wc.lpszClassName,
-                            L"LocalPinyinIME Settings",
+                            L"\u672C\u5730\u62FC\u97F3 \u00B7 \u8BBE\u7F6E",
                             kSettingsWindowStyle,
                             initial_rect.x,
                             initial_rect.y,
@@ -926,6 +1522,11 @@ int SettingsWindow::run(HINSTANCE instance, int show_command) {
 
     MSG message{};
     while (GetMessageW(&message, nullptr, 0, 0) > 0) {
+        if (settings_keyboard_suppresses_control_activation(message.message,
+                                                            message.wParam,
+                                                            current_settings_keyboard_state())) {
+            continue;
+        }
         TranslateMessage(&message);
         DispatchMessageW(&message);
     }
@@ -956,8 +1557,14 @@ LRESULT SettingsWindow::handle_message(UINT message, WPARAM wparam, LPARAM lpara
             layout_controls();
             return 0;
         case WM_SIZE:
+            if (wparam == SIZE_MINIMIZED) {
+                set_shortcut_test_timer_enabled(false);
+                clear_shortcut_test_key_state();
+            } else {
+                set_shortcut_test_timer_enabled(shortcut_test_should_sample());
+            }
             layout_controls();
-            InvalidateRect(hwnd_, nullptr, TRUE);
+            InvalidateRect(hwnd_, nullptr, FALSE);
             return 0;
         case WM_DPICHANGED: {
             dpi_ = HIWORD(wparam);
@@ -993,9 +1600,33 @@ LRESULT SettingsWindow::handle_message(UINT message, WPARAM wparam, LPARAM lpara
         case WM_SHOWWINDOW:
             if (wparam) {
                 layout_controls();
-                RedrawWindow(hwnd_, nullptr, nullptr, RDW_INVALIDATE | RDW_ALLCHILDREN | RDW_UPDATENOW);
+                set_shortcut_test_timer_enabled(shortcut_test_should_sample());
+                InvalidateRect(hwnd_, nullptr, FALSE);
+            } else {
+                set_shortcut_test_timer_enabled(false);
+                clear_shortcut_test_key_state();
             }
             return 0;
+        case WM_ACTIVATE:
+        case WM_ACTIVATEAPP:
+            set_shortcut_test_timer_enabled(shortcut_test_should_sample());
+            if (wparam) {
+                update_runtime_input_mode_status();
+            }
+            return 0;
+        case WM_TIMER:
+            if (wparam == kShortcutTestTimerId) {
+                if (shortcut_test_should_sample()) {
+                    update_shortcut_test_key_state();
+                    update_runtime_input_mode_status();
+                } else {
+                    set_shortcut_test_timer_enabled(false);
+                    clear_shortcut_test_key_state();
+                    update_runtime_input_mode_status();
+                }
+                return 0;
+            }
+            break;
         case WM_COMMAND:
             switch (LOWORD(wparam)) {
                 case kIdNavAppearance:
@@ -1011,11 +1642,8 @@ LRESULT SettingsWindow::handle_message(UINT message, WPARAM wparam, LPARAM lpara
                 case kIdCopyDataFolder:
                     copy_data_dir_to_clipboard();
                     return 0;
-                case kIdOpenGithubProject:
-                    open_github_project();
-                    return 0;
-                case kIdCopyGithubUrl:
-                    copy_github_url_to_clipboard();
+                case kIdAboutDictionaryPreview:
+                    open_dictionary_preview();
                     return 0;
                 case kIdThemeSystem:
                 case kIdThemeLight:
@@ -1023,27 +1651,18 @@ LRESULT SettingsWindow::handle_message(UINT message, WPARAM wparam, LPARAM lpara
                     options_.theme_mode = LOWORD(wparam) == kIdThemeLight ? CandidateThemeMode::Light :
                                           LOWORD(wparam) == kIdThemeDark ? CandidateThemeMode::Dark :
                                           CandidateThemeMode::System;
-                    store_.save_options(options_, input_mode_options_);
+                    persist_candidate_display_options();
                     refresh_theme();
                     return 0;
                 case kIdShowKeyHints:
                     options_.show_key_hints = !options_.show_key_hints;
-                    store_.save_options(options_, input_mode_options_);
-                    InvalidateRect(GetDlgItem(hwnd_, kIdShowKeyHints), nullptr, TRUE);
+                    persist_candidate_display_options();
+                    InvalidateRect(GetDlgItem(hwnd_, kIdShowKeyHints), nullptr, FALSE);
                     return 0;
                 case kIdShiftToggle:
                     input_mode_options_.shift_toggle_enabled = !input_mode_options_.shift_toggle_enabled;
                     store_.save_options(options_, input_mode_options_);
-                    InvalidateRect(GetDlgItem(hwnd_, kIdShiftToggle), nullptr, TRUE);
-                    return 0;
-                case kIdTextSmall:
-                case kIdTextStandard:
-                case kIdTextLarge:
-                    options_.text_size = LOWORD(wparam) == kIdTextSmall ? CandidateTextSize::Small :
-                                         LOWORD(wparam) == kIdTextLarge ? CandidateTextSize::Large :
-                                         CandidateTextSize::Standard;
-                    store_.save_options(options_, input_mode_options_);
-                    InvalidateRect(hwnd_, nullptr, FALSE);
+                    InvalidateRect(GetDlgItem(hwnd_, kIdShiftToggle), nullptr, FALSE);
                     return 0;
                 case kIdClearLearning:
                     clear_learning_data();
@@ -1065,14 +1684,31 @@ LRESULT SettingsWindow::handle_message(UINT message, WPARAM wparam, LPARAM lpara
                         populate_user_lexicon_list();
                     }
                     if (HIWORD(wparam) == EN_SETFOCUS || HIWORD(wparam) == EN_KILLFOCUS) {
-                        InvalidateRect(hwnd_, nullptr, FALSE);
+                        RECT client{};
+                        GetClientRect(hwnd_, &client);
+                        const auto layout = calculate_settings_window_layout(client.right - client.left,
+                                                                             client.bottom - client.top,
+                                                                             dpi_);
+                        RECT dirty = to_win_rect(layout.search_box);
+                        InvalidateRect(hwnd_, &dirty, FALSE);
                     }
                     return 0;
                 case kIdLexiconPinyin:
                 case kIdLexiconWord:
                 case kIdLexiconFrequency:
                     if (HIWORD(wparam) == EN_SETFOCUS || HIWORD(wparam) == EN_KILLFOCUS) {
-                        InvalidateRect(hwnd_, nullptr, FALSE);
+                        invalidate_user_lexicon_input_frame(LOWORD(wparam));
+                    }
+                    return 0;
+                case kIdShortcutInput:
+                    if (HIWORD(wparam) == EN_SETFOCUS || HIWORD(wparam) == EN_KILLFOCUS) {
+                        RECT client{};
+                        GetClientRect(hwnd_, &client);
+                        const auto layout = calculate_settings_window_layout(client.right - client.left,
+                                                                             client.bottom - client.top,
+                                                                             dpi_);
+                        RECT dirty = to_win_rect(layout.shortcut_test_input_box);
+                        InvalidateRect(hwnd_, &dirty, FALSE);
                     }
                     return 0;
                 default:
@@ -1132,13 +1768,15 @@ LRESULT SettingsWindow::handle_message(UINT message, WPARAM wparam, LPARAM lpara
                                id == kIdUserLexiconTitle || id == kIdLearningTitle ||
                                id == kIdAboutTitle;
             const bool section = id == kIdAppearanceThemeLabel || id == kIdCandidateHintLabel ||
+                                  id == kIdShiftToggleLabel || id == kIdShortcutTestTitle ||
+                                  id == kIdShortcutModeValue || id == kIdShortcutInputLabel ||
                                   id == kIdCandidateTextSizeLabel || id == kIdLexiconPinyinLabel ||
                                   id == kIdLexiconWordLabel || id == kIdLexiconFrequencyLabel ||
                                    id == kIdUserLexiconEditorTitle ||
                                    id == kIdAboutProductKey || id == kIdAboutVersionKey ||
                                    id == kIdAboutArchKey || id == kIdAboutOfflineKey ||
                                    id == kIdAboutStatusKey || id == kIdAboutDataDirKey ||
-                                   id == kIdAboutGithubKey;
+                                   id == kIdAboutShortcutKey || id == kIdAboutDictionaryTitle;
             const HBRUSH background = brush_for_static_control(id);
             SetBkMode(hdc, TRANSPARENT);
             SetBkColor(hdc,
@@ -1177,12 +1815,26 @@ LRESULT SettingsWindow::handle_message(UINT message, WPARAM wparam, LPARAM lpara
         case WM_PAINT:
             paint();
             return 0;
+        case WM_PRINTCLIENT:
+            render(reinterpret_cast<HDC>(wparam));
+            return 0;
         case WM_DESTROY:
+            if (dictionary_preview_hwnd_ && IsWindow(dictionary_preview_hwnd_)) {
+                DestroyWindow(dictionary_preview_hwnd_);
+            }
+            dictionary_preview_hwnd_ = nullptr;
+            set_shortcut_test_timer_enabled(false);
+            clear_shortcut_test_key_state();
             if (lexicon_list_) {
                 const HWND header = ListView_GetHeader(lexicon_list_);
                 if (header) {
                     RemoveWindowSubclass(header, SettingsWindow::list_header_subclass_proc, kUserLexiconHeaderSubclassId);
                 }
+            }
+            if (candidate_size_slider_) {
+                RemoveWindowSubclass(candidate_size_slider_,
+                                     SettingsWindow::candidate_size_slider_subclass_proc,
+                                     static_cast<UINT_PTR>(kIdCandidateSizeSlider));
             }
             destroy_theme_brushes();
             destroy_fonts();
@@ -1252,7 +1904,8 @@ void SettingsWindow::apply_fonts() {
         kIdAboutOfflineKey,
         kIdAboutStatusKey,
         kIdAboutDataDirKey,
-        kIdAboutGithubKey,
+        kIdAboutShortcutKey,
+        kIdAboutDictionaryTitle,
     };
     for (int id : section_ids) {
         set_control_font(GetDlgItem(hwnd_, id), section_font_);
@@ -1382,7 +2035,7 @@ HBRUSH SettingsWindow::brush_for_control_surface(SettingsControlSurface surface)
 }
 
 HBRUSH SettingsWindow::brush_for_static_control(int id) const {
-    if (id == kIdAppearanceCard || id == kIdCandidateCard ||
+    if (id == kIdAppearanceCard || id == kIdCandidateCard || id == kIdShortcutTestCard ||
         id == kIdUserLexiconTableCard || id == kIdUserLexiconEditorCard ||
         id == kIdLearningCard || id == kIdAboutCard) {
         return nullptr;
@@ -1417,8 +2070,7 @@ SettingsControlRole SettingsWindow::control_role_for_id(int id) const {
         return SettingsControlRole::Navigation;
     }
     if (id == kIdThemeSystem || id == kIdThemeLight || id == kIdThemeDark ||
-        id == kIdShowKeyHints || id == kIdShiftToggle || id == kIdTextSmall ||
-        id == kIdTextStandard || id == kIdTextLarge) {
+        id == kIdShowKeyHints || id == kIdShiftToggle) {
         return SettingsControlRole::Option;
     }
     if (id == kIdLexiconSave) {
@@ -1570,9 +2222,323 @@ LRESULT CALLBACK SettingsWindow::list_header_subclass_proc(
     return DefSubclassProc(hwnd, message, wparam, lparam);
 }
 
+LRESULT CALLBACK SettingsWindow::candidate_size_slider_subclass_proc(
+    HWND hwnd,
+    UINT message,
+    WPARAM wparam,
+    LPARAM lparam,
+    UINT_PTR subclass_id,
+    DWORD_PTR ref_data) {
+    (void)subclass_id;
+    auto* self = reinterpret_cast<SettingsWindow*>(ref_data);
+    if (!self) {
+        return DefSubclassProc(hwnd, message, wparam, lparam);
+    }
+
+    const auto update_from_x = [&](int x) {
+        RECT client{};
+        GetClientRect(hwnd, &client);
+        const int level = candidate_size_slider_level_from_x(
+            SettingsRect{0, 0, rect_width(client), rect_height(client)},
+            x,
+            self->dpi_);
+        self->update_candidate_text_size_from_level(level);
+    };
+
+    switch (message) {
+        case WM_ERASEBKGND:
+            return 1;
+        case WM_LBUTTONDOWN:
+            SetFocus(hwnd);
+            SetCapture(hwnd);
+            self->candidate_size_slider_dragging_ = true;
+            update_from_x(GET_X_LPARAM(lparam));
+            return 0;
+        case WM_MOUSEMOVE:
+            if (self->candidate_size_slider_dragging_ && GetCapture() == hwnd) {
+                update_from_x(GET_X_LPARAM(lparam));
+                return 0;
+            }
+            break;
+        case WM_LBUTTONUP:
+            if (self->candidate_size_slider_dragging_) {
+                update_from_x(GET_X_LPARAM(lparam));
+                self->candidate_size_slider_dragging_ = false;
+                if (GetCapture() == hwnd) {
+                    ReleaseCapture();
+                }
+                return 0;
+            }
+            break;
+        case WM_CANCELMODE:
+        case WM_CAPTURECHANGED:
+            self->candidate_size_slider_dragging_ = false;
+            break;
+        case WM_KEYDOWN: {
+            int level = candidate_text_size_level(self->options_.text_size);
+            if (wparam == VK_LEFT) {
+                --level;
+            } else if (wparam == VK_RIGHT) {
+                ++level;
+            } else if (wparam == VK_HOME) {
+                level = candidate_text_size_min_level();
+            } else if (wparam == VK_END) {
+                level = candidate_text_size_max_level();
+            } else {
+                break;
+            }
+            self->update_candidate_text_size_from_level(level);
+            return 0;
+        }
+        case WM_GETDLGCODE:
+            return DLGC_WANTARROWS;
+        case WM_SETFOCUS:
+        case WM_KILLFOCUS:
+            InvalidateRect(hwnd, nullptr, FALSE);
+            return 0;
+        case WM_PAINT: {
+            PAINTSTRUCT ps{};
+            HDC hdc = BeginPaint(hwnd, &ps);
+            CandidateSizeSliderDrawState state;
+            state.focused = GetFocus() == hwnd;
+            state.pressed = self->candidate_size_slider_dragging_;
+            state.disabled = !IsWindowEnabled(hwnd);
+            self->draw_candidate_size_slider(hdc, ps.rcPaint, state);
+            EndPaint(hwnd, &ps);
+            return 0;
+        }
+        case WM_NCDESTROY:
+            RemoveWindowSubclass(hwnd,
+                                 SettingsWindow::candidate_size_slider_subclass_proc,
+                                 static_cast<UINT_PTR>(kIdCandidateSizeSlider));
+            break;
+        default:
+            break;
+    }
+    return DefSubclassProc(hwnd, message, wparam, lparam);
+}
+
+void SettingsWindow::draw_candidate_size_slider(HDC hdc,
+                                                const RECT&,
+                                                const CandidateSizeSliderDrawState& state) {
+    if (!candidate_size_slider_) {
+        return;
+    }
+    RECT client{};
+    GetClientRect(candidate_size_slider_, &client);
+    const SettingsRect bounds{0, 0, rect_width(client), rect_height(client)};
+    const CandidateSizeSliderMetrics metrics = calculate_candidate_size_slider_metrics(
+        bounds,
+        candidate_text_size_level(options_.text_size),
+        dpi_);
+    const CandidateSizeSliderDrawStyle style = candidate_size_slider_draw_style(palette_, state);
+
+    fill_rect(hdc, client, style.background);
+    draw_round_rect(hdc,
+                    to_win_rect(metrics.track),
+                    std::max(1, metrics.track.height / 2),
+                    style.track,
+                    style.track);
+
+    RECT active_track = to_win_rect(metrics.track);
+    active_track.right = metrics.thumb.x + metrics.thumb.width / 2;
+    if (active_track.right > active_track.left) {
+        draw_round_rect(hdc,
+                        active_track,
+                        std::max(1, metrics.track.height / 2),
+                        style.track_active,
+                        style.track_active);
+    }
+
+    const int current_level = candidate_text_size_level(options_.text_size);
+    for (int i = 0; i < 7; ++i) {
+        const bool active = i + 1 <= current_level;
+        draw_round_rect(hdc,
+                        to_win_rect(metrics.stops[static_cast<size_t>(i)]),
+                        std::max(1, metrics.stops[static_cast<size_t>(i)].height / 2),
+                        active ? style.stop_active : style.stop,
+                        active ? style.stop_active : style.stop);
+    }
+
+    draw_round_rect(hdc,
+                    to_win_rect(metrics.thumb),
+                    std::max(1, metrics.thumb.height / 2),
+                    style.thumb,
+                    style.thumb_border);
+
+    if (state.focused) {
+        RECT focus_rect = to_win_rect(metrics.thumb);
+        InflateRect(&focus_rect, scale_settings_value(5, dpi_), scale_settings_value(5, dpi_));
+        HPEN pen = CreatePen(PS_SOLID, std::max(1, scale_settings_value(2, dpi_)), style.focus);
+        HGDIOBJ old_pen = SelectObject(hdc, pen);
+        HGDIOBJ old_brush = SelectObject(hdc, GetStockObject(NULL_BRUSH));
+        RoundRect(hdc,
+                  focus_rect.left,
+                  focus_rect.top,
+                  focus_rect.right,
+                  focus_rect.bottom,
+                  scale_settings_value(14, dpi_),
+                  scale_settings_value(14, dpi_));
+        SelectObject(hdc, old_brush);
+        SelectObject(hdc, old_pen);
+        DeleteObject(pen);
+    }
+}
+
+void SettingsWindow::draw_shortcut_test_keys(HDC hdc, const SettingsWindowLayout& layout) {
+    const auto draw_key = [&](const SettingsRect& settings_rect, const wchar_t* label, bool pressed) {
+        const RECT rect = to_win_rect(settings_rect);
+        const COLORREF fill = pressed ? palette_.accent_soft : blend(palette_.card_background, palette_.card_border, 35);
+        const COLORREF border = pressed ? palette_.accent : palette_.card_border;
+        const COLORREF text = pressed ? palette_.text : palette_.muted_text;
+        draw_round_rect(hdc, rect, scale_settings_value(8, dpi_), fill, border);
+        draw_text_in_rect(hdc,
+                          label,
+                          rect,
+                          text,
+                          section_font_,
+                          DT_SINGLELINE | DT_CENTER | DT_VCENTER | DT_END_ELLIPSIS);
+    };
+    draw_key(layout.shortcut_test_ctrl_key, L"Ctrl", shortcut_test_key_state_.ctrl_down);
+    draw_key(layout.shortcut_test_space_key, L"Space", shortcut_test_key_state_.space_down);
+
+    const RECT mode_rect = to_win_rect(layout.shortcut_test_mode_value);
+    const bool english = runtime_input_mode_status_.available &&
+                         runtime_input_mode_status_.mode == InputMode::English;
+    const bool available = runtime_input_mode_status_.available;
+    const COLORREF mode_fill = available
+        ? (english ? blend(palette_.accent_soft, palette_.card_background, 45)
+                   : blend(palette_.accent_soft, palette_.card_background, 20))
+        : blend(palette_.card_background, palette_.card_border, 30);
+    const COLORREF mode_border = available ? palette_.accent_border : palette_.card_border;
+    draw_round_rect(hdc, mode_rect, scale_settings_value(12, dpi_), mode_fill, mode_border);
+}
+
+bool SettingsWindow::shortcut_test_should_sample() const {
+    if (!hwnd_ || active_page_ != SettingsPage::Candidate || !IsWindowVisible(hwnd_) || IsIconic(hwnd_)) {
+        return false;
+    }
+    return true;
+}
+
+void SettingsWindow::set_shortcut_test_timer_enabled(bool enabled) {
+    if (!hwnd_) {
+        return;
+    }
+    if (enabled && !shortcut_test_timer_active_) {
+        SetTimer(hwnd_, kShortcutTestTimerId, kShortcutTestTimerMs, nullptr);
+        shortcut_test_timer_active_ = true;
+    } else if (!enabled && shortcut_test_timer_active_) {
+        KillTimer(hwnd_, kShortcutTestTimerId);
+        shortcut_test_timer_active_ = false;
+    }
+}
+
+void SettingsWindow::clear_shortcut_test_key_state() {
+    if (!shortcut_test_key_state_.ctrl_down && !shortcut_test_key_state_.space_down) {
+        return;
+    }
+    shortcut_test_key_state_ = shortcut_test_key_state_after_sampling_stop();
+    invalidate_shortcut_test_key_state_rects();
+}
+
+void SettingsWindow::update_shortcut_test_key_state() {
+    const ShortcutTestKeyState next = shortcut_test_key_state_from_readings(ShortcutTestKeyReadings{
+        (GetAsyncKeyState(VK_LCONTROL) & 0x8000) != 0,
+        (GetAsyncKeyState(VK_RCONTROL) & 0x8000) != 0,
+        (GetAsyncKeyState(VK_SPACE) & 0x8000) != 0
+    });
+    if (next.ctrl_down == shortcut_test_key_state_.ctrl_down &&
+        next.space_down == shortcut_test_key_state_.space_down) {
+        return;
+    }
+    shortcut_test_key_state_ = next;
+    invalidate_shortcut_test_key_state_rects();
+}
+
+void SettingsWindow::invalidate_shortcut_test_key_state_rects() {
+    if (!hwnd_) {
+        return;
+    }
+    RECT client{};
+    GetClientRect(hwnd_, &client);
+    const SettingsWindowLayout layout = calculate_settings_window_layout(client.right - client.left,
+                                                                         client.bottom - client.top,
+                                                                         dpi_);
+    const auto dirty_rects = shortcut_test_key_dirty_rects(layout, dpi_);
+    RECT ctrl = to_win_rect(dirty_rects[0]);
+    RECT space = to_win_rect(dirty_rects[1]);
+    InvalidateRect(hwnd_, &ctrl, FALSE);
+    InvalidateRect(hwnd_, &space, FALSE);
+}
+
+void SettingsWindow::invalidate_user_lexicon_input_frame(int control_id) {
+    if (!hwnd_) {
+        return;
+    }
+    RECT client{};
+    GetClientRect(hwnd_, &client);
+    const SettingsWindowLayout layout = calculate_settings_window_layout(client.right - client.left,
+                                                                         client.bottom - client.top,
+                                                                         dpi_);
+    UserLexiconInputField field = UserLexiconInputField::Pinyin;
+    if (control_id == kIdLexiconPinyin) {
+        field = UserLexiconInputField::Pinyin;
+    } else if (control_id == kIdLexiconWord) {
+        field = UserLexiconInputField::Word;
+    } else if (control_id == kIdLexiconFrequency) {
+        field = UserLexiconInputField::Frequency;
+    } else {
+        return;
+    }
+    RECT dirty = to_win_rect(user_lexicon_input_frame_rect(layout, field, dpi_));
+    InflateRect(&dirty, scale_settings_value(2, dpi_), scale_settings_value(2, dpi_));
+    InvalidateRect(hwnd_, &dirty, FALSE);
+}
+
+void SettingsWindow::update_runtime_input_mode_status() {
+    const RuntimeInputModeStatus next = store_.load_runtime_input_mode_status();
+    if (next.available == runtime_input_mode_status_.available &&
+        next.active == runtime_input_mode_status_.active &&
+        next.mode == runtime_input_mode_status_.mode &&
+        next.sequence == runtime_input_mode_status_.sequence &&
+        next.source == runtime_input_mode_status_.source &&
+        next.process_id == runtime_input_mode_status_.process_id &&
+        next.updated_at_utc_ms == runtime_input_mode_status_.updated_at_utc_ms) {
+        return;
+    }
+    runtime_input_mode_status_ = next;
+    if (shortcut_mode_value_) {
+        std::wstring text;
+        if (!runtime_input_mode_status_.available) {
+            text = L"\u7B49\u5F85\u8F93\u5165";
+        } else if (runtime_input_mode_status_.mode == InputMode::Chinese) {
+            text = L"\u4E2D\u6587\u8F93\u5165";
+        } else {
+            text = L"\u82F1\u6587\u8F93\u5165";
+        }
+        SetWindowTextW(shortcut_mode_value_, text.c_str());
+    }
+    RECT client{};
+    GetClientRect(hwnd_, &client);
+    const SettingsWindowLayout layout = calculate_settings_window_layout(client.right - client.left,
+                                                                         client.bottom - client.top,
+                                                                         dpi_);
+    RECT dirty = to_win_rect(layout.shortcut_test_mode_value);
+    InvalidateRect(hwnd_, &dirty, FALSE);
+}
+
 void SettingsWindow::paint() {
     PAINTSTRUCT ps{};
     HDC hdc = BeginPaint(hwnd_, &ps);
+    render(hdc);
+    EndPaint(hwnd_, &ps);
+}
+
+void SettingsWindow::render(HDC hdc) {
+    if (!hdc) {
+        return;
+    }
     RECT client{};
     GetClientRect(hwnd_, &client);
     const int client_width = rect_width(client);
@@ -1605,6 +2571,37 @@ void SettingsWindow::paint() {
     fill_rect(paint_dc, client, palette_.window_background);
     fill_rect(paint_dc, to_win_rect(layout.sidebar), palette_.sidebar_background);
 
+    const auto s = [this](int value) { return scale_settings_value(value, dpi_); };
+    if (app_icon_big_) {
+        DrawIconEx(paint_dc, s(20), s(25), app_icon_big_, s(34), s(34), 0, nullptr, DI_NORMAL);
+    }
+    draw_text_in_rect(paint_dc, L"\u672C\u5730\u62FC\u97F3",
+                       RECT{s(65), s(23), layout.sidebar.width - s(16), s(49)},
+                       palette_.text, section_font_, DT_SINGLELINE | DT_VCENTER);
+    draw_text_in_rect(paint_dc, L"\u8F7B\u5DE7 \u00B7 \u667A\u80FD \u00B7 \u672C\u5730",
+                       RECT{s(65), s(48), layout.sidebar.width - s(10), s(70)},
+                       palette_.muted_text, body_font_, DT_SINGLELINE | DT_VCENTER);
+
+    const int sidebar_help_top = rect_bottom(layout.nav_items.back()) + s(36);
+    draw_text_in_rect(paint_dc, L"\u5E38\u7528\u5FEB\u6377\u952E",
+                       RECT{s(24), sidebar_help_top, layout.sidebar.width - s(18), sidebar_help_top + s(24)},
+                       palette_.weak_text, body_font_, DT_SINGLELINE | DT_VCENTER);
+    draw_text_in_rect(paint_dc, L"Ctrl + Space   \u4E2D\u82F1\u5207\u6362\nSpace             \u786E\u8BA4\u9009\u8BCD\n1\u20139                  \u9009\u62E9\u5019\u9009",
+                       RECT{s(24), sidebar_help_top + s(34), layout.sidebar.width - s(12), sidebar_help_top + s(118)},
+                       palette_.muted_text, body_font_, DT_LEFT | DT_WORDBREAK);
+
+    const RECT offline_badge{s(16), client_height - s(93), layout.sidebar.width - s(16), client_height - s(45)};
+    draw_round_rect(paint_dc, offline_badge, s(10), palette_.card_background, palette_.card_border);
+    draw_round_rect(paint_dc,
+                     RECT{offline_badge.left + s(12), offline_badge.top + s(20), offline_badge.left + s(20), offline_badge.top + s(28)},
+                     s(4), RGB(35, 153, 108), RGB(35, 153, 108));
+    draw_text_in_rect(paint_dc, L"\u8F93\u5165\u53EA\u7559\u5728\u672C\u673A",
+                       RECT{offline_badge.left + s(29), offline_badge.top, offline_badge.right - s(8), offline_badge.bottom},
+                       palette_.muted_text, body_font_, DT_SINGLELINE | DT_VCENTER);
+    draw_text_in_rect(paint_dc, L"LocalPinyinIME  " LOCALPINYINIME_VERSION_STRING,
+                       RECT{s(24), client_height - s(35), layout.sidebar.width - s(10), client_height - s(12)},
+                       palette_.weak_text, body_font_, DT_SINGLELINE | DT_VCENTER);
+
     RECT divider{layout.sidebar.x + layout.sidebar.width - 1, 0, layout.sidebar.x + layout.sidebar.width, layout.sidebar.height};
     fill_rect(paint_dc, divider, palette_.card_border);
 
@@ -1621,31 +2618,93 @@ void SettingsWindow::paint() {
                         focused ? palette_.accent : palette_.input_border);
     };
 
-    if (active_page_ == SettingsPage::UserLexicon) {
+    if (active_page_ == SettingsPage::Appearance) {
+        draw_card(layout.appearance_preview_card);
+        draw_card(layout.appearance_theme_card);
+    } else if (active_page_ == SettingsPage::UserLexicon) {
         draw_edit_frame(layout.search_box, lexicon_search_);
         draw_card(layout.user_table);
         draw_card(layout.user_editor_card);
     } else if (active_page_ == SettingsPage::About) {
         draw_card(layout.about_card);
+        draw_card(layout.about_dictionary_card);
+        draw_card(layout.about_offline_card);
+    } else if (active_page_ == SettingsPage::Candidate) {
+        draw_card(layout.candidate_options_card);
+        draw_card(layout.shortcut_test_card);
+        draw_edit_frame(layout.shortcut_test_input_box, shortcut_test_input_);
     } else {
         draw_card(layout.primary_card);
+        draw_card(SettingsRect{layout.secondary_card.x, layout.secondary_card.y,
+                                layout.secondary_card.width, s(260)});
+    }
+
+    if (active_page_ == SettingsPage::Appearance) {
+        RECT preview_title{layout.appearance_preview_card.x + scale_settings_value(24, dpi_),
+                           layout.appearance_preview_card.y + scale_settings_value(18, dpi_),
+                           layout.appearance_preview_card.x + layout.appearance_preview_card.width - scale_settings_value(24, dpi_),
+                           layout.appearance_preview_card.y + scale_settings_value(46, dpi_)};
+        draw_text_in_rect(paint_dc,
+                          L"\u5019\u9009\u7A97\u9884\u89C8",
+                          preview_title,
+                          palette_.text,
+                          section_font_,
+                          DT_SINGLELINE | DT_VCENTER | DT_LEFT | DT_END_ELLIPSIS);
+        draw_candidate_preview(paint_dc, layout, options_, windows_apps_use_dark_theme(), dpi_);
+        draw_text_in_rect(paint_dc, L"\u771F\u5B9E\u5019\u9009\u7A97\u6548\u679C \u00B7 \u62D6\u52A8\u4E0B\u65B9\u6ED1\u5757\u8C03\u6574\u5B57\u53F7",
+                           RECT{layout.appearance_preview_card.x + s(24), rect_bottom(layout.appearance_preview_card) - s(32),
+                                rect_right(layout.appearance_preview_card) - s(24), rect_bottom(layout.appearance_preview_card) - s(10)},
+                           palette_.weak_text, body_font_, DT_SINGLELINE | DT_VCENTER);
+        draw_text_in_rect(paint_dc, L"\u4FEE\u6539\u4F1A\u81EA\u52A8\u4FDD\u5B58",
+                           RECT{layout.appearance_theme_card.x + s(24), rect_bottom(layout.appearance_theme_card) - s(34),
+                                rect_right(layout.appearance_theme_card) - s(24), rect_bottom(layout.appearance_theme_card) - s(12)},
+                           palette_.weak_text, body_font_, DT_SINGLELINE | DT_VCENTER);
+    }
+
+    if (active_page_ == SettingsPage::Learning) {
+        draw_text_in_rect(paint_dc, L"\u91CD\u7F6E\u4E2A\u4EBA\u6392\u5E8F",
+                           RECT{layout.primary_card.x + s(24), layout.primary_card.y + s(16),
+                                rect_right(layout.primary_card) - s(24), layout.primary_card.y + s(40)},
+                           palette_.text, section_font_, DT_SINGLELINE | DT_VCENTER);
+        const int x = layout.secondary_card.x + s(24);
+        int y = layout.secondary_card.y + s(22);
+        const wchar_t* titles[] = {L"\u8BB0\u4F4F\u5E38\u7528\u8BCD", L"\u6574\u53E5\u8F93\u5165", L"\u4F60\u7684\u4E13\u5C5E\u8BCD\u5E93"};
+        const wchar_t* descriptions[] = {
+            L"\u6839\u636E\u9009\u8BCD\u4E60\u60EF\u8C03\u6574\u6392\u5E8F\uFF0C\u5E38\u7528\u7684\u8868\u8FBE\u66F4\u5BB9\u6613\u627E\u5230\u3002",
+            L"\u8FDE\u7EED\u8F93\u5165\u62FC\u97F3\uFF0C\u7EC4\u5408\u8BCD\u8BED\u751F\u6210\u6574\u53E5\u5019\u9009\u3002",
+            L"\u5728\u300C\u6211\u7684\u8BCD\u5E93\u300D\u4E2D\u6DFB\u52A0\u4EBA\u540D\u4E0E\u4E13\u4E1A\u672F\u8BED\uFF0C\u4FDD\u5B58\u540E\u5373\u53EF\u4F7F\u7528\u3002"
+        };
+        for (size_t i = 0; i < std::size(titles); ++i) {
+            draw_navigation_icon(paint_dc, i == 2 ? kIdNavUserLexicon : kIdNavLearning,
+                                   RECT{x, y, x + s(22), y + s(22)}, palette_.accent, dpi_);
+            draw_text_in_rect(paint_dc, titles[i], RECT{x + s(36), y, rect_right(layout.secondary_card) - s(24), y + s(24)},
+                               palette_.text, section_font_, DT_SINGLELINE | DT_VCENTER);
+            draw_text_in_rect(paint_dc, descriptions[i], RECT{x + s(36), y + s(29), rect_right(layout.secondary_card) - s(24), y + s(55)},
+                               palette_.muted_text, body_font_, DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS);
+            y += s(76);
+        }
+    }
+    if (active_page_ == SettingsPage::About) {
+        const int x = layout.about_offline_card.x + s(24);
+        const int y = layout.about_offline_card.y + s(18);
+        draw_text_in_rect(paint_dc, L"\u5F00\u59CB\u8F93\u5165", RECT{x, y, rect_right(layout.about_offline_card) - s(24), y + s(26)},
+                           palette_.text, section_font_, DT_SINGLELINE | DT_VCENTER);
+        draw_text_in_rect(paint_dc,
+                           L"Win + \u7A7A\u683C\u9009\u62E9\u672C\u5730\u62FC\u97F3\uFF0CCtrl + Space \u5207\u6362\u4E2D\u82F1\u6587\u3002\n\u8F93\u5165\u62FC\u97F3\uFF0C\u7A7A\u683C\u786E\u8BA4\uFF1B\u6570\u5B57 1\u20139 \u9009\u8BCD\uFF0CEsc \u53D6\u6D88\u5F53\u524D\u8F93\u5165\u3002",
+                           RECT{x, y + s(38), rect_right(layout.about_offline_card) - s(24), rect_bottom(layout.about_offline_card) - s(18)},
+                           palette_.muted_text, body_font_, DT_LEFT | DT_WORDBREAK);
     }
 
     if (active_page_ == SettingsPage::UserLexicon) {
-        const int s24 = scale_settings_value(24, dpi_);
-        const int s18 = scale_settings_value(18, dpi_);
-        const int s12 = scale_settings_value(12, dpi_);
-        const int s24h = scale_settings_value(24, dpi_);
-        const int s32 = scale_settings_value(32, dpi_);
-        const int editor_x = layout.user_editor_card.x + s24;
-        const int editor_y = rect_bottom(layout.user_editor_title) + s18;
-        const int editor_width = layout.user_editor_card.width - s24 * 2;
-        const int frequency_width = scale_settings_value(100, dpi_);
-        const int pinyin_width = scale_settings_value(160, dpi_);
-        const int word_width = std::max(scale_settings_value(220, dpi_), editor_width - pinyin_width - frequency_width - s12 * 2);
-        draw_edit_frame(SettingsRect{editor_x, editor_y + s24h, pinyin_width, s32}, lexicon_pinyin_);
-        draw_edit_frame(SettingsRect{editor_x + pinyin_width + s12, editor_y + s24h, word_width, s32}, lexicon_word_);
-        draw_edit_frame(SettingsRect{editor_x + pinyin_width + s12 + word_width + s12, editor_y + s24h, frequency_width, s32}, lexicon_frequency_);
+        draw_edit_frame(user_lexicon_input_frame_rect(layout, UserLexiconInputField::Pinyin, dpi_),
+                        lexicon_pinyin_);
+        draw_edit_frame(user_lexicon_input_frame_rect(layout, UserLexiconInputField::Word, dpi_),
+                        lexicon_word_);
+        draw_edit_frame(user_lexicon_input_frame_rect(layout, UserLexiconInputField::Frequency, dpi_),
+                        lexicon_frequency_);
+    }
+    if (active_page_ == SettingsPage::Candidate) {
+        draw_shortcut_test_keys(paint_dc, layout);
     }
 
     if (memory_dc && bitmap) {
@@ -1654,7 +2713,6 @@ void SettingsWindow::paint() {
         DeleteObject(bitmap);
         DeleteDC(memory_dc);
     }
-    EndPaint(hwnd_, &ps);
 }
 
 void SettingsWindow::draw_button(const DRAWITEMSTRUCT& item) {
@@ -1677,12 +2735,7 @@ void SettingsWindow::draw_button(const DRAWITEMSTRUCT& item) {
         checked = options_.show_key_hints;
     } else if (id == kIdShiftToggle) {
         checked = input_mode_options_.shift_toggle_enabled;
-    } else if (id == kIdTextSmall) {
-        checked = options_.text_size == CandidateTextSize::Small;
-    } else if (id == kIdTextStandard) {
-        checked = options_.text_size == CandidateTextSize::Standard;
-    } else if (id == kIdTextLarge) {
-        checked = options_.text_size == CandidateTextSize::Large;
+
     }
     const bool focused = (item.itemState & ODS_FOCUS) != 0;
     const std::wstring text = control_text(item.hwndItem);
@@ -1692,8 +2745,7 @@ void SettingsWindow::draw_button(const DRAWITEMSTRUCT& item) {
     const bool is_nav = id == kIdNavAppearance || id == kIdNavCandidate ||
                         id == kIdNavUserLexicon || id == kIdNavLearning || id == kIdNavAbout;
     const bool is_option = id == kIdThemeSystem || id == kIdThemeLight || id == kIdThemeDark ||
-                           id == kIdShowKeyHints || id == kIdShiftToggle || id == kIdTextSmall ||
-                           id == kIdTextStandard || id == kIdTextLarge;
+                           id == kIdShowKeyHints || id == kIdShiftToggle;
     SettingsControlDrawState state;
     state.checked = checked;
     state.hot = hot;
@@ -1708,11 +2760,37 @@ void SettingsWindow::draw_button(const DRAWITEMSTRUCT& item) {
                              : (DT_SINGLELINE | DT_VCENTER | DT_CENTER | DT_END_ELLIPSIS);
 
     fill_rect(item.hDC, rect, style.background);
+    if (id == kIdShowKeyHints || id == kIdShiftToggle) {
+        const SettingsSwitchDrawStyle switch_style = settings_switch_draw_style(palette_, checked, focused);
+        const SettingsSwitchMetrics metrics = settings_switch_metrics(
+            SettingsRect{rect.left, rect.top, rect_width(rect), rect_height(rect)},
+            switch_style.thumb_on_right,
+            dpi_);
+        const RECT track = to_win_rect(metrics.track);
+        const RECT thumb = to_win_rect(metrics.thumb);
+        draw_round_rect(item.hDC,
+                        track,
+                        metrics.track_corner_radius,
+                        switch_style.track,
+                        switch_style.track_border);
+        draw_round_rect(item.hDC,
+                        thumb,
+                        metrics.thumb_corner_radius,
+                        switch_style.thumb,
+                        switch_style.thumb_border);
+        return;
+    }
     draw_round_rect(item.hDC, rect, radius, style.fill, style.border);
 
     RECT text_rect = rect;
     if (is_nav) {
-        text_rect.left += scale_settings_value(18, dpi_);
+        const int icon_size = scale_settings_value(22, dpi_);
+        const int icon_top = rect.top + (rect_height(rect) - icon_size) / 2;
+        draw_navigation_icon(item.hDC, id,
+                               RECT{rect.left + scale_settings_value(14, dpi_), icon_top,
+                                    rect.left + scale_settings_value(14, dpi_) + icon_size, icon_top + icon_size},
+                               style.text, dpi_);
+        text_rect.left += scale_settings_value(48, dpi_);
         if (checked) {
             RECT accent{rect.left + scale_settings_value(5, dpi_),
                         rect.top + scale_settings_value(9, dpi_),
@@ -1740,56 +2818,96 @@ void SettingsWindow::draw_button(const DRAWITEMSTRUCT& item) {
 }
 
 void SettingsWindow::create_controls() {
-    make_static(hwnd_, L"LocalPinyinIME", kIdAppTitle, section_font_);
     make_static(hwnd_, L"", kIdSidebarDivider, body_font_);
 
     nav_buttons_[page_index(SettingsPage::Appearance)] =
         make_button(hwnd_, L"\u5916\u89C2", kIdNavAppearance, BS_AUTORADIOBUTTON | BS_PUSHLIKE | BS_LEFT, body_font_);
     nav_buttons_[page_index(SettingsPage::Candidate)] =
-        make_button(hwnd_, L"\u5019\u9009\u7A97", kIdNavCandidate, BS_AUTORADIOBUTTON | BS_PUSHLIKE | BS_LEFT, body_font_);
+        make_button(hwnd_, L"\u8F93\u5165\u4E0E\u5FEB\u6377\u952E", kIdNavCandidate, BS_AUTORADIOBUTTON | BS_PUSHLIKE | BS_LEFT, body_font_);
     nav_buttons_[page_index(SettingsPage::UserLexicon)] =
-        make_button(hwnd_, L"\u7528\u6237\u8BCD\u5E93", kIdNavUserLexicon, BS_AUTORADIOBUTTON | BS_PUSHLIKE | BS_LEFT, body_font_);
+        make_button(hwnd_, L"\u6211\u7684\u8BCD\u5E93", kIdNavUserLexicon, BS_AUTORADIOBUTTON | BS_PUSHLIKE | BS_LEFT, body_font_);
     nav_buttons_[page_index(SettingsPage::Learning)] =
-        make_button(hwnd_, L"\u5B66\u4E60\u6570\u636E", kIdNavLearning, BS_AUTORADIOBUTTON | BS_PUSHLIKE | BS_LEFT, body_font_);
+        make_button(hwnd_, L"\u4E2A\u6027\u5316\u5B66\u4E60", kIdNavLearning, BS_AUTORADIOBUTTON | BS_PUSHLIKE | BS_LEFT, body_font_);
     nav_buttons_[page_index(SettingsPage::About)] =
-        make_button(hwnd_, L"\u5173\u4E8E", kIdNavAbout, BS_AUTORADIOBUTTON | BS_PUSHLIKE | BS_LEFT, body_font_);
+        make_button(hwnd_, L"\u5173\u4E8E\u4E0E\u5E2E\u52A9", kIdNavAbout, BS_AUTORADIOBUTTON | BS_PUSHLIKE | BS_LEFT, body_font_);
 
     auto track = [&](SettingsPage page, HWND control) {
-        page_controls_[page_index(page)].push_back(control);
+        if (control) {
+            page_controls_[page_index(page)].push_back(control);
+        }
         return control;
     };
 
-    track(SettingsPage::Appearance, make_static(hwnd_, L"\u5916\u89C2", kIdAppearanceTitle, title_font_));
+    track(SettingsPage::Appearance, make_static(hwnd_, L"\u8BA9\u8F93\u5165\u66F4\u5408\u5FC3\u610F", kIdAppearanceTitle, title_font_));
     track(SettingsPage::Appearance,
           make_static(hwnd_,
-                      L"\u8BBE\u7F6E\u5019\u9009\u7A97\u7684\u57FA\u672C\u663E\u793A\u98CE\u683C\u3002",
+                      L"\u9009\u62E9\u559C\u6B22\u7684\u5916\u89C2\u548C\u5B57\u53F7\uFF0C\u8BBE\u7F6E\u5373\u65F6\u751F\u6548\u3002",
                       kIdAppearanceDescription,
                       body_font_));
-    track(SettingsPage::Appearance, make_group(hwnd_, L"\u4E3B\u9898", kIdAppearanceCard, section_font_));
+    track(SettingsPage::Appearance, make_group(hwnd_, L"\u5019\u9009\u7A97\u9884\u89C8", kIdAppearanceCard, section_font_));
     track(SettingsPage::Appearance, make_static(hwnd_, L"\u5916\u89C2\u6A21\u5F0F", kIdAppearanceThemeLabel, section_font_));
     track(SettingsPage::Appearance, make_button(hwnd_, L"\u8DDF\u968F\u7CFB\u7EDF", kIdThemeSystem, BS_AUTORADIOBUTTON, body_font_));
     track(SettingsPage::Appearance, make_button(hwnd_, L"\u6D45\u8272", kIdThemeLight, BS_AUTORADIOBUTTON, body_font_));
     track(SettingsPage::Appearance, make_button(hwnd_, L"\u6DF1\u8272", kIdThemeDark, BS_AUTORADIOBUTTON, body_font_));
+    track(SettingsPage::Appearance, make_static(hwnd_, L"\u5019\u9009\u6587\u5B57\u5927\u5C0F", kIdCandidateTextSizeLabel, section_font_));
+    candidate_size_slider_ = track(SettingsPage::Appearance, make_trackbar(hwnd_, kIdCandidateSizeSlider, body_font_));
+    SetWindowSubclass(candidate_size_slider_,
+                      SettingsWindow::candidate_size_slider_subclass_proc,
+                      static_cast<UINT_PTR>(kIdCandidateSizeSlider),
+                      reinterpret_cast<DWORD_PTR>(this));
+    candidate_size_value_ = track(SettingsPage::Appearance, make_static(hwnd_, L"", kIdCandidateSizeValue, body_font_));
+    track(SettingsPage::Appearance, make_static(hwnd_, L"\u5C0F", kIdCandidateSizeSmallLabel, body_font_));
+    track(SettingsPage::Appearance, make_static(hwnd_, L"\u6807\u51C6", kIdCandidateSizeStandardLabel, body_font_));
+    track(SettingsPage::Appearance, make_static(hwnd_, L"\u5927", kIdCandidateSizeLargeLabel, body_font_));
 
-    track(SettingsPage::Candidate, make_static(hwnd_, L"\u5019\u9009\u7A97", kIdCandidateTitle, title_font_));
+    track(SettingsPage::Candidate, make_static(hwnd_, L"\u8F93\u5165\u4E0E\u5FEB\u6377\u952E", kIdCandidateTitle, title_font_));
     track(SettingsPage::Candidate,
           make_static(hwnd_,
-                      L"\u8C03\u6574\u5019\u9009\u9879\u7684\u8F85\u52A9\u63D0\u793A\u548C\u6587\u5B57\u5C3A\u5BF8\u3002",
+                      L"\u8C03\u6574\u9009\u8BCD\u63D0\u793A\uFF0C\u5728\u8FD9\u91CC\u8BD5\u8BD5\u4E2D\u6587\u8F93\u5165\u3002",
                       kIdCandidateDescription,
                       body_font_));
-    track(SettingsPage::Candidate, make_group(hwnd_, L"\u663E\u793A", kIdCandidateCard, section_font_));
+    track(SettingsPage::Candidate, make_group(hwnd_, L"\u6309\u952E\u63D0\u793A / \u5207\u6362\u65B9\u5F0F", kIdCandidateCard, section_font_));
     track(SettingsPage::Candidate, make_static(hwnd_, L"\u6309\u952E\u63D0\u793A", kIdCandidateHintLabel, section_font_));
-    track(SettingsPage::Candidate, make_button(hwnd_, L"\u663E\u793A\u6309\u952E\u63D0\u793A", kIdShowKeyHints, BS_AUTOCHECKBOX, body_font_));
-    track(SettingsPage::Candidate, make_button(hwnd_, L"\u5355\u72EC\u6309 Shift \u5207\u6362\u4E2D\u82F1\u6587", kIdShiftToggle, BS_AUTOCHECKBOX, body_font_));
-    track(SettingsPage::Candidate, make_static(hwnd_, L"\u5019\u9009\u6587\u5B57\u5927\u5C0F", kIdCandidateTextSizeLabel, section_font_));
-    track(SettingsPage::Candidate, make_button(hwnd_, L"\u5C0F", kIdTextSmall, BS_AUTORADIOBUTTON, body_font_));
-    track(SettingsPage::Candidate, make_button(hwnd_, L"\u6807\u51C6", kIdTextStandard, BS_AUTORADIOBUTTON, body_font_));
-    track(SettingsPage::Candidate, make_button(hwnd_, L"\u5927", kIdTextLarge, BS_AUTORADIOBUTTON, body_font_));
+    track(SettingsPage::Candidate,
+          make_static(hwnd_,
+                      L"\u5728\u5019\u9009\u7A97\u5E95\u90E8\u663E\u793A\u9009\u8BCD\u4E0E\u786E\u8BA4\u7684\u5FEB\u6377\u952E\u3002",
+                      kIdCandidateHintDescription,
+                      body_font_));
+    track(SettingsPage::Candidate, make_button(hwnd_, L"", kIdShowKeyHints, BS_AUTOCHECKBOX, body_font_));
+    track(SettingsPage::Candidate, make_static(hwnd_, L"Shift \u5207\u6362\u4E2D\u82F1\u6587", kIdShiftToggleLabel, section_font_));
+    track(SettingsPage::Candidate,
+          make_static(hwnd_,
+                      L"\u5F00\u542F\u540E\uFF0C\u8F7B\u6309\u4E00\u6B21 Shift \u5373\u53EF\u5207\u6362\u3002",
+                      kIdShiftToggleDescription,
+                      body_font_));
+    track(SettingsPage::Candidate, make_button(hwnd_, L"", kIdShiftToggle, BS_AUTOCHECKBOX, body_font_));
+    track(SettingsPage::Candidate,
+          make_static(hwnd_,
+                      L"\u968F\u65F6\u53EF\u4EE5\u4F7F\u7528 Ctrl + Space \u5207\u6362\u3002",
+                      kIdShiftDefaultNote,
+                      body_font_));
+    track(SettingsPage::Candidate, make_group(hwnd_, L"\u7269\u7406\u6309\u952E\u89C2\u5BDF", kIdShortcutTestCard, section_font_));
+    track(SettingsPage::Candidate, make_static(hwnd_, L"\u8BD5\u8BD5\u4F60\u7684\u8F93\u5165\u6CD5", kIdShortcutTestTitle, section_font_));
+    track(SettingsPage::Candidate,
+          make_static(hwnd_,
+                      L"\u5148\u7528 Win + \u7A7A\u683C\u9009\u62E9\u672C\u5730\u62FC\u97F3\uFF0C\u518D\u5728\u4E0B\u65B9\u8F93\u5165\u3002\u6309\u952E\u6309\u4E0B\u65F6\u4F1A\u4EAE\u8D77\u3002",
+                      kIdShortcutTestDescription,
+                      body_font_));
+    track(SettingsPage::Candidate, make_static(hwnd_, L"\u72B6\u6001", kIdShortcutModeLabel, body_font_));
+    shortcut_mode_value_ = track(SettingsPage::Candidate, make_static(hwnd_, L"\u7B49\u5F85\u8F93\u5165", kIdShortcutModeValue, section_font_));
+    track(SettingsPage::Candidate, make_static(hwnd_, L"\u8F93\u5165\u533A", kIdShortcutInputLabel, section_font_));
+    shortcut_test_input_ = track(SettingsPage::Candidate, make_edit(hwnd_, kIdShortcutInput, body_font_));
+    set_cue_banner(shortcut_test_input_, L"\u8F93\u5165 nihao\uFF0C\u6309\u7A7A\u683C\u5F97\u5230\u300C\u4F60\u597D\u300D");
+    track(SettingsPage::Candidate,
+          make_static(hwnd_,
+                      L"\u7A7A\u683C\u786E\u8BA4\u9996\u9009\u9879 \u00B7 \u6570\u5B57 1\u20139 \u9009\u8BCD \u00B7 Esc \u53D6\u6D88\u5F53\u524D\u8F93\u5165",
+                      kIdShortcutBoundaryNote,
+                      body_font_));
 
-    track(SettingsPage::UserLexicon, make_static(hwnd_, L"\u7528\u6237\u8BCD\u5E93", kIdUserLexiconTitle, title_font_));
+    track(SettingsPage::UserLexicon, make_static(hwnd_, L"\u6211\u7684\u8BCD\u5E93", kIdUserLexiconTitle, title_font_));
     track(SettingsPage::UserLexicon,
           make_static(hwnd_,
-                      L"\u4EC5\u7F16\u8F91\u5F53\u524D Windows \u7528\u6237\u7684\u79C1\u6709\u8BCD\u5E93\uFF0C\u4E0D\u4F1A\u4FEE\u6539\u5185\u7F6E\u8BCD\u5E93\u6216 Program Files\u3002",
+                      L"\u6DFB\u52A0\u540D\u5B57\u3001\u672F\u8BED\u548C\u5E38\u7528\u8BED\uFF0C\u8BA9\u8F93\u5165\u66F4\u61C2\u4F60\u3002",
                       kIdUserLexiconDescription,
                       body_font_));
     lexicon_search_ = track(SettingsPage::UserLexicon, make_edit(hwnd_, kIdLexiconSearch, body_font_));
@@ -1806,6 +2924,7 @@ void SettingsWindow::create_controls() {
     track(SettingsPage::UserLexicon, make_static(hwnd_, L"\u62FC\u97F3", kIdLexiconPinyinLabel, section_font_));
     track(SettingsPage::UserLexicon, make_static(hwnd_, L"\u8BCD\u8BED", kIdLexiconWordLabel, section_font_));
     track(SettingsPage::UserLexicon, make_static(hwnd_, L"\u9891\u7387", kIdLexiconFrequencyLabel, section_font_));
+    track(SettingsPage::UserLexicon, make_static(hwnd_, kUserLexiconFrequencyHelpText, kIdLexiconFrequencyHelp, body_font_));
     lexicon_pinyin_ = track(SettingsPage::UserLexicon, make_edit(hwnd_, kIdLexiconPinyin, body_font_));
     set_cue_banner(lexicon_pinyin_, L"nihao");
     lexicon_word_ = track(SettingsPage::UserLexicon, make_edit(hwnd_, kIdLexiconWord, body_font_));
@@ -1835,46 +2954,48 @@ void SettingsWindow::create_controls() {
     ListView_InsertColumn(lexicon_list_, 2, &column);
     install_list_header_theme_subclass();
 
-    track(SettingsPage::Learning, make_static(hwnd_, L"\u5B66\u4E60\u6570\u636E", kIdLearningTitle, title_font_));
+    track(SettingsPage::Learning, make_static(hwnd_, L"\u4E2A\u6027\u5316\u5B66\u4E60", kIdLearningTitle, title_font_));
     track(SettingsPage::Learning,
           make_static(hwnd_,
-                      L"\u672C\u5730\u5B66\u4E60\u53EA\u7528\u4E8E\u6539\u5584\u5019\u9009\u6392\u5E8F\uFF0C\u4E0D\u4F1A\u4E0A\u4F20\u3002",
+                      L"\u5E38\u7528\u8BCD\u4F1A\u9010\u6E10\u9760\u524D\uFF0C\u5B66\u4E60\u8BB0\u5F55\u4FDD\u5B58\u5728\u4F60\u7684\u7535\u8111\u4E0A\u3002",
                       kIdLearningDescription,
                       body_font_));
     track(SettingsPage::Learning, make_group(hwnd_, L"\u5371\u9669\u64CD\u4F5C", kIdLearningCard, section_font_));
     track(SettingsPage::Learning,
           make_static(hwnd_,
-                      L"\u6E05\u7A7A\u540E\uFF0CLocalPinyinIME \u4F1A\u5FD8\u8BB0\u4F60\u4E4B\u524D\u9009\u8FC7\u7684\u5019\u9009\u6392\u5E8F\u3002\u8BE5\u64CD\u4F5C\u4E0D\u4F1A\u5220\u9664\u7528\u6237\u8BCD\u5E93\u3002",
+                      L"\u91CD\u65B0\u5F00\u59CB\u5B66\u4E60\u4F60\u7684\u7528\u8BCD\u4E60\u60EF\u3002\u81EA\u5B9A\u4E49\u8BCD\u5E93\u4F1A\u4FDD\u7559\u3002",
                       kIdLearningCardText,
                       body_font_));
     track(SettingsPage::Learning, make_button(hwnd_, L"\u6E05\u7A7A\u5B66\u4E60\u6570\u636E", kIdClearLearning, BS_PUSHBUTTON, body_font_));
 
-    track(SettingsPage::About, make_static(hwnd_, L"\u5173\u4E8E", kIdAboutTitle, title_font_));
+    track(SettingsPage::About, make_static(hwnd_, L"\u5173\u4E8E\u4E0E\u5E2E\u52A9", kIdAboutTitle, title_font_));
     track(SettingsPage::About,
           make_static(hwnd_,
-                      L"LocalPinyinIME \u662F\u79BB\u7EBF\u8FD0\u884C\u7684 Windows x64 TSF \u62FC\u97F3\u8F93\u5165\u6CD5\u5B9E\u9A8C\u9879\u76EE\u3002",
+                      L"\u8F7B\u5DE7\u7684\u672C\u5730\u4E2D\u6587\u8F93\u5165\u6CD5\uFF0C\u5B89\u88C5\u540E\u5373\u53EF\u79BB\u7EBF\u4F7F\u7528\u3002",
                       kIdAboutDescription,
                       body_font_));
     track(SettingsPage::About, make_group(hwnd_, L"\u4FE1\u606F", kIdAboutCard, section_font_));
     track(SettingsPage::About, make_static(hwnd_, L"\u7248\u672C", kIdAboutVersionKey, section_font_));
     track(SettingsPage::About, make_static(hwnd_, LOCALPINYINIME_VERSION_STRING, kIdAboutVersionValue, body_font_));
     track(SettingsPage::About, make_static(hwnd_, L"\u4EA7\u54C1", kIdAboutProductKey, section_font_));
-    track(SettingsPage::About, make_static(hwnd_, L"LocalPinyinIME", kIdAboutProductValue, body_font_));
+    track(SettingsPage::About, make_static(hwnd_, L"\u672C\u5730\u62FC\u97F3 \u00B7 LocalPinyinIME", kIdAboutProductValue, body_font_));
     track(SettingsPage::About, make_static(hwnd_, L"\u67B6\u6784", kIdAboutArchKey, section_font_));
     track(SettingsPage::About, make_static(hwnd_, L"x64", kIdAboutArchValue, body_font_));
     track(SettingsPage::About, make_static(hwnd_, L"\u8FD0\u884C", kIdAboutOfflineKey, section_font_));
-    track(SettingsPage::About, make_static(hwnd_, L"\u79BB\u7EBF", kIdAboutOfflineValue, body_font_));
-    track(SettingsPage::About, make_static(hwnd_, L"\u72B6\u6001", kIdAboutStatusKey, section_font_));
-    track(SettingsPage::About, make_static(hwnd_, L"\u672A\u7B7E\u540D\u5F00\u53D1\u7248", kIdAboutStatusValue, body_font_));
+    track(SettingsPage::About, make_static(hwnd_, L"\u5B8C\u5168\u672C\u5730 \u00B7 \u65E0\u9700\u7F51\u7EDC", kIdAboutOfflineValue, body_font_));
+    track(SettingsPage::About, make_static(hwnd_, L"\u667A\u80FD\u8F93\u5165", kIdAboutStatusKey, section_font_));
+    track(SettingsPage::About, make_static(hwnd_, L"\u6574\u53E5\u8054\u60F3 \u00B7 \u4E2A\u4EBA\u7528\u8BCD\u5B66\u4E60", kIdAboutStatusValue, body_font_));
     track(SettingsPage::About, make_static(hwnd_, L"\u6570\u636E\u76EE\u5F55", kIdAboutDataDirKey, section_font_));
     track(SettingsPage::About, make_static(hwnd_, store_.data_dir().c_str(), kIdAboutDataDirValue, body_font_));
-    track(SettingsPage::About, make_static(hwnd_, L"GitHub", kIdAboutGithubKey, section_font_));
-    track(SettingsPage::About, make_static(hwnd_, kGithubProjectUrl, kIdAboutGithubValue, body_font_));
+    track(SettingsPage::About, make_static(hwnd_, L"\u6A21\u5F0F\u5207\u6362", kIdAboutShortcutKey, section_font_));
+    track(SettingsPage::About, make_static(hwnd_, L"Ctrl + Space \u5207\u6362\u4E2D\u82F1\u6587", kIdAboutShortcutValue, body_font_));
     track(SettingsPage::About, make_button(hwnd_, L"\u6253\u5F00\u6570\u636E\u76EE\u5F55", kIdOpenDataFolder, BS_PUSHBUTTON, body_font_));
     track(SettingsPage::About, make_button(hwnd_, L"\u590D\u5236\u8DEF\u5F84", kIdCopyDataFolder, BS_PUSHBUTTON, body_font_));
-    track(SettingsPage::About, make_button(hwnd_, L"\u6253\u5F00 GitHub", kIdOpenGithubProject, BS_PUSHBUTTON, body_font_));
-    track(SettingsPage::About, make_button(hwnd_, L"\u590D\u5236 GitHub \u94FE\u63A5", kIdCopyGithubUrl, BS_PUSHBUTTON, body_font_));
-
+    track(SettingsPage::About, make_static(hwnd_, L"\u5185\u7F6E\u8BCD\u5E93", kIdAboutDictionaryTitle, section_font_));
+    const std::wstring dictionary_count = std::to_wstring(dictionary_catalog_.stats().total_unique_entries) +
+                                           L" \u6761\u672C\u5730\u8BCD\u6761 \u00B7 \u968F\u5B89\u88C5\u5305\u63D0\u4F9B";
+    track(SettingsPage::About, make_static(hwnd_, dictionary_count.c_str(), kIdAboutDictionaryCount, body_font_));
+    track(SettingsPage::About, make_button(hwnd_, L"\u9884\u89C8\u8BCD\u5E93", kIdAboutDictionaryPreview, BS_PUSHBUTTON, body_font_));
     update_user_lexicon_action_controls();
 }
 
@@ -1922,25 +3043,46 @@ void SettingsWindow::layout_controls() {
     };
 
     place_page_header(kIdAppearanceTitle, kIdAppearanceDescription);
-    move_child(hwnd_, kIdAppearanceCard, layout.primary_card);
+    move_child(hwnd_, kIdAppearanceCard, layout.appearance_preview_card);
     move_child(hwnd_, kIdAppearanceThemeLabel,
-               layout.primary_card.x + s24,
-               layout.primary_card.y + s36,
+               layout.appearance_theme_card.x + s24,
+               layout.appearance_theme_card.y + s28,
                scale_settings_value(180, dpi_),
                s24);
-    move_child(hwnd_, kIdThemeSystem, layout.primary_card.x + s24, layout.primary_card.y + s72, scale_settings_value(150, dpi_), s28);
-    move_child(hwnd_, kIdThemeLight, layout.primary_card.x + scale_settings_value(190, dpi_), layout.primary_card.y + s72, scale_settings_value(90, dpi_), s28);
-    move_child(hwnd_, kIdThemeDark, layout.primary_card.x + scale_settings_value(300, dpi_), layout.primary_card.y + s72, scale_settings_value(90, dpi_), s28);
+    move_child(hwnd_, kIdThemeSystem, layout.appearance_theme_card.x + s24, layout.appearance_theme_card.y + scale_settings_value(64, dpi_), scale_settings_value(150, dpi_), s28);
+    move_child(hwnd_, kIdThemeLight, layout.appearance_theme_card.x + scale_settings_value(190, dpi_), layout.appearance_theme_card.y + scale_settings_value(64, dpi_), scale_settings_value(90, dpi_), s28);
+    move_child(hwnd_, kIdThemeDark, layout.appearance_theme_card.x + scale_settings_value(300, dpi_), layout.appearance_theme_card.y + scale_settings_value(64, dpi_), scale_settings_value(90, dpi_), s28);
+    move_child(hwnd_, kIdCandidateTextSizeLabel,
+               layout.appearance_theme_card.x + s24,
+               layout.appearance_theme_card.y + scale_settings_value(104, dpi_),
+               scale_settings_value(180, dpi_),
+               s24);
+    move_window(candidate_size_slider_, layout.candidate_size_slider);
+    move_window(candidate_size_value_, layout.candidate_size_value);
+    move_child(hwnd_, kIdCandidateSizeSmallLabel, layout.candidate_size_label_left);
+    move_child(hwnd_, kIdCandidateSizeStandardLabel, layout.candidate_size_label_middle);
+    move_child(hwnd_, kIdCandidateSizeLargeLabel, layout.candidate_size_label_right);
 
     place_page_header(kIdCandidateTitle, kIdCandidateDescription);
-    move_child(hwnd_, kIdCandidateCard, layout.primary_card);
-    move_child(hwnd_, kIdCandidateHintLabel, layout.primary_card.x + s24, layout.primary_card.y + s36, scale_settings_value(180, dpi_), s24);
-    move_child(hwnd_, kIdShowKeyHints, layout.primary_card.x + scale_settings_value(220, dpi_), layout.primary_card.y + s34, scale_settings_value(200, dpi_), s28);
-    move_child(hwnd_, kIdCandidateTextSizeLabel, layout.primary_card.x + s24, layout.primary_card.y + s76, scale_settings_value(180, dpi_), s24);
-    move_child(hwnd_, kIdTextSmall, layout.primary_card.x + scale_settings_value(220, dpi_), layout.primary_card.y + s74, scale_settings_value(70, dpi_), s28);
-    move_child(hwnd_, kIdTextStandard, layout.primary_card.x + scale_settings_value(300, dpi_), layout.primary_card.y + s74, scale_settings_value(90, dpi_), s28);
-    move_child(hwnd_, kIdTextLarge, layout.primary_card.x + scale_settings_value(400, dpi_), layout.primary_card.y + s74, scale_settings_value(70, dpi_), s28);
-    move_child(hwnd_, kIdShiftToggle, layout.primary_card.x + s24, layout.primary_card.y + scale_settings_value(116, dpi_), scale_settings_value(310, dpi_), s28);
+    move_child(hwnd_, kIdCandidateCard, layout.candidate_options_card);
+    move_child(hwnd_, kIdCandidateHintLabel, layout.candidate_hint_title);
+    move_child(hwnd_, kIdCandidateHintDescription, layout.candidate_hint_description);
+    move_child(hwnd_, kIdShowKeyHints, layout.candidate_hint_toggle);
+    move_child(hwnd_, kIdShiftToggleLabel, layout.candidate_shift_title);
+    move_child(hwnd_, kIdShiftToggleDescription, layout.candidate_shift_description);
+    move_child(hwnd_, kIdShiftToggle, layout.candidate_shift_toggle);
+    move_child(hwnd_, kIdShiftDefaultNote, layout.candidate_shift_note);
+    move_child(hwnd_, kIdShortcutTestCard, layout.shortcut_test_card);
+    move_child(hwnd_, kIdShortcutTestTitle, layout.shortcut_test_title);
+    move_child(hwnd_, kIdShortcutTestDescription, layout.shortcut_test_description);
+    move_child(hwnd_, kIdShortcutModeLabel, layout.shortcut_test_mode_label);
+    move_child(hwnd_, kIdShortcutModeValue, layout.shortcut_test_mode_value);
+    move_child(hwnd_, kIdShortcutInputLabel, layout.shortcut_test_input_label);
+    move_window(shortcut_test_input_, SettingsRect{layout.shortcut_test_input_box.x + s10,
+                                                   layout.shortcut_test_input_box.y + s6,
+                                                   layout.shortcut_test_input_box.width - s20,
+                                                   layout.shortcut_test_input_box.height - s6 * 2});
+    move_child(hwnd_, kIdShortcutBoundaryNote, layout.shortcut_test_boundary_note);
 
     place_page_header(kIdUserLexiconTitle, kIdUserLexiconDescription);
     move_window(lexicon_search_, SettingsRect{layout.search_box.x + s12,
@@ -1971,9 +3113,10 @@ void SettingsWindow::layout_controls() {
     move_window(lexicon_pinyin_, SettingsRect{editor_x + s10, editor_y + s24 + s6, pinyin_width - s20, s32 - s6 * 2});
     move_window(lexicon_word_, SettingsRect{editor_x + pinyin_width + s12 + s10, editor_y + s24 + s6, word_width - s20, s32 - s6 * 2});
     move_window(lexicon_frequency_, SettingsRect{editor_x + pinyin_width + s12 + word_width + s12 + s10, editor_y + s24 + s6, frequency_width - s20, s32 - s6 * 2});
-    move_window(lexicon_new_button_, SettingsRect{editor_x, editor_y + s68, scale_settings_value(112, dpi_), s32});
-    move_window(lexicon_save_button_, SettingsRect{editor_x + scale_settings_value(124, dpi_), editor_y + s68, scale_settings_value(128, dpi_), s32});
-    move_window(lexicon_delete_button_, SettingsRect{editor_x + scale_settings_value(264, dpi_), editor_y + s68, scale_settings_value(160, dpi_), s32});
+    move_child(hwnd_, kIdLexiconFrequencyHelp, layout.user_frequency_help);
+    move_window(lexicon_new_button_, layout.user_new_button);
+    move_window(lexicon_save_button_, layout.user_save_button);
+    move_window(lexicon_delete_button_, layout.user_delete_button);
     move_window(lexicon_status_, layout.user_status);
 
     const auto columns = calculate_user_lexicon_column_widths(layout.user_table.width, dpi_);
@@ -1996,8 +3139,8 @@ void SettingsWindow::layout_controls() {
 
     place_page_header(kIdAboutTitle, kIdAboutDescription);
     move_child(hwnd_, kIdAboutCard, layout.about_card);
-    const int key_ids[] = {kIdAboutProductKey, kIdAboutVersionKey, kIdAboutArchKey, kIdAboutOfflineKey, kIdAboutStatusKey, kIdAboutDataDirKey, kIdAboutGithubKey};
-    const int value_ids[] = {kIdAboutProductValue, kIdAboutVersionValue, kIdAboutArchValue, kIdAboutOfflineValue, kIdAboutStatusValue, kIdAboutDataDirValue, kIdAboutGithubValue};
+    const int key_ids[] = {kIdAboutProductKey, kIdAboutVersionKey, kIdAboutArchKey, kIdAboutOfflineKey, kIdAboutStatusKey, kIdAboutDataDirKey, kIdAboutShortcutKey};
+    const int value_ids[] = {kIdAboutProductValue, kIdAboutVersionValue, kIdAboutArchValue, kIdAboutOfflineValue, kIdAboutStatusValue, kIdAboutDataDirValue, kIdAboutShortcutValue};
     for (int i = 0; i < 7; ++i) {
         move_child(hwnd_, key_ids[i], layout.about_labels[static_cast<size_t>(i)]);
         move_child(hwnd_, value_ids[i], layout.about_values[static_cast<size_t>(i)]);
@@ -2006,27 +3149,55 @@ void SettingsWindow::layout_controls() {
                                       ? L"\u6570\u636E\u76EE\u5F55\u5C1A\u672A\u53EF\u7528"
                                       : compact_path_for_width(hwnd_, body_font_, store_.data_dir(), layout.about_values[5].width);
     set_control_text(hwnd_, kIdAboutDataDirValue, data_dir);
-    set_control_text(hwnd_, kIdAboutGithubValue, kGithubProjectUrl);
     move_child(hwnd_, kIdOpenDataFolder, layout.about_open_data_button);
     move_child(hwnd_, kIdCopyDataFolder, layout.about_copy_data_button);
-    move_child(hwnd_, kIdOpenGithubProject, layout.about_open_github_button);
-    move_child(hwnd_, kIdCopyGithubUrl, layout.about_copy_github_button);
+    move_child(hwnd_, kIdAboutDictionaryTitle, layout.about_dictionary_title);
+    move_child(hwnd_, kIdAboutDictionaryCount, layout.about_dictionary_count);
+    move_child(hwnd_, kIdAboutDictionaryPreview, layout.about_dictionary_preview_button);
 }
 
 void SettingsWindow::show_page(SettingsPage page) {
+    const SettingsPage previous_page = active_page_;
     active_page_ = page;
     CheckRadioButton(hwnd_, kIdNavAppearance, kIdNavAbout, nav_id_for_page(page));
+    InvalidateRect(GetDlgItem(hwnd_, nav_id_for_page(previous_page)), nullptr, FALSE);
+    InvalidateRect(GetDlgItem(hwnd_, nav_id_for_page(page)), nullptr, FALSE);
+    const SettingsPageVisibilityPolicy visibility_policy = settings_page_visibility_policy();
     for (int i = 0; i < kSettingsPageCount; ++i) {
-        const bool visible = i == page_index(page);
+        const SettingsPage owner_page = static_cast<SettingsPage>(i);
+        const bool visible = !visibility_policy.show_only_active_page_controls ||
+                             settings_page_control_visible(page, owner_page);
         for (HWND control : page_controls_[static_cast<size_t>(i)]) {
             ShowWindow(control, visible ? SW_SHOW : SW_HIDE);
+            if (visible) {
+                SetWindowPos(control,
+                             HWND_TOP,
+                             0,
+                             0,
+                             0,
+                             0,
+                             SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
+            }
         }
     }
     if (page == SettingsPage::UserLexicon) {
         populate_user_lexicon_list();
     }
+    if (previous_page == SettingsPage::Candidate && page != SettingsPage::Candidate) {
+        set_shortcut_test_timer_enabled(false);
+        clear_shortcut_test_key_state();
+    } else if (page == SettingsPage::Candidate) {
+        set_shortcut_test_timer_enabled(shortcut_test_should_sample());
+        update_runtime_input_mode_status();
+    }
     layout_controls();
-    InvalidateRect(hwnd_, nullptr, TRUE);
+    RECT client{};
+    GetClientRect(hwnd_, &client);
+    const SettingsWindowLayout layout = calculate_settings_window_layout(client.right - client.left,
+                                                                         client.bottom - client.top,
+                                                                         dpi_);
+    RECT dirty = to_win_rect(settings_page_switch_dirty_rect(layout));
+    InvalidateRect(hwnd_, &dirty, FALSE);
 }
 
 void SettingsWindow::apply_options_to_controls() {
@@ -2035,9 +3206,7 @@ void SettingsWindow::apply_options_to_controls() {
                      options_.theme_mode == CandidateThemeMode::Dark ? kIdThemeDark : kIdThemeSystem);
     set_checked(hwnd_, kIdShowKeyHints, options_.show_key_hints);
     set_checked(hwnd_, kIdShiftToggle, input_mode_options_.shift_toggle_enabled);
-    CheckRadioButton(hwnd_, kIdTextSmall, kIdTextLarge,
-                     options_.text_size == CandidateTextSize::Small ? kIdTextSmall :
-                     options_.text_size == CandidateTextSize::Large ? kIdTextLarge : kIdTextStandard);
+    sync_candidate_text_size_controls();
 }
 
 void SettingsWindow::save_options_from_controls() {
@@ -2051,15 +3220,50 @@ void SettingsWindow::save_options_from_controls() {
 
     options_.show_key_hints = is_checked(hwnd_, kIdShowKeyHints);
     input_mode_options_.shift_toggle_enabled = is_checked(hwnd_, kIdShiftToggle);
-    if (is_checked(hwnd_, kIdTextSmall)) {
-        options_.text_size = CandidateTextSize::Small;
-    } else if (is_checked(hwnd_, kIdTextLarge)) {
-        options_.text_size = CandidateTextSize::Large;
-    } else {
-        options_.text_size = CandidateTextSize::Standard;
-    }
+    persist_candidate_display_options();
+}
 
+void SettingsWindow::sync_candidate_text_size_controls() {
+    if (candidate_size_value_) {
+        SetWindowTextW(candidate_size_value_, candidate_text_size_display_text(options_.text_size).c_str());
+    }
+    if (candidate_size_slider_) {
+        InvalidateRect(candidate_size_slider_, nullptr, FALSE);
+    }
+}
+
+void SettingsWindow::persist_candidate_display_options() {
     store_.save_options(options_, input_mode_options_);
+    notify_candidate_options_changed();
+}
+
+void SettingsWindow::update_candidate_text_size_from_level(int level) {
+    const CandidateTextSize text_size = candidate_text_size_from_level(level);
+    if (text_size == options_.text_size) {
+        return;
+    }
+    options_.text_size = text_size;
+    sync_candidate_text_size_controls();
+    persist_candidate_display_options();
+    invalidate_candidate_size_preview();
+}
+
+void SettingsWindow::invalidate_candidate_size_preview() {
+    if (!hwnd_) {
+        return;
+    }
+    RECT client{};
+    GetClientRect(hwnd_, &client);
+    const SettingsWindowLayout layout = calculate_settings_window_layout(client.right - client.left,
+                                                                         client.bottom - client.top,
+                                                                         dpi_);
+    RECT preview = to_win_rect(layout.appearance_preview_card);
+    InvalidateRect(hwnd_, &preview, FALSE);
+    RECT value = to_win_rect(layout.candidate_size_value);
+    InvalidateRect(hwnd_, &value, FALSE);
+    if (candidate_size_slider_) {
+        InvalidateRect(candidate_size_slider_, nullptr, FALSE);
+    }
 }
 
 void SettingsWindow::open_data_dir() {
@@ -2078,14 +3282,19 @@ void SettingsWindow::copy_data_dir_to_clipboard() {
                            L"\u590D\u5236\u8DEF\u5F84\u5931\u8D25\u3002");
 }
 
-void SettingsWindow::open_github_project() {
-    ShellExecuteW(hwnd_, L"open", kGithubProjectUrl, nullptr, nullptr, SW_SHOWNORMAL);
+void SettingsWindow::load_dictionary_catalog() {
+    const std::filesystem::path executable(module_path(instance_));
+    dictionary_catalog_.load((executable.parent_path() / L"dictionary").wstring());
 }
 
-void SettingsWindow::copy_github_url_to_clipboard() {
-    copy_text_to_clipboard(kGithubProjectUrl,
-                           L"GitHub \u94FE\u63A5\u5DF2\u590D\u5236\u3002",
-                           L"\u590D\u5236 GitHub \u94FE\u63A5\u5931\u8D25\u3002");
+void SettingsWindow::open_dictionary_preview() {
+    if (dictionary_preview_hwnd_ && IsWindow(dictionary_preview_hwnd_)) {
+        ShowWindow(dictionary_preview_hwnd_, SW_RESTORE);
+        SetForegroundWindow(dictionary_preview_hwnd_);
+        return;
+    }
+    dictionary_preview_hwnd_ =
+        DictionaryPreviewWindow::show(hwnd_, instance_, dictionary_catalog_, palette_.dark);
 }
 
 bool SettingsWindow::copy_text_to_clipboard(const std::wstring& text,
@@ -2205,7 +3414,7 @@ void SettingsWindow::populate_user_lexicon_list() {
         populate_user_lexicon_editor(make_new_user_lexicon_editor_state(false));
     }
     update_user_lexicon_action_controls();
-    InvalidateRect(lexicon_list_, nullptr, TRUE);
+    InvalidateRect(lexicon_list_, nullptr, FALSE);
 }
 
 void SettingsWindow::populate_user_lexicon_editor(size_t entry_index) {
@@ -2239,7 +3448,7 @@ void SettingsWindow::populate_user_lexicon_editor(const UserLexiconEditorState& 
 void SettingsWindow::enter_new_user_lexicon_state(bool focus_pinyin, const wchar_t* status_text) {
     if (lexicon_list_) {
         ListView_SetItemState(lexicon_list_, -1, 0, LVIS_SELECTED | LVIS_FOCUSED);
-        InvalidateRect(lexicon_list_, nullptr, TRUE);
+        InvalidateRect(lexicon_list_, nullptr, FALSE);
     }
     populate_user_lexicon_editor(make_new_user_lexicon_editor_state(focus_pinyin));
     if (status_text && lexicon_status_) {
@@ -2264,7 +3473,7 @@ bool SettingsWindow::select_user_lexicon_entry(const UserLexiconEntry& entry) {
             ListView_SetItemState(lexicon_list_, row_index, LVIS_SELECTED | LVIS_FOCUSED, LVIS_SELECTED | LVIS_FOCUSED);
             ListView_EnsureVisible(lexicon_list_, row_index, FALSE);
             enter_edit_user_lexicon_state(entry_index);
-            InvalidateRect(lexicon_list_, nullptr, TRUE);
+            InvalidateRect(lexicon_list_, nullptr, FALSE);
             return true;
         }
     }
@@ -2315,7 +3524,13 @@ void SettingsWindow::save_user_lexicon_entry() {
     }
     log_status(L"settings", user_lexicon_save_log_message(user_lexicon_entries_.size(), updated ? 1 : 0, 0));
     SetWindowTextW(lexicon_status_, user_lexicon_reload_hint().c_str());
-    InvalidateRect(hwnd_, nullptr, FALSE);
+    RECT client{};
+    GetClientRect(hwnd_, &client);
+    const auto layout = calculate_settings_window_layout(client.right - client.left,
+                                                         client.bottom - client.top,
+                                                         dpi_);
+    RECT dirty = to_win_rect(layout.user_editor_card);
+    InvalidateRect(hwnd_, &dirty, FALSE);
 }
 
 int SettingsWindow::selected_user_lexicon_row() const {
@@ -2368,7 +3583,13 @@ void SettingsWindow::delete_user_lexicon_entry() {
     log_status(L"settings", user_lexicon_save_log_message(user_lexicon_entries_.size(), 0, 1));
     SetWindowTextW(lexicon_status_,
                    L"\u5DF2\u5220\u9664\u3002\u8BF7\u5728\u6CA1\u6709\u6B63\u5728\u8F93\u5165\u7684\u62FC\u97F3\u65F6\u7EE7\u7EED\u4F7F\u7528\uFF1BLocalPinyinIME \u4F1A\u5728\u5B89\u5168\u65F6\u673A\u5237\u65B0\u7528\u6237\u8BCD\u5E93\u3002");
-    InvalidateRect(hwnd_, nullptr, FALSE);
+    RECT client{};
+    GetClientRect(hwnd_, &client);
+    const auto layout = calculate_settings_window_layout(client.right - client.left,
+                                                         client.bottom - client.top,
+                                                         dpi_);
+    RECT dirty = to_win_rect(layout.user_editor_card);
+    InvalidateRect(hwnd_, &dirty, FALSE);
 }
 
 void SettingsWindow::refresh_user_lexicon() {

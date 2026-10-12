@@ -1,17 +1,1 @@
-# Build Guide
-
-Open a Visual Studio 2022 Developer PowerShell, then run:
-
-```powershell
-cd LocalPinyinIME
-.\scripts\build_debug.ps1
-```
-
-This configures CMake for x64, builds the TSF DLL, builds the settings app, and
-runs the engine/data tests.
-
-Release build:
-
-```powershell
-.\scripts\build_release.ps1
-```
+运行 scripts/Build.ps1。脚本自动发现 MSVC、CMake/Ninja、Python 3 和 Inno Setup 6，完成 Release 构建、27 项回归和安装包生成。详见源码 README.md。

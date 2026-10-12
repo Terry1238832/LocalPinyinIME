@@ -20,16 +20,16 @@ std::wstring guid_string(REFGUID guid) {
 int main() {
     REQUIRE_TRUE(localpinyin::registration_operation_precedes(
         localpinyin::RegistrationOperation::SnapshotProfile,
-        localpinyin::RegistrationOperation::RegisterCategories));
-    REQUIRE_TRUE(localpinyin::registration_operation_precedes(
-        localpinyin::RegistrationOperation::RegisterCategories,
         localpinyin::RegistrationOperation::RegisterProfile));
     REQUIRE_TRUE(localpinyin::registration_operation_precedes(
         localpinyin::RegistrationOperation::RegisterProfile,
+        localpinyin::RegistrationOperation::RegisterCategories));
+    REQUIRE_TRUE(localpinyin::registration_operation_precedes(
+        localpinyin::RegistrationOperation::RegisterCategories,
         localpinyin::RegistrationOperation::RegisterComClass));
     REQUIRE_TRUE(!localpinyin::registration_operation_precedes(
-        localpinyin::RegistrationOperation::RegisterProfile,
-        localpinyin::RegistrationOperation::RegisterCategories));
+        localpinyin::RegistrationOperation::RegisterCategories,
+        localpinyin::RegistrationOperation::RegisterProfile));
 
     REQUIRE_TRUE(!localpinyin::should_unregister_previous_shared_clsid_before_register());
     REQUIRE_TRUE(!localpinyin::should_unregister_previous_shared_clsid_after_register());
@@ -70,6 +70,46 @@ int main() {
     REQUIRE_TRUE(!localpinyin::should_rollback_category(true, true));
     REQUIRE_TRUE(!localpinyin::should_rollback_category(false, false));
     REQUIRE_TRUE(localpinyin::should_rollback_category(false, true));
+    REQUIRE_TRUE(localpinyin::should_track_category_for_cleanup(true, S_OK, false));
+    REQUIRE_TRUE(!localpinyin::should_track_category_for_cleanup(true, E_FAIL, false));
+    REQUIRE_TRUE(!localpinyin::should_track_category_for_cleanup(false, S_OK, false));
+    REQUIRE_TRUE(!localpinyin::should_track_category_for_cleanup(true, S_OK, true));
+    REQUIRE_TRUE(localpinyin::should_attempt_category_cleanup(true, false));
+    REQUIRE_TRUE(localpinyin::should_attempt_category_cleanup(false, true));
+    REQUIRE_TRUE(!localpinyin::should_attempt_category_cleanup(false, false));
+    REQUIRE_EQ(localpinyin::category_visibility_verification_attempts(), 3u);
+    REQUIRE_EQ(localpinyin::category_visibility_retry_delay_ms(), 50u);
+
+    const auto inconclusive =
+        localpinyin::CategoryVerificationResult::VerificationInconclusive;
+    REQUIRE_TRUE(localpinyin::category_verification_allows_continue(
+        inconclusive, true));
+    REQUIRE_TRUE(!localpinyin::category_verification_allows_continue(
+        inconclusive, false));
+
+    // An unobserved keyboard category can continue only while all core
+    // profile and expected-DLL postconditions remain successful.
+    REQUIRE_TRUE(localpinyin::core_registration_verification_succeeded(
+        true, true, true, S_OK));
+    REQUIRE_TRUE(!localpinyin::core_registration_verification_succeeded(
+        false, true, true, S_OK));
+    REQUIRE_TRUE(!localpinyin::core_registration_verification_succeeded(
+        true, false, true, S_OK));
+    REQUIRE_TRUE(!localpinyin::core_registration_verification_succeeded(
+        true, true, false, S_OK));
+    REQUIRE_TRUE(!localpinyin::core_registration_verification_succeeded(
+        true, true, true, E_FAIL));
+
+    // A rollback-side missing InprocServer32 result must not replace the
+    // original category/profile/COM failure.
+    REQUIRE_EQ(localpinyin::preserve_first_registration_failure(
+                   E_ACCESSDENIED,
+                   HRESULT_FROM_WIN32(ERROR_FILE_NOT_FOUND)),
+               E_ACCESSDENIED);
+    REQUIRE_EQ(localpinyin::preserve_first_registration_failure(
+                   S_OK,
+                   HRESULT_FROM_WIN32(ERROR_FILE_NOT_FOUND)),
+               HRESULT_FROM_WIN32(ERROR_FILE_NOT_FOUND));
 
     {
         const auto observation = localpinyin::observe_profile_caps(0, localpinyin::required_tsf_profile_caps());
@@ -167,8 +207,8 @@ int main() {
         }
         if (IsEqualGUID(*capability.category_guid, GUID_TFCAT_TIPCAP_IMMERSIVESUPPORT)) {
             has_immersive_profile_cap = true;
-            REQUIRE_TRUE(!capability.allow_register_category);
-            REQUIRE_EQ(capability.check_strategy, localpinyin::TsfCapabilityCheckStrategy::ProfileCaps);
+            REQUIRE_TRUE(capability.allow_register_category);
+            REQUIRE_EQ(capability.check_strategy, localpinyin::TsfCapabilityCheckStrategy::CategoryContainsItem);
             REQUIRE_EQ(capability.profile_caps, static_cast<DWORD>(TF_IPP_CAPS_IMMERSIVESUPPORT));
         }
         if (IsEqualGUID(*capability.category_guid, GUID_TFCAT_TIPCAP_UIELEMENTENABLED)) {
@@ -194,13 +234,30 @@ int main() {
 
     const auto& categories = localpinyin::required_tsf_profile_categories();
     REQUIRE_EQ(categories.size(), static_cast<size_t>(1));
-    REQUIRE_TRUE(IsEqualGUID(*categories[0].category_guid, GUID_TFCAT_TIP_KEYBOARD));
+    bool registerable_has_keyboard = false;
+    bool registerable_has_immersive = false;
     for (const auto& category : categories) {
         REQUIRE_TRUE(category.allow_register_category);
         REQUIRE_EQ(category.check_strategy, localpinyin::TsfCapabilityCheckStrategy::CategoryContainsItem);
-        REQUIRE_TRUE(category.profile_caps == 0);
+        registerable_has_keyboard = registerable_has_keyboard ||
+            IsEqualGUID(*category.category_guid, GUID_TFCAT_TIP_KEYBOARD);
+        registerable_has_immersive = registerable_has_immersive ||
+            IsEqualGUID(*category.category_guid, GUID_TFCAT_TIPCAP_IMMERSIVESUPPORT);
         REQUIRE_TRUE(!IsEqualGUID(*category.category_guid, GUID_TFCAT_TIPCAP_INPUTMODECOMPARTMENT));
     }
+    REQUIRE_TRUE(registerable_has_keyboard);
+    REQUIRE_TRUE(!registerable_has_immersive);
+    const auto& compatibility_categories = localpinyin::compatibility_tsf_profile_categories();
+    REQUIRE_EQ(compatibility_categories.size(), static_cast<size_t>(1));
+    REQUIRE_TRUE(IsEqualGUID(*compatibility_categories[0].category_guid,
+                             GUID_TFCAT_TIPCAP_IMMERSIVESUPPORT));
+    REQUIRE_TRUE(compatibility_categories[0].allow_register_category);
+    REQUIRE_EQ(localpinyin::apply_category_verification_policy(
+                   HRESULT_FROM_WIN32(ERROR_NOT_FOUND), false),
+               S_OK);
+    REQUIRE_EQ(localpinyin::apply_category_verification_policy(
+                   HRESULT_FROM_WIN32(ERROR_NOT_FOUND), true),
+               HRESULT_FROM_WIN32(ERROR_NOT_FOUND));
     REQUIRE_EQ((localpinyin::required_tsf_profile_caps() & TF_IPP_CAPS_IMMERSIVESUPPORT),
                static_cast<DWORD>(TF_IPP_CAPS_IMMERSIVESUPPORT));
     REQUIRE_EQ((localpinyin::required_tsf_profile_caps() & TF_IPP_CAPS_UIELEMENTENABLED),

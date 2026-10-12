@@ -5,7 +5,11 @@
 
 #include <windows.h>
 
+#include <algorithm>
+#include <cerrno>
+#include <cwchar>
 #include <fstream>
+#include <sstream>
 #include <utility>
 
 namespace localpinyin {
@@ -55,7 +59,94 @@ bool parse_bool(const std::wstring& text, bool fallback) {
     return fallback;
 }
 
+std::wstring input_mode_to_string(InputMode mode) {
+    return mode == InputMode::Chinese ? L"Chinese" : L"English";
+}
+
+bool parse_input_mode_strict(const std::wstring& text, InputMode* mode) {
+    if (!mode) {
+        return false;
+    }
+    if (text == L"Chinese") {
+        *mode = InputMode::Chinese;
+        return true;
+    }
+    if (text == L"English") {
+        *mode = InputMode::English;
+        return true;
+    }
+    return false;
+}
+
+unsigned long parse_ulong(const std::wstring& text, unsigned long fallback) {
+    if (text.empty()) {
+        return fallback;
+    }
+    wchar_t* end = nullptr;
+    const unsigned long value = std::wcstoul(text.c_str(), &end, 10);
+    return end && *end == L'\0' ? value : fallback;
+}
+
+unsigned long long parse_ullong(const std::wstring& text, unsigned long long fallback) {
+    if (text.empty()) {
+        return fallback;
+    }
+    wchar_t* end = nullptr;
+    const unsigned long long value = std::wcstoull(text.c_str(), &end, 10);
+    return end && *end == L'\0' ? value : fallback;
+}
+
+bool process_is_running(unsigned long process_id) {
+    if (process_id == 0) {
+        return false;
+    }
+    HANDLE process = OpenProcess(SYNCHRONIZE, FALSE, process_id);
+    if (!process) {
+        return false;
+    }
+    const DWORD wait = WaitForSingleObject(process, 0);
+    CloseHandle(process);
+    return wait == WAIT_TIMEOUT;
+}
+
+bool write_utf8_file_atomic(const std::wstring& path, const std::wstring& text) {
+    const std::wstring temp_path = path + L".tmp";
+    {
+        std::ofstream file(temp_path, std::ios::binary | std::ios::trunc);
+        if (!file) {
+            return false;
+        }
+        file << wide_to_utf8(text);
+        if (!file) {
+            DeleteFileW(temp_path.c_str());
+            return false;
+        }
+    }
+    if (MoveFileExW(temp_path.c_str(), path.c_str(), MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH)) {
+        return true;
+    }
+    DeleteFileW(temp_path.c_str());
+    return false;
+}
+
 }  // namespace
+
+unsigned long long runtime_status_current_utc_ms() {
+    FILETIME file_time{};
+    GetSystemTimeAsFileTime(&file_time);
+    ULARGE_INTEGER value{};
+    value.LowPart = file_time.dwLowDateTime;
+    value.HighPart = file_time.dwHighDateTime;
+    constexpr unsigned long long kUnixEpochFiletime = 116444736000000000ULL;
+    if (value.QuadPart < kUnixEpochFiletime) {
+        return 0;
+    }
+    return (value.QuadPart - kUnixEpochFiletime) / 10000ULL;
+}
+
+unsigned long long runtime_status_stale_after_ms() {
+    return 15ULL * 60ULL * 1000ULL;
+}
 
 SettingsStore::SettingsStore(std::wstring data_dir_override)
     : data_dir_override_(std::move(data_dir_override)) {}
@@ -73,6 +164,10 @@ std::wstring SettingsStore::settings_path() const {
 
 std::wstring SettingsStore::learning_data_path() const {
     return data_dir() + L"\\user_learning.tsv";
+}
+
+std::wstring SettingsStore::runtime_status_path() const {
+    return data_dir() + L"\\runtime_status.json";
 }
 
 bool SettingsStore::ensure_data_dir() const {
@@ -115,6 +210,37 @@ InputModeOptions SettingsStore::load_input_mode_options() const {
     return options;
 }
 
+RuntimeInputModeStatus SettingsStore::load_runtime_input_mode_status() const {
+    RuntimeInputModeStatus status;
+    const std::wstring text = read_utf8_file(runtime_status_path());
+    if (text.empty()) {
+        return status;
+    }
+    status.schema_version = static_cast<unsigned int>(parse_ulong(setting_value(text, L"schemaVersion"), 0));
+    if (status.schema_version != 1) {
+        return RuntimeInputModeStatus{};
+    }
+    status.active = parse_bool(setting_value(text, L"active"), false);
+    if (!parse_input_mode_strict(setting_value(text, L"mode"), &status.mode)) {
+        return RuntimeInputModeStatus{};
+    }
+    status.source = setting_value(text, L"source");
+    status.process_id = parse_ulong(setting_value(text, L"processId"), 0);
+    status.thread_id = parse_ulong(setting_value(text, L"threadId"), 0);
+    status.sequence = parse_ullong(setting_value(text, L"sequence"), 0);
+    status.updated_at_utc_ms = parse_ullong(setting_value(text, L"updatedAtUtcMs"), 0);
+    if (!status.active || status.updated_at_utc_ms == 0) {
+        status.available = false;
+        return status;
+    }
+    const unsigned long long now = runtime_status_current_utc_ms();
+    const bool stale = now == 0 ||
+                       status.updated_at_utc_ms > now + 5000ULL ||
+                       now - status.updated_at_utc_ms > runtime_status_stale_after_ms();
+    status.available = !stale && process_is_running(status.process_id);
+    return status;
+}
+
 bool SettingsStore::save_options(const CandidateWindowOptions& candidate_options,
                                  const InputModeOptions& input_mode_options) const {
     if (!ensure_data_dir()) {
@@ -136,13 +262,7 @@ bool SettingsStore::save_options(const CandidateWindowOptions& candidate_options
     text += L"\n";
     text += L"  }\n";
     text += L"}\n";
-
-    std::ofstream file(settings_path(), std::ios::binary | std::ios::trunc);
-    if (!file) {
-        return false;
-    }
-    file << wide_to_utf8(text);
-    return true;
+    return write_utf8_file_atomic(settings_path(), text);
 }
 
 bool SettingsStore::save_candidate_options(const CandidateWindowOptions& options) const {
@@ -151,6 +271,36 @@ bool SettingsStore::save_candidate_options(const CandidateWindowOptions& options
 
 bool SettingsStore::save_input_mode_options(const InputModeOptions& options) const {
     return save_options(load_candidate_options(), options);
+}
+
+bool SettingsStore::save_runtime_input_mode_status(const RuntimeInputModeStatus& status) const {
+    if (!ensure_data_dir()) {
+        return false;
+    }
+
+    std::wstring text;
+    text += L"{\n";
+    text += L"  \"schemaVersion\": 1,\n";
+    text += L"  \"active\": ";
+    text += status.active ? L"true" : L"false";
+    text += L",\n";
+    text += L"  \"mode\": \"" + input_mode_to_string(status.mode) + L"\",\n";
+    text += L"  \"source\": \"" + status.source + L"\",\n";
+    text += L"  \"processId\": ";
+    text += std::to_wstring(status.process_id);
+    text += L",\n";
+    text += L"  \"threadId\": ";
+    text += std::to_wstring(status.thread_id);
+    text += L",\n";
+    text += L"  \"sequence\": ";
+    text += std::to_wstring(status.sequence);
+    text += L",\n";
+    text += L"  \"updatedAtUtcMs\": ";
+    text += std::to_wstring(status.updated_at_utc_ms);
+    text += L"\n";
+    text += L"}\n";
+
+    return write_utf8_file_atomic(runtime_status_path(), text);
 }
 
 bool SettingsStore::clear_learning_data() const {

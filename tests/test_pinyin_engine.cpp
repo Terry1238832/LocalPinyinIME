@@ -1,5 +1,9 @@
 #include "test_common.h"
 #include "../src/engine/pinyin_engine.h"
+#include "../src/common/utf_utils.h"
+
+#include <algorithm>
+#include <fstream>
 
 int main() {
     const auto user_lexicon_root = use_temp_user_lexicon_override();
@@ -30,6 +34,52 @@ int main() {
         }
     }
     REQUIRE_EQ(nihao_world_count, 1);
+
+    // A small controlled dictionary catches behavior independently of shipped
+    // frequencies and verifies that learning survives a new engine instance.
+    const auto fixture = user_lexicon_root / L"smart_fixture.tsv";
+    {
+        std::ofstream file(fixture, std::ios::binary);
+        file << localpinyin::wide_to_utf8(
+            L"ni\t\u4F60\t9000\n"
+            L"hao\t\u597D\t9000\n"
+            L"nihao\t\u4F60\u597D\t9000\n"
+            L"nihao\t\u62DF\u597D\t8900\n"
+            L"zhongguo\t\u4E2D\u56FD\t9000\n"
+            L"shijie\t\u4E16\u754C\t8500\n"
+            L"shijie\t\u89C6\u754C\t8400\n"
+            L"changan\t\u957F\u5B89\t8000\n"
+            L"xian\t\u5148\t7900\n"
+            L"xian\t\u897F\u5B89\t7800\n");
+    }
+    const auto contains = [](const auto& candidates, const std::wstring& text) {
+        return std::any_of(candidates.begin(), candidates.end(), [&](const auto& candidate) { return candidate.text == text; });
+    };
+    localpinyin::PinyinEngine smart(localpinyin::DictionaryLoadMode::Empty);
+    REQUIRE_TRUE(smart.load_dictionary(fixture.wstring()));
+    REQUIRE_EQ(smart.lookup(L"NH").front().text, std::wstring(L"\u4F60\u597D"));
+    REQUIRE_EQ(smart.lookup(L"zg").front().text, std::wstring(L"\u4E2D\u56FD"));
+    REQUIRE_EQ(smart.lookup(L"ca").front().text, std::wstring(L"\u957F\u5B89"));
+    REQUIRE_EQ(smart.lookup(L"xa").front().text, std::wstring(L"\u897F\u5B89"));
+    REQUIRE_EQ(smart.lookup(L"niha").front().text, std::wstring(L"\u4F60\u597D"));
+    REQUIRE_EQ(smart.lookup(L"nihaoo").front().text, std::wstring(L"\u4F60\u597D"));
+    REQUIRE_EQ(smart.lookup(L"nihoa").front().text, std::wstring(L"\u4F60\u597D"));
+    REQUIRE_EQ(smart.lookup(L"nihao").front().text, std::wstring(L"\u4F60\u597D"));
+    const auto sentence = smart.lookup(L"nihaoshijie");
+    REQUIRE_EQ(sentence.front().text, std::wstring(L"\u4F60\u597D\u4E16\u754C"));
+    REQUIRE_TRUE(contains(sentence, L"\u4F60\u597D\u89C6\u754C"));
+    REQUIRE_TRUE(sentence.size() <= localpinyin::kMaxCandidateCount);
+    const std::wstring unknown_long(256, L'z');
+    REQUIRE_EQ(smart.lookup(unknown_long).front().text, unknown_long);
+    smart.learn(L"nihao", L"\u62DF\u597D");
+    REQUIRE_EQ(smart.lookup(L"nihao").front().text, std::wstring(L"\u62DF\u597D"));
+    localpinyin::PinyinEngine reopened(localpinyin::DictionaryLoadMode::Empty);
+    REQUIRE_TRUE(reopened.load_dictionary(fixture.wstring()));
+    REQUIRE_EQ(reopened.lookup(L"nihao").front().text, std::wstring(L"\u62DF\u597D"));
+    localpinyin::UserLearning cleaner;
+    REQUIRE_TRUE(cleaner.open((user_lexicon_root / L"user_learning.tsv").wstring()));
+    REQUIRE_TRUE(cleaner.clear());
+    REQUIRE_EQ(smart.lookup(L"nihao").front().text, std::wstring(L"\u4F60\u597D"));
     std::filesystem::remove_all(user_lexicon_root);
     return 0;
 }

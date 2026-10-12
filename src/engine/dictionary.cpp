@@ -12,9 +12,57 @@
 #include <filesystem>
 #include <fstream>
 #include <sstream>
+#include <unordered_set>
 
 namespace localpinyin {
 namespace {
+
+// Legal Mandarin syllables, shared by all dictionary layers. Derive initials
+// against the character count so xian (先) is not incorrectly split as xi'an.
+std::wstring initials_for(const std::wstring& pinyin, size_t character_count) {
+    static const std::unordered_set<std::wstring> syllables = [] {
+        std::wistringstream stream(
+            L"a ai an ang ao ba bai ban bang bao bei ben beng bi bian biao bie bin bing bo bu "
+            L"ca cai can cang cao ce cen ceng cha chai chan chang chao che chen cheng chi chong chou chu chua chuai chuan chuang chui chun chuo ci cong cou cu cuan cui cun cuo "
+            L"da dai dan dang dao de dei den deng di dia dian diao die ding diu dong dou du duan dui dun duo "
+            L"e ei en eng er fa fan fang fei fen feng fo fou fu "
+            L"ga gai gan gang gao ge gei gen geng gong gou gu gua guai guan guang gui gun guo "
+            L"ha hai han hang hao he hei hen heng hong hou hu hua huai huan huang hui hun huo "
+            L"ji jia jian jiang jiao jie jin jing jiong jiu ju juan jue jun "
+            L"ka kai kan kang kao ke ken keng kong kou ku kua kuai kuan kuang kui kun kuo "
+            L"la lai lan lang lao le lei leng li lia lian liang liao lie lin ling liu lo long lou lu luan lun luo lv lve "
+            L"ma mai man mang mao me mei men meng mi mian miao mie min ming miu mo mou mu "
+            L"na nai nan nang nao ne nei nen neng ni nian niang niao nie nin ning niu nong nou nu nuan nuo nv nve "
+            L"o ou pa pai pan pang pao pei pen peng pi pian piao pie pin ping po pou pu "
+            L"qi qia qian qiang qiao qie qin qing qiong qiu qu quan que qun "
+            L"ran rang rao re ren reng ri rong rou ru ruan rui run ruo "
+            L"sa sai san sang sao se sen seng sha shai shan shang shao she shei shen sheng shi shou shu shua shuai shuan shuang shui shun shuo si song sou su suan sui sun suo "
+            L"ta tai tan tang tao te teng ti tian tiao tie ting tong tou tu tuan tui tun tuo "
+            L"wa wai wan wang wei wen weng wo wu xi xia xian xiang xiao xie xin xing xiong xiu xu xuan xue xun "
+            L"ya yan yang yao ye yi yin ying yo yong you yu yuan yue yun "
+            L"za zai zan zang zao ze zei zen zeng zha zhai zhan zhang zhao zhe zhei zhen zheng zhi zhong zhou zhu zhua zhuai zhuan zhuang zhui zhun zhuo zi zong zou zu zuan zui zun zuo");
+        std::unordered_set<std::wstring> result;
+        for (std::wstring syllable; stream >> syllable;) result.insert(syllable);
+        return result;
+    }();
+    if (character_count < 2 || character_count > 16 || pinyin.size() > 96) return {};
+    std::vector<std::vector<bool>> failed(pinyin.size() + 1,
+                                         std::vector<bool>(character_count + 1));
+    std::wstring result;
+    const auto solve = [&](auto&& self, size_t offset, size_t count) -> bool {
+        if (offset == pinyin.size()) return count == character_count;
+        if (count == character_count || failed[offset][count]) return false;
+        for (size_t length = std::min<size_t>(6, pinyin.size() - offset); length > 0; --length) {
+            if (!syllables.contains(pinyin.substr(offset, length))) continue;
+            result.push_back(pinyin[offset]);
+            if (self(self, offset + length, count + 1)) return true;
+            result.pop_back();
+        }
+        failed[offset][count] = true;
+        return false;
+    };
+    return solve(solve, 0, 0) ? result : L"";
+}
 
 std::wstring trim_ascii(std::wstring value) {
     const auto first = value.find_first_not_of(L" \t\r\n");
@@ -152,6 +200,10 @@ Dictionary::Dictionary(DictionaryLoadMode mode) {
 
 void Dictionary::clear() {
     entries_.clear();
+    max_key_length_ = 0;
+    prediction_index_dirty_ = true;
+    sorted_keys_.clear();
+    initials_index_.clear();
     entry_count_ = 0;
     stats_ = {};
     layer_stats_.clear();
@@ -171,6 +223,8 @@ bool Dictionary::add_entry(const std::wstring& pinyin,
     if (key.empty() || word.empty() || base_frequency < 0) {
         return false;
     }
+    max_key_length_ = std::max(max_key_length_, key.size());
+    prediction_index_dirty_ = true;
 
     auto& candidates = entries_[key];
     const auto it = std::find_if(candidates.begin(), candidates.end(), [&](const Candidate& candidate) {
@@ -347,6 +401,8 @@ bool Dictionary::add_user_lexicon_entry(const UserLexiconEntry& entry, Dictionar
     if (key.empty() || entry.word.empty() || entry.frequency < 0) {
         return false;
     }
+    max_key_length_ = std::max(max_key_length_, key.size());
+    prediction_index_dirty_ = true;
 
     auto& candidates = entries_[key];
     const auto it = std::find_if(candidates.begin(), candidates.end(), [&](const Candidate& candidate) {
@@ -374,6 +430,7 @@ bool Dictionary::add_user_lexicon_entry(const UserLexiconEntry& entry, Dictionar
 }
 
 void Dictionary::revert_user_lexicon_entries() {
+    prediction_index_dirty_ = true;
     for (auto it = user_lexicon_overlays_.rbegin(); it != user_lexicon_overlays_.rend(); ++it) {
         auto candidates_it = entries_.find(it->pinyin);
         if (candidates_it == entries_.end()) {
@@ -631,19 +688,75 @@ std::vector<Candidate> Dictionary::lookup(const std::wstring& pinyin) const {
 
 std::vector<std::wstring> Dictionary::matching_pinyins_at(const std::wstring& input, size_t offset) const {
     std::vector<std::wstring> matches;
-    for (const auto& [pinyin, candidates] : entries_) {
-        if (candidates.empty() || pinyin.empty() || offset + pinyin.size() > input.size()) {
-            continue;
-        }
-        if (input.compare(offset, pinyin.size(), pinyin) == 0) {
-            matches.push_back(pinyin);
+    if (offset >= input.size()) return matches;
+    // At most input length hash probes, rather than a complete dictionary scan
+    // for every character of every keystroke.
+    for (size_t length = std::min(max_key_length_, input.size() - offset); length > 0; --length) {
+        std::wstring key = input.substr(offset, length);
+        if (entries_.contains(key)) matches.push_back(std::move(key));
+    }
+    return matches;
+}
+
+void Dictionary::rebuild_prediction_index() const {
+    if (!prediction_index_dirty_) return;
+    sorted_keys_.clear();
+    initials_index_.clear();
+    sorted_keys_.reserve(entries_.size());
+    for (const auto& [key, candidates] : entries_) {
+        if (candidates.empty()) continue;
+        sorted_keys_.push_back(key);
+        std::unordered_set<size_t> character_counts;
+        for (const auto& candidate : candidates) {
+            const auto& text = candidate.text;
+            if (text.size() < 2 || text.size() > 16 ||
+                !std::all_of(text.begin(), text.end(), [](wchar_t ch) { return ch >= 0x3400 && ch <= 0x9FFF; }) ||
+                !character_counts.insert(text.size()).second) continue;
+            const auto initials = initials_for(key, text.size());
+            if (!initials.empty() && initials != key) initials_index_[initials].push_back(key);
         }
     }
+    std::sort(sorted_keys_.begin(), sorted_keys_.end());
+    for (auto& [initials, keys] : initials_index_) {
+        std::sort(keys.begin(), keys.end(), [&](const auto& left, const auto& right) {
+            const int left_score = entries_.at(left).front().base_score;
+            const int right_score = entries_.at(right).front().base_score;
+            return left_score != right_score ? left_score > right_score : left < right;
+        });
+        if (keys.size() > 32) keys.resize(32);
+    }
+    prediction_index_dirty_ = false;
+}
 
-    std::stable_sort(matches.begin(), matches.end(), [](const std::wstring& left, const std::wstring& right) {
-        return left.size() > right.size();
-    });
-    return matches;
+std::vector<Candidate> Dictionary::lookup_abbreviation(const std::wstring& initials) const {
+    if (initials.size() < 2 || initials.size() > 16) return {};
+    rebuild_prediction_index();
+    const auto it = initials_index_.find(initials);
+    if (it == initials_index_.end()) return {};
+    std::vector<Candidate> result;
+    for (const auto& key : it->second) {
+        const auto& candidates = entries_.at(key);
+        size_t added = 0;
+        for (const auto& candidate : candidates) {
+            if (candidate.text.size() != initials.size()) continue;
+            result.push_back(candidate);
+            if (++added >= 3) break;
+        }
+    }
+    return result;
+}
+
+std::vector<Candidate> Dictionary::lookup_completion(const std::wstring& prefix) const {
+    if (prefix.size() < 2 || prefix.size() > 32) return {};
+    rebuild_prediction_index();
+    std::vector<Candidate> result;
+    size_t matched_keys = 0;
+    for (auto it = std::lower_bound(sorted_keys_.begin(), sorted_keys_.end(), prefix);
+         it != sorted_keys_.end() && it->starts_with(prefix) && matched_keys < 32; ++it, ++matched_keys) {
+        const auto& candidates = entries_.at(*it);
+        result.insert(result.end(), candidates.begin(), candidates.begin() + std::min<size_t>(3, candidates.size()));
+    }
+    return result;
 }
 
 size_t Dictionary::entry_count() const noexcept {

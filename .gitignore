@@ -1,87 +1,21 @@
-# Build trees and generated package output
+.build/
 build/
 build-*/
-out/
 dist/
-dist/installers/
-
-# CMake generated files
-CMakeFiles/
-CMakeCache.txt
-Testing/
-CTestTestfile.cmake
-install_manifest.txt
-compile_commands.json
-
-# Visual Studio and MSVC generated files
-.vs/
-.vscode/
-*.suo
-*.user
-*.vcxproj.user
-*.VC.db
-*.opendb
-*.db
-*.ipch
-*.tlog
-*.lastbuildstate
-
-# Native build artifacts
-*.dll
-*.exe
+安装包/
+.agents/
+.codex/
+__pycache__/
+*.pyc
+*.log
+*.tmp
 *.pdb
+*.obj
 *.lib
 *.exp
-*.obj
-*.idb
-*.ilk
-*.ipdb
-*.iobj
-*.res
-*.manifest
-*.map
-
-# Release archives and installer outputs
-*.zip
-*.sha256
-*.7z
-*.msi
-*.msix
-*.appx
-
-# Logs, diagnostics, and crash dumps
-*.log
-status.log
-LocalPinyinIME.log
-*.dmp
-*.etl
-*.trace
-
-# Local user data, learning state, and temporary extraction output
-local-data/
-user-data/
-user_learning/
-learning-data/
-tmp/
-temp/
+*.dll
+*.exe
 *.sqlite
 *.sqlite3
-*.userdb
-*.userdict
+user_learning.tsv
 user_lexicon.tsv
-*.learned
-*.learned.tsv
-*.tmp
-*.temp
-
-# PowerShell local state
-*.ps1xml
-*.pssc
-*.psrc
-
-# Keep source-controlled dictionary resources explicit.
-!resources/
-!resources/dictionary/
-!resources/dictionary/core_zh_pinyin.tsv
-!resources/dictionary/local_core_zh_pinyin.tsv
-!resources/dictionary/local_core_zh_pinyin.metadata.json

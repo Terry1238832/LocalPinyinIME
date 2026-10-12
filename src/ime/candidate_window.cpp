@@ -16,8 +16,45 @@ namespace {
 constexpr wchar_t kWindowClassName[] = L"LocalPinyinCandidateWindow";
 constexpr wchar_t kSettingsWindowClassName[] = L"LocalPinyinSettingsWindow";
 constexpr wchar_t kSettingsExecutableName[] = L"LocalPinyinSettings.exe";
-constexpr wchar_t kSettingsButtonText[] = L"\u2699";
-constexpr wchar_t kHintText[] = L"Space \u9009\u9996\u9879 \u00B7 1-9 \u9009\u8BCD \u00B7 Esc \u53D6\u6D88";
+constexpr wchar_t kHintText[] = L"\u7A7A\u683C \u786E\u8BA4  \u00B7  \u6570\u5B57 \u9009\u8BCD  \u00B7  Esc \u53D6\u6D88";
+constexpr wchar_t kCandidateOptionsChangedMessageName[] = L"LocalPinyinIME.CandidateOptionsChanged";
+constexpr UINT_PTR kLayoutRetryTimerId = 1;
+constexpr UINT kDwmAttributeCloaked = 14;
+constexpr DWORD kDwmCloakedShell = 0x00000002;
+
+using DwmGetWindowAttributeFn = HRESULT(WINAPI*)(HWND, DWORD, PVOID, DWORD);
+
+struct DwmSnapshot {
+    HRESULT cloaked_hr = E_NOTIMPL;
+    DWORD cloaked = 0;
+};
+
+bool rect_valid(const RECT& rect) noexcept {
+    return rect.right > rect.left && rect.bottom > rect.top;
+}
+
+DwmGetWindowAttributeFn dwm_get_window_attribute() {
+    static const HMODULE module = LoadLibraryW(L"dwmapi.dll");
+    if (!module) {
+        return nullptr;
+    }
+    return reinterpret_cast<DwmGetWindowAttributeFn>(GetProcAddress(module, "DwmGetWindowAttribute"));
+}
+
+DwmSnapshot query_dwm_snapshot(HWND hwnd) {
+    DwmSnapshot snapshot;
+    const auto function = dwm_get_window_attribute();
+    if (!function || !hwnd) {
+        return snapshot;
+    }
+    snapshot.cloaked_hr = function(hwnd, kDwmAttributeCloaked, &snapshot.cloaked, sizeof(snapshot.cloaked));
+    return snapshot;
+}
+
+UINT candidate_options_changed_message() {
+    static const UINT message = RegisterWindowMessageW(kCandidateOptionsChangedMessageName);
+    return message;
+}
 
 bool windows_apps_use_dark_theme() {
     DWORD value = 1;
@@ -45,26 +82,6 @@ RECT monitor_work_area_for(const RECT& rect) {
     return work;
 }
 
-std::wstring placement_text(CandidatePlacement placement) {
-    switch (placement) {
-        case CandidatePlacement::Above:
-            return L"above";
-        case CandidatePlacement::Below:
-            return L"below";
-        case CandidatePlacement::Hidden:
-        default:
-            return L"hidden";
-    }
-}
-
-std::wstring theme_text(const CandidateThemePalette& palette) {
-    return palette.dark ? L"dark" : L"light";
-}
-
-const wchar_t* bool_text(bool value) noexcept {
-    return value ? L"true" : L"false";
-}
-
 void fill_round_rect(HDC hdc, const RECT& rect, int radius, HBRUSH brush, HPEN pen) {
     HGDIOBJ old_brush = SelectObject(hdc, brush);
     HGDIOBJ old_pen = SelectObject(hdc, pen);
@@ -83,7 +100,7 @@ COLORREF blend_color(COLORREF from, COLORREF to, int percent_to) {
 HFONT create_candidate_font(int height_px, LONG weight) {
     return CreateFontW(-height_px, 0, 0, 0, weight, FALSE, FALSE, FALSE,
                        DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
-                       CLEARTYPE_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Segoe UI Variable");
+                       CLEARTYPE_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Microsoft YaHei UI");
 }
 
 int measure_text_width_px(HWND hwnd, HFONT font, const std::wstring& text, int fallback_font_px) {
@@ -142,23 +159,43 @@ std::wstring parent_directory_of(const std::wstring& path) {
     return path.substr(0, slash);
 }
 
+void notify_candidate_ime_win_event(DWORD event,
+                                    HWND hwnd,
+                                    LONG object_id,
+                                    LONG child_id,
+                                    void*) noexcept {
+    NotifyWinEvent(event, hwnd, object_id, child_id);
+}
+
 }  // namespace
 
-CandidateWindow::CandidateWindow() = default;
+CandidateWindow::CandidateWindow()
+    : ime_win_event_state_(notify_candidate_ime_win_event, nullptr) {}
 
 CandidateWindow::~CandidateWindow() {
+    cancel_layout_retry();
     release_fonts();
     if (hwnd_) {
+        notify_ime_window_hidden(hwnd_);
         DestroyWindow(hwnd_);
     }
 }
 
 bool CandidateWindow::create() {
+    return create_with_owner(nullptr);
+}
+
+bool CandidateWindow::create_with_owner(HWND requested_owner) {
     if (hwnd_) {
         return true;
     }
+    return create_replacement_hwnd(requested_owner, nullptr) != nullptr;
+}
 
-    const CandidateWindowCreateConfig create_config = make_candidate_window_create_config(nullptr, false);
+HWND CandidateWindow::create_replacement_hwnd(HWND requested_owner, HWND original_hwnd) {
+    const bool requested_owner_is_window = requested_owner && IsWindow(requested_owner);
+    const CandidateWindowCreateConfig create_config =
+        make_candidate_window_create_config(requested_owner, requested_owner_is_window);
 
     WNDCLASSEXW wc{};
     wc.cbSize = sizeof(wc);
@@ -174,32 +211,108 @@ bool CandidateWindow::create() {
         std::wstringstream stream;
         stream << L"window_class_registered=false last_error=" << register_error;
         log_status(L"candidate-ui", stream.str());
+        return nullptr;
+    }
+
+    SetLastError(ERROR_SUCCESS);
+    HWND created_hwnd = CreateWindowExW(create_config.ex_style,
+                                        wc.lpszClassName, L"", create_config.style,
+                                        create_config.x, create_config.y, create_config.width, create_config.height,
+                                        create_config.parent, create_config.menu, g_instance, this);
+    const DWORD create_error = created_hwnd ? ERROR_SUCCESS : GetLastError();
+    if (!created_hwnd && original_hwnd) {
+        hwnd_ = original_hwnd;
+    }
+    if (created_hwnd) {
+        hwnd_ = created_hwnd;
+        SetLastError(ERROR_SUCCESS);
+        const BOOL layered_ok = SetLayeredWindowAttributes(created_hwnd, 0, 248, LWA_ALPHA);
+        if (!layered_ok) {
+            log_status(L"candidate-ui",
+                       L"SetLayeredWindowAttributes failed last_error=" +
+                           std::to_wstring(GetLastError()));
+        }
+    } else {
+        log_status(L"candidate-ui",
+                   L"CreateWindowEx failed last_error=" + std::to_wstring(create_error));
+    }
+    return created_hwnd;
+}
+
+void CandidateWindow::destroy_hwnd_for_recreate() {
+    if (!hwnd_) {
+        return;
+    }
+    if (GetCapture() == hwnd_) {
+        ReleaseCapture();
+    }
+    settings_button_hot_ = false;
+    settings_button_pressed_ = false;
+    tracking_mouse_leave_ = false;
+    const HWND old_hwnd = hwnd_;
+    notify_ime_window_hidden(old_hwnd);
+    DestroyWindow(old_hwnd);
+    if (hwnd_ == old_hwnd) {
+        hwnd_ = nullptr;
+    }
+    release_fonts();
+    font_dpi_ = 0;
+}
+
+void CandidateWindow::reset_window_lifecycle_state() noexcept {
+    paint_seen_ = false;
+}
+
+bool CandidateWindow::apply_window_region(int width, int height) {
+    HRGN region = CreateRoundRectRgn(0, 0, width + 1, height + 1,
+                                     layout_.corner_radius * 2, layout_.corner_radius * 2);
+    if (!region) {
+        return false;
+    }
+    if (!SetWindowRgn(hwnd_, region, FALSE)) {
+        DeleteObject(region);
+        return false;
+    }
+    return true;
+}
+
+bool CandidateWindow::position_and_show_current_layout() {
+    const int width = layout_.window_rect.right - layout_.window_rect.left;
+    const int height = layout_.window_rect.bottom - layout_.window_rect.top;
+    apply_window_region(width, height);
+
+    SetLastError(ERROR_SUCCESS);
+    const BOOL set_window_pos_ok = SetWindowPos(hwnd_, HWND_TOPMOST,
+                                                layout_.window_rect.left,
+                                                layout_.window_rect.top,
+                                                width,
+                                                height,
+                                                SWP_NOACTIVATE | SWP_SHOWWINDOW);
+    const DWORD set_window_pos_error = set_window_pos_ok ? ERROR_SUCCESS : GetLastError();
+    if (!set_window_pos_ok) {
+        log_status(L"candidate-ui",
+                   L"SetWindowPos failed last_error=" + std::to_wstring(set_window_pos_error));
         return false;
     }
 
-    log_status(L"candidate-ui", make_candidate_window_create_attempt_log(create_config));
-
-    SetLastError(ERROR_SUCCESS);
-    hwnd_ = CreateWindowExW(create_config.ex_style,
-                            wc.lpszClassName, L"", create_config.style,
-                            create_config.x, create_config.y, create_config.width, create_config.height,
-                            create_config.parent, create_config.menu, g_instance, this);
-    const DWORD create_error = hwnd_ ? ERROR_SUCCESS : GetLastError();
-    if (hwnd_) {
-        SetLayeredWindowAttributes(hwnd_, 0, 248, LWA_ALPHA);
-    }
-    log_status(L"candidate-ui", make_candidate_window_create_result_log(hwnd_ != nullptr, create_error));
-    return hwnd_ != nullptr;
+    InvalidateRect(hwnd_, nullptr, FALSE);
+    ShowWindow(hwnd_, SW_SHOWNOACTIVATE);
+    UpdateWindow(hwnd_);
+    return true;
 }
 
 void CandidateWindow::show(const std::wstring& composition_text,
                            const std::vector<Candidate>& candidates,
                            size_t selected_index,
-                           const RECT& caret_rect) {
-    std::wstringstream request_stream;
-    request_stream << L"request_show=true composition_active=" << bool_text(!composition_text.empty())
-                   << L" candidate_count=" << candidates.size();
-    log_status(L"candidate-ui", request_stream.str());
+                           const RECT& caret_rect,
+                           const CandidateWindowOwnerInfo& owner_info) {
+    const bool continuing_session = has_cached_show_state_;
+    reset_presentation_state();
+    if (!continuing_session) {
+        shell_cloak_recovery_attempts_ = 0;
+    }
+    show_requested_ = true;
+    owner_info_ = owner_info;
 
     if (composition_text.empty()) {
         hide(L"empty_composition");
@@ -213,90 +326,171 @@ void CandidateWindow::show(const std::wstring& composition_text,
         hide(L"create_failed");
         return;
     }
+    cancel_layout_retry();
 
-    std::vector<std::wstring> candidate_texts;
-    candidate_texts.reserve(std::min(candidates.size(), kMaxCandidateCount));
+    candidate_texts_.clear();
+    candidate_texts_.reserve(std::min(candidates.size(), kMaxCandidateCount));
     for (const auto& candidate : candidates) {
-        candidate_texts.push_back(candidate.text);
+        candidate_texts_.push_back(candidate.text);
     }
+    composition_text_ = composition_text;
+    selected_index_ = selected_index;
+    caret_rect_ = caret_rect;
+    has_cached_show_state_ = true;
 
     reload_options();
     const int dpi = GetDpiForWindow(hwnd_);
-    update_fonts(dpi);
-    const int fallback_font_px = candidate_font_px_for_size(options_.text_size, dpi);
-    std::vector<int> candidate_text_widths;
-    std::vector<int> number_text_widths;
-    candidate_text_widths.reserve(candidate_texts.size());
-    number_text_widths.reserve(candidate_texts.size());
-    for (size_t i = 0; i < candidate_texts.size(); ++i) {
-        candidate_text_widths.push_back(measure_text_width_px(hwnd_, candidate_font_, candidate_texts[i], fallback_font_px));
-        const std::wstring number = std::to_wstring(i + 1);
-        number_text_widths.push_back(measure_text_width_px(hwnd_, candidate_font_, number, fallback_font_px));
-    }
-
-    CandidateLayoutInput input;
-    input.composition_text = composition_text;
-    input.candidate_texts = std::move(candidate_texts);
-    input.candidate_text_widths_px = std::move(candidate_text_widths);
-    input.number_text_widths_px = std::move(number_text_widths);
-    input.selected_index = selected_index;
-    input.caret_rect = caret_rect;
-    input.work_area = monitor_work_area_for(caret_rect);
-    input.dpi = dpi;
-    input.options = options_;
-    layout_ = make_candidate_layout(input);
-    if (!layout_.visible) {
+    if (!rebuild_layout(dpi)) {
         hide(L"layout_hidden");
         return;
     }
 
-    composition_text_ = composition_text;
-    update_fonts(dpi);
-
-    const int width = layout_.window_rect.right - layout_.window_rect.left;
-    const int height = layout_.window_rect.bottom - layout_.window_rect.top;
-    HRGN region = CreateRoundRectRgn(0, 0, width + 1, height + 1,
-                                     layout_.corner_radius * 2, layout_.corner_radius * 2);
-    if (region) {
-        if (!SetWindowRgn(hwnd_, region, FALSE)) {
-            DeleteObject(region);
-        }
-    }
-
-    SetLastError(ERROR_SUCCESS);
-    const BOOL set_window_pos_ok = SetWindowPos(hwnd_, HWND_TOPMOST,
-                                                layout_.window_rect.left,
-                                                layout_.window_rect.top,
-                                                width,
-                                                height,
-                                                SWP_NOACTIVATE | SWP_SHOWWINDOW);
-    const DWORD set_window_pos_error = set_window_pos_ok ? ERROR_SUCCESS : GetLastError();
-    if (!set_window_pos_ok) {
-        log_show_event(false, set_window_pos_error);
+    if (!position_and_show_current_layout()) {
         hide(L"set_window_pos_failed");
         return;
     }
 
-    InvalidateRect(hwnd_, nullptr, FALSE);
-    ShowWindow(hwnd_, SW_SHOWNOACTIVATE);
-    UpdateWindow(hwnd_);
-    log_show_event(true, ERROR_SUCCESS);
+    notify_ime_window_shown(hwnd_);
+
+    maybe_recover_from_shell_cloak();
 }
 
-void CandidateWindow::hide(const wchar_t* reason) {
+void CandidateWindow::hide(const wchar_t*) {
     if (hwnd_) {
         settings_button_hot_ = false;
         settings_button_pressed_ = false;
         tracking_mouse_leave_ = false;
         ShowWindow(hwnd_, SW_HIDE);
-        std::wstringstream stream;
-        stream << L"hidden=true reason=" << (reason ? reason : L"unspecified");
-        log_status(L"candidate-ui", stream.str());
+        notify_ime_window_hidden(hwnd_);
     }
+    has_cached_show_state_ = false;
+    shell_cloak_recovery_attempts_ = 0;
+}
+
+bool CandidateWindow::schedule_layout_retry(std::function<void()> callback,
+                                            unsigned int attempt,
+                                            UINT delay_ms) {
+    if (!callback || !create()) {
+        return false;
+    }
+    cancel_layout_retry();
+    layout_retry_callback_ = std::move(callback);
+    layout_retry_attempt_ = attempt;
+    layout_retry_timer_ = SetTimer(hwnd_, kLayoutRetryTimerId, delay_ms, nullptr);
+    if (!layout_retry_timer_) {
+        log_status(L"candidate-ui", L"candidate layout retry SetTimer failed");
+        layout_retry_callback_ = {};
+        layout_retry_attempt_ = 0;
+        return false;
+    }
+    return true;
+}
+
+void CandidateWindow::cancel_layout_retry() {
+    if (hwnd_ && layout_retry_timer_) {
+        KillTimer(hwnd_, layout_retry_timer_);
+    }
+    layout_retry_timer_ = 0;
+    layout_retry_attempt_ = 0;
+    layout_retry_callback_ = {};
 }
 
 bool CandidateWindow::is_visible() const noexcept {
     return hwnd_ && IsWindowVisible(hwnd_);
+}
+
+void CandidateWindow::reset_presentation_state() noexcept {
+    show_requested_ = false;
+    paint_seen_ = false;
+}
+
+void CandidateWindow::maybe_recover_from_shell_cloak() {
+    const HWND original_hwnd = hwnd_;
+    const bool candidate_valid = original_hwnd && IsWindow(original_hwnd);
+    const bool candidate_visible = candidate_valid && IsWindowVisible(original_hwnd);
+    DWORD candidate_process_id = 0;
+    if (candidate_valid) {
+        GetWindowThreadProcessId(original_hwnd, &candidate_process_id);
+    }
+    DWORD owner_root_process_id = 0;
+    const bool owner_root_valid = owner_info_.root_valid && owner_info_.root_hwnd && IsWindow(owner_info_.root_hwnd);
+    if (owner_root_valid) {
+        GetWindowThreadProcessId(owner_info_.root_hwnd, &owner_root_process_id);
+    }
+    const DwmSnapshot candidate_dwm = query_dwm_snapshot(original_hwnd);
+    const DwmSnapshot owner_dwm = query_dwm_snapshot(owner_info_.root_hwnd);
+
+    CandidateShellCloakRecoveryInput input;
+    input.candidate_model_valid = has_cached_show_state_ && !composition_text_.empty() && !candidate_texts_.empty();
+    input.candidate_show_requested = show_requested_;
+    input.candidate_hwnd_valid = candidate_valid;
+    input.candidate_hwnd_visible = candidate_visible;
+    input.current_process_id = GetCurrentProcessId();
+    input.candidate_process_id = candidate_process_id;
+    input.candidate_cloak_hr = candidate_dwm.cloaked_hr;
+    input.candidate_cloak_value = candidate_dwm.cloaked;
+    input.owner_root_valid = owner_root_valid;
+    input.owner_root_process_id = owner_root_process_id;
+    input.owner_root_cloak_hr = owner_dwm.cloaked_hr;
+    input.owner_root_cloak_value = owner_dwm.cloaked;
+    input.recovery_attempts = shell_cloak_recovery_attempts_;
+
+    const CandidateShellCloakRecoveryDecision decision = decide_candidate_shell_cloak_recovery(input);
+    if (!decision.recovery_eligible) {
+        return;
+    }
+
+    ++shell_cloak_recovery_attempts_;
+    log_status(L"candidate-ui",
+               L"candidate_shell_cloak_recovery_attempted=true strategy=" +
+                   candidate_shell_cloak_recovery_strategy_to_string(decision.strategy));
+
+    destroy_hwnd_for_recreate();
+    reset_window_lifecycle_state();
+
+    bool recreated = create_with_owner(owner_info_.root_hwnd);
+    bool position_ok = false;
+    if (recreated) {
+        const int dpi = GetDpiForWindow(hwnd_);
+        recreated = rebuild_layout(dpi);
+    }
+    if (recreated) {
+        position_ok = position_and_show_current_layout();
+    }
+
+    const DwmSnapshot after_dwm = query_dwm_snapshot(hwnd_);
+    RECT window_rect{};
+    const bool window_rect_ok = hwnd_ && GetWindowRect(hwnd_, &window_rect);
+    const bool rect_on_monitor =
+        window_rect_ok && rect_valid(window_rect) && MonitorFromRect(&window_rect, MONITOR_DEFAULTTONULL) != nullptr;
+    const bool after_shell_cloaked = SUCCEEDED(after_dwm.cloaked_hr) &&
+                                     (after_dwm.cloaked & kCandidateDwmCloakedShell) != 0;
+    const bool success = recreated && position_ok && hwnd_ && IsWindow(hwnd_) &&
+                          IsWindowVisible(hwnd_) && rect_on_monitor &&
+                          paint_seen_ && !after_shell_cloaked;
+    if (success) {
+        notify_ime_window_shown(hwnd_);
+    }
+
+    if (success) {
+        log_status(L"candidate-ui", L"candidate_shell_cloak_recovery_succeeded=true");
+        return;
+    }
+
+    const wchar_t* reason = L"unknown";
+    if (!recreated) {
+        reason = L"recreate_failed";
+    } else if (!position_ok) {
+        reason = L"recreate_show_failed";
+    } else if (after_shell_cloaked) {
+        reason = L"still_shell_cloaked";
+    } else if (!paint_seen_) {
+        reason = L"paint_not_seen";
+    } else if (!rect_on_monitor) {
+        reason = L"rect_not_on_monitor";
+    }
+    log_status(L"candidate-ui",
+               L"candidate_shell_cloak_recovery_failed=true reason=" + std::wstring(reason));
 }
 
 LRESULT CALLBACK CandidateWindow::window_proc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) {
@@ -313,7 +507,24 @@ LRESULT CALLBACK CandidateWindow::window_proc(HWND hwnd, UINT message, WPARAM wp
 }
 
 LRESULT CandidateWindow::handle_message(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) {
+    if (message == candidate_options_changed_message()) {
+        apply_options_changed();
+        return 0;
+    }
     switch (message) {
+        case WM_TIMER:
+            if (wparam == kLayoutRetryTimerId && layout_retry_timer_) {
+                KillTimer(hwnd_, layout_retry_timer_);
+                layout_retry_timer_ = 0;
+                layout_retry_attempt_ = 0;
+                auto callback = std::move(layout_retry_callback_);
+                layout_retry_callback_ = {};
+                if (callback) {
+                    callback();
+                }
+                return 0;
+            }
+            break;
         case WM_MOUSEACTIVATE:
             return MA_NOACTIVATE;
         case WM_MOUSEMOVE: {
@@ -365,15 +576,31 @@ LRESULT CandidateWindow::handle_message(HWND hwnd, UINT message, WPARAM wparam, 
                 return TRUE;
             }
             break;
+        case WM_DESTROY:
+            notify_ime_window_hidden(hwnd);
+            break;
         case WM_ERASEBKGND:
             return 1;
         case WM_PAINT:
+            paint_seen_ = true;
             paint();
             return 0;
         default:
             return DefWindowProcW(hwnd, message, wparam, lparam);
     }
     return DefWindowProcW(hwnd, message, wparam, lparam);
+}
+
+bool CandidateWindow::notify_ime_window_shown(HWND hwnd) {
+    RECT rect{};
+    if (!hwnd || !IsWindow(hwnd) || !IsWindowVisible(hwnd) || !GetWindowRect(hwnd, &rect)) {
+        return false;
+    }
+    return ime_win_event_state_.notify_visible(hwnd, rect);
+}
+
+void CandidateWindow::notify_ime_window_hidden(HWND hwnd) noexcept {
+    ime_win_event_state_.notify_hidden(hwnd);
 }
 
 void CandidateWindow::reload_options() {
@@ -393,6 +620,69 @@ void CandidateWindow::update_fonts(int dpi) {
     composition_font_ = create_candidate_font(scale_dip(15, dpi), FW_NORMAL);
     candidate_font_ = create_candidate_font(candidate_font_px_for_size(options_.text_size, dpi), FW_MEDIUM);
     hint_font_ = create_candidate_font(scale_dip(13, dpi), FW_NORMAL);
+}
+
+bool CandidateWindow::rebuild_layout(int dpi) {
+    update_fonts(dpi);
+    const int fallback_font_px = candidate_font_px_for_size(options_.text_size, dpi);
+    std::vector<int> candidate_text_widths;
+    std::vector<int> number_text_widths;
+    candidate_text_widths.reserve(candidate_texts_.size());
+    number_text_widths.reserve(candidate_texts_.size());
+    for (size_t i = 0; i < candidate_texts_.size(); ++i) {
+        candidate_text_widths.push_back(measure_text_width_px(hwnd_, candidate_font_, candidate_texts_[i], fallback_font_px));
+        const std::wstring number = std::to_wstring(i + 1);
+        number_text_widths.push_back(measure_text_width_px(hwnd_, candidate_font_, number, fallback_font_px));
+    }
+
+    CandidateLayoutInput input;
+    input.composition_text = composition_text_;
+    input.candidate_texts = candidate_texts_;
+    input.candidate_text_widths_px = std::move(candidate_text_widths);
+    input.number_text_widths_px = std::move(number_text_widths);
+    input.selected_index = selected_index_;
+    input.caret_rect = caret_rect_;
+    input.work_area = monitor_work_area_for(caret_rect_);
+    input.dpi = dpi;
+    input.options = options_;
+    layout_ = make_candidate_layout(input);
+    return layout_.visible;
+}
+
+void CandidateWindow::apply_options_changed() {
+    reload_options();
+    if (!hwnd_ || !IsWindowVisible(hwnd_) || !has_cached_show_state_) {
+        return;
+    }
+    const int dpi = GetDpiForWindow(hwnd_);
+    if (!rebuild_layout(dpi)) {
+        hide(L"options_changed_layout_hidden");
+        return;
+    }
+    const int width = layout_.window_rect.right - layout_.window_rect.left;
+    const int height = layout_.window_rect.bottom - layout_.window_rect.top;
+    HRGN region = CreateRoundRectRgn(0, 0, width + 1, height + 1,
+                                     layout_.corner_radius * 2, layout_.corner_radius * 2);
+    if (region) {
+        if (!SetWindowRgn(hwnd_, region, FALSE)) {
+            DeleteObject(region);
+        }
+    }
+    SetLastError(ERROR_SUCCESS);
+    const BOOL set_window_pos_ok = SetWindowPos(hwnd_,
+                                                HWND_TOPMOST,
+                                                layout_.window_rect.left,
+                                                layout_.window_rect.top,
+                                                width,
+                                                height,
+                                                SWP_NOACTIVATE | SWP_SHOWWINDOW);
+    const DWORD set_window_pos_error = set_window_pos_ok ? ERROR_SUCCESS : GetLastError();
+    if (!set_window_pos_ok) {
+        std::wstringstream stream;
+        stream << L"candidate_options_changed_setwindowpos_success=false last_error=" << set_window_pos_error;
+        log_status(L"candidate-ui", stream.str());
+    }
+    RedrawWindow(hwnd_, nullptr, nullptr, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
 bool CandidateWindow::hit_test_settings_button(POINT point) const noexcept {
@@ -468,7 +758,7 @@ void CandidateWindow::draw_settings_button(HDC hdc) {
     }
 
     const RECT rect = layout_.action_button_rect;
-    COLORREF fill = palette_.dark ? RGB(0x2E, 0x31, 0x38) : RGB(0xF4, 0xF7, 0xFB);
+    COLORREF fill = blend_color(palette_.background, palette_.border, 30);
     if (settings_button_hot_) {
         fill = blend_color(fill, palette_.selected_background, palette_.dark ? 28 : 16);
     }
@@ -482,21 +772,32 @@ void CandidateWindow::draw_settings_button(HDC hdc) {
     DeleteObject(pen);
     DeleteObject(brush);
 
-    HGDIOBJ old_font = nullptr;
-    if (candidate_font_) {
-        old_font = SelectObject(hdc, candidate_font_);
+    // Draw the settings affordance with GDI, so it stays crisp at every DPI
+    // without a symbol-font dependency or a bitmap resource.
+    const int center_x = (rect.left + rect.right) / 2;
+    const int center_y = (rect.top + rect.bottom) / 2;
+    HPEN icon_pen = CreatePen(PS_SOLID, std::max(1, scale_dip(2, layout_.dpi)),
+                              settings_button_hot_ ? palette_.number_text : palette_.muted_text);
+    HGDIOBJ old_pen = SelectObject(hdc, icon_pen);
+    HGDIOBJ old_brush = SelectObject(hdc, GetStockObject(NULL_BRUSH));
+    const int radius = scale_dip(5, layout_.dpi);
+    Ellipse(hdc, center_x - radius, center_y - radius, center_x + radius, center_y + radius);
+    const int inner = scale_dip(2, layout_.dpi);
+    Ellipse(hdc, center_x - inner, center_y - inner, center_x + inner, center_y + inner);
+    const int outer = scale_dip(8, layout_.dpi);
+    const POINT spokes[][2] = {
+        {{center_x - outer, center_y}, {center_x - radius, center_y}},
+        {{center_x + radius, center_y}, {center_x + outer, center_y}},
+        {{center_x, center_y - outer}, {center_x, center_y - radius}},
+        {{center_x, center_y + radius}, {center_x, center_y + outer}}
+    };
+    for (const auto& spoke : spokes) {
+        MoveToEx(hdc, spoke[0].x, spoke[0].y, nullptr);
+        LineTo(hdc, spoke[1].x, spoke[1].y);
     }
-    RECT text_rect = rect;
-    SetBkMode(hdc, TRANSPARENT);
-    SetTextColor(hdc, settings_button_hot_ ? palette_.number_text : palette_.muted_text);
-    DrawTextW(hdc,
-              kSettingsButtonText,
-              static_cast<int>(wcslen(kSettingsButtonText)),
-              &text_rect,
-              DT_SINGLELINE | DT_CENTER | DT_VCENTER | DT_NOPREFIX);
-    if (old_font) {
-        SelectObject(hdc, old_font);
-    }
+    SelectObject(hdc, old_brush);
+    SelectObject(hdc, old_pen);
+    DeleteObject(icon_pen);
 }
 
 void CandidateWindow::paint() {
@@ -537,12 +838,12 @@ void CandidateWindow::paint() {
 
         const std::wstring number = std::to_wstring(item.candidate_index + 1);
         RECT number_rect = item.number_bounds;
-        SetTextColor(memory_dc, palette_.number_text);
+        SetTextColor(memory_dc, item.selected ? palette_.selected_text : palette_.number_text);
         DrawTextW(memory_dc, number.c_str(), static_cast<int>(number.size()), &number_rect,
                   DT_SINGLELINE | DT_VCENTER | DT_NOPREFIX);
 
         RECT text_rect = item.text_bounds;
-        SetTextColor(memory_dc, palette_.text);
+        SetTextColor(memory_dc, item.selected ? palette_.selected_text : palette_.text);
         DrawTextW(memory_dc, item.display_text.c_str(), static_cast<int>(item.display_text.size()), &text_rect,
                   candidate_text_draw_flags(item.truncated));
     }
@@ -550,6 +851,13 @@ void CandidateWindow::paint() {
     draw_settings_button(memory_dc);
 
     if (layout_.show_hint) {
+        HPEN separator = CreatePen(PS_SOLID, 1, palette_.border);
+        HGDIOBJ old_pen = SelectObject(memory_dc, separator);
+        const int separator_y = layout_.hint_rect.top - scale_dip(4, layout_.dpi);
+        MoveToEx(memory_dc, layout_.hint_rect.left, separator_y, nullptr);
+        LineTo(memory_dc, layout_.hint_rect.right, separator_y);
+        SelectObject(memory_dc, old_pen);
+        DeleteObject(separator);
         if (hint_font_) {
             SelectObject(memory_dc, hint_font_);
         }
@@ -567,21 +875,6 @@ void CandidateWindow::paint() {
     DeleteDC(memory_dc);
 
     EndPaint(hwnd_, &ps);
-}
-
-void CandidateWindow::log_show_event(bool set_window_pos_ok, DWORD set_window_pos_error) const {
-    const CandidateWindowShowStatus show_status = make_candidate_window_show_status(set_window_pos_ok);
-    std::wstringstream stream;
-    stream << L"theme=" << theme_text(palette_)
-           << L" dpi=" << layout_.dpi
-           << L" candidate_count=" << layout_.items.size()
-           << L" placement=" << placement_text(layout_.placement)
-           << L" rect_clamped=" << bool_text(layout_.rect_clamped)
-           << L" set_window_pos_ok=" << bool_text(set_window_pos_ok)
-           << L" set_window_pos_last_error=" << set_window_pos_error
-           << L" show_window_called=" << bool_text(show_status.show_window_called)
-           << L" shown=" << bool_text(show_status.shown);
-    log_status(L"candidate-ui", stream.str());
 }
 
 void CandidateWindow::release_fonts() {

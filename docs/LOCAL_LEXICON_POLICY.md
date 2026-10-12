@@ -30,4 +30,3 @@ Before any future import, the project must record:
 No document in this repository should claim that every possible dictionary source is free of copyright restrictions. Each source must be reviewed on its own terms before it is added.
 
 Machine-readable source review records live in `resources/dictionary/sources/lexicon_sources.json`.
-The offline import preparation tool is `tools/import_lexicon_source.py`; it only accepts explicit local files and refuses sources that are not both `review_status = approved` and `included_in_release = true`.

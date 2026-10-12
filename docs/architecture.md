@@ -1,24 +1,3 @@
-# Architecture
+本地拼音使用原生 Windows TSF：COM DLL 接收输入事件，通过系统编辑会话更新和提交组合文字；候选使用自绘窗口或宿主管理的 TSF UIElement。
 
-LocalPinyinIME is split into three layers.
-
-1. Windows TSF/COM integration
-
-   The DLL exports `DllGetClassObject`, `DllCanUnloadNow`, `DllRegisterServer`,
-   and `DllUnregisterServer`. `TextService` implements
-   `ITfTextInputProcessorEx`, `ITfKeyEventSink`, and `ITfCompositionSink`.
-   Activation stores the TSF thread manager and advises the keystroke sink.
-
-2. Offline pinyin engine
-
-   `PinyinEngine` owns a dictionary and a ranker. The first dictionary is small
-   and embedded so the IME can run without network access or a large third-party
-   engine.
-
-3. Local data layer
-
-   User frequency learning is represented by `UserLearning`. The current build
-   uses a local UTF-8 tab-separated persistence file for tests. The SQLite
-   adapter boundary is present in `SqliteDatabase` for the next milestone.
-
-No layer reads the clipboard, sends network requests, or logs user input text.
+engine 负责离线词库、有限宽度整句解码、简拼/补全/容错与本地学习；settings 负责现代 Win32 设置页；setup 负责系统注册、用户启用与验证。CMake 共享静态库在产品和测试之间复用，无联网模块。

@@ -5,9 +5,48 @@
 
 #include <msctf.h>
 
+#include <array>
 #include <cstddef>
 
 namespace {
+
+struct FakeKeyState {
+    std::array<bool, 256> down{};
+
+    static bool read(int virtual_key, void* context) noexcept {
+        const auto* state = static_cast<const FakeKeyState*>(context);
+        return state && virtual_key >= 0 &&
+               static_cast<std::size_t>(virtual_key) < state->down.size() &&
+               state->down[static_cast<std::size_t>(virtual_key)];
+    }
+
+    void set(int virtual_key, bool is_down) noexcept {
+        if (virtual_key >= 0 && static_cast<std::size_t>(virtual_key) < down.size()) {
+            down[static_cast<std::size_t>(virtual_key)] = is_down;
+        }
+    }
+
+    void release_all() noexcept {
+        down.fill(false);
+    }
+};
+
+const wchar_t* bool_name(BOOL value) noexcept {
+    return value == TRUE ? L"TRUE" : L"FALSE";
+}
+
+bool require_eaten(const wchar_t* stage, BOOL actual, BOOL expected) {
+    if (actual == expected) {
+        return true;
+    }
+    std::wcerr << L"Requirement failed: stage=" << stage
+               << L" expected=" << bool_name(expected)
+               << L" actual=" << bool_name(actual) << L"\n";
+    return false;
+}
+
+#define REQUIRE_EATEN(stage, actual, expected) \
+    do { if (!require_eaten(L##stage, (actual), (expected))) { return 1; } } while (false)
 
 class FakeKeystrokeMgr final : public ITfKeystrokeMgr {
 public:
@@ -130,7 +169,7 @@ public:
     HRESULT unpreserve_result = S_OK;
 };
 
-class FakeThreadMgr final : public ITfThreadMgr {
+class FakeThreadMgr final : public ITfThreadMgr, public ITfLangBarItemMgr {
 public:
     HRESULT STDMETHODCALLTYPE QueryInterface(REFIID riid, void** object) override {
         if (!object) {
@@ -144,6 +183,11 @@ public:
         }
         if (riid == __uuidof(ITfKeystrokeMgr)) {
             return keystroke_mgr.QueryInterface(riid, object);
+        }
+        if (riid == __uuidof(ITfLangBarItemMgr)) {
+            *object = static_cast<ITfLangBarItemMgr*>(this);
+            AddRef();
+            return S_OK;
         }
         return E_NOINTERFACE;
     }
@@ -204,7 +248,72 @@ public:
         return E_NOTIMPL;
     }
 
+    HRESULT STDMETHODCALLTYPE EnumItems(IEnumTfLangBarItems**) override {
+        return E_NOTIMPL;
+    }
+
+    HRESULT STDMETHODCALLTYPE GetItem(REFGUID, ITfLangBarItem**) override {
+        return E_NOTIMPL;
+    }
+
+    HRESULT STDMETHODCALLTYPE AddItem(ITfLangBarItem* item) override {
+        added_item = item;
+        ++add_item_count;
+        return add_item_result;
+    }
+
+    HRESULT STDMETHODCALLTYPE RemoveItem(ITfLangBarItem* item) override {
+        removed_item = item;
+        ++remove_item_count;
+        return remove_item_result;
+    }
+
+    HRESULT STDMETHODCALLTYPE AdviseItemSink(ITfLangBarItemSink*, DWORD*, REFGUID) override {
+        return E_NOTIMPL;
+    }
+
+    HRESULT STDMETHODCALLTYPE UnadviseItemSink(DWORD) override {
+        return E_NOTIMPL;
+    }
+
+    HRESULT STDMETHODCALLTYPE GetItemFloatingRect(DWORD, REFGUID, RECT*) override {
+        return E_NOTIMPL;
+    }
+
+    HRESULT STDMETHODCALLTYPE GetItemsStatus(ULONG, const GUID*, DWORD*) override {
+        return E_NOTIMPL;
+    }
+
+    HRESULT STDMETHODCALLTYPE GetItemNum(ULONG*) override {
+        return E_NOTIMPL;
+    }
+
+    HRESULT STDMETHODCALLTYPE GetItems(ULONG,
+                                       ITfLangBarItem**,
+                                       TF_LANGBARITEMINFO*,
+                                       DWORD*,
+                                       ULONG*) override {
+        return E_NOTIMPL;
+    }
+
+    HRESULT STDMETHODCALLTYPE AdviseItemsSink(ULONG,
+                                             ITfLangBarItemSink**,
+                                             const GUID*,
+                                             DWORD*) override {
+        return E_NOTIMPL;
+    }
+
+    HRESULT STDMETHODCALLTYPE UnadviseItemsSink(ULONG, DWORD*) override {
+        return E_NOTIMPL;
+    }
+
     FakeKeystrokeMgr keystroke_mgr;
+    int add_item_count = 0;
+    int remove_item_count = 0;
+    HRESULT add_item_result = S_OK;
+    HRESULT remove_item_result = S_OK;
+    ITfLangBarItem* added_item = nullptr;
+    ITfLangBarItem* removed_item = nullptr;
 };
 
 }  // namespace
@@ -212,9 +321,13 @@ public:
 int main() {
     FakeThreadMgr thread_mgr;
     auto* service = new localpinyin::TextService();
+    FakeKeyState key_state;
+    service->set_key_state_reader_for_testing(&FakeKeyState::read, &key_state);
     constexpr TfClientId kClientId = 123;
 
     REQUIRE_EQ(service->ActivateEx(&thread_mgr, kClientId, 0), S_OK);
+    REQUIRE_EQ(thread_mgr.add_item_count, 1);
+    REQUIRE_TRUE(thread_mgr.added_item != nullptr);
     REQUIRE_EQ(thread_mgr.keystroke_mgr.advise_count, 1);
     REQUIRE_EQ(thread_mgr.keystroke_mgr.advised_tid, kClientId);
     REQUIRE_TRUE(thread_mgr.keystroke_mgr.advised_sink != nullptr);
@@ -226,31 +339,108 @@ int main() {
     REQUIRE_TRUE(localpinyin::is_ctrl_space_preserved_key(thread_mgr.keystroke_mgr.preserved_key));
     REQUIRE_TRUE(thread_mgr.keystroke_mgr.preserved_description_length > 0);
 
+    const auto left_ctrl_modifiers = localpinyin::modifier_key_state_from_readings(
+        localpinyin::ModifierKeyReadings{false, true, false});
+    REQUIRE_TRUE(left_ctrl_modifiers.ctrl);
+    REQUIRE_TRUE(localpinyin::is_ctrl_space(VK_SPACE, left_ctrl_modifiers));
+    const auto right_ctrl_modifiers = localpinyin::modifier_key_state_from_readings(
+        localpinyin::ModifierKeyReadings{false, false, true});
+    REQUIRE_TRUE(right_ctrl_modifiers.ctrl);
+    REQUIRE_TRUE(localpinyin::is_ctrl_space(VK_SPACE, right_ctrl_modifiers));
+    const auto generic_ctrl_modifiers = localpinyin::modifier_key_state_from_readings(
+        localpinyin::ModifierKeyReadings{true, false, false});
+    REQUIRE_TRUE(generic_ctrl_modifiers.ctrl);
+    REQUIRE_TRUE(localpinyin::is_ctrl_space(VK_SPACE, generic_ctrl_modifiers));
+    auto shifted_ctrl = left_ctrl_modifiers;
+    shifted_ctrl.shift = true;
+    REQUIRE_TRUE(!localpinyin::is_ctrl_space(VK_SPACE, shifted_ctrl));
+    localpinyin::CtrlSpaceKeyDownState accepted_by_test;
+    accepted_by_test.accepted_by_test_key_down = true;
+    REQUIRE_TRUE(localpinyin::should_handle_ctrl_space_key_down(VK_SPACE,
+                                                                localpinyin::ModifierKeyState{},
+                                                                accepted_by_test));
+    REQUIRE_TRUE(!localpinyin::should_handle_ctrl_space_key_down(L'A',
+                                                                 localpinyin::ModifierKeyState{},
+                                                                 accepted_by_test));
+
+    localpinyin::CtrlSpaceToggleTracker tracker;
+    REQUIRE_TRUE(localpinyin::ctrl_space_toggle_should_fire(tracker, true));
+    REQUIRE_TRUE(!localpinyin::ctrl_space_toggle_should_fire(tracker, true));
+    localpinyin::ctrl_space_toggle_on_key_up(tracker, VK_CONTROL, false, false);
+    REQUIRE_TRUE(localpinyin::ctrl_space_toggle_should_fire(tracker, true));
+    REQUIRE_TRUE(!localpinyin::ctrl_space_toggle_should_fire(tracker, true));
+    localpinyin::ctrl_space_toggle_on_key_up(tracker, VK_SPACE, false, false);
+    REQUIRE_TRUE(localpinyin::ctrl_space_toggle_should_fire(tracker, true));
+
     BOOL eaten = FALSE;
+    key_state.release_all();
     REQUIRE_EQ(service->OnTestKeyDown(nullptr, L'A', 0, &eaten), S_OK);
-    REQUIRE_EQ(eaten, TRUE);
+    REQUIRE_EATEN("initial_chinese_letter", eaten, TRUE);
+
+    key_state.set(VK_CONTROL, true);
+    REQUIRE_EQ(service->OnTestKeyDown(nullptr, L'A', 0, &eaten), S_OK);
+    REQUIRE_EATEN("ctrl_letter_pass_through", eaten, FALSE);
+    key_state.release_all();
+    key_state.set(VK_MENU, true);
+    REQUIRE_EQ(service->OnTestKeyDown(nullptr, L'A', 0, &eaten), S_OK);
+    REQUIRE_EATEN("alt_letter_pass_through", eaten, FALSE);
+    key_state.release_all();
+    key_state.set(VK_LWIN, true);
+    REQUIRE_EQ(service->OnTestKeyDown(nullptr, L'A', 0, &eaten), S_OK);
+    REQUIRE_EATEN("win_letter_pass_through", eaten, FALSE);
+
+    key_state.release_all();
+    key_state.set(VK_CONTROL, true);
+    key_state.set(VK_SPACE, true);
     REQUIRE_EQ(service->OnPreservedKey(nullptr, localpinyin::GUID_LocalPinyinCtrlSpacePreservedKey, &eaten), S_OK);
-    REQUIRE_EQ(eaten, TRUE);
-    REQUIRE_EQ(service->OnTestKeyDown(nullptr, L'A', 0, &eaten), S_OK);
-    REQUIRE_EQ(eaten, FALSE);
+    REQUIRE_EATEN("first_preserved_key_consumed", eaten, TRUE);
     REQUIRE_EQ(service->OnPreservedKey(nullptr, localpinyin::GUID_LocalPinyinCtrlSpacePreservedKey, &eaten), S_OK);
-    REQUIRE_EQ(eaten, TRUE);
+    REQUIRE_EATEN("repeated_preserved_key_consumed", eaten, TRUE);
+
+    key_state.release_all();
     REQUIRE_EQ(service->OnTestKeyDown(nullptr, L'A', 0, &eaten), S_OK);
-    REQUIRE_EQ(eaten, FALSE);
+    REQUIRE_EATEN("english_letter_after_first_toggle", eaten, FALSE);
+
+    key_state.set(VK_CONTROL, true);
+    key_state.set(VK_SPACE, true);
     REQUIRE_EQ(service->OnKeyUp(nullptr, VK_SPACE, 0, &eaten), S_OK);
-    REQUIRE_EQ(service->OnPreservedKey(nullptr, GUID_NULL, &eaten), S_OK);
-    REQUIRE_EQ(eaten, FALSE);
-    REQUIRE_EQ(service->OnTestKeyDown(nullptr, L'A', 0, &eaten), S_OK);
-    REQUIRE_EQ(eaten, FALSE);
+    REQUIRE_EATEN("retained_ctrl_space_key_up", eaten, FALSE);
+    key_state.release_all();
     REQUIRE_EQ(service->OnPreservedKey(nullptr, localpinyin::GUID_LocalPinyinCtrlSpacePreservedKey, &eaten), S_OK);
-    REQUIRE_EQ(eaten, TRUE);
+    REQUIRE_EATEN("retained_state_preserved_key_consumed", eaten, TRUE);
     REQUIRE_EQ(service->OnTestKeyDown(nullptr, L'A', 0, &eaten), S_OK);
-    REQUIRE_EQ(eaten, TRUE);
+    REQUIRE_EATEN("retained_state_still_english", eaten, FALSE);
+
+    key_state.release_all();
+    REQUIRE_EQ(service->OnKeyUp(nullptr, VK_SPACE, 0, &eaten), S_OK);
+    REQUIRE_EATEN("released_ctrl_space_key_up", eaten, FALSE);
+    REQUIRE_EQ(service->OnPreservedKey(nullptr, GUID_NULL, &eaten), S_OK);
+    REQUIRE_EATEN("unknown_preserved_key_ignored", eaten, FALSE);
+    REQUIRE_EQ(service->OnTestKeyDown(nullptr, L'A', 0, &eaten), S_OK);
+    REQUIRE_EATEN("english_letter_before_third_toggle", eaten, FALSE);
+
+    key_state.set(VK_CONTROL, true);
+    key_state.set(VK_SPACE, true);
+    REQUIRE_EQ(service->OnPreservedKey(nullptr, localpinyin::GUID_LocalPinyinCtrlSpacePreservedKey, &eaten), S_OK);
+    REQUIRE_EATEN("third_preserved_key_consumed", eaten, TRUE);
+    key_state.release_all();
+    REQUIRE_EQ(service->OnTestKeyDown(nullptr, L'A', 0, &eaten), S_OK);
+    REQUIRE_EATEN("final_chinese_letter", eaten, TRUE);
 
     REQUIRE_EQ(service->OnTestKeyDown(nullptr, VK_BACK, 0, &eaten), S_OK);
-    REQUIRE_EQ(eaten, FALSE);
+    REQUIRE_EATEN("backspace_without_composition", eaten, FALSE);
+    REQUIRE_EQ(service->OnTestKeyDown(nullptr, VK_LEFT, 0, &eaten), S_OK);
+    REQUIRE_EATEN("left_test_without_candidates", eaten, FALSE);
+    REQUIRE_EQ(service->OnKeyDown(nullptr, VK_LEFT, 0, &eaten), S_OK);
+    REQUIRE_EATEN("left_key_without_candidates", eaten, FALSE);
+    REQUIRE_EQ(service->OnTestKeyDown(nullptr, VK_RIGHT, 0, &eaten), S_OK);
+    REQUIRE_EATEN("right_test_without_candidates", eaten, FALSE);
+    REQUIRE_EQ(service->OnKeyDown(nullptr, VK_RIGHT, 0, &eaten), S_OK);
+    REQUIRE_EATEN("right_key_without_candidates", eaten, FALSE);
 
     REQUIRE_EQ(service->Deactivate(), S_OK);
+    REQUIRE_EQ(thread_mgr.remove_item_count, 1);
+    REQUIRE_EQ(thread_mgr.removed_item, thread_mgr.added_item);
     REQUIRE_EQ(thread_mgr.keystroke_mgr.unpreserve_count, 1);
     REQUIRE_EQ(thread_mgr.keystroke_mgr.unadvise_count, 1);
     REQUIRE_EQ(thread_mgr.keystroke_mgr.unadvised_tid, kClientId);
@@ -289,11 +479,23 @@ int main() {
     REQUIRE_TRUE(has_systray);
     const auto& registerable_categories = localpinyin::required_tsf_profile_categories();
     REQUIRE_EQ(registerable_categories.size(), static_cast<size_t>(1));
+    bool registerable_has_keyboard = false;
+    bool registerable_has_immersive = false;
     for (const auto& category : registerable_categories) {
         REQUIRE_TRUE(category.allow_register_category);
         REQUIRE_EQ(category.check_strategy, localpinyin::TsfCapabilityCheckStrategy::CategoryContainsItem);
+        registerable_has_keyboard = registerable_has_keyboard ||
+            IsEqualGUID(*category.category_guid, GUID_TFCAT_TIP_KEYBOARD);
+        registerable_has_immersive = registerable_has_immersive ||
+            IsEqualGUID(*category.category_guid, GUID_TFCAT_TIPCAP_IMMERSIVESUPPORT);
         REQUIRE_TRUE(!IsEqualGUID(*category.category_guid, GUID_TFCAT_TIPCAP_INPUTMODECOMPARTMENT));
     }
+    REQUIRE_TRUE(registerable_has_keyboard);
+    REQUIRE_TRUE(!registerable_has_immersive);
+    const auto& compatibility_categories = localpinyin::compatibility_tsf_profile_categories();
+    REQUIRE_EQ(compatibility_categories.size(), static_cast<size_t>(1));
+    REQUIRE_TRUE(IsEqualGUID(*compatibility_categories[0].category_guid,
+                             GUID_TFCAT_TIPCAP_IMMERSIVESUPPORT));
     REQUIRE_EQ((localpinyin::required_tsf_profile_caps() & TF_IPP_CAPS_IMMERSIVESUPPORT),
                static_cast<DWORD>(TF_IPP_CAPS_IMMERSIVESUPPORT));
     REQUIRE_EQ((localpinyin::required_tsf_profile_caps() & TF_IPP_CAPS_UIELEMENTENABLED),

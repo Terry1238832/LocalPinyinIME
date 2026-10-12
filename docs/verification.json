@@ -1,0 +1,33 @@
+{
+  "version": "0.4.0",
+  "clientDate": "2026-10-12",
+  "installer": "https://github.com/Terry1238832/LocalPinyinIME/releases/download/v0.4.0/LocalPinyinIME-0.4.0-x64.exe",
+  "installerBytes": 3073774,
+  "installedPayloadBytes": 2931036,
+  "sha256": "194D7669DA78583DD40121F2096B56ED889907B778018530DB6918AA1B401667",
+  "testsPassed": 27,
+  "testsFailed": 0,
+  "interfaceScreenshotsChecked": 10,
+  "dictionaryEntries": 21860,
+  "verified": [
+    "Offline engine regression including initials, typo fallback, sentences and persistent learning",
+    "DLL COM and real Windows TSF context/edit-session Chinese commit with a keyboard registration adapter",
+    "Light/dark UI pages and DPI layout tests",
+    "Inno Setup compilation, payload file list and installer SHA-256",
+    "Runtime imports contain Windows system DLLs only"
+  ],
+  "notTested": [
+    "Automatic installed-profile keyboard routing in each third-party application",
+    "Full installer install/uninstall cycle on a clean Windows machine"
+  ],
+  "limitations": [
+    "Windows x64 only, no 32-bit application support",
+    "Unsigned local build",
+    "Some Microsoft Store/immersive hosts may hide the self-drawn candidate window"
+  ],
+  "removedHistoricalBuildBytes": 41127950676,
+  "gitHistoryRetained": true,
+  "finalWorkspaceBytes": 12789386.0,
+  "sourceDirectory": ".",
+  "cleanCheckoutBuildVerified": true
+}

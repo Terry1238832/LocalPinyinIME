@@ -2,6 +2,8 @@
 
 #include <cstddef>
 #include <string>
+#include <algorithm>
+#include <limits>
 
 namespace localpinyin {
 
@@ -16,7 +18,8 @@ struct Candidate {
     int segmentation_penalty = 0;
 
     [[nodiscard]] int total_score() const noexcept {
-        return base_score + user_frequency + exact_match_bonus + complete_segmentation_bonus - segmentation_penalty;
+        const long long score = static_cast<long long>(base_score) + user_frequency + exact_match_bonus + complete_segmentation_bonus - segmentation_penalty;
+        return static_cast<int>(std::clamp(score, static_cast<long long>(std::numeric_limits<int>::min()), static_cast<long long>(std::numeric_limits<int>::max())));
     }
 };
 

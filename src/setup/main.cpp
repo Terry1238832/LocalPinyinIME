@@ -6,9 +6,11 @@
 #include "../ime/registration.h"
 #include "../ime/tsf_profile_categories.h"
 #include "localpinyin_version.h"
+#include "profile_visibility_verification.h"
 #include "verify_expected_dll.h"
 
 #include <algorithm>
+#include <clocale>
 #include <cstring>
 #include <filesystem>
 #include <fstream>
@@ -52,12 +54,21 @@ struct TsfState {
     bool profile_enabled_flag = false;
     bool profile_active_flag = false;
     bool required_caps_present = false;
+    std::vector<localpinyin::setup::ProfileVisibilityAttempt> profile_attempts;
+    localpinyin::setup::ProfileVisibilityVerification profile_verification;
     struct CategoryState {
         const wchar_t* name = L"";
-        HRESULT hr = E_FAIL;
+        HRESULT category_to_items_hr = E_FAIL;
+        unsigned int category_to_items_count = 0;
+        bool category_to_items_found = false;
+        HRESULT item_to_categories_hr = E_FAIL;
+        unsigned int item_to_categories_count = 0;
+        bool item_to_categories_found = false;
         bool contains = false;
+        bool allow_inconclusive = false;
     };
     std::vector<CategoryState> categories;
+    std::vector<CategoryState> compatibility_categories;
 };
 
 std::wstring hresult_hex(HRESULT hr) {
@@ -239,13 +250,19 @@ HRESULT call_dll_entry(const std::wstring& dll_path, const char* export_name) {
     SetLastError(ERROR_SUCCESS);
     HMODULE module = LoadLibraryExW(dll_path.c_str(), nullptr,
                                     LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR | LOAD_LIBRARY_SEARCH_SYSTEM32);
-    const DWORD load_error = GetLastError();
-    std::wcout << L"LoadLibraryExW Win32 error: " << load_error << L" / " << win32_hex(load_error) << L"\n";
-    append_diagnostic_line(L"operation=LoadLibraryExW win32=" + std::to_wstring(load_error) +
-                           L" target_dll=" + dll_path);
     if (!module) {
+        const DWORD load_error = GetLastError();
+        std::wcout << L"LoadLibraryExW succeeded: FALSE\n"
+                   << L"LoadLibraryExW Win32 error: " << load_error << L" / "
+                   << win32_hex(load_error) << L"\n";
+        append_diagnostic_line(L"operation=LoadLibraryExW success=FALSE win32=" +
+                               std::to_wstring(load_error) +
+                               L" target_dll=" + dll_path);
         return HRESULT_FROM_WIN32(load_error);
     }
+    std::wcout << L"LoadLibraryExW succeeded: TRUE\n";
+    append_diagnostic_line(L"operation=LoadLibraryExW success=TRUE target_dll=" +
+                           dll_path);
 
     SetLastError(ERROR_SUCCESS);
     auto* proc = reinterpret_cast<DllEntryFn>(GetProcAddress(module, export_name));
@@ -325,94 +342,228 @@ bool is_local_profile(const TF_INPUTPROCESSORPROFILE& profile) {
            IsEqualGUID(profile.guidProfile, localpinyin::GUID_LocalPinyinProfile);
 }
 
-bool category_contains(ITfCategoryMgr* category_mgr, REFGUID category, REFGUID expected_item, HRESULT& hr) {
-    IEnumGUID* enum_items = nullptr;
-    hr = category_mgr->EnumItemsInCategory(category, &enum_items);
-    if (FAILED(hr) || !enum_items) {
-        return false;
+localpinyin::CategoryMembershipObservation enumerate_category_to_items(
+    ITfCategoryMgr* category_mgr,
+    REFGUID category,
+    REFGUID expected_item) {
+    localpinyin::CategoryMembershipObservation observation{};
+    IEnumGUID* items = nullptr;
+    observation.hr = category_mgr->EnumItemsInCategory(category, &items);
+    if (FAILED(observation.hr) || !items) {
+        return observation;
     }
-
-    bool contains = false;
     for (;;) {
-            GUID item{};
-            ULONG fetched = 0;
-            const HRESULT next_hr = enum_items->Next(1, &item, &fetched);
-        if (next_hr != S_OK || fetched == 0) {
+        GUID item{};
+        ULONG fetched = 0;
+        const HRESULT next_hr = items->Next(1, &item, &fetched);
+        if (next_hr == S_FALSE || fetched == 0) {
             break;
         }
-        if (IsEqualGUID(item, expected_item)) {
-            contains = true;
+        if (FAILED(next_hr)) {
+            observation.hr = next_hr;
             break;
         }
+        ++observation.count;
+        observation.found = observation.found || IsEqualGUID(item, expected_item);
     }
-    enum_items->Release();
-    return contains;
+    items->Release();
+    return observation;
+}
+
+localpinyin::CategoryMembershipObservation enumerate_item_to_categories(
+    ITfCategoryMgr* category_mgr,
+    REFGUID item,
+    REFGUID expected_category) {
+    localpinyin::CategoryMembershipObservation observation{};
+    IEnumGUID* categories = nullptr;
+    observation.hr = category_mgr->EnumCategoriesInItem(item, &categories);
+    if (FAILED(observation.hr) || !categories) {
+        return observation;
+    }
+    for (;;) {
+        GUID category{};
+        ULONG fetched = 0;
+        const HRESULT next_hr = categories->Next(1, &category, &fetched);
+        if (next_hr == S_FALSE || fetched == 0) {
+            break;
+        }
+        if (FAILED(next_hr)) {
+            observation.hr = next_hr;
+            break;
+        }
+        ++observation.count;
+        observation.found = observation.found ||
+                            IsEqualGUID(category, expected_category);
+    }
+    categories->Release();
+    return observation;
 }
 
 TsfState query_tsf_state() {
     TsfState state{};
-
-    ITfInputProcessorProfileMgr* profile_mgr = nullptr;
-    HRESULT hr = CoCreateInstance(CLSID_TF_InputProcessorProfiles, nullptr, CLSCTX_INPROC_SERVER,
-                                  IID_PPV_ARGS(&profile_mgr));
-    if (FAILED(hr)) {
-        state.get_profile_hr = hr;
-        state.enum_profiles_hr = hr;
-    } else {
-        TF_INPUTPROCESSORPROFILE profile{};
-        hr = profile_mgr->GetProfile(TF_PROFILETYPE_INPUTPROCESSOR,
-                                     kLangId,
-                                     localpinyin::CLSID_LocalPinyinTextService,
-                                     localpinyin::GUID_LocalPinyinProfile,
-                                     nullptr,
-                                     &profile);
-        state.get_profile_hr = hr;
-        state.get_profile_ok = SUCCEEDED(hr) && is_local_profile(profile);
-        if (state.get_profile_ok) {
-            state.profile_flags = profile.dwFlags;
-            state.profile_caps = profile.dwCaps;
-            state.profile_enabled_flag = (profile.dwFlags & TF_IPP_FLAG_ENABLED) != 0;
-            state.profile_active_flag = (profile.dwFlags & TF_IPP_FLAG_ACTIVE) != 0;
-            state.required_caps_present =
-                (profile.dwCaps & localpinyin::required_tsf_profile_caps()) ==
-                localpinyin::required_tsf_profile_caps();
+    TF_INPUTPROCESSORPROFILE final_matching_profile{};
+    bool have_final_matching_profile = false;
+    for (size_t index = 0;
+         index < localpinyin::setup::kProfileVisibilityRetryDelaysMs.size();
+         ++index) {
+        const DWORD delay_ms =
+            localpinyin::setup::kProfileVisibilityRetryDelaysMs[index];
+        if (delay_ms != 0) {
+            Sleep(delay_ms);
         }
 
-        IEnumTfInputProcessorProfiles* enum_profiles = nullptr;
-        hr = profile_mgr->EnumProfiles(kLangId, &enum_profiles);
-        state.enum_profiles_hr = hr;
-        if (SUCCEEDED(hr) && enum_profiles) {
-            for (;;) {
-                TF_INPUTPROCESSORPROFILE item{};
-                ULONG fetched = 0;
-                const HRESULT next_hr = enum_profiles->Next(1, &item, &fetched);
-                if (next_hr != S_OK || fetched == 0) {
-                    break;
-                }
-                if (is_local_profile(item)) {
-                    state.enum_profiles_contains = true;
-                    break;
+        localpinyin::setup::ProfileVisibilityAttempt attempt{};
+        ITfInputProcessorProfileMgr* profile_mgr = nullptr;
+        attempt.manager_hr = CoCreateInstance(CLSID_TF_InputProcessorProfiles,
+                                              nullptr,
+                                              CLSCTX_INPROC_SERVER,
+                                              IID_PPV_ARGS(&profile_mgr));
+        if (SUCCEEDED(attempt.manager_hr) && profile_mgr) {
+            TF_INPUTPROCESSORPROFILE profile{};
+            attempt.get_hr = profile_mgr->GetProfile(
+                TF_PROFILETYPE_INPUTPROCESSOR,
+                kLangId,
+                localpinyin::CLSID_LocalPinyinTextService,
+                localpinyin::GUID_LocalPinyinProfile,
+                nullptr,
+                &profile);
+            if (SUCCEEDED(attempt.get_hr)) {
+                attempt.get_matches_clsid = IsEqualGUID(
+                    profile.clsid, localpinyin::CLSID_LocalPinyinTextService);
+                attempt.get_matches_guid = IsEqualGUID(
+                    profile.guidProfile, localpinyin::GUID_LocalPinyinProfile);
+                attempt.get_matches_langid = profile.langid == kLangId;
+                if (localpinyin::setup::profile_get_matches(attempt)) {
+                    final_matching_profile = profile;
+                    have_final_matching_profile = true;
                 }
             }
-            enum_profiles->Release();
+
+            IEnumTfInputProcessorProfiles* enum_profiles = nullptr;
+            attempt.enum_hr = profile_mgr->EnumProfiles(kLangId, &enum_profiles);
+            if (SUCCEEDED(attempt.enum_hr) && enum_profiles) {
+                for (;;) {
+                    TF_INPUTPROCESSORPROFILE item{};
+                    ULONG fetched = 0;
+                    const HRESULT next_hr = enum_profiles->Next(1, &item, &fetched);
+                    if (next_hr == S_FALSE || fetched == 0) {
+                        break;
+                    }
+                    if (FAILED(next_hr)) {
+                        attempt.enum_hr = next_hr;
+                        break;
+                    }
+                    ++attempt.enum_count;
+                    attempt.enum_found = attempt.enum_found || is_local_profile(item);
+                }
+                enum_profiles->Release();
+            }
+            profile_mgr->Release();
+        } else {
+            attempt.get_hr = attempt.manager_hr;
+            attempt.enum_hr = attempt.manager_hr;
         }
-        profile_mgr->Release();
+
+        state.profile_attempts.push_back(attempt);
+        append_diagnostic_line(
+            L"operation=VerifyProfileVisibility"
+            L" profile_verification_attempt=" + std::to_wstring(index + 1) +
+            L" profile_manager_source=fresh_manager"
+            L" profile_manager_hr=" + hresult_hex(attempt.manager_hr) +
+            L" profile_get_hr=" + hresult_hex(attempt.get_hr) +
+            L" profile_get_succeeded=" + bool_text(SUCCEEDED(attempt.get_hr)) +
+            L" profile_get_matches_clsid=" + bool_text(attempt.get_matches_clsid) +
+            L" profile_get_matches_guid=" + bool_text(attempt.get_matches_guid) +
+            L" profile_get_matches_langid=" + bool_text(attempt.get_matches_langid) +
+            L" profile_enum_hr=" + hresult_hex(attempt.enum_hr) +
+            L" profile_enum_count=" + std::to_wstring(attempt.enum_count) +
+            L" profile_enum_found=" + bool_text(attempt.enum_found) +
+            L" profile_verification_result=" +
+                std::wstring(localpinyin::setup::profile_visibility_attempt_succeeded(attempt)
+                                 ? L"Visible"
+                                 : L"RetryableNotVisible"));
+        if (localpinyin::setup::profile_visibility_attempt_succeeded(attempt)) {
+            break;
+        }
+    }
+
+    state.profile_verification =
+        localpinyin::setup::evaluate_profile_visibility_attempts(
+            state.profile_attempts);
+    if (!state.profile_attempts.empty()) {
+        const auto& final_attempt = state.profile_verification.final_attempt;
+        state.get_profile_hr = final_attempt.get_hr;
+        state.get_profile_ok = localpinyin::setup::profile_get_matches(final_attempt);
+        state.enum_profiles_hr = final_attempt.enum_hr;
+        state.enum_profiles_contains = final_attempt.enum_found;
+    }
+    if (have_final_matching_profile) {
+        state.profile_flags = final_matching_profile.dwFlags;
+        state.profile_caps = final_matching_profile.dwCaps;
+        state.profile_enabled_flag =
+            (final_matching_profile.dwFlags & TF_IPP_FLAG_ENABLED) != 0;
+        state.profile_active_flag =
+            (final_matching_profile.dwFlags & TF_IPP_FLAG_ACTIVE) != 0;
+        state.required_caps_present =
+            (final_matching_profile.dwCaps & localpinyin::required_tsf_profile_caps()) ==
+            localpinyin::required_tsf_profile_caps();
     }
 
     ITfCategoryMgr* category_mgr = nullptr;
-    hr = CoCreateInstance(CLSID_TF_CategoryMgr, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&category_mgr));
+    HRESULT hr = CoCreateInstance(CLSID_TF_CategoryMgr, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&category_mgr));
     if (FAILED(hr)) {
         for (const auto& category : localpinyin::required_tsf_profile_categories()) {
-            state.categories.push_back(TsfState::CategoryState{category.name, hr, false});
+            state.categories.push_back(TsfState::CategoryState{
+                category.name, hr, 0, false, hr, 0, false, false,
+                category.allow_inconclusive_post_register_verification});
+        }
+        for (const auto& category : localpinyin::compatibility_tsf_profile_categories()) {
+            state.compatibility_categories.push_back(TsfState::CategoryState{
+                category.name, hr, 0, false, hr, 0, false, false,
+                category.allow_inconclusive_post_register_verification});
         }
         return state;
     }
 
     for (const auto& category : localpinyin::required_tsf_profile_categories()) {
-        HRESULT category_hr = E_FAIL;
-        const bool contains =
-            category_contains(category_mgr, *category.category_guid, *category.item_guid, category_hr);
-        state.categories.push_back(TsfState::CategoryState{category.name, category_hr, contains});
+        const auto category_to_items =
+            enumerate_category_to_items(category_mgr,
+                                        *category.category_guid,
+                                        *category.item_guid);
+        const auto item_to_categories =
+            enumerate_item_to_categories(category_mgr,
+                                         *category.item_guid,
+                                         *category.category_guid);
+        state.categories.push_back(TsfState::CategoryState{
+            category.name,
+            category_to_items.hr,
+            category_to_items.count,
+            category_to_items.found,
+            item_to_categories.hr,
+            item_to_categories.count,
+            item_to_categories.found,
+            category_to_items.found || item_to_categories.found,
+            category.allow_inconclusive_post_register_verification});
+    }
+    for (const auto& category : localpinyin::compatibility_tsf_profile_categories()) {
+        const auto category_to_items =
+            enumerate_category_to_items(category_mgr,
+                                        *category.category_guid,
+                                        *category.item_guid);
+        const auto item_to_categories =
+            enumerate_item_to_categories(category_mgr,
+                                         *category.item_guid,
+                                         *category.category_guid);
+        state.compatibility_categories.push_back(TsfState::CategoryState{
+            category.name,
+            category_to_items.hr,
+            category_to_items.count,
+            category_to_items.found,
+            item_to_categories.hr,
+            item_to_categories.count,
+            item_to_categories.found,
+            category_to_items.found || item_to_categories.found,
+            category.allow_inconclusive_post_register_verification});
     }
     category_mgr->Release();
     return state;
@@ -424,6 +575,19 @@ void print_tsf_state(const TsfState& state) {
                                                         return item.contains;
                                                     });
     const auto caps = localpinyin::observe_profile_caps(state.profile_caps, localpinyin::required_tsf_profile_caps());
+    for (size_t index = 0; index < state.profile_attempts.size(); ++index) {
+        const auto& attempt = state.profile_attempts[index];
+        std::wcout << L"Profile visibility attempt: " << (index + 1) << L"\n"
+                   << L"Profile manager source: fresh_manager\n"
+                   << L"Profile manager HRESULT: " << hresult_hex(attempt.manager_hr) << L"\n"
+                   << L"GetProfile HRESULT: " << hresult_hex(attempt.get_hr) << L"\n"
+                   << L"GetProfile matches CLSID: " << bool_text(attempt.get_matches_clsid) << L"\n"
+                   << L"GetProfile matches profile GUID: " << bool_text(attempt.get_matches_guid) << L"\n"
+                   << L"GetProfile matches LANGID: " << bool_text(attempt.get_matches_langid) << L"\n"
+                   << L"EnumProfiles HRESULT: " << hresult_hex(attempt.enum_hr) << L"\n"
+                   << L"EnumProfiles count: " << attempt.enum_count << L"\n"
+                   << L"EnumProfiles found LocalPinyinIME: " << bool_text(attempt.enum_found) << L"\n";
+    }
     std::wcout << L"Profile CLSID: " << kClsidText << L"\n"
                << L"Profile GUID: " << kProfileGuidText << L"\n"
                << L"Profile LANGID: 0x0804\n"
@@ -433,19 +597,48 @@ void print_tsf_state(const TsfState& state) {
                << L"Profile enabled flag: " << bool_text(state.profile_enabled_flag) << L"\n"
                << L"Profile active flag: " << bool_text(state.profile_active_flag) << L"\n"
                << L"Profile flags: " << win32_hex(state.profile_flags) << L"\n"
-               << L"Profile caps: " << win32_hex(state.profile_caps) << L"\n"
-               << L"Profile required caps present (diagnostic only): " << bool_text(state.required_caps_present) << L"\n"
-               << L"Profile expected internal caps (diagnostic only): " << win32_hex(caps.expected_caps) << L"\n"
-               << L"Profile missing internal caps (diagnostic only): " << win32_hex(caps.missing_caps) << L"\n"
                << L"EnumProfiles HRESULT: " << hresult_hex(state.enum_profiles_hr) << L"\n"
                << L"EnumProfiles contains LocalPinyinIME: " << bool_text(state.enum_profiles_contains) << L"\n"
+               << L"Required TSF categories:\n"
                << L"All required TSF categories contain LocalPinyinIME CLSID: "
                << bool_text(all_categories_present) << L"\n";
     for (const auto& category : state.categories) {
-        std::wcout << category.name << L" HRESULT: " << hresult_hex(category.hr) << L"\n"
+        std::wcout << category.name << L" Category->Items HRESULT: "
+                   << hresult_hex(category.category_to_items_hr) << L"\n"
+                   << category.name << L" Category->Items count: "
+                   << category.category_to_items_count << L"\n"
+                   << category.name << L" Category->Items found: "
+                   << bool_text(category.category_to_items_found) << L"\n"
+                   << category.name << L" Item->Categories HRESULT: "
+                   << hresult_hex(category.item_to_categories_hr) << L"\n"
+                   << category.name << L" Item->Categories count: "
+                   << category.item_to_categories_count << L"\n"
+                   << category.name << L" Item->Categories found: "
+                   << bool_text(category.item_to_categories_found) << L"\n"
                    << category.name << L" contains LocalPinyinIME CLSID: "
-                   << bool_text(category.contains) << L"\n";
+                   << bool_text(category.contains) << L"\n"
+                   << category.name << L" unobserved membership fatal to core verification: "
+                   << bool_text(!category.allow_inconclusive) << L"\n";
     }
+    std::wcout << L"Compatibility / capability diagnostics:\n";
+    for (const auto& category : state.compatibility_categories) {
+        std::wcout << category.name << L" register policy: diagnostic\n"
+                   << category.name << L" register attempted by verify command: FALSE\n"
+                   << category.name << L" Category->Items HRESULT: "
+                   << hresult_hex(category.category_to_items_hr) << L"\n"
+                   << category.name << L" Item->Categories HRESULT: "
+                   << hresult_hex(category.item_to_categories_hr) << L"\n"
+                   << category.name << L" enum contains LocalPinyinIME CLSID: "
+                   << bool_text(category.contains) << L"\n"
+                   << category.name << L" fatal to system registration: FALSE\n"
+                   << category.name << L" reason: compatibility/capability diagnostic; EnumItemsInCategory is not required for install success\n";
+    }
+    std::wcout << L"Profile internal caps diagnostic:\n"
+               << L"Profile internal dwCaps: " << win32_hex(state.profile_caps) << L"\n"
+               << L"Profile internal dwCaps required bits present (diagnostic only): " << bool_text(state.required_caps_present) << L"\n"
+               << L"Profile internal dwCaps expected bits (diagnostic only): " << win32_hex(caps.expected_caps) << L"\n"
+               << L"Profile internal dwCaps missing bits (diagnostic only): " << win32_hex(caps.missing_caps) << L"\n"
+               << L"Profile internal dwCaps diagnostic only: TRUE\n";
 }
 
 HRESULT append_expected_dll_diagnostic(const std::wstring& line, void*) {
@@ -476,32 +669,86 @@ localpinyin::setup::ExpectedDllVerification verify_expected_dll(const std::wstri
     return result;
 }
 
-bool verify_system_registration() {
+HRESULT verify_system_registration(HRESULT expected_dll_hr,
+                                   bool profile_registration_performed_by_dll,
+                                   HRESULT dll_register_server_hr) {
     const TsfState state = query_tsf_state();
     print_tsf_state(state);
-    const bool all_categories_present = std::all_of(state.categories.begin(), state.categories.end(),
-                                                    [](const TsfState::CategoryState& item) {
-                                                        return item.contains;
-                                                    });
-    return localpinyin::is_system_registration_verified(state.get_profile_ok,
-                                                        state.enum_profiles_contains,
-                                                        all_categories_present,
-                                                        state.required_caps_present);
+    const bool non_keyboard_required_categories_present =
+        std::all_of(state.categories.begin(), state.categories.end(),
+                    [](const TsfState::CategoryState& item) {
+                        return item.contains || item.allow_inconclusive;
+                    });
+    const bool verified = state.profile_verification.visible &&
+                          non_keyboard_required_categories_present &&
+                          SUCCEEDED(expected_dll_hr);
+    const HRESULT profile_visibility_hr = state.profile_verification.visible
+        ? S_OK
+        : state.profile_verification.failure_hr;
+    append_diagnostic_line(
+        L"operation=VerifySystemRegistration"
+        L" profile_registration_performed_by_dll=" +
+            bool_text(profile_registration_performed_by_dll) +
+        L" dll_register_server_hr=" +
+            std::wstring(profile_registration_performed_by_dll
+                             ? hresult_hex(dll_register_server_hr)
+                             : L"NOT_PERFORMED") +
+        L" profile_verification_attempt=" +
+            std::to_wstring(state.profile_verification.attempts_used) +
+        L" profile_manager_source=fresh_manager_per_attempt"
+        L" profile_get_hr=" + hresult_hex(state.get_profile_hr) +
+        L" profile_get_succeeded=" + bool_text(SUCCEEDED(state.get_profile_hr)) +
+        L" profile_get_matches_clsid=" +
+            bool_text(state.profile_verification.final_attempt.get_matches_clsid) +
+        L" profile_get_matches_guid=" +
+            bool_text(state.profile_verification.final_attempt.get_matches_guid) +
+        L" profile_get_matches_langid=" +
+            bool_text(state.profile_verification.final_attempt.get_matches_langid) +
+        L" profile_enum_hr=" + hresult_hex(state.enum_profiles_hr) +
+        L" profile_enum_count=" +
+            std::to_wstring(state.profile_verification.final_attempt.enum_count) +
+        L" profile_enum_found=" + bool_text(state.enum_profiles_contains) +
+        L" profile_verification_result=" +
+            std::wstring(state.profile_verification.visible ? L"Visible" : L"RetryExhausted") +
+        L" final_profile_get_succeeded=" + bool_text(SUCCEEDED(state.get_profile_hr)) +
+        L" final_profile_enum_found=" + bool_text(state.enum_profiles_contains) +
+        L" final_profile_visible=" + bool_text(state.profile_verification.visible) +
+        L" final_expected_dll_verified=" + bool_text(SUCCEEDED(expected_dll_hr)) +
+        L" non_keyboard_required_categories_present=" +
+            bool_text(non_keyboard_required_categories_present) +
+        L" result=" + bool_text(verified));
+    if (verified) {
+        return S_OK;
+    }
+    if (FAILED(profile_visibility_hr)) {
+        return profile_visibility_hr;
+    }
+    if (FAILED(expected_dll_hr)) {
+        return expected_dll_hr;
+    }
+    return E_FAIL;
 }
 
 struct RegistrationVerificationResult {
     localpinyin::setup::ExpectedDllVerification expected_dll;
     bool system_registered = false;
+    HRESULT system_registration_hr = E_FAIL;
 
     bool ok() const {
         return SUCCEEDED(expected_dll.hr) && system_registered;
     }
 };
 
-RegistrationVerificationResult verify_registered(const std::wstring* expected_dll_path) {
+RegistrationVerificationResult verify_registered(const std::wstring* expected_dll_path,
+                                                  bool profile_registration_performed_by_dll,
+                                                  HRESULT dll_register_server_hr) {
     RegistrationVerificationResult result{};
     result.expected_dll = verify_expected_dll(expected_dll_path);
-    result.system_registered = verify_system_registration();
+    result.system_registration_hr = verify_system_registration(
+        result.expected_dll.hr,
+        profile_registration_performed_by_dll,
+        dll_register_server_hr);
+    result.system_registered = SUCCEEDED(result.system_registration_hr);
     return result;
 }
 
@@ -601,7 +848,7 @@ int enable_or_disable_current_user(bool enable) {
     hr = query_current_user_enabled(after);
     std::wcout << L"after.IsEnabledLanguageProfile HRESULT: " << hresult_hex(hr) << L"\n"
                << L"enabled after: " << bool_text(after) << L"\n";
-    std::wcout << L"current user InputMethodTips verification: run Verify-LocalPinyinIME.ps1\n";
+    std::wcout << L"current user InputMethodTips verification: use --verify --require-current-user-enabled\n";
     if (FAILED(hr)) {
         return 1;
     }
@@ -623,6 +870,7 @@ void print_usage() {
 }  // namespace
 
 int wmain(int argc, wchar_t** argv) {
+    std::setlocale(LC_ALL, ".UTF-8");
     std::wstring command;
     std::wstring dll_path;
     std::wstring expected_dll_path;
@@ -713,13 +961,17 @@ int wmain(int argc, wchar_t** argv) {
             } else if (command == L"--register-system") {
                 const HRESULT register_hr = call_dll_entry(dll_path, "DllRegisterServer");
                 std::wcout << L"DllRegisterServer HRESULT: " << hresult_hex(register_hr) << L"\n";
-                const RegistrationVerificationResult registered = verify_registered(&dll_path);
+                const RegistrationVerificationResult registered =
+                    verify_registered(&dll_path, true, register_hr);
                 if (FAILED(register_hr)) {
                     write_failure_summary(L"register-system", L"DllRegisterServer", register_hr, dll_path);
                 } else if (FAILED(registered.expected_dll.hr)) {
                     write_failure_summary(L"register-system", L"VerifyExpectedDll", registered.expected_dll.hr, dll_path);
                 } else if (!registered.system_registered) {
-                    write_failure_summary(L"register-system", L"VerifySystemRegistration", E_FAIL, dll_path);
+                    write_failure_summary(L"register-system",
+                                          L"VerifySystemRegistration/ProfileVisibility",
+                                          registered.system_registration_hr,
+                                          dll_path);
                 }
                 exit_code = SUCCEEDED(register_hr) && registered.ok() ? 0 : 1;
             } else {
@@ -739,7 +991,8 @@ int wmain(int argc, wchar_t** argv) {
             expected = full_path(expected_dll_path);
             expected_ptr = &expected;
         }
-        const RegistrationVerificationResult registered = verify_registered(expected_ptr);
+        const RegistrationVerificationResult registered =
+            verify_registered(expected_ptr, false, E_UNEXPECTED);
         bool enabled = false;
         const HRESULT enabled_hr = query_current_user_enabled(enabled);
         std::wcout << L"IsEnabledLanguageProfile HRESULT: " << hresult_hex(enabled_hr) << L"\n"

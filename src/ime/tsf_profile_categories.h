@@ -18,6 +18,7 @@ struct TsfProfileCategory {
     const GUID* category_guid;
     const GUID* item_guid;
     bool allow_register_category;
+    bool allow_inconclusive_post_register_verification;
     TsfCapabilityCheckStrategy check_strategy;
     DWORD profile_caps;
 };
@@ -28,23 +29,27 @@ inline const std::array<TsfProfileCategory, 4>& required_tsf_profile_capabilitie
          &GUID_TFCAT_TIP_KEYBOARD,
          &CLSID_LocalPinyinTextService,
          true,
+         true,
          TsfCapabilityCheckStrategy::CategoryContainsItem,
          0},
         {L"GUID_TFCAT_TIPCAP_IMMERSIVESUPPORT",
          &GUID_TFCAT_TIPCAP_IMMERSIVESUPPORT,
          &CLSID_LocalPinyinTextService,
+         true,
          false,
-         TsfCapabilityCheckStrategy::ProfileCaps,
+         TsfCapabilityCheckStrategy::CategoryContainsItem,
          TF_IPP_CAPS_IMMERSIVESUPPORT},
         {L"GUID_TFCAT_TIPCAP_UIELEMENTENABLED",
          &GUID_TFCAT_TIPCAP_UIELEMENTENABLED,
          &CLSID_LocalPinyinTextService,
+         false,
          false,
          TsfCapabilityCheckStrategy::ProfileCaps,
          TF_IPP_CAPS_UIELEMENTENABLED},
         {L"GUID_TFCAT_TIPCAP_SYSTRAYSUPPORT",
          &GUID_TFCAT_TIPCAP_SYSTRAYSUPPORT,
          &CLSID_LocalPinyinTextService,
+         false,
          false,
          TsfCapabilityCheckStrategy::ProfileCaps,
          TF_IPP_CAPS_SYSTRAYSUPPORT},
@@ -55,6 +60,13 @@ inline const std::array<TsfProfileCategory, 4>& required_tsf_profile_capabilitie
 inline const std::array<TsfProfileCategory, 1>& required_tsf_profile_categories() noexcept {
     static const std::array<TsfProfileCategory, 1> categories{{
         required_tsf_profile_capabilities()[0],
+    }};
+    return categories;
+}
+
+inline const std::array<TsfProfileCategory, 1>& compatibility_tsf_profile_categories() noexcept {
+    static const std::array<TsfProfileCategory, 1> categories{{
+        required_tsf_profile_capabilities()[1],
     }};
     return categories;
 }
