@@ -140,7 +140,8 @@ else {
     });
     window = new BrowserWindow({ width: 1160, height: 800, minWidth: 920, minHeight: 680,
       frame: false, show: false, backgroundColor: nativeTheme.shouldUseDarkColors ? '#13151d' : '#f5f6fa', title: '本地拼音设置',
-      icon: path.join(app.getAppPath(), 'icon.ico'), webPreferences: {
+      icon: app.isPackaged ? path.join(path.dirname(process.execPath), 'icon.ico')
+        : path.resolve(app.getAppPath(), '../assets/branding/icon/LocalPinyinIME.ico'), webPreferences: {
         preload: path.join(__dirname, 'preload.cjs'), contextIsolation: true, sandbox: true,
         nodeIntegration: false, webSecurity: true, backgroundThrottling: !hidden, offscreen: hidden, spellcheck: false,
         devTools: !app.isPackaged } });

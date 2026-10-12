@@ -1,12 +1,14 @@
-# 本地拼音 0.6.0
+# 本地拼音 0.6.1
 
 Windows 10/11 x64 离线中文拼音输入法。输入核心是原生 C++20/Windows TSF，设置程序使用 Electron、React、TypeScript 和 Vite。设置窗口关闭后退出，输入核心继续独立工作。安装包自带桌面运行时，使用时无需联网，也无需另外安装 Node.js、Python或浏览器。
 
 设置采用新的明暗界面，提供跟随系统、候选字号、真实候选预览、Shift切换设置、个人词库增改删查、内置词库查询与学习清除。侧栏和五个页面保持挂载，切换只改变可见内容；搜索和编辑状态保留。启动先读取保存的主题和配置，避免浅色首屏再变深色。全部操作连接原生配置、词库和输入引擎，沿用旧版个人数据。
 
+0.6.1恢复原来的蓝色PI品牌、窗口图标及旧侧栏、搜索和学习图形，保留Electron设置界面。原图文件保持不变。
+
 支持全拼、连续拼音与整句候选、简拼、补全、单次拼写容错、中文标点、鼠标选词和本地学习。内置词库83,062条；常用个人长词频率5000及以上、完整拼音匹配时保留直接候选。输入质量与0.5.1一致，长句和同音词仍可能需要选词。
 
-从 [GitHub Release v0.6.0](https://github.com/Terry1238832/LocalPinyinIME/releases/tag/v0.6.0) 下载 [Windows x64安装包](https://github.com/Terry1238832/LocalPinyinIME/releases/download/v0.6.0/LocalPinyinIME-0.6.0-x64.exe)（100.30 MiB）及同页SHA-256文件。Electron运行时使安装内容约326.95 MiB，已只保留中文和英文语言资源。双击安装后按Win＋空格选择“本地拼音”；升级后重新打开输入应用。空格确认首项，数字1–9选词，Esc取消，Enter提交原始拼音，Ctrl＋Space切换中英文。
+从 [GitHub Release v0.6.1](https://github.com/Terry1238832/LocalPinyinIME/releases/tag/v0.6.1) 下载 [Windows x64安装包](https://github.com/Terry1238832/LocalPinyinIME/releases/download/v0.6.1/LocalPinyinIME-0.6.1-x64.exe)（100.28 MiB）及同页SHA-256文件。Electron运行时使安装内容约326.95 MiB，已只保留中文和英文语言资源。双击安装后按Win＋空格选择“本地拼音”；升级后重新打开输入应用。空格确认首项，数字1–9选词，Esc取消，Enter提交原始拼音，Ctrl＋Space切换中英文。
 
 ![本地拼音设置](docs/images/interface.png)
 

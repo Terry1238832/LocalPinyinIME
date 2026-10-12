@@ -18,7 +18,6 @@ await mkdir(stage, { recursive: true });
 await cp(path.join(desktop, 'dist'), path.join(stage, 'dist'), { recursive: true });
 await mkdir(path.join(stage, 'electron'), { recursive: true });
 for (const name of ['main.cjs','preload.cjs']) await cp(path.join(desktop, 'electron', name), path.join(stage, 'electron', name));
-await cp(path.join(workspace,'assets/branding/icon/LocalPinyinIME.ico'),path.join(stage,'icon.ico'));
 const meta = JSON.parse(await readFile(path.join(desktop, 'package.json'), 'utf8'));
 const checksums = JSON.parse(await readFile(path.join(desktop, 'node_modules/electron/checksums.json'), 'utf8'));
 const cache = path.join(workspace, '.build/electron-cache');
@@ -48,6 +47,7 @@ const result = await packager({ dir: stage, out: output, platform: 'win32', arch
   win32metadata: { CompanyName: 'LocalPinyinIME contributors', FileDescription: '本地拼音设置',
     OriginalFilename: 'LocalPinyinSettings.exe', ProductName: '本地拼音' } });
 const product = checked(result[0]);
+await cp(path.join(workspace, 'assets/branding/icon/LocalPinyinIME.ico'), path.join(product, 'icon.ico'));
 // The interface is Chinese; retain English as Chromium's fallback locale.
 for (const name of await readdir(path.join(product, 'locales'))) {
   if (!['zh-CN.pak', 'en-US.pak'].includes(name)) await rm(path.join(product, 'locales', name));

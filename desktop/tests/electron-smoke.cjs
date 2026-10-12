@@ -13,6 +13,7 @@ const cli = Object.fromEntries(process.argv.slice(2).reduce((items, value, index
 }, []));
 const desktop = path.resolve(cli.app || path.join(__dirname, '..'));
 const source = path.resolve(__dirname, '../..');
+const expectedVersion = JSON.parse(fs.readFileSync(path.join(source, 'desktop/package.json'), 'utf8')).version;
 const output = path.resolve(cli.output || path.join(source, '.build/electron-ui'));
 const data = path.resolve(cli.data || path.join(output, `isolated-data-${Date.now()}`));
 const bridge = path.resolve(cli.bridge || path.join(source, '.build/bin/LocalPinyinSettingsBridge.exe'));
@@ -159,7 +160,7 @@ async function run() {
   await launch();
   await check('Real native state and preview', async () => {
     const initial = await state();
-    assert.equal(initial.version, '0.6.0');
+    assert.equal(initial.version, expectedVersion);
     assert(initial.dictionary.total >= 83062, 'Built-in resources were not loaded.');
     assert.equal(path.resolve(initial.dataDirectory), path.join(data, 'LocalPinyinIME'));
     assert.deepEqual((await api('listUserLexicon')).entries, []);
@@ -183,7 +184,7 @@ async function run() {
     assert.equal(exposed.frozen, true);
     assert.deepEqual(exposed.api, ['clearLearning', 'deleteUserEntry', 'getState', 'initialState', 'listUserLexicon', 'lookup', 'openDataDirectory', 'saveSettings', 'searchDictionary', 'upsertUserEntry', 'windowControl'].sort());
     assert.equal(await page.evaluate(() => typeof window.localPinyin.initialState), 'object');
-    assert.equal(await page.evaluate(() => window.localPinyin.initialState.version), '0.6.0');
+    assert.equal(await page.evaluate(() => window.localPinyin.initialState.version), expectedVersion);
     const preferences = await app.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows()[0].webContents.getLastWebPreferences());
     assert.equal(preferences.nodeIntegration, false);
     assert.equal(preferences.contextIsolation, true);
