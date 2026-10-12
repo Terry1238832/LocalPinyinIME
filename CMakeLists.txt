@@ -59,8 +59,7 @@ add_library(pinyin_engine STATIC src/engine/pinyin_engine.cpp src/engine/diction
 target_link_libraries(pinyin_engine PUBLIC pinyin_common)
 add_library(pinyin_ui STATIC src/ime/candidate_ui.cpp src/settings/settings_store.cpp src/settings/modern_renderer.cpp)
 target_link_libraries(pinyin_ui PUBLIC pinyin_common d2d1 dwrite)
-add_library(pinyin_settings STATIC src/settings/settings_window.cpp src/settings/dictionary_catalog.cpp
-    src/settings/dictionary_preview_window.cpp)
+add_library(pinyin_settings STATIC src/settings/dictionary_catalog.cpp)
 target_link_libraries(pinyin_settings PUBLIC pinyin_ui pinyin_engine comctl32 advapi32)
 add_library(pinyin_service STATIC src/ime/text_service.cpp src/ime/composition_manager.cpp
     src/ime/candidate_ui_element.cpp src/ime/candidate_window.cpp src/ime/runtime_diagnostics.cpp
@@ -76,9 +75,10 @@ set_property(TARGET LocalPinyinIME APPEND PROPERTY LINK_DEPENDS
     "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/local_core_zh_pinyin.tsv"
     "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/standard_zh_pinyin.tsv"
     "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/context_zh.tsv")
-add_executable(LocalPinyinSettings WIN32 src/settings/main.cpp src/settings/LocalPinyinSettings.rc)
-target_link_libraries(LocalPinyinSettings PRIVATE pinyin_settings)
-localpinyin_add_version_resource(LocalPinyinSettings "本地拼音设置" "LocalPinyinSettings.exe" "VFT_APP")
+add_executable(LocalPinyinSettingsBridge src/tools/settings_bridge.cpp)
+target_link_libraries(LocalPinyinSettingsBridge PRIVATE pinyin_settings)
+localpinyin_add_version_resource(LocalPinyinSettingsBridge "本地拼音设置服务" "LocalPinyinSettingsBridge.exe" "VFT_APP")
+localpinyin_copy_dictionary_resource(LocalPinyinSettingsBridge)
 add_executable(LocalPinyinImeSetup src/setup/main.cpp src/setup/verify_expected_dll.cpp src/ime/guids.cpp)
 target_link_libraries(LocalPinyinImeSetup PRIVATE ole32 uuid advapi32 shell32)
 localpinyin_add_version_resource(LocalPinyinImeSetup "本地拼音安装工具" "LocalPinyinImeSetup.exe" "VFT_APP")
@@ -95,7 +95,6 @@ if(BUILD_TESTING)
     foreach(name IN ITEMS test_candidate_ui test_cross_app_compatibility test_settings_store)
         pinyin_test(${name} pinyin_ui)
     endforeach()
-    pinyin_test(test_settings_window_layout pinyin_settings)
     pinyin_test(test_dictionary_catalog pinyin_settings)
     foreach(name IN ITEMS test_candidate_ui_element test_runtime_diagnostics test_preserved_key_registration)
         pinyin_test(${name} pinyin_service)
@@ -118,8 +117,9 @@ if(BUILD_TESTING)
     target_link_libraries(LocalPinyinImeDictionarySmoke PRIVATE pinyin_engine)
     add_executable(LocalPinyinImeEval src/tools/ime_eval.cpp)
     target_link_libraries(LocalPinyinImeEval PRIVATE pinyin_engine)
-    add_executable(LocalPinyinSettingsCapture src/tools/settings_capture.cpp)
-    target_link_libraries(LocalPinyinSettingsCapture PRIVATE pinyin_settings pinyin_service)
+    add_test(NAME test_settings_bridge COMMAND "${Python3_EXECUTABLE}"
+        "${CMAKE_CURRENT_SOURCE_DIR}/tests/test_settings_bridge.py"
+        --bridge "$<TARGET_FILE:LocalPinyinSettingsBridge>" --temp-root "${CMAKE_BINARY_DIR}/test-tmp")
     add_test(NAME dictionary_smoke_tool COMMAND LocalPinyinImeDictionarySmoke --resource-dir "$<TARGET_FILE_DIR:LocalPinyinIME>")
     add_test(NAME test_input_mode_toggle_paths COMMAND "${Python3_EXECUTABLE}"
         "${CMAKE_CURRENT_SOURCE_DIR}/tests/test_input_mode_toggle_paths.py"
@@ -144,7 +144,7 @@ if(BUILD_TESTING)
     set_tests_properties(${pinyin_tests} PROPERTIES
         ENVIRONMENT "TEMP=${CMAKE_BINARY_DIR}/test-tmp;TMP=${CMAKE_BINARY_DIR}/test-tmp;LOCALPINYINIME_LOCALAPPDATA=${CMAKE_BINARY_DIR}/test-data")
 endif()
-install(TARGETS LocalPinyinIME LocalPinyinSettings LocalPinyinImeSetup RUNTIME DESTINATION .)
+install(TARGETS LocalPinyinIME LocalPinyinSettingsBridge LocalPinyinImeSetup RUNTIME DESTINATION .)
 install(FILES resources/dictionary/core_zh_pinyin.tsv resources/dictionary/local_core_zh_pinyin.tsv resources/dictionary/context_zh.tsv resources/dictionary/standard_zh_pinyin.tsv DESTINATION dictionary)
 install(FILES resources/THIRD_PARTY_NOTICES.txt DESTINATION .)
 install(FILES LICENSE DESTINATION .)

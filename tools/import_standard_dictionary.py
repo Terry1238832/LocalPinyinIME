@@ -85,6 +85,9 @@ def main():
     (a.cache_dir / "standard_frequencies.json").write_text(json.dumps(
         [[key, word, frequency] for (key, word), frequency in sorted(all_frequencies.items())], ensure_ascii=False), encoding="utf-8")
     notices = a.dictionary_dir.parent / "THIRD_PARTY_NOTICES.txt"
+    desktop_marker = "\n\nElectron desktop interface\n"
+    previous_notices = notices.read_text(encoding="utf-8") if notices.exists() else ""
+    desktop_notices = desktop_marker + previous_notices.split(desktop_marker, 1)[1] if desktop_marker in previous_notices else ""
     notices.write_text("Rime pinyin-simp / Android Open Source Project PinyinIME dictionary\n"
         f"https://github.com/{REPOSITORY}/tree/{commit}\n"
         "Original dictionary header: Derived from android open source project:\n"
@@ -97,7 +100,7 @@ def main():
         "The full prose and Python authoring dependencies are not included in the installer.\n"
         "Source titles, authors, links, rights review and checksums: https://github.com/Terry1238832/LocalPinyinIME/blob/main/resources/dictionary/authoring/sources.json\n"
         "Model transformation and checksums: resources/dictionary/context_zh.metadata.json in the source repository.\n"
-        "Validation works are excluded from training.\n", encoding="utf-8")
+        "Validation works are excluded from training.\n" + desktop_notices, encoding="utf-8")
     metadata = {"format_version": 1, "source_repository": REPOSITORY, "upstream_commit": commit,
                 "upstream_sha256": hashlib.sha256(raw).hexdigest(), "license": "Apache-2.0",
                 "upstream_authors_sha256": hashlib.sha256(authors_text).hexdigest(),

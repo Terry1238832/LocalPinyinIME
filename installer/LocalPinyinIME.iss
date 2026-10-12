@@ -35,13 +35,7 @@ UninstallDisplayName={#MyAppName}
 UninstallDisplayIcon={app}\LocalPinyinSettings.exe
 
 [Files]
-Source: "{#MyAppPackageDir}\bin\LocalPinyinIME.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPackageDir}\bin\LocalPinyinImeSetup.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPackageDir}\bin\LocalPinyinSettings.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPackageDir}\bin\dictionary\core_zh_pinyin.tsv"; DestDir: "{app}\dictionary"; Flags: ignoreversion
-Source: "{#MyAppPackageDir}\bin\dictionary\local_core_zh_pinyin.tsv"; DestDir: "{app}\dictionary"; Flags: ignoreversion
-Source: "{#MyAppPackageDir}\bin\dictionary\context_zh.tsv"; DestDir: "{app}\dictionary"; Flags: ignoreversion
-Source: "{#MyAppPackageDir}\bin\dictionary\standard_zh_pinyin.tsv"; DestDir: "{app}\dictionary"; Flags: ignoreversion
+Source: "{#MyAppPackageDir}\bin\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "{#MyAppPackageDir}\THIRD_PARTY_NOTICES.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MyAppPackageDir}\LICENSE"; DestDir: "{app}"; Flags: ignoreversion
 

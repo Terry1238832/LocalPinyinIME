@@ -47,6 +47,8 @@ foreach ($key in @('HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall', 
     }
 }
 $IsccPath = Find-Tool $IsccPath 'ISCC.exe' $isccCandidates
+$npmPath = Find-Tool '' 'npm.cmd' @()
+$desktopRoot = Join-Path $sourceRoot 'desktop'
 
 if (!$vsRoots.Count) { throw 'Visual Studio C++ build tools are required' }
 New-Item -ItemType Directory -Path $buildRoot -Force | Out-Null
@@ -67,6 +69,16 @@ Invoke-Checked $CMakePath @('-S', $sourceRoot, '-B', $buildRoot, '-G', 'Ninja', 
 Invoke-Checked $CMakePath @('--build', $buildRoot, '--config', 'Release', '--parallel', "$Jobs")
 Invoke-Checked $ctestPath @('--test-dir', $buildRoot, '-C', 'Release', '--output-on-failure')
 
+# Build the isolated React interface and the Electron shell. The native TSF
+# service remains independent of the desktop runtime.
+if (!(Test-Path -LiteralPath (Join-Path $desktopRoot 'node_modules\.package-lock.json'))) {
+    Invoke-Checked $npmPath @('--prefix', $desktopRoot, 'ci', '--no-fund', '--no-audit')
+}
+$env:electron_config_cache = Join-Path $buildRoot 'electron-cache'
+Invoke-Checked $npmPath @('--prefix', $desktopRoot, 'run', 'package')
+$desktopPackage = Join-Path $buildRoot 'electron-dist\LocalPinyinSettings-win32-x64'
+if (!(Test-Path -LiteralPath (Join-Path $desktopPackage 'LocalPinyinSettings.exe'))) { throw 'Electron package missing' }
+
 # Staging always lives inside the checked build directory.
 if (Test-Path -LiteralPath $stageRoot) {
     $resolvedStage = (Resolve-Path -LiteralPath $stageRoot).Path
@@ -76,7 +88,8 @@ if (Test-Path -LiteralPath $stageRoot) {
 }
 New-Item -ItemType Directory -Path (Join-Path $stageRoot 'bin\dictionary') -Force | Out-Null
 New-Item -ItemType Directory -Path $outputRoot -Force | Out-Null
-foreach ($binary in @('LocalPinyinIME.dll', 'LocalPinyinSettings.exe', 'LocalPinyinImeSetup.exe')) {
+Get-ChildItem -LiteralPath $desktopPackage -Force | Copy-Item -Destination (Join-Path $stageRoot 'bin') -Recurse -Force
+foreach ($binary in @('LocalPinyinIME.dll', 'LocalPinyinSettingsBridge.exe', 'LocalPinyinImeSetup.exe')) {
     Copy-Item -LiteralPath (Join-Path $buildRoot "bin\$binary") -Destination (Join-Path $stageRoot 'bin')
 }
 Copy-Item -LiteralPath (Join-Path $sourceRoot 'resources\dictionary\core_zh_pinyin.tsv'), (Join-Path $sourceRoot 'resources\dictionary\local_core_zh_pinyin.tsv'), (Join-Path $sourceRoot 'resources\dictionary\context_zh.tsv'), (Join-Path $sourceRoot 'resources\dictionary\standard_zh_pinyin.tsv') -Destination (Join-Path $stageRoot 'bin\dictionary')

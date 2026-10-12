@@ -1,0 +1,86 @@
+{
+  "all_quality_and_provenance_equal": true,
+  "personal_data_isolated": true,
+  "expected_answers_learned": false,
+  "lookup_latency_compared": false,
+  "reports": {
+    "fixed": {
+      "baseline": "fixed_0_5_1",
+      "summary_equal": true,
+      "group_quality_equal": true,
+      "all_failure_records_equal": true,
+      "failure_count": 49,
+      "cases_sha256_equal": true,
+      "resource_sha256_equal": true,
+      "engine_sha256": "94ab8bde61071faae7b8f81867e4e543aa3a6d2f0f8d403b320399c597f44bd9",
+      "cases_sha256": "533db2c1baa72ab8624906783545125131b3b99b015cf46be3bd27c4e0e64f7c",
+      "resource_sha256": {
+        "core_zh_pinyin.tsv": "167b2356dcf36ca0134ebfde17f428504c43cbc3b33fbafdd96a9f2990d9bd9d",
+        "local_core_zh_pinyin.tsv": "f79230ff886612d1d78a66b1908e58250c936b3963def870becbecf804b0e0a1",
+        "standard_zh_pinyin.tsv": "9dbc97aacdad2bd21bfbd6d2dad7f7ed61e0dd95bbf213030f7d7973d25c3e15",
+        "context_zh.tsv": "7fb97a138b74402f2e082e5bdf56f5dbba83c8452976e480fcd41fdcde045cf8"
+      },
+      "summary": {
+        "cases": 138,
+        "top1_correct": 89,
+        "top9_present": 121,
+        "top1_percent": 64.49,
+        "top9_percent": 87.68,
+        "character_error_rate": 0.0482
+      },
+      "passed": true
+    },
+    "secondary": {
+      "baseline": "fresh_0_5_1",
+      "summary_equal": true,
+      "group_quality_equal": true,
+      "all_failure_records_equal": true,
+      "failure_count": 30,
+      "cases_sha256_equal": true,
+      "resource_sha256_equal": true,
+      "engine_sha256": "94ab8bde61071faae7b8f81867e4e543aa3a6d2f0f8d403b320399c597f44bd9",
+      "cases_sha256": "d3f98fb17c845e34f15153fb8973a19e5f8f4e78c77e55973dd4cab9acb9537e",
+      "resource_sha256": {
+        "core_zh_pinyin.tsv": "167b2356dcf36ca0134ebfde17f428504c43cbc3b33fbafdd96a9f2990d9bd9d",
+        "local_core_zh_pinyin.tsv": "f79230ff886612d1d78a66b1908e58250c936b3963def870becbecf804b0e0a1",
+        "standard_zh_pinyin.tsv": "9dbc97aacdad2bd21bfbd6d2dad7f7ed61e0dd95bbf213030f7d7973d25c3e15",
+        "context_zh.tsv": "7fb97a138b74402f2e082e5bdf56f5dbba83c8452976e480fcd41fdcde045cf8"
+      },
+      "summary": {
+        "cases": 67,
+        "top1_correct": 37,
+        "top9_present": 52,
+        "top1_percent": 55.22,
+        "top9_percent": 77.61,
+        "character_error_rate": 0.0915
+      },
+      "passed": true
+    },
+    "independent": {
+      "baseline": "independent_0_5_1",
+      "summary_equal": true,
+      "group_quality_equal": true,
+      "all_failure_records_equal": true,
+      "failure_count": 38,
+      "cases_sha256_equal": true,
+      "resource_sha256_equal": true,
+      "engine_sha256": "94ab8bde61071faae7b8f81867e4e543aa3a6d2f0f8d403b320399c597f44bd9",
+      "cases_sha256": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98",
+      "resource_sha256": {
+        "core_zh_pinyin.tsv": "167b2356dcf36ca0134ebfde17f428504c43cbc3b33fbafdd96a9f2990d9bd9d",
+        "local_core_zh_pinyin.tsv": "f79230ff886612d1d78a66b1908e58250c936b3963def870becbecf804b0e0a1",
+        "standard_zh_pinyin.tsv": "9dbc97aacdad2bd21bfbd6d2dad7f7ed61e0dd95bbf213030f7d7973d25c3e15",
+        "context_zh.tsv": "7fb97a138b74402f2e082e5bdf56f5dbba83c8452976e480fcd41fdcde045cf8"
+      },
+      "summary": {
+        "cases": 62,
+        "top1_correct": 24,
+        "top9_present": 30,
+        "top1_percent": 38.71,
+        "top9_percent": 48.39,
+        "character_error_rate": 0.1375
+      },
+      "passed": true
+    }
+  }
+}

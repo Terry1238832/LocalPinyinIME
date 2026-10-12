@@ -18,7 +18,8 @@ public:
 
     bool load_dictionary(const std::wstring& path);
     bool load_dictionary_resource_directory(const std::wstring& directory,
-                                            const std::wstring& user_lexicon_path = L"");
+                                            const std::wstring& user_lexicon_path = L"",
+                                            UserLexiconCreateMode create_mode = UserLexiconCreateMode::CreateIfMissing);
     bool load_context_model(const std::wstring& path);
     [[nodiscard]] std::vector<Candidate> lookup(const std::wstring& pinyin,
                                                const std::wstring& preceding_text = L"") const;

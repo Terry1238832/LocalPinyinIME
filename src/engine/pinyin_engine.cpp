@@ -281,11 +281,16 @@ bool PinyinEngine::load_dictionary(const std::wstring& path) {
 }
 
 bool PinyinEngine::load_dictionary_resource_directory(const std::wstring& directory,
-                                                      const std::wstring& user_lexicon_path) {
+                                                      const std::wstring& user_lexicon_path,
+                                                      UserLexiconCreateMode create_mode) {
     dictionary_.clear();
     const auto user_path = user_lexicon_path.empty() ? Dictionary::default_user_lexicon_path() : user_lexicon_path;
     open_learning(user_path);
-    const bool loaded = dictionary_.load_from_resource_directory(directory, user_path);
+    const auto resources = std::filesystem::path(directory) / L"dictionary";
+    const bool loaded = dictionary_.load_from_layered_files(
+        (resources / L"core_zh_pinyin.tsv").wstring(),
+        (resources / L"local_core_zh_pinyin.tsv").wstring(), user_path, create_mode,
+        (resources / L"standard_zh_pinyin.tsv").wstring());
     rebuild_context_model((std::filesystem::path(directory) / L"dictionary" / L"context_zh.tsv").wstring());
     return loaded;
 }
