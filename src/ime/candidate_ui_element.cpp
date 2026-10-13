@@ -243,16 +243,24 @@ HRESULT CandidateListUIElement::SetSelection(UINT index) {
 }
 
 HRESULT CandidateListUIElement::Finalize() {
+    const bool notify = !finalized_ && !aborted_;
     finalized_ = true;
+    const auto callback = finalize_callback_;
+    if (notify && callback) callback(snapshot_.selection);
     return S_OK;
 }
 
 HRESULT CandidateListUIElement::Abort() {
+    const bool notify = !finalized_ && !aborted_;
     aborted_ = true;
+    const auto callback = abort_callback_;
+    if (notify && callback) callback();
     return S_OK;
 }
 
 void CandidateListUIElement::update(const CandidateModelSnapshot& snapshot) {
+    finalized_ = false;
+    aborted_ = false;
     release_candidate_model_snapshot(snapshot_);
     snapshot_.active = snapshot.active;
     snapshot_.composition_text = snapshot.composition_text;
@@ -322,6 +330,8 @@ HRESULT CandidateUIElementSession::begin_with_manager(ITfUIElementMgr* manager,
     if (!element_) {
         return E_OUTOFMEMORY;
     }
+    element_->set_finalize_callback(finalize_callback_);
+    element_->set_abort_callback(abort_callback_);
 
     BOOL show = TRUE;
     DWORD id = 0;
@@ -348,6 +358,16 @@ HRESULT CandidateUIElementSession::begin_with_manager(ITfUIElementMgr* manager,
         CandidatePresentationFallbackReason::None;
     diagnostics_.no_presentation_path = false;
     return S_OK;
+}
+
+void CandidateUIElementSession::set_finalize_callback(std::function<void(size_t)> callback) {
+    finalize_callback_ = std::move(callback);
+    if (element_) element_->set_finalize_callback(finalize_callback_);
+}
+
+void CandidateUIElementSession::set_abort_callback(std::function<void()> callback) {
+    abort_callback_ = std::move(callback);
+    if (element_) element_->set_abort_callback(abort_callback_);
 }
 
 HRESULT CandidateUIElementSession::update(const CandidateModelSnapshot& snapshot) {
@@ -403,6 +423,8 @@ void CandidateUIElementSession::release_manager() noexcept {
 
 void CandidateUIElementSession::release_element() noexcept {
     if (element_) {
+        element_->set_finalize_callback({});
+        element_->set_abort_callback({});
         element_->Release();
         element_ = nullptr;
     }

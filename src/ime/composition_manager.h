@@ -29,6 +29,7 @@ struct CaretRectDiagnostics {
 };
 
 class CompositionEditSession;
+class CompositionSurroundingTextEditSession;
 
 class CompositionManager {
 public:
@@ -40,6 +41,10 @@ public:
     HRESULT cancel(ITfContext* context, TfClientId client_id);
     HRESULT caret_rect(ITfContext* context, TfClientId client_id, RECT* rect,
                        CaretRectDiagnostics* diagnostics = nullptr);
+    // S_FALSE means a selected range, protected input, or moved caret. Reading
+    // never changes the document or falls back to text from a previous context.
+    HRESULT read_preceding_text(ITfContext* context, TfClientId client_id, std::wstring* text,
+                                ITfRange** caret = nullptr, ITfRange* expected_caret = nullptr);
     [[nodiscard]] bool active() const noexcept { return composition_ != nullptr; }
     [[nodiscard]] EditSessionRequestResult last_edit_session_result() const noexcept {
         return last_edit_session_result_;
@@ -49,6 +54,7 @@ public:
 private:
     friend class CompositionEditSession;
     friend class CompositionCaretRectEditSession;
+    friend class CompositionSurroundingTextEditSession;
 
     HRESULT do_set_text(TfEditCookie cookie, ITfContext* context, ITfCompositionSink* sink, const std::wstring& text);
     HRESULT do_commit_text(TfEditCookie cookie, ITfContext* context, const std::wstring& text);
@@ -56,6 +62,8 @@ private:
     HRESULT do_cancel(TfEditCookie cookie, ITfContext* context);
     HRESULT do_caret_rect(TfEditCookie cookie, ITfContext* context, RECT* rect,
                           CaretRectDiagnostics* diagnostics);
+    HRESULT do_read_preceding_text(TfEditCookie cookie, ITfContext* context, std::wstring* text,
+                                   ITfRange** caret, ITfRange* expected_caret);
 
     ITfComposition* composition_ = nullptr;
     EditSessionRequestResult last_edit_session_result_{};

@@ -1,10 +1,16 @@
 #include <windows.h>
 #include <msctf.h>
 #include <textstor.h>
+#include <initguid.h>
+#include <inputscope.h>
+#include "../src/ime/composition_manager.h"
+#include "../src/ime/text_service.h"
 #include <wrl/client.h>
 
 #include <algorithm>
+#include <array>
 #include <filesystem>
+#include <fstream>
 #include <iostream>
 #include <stdexcept>
 #include <string>
@@ -27,6 +33,33 @@ void check(HRESULT hr, const char* stage) {
 void require(bool value, const char* stage) {
     if (!value) throw std::runtime_error(stage);
 }
+
+class HostInputScope final : public ITfInputScope {
+public:
+    explicit HostInputScope(InputScope scope) : scope_(scope) {}
+    HRESULT STDMETHODCALLTYPE QueryInterface(REFIID iid, void** out) override {
+        if (!out) return E_POINTER; *out = nullptr;
+        if (iid != IID_IUnknown && iid != __uuidof(ITfInputScope)) return E_NOINTERFACE;
+        *out = static_cast<ITfInputScope*>(this); AddRef(); return S_OK;
+    }
+    ULONG STDMETHODCALLTYPE AddRef() override { return ++refs_; }
+    ULONG STDMETHODCALLTYPE Release() override { const auto n = --refs_; if (!n) delete this; return n; }
+    HRESULT STDMETHODCALLTYPE GetInputScopes(InputScope** values, UINT* count) override {
+        if (!values || !count) return E_POINTER;
+        *values = static_cast<InputScope*>(CoTaskMemAlloc(sizeof(InputScope)));
+        if (!*values) return E_OUTOFMEMORY;
+        **values = scope_; *count = 1; return S_OK;
+    }
+    HRESULT STDMETHODCALLTYPE GetPhrase(BSTR** values, UINT* count) override {
+        if (!values || !count) return E_POINTER; *values = nullptr; *count = 0; return S_FALSE;
+    }
+    HRESULT STDMETHODCALLTYPE GetRegularExpression(BSTR* out) override { if (out) *out = nullptr; return S_FALSE; }
+    HRESULT STDMETHODCALLTYPE GetSRGS(BSTR* out) override { if (out) *out = nullptr; return S_FALSE; }
+    HRESULT STDMETHODCALLTYPE GetXML(BSTR* out) override { if (out) *out = nullptr; return S_FALSE; }
+private:
+    ULONG refs_ = 1;
+    InputScope scope_;
+};
 
 class TextStore final : public ITextStoreACP, public ITfContextOwnerCompositionSink {
 public:
@@ -56,6 +89,7 @@ public:
     HRESULT STDMETHODCALLTYPE UnadviseSink(IUnknown*) override { sink_.Reset(); return S_OK; }
     HRESULT STDMETHODCALLTYPE RequestLock(DWORD flags, HRESULT* result) override {
         if (!result || !sink_) return E_INVALIDARG;
+        if (reject_readonly && (flags & TS_LF_READWRITE) == TS_LF_READ) { *result = TS_E_NOLOCK; return S_OK; }
         if (lock_) {
             if (flags & TS_LF_SYNC) *result = TS_E_SYNCHRONOUS;
             else { pending_lock_ |= flags; *result = TS_S_ASYNC; }
@@ -75,7 +109,7 @@ public:
     }
     HRESULT STDMETHODCALLTYPE GetStatus(TS_STATUS* status) override {
         if (!status) return E_POINTER;
-        status->dwDynamicFlags = 0;
+        status->dwDynamicFlags = read_only ? TS_SD_READONLY : 0;
         status->dwStaticFlags = TS_SS_NOHIDDENTEXT;
         return S_OK;
     }
@@ -100,6 +134,7 @@ public:
     HRESULT STDMETHODCALLTYPE GetText(LONG start, LONG end, WCHAR* plain, ULONG capacity,
         ULONG* copied, TS_RUNINFO* runs, ULONG run_capacity, ULONG* run_count, LONG* next) override {
         if (!copied || !run_count || !next) return E_POINTER;
+        if (plain && capacity) ++plain_text_reads;
         if (end == -1) end = static_cast<LONG>(text.size());
         if (!valid(start, end)) return TS_E_INVALIDPOS;
         const auto length = static_cast<ULONG>(end - start);
@@ -146,8 +181,8 @@ public:
         return SetText(0, insert_start, selection_.acpEnd, value, count, change);
     }
     HRESULT STDMETHODCALLTYPE InsertEmbeddedAtSelection(DWORD, IDataObject*, LONG*, LONG*, TS_TEXTCHANGE*) override { return E_NOTIMPL; }
-    HRESULT STDMETHODCALLTYPE RequestSupportedAttrs(DWORD, ULONG, const TS_ATTRID*) override { return S_OK; }
-    HRESULT STDMETHODCALLTYPE RequestAttrsAtPosition(LONG, ULONG, const TS_ATTRID*, DWORD) override { return S_OK; }
+    HRESULT STDMETHODCALLTYPE RequestSupportedAttrs(DWORD, ULONG count, const TS_ATTRID* attributes) override { return request_attributes(count, attributes); }
+    HRESULT STDMETHODCALLTYPE RequestAttrsAtPosition(LONG, ULONG count, const TS_ATTRID* attributes, DWORD) override { return request_attributes(count, attributes); }
     HRESULT STDMETHODCALLTYPE RequestAttrsTransitioningAtPosition(LONG, ULONG, const TS_ATTRID*, DWORD) override { return S_OK; }
     HRESULT STDMETHODCALLTYPE FindNextAttrTransition(LONG, LONG halt, ULONG, const TS_ATTRID*, DWORD,
         LONG* next, BOOL* found, LONG* offset) override {
@@ -155,9 +190,18 @@ public:
         *next = halt; *found = FALSE; *offset = 0;
         return S_OK;
     }
-    HRESULT STDMETHODCALLTYPE RetrieveRequestedAttrs(ULONG, TS_ATTRVAL*, ULONG* fetched) override {
+    HRESULT STDMETHODCALLTYPE RetrieveRequestedAttrs(ULONG count, TS_ATTRVAL* values, ULONG* fetched) override {
         if (!fetched) return E_POINTER;
         *fetched = 0;
+        if (count && values && scope_requested_) {
+            values[0].idAttr = GUID_PROP_INPUTSCOPE;
+            values[0].dwOverlapId = 0;
+            VariantInit(&values[0].varValue);
+            values[0].varValue.vt = VT_UNKNOWN;
+            values[0].varValue.punkVal = new HostInputScope(password ? IS_PASSWORD : IS_DEFAULT);
+            *fetched = 1;
+        }
+        scope_requested_ = false;
         return S_OK;
     }
     HRESULT STDMETHODCALLTYPE GetEndACP(LONG* end) override {
@@ -194,9 +238,43 @@ public:
     HRESULT STDMETHODCALLTYPE OnUpdateComposition(ITfCompositionView*, ITfRange*) override { return S_OK; }
     HRESULT STDMETHODCALLTYPE OnEndComposition(ITfCompositionView*) override { ++composition_ends; return S_OK; }
     std::wstring text;
+    void move_selection(LONG start, LONG end) {
+        require(valid(start, end), "test selection bounds");
+        selection_.acpStart = start; selection_.acpEnd = end;
+        if (sink_) check(sink_->OnSelectionChange(), "host selection change notification");
+    }
+    void host_replace(const std::wstring& value) {
+        const LONG previous = static_cast<LONG>(text.size());
+        text = value;
+        selection_.acpStart = selection_.acpEnd = static_cast<LONG>(text.size());
+        TS_TEXTCHANGE change{0, previous, static_cast<LONG>(text.size())};
+        if (sink_) {
+            check(sink_->OnTextChange(0, &change), "host text change notification");
+            check(sink_->OnSelectionChange(), "host selection notification");
+        }
+    }
+    bool read_only = false;
+    bool reject_readonly = false;
+    ULONG plain_text_reads = 0;
+    bool password = false;
+    void set_password(bool value) {
+        password = value;
+        const TS_ATTRID attribute = GUID_PROP_INPUTSCOPE;
+        if (sink_) check(sink_->OnAttrsChange(0, static_cast<LONG>(text.size()), 1, &attribute), "host input scope change");
+    }
+    void set_read_only(bool value) {
+        read_only = value;
+        if (sink_) check(sink_->OnStatusChange(value ? TS_SD_READONLY : 0), "host readonly status change");
+    }
     unsigned composition_starts = 0;
     unsigned composition_ends = 0;
 private:
+    HRESULT request_attributes(ULONG count, const TS_ATTRID* attributes) {
+        scope_requested_ = false;
+        for (ULONG i = 0; i < count; ++i) if (attributes[i] == GUID_PROP_INPUTSCOPE) scope_requested_ = true;
+        return S_OK;
+    }
+    bool scope_requested_ = false;
     bool valid(LONG start, LONG end) const {
         return start >= 0 && end >= start && end <= static_cast<LONG>(text.size());
     }
@@ -211,7 +289,7 @@ private:
 // Windows rejects AdviseKeyEventSink for a TIP not loaded through its registered
 // profile. This adapter supplies only that registration bookkeeping in memory;
 // document/context/range/composition/edit-session operations remain system TSF.
-class ManagerAdapter final : public ITfThreadMgr, public ITfKeystrokeMgr {
+class ManagerAdapter final : public ITfThreadMgr, public ITfKeystrokeMgr, public ITfUIElementMgr {
 public:
     explicit ManagerAdapter(ITfThreadMgr* system) : system_(system) {}
     HRESULT STDMETHODCALLTYPE QueryInterface(REFIID iid, void** out) override {
@@ -219,6 +297,7 @@ public:
         *out = nullptr;
         if (iid == IID_IUnknown || iid == __uuidof(ITfThreadMgr)) *out = static_cast<ITfThreadMgr*>(this);
         else if (iid == __uuidof(ITfKeystrokeMgr)) *out = static_cast<ITfKeystrokeMgr*>(this);
+        else if (iid == __uuidof(ITfUIElementMgr)) *out = static_cast<ITfUIElementMgr*>(this);
         else return system_->QueryInterface(iid, out);
         AddRef();
         return S_OK;
@@ -260,7 +339,28 @@ public:
     HRESULT STDMETHODCALLTYPE SetPreservedKeyDescription(REFGUID, const WCHAR*, ULONG) override { return E_NOTIMPL; }
     HRESULT STDMETHODCALLTYPE GetPreservedKeyDescription(REFGUID, BSTR*) override { return E_NOTIMPL; }
     HRESULT STDMETHODCALLTYPE SimulatePreservedKey(ITfContext*, REFGUID, BOOL*) override { return E_NOTIMPL; }
+    HRESULT STDMETHODCALLTYPE BeginUIElement(ITfUIElement* element, BOOL* show, DWORD* id) override {
+        if (!element || !show || !id) return E_POINTER;
+        current_element = element; *show = FALSE; *id = ++element_id_;
+        return S_OK;
+    }
+    HRESULT STDMETHODCALLTYPE UpdateUIElement(DWORD) override { return S_OK; }
+    HRESULT STDMETHODCALLTYPE EndUIElement(DWORD id) override {
+        if (id == element_id_) current_element.Reset();
+        return S_OK;
+    }
+    HRESULT STDMETHODCALLTYPE GetUIElement(DWORD id, ITfUIElement** out) override {
+        if (!out) return E_POINTER;
+        *out = nullptr;
+        if (id != element_id_ || !current_element) return E_INVALIDARG;
+        *out = current_element.Get(); (*out)->AddRef(); return S_OK;
+    }
+    HRESULT STDMETHODCALLTYPE EnumUIElements(IEnumTfUIElements** out) override {
+        if (out) *out = nullptr; return E_NOTIMPL;
+    }
+    ComPtr<ITfUIElement> current_element;
 private:
+    DWORD element_id_ = 0;
     ULONG refs_ = 1;
     ComPtr<ITfThreadMgr> system_;
     ComPtr<ITfKeyEventSink> sink_;
@@ -279,6 +379,19 @@ struct Session {
     ComPtr<ITfTextInputProcessor> service;
     ComPtr<ITfKeyEventSink> keys;
     ComPtr<TextStore> store;
+    std::array<bool, 256> modifier_keys{};
+    static bool test_key_state(int key, void* context) noexcept {
+        return key >= 0 && key < 256 && static_cast<Session*>(context)->modifier_keys[static_cast<size_t>(key)];
+    }
+    std::wstring first_candidate() {
+        require(adapter->current_element != nullptr, "candidate UI element exists");
+        ComPtr<ITfCandidateListUIElement> list;
+        check(adapter->current_element.As(&list), "real candidate UI element interface");
+        BSTR word = nullptr;
+        check(list->GetString(0, &word), "candidate UI first word");
+        std::wstring result(word, SysStringLen(word)); SysFreeString(word);
+        return result;
+    }
     ~Session() {
         if (service_active) service->Deactivate();
         keys.Reset(); service.Reset();
@@ -320,6 +433,28 @@ int wmain(int argc, wchar_t** argv) {
         // Local learning/status written by the service stays out of the user's data.
         require(SetEnvironmentVariableW(L"LOCALAPPDATA", isolated.c_str()) != FALSE, "isolate service data");
         require(SetEnvironmentVariableW(L"LOCALPINYINIME_LOCALAPPDATA", isolated.c_str()) != FALSE, "isolate known-folder data");
+        require(SetEnvironmentVariableW(L"LOCALPINYINIME_USER_LEXICON_PATH", (isolated / L"LocalPinyinIME" / L"user_lexicon.tsv").c_str()) != FALSE, "isolate user lexicon");
+        const auto native = isolated / L"native";
+        std::filesystem::create_directories(native / L"dictionary");
+        const auto original = std::filesystem::path(argv[1]);
+        const auto isolated_dll = native / L"LocalPinyinIME.dll";
+        std::filesystem::copy_file(original, isolated_dll, std::filesystem::copy_options::overwrite_existing);
+        {
+            // Pin lexical behavior for the host integration contract. Full
+            // production text quality is measured by the separate evaluations.
+            std::ofstream core(native / L"dictionary" / L"core_zh_pinyin.tsv", std::ios::binary | std::ios::trunc);
+            core << "nihao\t你好\t9000\nsuibian\t随便\t9000\npengyou\t朋友\t9000\nni\t你\t9000\ntianqi\t天气\t9000\nweixing\t卫星\t9100\nweixing\t微信\t9000\n";
+            require(static_cast<bool>(core), "write isolated core fixture");
+            for (const auto* name : {L"local_core_zh_pinyin.tsv", L"standard_zh_pinyin.tsv", L"context_zh.tsv"}) {
+                std::ofstream empty(native / L"dictionary" / name, std::ios::binary | std::ios::trunc);
+                empty << "# Isolated TSF fixture\n";
+            }
+            std::ofstream context(native / L"dictionary" / L"context_zh.tsv", std::ios::binary | std::ios::trunc);
+            context << "发送微信\t20000\n气象卫星\t20000\n";
+            std::ofstream file(native / L"dictionary" / L"continuations_zh.tsv", std::ios::binary);
+            file << "你好\t世界\t10000\n你好\t朋友\t9000\n天气\t不错\t10000\n";
+            require(static_cast<bool>(file), "write isolated continuation fixture");
+        }
         {
             Session s;
             check(CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED), "CoInitializeEx");
@@ -343,7 +478,7 @@ int wmain(int argc, wchar_t** argv) {
                 &s.context, &cookie), "real TSF context");
             check(s.document->Push(s.context.Get()), "push context");
             check(s.manager->SetFocus(s.document.Get()), "focus test document");
-            s.module = LoadLibraryExW(argv[1], nullptr, LOAD_WITH_ALTERED_SEARCH_PATH);
+            s.module = LoadLibraryExW(isolated_dll.c_str(), nullptr, LOAD_WITH_ALTERED_SEARCH_PATH);
             require(s.module != nullptr, "load IME DLL");
             using GetFactory = HRESULT (STDAPICALLTYPE*)(REFCLSID, REFIID, void**);
             const auto get_factory = reinterpret_cast<GetFactory>(GetProcAddress(s.module, "DllGetClassObject"));
@@ -351,6 +486,10 @@ int wmain(int argc, wchar_t** argv) {
             ComPtr<IClassFactory> factory;
             check(get_factory(kService, IID_PPV_ARGS(&factory)), "DLL COM factory");
             check(factory->CreateInstance(nullptr, IID_PPV_ARGS(&s.service)), "create COM text service");
+            // The in-process object is this repository's TextService. Its
+            // existing internal seam keeps modifier tests deterministic while
+            // contexts, locks, ranges and compositions remain Windows TSF.
+            static_cast<localpinyin::TextService*>(s.service.Get())->set_key_state_reader_for_testing(Session::test_key_state, &s);
             factory.Reset();
             check(s.service.As(&s.keys), "key sink COM interface");
             s.adapter.Attach(new ManagerAdapter(s.manager.Get()));
@@ -395,18 +534,264 @@ int wmain(int argc, wchar_t** argv) {
             require(s.store->text == before_separator_limit + std::wstring(255, L'z') + L"'z",
                 "composition length boundary includes separators and preserves raw text");
             s.key(VK_RETURN);
+            // Suggestions use document text and a live caret range, never a
+            // cached string from the previous composition or another editor.
+            s.store->host_replace(L"");
+            for (const auto letter : std::wstring(L"NIHAO")) s.key(letter);
+            s.key(VK_SPACE);
+            require(s.store->text == L"你好", "prediction never inserts without acceptance");
+            require(s.first_candidate() == L"世界", "stable isolated next-word prediction");
+            s.key(VK_TAB);
+            require(s.store->text == L"你好世界", "Tab inserts only the extension once");
+            s.key(VK_TAB, false);
+
+            s.store->host_replace(std::wstring(48, L'前') + L"你好");
+            localpinyin::CompositionManager surrounding_reader;
+            std::wstring actual_before;
+            check(surrounding_reader.read_preceding_text(s.context.Get(), service_client, &actual_before), "real TSF preceding text API");
+            require(actual_before == std::wstring(30, L'前') + L"你好", "preceding text API limits real text to 32 UTF16 units");
+            s.key(L'T');
+            s.key(VK_ESCAPE);
+            s.store->move_selection(0, 0);
+
+            s.store->host_replace(L"发送");
+            for (const auto letter : std::wstring(L"WEIXING")) s.key(letter);
+            require(s.first_candidate() == L"微信", "lookup ranks homophone using real caret preceding text");
+            s.key(VK_ESCAPE);
+            s.store->host_replace(L"气象");
+            for (const auto letter : std::wstring(L"WEIXING")) s.key(letter);
+            require(s.first_candidate() == L"卫星", "new document prefix replaces previous lookup context");
+            s.key(VK_ESCAPE);
+            s.store->host_replace(L"发送");
+            s.store->move_selection(0, 0);
+            for (const auto letter : std::wstring(L"WEIXING")) s.key(letter);
+            require(s.first_candidate() == L"卫星", "lookup after caret movement does not use stale preceding text");
+            s.key(VK_ESCAPE);
+            check(surrounding_reader.read_preceding_text(s.context.Get(), service_client, &actual_before), "read moved real caret");
+            require(actual_before.empty(), "moving caret reads fresh front-of-document context");
+            s.key(L'N');
+            s.key(VK_ESCAPE);
+            s.store->host_replace(L"此处有密码前文");
+            s.store->set_password(true);
+            const auto private_reads = s.store->plain_text_reads;
+            actual_before = L"previous stale value";
+            require(surrounding_reader.read_preceding_text(s.context.Get(), service_client, &actual_before) == S_FALSE && actual_before.empty(),
+                "password input scope blocks preceding text and clears stale value");
+            require(s.store->plain_text_reads == private_reads, "password scope is checked before private plaintext is read");
+            for (const auto letter : std::wstring(L"NIHAO")) s.key(letter);
+            s.key(VK_SPACE);
+            require(!s.adapter->current_element, "password field never exposes automatic predictions");
+            s.key(VK_TAB, false);
+            s.store->set_password(false);
+            s.store->move_selection(0, 3);
+            actual_before = L"previous stale value";
+            require(surrounding_reader.read_preceding_text(s.context.Get(), service_client, &actual_before) == S_FALSE && actual_before.empty(),
+                "nonempty selection never guesses preceding text");
+            s.store->move_selection(0, 0);
+            s.store->set_read_only(true);
+            actual_before = L"previous stale value";
+            require(surrounding_reader.read_preceding_text(s.context.Get(), service_client, &actual_before) == S_FALSE && actual_before.empty(),
+                "readonly context blocks preceding text");
+            s.store->set_read_only(false);
+            s.store->reject_readonly = true;
+            actual_before = L"previous stale value";
+            require(FAILED(surrounding_reader.read_preceding_text(s.context.Get(), service_client, &actual_before)) && actual_before.empty(),
+                "failed readonly edit session never uses stale preceding text");
+            s.store->reject_readonly = false;
+            s.store->host_replace(std::wstring(L"🙂") + std::wstring(31, L'前'));
+            check(surrounding_reader.read_preceding_text(s.context.Get(), service_client, &actual_before), "read surrogate boundary");
+            require(actual_before == std::wstring(31, L'前'), "32 UTF16 boundary drops an isolated low surrogate");
+
+            s.store->host_replace(L"");
+            for (const auto letter : std::wstring(L"NIHAO")) s.key(letter);
+            s.key(VK_SPACE);
+            s.key(VK_ESCAPE);
+            require(s.store->text == L"你好", "prediction Escape keeps committed text");
+            require(!s.adapter->current_element, "prediction Escape ends candidate UI element");
+            s.key(VK_ESCAPE, false);
+
+            for (const auto ordinary : {L'1', static_cast<wchar_t>(VK_SPACE), static_cast<wchar_t>(VK_RETURN),
+                    static_cast<wchar_t>(VK_BACK), static_cast<wchar_t>(VK_LEFT), static_cast<wchar_t>(VK_RIGHT),
+                    static_cast<wchar_t>(VK_OEM_COMMA)}) {
+                s.store->host_replace(L"");
+                for (const auto letter : std::wstring(L"NIHAO")) s.key(letter);
+                s.key(VK_SPACE);
+                s.key(ordinary, false);
+                require(s.store->text == L"你好", "ordinary editing key is not converted or predicted");
+                require(!s.adapter->current_element, "ordinary editing closes prediction UI");
+            }
+            s.store->host_replace(L"");
+            for (const auto letter : std::wstring(L"NIHAO")) s.key(letter);
+            s.key(VK_SPACE);
+            for (const auto letter : std::wstring(L"TIANQI")) s.key(letter);
+            require(s.store->text == L"你好tianqi", "letter after suggestion starts ordinary pinyin");
+            s.key(VK_SPACE);
+            require(s.store->text == L"你好天气" && s.first_candidate() == L"不错", "new composition uses current actual context");
+            s.store->move_selection(0, 0);
+            require(!s.adapter->current_element, "host caret movement immediately closes prediction");
+            s.key(VK_TAB, false);
+            require(s.store->text == L"你好天气", "moved caret cannot accept an old suggestion");
+
+            s.store->host_replace(L"");
+            for (const auto letter : std::wstring(L"NIHAO")) s.key(letter);
+            s.key(VK_SPACE);
+            s.store->host_replace(L"外部编辑");
+            require(!s.adapter->current_element, "external host edit immediately closes prediction");
+            s.key(VK_TAB, false);
+
+            s.store->host_replace(L"");
+            for (const auto letter : std::wstring(L"NIHAO")) s.key(letter);
+            s.key(VK_SPACE);
+            ComPtr<ITfCandidateListUIElementBehavior> behavior;
+            check(s.adapter->current_element.As(&behavior), "host-managed candidate behavior");
+            check(behavior->SetSelection(1), "host-managed changes selected prediction");
+            require(s.store->text == L"你好", "host selection alone never inserts text");
+            check(behavior->Finalize(), "host-managed finalizes prediction");
+            require(s.store->text == L"你好朋友", "host-managed accepts selected extension");
+            behavior.Reset();
+
+            s.store->host_replace(L"");
+            for (const auto letter : std::wstring(L"NIHAO")) s.key(letter);
+            s.key(VK_SPACE);
+            check(s.adapter->current_element.As(&behavior), "host-managed selected prediction for Tab");
+            check(behavior->SetSelection(1), "host changes selection before Tab");
+            s.key(VK_TAB);
+            require(s.store->text == L"你好朋友", "Tab accepts host-selected prediction instead of stale first item");
+            behavior.Reset();
+
+            s.store->host_replace(L"");
+            for (const auto letter : std::wstring(L"NIHAO")) s.key(letter);
+            check(s.adapter->current_element.As(&behavior), "host-managed ordinary pinyin selection");
+            check(behavior->SetSelection(1), "host selects pinyin prefix candidate");
+            s.key(VK_SPACE);
+            require(s.store->text == L"你hao", "Space accepts host-selected pinyin and keeps remaining suffix");
+            s.key(VK_ESCAPE);
+            behavior.Reset();
+            s.store->host_replace(L"");
+            for (const auto letter : std::wstring(L"NIHAO")) s.key(letter);
+            s.key(L'2');
+            require(s.store->text == L"你hao", "explicit digit selection still overrides host default selection");
+            s.key(VK_ESCAPE);
+
+            s.store->host_replace(L"");
+            for (const auto letter : std::wstring(L"NIHAO")) s.key(letter);
+            s.key(VK_SPACE);
+            {
+                std::ofstream options(isolated / L"LocalPinyinIME" / L"settings.json", std::ios::binary | std::ios::trunc);
+                options << "{\"inputMode\":{\"predictionEnabled\":false}}";
+            }
+            const UINT changed_message = RegisterWindowMessageW(L"LocalPinyinIME.CandidateOptionsChanged");
+            EnumThreadWindows(GetCurrentThreadId(), [](HWND hwnd, LPARAM message) -> BOOL {
+                wchar_t name[64]{}; GetClassNameW(hwnd, name, 64);
+                if (std::wstring(name) == L"LocalPinyinCandidateWindow") SendMessageW(hwnd, static_cast<UINT>(message), 0, 0);
+                return TRUE;
+            }, changed_message);
+            require(!s.adapter->current_element, "settings disable closes host-managed prediction immediately");
+            s.key(VK_TAB, false);
+            s.store->host_replace(L"");
+            for (const auto letter : std::wstring(L"NIHAO")) s.key(letter);
+            s.key(VK_SPACE);
+            require(!s.adapter->current_element && s.store->text == L"你好", "disabled prediction preserves normal Chinese commit");
+            s.key(VK_TAB, false);
+            std::filesystem::remove(isolated / L"LocalPinyinIME" / L"settings.json");
+
+            for (const auto modifier : {VK_SHIFT, VK_CONTROL, VK_MENU, VK_LWIN}) {
+                s.store->host_replace(L"");
+                for (const auto letter : std::wstring(L"NIHAO")) s.key(letter);
+                s.key(VK_SPACE);
+                s.modifier_keys[modifier] = true;
+                s.key(VK_TAB, false);
+                s.modifier_keys[modifier] = false;
+                require(s.store->text == L"你好" && !s.adapter->current_element,
+                    "modified Tab passes through and closes prediction without inserting");
+            }
+            {
+                std::ofstream options(isolated / L"LocalPinyinIME" / L"settings.json", std::ios::binary | std::ios::trunc);
+                options << "{\"inputMode\":{\"predictionEnabled\":true,\"shiftToggleEnabled\":true}}";
+            }
+            s.store->host_replace(L"");
+            for (const auto letter : std::wstring(L"NIHAO")) s.key(letter);
+            s.key(VK_SPACE);
+            require(s.first_candidate() == L"世界", "prediction active before Shift mode toggle");
+            s.modifier_keys[VK_SHIFT] = true;
+            s.key(VK_SHIFT);
+            s.modifier_keys[VK_SHIFT] = false;
+            require(!s.adapter->current_element, "enabled Shift still closes prediction and toggles English");
+            s.key(L'A', false);
+            s.modifier_keys[VK_SHIFT] = true;
+            s.key(VK_SHIFT);
+            s.modifier_keys[VK_SHIFT] = false;
+            std::filesystem::remove(isolated / L"LocalPinyinIME" / L"settings.json");
+
+            s.store->host_replace(L"");
+            for (const auto letter : std::wstring(L"NIHAO")) s.key(letter);
+            s.key(VK_SPACE);
+            s.modifier_keys[VK_CONTROL] = true;
+            s.key(VK_SPACE);
+            s.modifier_keys[VK_CONTROL] = false;
+            BOOL control_eaten = FALSE;
+            check(s.keys->OnKeyUp(s.context.Get(), VK_CONTROL, 0, &control_eaten), "release Ctrl mode chord");
+            require(!s.adapter->current_element, "CtrlSpace closes active prediction");
+            s.key(L'A', false);
+            check(s.keys->OnPreservedKey(s.context.Get(), kCtrlSpace, &control_eaten), "restore Chinese after CtrlSpace");
+
+            s.store->host_replace(L"");
+            for (const auto letter : std::wstring(L"NIHAO")) s.key(letter);
+            s.key(VK_SPACE);
+            check(s.keys->OnSetFocus(FALSE), "prediction loses keyboard focus");
+            require(!s.adapter->current_element, "lost focus ends prediction candidate UI");
+            s.key(VK_TAB, false);
+
+            // A different real TSF context cannot reuse the first editor's
+            // pending candidate or preceding text even within the same TIP.
+            s.store->host_replace(L"");
+            for (const auto letter : std::wstring(L"NIHAO")) s.key(letter);
+            s.key(VK_SPACE);
+            ComPtr<ITfDocumentMgr> other_document;
+            ComPtr<ITfContext> other_context;
+            ComPtr<TextStore> other_store; other_store.Attach(new TextStore(s.window));
+            check(s.manager->CreateDocumentMgr(&other_document), "second real TSF document");
+            check(other_document->CreateContext(client, 0, static_cast<ITextStoreACP*>(other_store.Get()), &other_context, &cookie), "second real context");
+            check(other_document->Push(other_context.Get()), "second context push");
+            check(s.manager->SetFocus(other_document.Get()), "second document focus");
+            require(!s.adapter->current_element, "new document immediately closes old prediction");
+            auto first_context = s.context;
+            s.context = other_context;
+            s.key(VK_TAB, false);
+            s.key(L'N'); s.key(VK_ESCAPE);
+            require(other_store->text.empty(), "no prediction crosses real contexts");
+            check(surrounding_reader.read_preceding_text(other_context.Get(), service_client, &actual_before), "read other real context");
+            require(actual_before.empty(), "no preceding text crosses real contexts");
+            s.context = first_context;
+            check(s.manager->SetFocus(s.document.Get()), "restore first document focus");
+            check(other_document->Pop(TF_POPF_ALL), "pop second context");
+
+            s.store->host_replace(L"");
+            for (const auto letter : std::wstring(L"NIHAO")) s.key(letter);
+            s.key(VK_SPACE);
+            require(s.first_candidate() == L"世界", "prediction active before mode change");
+
             const std::wstring before_english = s.store->text;
             BOOL eaten = FALSE;
             check(s.keys->OnPreservedKey(s.context.Get(), kCtrlSpace, &eaten), "English mode toggle");
             require(eaten != FALSE, "preserved key consumed");
+            require(!s.adapter->current_element, "English mode closes active prediction");
+            s.key(VK_TAB, false);
             s.key(L'A', false);
             s.key(VK_OEM_PERIOD, false);
             require(s.store->text == before_english, "English keys pass through without composition");
             require(s.store->composition_starts == s.store->composition_ends,
                 "all real TSF compositions ended");
+            {
+                std::ifstream learning(isolated / L"LocalPinyinIME" / L"user_learning.tsv", std::ios::binary);
+                const std::string records((std::istreambuf_iterator<char>(learning)), std::istreambuf_iterator<char>());
+                for (const auto* private_text : {"发送", "气象", "此处有密码前文", "外部编辑", "世界", "朋友"})
+                    require(records.find(private_text) == std::string::npos,
+                        "surrounding document and prediction acceptance are not persisted as pinyin learning");
+            }
             check(s.service->Deactivate(), "text service deactivation");
             s.service_active = false;
-            std::cout << "PASS: DLL COM creation, real TSF edit sessions, Chinese/prefix commit, retained suffix, punctuation, Backspace, Esc, Enter and English passthrough.\n"
+            std::cout << "PASS: DLL COM creation, real TSF edit sessions, context-ranked pinyin, bounded/private preceding text, Tab prediction, host-managed selection, edit/focus/context invalidation, ordinary key passthrough and composition regressions.\n"
                 << "Scope: key-sink registration is in memory; OS profile loading/key routing and candidate presentation require desktop acceptance.\n";
         }
         std::filesystem::remove_all(isolated);

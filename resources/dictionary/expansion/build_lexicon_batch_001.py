@@ -795,7 +795,7 @@ def main() -> None:
         },
         "canonical_dictionaries_modified": False,
     }
-    (OUTPUT_DIR / f"lexicon_batch_{args.batch}.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    (OUTPUT_DIR / f"lexicon_batch_{args.batch}.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps(report, ensure_ascii=False))
 
 if __name__ == "__main__":

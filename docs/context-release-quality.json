@@ -1,0 +1,722 @@
+{
+  "format_version": 1,
+  "version": "0.7.0",
+  "evaluated_at_utc": "2026-10-13T01:51:21.283363+00:00",
+  "status": "passed_final_read_only_quality_checks",
+  "scope": "Read-only native evaluation of frozen fixtures, merged batches 007/008 and the curated continuation model",
+  "method": {
+    "fixture_tool": "tools/evaluate_typing.py",
+    "engine": ".build/bin/LocalPinyinImeEval.exe",
+    "resources": ".build/package/bin",
+    "personal_data_isolated": true,
+    "expected_answers_learned": false,
+    "source_data_or_weights_adjusted_after_observation": false,
+    "complete_word_candidate_retention_fixed_between_diagnostic_and_final_runs": true,
+    "keystroke_benchmark_run": false,
+    "all_paths_repository_relative": true,
+    "full_raw_reports_location": ".build/quality-070; raw rows are excluded from this aggregate document"
+  },
+  "historical_baseline": {
+    "comparison_keys": [
+      "fixed_0_5_1",
+      "fresh_0_5_1",
+      "independent_0_5_1"
+    ],
+    "report": "docs/typing-evaluation.json",
+    "sha256": "eee9fcf3b7a4403537c6a511bcfd95c9ea09f422d8eec7618a0c8edf702bfb57",
+    "settings_migration_regression": "docs/electron-engine-regression.json",
+    "settings_migration_regression_sha256": "23f95c85955942d9518036df44638fddec0d6a12dd1b906da17d376efcd10139",
+    "release_relationship": "0.6.1 only restored settings icons and retained the 0.6.0 engine/data; 0.6.0 regression quality equaled the 0.5.1 keys. Therefore these 0.5.1 keys are the retained 0.6.1 quality baseline, not a separately rerun 0.6.1 report.",
+    "historical_reports_byte_unchanged": true,
+    "historical_engine_sha256": "57d93cb321eab338c2d50f45feb55911e5c1050ae06426d76f62eff849bb2a9a"
+  },
+  "artifact_sha256": {
+    "engine": "3ab5244922d4951b579678ade39dca06a9ae28bc3c89f114830e511911041490",
+    "settings_bridge": "1f3e885bfbad6b49c394a42686adfe81d46a89f31e4ffbc71f1e417e97a152a7",
+    "runtime_data": {
+      "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+      "local_core_zh_pinyin.tsv": "a1a74d0284ec336075b28676208d8e8fe6b7d1edd4f4e988ea220f2abc5ad59b",
+      "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+      "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+      "continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e"
+    },
+    "source_and_packaged_data_byte_identical": true
+  },
+  "fixtures": {
+    "fixed": {
+      "input": "tests/data/typing_holdout.tsv",
+      "baseline_key": "fixed_0_5_1",
+      "current_summary": {
+        "cases": 138,
+        "top1_correct": 89,
+        "top9_present": 121,
+        "top1_percent": 64.49,
+        "top9_percent": 87.68,
+        "character_error_rate": 0.0482
+      },
+      "baseline_summary": {
+        "cases": 138,
+        "top1_correct": 89,
+        "top9_present": 121,
+        "top1_percent": 64.49,
+        "top9_percent": 87.68,
+        "character_error_rate": 0.0482
+      },
+      "groups": {
+        "article": {
+          "current": {
+            "cases": 47,
+            "top1_correct": 20,
+            "top9_present": 34,
+            "top1_percent": 42.55,
+            "top9_percent": 72.34,
+            "character_error_rate": 0.1
+          },
+          "baseline": {
+            "cases": 47,
+            "top1_correct": 20,
+            "top9_present": 34,
+            "top1_percent": 42.55,
+            "top9_percent": 72.34,
+            "character_error_rate": 0.1
+          }
+        },
+        "daily": {
+          "current": {
+            "cases": 91,
+            "top1_correct": 69,
+            "top9_present": 87,
+            "top1_percent": 75.82,
+            "top9_percent": 95.6,
+            "character_error_rate": 0.0254
+          },
+          "baseline": {
+            "cases": 91,
+            "top1_correct": 69,
+            "top9_present": 87,
+            "top1_percent": 75.82,
+            "top9_percent": 95.6,
+            "character_error_rate": 0.0254
+          }
+        }
+      },
+      "quality_delta": {
+        "cases": 0,
+        "top1_correct": 0,
+        "top9_present": 0,
+        "top1_percent": 0.0,
+        "top9_percent": 0.0,
+        "character_error_rate": 0.0
+      },
+      "quality_summary_equal": true,
+      "group_quality_equal": true,
+      "all_failure_source_records_equal": true,
+      "failure_count": 49,
+      "missing_top9_count": 17,
+      "per_case_candidate_changes": [],
+      "new_top1_improvements": 0,
+      "new_top1_regressions": 0,
+      "new_top9_improvements": 0,
+      "new_top9_regressions": 0,
+      "failure_examples": [
+        {
+          "source": "article:beiying:01",
+          "pinyin": "wozuibunengwangjideshitadebeiying",
+          "expected": "我最不能忘记的是他的背影",
+          "actual": "我最不能忘记得是他的背影",
+          "rank": 0
+        },
+        {
+          "source": "article:beiying:03",
+          "pinyin": "daonanjingshiyoupengyouyuequyouguang",
+          "expected": "到南京时有朋友约去游逛",
+          "actual": "到南京时有朋友约去油光",
+          "rank": 4
+        }
+      ],
+      "rank_histogram": {
+        "0": 17,
+        "1": 89,
+        "2": 24,
+        "3": 3,
+        "4": 1,
+        "5": 1,
+        "6": 2,
+        "7": 1
+      },
+      "fixture_byte_provenance": {
+        "historical_sha256": "533db2c1baa72ab8624906783545125131b3b99b015cf46be3bd27c4e0e64f7c",
+        "current_sha256": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+        "historical_bytes_normalized_to_LF_sha256": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+        "content_and_answers_unchanged_after_LF_normalization": true
+      },
+      "lookup_timing_ms": {
+        "p50_lookup_ms": 14.388,
+        "p95_lookup_ms": 22.487,
+        "max_lookup_ms": 29.235
+      },
+      "final_vs_before_complete_word_retention": {
+        "all_candidate_arrays_equal": true,
+        "changed_candidate_arrays": 0,
+        "changed_tail_slots_8_9": 0,
+        "changed_top1": 0,
+        "changed_expected_rank": 0
+      }
+    },
+    "fresh": {
+      "input": "tests/data/typing_fresh.tsv",
+      "baseline_key": "fresh_0_5_1",
+      "current_summary": {
+        "cases": 67,
+        "top1_correct": 37,
+        "top9_present": 52,
+        "top1_percent": 55.22,
+        "top9_percent": 77.61,
+        "character_error_rate": 0.0915
+      },
+      "baseline_summary": {
+        "cases": 67,
+        "top1_correct": 37,
+        "top9_present": 52,
+        "top1_percent": 55.22,
+        "top9_percent": 77.61,
+        "character_error_rate": 0.0915
+      },
+      "groups": {
+        "article": {
+          "current": {
+            "cases": 47,
+            "top1_correct": 24,
+            "top9_present": 32,
+            "top1_percent": 51.06,
+            "top9_percent": 68.09,
+            "character_error_rate": 0.1265
+          },
+          "baseline": {
+            "cases": 47,
+            "top1_correct": 24,
+            "top9_present": 32,
+            "top1_percent": 51.06,
+            "top9_percent": 68.09,
+            "character_error_rate": 0.1265
+          }
+        },
+        "daily": {
+          "current": {
+            "cases": 20,
+            "top1_correct": 13,
+            "top9_present": 20,
+            "top1_percent": 65.0,
+            "top9_percent": 100.0,
+            "character_error_rate": 0.0424
+          },
+          "baseline": {
+            "cases": 20,
+            "top1_correct": 13,
+            "top9_present": 20,
+            "top1_percent": 65.0,
+            "top9_percent": 100.0,
+            "character_error_rate": 0.0424
+          }
+        }
+      },
+      "quality_delta": {
+        "cases": 0,
+        "top1_correct": 0,
+        "top9_present": 0,
+        "top1_percent": 0.0,
+        "top9_percent": 0.0,
+        "character_error_rate": 0.0
+      },
+      "quality_summary_equal": true,
+      "group_quality_equal": true,
+      "all_failure_source_records_equal": true,
+      "failure_count": 30,
+      "missing_top9_count": 15,
+      "per_case_candidate_changes": [],
+      "new_top1_improvements": 0,
+      "new_top1_regressions": 0,
+      "new_top9_improvements": 0,
+      "new_top9_regressions": 0,
+      "failure_examples": [
+        {
+          "source": "article:hetang:03",
+          "pinyin": "huranxiangqiririzouguodehetang",
+          "expected": "忽然想起日日走过的荷塘",
+          "actual": "忽然想起日日走过的喝汤",
+          "rank": 0
+        },
+        {
+          "source": "article:hetang:05",
+          "pinyin": "zonggailingyouyifanyangziba",
+          "expected": "总该另有一番样子吧",
+          "actual": "总该另有一番样子罢",
+          "rank": 5
+        }
+      ],
+      "rank_histogram": {
+        "0": 15,
+        "1": 37,
+        "2": 8,
+        "3": 4,
+        "4": 1,
+        "5": 1,
+        "6": 1
+      },
+      "fixture_byte_provenance": {
+        "historical_sha256": "d3f98fb17c845e34f15153fb8973a19e5f8f4e78c77e55973dd4cab9acb9537e",
+        "current_sha256": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+        "historical_bytes_normalized_to_LF_sha256": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+        "content_and_answers_unchanged_after_LF_normalization": true
+      },
+      "lookup_timing_ms": {
+        "p50_lookup_ms": 11.033,
+        "p95_lookup_ms": 18.141,
+        "max_lookup_ms": 24.906
+      },
+      "final_vs_before_complete_word_retention": {
+        "all_candidate_arrays_equal": true,
+        "changed_candidate_arrays": 0,
+        "changed_tail_slots_8_9": 0,
+        "changed_top1": 0,
+        "changed_expected_rank": 0
+      }
+    },
+    "independent": {
+      "input": "tests/data/typing_independent.tsv",
+      "baseline_key": "independent_0_5_1",
+      "current_summary": {
+        "cases": 62,
+        "top1_correct": 24,
+        "top9_present": 30,
+        "top1_percent": 38.71,
+        "top9_percent": 48.39,
+        "character_error_rate": 0.1375
+      },
+      "baseline_summary": {
+        "cases": 62,
+        "top1_correct": 24,
+        "top9_present": 30,
+        "top1_percent": 38.71,
+        "top9_percent": 48.39,
+        "character_error_rate": 0.1375
+      },
+      "groups": {
+        "article": {
+          "current": {
+            "cases": 42,
+            "top1_correct": 12,
+            "top9_present": 18,
+            "top1_percent": 28.57,
+            "top9_percent": 42.86,
+            "character_error_rate": 0.2
+          },
+          "baseline": {
+            "cases": 42,
+            "top1_correct": 12,
+            "top9_present": 18,
+            "top1_percent": 28.57,
+            "top9_percent": 42.86,
+            "character_error_rate": 0.2
+          }
+        },
+        "daily": {
+          "current": {
+            "cases": 20,
+            "top1_correct": 12,
+            "top9_present": 12,
+            "top1_percent": 60.0,
+            "top9_percent": 60.0,
+            "character_error_rate": 0.0651
+          },
+          "baseline": {
+            "cases": 20,
+            "top1_correct": 12,
+            "top9_present": 12,
+            "top1_percent": 60.0,
+            "top9_percent": 60.0,
+            "character_error_rate": 0.0651
+          }
+        }
+      },
+      "quality_delta": {
+        "cases": 0,
+        "top1_correct": 0,
+        "top9_present": 0,
+        "top1_percent": 0.0,
+        "top9_percent": 0.0,
+        "character_error_rate": 0.0
+      },
+      "quality_summary_equal": true,
+      "group_quality_equal": true,
+      "all_failure_source_records_equal": true,
+      "failure_count": 38,
+      "missing_top9_count": 32,
+      "per_case_candidate_changes": [],
+      "new_top1_improvements": 0,
+      "new_top1_regressions": 0,
+      "new_top9_improvements": 0,
+      "new_top9_regressions": 0,
+      "failure_examples": [
+        {
+          "source": "article:fengzheng:01",
+          "pinyin": "beijingdedongji",
+          "expected": "北京的冬季",
+          "actual": "北京的动机",
+          "rank": 0
+        },
+        {
+          "source": "article:fengzheng:02",
+          "pinyin": "dishanghaiyoujixue",
+          "expected": "地上还有积雪",
+          "actual": "地上还有几学",
+          "rank": 0
+        }
+      ],
+      "rank_histogram": {
+        "0": 32,
+        "1": 24,
+        "2": 5,
+        "4": 1
+      },
+      "fixture_byte_provenance": {
+        "historical_sha256": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98",
+        "current_sha256": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98",
+        "historical_bytes_normalized_to_LF_sha256": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98",
+        "content_and_answers_unchanged_after_LF_normalization": true
+      },
+      "lookup_timing_ms": {
+        "p50_lookup_ms": 12.628,
+        "p95_lookup_ms": 28.547,
+        "max_lookup_ms": 34.52
+      },
+      "final_vs_before_complete_word_retention": {
+        "all_candidate_arrays_equal": true,
+        "changed_candidate_arrays": 0,
+        "changed_tail_slots_8_9": 0,
+        "changed_top1": 0,
+        "changed_expected_rank": 0
+      }
+    }
+  },
+  "fixture_assessment": {
+    "total_cases": 267,
+    "current_top1": 150,
+    "current_top9": 203,
+    "baseline_top1": 150,
+    "baseline_top9": 203,
+    "unchanged_failure_records": 117,
+    "new_improvements": 0,
+    "new_regressions": 0,
+    "conclusion": "All frozen fixture quality metrics, article/daily groups and failure records are unchanged; this release does not demonstrate improved sentence accuracy on these cases.",
+    "latency_scope": "One engine lookup per complete input, without per-keystroke or host edit-session timing; jobs ran concurrently, so these coarse current timings are not compared with historical latency."
+  },
+  "new_lexicon_selection": {
+    "test_case_derivation": "Batch TSV pinyin and display text preserved; weight column replaced with batchNNN:rowID. No expected text passed as a candidate or learning event.",
+    "case_sha256": "4afec29ecd5f404e640e1b98cc8f27394c5d0f8c4b339d4ec1c4544e74467107",
+    "batch_sha256": {
+      "lexicon_batch_007.tsv": "ce5f1974850277f358948b999b66ca13cc2ff06f1681fda214ea55b6da42dc49",
+      "lexicon_batch_008.tsv": "22d5c696f3930876aefbce12b490f7d6ebd3b2dc45deb48eb9b014ea00354362"
+    },
+    "summary": {
+      "cases": 2537,
+      "top1_correct": 2394,
+      "top9_present": 2537,
+      "top1_percent": 94.36,
+      "top9_percent": 100.0,
+      "character_error_rate": 0.0225
+    },
+    "groups": {
+      "batch007": {
+        "cases": 1419,
+        "top1_correct": 1348,
+        "top9_present": 1419,
+        "top1_percent": 95.0,
+        "top9_percent": 100.0,
+        "character_error_rate": 0.0232
+      },
+      "batch008": {
+        "cases": 1118,
+        "top1_correct": 1046,
+        "top9_present": 1118,
+        "top1_percent": 93.56,
+        "top9_percent": 100.0,
+        "character_error_rate": 0.0217
+      }
+    },
+    "all_2537_rows_present_in_packaged_local_layer": true,
+    "all_added_words_top9_selectable": true,
+    "not_top1_but_top9_selectable": 143,
+    "missing_top9_count": 0,
+    "missing_length_distribution": {},
+    "missing_top9_evidence": [],
+    "interpretation": "All 2537 merged words are now selectable in top9. The final engine retains a candidate for a complete-key matched 5-16-character word with base score at least 5000 if normal ranking omitted it, while preserving the contextual first result and short first-phrase choice. No source words, weights or model data changed.",
+    "code_basis": {
+      "path": "src/engine/pinyin_engine.cpp",
+      "method": "PinyinEngine::lookup; general complete-word candidate retention"
+    }
+  },
+  "before_complete_word_retention": {
+    "scope": "Earlier development diagnostic; not the final release selection result",
+    "engine_sha256": "de794cc9866bdab2f331a8e95ab07af995ff6c738e73078f3e0b376796b41517",
+    "summary": {
+      "cases": 2537,
+      "top1_correct": 2394,
+      "top9_present": 2519,
+      "top1_percent": 94.36,
+      "top9_percent": 99.29,
+      "character_error_rate": 0.0225
+    },
+    "groups": {
+      "batch007": {
+        "cases": 1419,
+        "top1_correct": 1348,
+        "top9_present": 1419,
+        "top1_percent": 95.0,
+        "top9_percent": 100.0,
+        "character_error_rate": 0.0232
+      },
+      "batch008": {
+        "cases": 1118,
+        "top1_correct": 1046,
+        "top9_present": 1100,
+        "top1_percent": 93.56,
+        "top9_percent": 98.39,
+        "character_error_rate": 0.0217
+      }
+    },
+    "missing_top9_count": 18,
+    "resolved_in_final": 18,
+    "new_top9_improvements": 18,
+    "new_top9_regressions": 0,
+    "changed_top1": 0,
+    "resolved_selection_gaps": [
+      {
+        "source": "batch008:0047",
+        "pinyin": "daojiabaogepingan",
+        "expected": "到家报个平安",
+        "before_rank": 0,
+        "final_rank": 8,
+        "top1_unchanged": true,
+        "actual_top1": "到家宝个平安"
+      },
+      {
+        "source": "batch008:0142",
+        "pinyin": "xiacihaohaoliao",
+        "expected": "下次好好聊",
+        "before_rank": 0,
+        "final_rank": 8,
+        "top1_unchanged": true,
+        "actual_top1": "下次好好了"
+      },
+      {
+        "source": "batch008:0170",
+        "pinyin": "youshishuoyisheng",
+        "expected": "有事说一声",
+        "before_rank": 0,
+        "final_rank": 8,
+        "top1_unchanged": true,
+        "actual_top1": "有时说一声"
+      },
+      {
+        "source": "batch008:0171",
+        "pinyin": "youshisuishishuo",
+        "expected": "有事随时说",
+        "before_rank": 0,
+        "final_rank": 8,
+        "top1_unchanged": true,
+        "actual_top1": "有时虽是说"
+      },
+      {
+        "source": "batch008:0184",
+        "pinyin": "zhugongzuoshunli",
+        "expected": "祝工作顺利",
+        "before_rank": 0,
+        "final_rank": 8,
+        "top1_unchanged": true,
+        "actual_top1": "主工作顺利"
+      },
+      {
+        "source": "batch008:0185",
+        "pinyin": "zhulvtuyukuai",
+        "expected": "祝旅途愉快",
+        "before_rank": 0,
+        "final_rank": 8,
+        "top1_unchanged": true,
+        "actual_top1": "主旅途愉快"
+      },
+      {
+        "source": "batch008:0194",
+        "pinyin": "zhuyiqieshunli",
+        "expected": "祝一切顺利",
+        "before_rank": 0,
+        "final_rank": 8,
+        "top1_unchanged": true,
+        "actual_top1": "煮一切顺利"
+      },
+      {
+        "source": "batch008:0560",
+        "pinyin": "gongdajiacankao",
+        "expected": "供大家参考",
+        "before_rank": 0,
+        "final_rank": 8,
+        "top1_unchanged": true,
+        "actual_top1": "公大家参考"
+      },
+      {
+        "source": "batch008:0562",
+        "pinyin": "gonghouxucankao",
+        "expected": "供后续参考",
+        "before_rank": 0,
+        "final_rank": 8,
+        "top1_unchanged": true,
+        "actual_top1": "公后续参考"
+      },
+      {
+        "source": "batch008:0563",
+        "pinyin": "gongneibucankao",
+        "expected": "供内部参考",
+        "before_rank": 0,
+        "final_rank": 8,
+        "top1_unchanged": true,
+        "actual_top1": "公内部参考"
+      },
+      {
+        "source": "batch008:0569",
+        "pinyin": "gongtaoluncankao",
+        "expected": "供讨论参考",
+        "before_rank": 0,
+        "final_rank": 8,
+        "top1_unchanged": true,
+        "actual_top1": "公讨论参考"
+      },
+      {
+        "source": "batch008:0697",
+        "pinyin": "yifujianweizhun",
+        "expected": "以附件为准",
+        "before_rank": 0,
+        "final_rank": 8,
+        "top1_unchanged": true,
+        "actual_top1": "衣服肩为准"
+      },
+      {
+        "source": "batch008:0704",
+        "pinyin": "yitongzhiweizhun",
+        "expected": "以通知为准",
+        "before_rank": 0,
+        "final_rank": 8,
+        "top1_unchanged": true,
+        "actual_top1": "一同之为准"
+      },
+      {
+        "source": "batch008:0705",
+        "pinyin": "yiyoujianweizhun",
+        "expected": "以邮件为准",
+        "before_rank": 0,
+        "final_rank": 8,
+        "top1_unchanged": true,
+        "actual_top1": "一邮件为准"
+      },
+      {
+        "source": "batch008:0794",
+        "pinyin": "jiyushangshuqingkuang",
+        "expected": "基于上述情况",
+        "before_rank": 0,
+        "final_rank": 8,
+        "top1_unchanged": true,
+        "actual_top1": "给予上述情况"
+      },
+      {
+        "source": "batch008:0795",
+        "pinyin": "jiyuyishangqingkuang",
+        "expected": "基于以上情况",
+        "before_rank": 0,
+        "final_rank": 8,
+        "top1_unchanged": true,
+        "actual_top1": "给予以上情况"
+      },
+      {
+        "source": "batch008:0975",
+        "pinyin": "jinyibufenxi",
+        "expected": "进一步分析",
+        "before_rank": 0,
+        "final_rank": 8,
+        "top1_unchanged": true,
+        "actual_top1": "今一部分析"
+      },
+      {
+        "source": "batch008:0977",
+        "pinyin": "jinyibuheshi",
+        "expected": "进一步核实",
+        "before_rank": 0,
+        "final_rank": 8,
+        "top1_unchanged": true,
+        "actual_top1": "今一不合适"
+      }
+    ],
+    "fix": "General complete-key long-word candidate retention; vocabulary weights and model contents remain frozen"
+  },
+  "curated_continuation_selection": {
+    "command": [
+      ".build/package/bin/LocalPinyinSettingsBridge.exe",
+      "predict",
+      "<prefix>"
+    ],
+    "counts": {
+      "curated_rules": 346,
+      "unique_prefixes": 117,
+      "queries": 117,
+      "curated_selectable": 346,
+      "curated_missing": 0,
+      "curated_displaced_by_top9": 0,
+      "unexpected_missing": 0,
+      "query_errors": 0,
+      "empty_queries": 0,
+      "first_sources": {
+        "curated_next": 117
+      },
+      "all_candidates_equal_source_model_top9": true
+    },
+    "source_attribution": "Inferred from inspected continuation_model.cpp, dictionary.cpp, pinyin_engine.cpp and runtime TSV weights; source model top9 is compared with every actual native response. Bridge returns candidate text only.",
+    "query_time": {
+      "scope": "wall-clock per fresh bridge subprocess includes process start and loading all dictionary/context layers; this is not warm in-process prediction latency",
+      "total_ms": 38900.35,
+      "min_ms": 307.246,
+      "median_ms": 327.126,
+      "mean_ms": 332.355,
+      "p95_nearest_rank_ms": 361.72,
+      "max_ms": 371.759
+    },
+    "userdata_isolated": true,
+    "userdata_unchanged": true,
+    "userdata_files_before": 0,
+    "userdata_files_after": 0,
+    "all_runtime_files_byte_unchanged": true,
+    "runtime_source_data_equal": true,
+    "missing": [],
+    "queried_bridge_sha256": "dc833d5f1f566f7dc0ecc96aee5f355dd993a85fff39a42f7a48789d77f0ab94",
+    "final_bridge_sha256": "1f3e885bfbad6b49c394a42686adfe81d46a89f31e4ffbc71f1e417e97a152a7",
+    "bridge_relinked_after_queries": true,
+    "queries_repeated_after_relink": false,
+    "reuse_basis": "117-prefix queries preceded the final lookup-only complete-word retention fix. The continuation prediction path and all five runtime data files were unchanged; the existing query evidence is retained without claiming a second run against the relinked bridge."
+  },
+  "release_findings": [
+    {
+      "finding": "Frozen sentence metrics unchanged",
+      "cases": 267,
+      "new_improvements": 0,
+      "new_regressions": 0
+    },
+    {
+      "finding": "All 2537 new words selectable; 18 development selection gaps resolved",
+      "scope": "1419/1419 batch007 and 1118/1118 batch008; first results unchanged",
+      "evidence": "before_complete_word_retention.resolved_selection_gaps"
+    },
+    {
+      "finding": "All curated continuation choices selectable",
+      "pairs": "346/346",
+      "prefixes": "117/117",
+      "top9_displaced": 0
+    }
+  ]
+}

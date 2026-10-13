@@ -31,11 +31,13 @@ int main() {
     const auto root = make_temp_directory();
     SettingsStore store(root.wstring());
     REQUIRE_TRUE(!store.load_input_mode_options().shift_toggle_enabled);
+    REQUIRE_TRUE(store.load_input_mode_options().prediction_enabled);
     CandidateWindowOptions options;
     options.theme_mode = CandidateThemeMode::Dark;
     options.show_key_hints = false;
     options.text_size = CandidateTextSize::Level6;
     InputModeOptions input_options;
+    input_options.prediction_enabled = false;
     input_options.shift_toggle_enabled = false;
     REQUIRE_TRUE(store.save_options(options, input_options));
 
@@ -65,6 +67,7 @@ int main() {
     REQUIRE_TRUE(preserved.show_key_hints);
     REQUIRE_EQ(preserved.text_size, CandidateTextSize::Level2);
     REQUIRE_TRUE(store.load_input_mode_options().shift_toggle_enabled);
+    REQUIRE_TRUE(!store.load_input_mode_options().prediction_enabled);
     REQUIRE_EQ(store.load_candidate_options().theme_mode, CandidateThemeMode::Light);
     REQUIRE_TRUE(store.load_input_mode_options().shift_toggle_enabled);
 

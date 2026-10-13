@@ -46,13 +46,128 @@ export function AppearancePage({ state, saving, saveSettings, lookupRevision }: 
   </>;
 }
 
-export function InputPage({ state, saving, saveSettings }: SettingsPageProps) {
+export function InputPage({ state, saving, saveSettings, lookupRevision }: SettingsPageProps & { lookupRevision: number }) {
   return <>
     <PageHeader eyebrow="让习惯自然延续" title="输入习惯" description="保留熟悉的快捷键，让中文和英文切换更顺手。" action={<span className="quiet-tag"><Icon name="check" size={14} />自动保存</span>} />
-    <div className="card"><SectionTitle title="中英文切换" /><InfoRow icon="keyboard" title="按 Shift 切换中英文" description="单独按下并松开 Shift，就能切换输入模式。" last><Switch checked={state.settings.shiftToggleEnabled} disabled={saving} label="按 Shift 切换中英文" onChange={shiftToggleEnabled => void saveSettings({ ...state.settings, shiftToggleEnabled })} /></InfoRow></div>
+    <div className="card">
+      <SectionTitle title="输入选项" />
+      <InfoRow icon="keyboard" title="按 Shift 切换中英文" description="单独按下并松开 Shift，就能切换输入模式。">
+        <Switch checked={state.settings.shiftToggleEnabled} disabled={saving} label="按 Shift 切换中英文" onChange={shiftToggleEnabled => void saveSettings({ ...state.settings, shiftToggleEnabled })} />
+      </InfoRow>
+      <InfoRow icon="spark" title="前文联想" description="词语上屏后，根据光标前文推荐后续词，按 Tab 接受首个联想词。" last>
+        <Switch checked={state.settings.predictionEnabled} disabled={saving} label="前文联想" onChange={predictionEnabled => void saveSettings({ ...state.settings, predictionEnabled })} />
+      </InfoRow>
+    </div>
+    <ContextPreview state={state} lookupRevision={lookupRevision} />
     <div className="card shortcut-card"><SectionTitle title="常用快捷键" description="在输入法激活时使用。" /><div className="shortcut-row"><div><strong>切换中英文</strong><span>不论是否启用 Shift，都可以使用</span></div><div className="key-combination"><kbd>Ctrl</kbd><span>+</span><kbd>Space</kbd></div></div><div className="shortcut-row"><div><strong>选择首个候选</strong><span>确认当前词语，继续输入</span></div><kbd>Space</kbd></div><div className="shortcut-row"><div><strong>选择其他候选</strong><span>使用对应的数字直接选词</span></div><div className="key-combination"><kbd>1</kbd><span>—</span><kbd>9</kbd></div></div><div className="shortcut-row"><div><strong>取消当前拼音</strong><span>关闭候选窗口，清空当前输入</span></div><kbd>Esc</kbd></div><div className="shortcut-row last"><div><strong>切换系统输入法</strong><span>在 Windows 已安装的输入法之间切换</span></div><div className="key-combination"><kbd>Win</kbd><span>+</span><kbd>Space</kbd></div></div></div>
     <div className="tip-card"><span className="tip-icon"><Icon name="input" size={24} /></span><div><h3>整句输入，也可以分词选择</h3><p>输入连续拼音后，按数字选择候选词。遇到人名或专业词语，可以把它加入「我的词库」。</p></div></div>
   </>;
+}
+
+function lastContext(text: string): string {
+  const tail = text.slice(-32);
+  // Do not begin the preview context in the middle of a surrogate pair.
+  return tail.length && tail.charCodeAt(0) >= 0xdc00 && tail.charCodeAt(0) <= 0xdfff ? tail.slice(1) : tail;
+}
+
+function ContextPreview({ state, lookupRevision }: { state: AppState; lookupRevision: number }) {
+  const [precedingText, setPrecedingText] = useState('我想');
+  const [pinyin, setPinyin] = useState('');
+  const [predictions, setPredictions] = useState<string[]>([]);
+  const [candidates, setCandidates] = useState<string[]>([]);
+  const [predictPending, setPredictPending] = useState(false);
+  const [lookupPending, setLookupPending] = useState(false);
+  const [predictError, setPredictError] = useState<string | null>(null);
+  const [lookupError, setLookupError] = useState<string | null>(null);
+  const predictionRequest = useRef(0);
+  const lookupRequest = useRef(0);
+  const inflight = useRef(new Map<string, Promise<{ candidates: string[] }>>());
+  const context = lastContext(precedingText).trim();
+  const query = pinyin.trim().toLowerCase();
+  const revision = `${lookupRevision}:${state.learning.count}`;
+
+  const requestCandidates = (key: string, load: () => Promise<{ candidates: string[] }>) => {
+    const existing = inflight.current.get(key);
+    if (existing) return existing;
+    const promise = Promise.resolve().then(load);
+    inflight.current.set(key, promise);
+    const remove = () => { if (inflight.current.get(key) === promise) inflight.current.delete(key); };
+    void promise.then(remove, remove);
+    return promise;
+  };
+
+  useEffect(() => {
+    const id = ++predictionRequest.current;
+    setPredictions([]);
+    setPredictError(null);
+    if (!context) { setPredictPending(false); return; }
+    setPredictPending(true);
+    const timer = window.setTimeout(() => {
+      requestCandidates(`predict:${revision}:${context}`, () => window.localPinyin.predict(context)).then(result => {
+        if (predictionRequest.current === id) { setPredictions(result.candidates); setPredictPending(false); }
+      }).catch(failure => {
+        if (predictionRequest.current === id) { setPredictError(asError(failure)); setPredictPending(false); }
+      });
+    }, 180);
+    return () => { window.clearTimeout(timer); predictionRequest.current++; };
+  }, [context, revision]);
+
+  useEffect(() => {
+    const id = ++lookupRequest.current;
+    setCandidates([]);
+    setLookupError(null);
+    if (!context || !query) { setLookupPending(false); return; }
+    if (!/^[a-z0-9']+$/.test(query)) {
+      setLookupError('拼音只接受英文字母、数字和英文单引号。');
+      setLookupPending(false);
+      return;
+    }
+    setLookupPending(true);
+    const timer = window.setTimeout(() => {
+      requestCandidates(`lookup:${revision}:${context}:${query}`, () => window.localPinyin.lookup(query, context)).then(result => {
+        if (lookupRequest.current === id) { setCandidates(result.candidates); setLookupPending(false); }
+      }).catch(failure => {
+        if (lookupRequest.current === id) { setLookupError(asError(failure)); setLookupPending(false); }
+      });
+    }, 180);
+    return () => { window.clearTimeout(timer); lookupRequest.current++; };
+  }, [context, query, revision]);
+
+  const rawFallback = candidates.length === 1 && /^[a-z0-9']+$/i.test(candidates[0]) && candidates[0].toLowerCase() === query;
+  return <div className="card context-preview-card">
+    <div className="context-preview-heading">
+      <SectionTitle title="试试前文联想" description="在这里体验本地联想，点击后续词只会追加到这块试用区。" />
+      <span className="quiet-tag"><Icon name="shield" size={14} />完全离线</span>
+    </div>
+    <div className="context-preview-fields">
+      <div className="context-field">
+        <div className="context-field-label"><label htmlFor="context-preview-text">前文</label><span>{precedingText.length}/32</span></div>
+        <input id="context-preview-text" type="text" maxLength={32} autoComplete="off" value={precedingText} placeholder="例如：我想" onChange={event => setPrecedingText(lastContext(event.target.value))} />
+      </div>
+      <div className="context-field">
+        <label htmlFor="context-preview-pinyin">后续拼音 <span>可选</span></label>
+        <input id="context-preview-pinyin" type="text" maxLength={256} autoComplete="off" spellCheck={false} value={pinyin} placeholder="例如：qu" onChange={event => setPinyin(event.target.value)} />
+      </div>
+    </div>
+    <div className="context-preview-results">
+      <section className="context-result" aria-label="联想后续词" aria-busy={predictPending}>
+        <div className="context-result-heading"><h3>后续词</h3><span>点击追加到前文</span></div>
+        <div className="context-candidates" aria-live="polite">
+          {predictions.length ? predictions.slice(0, 9).map((word, index) => <button type="button" className="prediction-chip" key={`${word}-${index}`} title={word} disabled={predictPending} onClick={() => setPrecedingText(current => lastContext(current + word))}>{word}</button>) : <p className="context-empty">{!context ? '填写前文后，在这里查看后续词。' : predictPending ? '正在查找后续词…' : predictError ? '后续词查询未完成。' : '这段前文暂时没有后续词，可以继续输入拼音。'}</p>}
+        </div>
+        <ErrorNotice message={predictError} />
+      </section>
+      <section className="context-result" aria-label="前文拼音候选" aria-busy={lookupPending}>
+        <div className="context-result-heading"><h3>根据前文排列的拼音候选</h3><span>只读预览</span></div>
+        <div className="context-candidates" aria-live="polite">
+          {candidates.length ? candidates.slice(0, 9).map((word, index) => <span className={`context-word${index === 0 ? ' leading' : ''}`} key={`${word}-${index}`} title={word}>{word}{rawFallback && <span className="raw-input-label">原始输入</span>}</span>) : <p className="context-empty">{!context ? '填写前文后，查看拼音候选。' : !query ? '输入后续拼音，看看前文如何影响选词。' : lookupPending ? '正在根据前文查找…' : lookupError ? '拼音候选查询未完成。' : '没有找到候选，试试别的拼音。'}</p>}
+        </div>
+        <ErrorNotice message={lookupError} />
+      </section>
+    </div>
+    <div className="context-preview-footer"><span>试用不会写入学习记录；关闭前文联想开关后，仍可以在这里查询。</span><button className="text-button" onClick={() => { setPrecedingText('我想'); setPinyin(''); }}>重置试用</button></div>
+    <div className="prediction-shortcuts"><Icon name="keyboard" size={16} /><p>实际输入时，词语上屏后按 <kbd>Tab</kbd> 接受首个联想词，按 <kbd>Esc</kbd> 关闭联想。空格和数字保持原来的输入行为，不会自动续写。</p></div>
+  </div>;
 }
 
 export function LearningPage({ state, onState, notify }: { state: AppState; onState: (state: AppState) => void; notify: (message: string) => void }) {
@@ -94,7 +209,7 @@ export function AboutPage({ state }: { state: AppState }) {
     <PageHeader eyebrow="专注输入本身" title="关于 Local Pinyin" description="一个在本机工作的中文拼音输入法。" />
     <div className="about-hero card"><BrandMark size={72} /><div><h2>Local Pinyin</h2><p>让表达自然发生。</p><span className="version-tag">版本 {state.version}</span></div><span className="about-decoration" aria-hidden="true">拼</span></div>
     <div className="about-values"><div><Icon name="shield" size={22} /><strong>完全离线</strong><p>断网也能输入</p></div><div><Icon name="dictionary" size={22} /><strong>本地词库</strong><p>{formatNumber(state.dictionary.total)} 条内置词语</p></div><div><Icon name="learning" size={22} /><strong>个性学习</strong><p>记住你的选词习惯</p></div></div>
-    <div className="card about-details"><SectionTitle title="运行信息" /><dl><div><dt>输入会话</dt><dd title="在输入应用中选择本地拼音后显示状态">{sessionLabel}<span className={`inline-status${activeSession ? '' : ' unavailable'}`} /></dd></div><div><dt>输入方式</dt><dd>全拼 · 连续拼音 · 个人词库</dd></div><div><dt>设置界面</dt><dd>Electron · React · TypeScript</dd></div><div><dt>数据位置</dt><dd className="data-path" title={state.dataDirectory}>{state.dataDirectory}</dd></div></dl><div className="about-data-footer"><span>个人词库、设置与学习记录都保存在这里。</span><button className="button secondary compact" disabled={pending} onClick={() => void openFolder()}><Icon name="folder" size={16} />{pending ? '正在打开…' : '打开数据文件夹'}</button></div><ErrorNotice message={error} /></div>
-    <p className="about-footnote">日常用词会持续完善。同音词和较长的句子，仍可能需要手动选择候选。</p>
+    <div className="card about-details"><SectionTitle title="运行信息" /><dl><div><dt>输入会话</dt><dd title="在输入应用中选择本地拼音后显示状态">{sessionLabel}<span className={`inline-status${activeSession ? '' : ' unavailable'}`} /></dd></div><div><dt>输入方式</dt><dd>全拼 · 连续拼音 · 前文联想 · 个人词库</dd></div><div><dt>设置界面</dt><dd>Electron · React · TypeScript</dd></div><div><dt>数据位置</dt><dd className="data-path" title={state.dataDirectory}>{state.dataDirectory}</dd></div></dl><div className="about-data-footer"><span>个人词库、设置与学习记录都保存在这里。</span><button className="button secondary compact" disabled={pending} onClick={() => void openFolder()}><Icon name="folder" size={16} />{pending ? '正在打开…' : '打开数据文件夹'}</button></div><ErrorNotice message={error} /></div>
+    <p className="about-footnote">支持光标前文排序与离线后续词联想。同音词和较长的句子，仍可能需要手动选择候选。</p>
   </>;
 }

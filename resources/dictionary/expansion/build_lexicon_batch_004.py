@@ -842,7 +842,7 @@ def main():
             lines.append(f"# category: {category}"); previous = category
         lines.append(f"{pinyin}\t{word}\t{frequency}")
     path = OUT / "lexicon_batch_004.tsv"
-    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
     data = {
         "batch": "lexicon_batch_004", "authoring_source": "first_party_authored",
         "pronunciation_tool": "pypinyin authoring-only; reviewed compound overrides",
@@ -873,7 +873,7 @@ def main():
         },
         "canonical_dictionaries_modified": False,
     }
-    path.with_suffix(".json").write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    path.with_suffix(".json").write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps({k:v for k,v in data.items() if k not in ("dedup_baseline_sha256", "alternate_pronunciation_candidates_excluded")}, ensure_ascii=False))
 
 

@@ -49,6 +49,7 @@ enum class UserLexiconCreateMode {
 
 class Dictionary {
     friend class ContextModel;
+    friend class ContinuationModel;
 public:
     Dictionary();
     explicit Dictionary(DictionaryLoadMode mode);

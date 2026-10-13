@@ -6,6 +6,10 @@
 
 #include <new>
 #include <utility>
+#include <initguid.h>
+#include <inputscope.h>
+#include <oleauto.h>
+#include <wrl/client.h>
 
 namespace localpinyin {
 
@@ -149,6 +153,32 @@ private:
     CaretRectDiagnostics* diagnostics_ = nullptr;
 };
 
+class CompositionSurroundingTextEditSession final : public ITfEditSession {
+public:
+    CompositionSurroundingTextEditSession(CompositionManager* manager, ITfContext* context,
+        std::wstring* text, ITfRange** caret, ITfRange* expected)
+        : manager_(manager), context_(context), text_(text), caret_(caret), expected_(expected) { dll_add_ref(); }
+    HRESULT STDMETHODCALLTYPE QueryInterface(REFIID iid, void** out) override {
+        if (!out) return E_POINTER;
+        *out = nullptr;
+        if (iid != IID_IUnknown && iid != __uuidof(ITfEditSession)) return E_NOINTERFACE;
+        *out = static_cast<ITfEditSession*>(this); AddRef(); return S_OK;
+    }
+    ULONG STDMETHODCALLTYPE AddRef() override { return InterlockedIncrement(&refs_); }
+    ULONG STDMETHODCALLTYPE Release() override { const long n = InterlockedDecrement(&refs_); if (!n) delete this; return n; }
+    HRESULT STDMETHODCALLTYPE DoEditSession(TfEditCookie cookie) override {
+        return manager_->do_read_preceding_text(cookie, context_.Get(), text_, caret_, expected_.Get());
+    }
+private:
+    ~CompositionSurroundingTextEditSession() { dll_release(); }
+    long refs_ = 1;
+    CompositionManager* manager_;
+    Microsoft::WRL::ComPtr<ITfContext> context_;
+    std::wstring* text_;
+    ITfRange** caret_;
+    Microsoft::WRL::ComPtr<ITfRange> expected_;
+};
+
 namespace {
 
 EditSessionRequestResult request_session(ITfContext* context, TfClientId client_id, ITfEditSession* session) {
@@ -176,6 +206,7 @@ HRESULT set_selection_to_composition(ITfContext* context, ITfComposition* compos
     ITfRange* composition_range = nullptr;
     HRESULT hr = composition->GetRange(&composition_range);
     if (FAILED(hr)) {
+        if (composition_range) composition_range->Release();
         return hr;
     }
 
@@ -280,9 +311,6 @@ HRESULT CompositionManager::caret_rect(ITfContext* context, TfClientId client_id
     if (!context || !rect) {
         return E_POINTER;
     }
-    if (!composition_) {
-        return S_FALSE;
-    }
     auto* session = new (std::nothrow) CompositionCaretRectEditSession(this, context, rect, diagnostics);
     if (!session) {
         return E_OUTOFMEMORY;
@@ -290,6 +318,81 @@ HRESULT CompositionManager::caret_rect(ITfContext* context, TfClientId client_id
     last_edit_session_result_ = request_readonly_session(context, client_id, session);
     session->Release();
     return last_edit_session_result_.effective_hr();
+}
+
+HRESULT CompositionManager::read_preceding_text(ITfContext* context, TfClientId client_id,
+    std::wstring* text, ITfRange** caret, ITfRange* expected_caret) {
+    if (!context || !text) return E_POINTER;
+    text->clear();
+    if (caret) *caret = nullptr;
+    auto* session = new (std::nothrow) CompositionSurroundingTextEditSession(this, context, text, caret, expected_caret);
+    if (!session) return E_OUTOFMEMORY;
+    last_edit_session_result_ = request_readonly_session(context, client_id, session);
+    session->Release();
+    return last_edit_session_result_.effective_hr();
+}
+
+HRESULT CompositionManager::do_read_preceding_text(TfEditCookie cookie, ITfContext* context,
+    std::wstring* text, ITfRange** caret, ITfRange* expected_caret) {
+    using Microsoft::WRL::ComPtr;
+    TF_STATUS status{};
+    HRESULT hr = context->GetStatus(&status);
+    if (FAILED(hr)) return hr;
+    if (status.dwDynamicFlags & TF_SD_READONLY) return S_FALSE;
+    TF_SELECTION selection{};
+    ULONG fetched = 0;
+    hr = context->GetSelection(cookie, TF_DEFAULT_SELECTION, 1, &selection, &fetched);
+    ComPtr<ITfRange> range;
+    range.Attach(selection.range);
+    if (FAILED(hr)) return hr;
+    if (fetched != 1 || !range || selection.style.fInterimChar) return S_FALSE;
+    BOOL empty = FALSE;
+    hr = range->IsEmpty(cookie, &empty);
+    if (FAILED(hr)) return hr;
+    if (!empty) return S_FALSE;
+    if (expected_caret) {
+        LONG comparison = 1;
+        hr = range->CompareStart(cookie, expected_caret, TF_ANCHOR_START, &comparison);
+        if (FAILED(hr)) return hr;
+        if (comparison != 0) return S_FALSE;
+    }
+    // Input scope is supplied by the host through the real TSF property. Do
+    // not inspect preceding characters before checking for protected fields.
+    ComPtr<ITfReadOnlyProperty> property;
+    hr = context->GetAppProperty(GUID_PROP_INPUTSCOPE, &property);
+    if (FAILED(hr)) return hr;
+    if (property) {
+        VARIANT value; VariantInit(&value);
+        hr = property->GetValue(cookie, range.Get(), &value);
+        bool protected_input = false;
+        if (SUCCEEDED(hr) && value.vt == VT_UNKNOWN && value.punkVal) {
+            ComPtr<ITfInputScope> scope;
+            hr = value.punkVal->QueryInterface(IID_PPV_ARGS(&scope));
+            if (SUCCEEDED(hr)) {
+                InputScope* values = nullptr; UINT count = 0;
+                hr = scope->GetInputScopes(&values, &count);
+                if (SUCCEEDED(hr)) for (UINT i = 0; i < count; ++i)
+                    if (values[i] == IS_PASSWORD || values[i] == IS_NUMERIC_PASSWORD) protected_input = true;
+                CoTaskMemFree(values);
+            }
+        }
+        VariantClear(&value);
+        if (FAILED(hr)) return hr;
+        if (protected_input) return S_FALSE;
+    }
+    ComPtr<ITfRange> caret_copy;
+    if (caret) { hr = range->Clone(&caret_copy); if (FAILED(hr)) return hr; }
+    LONG shifted = 0;
+    hr = range->ShiftStart(cookie, -32, &shifted, nullptr);
+    if (FAILED(hr)) return hr;
+    wchar_t buffer[32]{}; ULONG copied = 0;
+    hr = range->GetText(cookie, 0, buffer, 32, &copied);
+    if (FAILED(hr)) return hr;
+    text->assign(buffer, copied);
+    // A 32-unit range may start halfway through an emoji's surrogate pair.
+    if (!text->empty() && text->front() >= 0xDC00 && text->front() <= 0xDFFF) text->erase(0, 1);
+    if (caret) *caret = caret_copy.Detach();
+    return S_OK;
 }
 
 HRESULT CompositionManager::do_set_text(TfEditCookie cookie, ITfContext* context, ITfCompositionSink* sink, const std::wstring& text) {
@@ -410,13 +513,21 @@ HRESULT CompositionManager::do_cancel(TfEditCookie cookie, ITfContext* context) 
 
 HRESULT CompositionManager::do_caret_rect(TfEditCookie cookie, ITfContext* context, RECT* rect,
                                           CaretRectDiagnostics* diagnostics) {
-    if (!context || !rect || !composition_) {
+    if (!context || !rect) {
         return E_POINTER;
     }
 
     ITfRange* composition_range = nullptr;
-    HRESULT hr = composition_->GetRange(&composition_range);
+    HRESULT hr = S_OK;
+    if (composition_) hr = composition_->GetRange(&composition_range);
+    else {
+        TF_SELECTION selection{}; ULONG fetched = 0;
+        hr = context->GetSelection(cookie, TF_DEFAULT_SELECTION, 1, &selection, &fetched);
+        composition_range = selection.range;
+        if (SUCCEEDED(hr) && (fetched != 1 || !composition_range)) hr = E_FAIL;
+    }
     if (FAILED(hr)) {
+        if (composition_range) composition_range->Release();
         return hr;
     }
 

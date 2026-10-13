@@ -119,6 +119,8 @@ public:
     void cancel_layout_retry();
     [[nodiscard]] bool is_visible() const noexcept;
     void set_selection_callback(std::function<void(size_t)> callback);
+    void set_options_changed_callback(std::function<void()> callback);
+    void set_prediction_mode(bool enabled) noexcept { prediction_mode_ = enabled; }
 
 private:
     friend class SettingsWindowCapture;
@@ -170,10 +172,12 @@ private:
     bool tracking_mouse_leave_ = false;
     CandidatePointerState candidate_pointer_;
     std::function<void(size_t)> selection_callback_;
+    std::function<void()> options_changed_callback_;
     UINT_PTR layout_retry_timer_ = 0;
     unsigned int layout_retry_attempt_ = 0;
     std::function<void()> layout_retry_callback_;
     bool show_requested_ = false;
+    bool prediction_mode_ = false;
     bool paint_seen_ = false;
     unsigned int shell_cloak_recovery_attempts_ = 0;
     CandidateImeWinEventState ime_win_event_state_;

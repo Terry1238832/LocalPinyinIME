@@ -207,6 +207,7 @@ InputModeOptions SettingsStore::load_input_mode_options() const {
     if (!shift_toggle_enabled.empty()) {
         options.shift_toggle_enabled = parse_bool(shift_toggle_enabled, options.shift_toggle_enabled);
     }
+    options.prediction_enabled = parse_bool(setting_value(text, L"predictionEnabled"), true);
     return options;
 }
 
@@ -259,6 +260,8 @@ bool SettingsStore::save_options(const CandidateWindowOptions& candidate_options
     text += L"  \"inputMode\": {\n";
     text += L"    \"shiftToggleEnabled\": ";
     text += input_mode_options.shift_toggle_enabled ? L"true" : L"false";
+    text += L",\n    \"predictionEnabled\": ";
+    text += input_mode_options.prediction_enabled ? L"true" : L"false";
     text += L"\n";
     text += L"  }\n";
     text += L"}\n";

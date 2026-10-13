@@ -19,7 +19,9 @@ namespace localpinyin {
 
 class TextService final : public ITfTextInputProcessorEx,
                           public ITfKeyEventSink,
-                          public ITfCompositionSink {
+                          public ITfCompositionSink,
+                          public ITfThreadMgrEventSink,
+                          public ITfTextEditSink {
 public:
     using KeyStateReader = bool (*)(int virtual_key, void* context) noexcept;
 
@@ -44,12 +46,21 @@ public:
     HRESULT STDMETHODCALLTYPE OnPreservedKey(ITfContext* context, REFGUID guid, BOOL* eaten) override;
 
     HRESULT STDMETHODCALLTYPE OnCompositionTerminated(TfEditCookie cookie, ITfComposition* composition) override;
+    HRESULT STDMETHODCALLTYPE OnInitDocumentMgr(ITfDocumentMgr*) override;
+    HRESULT STDMETHODCALLTYPE OnUninitDocumentMgr(ITfDocumentMgr*) override;
+    HRESULT STDMETHODCALLTYPE OnSetFocus(ITfDocumentMgr* focus, ITfDocumentMgr* previous) override;
+    HRESULT STDMETHODCALLTYPE OnPushContext(ITfContext* context) override;
+    HRESULT STDMETHODCALLTYPE OnPopContext(ITfContext* context) override;
+    HRESULT STDMETHODCALLTYPE OnEndEdit(ITfContext* context, TfEditCookie cookie, ITfEditRecord* record) override;
 
 private:
     ~TextService();
 
     HRESULT advise_key_event_sink();
     void unadvise_key_event_sink();
+    void advise_thread_events();
+    void unadvise_thread_events();
+    void unadvise_prediction_edits();
     HRESULT preserve_ctrl_space_key();
     HRESULT unpreserve_ctrl_space_key();
     static LRESULT CALLBACK thread_keyboard_hook_proc(int code, WPARAM wparam, LPARAM lparam);
@@ -77,6 +88,11 @@ private:
     void update_candidate_window(ITfContext* context);
     void end_candidate_ui_element(const wchar_t* reason);
     HRESULT commit_selected(ITfContext* context);
+    void start_prediction(ITfContext* context);
+    bool prediction_still_valid(ITfContext* context);
+    HRESULT commit_prediction(ITfContext* context);
+    void dismiss_prediction(const wchar_t* reason);
+    void accept_candidate_from_ui(size_t index);
     HRESULT make_composition_room(ITfContext* context);
     HRESULT commit_raw_composition(ITfContext* context);
     HRESULT commit_punctuation(ITfContext* context, wchar_t punctuation);
@@ -96,6 +112,14 @@ private:
     ITfThreadMgr* thread_mgr_ = nullptr;
     TfClientId client_id_ = TF_CLIENTID_NULL;
     bool key_sink_advised_ = false;
+    DWORD thread_event_cookie_ = TF_INVALID_COOKIE;
+    DWORD prediction_edit_cookie_ = TF_INVALID_COOKIE;
+    bool secure_mode_ = false;
+    bool prediction_active_ = false;
+    bool suppress_prediction_ = false;
+    unsigned long prediction_passthrough_key_ = 0;
+    ITfRange* prediction_caret_ = nullptr;
+    std::wstring prediction_before_;
     bool ctrl_space_preserved_ = false;
     HHOOK keyboard_hook_ = nullptr;
     DWORD keyboard_hook_thread_id_ = 0;

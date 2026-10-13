@@ -397,7 +397,7 @@ def main() -> None:
             lines.append(f"# category: {category}"); previous = category
         lines.append(f"{key}\t{word}\t{frequency}")
     output = OUT / "lexicon_batch_007.tsv"
-    output.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    output.write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
     selected_words = {r[2] for r in selected}
     metadata = {
         "batch": "lexicon_batch_007", "authoring_source": "first_party_authored",
@@ -419,7 +419,7 @@ def main() -> None:
             "polyphone_reviewed_display_words": sum(any(c in w for c in POLYPHONES) for w in selected_words)},
         "canonical_dictionaries_modified": False,
     }
-    output.with_suffix(".json").write_text(json.dumps(metadata, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    output.with_suffix(".json").write_text(json.dumps(metadata, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps({k: metadata[k] for k in ("new_entries", "authored_candidates", "sha256", "category_counts")}, ensure_ascii=False))
 
 if __name__ == "__main__":

@@ -17,6 +17,7 @@ constexpr wchar_t kWindowClassName[] = L"LocalPinyinCandidateWindow";
 constexpr wchar_t kSettingsWindowClassName[] = L"LocalPinyinSettingsWindow";
 constexpr wchar_t kSettingsExecutableName[] = L"LocalPinyinSettings.exe";
 constexpr wchar_t kHintText[] = L"\u7A7A\u683C \u786E\u8BA4  \u00B7  \u6570\u5B57 \u9009\u8BCD  \u00B7  Esc \u53D6\u6D88";
+constexpr wchar_t kPredictionHintText[] = L"Tab 续写  ·  点击选词  ·  Esc 关闭";
 constexpr wchar_t kCandidateOptionsChangedMessageName[] = L"LocalPinyinIME.CandidateOptionsChanged";
 constexpr UINT_PTR kLayoutRetryTimerId = 1;
 constexpr UINT kDwmAttributeCloaked = 14;
@@ -393,6 +394,11 @@ bool CandidateWindow::is_visible() const noexcept {
     return hwnd_ && IsWindowVisible(hwnd_);
 }
 
+void CandidateWindow::set_options_changed_callback(std::function<void()> callback) {
+    create();
+    options_changed_callback_ = std::move(callback);
+}
+
 void CandidateWindow::set_selection_callback(std::function<void(size_t)> callback) {
     cancel_pointer_interaction();
     selection_callback_ = std::move(callback);
@@ -686,6 +692,8 @@ bool CandidateWindow::rebuild_layout(int dpi) {
 
 void CandidateWindow::apply_options_changed() {
     reload_options();
+    const auto callback = options_changed_callback_;
+    if (callback) callback();
     if (!hwnd_ || !IsWindowVisible(hwnd_) || !has_cached_show_state_) {
         return;
     }
@@ -913,7 +921,7 @@ void CandidateWindow::render(HDC hdc) {
             const float y = static_cast<float>(layout_.hint_rect.top - scale_dip(4, layout_.dpi));
             renderer_.line(static_cast<float>(layout_.hint_rect.left), y,
                              static_cast<float>(layout_.hint_rect.right), y, palette_.border, 1);
-            renderer_.text(kHintText, layout_.hint_rect, palette_.hint_text,
+            renderer_.text(prediction_mode_ ? kPredictionHintText : kHintText, layout_.hint_rect, palette_.hint_text,
                              static_cast<float>(layout_.hint_font_px));
         }
         modern.finish();
@@ -984,7 +992,8 @@ void CandidateWindow::render(HDC hdc) {
         }
         RECT hint_rect = layout_.hint_rect;
         SetTextColor(memory_dc, palette_.hint_text);
-        DrawTextW(memory_dc, kHintText, static_cast<int>(wcslen(kHintText)), &hint_rect,
+        const auto hint = prediction_mode_ ? kPredictionHintText : kHintText;
+        DrawTextW(memory_dc, hint, static_cast<int>(wcslen(hint)), &hint_rect,
                   DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS | DT_NOPREFIX);
     }
 

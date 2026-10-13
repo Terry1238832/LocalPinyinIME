@@ -2,7 +2,7 @@
 
 Windows x64需要Visual Studio C++/SDK、CMake/Ninja、Python 3、Node.js 22.12+及Inno Setup 6。运行scripts/Build.ps1；可显式传CMakePath、PythonPath、IsccPath与Jobs。
 
-原生CMake构建输出.build/bin；desktop/package-lock.json锁定桌面依赖。npm ci安装作者依赖；npm run build检查TypeScript、生成Vite资源和CJS主进程/preload。npm run package将应用写入.build/electron-dist；Build.ps1添加原生组件与四份词库、保留许可证、生成Inno安装包与SHA。
+原生CMake构建输出.build/bin；desktop/package-lock.json锁定桌面依赖。npm ci安装作者依赖；npm run build检查TypeScript、生成Vite资源和CJS主进程/preload。npm run package将应用写入.build/electron-dist；Build.ps1添加原生组件与五份运行数据、保留许可证、生成Inno安装包与SHA。
 
 开发设置程序：先构建原生bridge，再在desktop执行npm ci、npm run dev。首次下载Electron运行时需要网络。生产exe、原生bridge、词库在同一安装目录，React资源在resources/app.asar内。
 

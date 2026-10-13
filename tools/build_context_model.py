@@ -59,11 +59,11 @@ def main() -> None:
     counts, metadata = build(list(args.corpus_dir.glob("*.txt")), args.exclude_cases)
     lines = ["# LocalPinyinIME character context model v2; independent prose; 1-4 character counts"]
     lines.extend(f"{text}\t{min(count, 100000)}" for text, count in sorted(counts.items()))
-    args.output.write_text("\n".join(lines)+"\n", encoding="utf-8")
+    args.output.write_text("\n".join(lines)+"\n", encoding="utf-8", newline="\n")
     metadata.update({"format_version": 2, "maximum_order": 4, "entry_count": len(counts),
                      "sha256": hashlib.sha256(args.output.read_bytes()).hexdigest(),
                      "runtime_dependencies": "none", "source_manifest": "authoring/sources.json"})
-    args.output.with_suffix(".metadata.json").write_text(json.dumps(metadata, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
+    args.output.with_suffix(".metadata.json").write_text(json.dumps(metadata, ensure_ascii=False, indent=2)+"\n", encoding="utf-8", newline="\n")
     print(json.dumps({k: v for k, v in metadata.items() if k != "inputs"}, ensure_ascii=True))
 
 

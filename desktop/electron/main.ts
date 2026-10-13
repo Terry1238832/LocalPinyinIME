@@ -71,14 +71,16 @@ function installHandlers() {
   handle('save-settings', (value) => {
     const settings = record(value);
     if (!['system', 'light', 'dark'].includes(String(settings.theme)) || !Number.isInteger(settings.textSize) ||
-        (settings.textSize as number) < 1 || (settings.textSize as number) > 7 || typeof settings.shiftToggleEnabled !== 'boolean')
+        (settings.textSize as number) < 1 || (settings.textSize as number) > 7 || typeof settings.shiftToggleEnabled !== 'boolean' ||
+        typeof settings.predictionEnabled !== 'boolean')
       throw new Error('设置选项无效。');
     return enqueue(async () => {
-      await bridge('save-settings', [String(settings.theme), String(settings.textSize), String(settings.shiftToggleEnabled)]);
+      await bridge('save-settings', [String(settings.theme), String(settings.textSize), String(settings.shiftToggleEnabled), String(settings.predictionEnabled)]);
       return state();
     });
   });
-  handle('lookup', (pinyin) => bridge('lookup', [text(pinyin, 256, true)]));
+  handle('lookup', (pinyin, preceding = '') => bridge('lookup', [text(pinyin, 256, true), text(preceding, 32, true)]));
+  handle('predict', (preceding) => bridge('predict', [text(preceding, 32, true)]));
   handle('user-list', () => bridge('user-list'));
   handle('user-upsert', (entry, previous) => {
     const args = entryArgs(entry);

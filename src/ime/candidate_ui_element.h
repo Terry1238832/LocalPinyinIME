@@ -6,7 +6,9 @@
 #include <windows.h>
 
 #include <cstddef>
+#include <functional>
 #include <string>
+#include <utility>
 
 namespace localpinyin {
 
@@ -82,6 +84,8 @@ public:
     HRESULT STDMETHODCALLTYPE Abort() override;
 
     void update(const CandidateModelSnapshot& snapshot);
+    void set_finalize_callback(std::function<void(size_t)> callback) { finalize_callback_ = std::move(callback); }
+    void set_abort_callback(std::function<void()> callback) { abort_callback_ = std::move(callback); }
     [[nodiscard]] bool finalized() const noexcept { return finalized_; }
     [[nodiscard]] bool aborted() const noexcept { return aborted_; }
 
@@ -97,6 +101,8 @@ private:
     UINT current_page_ = 0;
     bool finalized_ = false;
     bool aborted_ = false;
+    std::function<void(size_t)> finalize_callback_;
+    std::function<void()> abort_callback_;
 };
 
 class CandidateUIElementSession {
@@ -114,10 +120,17 @@ public:
     HRESULT update(const CandidateModelSnapshot& snapshot);
     HRESULT end();
     void reset_without_end();
+    void set_finalize_callback(std::function<void(size_t)> callback);
+    void set_abort_callback(std::function<void()> callback);
 
     [[nodiscard]] bool active() const noexcept { return active_; }
     [[nodiscard]] DWORD id() const noexcept { return id_; }
     [[nodiscard]] bool host_managed() const noexcept { return active_ && !tip_should_show_; }
+    [[nodiscard]] size_t selected_index() const noexcept {
+        UINT index = 0;
+        if (element_) element_->GetSelection(&index);
+        return index;
+    }
     [[nodiscard]] bool tip_should_show() const noexcept { return !active_ || tip_should_show_; }
     [[nodiscard]] CandidateListUIElement* element_for_testing() const noexcept { return element_; }
     [[nodiscard]] const CandidatePresentationDiagnostics& diagnostics() const noexcept {
@@ -148,6 +161,8 @@ private:
     bool tip_should_show_ = true;
     DWORD id_ = 0;
     CandidatePresentationDiagnostics diagnostics_{};
+    std::function<void(size_t)> finalize_callback_;
+    std::function<void()> abort_callback_;
 };
 
 }  // namespace localpinyin

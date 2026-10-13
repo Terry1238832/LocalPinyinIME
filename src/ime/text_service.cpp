@@ -283,17 +283,15 @@ void read_open_close_compartment(ITfThreadMgr* thread_mgr, HRESULT* hr, bool* op
 
 TextService::TextService() {
     dll_add_ref();
-    candidate_window_.set_selection_callback([this](size_t index) {
-        if (mode_ != InputMode::Chinese || !candidate_context_ || composing_.empty() ||
-            !composition_.active() || index >= candidates_.size()) return;
-        // Committing hides the candidate window and releases its context.
-        // Keep the edit context alive across that lifecycle and any prefix tail.
-        ITfContext* context = candidate_context_;
-        context->AddRef();
-        selected_index_ = index;
-        const HRESULT hr = commit_selected(context);
-        if (FAILED(hr)) log_status(L"candidate-ui", L"mouse commit failed " + hresult_hex(hr));
-        context->Release();
+    candidate_window_.set_selection_callback([this](size_t index) { accept_candidate_from_ui(index); });
+    candidate_ui_element_session_.set_finalize_callback([this](size_t index) { accept_candidate_from_ui(index); });
+    candidate_ui_element_session_.set_abort_callback([this]() {
+        if (prediction_active_) dismiss_prediction(L"host_abort");
+        else if (composition_context_) cancel_composition(composition_context_);
+    });
+    candidate_window_.set_options_changed_callback([this]() {
+        if (prediction_active_ && !settings_store_.load_input_mode_options().prediction_enabled)
+            dismiss_prediction(L"prediction_disabled");
     });
 }
 
@@ -305,6 +303,12 @@ void TextService::set_key_state_reader_for_testing(KeyStateReader reader,
 
 TextService::~TextService() {
     candidate_window_.set_selection_callback({});
+    candidate_window_.set_options_changed_callback({});
+    candidate_ui_element_session_.set_finalize_callback({});
+    candidate_ui_element_session_.set_abort_callback({});
+    unadvise_prediction_edits();
+    unadvise_thread_events();
+    if (prediction_caret_) prediction_caret_->Release();
     end_candidate_ui_element(L"teardown");
     clear_transient_contexts();
     language_bar_.clear_callbacks();
@@ -329,6 +333,10 @@ HRESULT TextService::QueryInterface(REFIID riid, void** object) {
         *object = static_cast<ITfKeyEventSink*>(this);
     } else if (riid == __uuidof(ITfCompositionSink)) {
         *object = static_cast<ITfCompositionSink*>(this);
+    } else if (riid == __uuidof(ITfThreadMgrEventSink)) {
+        *object = static_cast<ITfThreadMgrEventSink*>(this);
+    } else if (riid == __uuidof(ITfTextEditSink)) {
+        *object = static_cast<ITfTextEditSink*>(this);
     } else {
         return E_NOINTERFACE;
     }
@@ -386,6 +394,7 @@ HRESULT TextService::ActivateEx(ITfThreadMgr* thread_mgr, TfClientId client_id, 
     thread_mgr_ = thread_mgr;
     thread_mgr_->AddRef();
     client_id_ = client_id;
+    secure_mode_ = ((flags | activation.active_flags) & TF_TMAE_SECUREMODE) != 0;
     language_bar_.set_toggle_callback([this](const wchar_t* source) {
         return toggle_input_mode_from_language_bar(source ? source : L"mode_icon");
     });
@@ -409,6 +418,7 @@ HRESULT TextService::ActivateEx(ITfThreadMgr* thread_mgr, TfClientId client_id, 
     }
     const HRESULT result = FAILED(hr) ? hr : preserve_hr;
     if (SUCCEEDED(result)) {
+        advise_thread_events();
         const bool hook_installed = install_thread_keyboard_hook();
         log_status(L"ctrl-space",
                    std::wstring(L"event=activate_hook_install_result hook_installed=") +
@@ -448,6 +458,7 @@ HRESULT TextService::Deactivate() {
                                             ctrl_space_toggle_.pending_release,
                                             keyboard_hook_uninstall_failed_));
     uninstall_thread_keyboard_hook();
+    unadvise_thread_events();
     const HRESULT unpreserve_hr = unpreserve_ctrl_space_key();
     language_bar_.clear_callbacks();
     const HRESULT langbar_hr = language_bar_.unregister_item();
@@ -780,6 +791,7 @@ bool TextService::handle_ctrl_space_keyup_fallback(ITfContext* context,
 }
 
 HRESULT TextService::OnSetFocus(BOOL foreground) {
+    if (!foreground && prediction_active_) dismiss_prediction(L"focus_lost");
     ITfDocumentMgr* focus_document_mgr = nullptr;
     ITfContext* top_context = nullptr;
     HRESULT focus_hr = E_UNEXPECTED;
@@ -813,6 +825,8 @@ HRESULT TextService::OnSetFocus(BOOL foreground) {
            << L" context_identity=" << reinterpret_cast<std::uintptr_t>(top_context);
     log_status(L"compatibility", stream.str());
     log_activation_focus_diagnostics(focus);
+    if (prediction_active_ && top_context != composition_context_)
+        dismiss_prediction(L"document_focus_changed");
     if (top_context) {
         top_context->Release();
     }
@@ -827,6 +841,8 @@ HRESULT TextService::OnTestKeyDown(ITfContext* context, WPARAM wparam, LPARAM, B
         return E_POINTER;
     }
     *eaten = FALSE;
+    prediction_passthrough_key_ = 0;
+    prepare_context_for_key(context);
     const CtrlSpaceRuntimeState ctrl_space_state =
         current_ctrl_space_runtime_state(key_state_reader_, key_state_reader_context_);
     const ModifierKeyState modifiers = ctrl_space_state.modifiers;
@@ -842,6 +858,22 @@ HRESULT TextService::OnTestKeyDown(ITfContext* context, WPARAM wparam, LPARAM, B
         return S_OK;
     }
     ctrl_space_key_down_.accepted_by_test_key_down = false;
+    if (prediction_active_) {
+        if (!prediction_still_valid(context)) dismiss_prediction(L"prediction_caret_changed");
+        else if (wparam == VK_TAB && !modifiers.shift && !modifiers.ctrl && !modifiers.alt && !modifiers.win) {
+            *eaten = TRUE; return S_OK;
+        } else if (wparam == VK_ESCAPE && !modifiers.ctrl && !modifiers.alt && !modifiers.win) {
+            *eaten = TRUE; return S_OK;
+        } else {
+            dismiss_prediction(L"ordinary_editing_key");
+            // Digits, whitespace, arrows and punctuation keep their ordinary
+            // host meaning while dismissing suggestions. Letters start pinyin.
+            if (!(wparam >= L'A' && wparam <= L'Z') &&
+                !can_start_shift_toggle(key, modifiers, shift_toggle_enabled())) {
+                prediction_passthrough_key_ = key; return S_OK;
+            }
+        }
+    }
     if (can_start_shift_toggle(static_cast<unsigned long>(wparam), modifiers, shift_toggle_enabled())) {
         *eaten = TRUE;
         return S_OK;
@@ -885,6 +917,13 @@ HRESULT TextService::OnKeyDown(ITfContext* context, WPARAM wparam, LPARAM, BOOL*
         return E_POINTER;
     }
     *eaten = FALSE;
+    const auto passthrough_key = prediction_passthrough_key_;
+    prediction_passthrough_key_ = 0;
+    if (passthrough_key == static_cast<unsigned long>(wparam) &&
+        !is_ctrl_space(static_cast<unsigned long>(wparam),
+            current_modifier_key_state(key_state_reader_, key_state_reader_context_))) {
+        return S_OK;
+    }
     prepare_context_for_key(context);
 
     const CtrlSpaceRuntimeState ctrl_space_state =
@@ -892,6 +931,19 @@ HRESULT TextService::OnKeyDown(ITfContext* context, WPARAM wparam, LPARAM, BOOL*
     const ModifierKeyState modifiers = ctrl_space_state.modifiers;
     const bool shift_enabled = shift_toggle_enabled();
     const unsigned long key = static_cast<unsigned long>(wparam);
+    if (prediction_active_) {
+        if (!prediction_still_valid(context)) dismiss_prediction(L"prediction_caret_changed");
+        else if (key == VK_TAB && !modifiers.shift && !modifiers.ctrl && !modifiers.alt && !modifiers.win) {
+            const HRESULT hr = commit_prediction(context);
+            *eaten = SUCCEEDED(hr) && hr != S_FALSE; return S_OK;
+        } else if (key == VK_ESCAPE && !modifiers.ctrl && !modifiers.alt && !modifiers.win) {
+            dismiss_prediction(L"prediction_escape"); *eaten = TRUE; return S_OK;
+        } else {
+            dismiss_prediction(L"ordinary_editing_key");
+            if (!(key >= L'A' && key <= L'Z') && !is_ctrl_space(key, modifiers) &&
+                !can_start_shift_toggle(key, modifiers, shift_enabled)) return S_OK;
+        }
+    }
     if (is_ctrl_space_key(key)) {
         ctrl_space_chord_on_key_down(ctrl_space_toggle_, key);
     }
@@ -979,6 +1031,75 @@ HRESULT TextService::OnCompositionTerminated(TfEditCookie, ITfComposition*) {
     return S_OK;
 }
 
+void TextService::advise_thread_events() {
+    if (!thread_mgr_ || thread_event_cookie_ != TF_INVALID_COOKIE) return;
+    ITfSource* source = nullptr;
+    if (SUCCEEDED(thread_mgr_->QueryInterface(IID_PPV_ARGS(&source)))) {
+        source->AdviseSink(__uuidof(ITfThreadMgrEventSink), static_cast<ITfThreadMgrEventSink*>(this), &thread_event_cookie_);
+        source->Release();
+    }
+}
+
+void TextService::unadvise_thread_events() {
+    if (!thread_mgr_ || thread_event_cookie_ == TF_INVALID_COOKIE) return;
+    ITfSource* source = nullptr;
+    if (SUCCEEDED(thread_mgr_->QueryInterface(IID_PPV_ARGS(&source)))) {
+        source->UnadviseSink(thread_event_cookie_); source->Release();
+    }
+    thread_event_cookie_ = TF_INVALID_COOKIE;
+}
+
+void TextService::unadvise_prediction_edits() {
+    if (!composition_context_ || prediction_edit_cookie_ == TF_INVALID_COOKIE) return;
+    ITfSource* source = nullptr;
+    if (SUCCEEDED(composition_context_->QueryInterface(IID_PPV_ARGS(&source)))) {
+        source->UnadviseSink(prediction_edit_cookie_); source->Release();
+    }
+    prediction_edit_cookie_ = TF_INVALID_COOKIE;
+}
+
+HRESULT TextService::OnInitDocumentMgr(ITfDocumentMgr*) { return S_OK; }
+HRESULT TextService::OnUninitDocumentMgr(ITfDocumentMgr*) {
+    if (prediction_active_) dismiss_prediction(L"document_closed");
+    return S_OK;
+}
+HRESULT TextService::OnSetFocus(ITfDocumentMgr* focus, ITfDocumentMgr*) {
+    if (prediction_active_) {
+        ITfDocumentMgr* prediction_document = nullptr;
+        if (!composition_context_ || FAILED(composition_context_->GetDocumentMgr(&prediction_document)) ||
+            prediction_document != focus) dismiss_prediction(L"document_focus_changed");
+        if (prediction_document) prediction_document->Release();
+    }
+    return S_OK;
+}
+HRESULT TextService::OnPushContext(ITfContext* context) {
+    if (prediction_active_ && context != composition_context_) dismiss_prediction(L"context_pushed");
+    return S_OK;
+}
+HRESULT TextService::OnPopContext(ITfContext*) {
+    if (prediction_active_) dismiss_prediction(L"context_popped");
+    return S_OK;
+}
+HRESULT TextService::OnEndEdit(ITfContext* context, TfEditCookie, ITfEditRecord* record) {
+    if (!prediction_active_ || context != composition_context_ || !record) return S_OK;
+    BOOL changed = FALSE;
+    if (FAILED(record->GetSelectionStatus(&changed)) || changed) {
+        dismiss_prediction(L"selection_changed"); return S_OK;
+    }
+    IEnumTfRanges* ranges = nullptr;
+    if (FAILED(record->GetTextAndPropertyUpdates(TF_GTP_INCL_TEXT, nullptr, 0, &ranges))) {
+        dismiss_prediction(L"document_changed"); return S_OK;
+    }
+    if (ranges) {
+        ITfRange* range = nullptr; ULONG fetched = 0;
+        const HRESULT hr = ranges->Next(1, &range, &fetched);
+        if (range) range->Release();
+        ranges->Release();
+        if (FAILED(hr) || fetched) dismiss_prediction(L"document_changed");
+    }
+    return S_OK;
+}
+
 bool TextService::should_pass_through(WPARAM wparam) const {
     const ModifierKeyState modifiers =
         current_modifier_key_state(key_state_reader_, key_state_reader_context_);
@@ -1020,6 +1141,7 @@ void TextService::publish_runtime_input_mode_status(const wchar_t* source, bool 
 }
 
 HRESULT TextService::toggle_input_mode(ITfContext* context, const wchar_t* reason) {
+    if (prediction_active_) dismiss_prediction(reason ? reason : L"mode_toggle");
     if (!composing_.empty()) {
         cancel_composition(context);
     } else {
@@ -1112,6 +1234,8 @@ bool TextService::handle_chinese_key(ITfContext* context, WPARAM wparam, BOOL* e
             engine_.refresh_user_lexicon_if_needed(false);
             set_composition_context(context);
             preceding_committed_text_.clear();
+            if (!secure_mode_ && composition_.read_preceding_text(context, client_id_, &preceding_committed_text_) != S_OK)
+                preceding_committed_text_.clear();
         }
         if (FAILED(make_composition_room(context))) {
             *eaten = FALSE;
@@ -1175,6 +1299,8 @@ bool TextService::handle_chinese_key(ITfContext* context, WPARAM wparam, BOOL* e
     }
 
     if (wparam == VK_SPACE) {
+        if (candidate_ui_element_session_.host_managed())
+            selected_index_ = candidate_ui_element_session_.selected_index();
         const int commit_index = candidate_commit_index_for_key(static_cast<unsigned long>(wparam), candidates_.size(), !composing_.empty(), selected_index_);
         if (commit_index >= 0) {
             selected_index_ = static_cast<size_t>(commit_index);
@@ -1234,8 +1360,13 @@ HRESULT TextService::update_composition(ITfContext* context) {
 }
 
 void TextService::update_candidate_window(ITfContext* context) {
+    candidate_window_.set_prediction_mode(prediction_active_);
+    if (prediction_active_ && !settings_store_.load_input_mode_options().prediction_enabled) {
+        dismiss_prediction(L"prediction_disabled"); return;
+    }
+    const std::wstring display_label = prediction_active_ ? L"联想 · Tab续写，Esc关闭" : composing_;
     const bool logical_show_requested =
-        mode_ == InputMode::Chinese && !composing_.empty() && !candidates_.empty();
+        mode_ == InputMode::Chinese && !display_label.empty() && !candidates_.empty();
     if (logical_show_requested) {
         if (candidate_context_ != context) {
             end_candidate_ui_element(L"candidate_context_changed");
@@ -1251,7 +1382,7 @@ void TextService::update_candidate_window(ITfContext* context) {
     }
 
     CandidateModelSnapshot snapshot =
-        make_candidate_model_snapshot(composing_, candidates_, selected_index_, context);
+        make_candidate_model_snapshot(display_label, candidates_, selected_index_, context);
     if (logical_show_requested) {
         HRESULT ui_element_hr = S_OK;
         if (!candidate_ui_element_session_.active()) {
@@ -1266,14 +1397,14 @@ void TextService::update_candidate_window(ITfContext* context) {
 
     RECT anchor_rect{};
     bool anchor_available = false;
-    if (mode_ == InputMode::Chinese && !composing_.empty() && !candidates_.empty()) {
+    if (logical_show_requested) {
         anchor_available = candidate_anchor_rect(context, &anchor_rect);
     }
     candidate_ui_element_session_.set_anchor_available(anchor_available);
 
     const CandidateDisplayDecision decision = decide_candidate_display(CandidateDisplayState{
         mode_ == InputMode::English,
-        !composing_.empty(),
+        !display_label.empty(),
         candidates_.size(),
         anchor_available
     });
@@ -1318,7 +1449,7 @@ void TextService::update_candidate_window(ITfContext* context) {
             candidate_window_.schedule_layout_retry(
                 [this]() {
                     if (candidate_context_ && mode_ == InputMode::Chinese &&
-                        !composing_.empty() && !candidates_.empty()) {
+                        (!composing_.empty() || prediction_active_) && !candidates_.empty()) {
                         update_candidate_window(candidate_context_);
                     }
                 },
@@ -1330,7 +1461,7 @@ void TextService::update_candidate_window(ITfContext* context) {
     }
     candidate_layout_retry_attempts_ = 0;
     const CandidateWindowOwnerInfo owner_info = candidate_owner_info(context);
-    candidate_window_.show(composing_, candidates_, selected_index_, anchor_rect, owner_info);
+    candidate_window_.show(display_label, candidates_, selected_index_, anchor_rect, owner_info);
     candidate_ui_element_session_.set_self_draw_enabled(true);
     candidate_ui_element_session_.set_window_visible(candidate_window_.is_visible());
     const bool begin_failed =
@@ -1359,6 +1490,76 @@ void TextService::end_candidate_ui_element(const wchar_t* reason) {
                        std::wstring(reason ? reason : L"unknown") +
                        L" hr=" + hresult_hex(hr));
     }
+}
+
+void TextService::dismiss_prediction(const wchar_t* reason) {
+    if (prediction_active_) reset_transient_input_state(reason);
+}
+
+bool TextService::prediction_still_valid(ITfContext* context) {
+    if (!prediction_active_ || !context || context != composition_context_ || secure_mode_ ||
+        !settings_store_.load_input_mode_options().prediction_enabled || !prediction_caret_) return false;
+    std::wstring before;
+    return composition_.read_preceding_text(context, client_id_, &before, nullptr, prediction_caret_) == S_OK &&
+           before == prediction_before_;
+}
+
+void TextService::start_prediction(ITfContext* context) {
+    if (!context || secure_mode_ || mode_ != InputMode::Chinese || composition_.active() ||
+        !composing_.empty() || !settings_store_.load_input_mode_options().prediction_enabled) return;
+    std::wstring before; ITfRange* caret = nullptr;
+    if (composition_.read_preceding_text(context, client_id_, &before, &caret) != S_OK) return;
+    auto predictions = engine_.predict(before);
+    if (predictions.empty()) { if (caret) caret->Release(); return; }
+    // Host-managed UI still needs a hidden top-level HWND to receive the
+    // existing settings broadcast, so disabling predictions closes it now.
+    candidate_window_.create();
+    set_composition_context(context);
+    ITfSource* source = nullptr;
+    HRESULT hr = context->QueryInterface(IID_PPV_ARGS(&source));
+    if (SUCCEEDED(hr)) {
+        hr = source->AdviseSink(__uuidof(ITfTextEditSink), static_cast<ITfTextEditSink*>(this), &prediction_edit_cookie_);
+        source->Release();
+    }
+    if (FAILED(hr)) {
+        if (caret) caret->Release();
+        reset_transient_input_state(L"prediction_monitor_unavailable"); return;
+    }
+    prediction_caret_ = caret;
+    prediction_before_ = std::move(before);
+    prediction_active_ = true;
+    candidates_ = std::move(predictions);
+    selected_index_ = 0;
+    update_candidate_window(context);
+}
+
+HRESULT TextService::commit_prediction(ITfContext* context) {
+    if (!prediction_still_valid(context) || candidates_.empty()) {
+        dismiss_prediction(L"prediction_stale"); return S_FALSE;
+    }
+    if (candidate_ui_element_session_.host_managed())
+        selected_index_ = candidate_ui_element_session_.selected_index();
+    const std::wstring extension = candidates_[std::min(selected_index_, candidates_.size() - 1)].text;
+    context->AddRef();
+    // Close the UI and its edit monitor before inserting. Accepted extensions
+    // are never treated as typed pinyin, and the surrounding document is never
+    // sent to the persistent learning store.
+    dismiss_prediction(L"prediction_accepted");
+    const HRESULT hr = composition_.insert_text(context, client_id_, extension);
+    if (SUCCEEDED(hr)) start_prediction(context);
+    context->Release();
+    return hr;
+}
+
+void TextService::accept_candidate_from_ui(size_t index) {
+    if (mode_ != InputMode::Chinese || !candidate_context_ || index >= candidates_.size() ||
+        (!prediction_active_ && (composing_.empty() || !composition_.active()))) return;
+    ITfContext* context = candidate_context_;
+    context->AddRef();
+    selected_index_ = index;
+    const HRESULT hr = prediction_active_ ? commit_prediction(context) : commit_selected(context);
+    if (FAILED(hr)) log_status(L"candidate-ui", L"candidate accept failed " + hresult_hex(hr));
+    context->Release();
 }
 
 HRESULT TextService::commit_selected(ITfContext* context) {
@@ -1391,6 +1592,8 @@ HRESULT TextService::commit_selected(ITfContext* context) {
         refresh_candidates();
         return update_composition(context);
     }
+    if (!suppress_prediction_ && std::any_of(committed.begin(), committed.end(),
+        [](wchar_t ch) { return ch >= 0x3400 && ch <= 0x9FFF; })) start_prediction(context);
     return S_OK;
 }
 
@@ -1403,7 +1606,9 @@ HRESULT TextService::make_composition_room(ITfContext* context) {
         [](wchar_t ch) { return ch >= L'a' && ch <= L'z'; });
     const std::wstring committed = raw ? composing_ : selected->text;
     const std::wstring preceding = preceding_committed_text_ + committed;
+    suppress_prediction_ = true;
     const HRESULT hr = raw ? commit_raw_composition(context) : commit_selected(context);
+    suppress_prediction_ = false;
     if (FAILED(hr)) return hr;
     if (composing_.size() >= before) return E_UNEXPECTED;
     if (composing_.empty()) {
@@ -1418,7 +1623,9 @@ HRESULT TextService::commit_punctuation(ITfContext* context, wchar_t punctuation
     // punctuation so the document never loses the remainder of typed pinyin.
     for (size_t attempt = 0; !composing_.empty() && attempt < 256; ++attempt) {
         const size_t before = composing_.size();
+        suppress_prediction_ = true;
         const HRESULT hr = candidates_.empty() ? commit_raw_composition(context) : commit_selected(context);
+        suppress_prediction_ = false;
         if (FAILED(hr)) return hr;
         if (!composing_.empty() && composing_.size() >= before) return E_UNEXPECTED;
     }
@@ -1489,6 +1696,10 @@ void TextService::clear_transient_contexts() {
 }
 
 void TextService::reset_transient_input_state(const wchar_t* reason) {
+    unadvise_prediction_edits();
+    prediction_active_ = false;
+    prediction_before_.clear();
+    if (prediction_caret_) { prediction_caret_->Release(); prediction_caret_ = nullptr; }
     candidate_window_.cancel_layout_retry();
     end_candidate_ui_element(reason ? reason : L"transient_reset");
     composition_.clear();

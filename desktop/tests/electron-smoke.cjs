@@ -6,6 +6,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const zlib = require('node:zlib');
+const { spawnSync } = require('node:child_process');
 
 const cli = Object.fromEntries(process.argv.slice(2).reduce((items, value, index, args) => {
   if (value.startsWith('--')) items.push([value.slice(2), args[index + 1]?.startsWith('--') ? true : args[index + 1] ?? true]);
@@ -156,15 +157,58 @@ async function api(name, args = []) {
   return page.evaluate(({ name, args }) => window.localPinyin[name](...args), { name, args });
 }
 
+function native(command, args = []) {
+  const environment = { ...process.env, LOCALPINYINIME_LOCALAPPDATA: data };
+  delete environment.LOCALPINYINIME_USER_LEXICON_PATH;
+  delete environment.LOCALPINYINIME_DIAGNOSTICS;
+  const result = spawnSync(bridge, [command, ...args], {
+    env: environment, encoding: 'utf8', windowsHide: true, timeout: 20000, maxBuffer: 4 * 1024 * 1024,
+  });
+  assert.equal(result.status, 0, `Native ${command} failed: ${result.error?.message || result.stdout || result.stderr}`);
+  return JSON.parse(result.stdout);
+}
+
+function savedFiles(directory, includeSettings = true) {
+  const names = ['user_lexicon.tsv', 'user_learning.tsv', 'runtime_status.json'];
+  if (includeSettings) names.push('settings.json');
+  return Object.fromEntries(names.map(name => {
+    const file = path.join(directory, name);
+    return [name, fs.existsSync(file) ? fs.readFileSync(file).toString('base64') : null];
+  }));
+}
+
+async function waitContextCandidates(expected) {
+  await page.waitForFunction(words => {
+    const region = document.querySelector('[aria-label="前文拼音候选"]');
+    if (region?.getAttribute('aria-busy') !== 'false') return false;
+    const actual = Array.from(region.querySelectorAll('.context-word')).map(element => element.firstChild?.textContent);
+    return JSON.stringify(actual) === JSON.stringify(words.slice(0, 9));
+  }, expected);
+}
+
+async function waitPredictions(expected) {
+  await page.waitForFunction(words => {
+    const region = document.querySelector('[aria-label="联想后续词"]');
+    if (region?.getAttribute('aria-busy') !== 'false') return false;
+    const actual = Array.from(region.querySelectorAll('.prediction-chip')).map(element => element.textContent);
+    return JSON.stringify(actual) === JSON.stringify(words.slice(0, 9));
+  }, expected);
+}
+
 async function run() {
   await launch();
   await check('Real native state and preview', async () => {
     const initial = await state();
     assert.equal(initial.version, expectedVersion);
+    assert.equal(initial.settings.predictionEnabled, true, 'Fresh installations enable contextual suggestions.');
     assert(initial.dictionary.total >= 83062, 'Built-in resources were not loaded.');
     assert.equal(path.resolve(initial.dataDirectory), path.join(data, 'LocalPinyinIME'));
     assert.deepEqual((await api('listUserLexicon')).entries, []);
     assert.equal((await api('lookup', ['suibian'])).candidates[0], '随便');
+    for (const context of ['', '请帮忙']) {
+      assert((await api('lookup', ['jinyibufenxi', context])).candidates.includes('进一步分析'),
+        'A complete-key common expression was lost among segmented alternatives.');
+    }
     assert.deepEqual((await api('lookup', [''])).candidates, []);
     const preview = page.getByLabel('试试拼音', { exact: true });
     await preview.fill('suibian');
@@ -182,7 +226,7 @@ async function run() {
     assert.equal(exposed.require, 'undefined');
     assert.equal(exposed.process, 'undefined');
     assert.equal(exposed.frozen, true);
-    assert.deepEqual(exposed.api, ['clearLearning', 'deleteUserEntry', 'getState', 'initialState', 'listUserLexicon', 'lookup', 'openDataDirectory', 'saveSettings', 'searchDictionary', 'upsertUserEntry', 'windowControl'].sort());
+    assert.deepEqual(exposed.api, ['clearLearning', 'deleteUserEntry', 'getState', 'initialState', 'listUserLexicon', 'lookup', 'openDataDirectory', 'predict', 'saveSettings', 'searchDictionary', 'upsertUserEntry', 'windowControl'].sort());
     assert.equal(await page.evaluate(() => typeof window.localPinyin.initialState), 'object');
     assert.equal(await page.evaluate(() => window.localPinyin.initialState.version), expectedVersion);
     const preferences = await app.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows()[0].webContents.getLastWebPreferences());
@@ -250,7 +294,7 @@ async function run() {
     assert.equal((await waitState(value => value.settings.textSize === fontValue)).settings.theme, 'dark');
     await navigate(pages[1]);
     const expectedShift = !(await state()).settings.shiftToggleEnabled;
-    const shift = page.getByRole('switch');
+    const shift = page.getByRole('switch', { name: '按 Shift 切换中英文', exact: true });
     await shift.click();
     await waitState(value => value.settings.shiftToggleEnabled === expectedShift);
     const saved = (await state()).settings;
@@ -259,8 +303,116 @@ async function run() {
     assert.deepEqual((await state()).settings, saved);
     assert.deepEqual(await page.evaluate(() => window.localPinyin.initialState.settings), saved);
     await navigate(pages[1]);
-    assert.equal(await page.getByRole('switch').getAttribute('aria-checked'), String(saved.shiftToggleEnabled));
+    assert.equal(await page.getByRole('switch', { name: '按 Shift 切换中英文', exact: true }).getAttribute('aria-checked'), String(saved.shiftToggleEnabled));
     report.persistedSettings = saved;
+  });
+  await check('Contextual suggestions and preview use the real native engine without learning writes', async () => {
+    await navigate(pages[1]);
+    const before = await state();
+    const filesBefore = savedFiles(before.dataDirectory);
+    const contextField = page.getByLabel('前文', { exact: true });
+    const pinyinField = page.getByLabel(/^后续拼音/);
+    const predictionRegion = page.getByRole('region', { name: '联想后续词', exact: true });
+    const lookupRegion = page.getByRole('region', { name: '前文拼音候选', exact: true });
+    assert.equal(await contextField.inputValue(), '我想');
+    assert.equal(await pinyinField.inputValue(), '');
+    const nativePredictions = native('predict', ['我想']).candidates;
+    assert(nativePredictions.includes('去'), 'The real engine must offer 去 after 我想.');
+    assert.deepEqual((await api('predict', ['我想'])).candidates, nativePredictions);
+    await waitPredictions(nativePredictions);
+    await pinyinField.fill('qu');
+    const nativeContextCandidates = native('lookup', ['qu', '我想']).candidates;
+    assert.deepEqual((await api('lookup', ['qu', '我想'])).candidates, nativeContextCandidates);
+    await waitContextCandidates(nativeContextCandidates);
+    await page.locator('.context-preview-card').scrollIntoViewIfNeeded();
+    await noOverflow();
+    await screenshot('context-preview');
+
+    await predictionRegion.getByRole('button', { name: '去', exact: true }).click();
+    assert.equal(await contextField.inputValue(), '我想去');
+    await waitPredictions(native('predict', ['我想去']).candidates);
+    await waitContextCandidates(native('lookup', ['qu', '我想去']).candidates);
+    assert.deepEqual(savedFiles(before.dataDirectory), filesBefore, 'Preview clicks or queries modified personal files.');
+    await screenshot('context-preview-appended');
+
+    // The same mounted preview survives navigation through all other pages.
+    for (const item of [pages[4], pages[2], pages[0], pages[3], pages[1]]) await navigate(item);
+    assert.equal(await contextField.inputValue(), '我想去');
+    assert.equal(await pinyinField.inputValue(), 'qu');
+    await contextField.fill('');
+    await page.waitForFunction(() => {
+      const regions = ['联想后续词', '前文拼音候选'].map(label => document.querySelector(`[aria-label="${label}"]`));
+      return regions.every(region => region?.getAttribute('aria-busy') === 'false') &&
+        !document.querySelector('.prediction-chip') && !document.querySelector('.context-word');
+    });
+    assert.equal(await predictionRegion.getByText('填写前文后，在这里查看后续词。', { exact: true }).count(), 1);
+    assert.deepEqual((await api('predict', [''])).candidates, []);
+    await contextField.fill('我想');
+    await pinyinField.fill('qu汉');
+    await lookupRegion.getByRole('alert').getByText('拼音只接受英文字母、数字和英文单引号。', { exact: true }).waitFor();
+    assert.equal(await lookupRegion.locator('.context-word').count(), 0);
+    await pinyinField.fill('');
+    await page.waitForFunction(() => document.querySelector('[aria-label="前文拼音候选"]')?.getAttribute('aria-busy') === 'false' &&
+      !document.querySelector('[aria-label="前文拼音候选"] [role="alert"]'));
+
+    // Rapid edits must settle on the final request, not a late prior response.
+    for (const query of ['shi', 'lian', 'qu']) await pinyinField.fill(query);
+    await waitContextCandidates(nativeContextCandidates);
+    await waitPredictions(nativePredictions);
+    const contextProbes = [];
+    for (const probe of [
+      { pinyin: 'xieshi', context: '我想' },
+      { pinyin: 'dehenkuai', context: '我跑' },
+      { pinyin: 'shishi', context: '我们开始' },
+    ]) {
+      const expected = native('lookup', [probe.pinyin, probe.context]).candidates;
+      const plain = native('lookup', [probe.pinyin]).candidates;
+      assert.deepEqual((await api('lookup', [probe.pinyin, probe.context])).candidates, expected);
+      await contextField.fill(probe.context);
+      await pinyinField.fill(probe.pinyin);
+      await waitContextCandidates(expected);
+      contextProbes.push({ ...probe, candidates: expected, contextChangesOrder: JSON.stringify(expected) !== JSON.stringify(plain) });
+    }
+    assert(contextProbes.some(probe => probe.contextChangesOrder), 'Contextual lookup never differed from context-free lookup in the homophone probes.');
+    await contextField.fill('我想'); await pinyinField.fill('qu');
+    await waitContextCandidates(nativeContextCandidates);
+    assert.deepEqual(savedFiles(before.dataDirectory), filesBefore);
+    report.contextPreview = { context: '我想', pinyin: 'qu', predictions: nativePredictions, candidates: nativeContextCandidates,
+      probes: contextProbes, previewFilesUnchanged: true, navigationPreserved: true, blankContextStopped: true, invalidAsciiRejected: true };
+  });
+  await check('Contextual-suggestion setting persists restart while disabled preview remains usable', async () => {
+    await navigate(pages[1]);
+    const original = (await state()).settings;
+    const predictionSwitch = page.getByRole('switch', { name: '前文联想', exact: true });
+    assert.equal(original.predictionEnabled, true);
+    await predictionSwitch.click();
+    await waitState(value => value.settings.predictionEnabled === false);
+    assert.deepEqual((await state()).settings, { ...original, predictionEnabled: false });
+    await app.close(); await launch(); await navigate(pages[1]);
+    const disabled = await state();
+    assert.deepEqual(disabled.settings, { ...original, predictionEnabled: false });
+    assert.equal(await page.evaluate(() => window.localPinyin.initialState.settings.predictionEnabled), false);
+    assert.equal(await page.getByRole('switch', { name: '前文联想', exact: true }).getAttribute('aria-checked'), 'false');
+    const filesBefore = savedFiles(disabled.dataDirectory);
+    const nativePredictions = native('predict', ['我想']).candidates;
+    assert(nativePredictions.includes('去'));
+    assert.deepEqual((await api('predict', ['我想'])).candidates, nativePredictions);
+    await waitPredictions(nativePredictions);
+    await page.getByLabel(/^后续拼音/).fill('qu');
+    await waitContextCandidates(native('lookup', ['qu', '我想']).candidates);
+    await page.locator('.context-preview-card').scrollIntoViewIfNeeded();
+    await screenshot('context-preview-disabled');
+    await page.getByRole('region', { name: '联想后续词', exact: true }).getByRole('button', { name: '去', exact: true }).click();
+    assert.equal(await page.getByLabel('前文', { exact: true }).inputValue(), '我想去');
+    await waitPredictions(native('predict', ['我想去']).candidates);
+    assert.deepEqual(savedFiles(disabled.dataDirectory), filesBefore, 'Disabled preview modified personal files or reenabled predictions.');
+    await page.getByRole('switch', { name: '前文联想', exact: true }).click();
+    await waitState(value => value.settings.predictionEnabled === true);
+    await app.close(); await launch(); await navigate(pages[1]);
+    assert.deepEqual((await state()).settings, original);
+    assert.equal(await page.evaluate(() => window.localPinyin.initialState.settings.predictionEnabled), true);
+    assert.equal(await page.getByRole('switch', { name: '前文联想', exact: true }).getAttribute('aria-checked'), 'true');
+    report.predictionSetting = { disabledRestartVerified: true, enabledRestartVerified: true, disabledPreviewWorks: true };
   });
   await check('Personal words add/edit/search/delete and restart', async () => {
     await navigate(pages[2]);
@@ -376,10 +528,20 @@ async function run() {
   });
   await check('Invalid bridge payloads cannot alter saved data', async () => {
     const before = await state();
+    const filesBefore = savedFiles(before.dataDirectory);
     for (const request of [
       ['saveSettings', [{ ...before.settings, theme: 'arbitrary' }]],
       ['saveSettings', [{ ...before.settings, textSize: -100 }]],
+      ['saveSettings', [{ ...before.settings, predictionEnabled: 'true' }]],
+      ['saveSettings', [{ ...before.settings, predictionEnabled: undefined }]],
       ['upsertUserEntry', [{ pinyin: '../outside', word: '无效词', frequency: 5000 }]],
+      ['lookup', ['qu汉', '我想']],
+      ['lookup', ['q'.repeat(257), '我想']],
+      ['lookup', ['qu', '中'.repeat(33)]],
+      ['lookup', [{ command: 'state' }, '我想']],
+      ['predict', ['中'.repeat(33)]],
+      ['predict', ['我想\n去']],
+      ['predict', [{ command: 'state' }]],
       ['windowControl', ['run-command']],
     ]) {
       const rejected = await page.evaluate(async ({ name, args }) => { try { await window.localPinyin[name](...args); return false; } catch { return true; } }, { name: request[0], args: request[1] });
@@ -387,6 +549,7 @@ async function run() {
     }
     assert.deepEqual((await state()).settings, before.settings);
     assert.equal((await api('listUserLexicon')).entries.length, 0);
+    assert.deepEqual(savedFiles(before.dataDirectory), filesBefore, 'Rejected IPC calls altered personal files.');
   });
   await check('External navigation and windows are denied', async () => {
     const url = page.url();

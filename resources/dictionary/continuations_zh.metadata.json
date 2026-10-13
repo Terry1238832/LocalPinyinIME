@@ -1,0 +1,66 @@
+{
+  "format_version": 1,
+  "name": "LocalPinyinIME first-party next-text continuations",
+  "columns": [
+    "prefix",
+    "next_text",
+    "weight"
+  ],
+  "encoding": "UTF-8",
+  "entry_count": 346,
+  "prefix_count": 117,
+  "sha256": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e",
+  "generated_at": "2026-10-12",
+  "license": "MIT",
+  "source_ids": [
+    "first_party_continuations_001"
+  ],
+  "runtime_dependencies": "none",
+  "authoring_source": "first_party_authored",
+  "review_status": "approved",
+  "included_in_release": true,
+  "authoring_script": "authoring/build_continuations.py",
+  "authoring_script_sha256": "9dfd6e9d626560be3488ae6a5e0b4f291609b12a1ab404c514433034cd56bd4f",
+  "category_counts": {
+    "care_and_politeness": 42,
+    "chat_and_replies": 42,
+    "connecting_phrases": 30,
+    "daily_plans": 31,
+    "office_and_documents": 40,
+    "shopping_and_food": 30,
+    "time_and_meetings": 35,
+    "travel_and_arrival": 23,
+    "weather_and_state": 31,
+    "work_and_progress": 42
+  },
+  "prefix_length_range": [
+    2,
+    5
+  ],
+  "next_text_length_range": [
+    1,
+    7
+  ],
+  "weight_range": [
+    6800,
+    9600
+  ],
+  "weight_policy": "Explicit project-authored relative preference weights, not corpus frequencies or personal data",
+  "authorship": "Individually authored ordinary next-text alternatives; no corpus, commercial IME or third-party lexicon import",
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_answers_added": 0,
+  "benchmark_overlaps_excluded": [],
+  "validation": {
+    "unique_pairs": true,
+    "han_only": true,
+    "prefix_two_to_eight_han": true,
+    "next_one_to_eight_han": true,
+    "weight_range_valid": true,
+    "no_tabs_or_newlines_inside_fields": true,
+    "full_frozen_answers_excluded": true
+  }
+}

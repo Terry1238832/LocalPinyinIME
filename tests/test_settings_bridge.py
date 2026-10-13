@@ -68,6 +68,7 @@ class SettingsBridgeContract(unittest.TestCase):
         self.assertIn(state["settings"]["theme"], {"system", "light", "dark"})
         self.assertIn(state["settings"]["textSize"], range(1, 8))
         self.assertIsInstance(state["settings"]["shiftToggleEnabled"], bool)
+        self.assertIs(state["settings"]["predictionEnabled"], True)
         self.assertGreater(state["dictionary"]["total"], 1000)
         self.assertTrue(all(state["dictionary"][key] > 0 for key in ("core", "local", "standard")))
         self.assertEqual(state["learning"], {"count": 0})
@@ -77,6 +78,8 @@ class SettingsBridgeContract(unittest.TestCase):
         self.assertEqual(self.call("user-list"), {"entries": []})
         self.assertEqual(self.call("lookup", "suibian")["candidates"][0], "随便")
         self.assertEqual(self.call("lookup", ""), {"candidates": []})
+        self.assertIn("去", self.call("predict", "我想")["candidates"])
+        self.assertEqual(self.call("predict", ""), {"candidates": []})
         matches = self.call("dictionary-search", "随便", "5")
         self.assertTrue(any(entry["word"] == "随便" for entry in matches["entries"]))
         self.assertGreaterEqual(matches["total"], len(matches["entries"]))
@@ -90,11 +93,36 @@ class SettingsBridgeContract(unittest.TestCase):
             "inputMode": {"shiftToggleEnabled": False},
         }), encoding="utf-8")
         for theme, size, shift in (("dark", "7", "true"), ("system", "1", "false"), ("light", "4", "true")):
-            expected = {"theme": theme, "textSize": int(size), "shiftToggleEnabled": shift == "true"}
+            expected = {"theme": theme, "textSize": int(size), "shiftToggleEnabled": shift == "true", "predictionEnabled": True}
             self.assertEqual(self.call("save-settings", theme, size, shift), {"settings": expected})
             self.assertEqual(self.call("state")["settings"], expected)
             self.assertFalse(json.loads(settings.read_text(encoding="utf-8"))["candidateWindow"]["showKeyHints"])
         self.assertFalse(self.lexicon.exists())
+
+    def test_context_preview_and_prediction_persistence(self) -> None:
+        before = self.snapshot()
+        predicted = self.call("predict", "我想")["candidates"]
+        self.assertIn("去", predicted)
+        self.assertGreater(len(predicted), 0)
+        self.assertLessEqual(len(predicted), 9)
+        self.assertEqual(len(predicted), len(set(predicted)))
+        self.assertNotIn("我想去", predicted)
+        self.assertEqual(self.call("predict", "我想。"), {"candidates": []})
+        self.assertTrue(self.call("lookup", "qu", "我想")["candidates"])
+        self.call("predict", "我" * 33, success=False)
+        self.call("lookup", "qu", "我" * 33, success=False)
+        self.call("lookup", "qu", "我\n想", success=False)
+        self.call("save-settings", "light", "4", "false", "invalid", success=False)
+        self.assertEqual(self.snapshot(), before)
+        settings = self.call("save-settings", "dark", "5", "true", "false")["settings"]
+        self.assertIs(settings["predictionEnabled"], False)
+        self.assertEqual(self.call("state")["settings"], settings)
+        # Legacy callers that only change theme/font/Shift preserve the option.
+        self.assertIs(self.call("save-settings", "light", "4", "false")["settings"]["predictionEnabled"], False)
+        stopped = self.snapshot()
+        self.assertEqual(self.call("predict", "我想")["candidates"], predicted)
+        self.call("lookup", "qu", "我想")
+        self.assertEqual(self.snapshot(), stopped)
 
     def test_personal_crud_edit_rename_unicode_and_restart(self) -> None:
         first = {"pinyin": "qingshikejifazhanyouxiangongsi", "word": "青石科技发展有限公司", "frequency": 5000}
@@ -179,7 +207,7 @@ class SettingsBridgeContract(unittest.TestCase):
         self.assertFalse(learning.exists())
         self.assertEqual(self.call("state")["learning"], {"count": 0})
         self.assertEqual(self.call("user-list"), personal)
-        self.assertEqual(self.call("state")["settings"], {"theme": "dark", "textSize": 5, "shiftToggleEnabled": True})
+        self.assertEqual(self.call("state")["settings"], {"theme": "dark", "textSize": 5, "shiftToggleEnabled": True, "predictionEnabled": True})
         self.assertEqual(self.call("clear-learning"), {"cleared": True})
 
     def test_valid_runtime_status_is_reported_and_not_rewritten(self) -> None:

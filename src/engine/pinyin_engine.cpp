@@ -255,6 +255,8 @@ void PinyinEngine::rebuild_context_model(const std::wstring& context_path) {
     context_path_ = context_path;
     context_model_.reset(dictionary_);
     if (!context_path.empty()) context_model_.load(context_path);
+    continuation_model_.reset(dictionary_);
+    if (!context_path.empty()) continuation_model_.load((std::filesystem::path(context_path).parent_path() / L"continuations_zh.tsv").wstring());
     learning_revision_ = static_cast<size_t>(-1);
 }
 
@@ -263,6 +265,21 @@ bool PinyinEngine::load_context_model(const std::wstring& path) {
     context_model_.reset(dictionary_);
     learning_revision_ = static_cast<size_t>(-1);
     return context_model_.load(path);
+}
+
+bool PinyinEngine::load_continuation_model(const std::wstring& path) {
+    return continuation_model_.load(path);
+}
+
+std::vector<Candidate> PinyinEngine::predict(const std::wstring& preceding_text, size_t limit) const {
+    learning_.refresh_if_changed();
+    if (learning_revision_ != learning_.revision()) {
+        const auto selections = learning_.selected_texts();
+        context_model_.set_learning(selections);
+        continuation_model_.set_learning(selections);
+        learning_revision_ = learning_.revision();
+    }
+    return continuation_model_.predict(preceding_text, limit);
 }
 
 void PinyinEngine::open_learning(const std::wstring& user_lexicon_path) {
@@ -296,6 +313,7 @@ bool PinyinEngine::load_dictionary_resource_directory(const std::wstring& direct
 }
 
 std::vector<Candidate> PinyinEngine::lookup(const std::wstring& pinyin, const std::wstring& preceding_text) const {
+    const auto context = ContinuationModel::context_suffix(preceding_text);
     const auto parsed = parse_input(pinyin);
     const auto& normalized = parsed.pinyin;
     if (normalized.empty()) {
@@ -304,11 +322,13 @@ std::vector<Candidate> PinyinEngine::lookup(const std::wstring& pinyin, const st
     if (normalized.size() > kMaxInputLength) return {Candidate{normalized, kFallbackScore, 0}};
     learning_.refresh_if_changed();
     if (learning_revision_ != learning_.revision()) {
-        context_model_.set_learning(learning_.selected_texts());
+        const auto selections = learning_.selected_texts();
+        context_model_.set_learning(selections);
+        continuation_model_.set_learning(selections);
         learning_revision_ = learning_.revision();
     }
 
-    auto dp = decode(dictionary_, ranker_, learning_, context_model_, parsed, preceding_text);
+    auto dp = decode(dictionary_, ranker_, learning_, context_model_, parsed, context);
     std::vector<Candidate> candidates;
     for (const auto& path : dp.back()) candidates.push_back(candidate_from_path(path, context_model_));
     // A standalone short word keeps its familiar frequency order. An explicit
@@ -317,7 +337,7 @@ std::vector<Candidate> PinyinEngine::lookup(const std::wstring& pinyin, const st
     // Lower-frequency personal phrases and system sentences keep their normal
     // contextual ranking.
     for (auto candidate : dictionary_.lookup(normalized)) {
-        const bool standalone_word = preceding_text.empty() && candidate.text.size() <= 4;
+        const bool standalone_word = context.empty() && candidate.text.size() <= 4;
         const bool preferred_personal_phrase = candidate.is_user_lexicon_entry && candidate.text.size() > 4 &&
                                                candidate.base_score >= kPreferredUserLexiconFrequency;
         if ((!standalone_word && !preferred_personal_phrase) ||
@@ -340,7 +360,7 @@ std::vector<Candidate> PinyinEngine::lookup(const std::wstring& pinyin, const st
             for (size_t index = 0; index < std::min<size_t>(12, completions.size()); ++index) {
                 const auto& word = completions[index];
                 SegmentPath completed{path.score + lexical_score(word) + word.user_frequency / 3 +
-                                      context_model_.extend_score(transition_history(preceding_text, path.text), word.text) - 600,
+                                      context_model_.extend_score(transition_history(context, path.text), word.text) - 600,
                                       path.segment_count + 1, path.text + word.text};
                 candidates.push_back(candidate_from_path(completed, context_model_));
             }
@@ -351,6 +371,22 @@ std::vector<Candidate> PinyinEngine::lookup(const std::wstring& pinyin, const st
     if (candidates.empty()) candidates = dictionary_.lookup_abbreviation(normalized);
     if (candidates.empty()) candidates = typo_candidates(dictionary_, normalized);
     auto ranked = deduplicate_and_limit(ranker_.rank(normalized, std::move(candidates), &learning_));
+
+    // Keep one explicit complete long word available beside sentence decoding.
+    // It remains an optional candidate: do not replace the contextual first
+    // choice, and leave a ninth slot for selecting a shorter prefix.
+    auto complete_words = dictionary_.lookup(normalized);
+    complete_words.erase(std::remove_if(complete_words.begin(), complete_words.end(), [&](const auto& word) {
+        return word.text.size() <= 4 || word.text.size() > 16 || word.base_score < kPreferredUserLexiconFrequency ||
+               !dictionary_.reading_matches_boundaries(normalized, word.text, parsed.boundaries);
+    }), complete_words.end());
+    complete_words = ranker_.rank(normalized, std::move(complete_words), &learning_);
+    for (auto& word : complete_words) {
+        if (std::any_of(ranked.begin(), ranked.end(), [&](const auto& item) { return item.text == word.text; })) continue;
+        if (ranked.size() >= kMaxCandidateCount - 1) ranked.resize(kMaxCandidateCount - 2);
+        ranked.push_back(std::move(word));
+        break;
+    }
 
     std::vector<Candidate> prefixes;
     if (ranked.empty()) {

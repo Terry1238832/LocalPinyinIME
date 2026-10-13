@@ -148,7 +148,7 @@ int main() {
                CandidatePresentationMode::SelfDrawnHwnd);
 
     std::wcout << L"CandidateListUIElement sizeof=" << sizeof(CandidateListUIElement) << L"\n";
-    REQUIRE_TRUE(sizeof(CandidateListUIElement) < 200U);
+    REQUIRE_TRUE(sizeof(CandidateListUIElement) < 512U);
 
     CandidateListUIElement* element = self_draw.element_for_testing();
     REQUIRE_TRUE(element != nullptr);
@@ -268,6 +268,35 @@ int main() {
     REQUIRE_TRUE(diag.find(L"\u4F60\u597D") == std::wstring::npos);
     REQUIRE_EQ(host_managed.end(), S_OK);
     REQUIRE_EQ(host_mgr.end_count, 1);
+
+    // Selection only highlights; explicit finalize commits once. Update arms
+    // the next model, and retained host references cannot act after session end.
+    FakeUIElementMgr callback_mgr;
+    CandidateUIElementSession callback_session;
+    int finalized = 0, aborted = 0;
+    size_t committed_index = 0;
+    callback_session.set_finalize_callback([&](size_t index) { ++finalized; committed_index = index; });
+    callback_session.set_abort_callback([&]() { ++aborted; });
+    REQUIRE_EQ(callback_session.begin_with_manager(&callback_mgr, S_OK, snapshot()), S_OK);
+    auto* callback_element = callback_session.element_for_testing();
+    REQUIRE_EQ(callback_element->SetSelection(1), S_OK);
+    REQUIRE_EQ(finalized, 0);
+    REQUIRE_EQ(callback_element->Finalize(), S_OK);
+    REQUIRE_EQ(finalized, 1);
+    REQUIRE_EQ(committed_index, size_t{1});
+    REQUIRE_EQ(callback_element->Finalize(), S_OK);
+    REQUIRE_EQ(finalized, 1);
+    REQUIRE_EQ(callback_session.update(snapshot()), S_OK);
+    REQUIRE_EQ(callback_element->Abort(), S_OK);
+    REQUIRE_EQ(aborted, 1);
+    REQUIRE_EQ(callback_element->Abort(), S_OK);
+    REQUIRE_EQ(aborted, 1);
+    REQUIRE_EQ(callback_session.update(snapshot(1)), S_OK);
+    callback_element->AddRef();
+    REQUIRE_EQ(callback_session.end(), S_OK);
+    REQUIRE_EQ(callback_element->Finalize(), S_OK);
+    REQUIRE_EQ(finalized, 1);
+    callback_element->Release();
 
     constexpr std::size_t kLifecycleStressIterations = 10000;
     for (std::size_t iteration = 0; iteration < kLifecycleStressIterations; ++iteration) {

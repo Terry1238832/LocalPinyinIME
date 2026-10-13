@@ -12,6 +12,7 @@ enum class InputMode {
 
 struct InputModeOptions {
     bool shift_toggle_enabled = false;
+    bool prediction_enabled = true;
 };
 
 struct ModifierKeyState {

@@ -55,3 +55,7 @@ python tools/evaluate_typing.py --engine .build/bin/LocalPinyinImeEval.exe --res
 ```
 
 另外两组分别替换为 typing_fresh.tsv、typing_independent.tsv。0.4.0与0.5.0使用此前发布的源码引擎及相同验证工具。摘要、失败案例、引擎、四份运行资源和输入文件SHA-256见 [typing-evaluation.json](typing-evaluation.json)。早期0.4.0/0.5.0记录只包含当时已记录的哈希字段。
+
+## 0.7.0扩词与前文联想
+
+新增2,537条词和前文联想后，重新在隔离数据目录验证三组267句及全部新增词，未学习期望答案。按键前文排序与Tab续词另由真实TSF与交付ASAR验证，不能用固定整句集的指标代表所有前文场景。结果与完整词候选保留修复证据见[context-release-quality.json](context-release-quality.json)。当前案例与运行数据使用LF；历史测量保存原发布字节SHA，文字与期望答案未因换行归一改变。

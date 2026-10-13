@@ -216,7 +216,7 @@ def main():
         output.append(row)
     assert len(output) == 261
     target = OUT / "legacy_pronunciation_repairs.json"
-    target.write_text(json.dumps(output, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    target.write_text(json.dumps(output, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
     manifest = {
         "source_report": ".build/evaluation/pronunciation-impossible.json",
         "source_report_sha256": hashlib.sha256(REPORT.read_bytes()).hexdigest(),
@@ -230,7 +230,7 @@ def main():
         ],
         "pronunciation_reference": "https://pedia.cloud.edu.tw/Entry/Detail?title=%E9%86%82",
     }
-    target.with_suffix(".metadata.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    target.with_suffix(".metadata.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps(manifest, ensure_ascii=False))
 
 

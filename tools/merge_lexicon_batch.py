@@ -39,7 +39,7 @@ def main():
         additions.append(f"{key}\t{word}\t{frequency}")
     if additions:
         text = canonical.read_text(encoding="utf-8").rstrip()+"\n\n# category: " + a.batch.stem + "\n"
-        canonical.write_text(text+"\n".join(additions)+"\n", encoding="utf-8")
+        canonical.write_text(text+"\n".join(additions)+"\n", encoding="utf-8", newline="\n")
     categories: Counter[str] = Counter()
     lengths: Counter[str] = Counter()
     category = ""
@@ -64,7 +64,7 @@ def main():
         "Pypinyin is an authoring-only pronunciation checker with manually reviewed compound overrides; "
         "neither Python nor its library is bundled in the input method. Independent prose used for the separate "
         "character context model is attributed in authoring/sources.json.")
-    meta_path.write_text(json.dumps(meta, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
+    meta_path.write_text(json.dumps(meta, ensure_ascii=False, indent=2)+"\n", encoding="utf-8", newline="\n")
     print(json.dumps({"added": len(additions), "entry_count": meta["entry_count"], "sha256": meta["sha256"]}))
 
 

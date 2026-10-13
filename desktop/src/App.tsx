@@ -88,7 +88,7 @@ export default function App() {
         {!state ? <div className="connection-state"><span className="connection-icon"><Icon name="keyboard" size={30} /></span><h1>{loading ? '正在打开设置' : '暂时无法打开设置'}</h1><p>{loading ? '读取本机设置与词库。' : '本地输入引擎没有响应，请重试。'}</p><ErrorNotice message={error} />{!loading && <button className="button primary" onClick={() => void refresh()}>重新连接</button>}</div> : <>
           <div className="global-message"><ErrorNotice message={error} /></div>
           <section id="page-appearance" className="page" hidden={page !== 'appearance'}><AppearancePage state={state} saving={saving} saveSettings={saveSettings} lookupRevision={lexiconRevision} /></section>
-          <section id="page-input" className="page" hidden={page !== 'input'}><InputPage state={state} saving={saving} saveSettings={saveSettings} /></section>
+          <section id="page-input" className="page" hidden={page !== 'input'}><InputPage state={state} saving={saving} saveSettings={saveSettings} lookupRevision={lexiconRevision} /></section>
           <section id="page-dictionary" className="page" hidden={page !== 'dictionary'}><DictionaryPage state={state} entries={entries} onEntries={updateEntries} loadError={lexiconError} notify={setNotice} /></section>
           <section id="page-learning" className="page" hidden={page !== 'learning'}><LearningPage state={state} onState={setState} notify={setNotice} /></section>
           <section id="page-about" className="page" hidden={page !== 'about'}><AboutPage state={state} /></section>

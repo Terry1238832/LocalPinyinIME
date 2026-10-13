@@ -103,7 +103,8 @@ std::string settings_json(const SettingsStore& store) {
     const auto input = store.load_input_mode_options();
     return "{\"theme\":" + json_string(candidate_theme_mode_to_string(candidate.theme_mode)) +
            ",\"textSize\":" + std::to_string(candidate_text_size_level(candidate.text_size)) +
-           ",\"shiftToggleEnabled\":" + (input.shift_toggle_enabled ? "true" : "false") + '}';
+           ",\"shiftToggleEnabled\":" + (input.shift_toggle_enabled ? "true" : "false") +
+           ",\"predictionEnabled\":" + (input.prediction_enabled ? "true" : "false") + '}';
 }
 
 UserLexiconLoadResult read_user_lexicon(const std::wstring& path) {
@@ -169,10 +170,11 @@ std::string run(const std::vector<std::wstring>& args) {
                std::to_string(user.entries.size()) + '}';
     }
     if (command == L"save-settings") {
-        require_count(args, 4);
+        require(args.size() == 4 || args.size() == 5, L"请求参数数量不正确。");
         require(args[1] == L"system" || args[1] == L"light" || args[1] == L"dark", L"主题必须是 system、light 或 dark。");
         const int level = integer(args[2], 1, 7);
         require(args[3] == L"true" || args[3] == L"false", L"Shift 切换选项必须是 true 或 false。");
+        if (args.size() == 5) require(args[4] == L"true" || args[4] == L"false", L"前文联想选项必须是 true 或 false。");
         BridgeFileLock lock(store.settings_path());
         require(lock.acquired(), L"设置正在保存，请稍后重试。");
         auto candidate = store.load_candidate_options();
@@ -180,15 +182,21 @@ std::string run(const std::vector<std::wstring>& args) {
         candidate.theme_mode = parse_candidate_theme_mode(args[1]);
         candidate.text_size = candidate_text_size_from_level(level);
         input.shift_toggle_enabled = args[3] == L"true";
+        if (args.size() == 5) input.prediction_enabled = args[4] == L"true";
         require(store.save_options(candidate, input), L"无法保存设置，请检查文件权限。");
         notify_options_changed();
         return "{\"settings\":" + settings_json(store) + '}';
     }
-    if (command == L"lookup") {
-        require_count(args, 2);
-        require(args[1].size() <= 256, L"预览拼音最多允许 256 个字符。");
-        require(args[1].find_first_not_of(L"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'") == std::wstring::npos,
-                L"预览只接受拼音字母、数字和分隔用的单引号。");
+    if (command == L"lookup" || command == L"predict") {
+        if (command == L"lookup") {
+            require(args.size() == 2 || args.size() == 3, L"请求参数数量不正确。");
+            require(args[1].size() <= 256, L"预览拼音最多允许 256 个字符。");
+            require(args[1].find_first_not_of(L"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'") == std::wstring::npos,
+                    L"预览只接受拼音字母、数字和分隔用的单引号。");
+        } else require_count(args, 2);
+        const auto preceding = command == L"predict" ? args[1] : (args.size() == 3 ? args[2] : L"");
+        require(preceding.size() <= 32 && preceding.find_first_of(L"\r\n\t") == std::wstring::npos &&
+                (preceding.empty() || !wide_to_utf8(preceding).empty()), L"前文最多32个字符，不能含换行或无效字符。");
         // Unlike normal TSF activation, opening a preview must not create a
         // missing user lexicon or write learning, logs, or runtime status.
         // Surface an unreadable personal file rather than silently previewing
@@ -197,7 +205,7 @@ std::string run(const std::vector<std::wstring>& args) {
         PinyinEngine engine(DictionaryLoadMode::Empty);
         require(engine.load_dictionary_resource_directory(resource_directory().wstring(), user_path,
                     UserLexiconCreateMode::DoNotCreate), L"无法加载输入法词库。");
-        const auto candidates = engine.lookup(args[1]);
+        const auto candidates = command == L"predict" ? engine.predict(preceding) : engine.lookup(args[1], preceding);
         std::string result = "{\"candidates\":[";
         for (size_t index = 0; index < candidates.size(); ++index) {
             if (index) result += ',';

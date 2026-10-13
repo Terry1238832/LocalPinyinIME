@@ -80,10 +80,10 @@ def main():
              "# Existing project entries keep their direct-candidate score; this supplies only their decoding reference."]
     lines.extend(f"{key}\t{word}\t{score}" for (key, word), score in sorted(entries.items()))
     output = a.dictionary_dir / "standard_zh_pinyin.tsv"
-    output.write_text("\n".join(lines)+"\n", encoding="utf-8")
+    output.write_text("\n".join(lines)+"\n", encoding="utf-8", newline="\n")
     # Preserve original frequency evidence separately for authoring/calibration.
     (a.cache_dir / "standard_frequencies.json").write_text(json.dumps(
-        [[key, word, frequency] for (key, word), frequency in sorted(all_frequencies.items())], ensure_ascii=False), encoding="utf-8")
+        [[key, word, frequency] for (key, word), frequency in sorted(all_frequencies.items())], ensure_ascii=False), encoding="utf-8", newline="\n")
     notices = a.dictionary_dir.parent / "THIRD_PARTY_NOTICES.txt"
     desktop_marker = "\n\nElectron desktop interface\n"
     previous_notices = notices.read_text(encoding="utf-8") if notices.exists() else ""
@@ -100,7 +100,12 @@ def main():
         "The full prose and Python authoring dependencies are not included in the installer.\n"
         "Source titles, authors, links, rights review and checksums: https://github.com/Terry1238832/LocalPinyinIME/blob/main/resources/dictionary/authoring/sources.json\n"
         "Model transformation and checksums: resources/dictionary/context_zh.metadata.json in the source repository.\n"
-        "Validation works are excluded from training.\n" + desktop_notices, encoding="utf-8")
+        "Validation works are excluded from training.\n"
+        "\n\nNext-text continuations\n"
+        "The bundled short next-text continuation pairs are original first-party text authored by LocalPinyinIME contributors and distributed under the project MIT license.\n"
+        "Weights are relative editorial preferences. No corpus, commercial lexicon or user conversation history is imported.\n"
+        "Authorship, review and checksums: resources/dictionary/authoring/continuations_sources.json and resources/dictionary/continuations_zh.metadata.json.\n"
+        + desktop_notices, encoding="utf-8", newline="\n")
     metadata = {"format_version": 1, "source_repository": REPOSITORY, "upstream_commit": commit,
                 "upstream_sha256": hashlib.sha256(raw).hexdigest(), "license": "Apache-2.0",
                 "upstream_authors_sha256": hashlib.sha256(authors_text).hexdigest(),
@@ -110,7 +115,7 @@ def main():
                 "heldout_sentences_excluded": True, "project_overrides_preserved": True,
                 "weight_transform": "5000 + round(4500 * ln(1 + frequency) / max_ln); single/multi maxima calibrated separately",
                 "normalization_max_ln": maxima}
-    output.with_suffix(".metadata.json").write_text(json.dumps(metadata, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
+    output.with_suffix(".metadata.json").write_text(json.dumps(metadata, ensure_ascii=False, indent=2)+"\n", encoding="utf-8", newline="\n")
     print(json.dumps(metadata, ensure_ascii=True))
 
 

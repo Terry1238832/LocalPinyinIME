@@ -73,7 +73,7 @@ def fetch(work, destination):
     filename = "luxun_" + re.sub(r"[^\w]", "_", work) + ".txt"
     text = "# Author: 鲁迅 (1881–1936). Public-domain original prose.\n# Source: " + url + "\n" + "\n".join(parser.paragraphs) + "\n"
     path = destination / filename
-    path.write_text(text, encoding="utf-8")
+    path.write_text(text, encoding="utf-8", newline="\n")
     return {"file": filename, "title": work, "author": "鲁迅", "author_died": 1936,
             "source": url, "rights": "public-domain original prose; source page PD notice verified",
             "retrieved": "2026-10-12", "transformation": "Simplified display; article paragraphs only; punctuation retained",
@@ -107,7 +107,7 @@ def main():
     manifest = {**previous, "format_version": 1, "heldout_works_excluded": sorted(heldout),
                 "runtime_artifact": "../context_zh.tsv; only 1-4 character counts are packaged", "sources": list(sources.values()),
                 "fetch_failures": failures}
-    manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
+    manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2)+"\n", encoding="utf-8", newline="\n")
     print(json.dumps({"attributed_sources": len(sources), "failures": failures}, ensure_ascii=True))
 
 

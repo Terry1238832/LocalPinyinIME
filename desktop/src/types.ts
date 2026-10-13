@@ -4,6 +4,7 @@ export interface Settings {
   theme: Theme;
   textSize: number;
   shiftToggleEnabled: boolean;
+  predictionEnabled: boolean;
 }
 
 export interface UserEntry {
@@ -30,7 +31,8 @@ export interface LocalPinyinApi {
   readonly initialState: AppState | null;
   getState(): Promise<AppState>;
   saveSettings(settings: Settings): Promise<AppState>;
-  lookup(pinyin: string): Promise<{ candidates: string[] }>;
+  lookup(pinyin: string, precedingText?: string): Promise<{ candidates: string[] }>;
+  predict(precedingText: string): Promise<{ candidates: string[] }>;
   listUserLexicon(): Promise<{ entries: UserEntry[] }>;
   upsertUserEntry(entry: UserEntry, previous?: UserEntry): Promise<{ entries: UserEntry[] }>;
   deleteUserEntry(entry: UserEntry): Promise<{ entries: UserEntry[] }>;
