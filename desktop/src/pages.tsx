@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { PagedCandidates } from "./PagedCandidates";
 import { BrandMark, Icon, type IconName } from './icons';
 import { asError, ErrorNotice, formatNumber, InfoRow, Modal, PageHeader, SectionTitle, Switch } from './components';
 import type { AppState, Settings, Theme } from './types';
@@ -24,6 +25,7 @@ export function AppearancePage({ state, saving, saveSettings, lookupRevision }: 
     const id = ++request.current;
     setLookupError(null);
     if (!pinyin.trim()) { setCandidates([]); setPending(false); return; }
+    setCandidates([]);
     setPending(true);
     const timer = window.setTimeout(() => {
       window.localPinyin.lookup(pinyin.trim()).then(result => {
@@ -41,7 +43,7 @@ export function AppearancePage({ state, saving, saveSettings, lookupRevision }: 
   return <>
     <PageHeader eyebrow="让输入更合眼缘" title="外观" description="选一个喜欢的主题，把候选词调到刚刚好的大小。" action={<span className="quiet-tag"><Icon name="check" size={14} />自动保存</span>} />
     <div className="card theme-card"><SectionTitle title="界面主题" description="设置界面与输入候选窗口使用同一个主题。" /><div className="theme-options" role="radiogroup" aria-label="界面主题">{themes.map(item => <label key={item.value} className={`theme-option${state.settings.theme === item.value ? ' active' : ''}`}><input type="radio" name="theme" aria-label={item.label} value={item.value} checked={state.settings.theme === item.value} disabled={saving} onChange={() => void saveSettings({ ...state.settings, theme: item.value })} /><div className={`theme-sample sample-${item.value}`}><div className="sample-sidebar"><span /><span /><span /></div><div className="sample-content"><span className="sample-heading" /><span className="sample-line" /><div className="sample-box"><span /><span /></div></div></div><div className="theme-option-footer"><span className="theme-icon"><Icon name={item.icon} size={17} /></span><div><strong>{item.label}</strong><span>{item.description}</span></div><span className="radio-indicator">{state.settings.theme === item.value && <span />}</span></div></label>)}</div></div>
-    <div className="card preview-card"><div className="preview-settings"><SectionTitle title="候选字大小" description="七档字号，适应不同的屏幕和阅读习惯。" /><div className="size-value"><span>{fontSizes[size - 1]}</span><span>px</span><span className="size-level">{size === 4 ? '标准' : `第 ${size} 档`}</span></div><div className="range-control"><span className="range-small">字</span><input aria-label="候选字大小" aria-valuetext={`${fontSizes[size - 1]} px，第 ${size} 档`} type="range" min="1" max="7" step="1" value={size} disabled={saving} onChange={event => setSize(Number(event.target.value))} onPointerUp={commitSize} onKeyUp={commitSize} onBlur={commitSize} /><span className="range-large">字</span></div><div className="range-labels"><span>小</span><button className="text-button" disabled={saving || size === 4} onClick={() => { setSize(4); void saveSettings({ ...state.settings, textSize: 4 }); }}>恢复标准</button><span>大</span></div></div><div className="live-preview"><div className="preview-topline"><span className="eyebrow">实时预览</span><span className="live-indicator">本地引擎</span></div><label className="preview-input-label" htmlFor="preview-pinyin">试试拼音</label><div className="preview-input-wrap"><Icon name="keyboard" size={18} /><input id="preview-pinyin" type="text" spellCheck={false} autoComplete="off" value={pinyin} maxLength={256} placeholder="输入拼音，如 suibian" onChange={event => setPinyin(event.target.value)} /><span className="input-caret" /></div><div className="candidate-preview" aria-label="候选预览" aria-live="polite" aria-busy={pending} style={{ fontSize: `${fontSizes[size - 1]}px` }}>{candidates.length ? candidates.slice(0, 4).map((candidate, index) => <span className={`preview-candidate${index === 0 ? ' first' : ''}`} key={`${candidate}-${index}`}><span className="candidate-number">{index + 1}</span><span className="candidate-word">{candidate}</span>{rawFallback && <span className="raw-input-label">原始输入</span>}</span>) : <span className="preview-placeholder">{pending ? '正在查找候选…' : pinyin.trim() ? '没有找到候选，试试别的拼音。' : '输入拼音后，候选词会出现在这里。'}</span>}</div><p className="preview-footnote">预览不会写入你的学习记录。</p><ErrorNotice message={lookupError} /></div></div>
+    <div className="card preview-card"><div className="preview-settings"><SectionTitle title="候选字大小" description="七档字号，适应不同的屏幕和阅读习惯。" /><div className="size-value"><span>{fontSizes[size - 1]}</span><span>px</span><span className="size-level">{size === 4 ? '标准' : `第 ${size} 档`}</span></div><div className="range-control"><span className="range-small">字</span><input aria-label="候选字大小" aria-valuetext={`${fontSizes[size - 1]} px，第 ${size} 档`} type="range" min="1" max="7" step="1" value={size} disabled={saving} onChange={event => setSize(Number(event.target.value))} onPointerUp={commitSize} onKeyUp={commitSize} onBlur={commitSize} /><span className="range-large">字</span></div><div className="range-labels"><span>小</span><button className="text-button" disabled={saving || size === 4} onClick={() => { setSize(4); void saveSettings({ ...state.settings, textSize: 4 }); }}>恢复标准</button><span>大</span></div></div><div className="live-preview"><div className="preview-topline"><span className="eyebrow">实时预览</span><span className="live-indicator">本地引擎</span></div><label className="preview-input-label" htmlFor="preview-pinyin">试试拼音</label><div className="preview-input-wrap"><Icon name="keyboard" size={18} /><input id="preview-pinyin" type="text" spellCheck={false} autoComplete="off" value={pinyin} maxLength={256} placeholder="输入拼音，如 suibian" onChange={event => setPinyin(event.target.value)} /><span className="input-caret" /></div><PagedCandidates words={candidates} label="候选预览" fontSize={fontSizes[size - 1]} pending={pending} variant="preview" rawFallback={rawFallback} emptyText={pending ? "正在查找候选…" : pinyin.trim() ? "没有找到候选，试试别的拼音。" : "输入拼音后，候选词会出现在这里。"} /><p className="preview-footnote">候选单行显示，左右箭头翻页；预览仅查询本地词库。</p><ErrorNotice message={lookupError} /></div></div>
     <div className="page-note"><Icon name="spark" size={17} /><span>设置会自动保存。正在打开的输入应用，会在下一次输入时读取新设置。</span></div>
   </>;
 }
@@ -54,12 +56,12 @@ export function InputPage({ state, saving, saveSettings, lookupRevision }: Setti
       <InfoRow icon="keyboard" title="按 Shift 切换中英文" description="单独按下并松开 Shift，就能切换输入模式。">
         <Switch checked={state.settings.shiftToggleEnabled} disabled={saving} label="按 Shift 切换中英文" onChange={shiftToggleEnabled => void saveSettings({ ...state.settings, shiftToggleEnabled })} />
       </InfoRow>
-      <InfoRow icon="spark" title="前文联想" description="词语上屏后，根据光标前文推荐后续词，按 Tab 接受首个联想词。" last>
+      <InfoRow icon="spark" title="前文联想" description="词语上屏后，根据光标前文推荐后续词，左右箭头翻页，Tab 接受当前页联想。" last>
         <Switch checked={state.settings.predictionEnabled} disabled={saving} label="前文联想" onChange={predictionEnabled => void saveSettings({ ...state.settings, predictionEnabled })} />
       </InfoRow>
     </div>
     <ContextPreview state={state} lookupRevision={lookupRevision} />
-    <div className="card shortcut-card"><SectionTitle title="常用快捷键" description="在输入法激活时使用。" /><div className="shortcut-row"><div><strong>切换中英文</strong><span>不论是否启用 Shift，都可以使用</span></div><div className="key-combination"><kbd>Ctrl</kbd><span>+</span><kbd>Space</kbd></div></div><div className="shortcut-row"><div><strong>选择首个候选</strong><span>确认当前词语，继续输入</span></div><kbd>Space</kbd></div><div className="shortcut-row"><div><strong>选择其他候选</strong><span>使用对应的数字直接选词</span></div><div className="key-combination"><kbd>1</kbd><span>—</span><kbd>9</kbd></div></div><div className="shortcut-row"><div><strong>取消当前拼音</strong><span>关闭候选窗口，清空当前输入</span></div><kbd>Esc</kbd></div><div className="shortcut-row last"><div><strong>切换系统输入法</strong><span>在 Windows 已安装的输入法之间切换</span></div><div className="key-combination"><kbd>Win</kbd><span>+</span><kbd>Space</kbd></div></div></div>
+    <div className="card shortcut-card"><SectionTitle title="常用快捷键" description="在输入法激活时使用。" /><div className="shortcut-row"><div><strong>切换中英文</strong><span>不论是否启用 Shift，都可以使用</span></div><div className="key-combination"><kbd>Ctrl</kbd><span>+</span><kbd>Space</kbd></div></div><div className="shortcut-row"><div><strong>确认当前候选</strong><span>确认当前词语，继续输入</span></div><kbd>Space</kbd></div><div className="shortcut-row"><div><strong>选择其他候选</strong><span>按当前页编号选词</span></div><div className="key-combination"><kbd>1</kbd><span>—</span><kbd>9</kbd></div></div><div className="shortcut-row"><div><strong>候选翻页</strong><span>单行显示，左右箭头切换上一页和下一页</span></div><div className="key-combination"><kbd>←</kbd><span>/</span><kbd>→</kbd></div></div><div className="shortcut-row"><div><strong>取消当前拼音</strong><span>关闭候选窗口，清空当前输入</span></div><kbd>Esc</kbd></div><div className="shortcut-row last"><div><strong>切换系统输入法</strong><span>在 Windows 已安装的输入法之间切换</span></div><div className="key-combination"><kbd>Win</kbd><span>+</span><kbd>Space</kbd></div></div></div>
     <div className="tip-card"><span className="tip-icon"><Icon name="input" size={24} /></span><div><h3>整句输入，也可以分词选择</h3><p>输入连续拼音后，按数字选择候选词。遇到人名或专业词语，可以把它加入「我的词库」。</p></div></div>
   </>;
 }
@@ -152,21 +154,17 @@ function ContextPreview({ state, lookupRevision }: { state: AppState; lookupRevi
     <div className="context-preview-results">
       <section className="context-result" aria-label="联想后续词" aria-busy={predictPending}>
         <div className="context-result-heading"><h3>后续词</h3><span>点击追加到前文</span></div>
-        <div className="context-candidates" aria-live="polite">
-          {predictions.length ? predictions.slice(0, 9).map((word, index) => <button type="button" className="prediction-chip" key={`${word}-${index}`} title={word} disabled={predictPending} onClick={() => setPrecedingText(current => lastContext(current + word))}>{word}</button>) : <p className="context-empty">{!context ? '填写前文后，在这里查看后续词。' : predictPending ? '正在查找后续词…' : predictError ? '后续词查询未完成。' : '这段前文暂时没有后续词，可以继续输入拼音。'}</p>}
-        </div>
+        <PagedCandidates words={predictions} label="联想候选" variant="prediction" pending={predictPending} emptyText={!context ? "填写前文后，在这里查看后续词。" : predictPending ? "正在查找后续词…" : predictError ? "后续词查询未完成。" : "这段前文暂时没有后续词，可以继续输入拼音。"} onSelect={word => setPrecedingText(current => lastContext(current + word))} />
         <ErrorNotice message={predictError} />
       </section>
       <section className="context-result" aria-label="前文拼音候选" aria-busy={lookupPending}>
         <div className="context-result-heading"><h3>根据前文排列的拼音候选</h3><span>只读预览</span></div>
-        <div className="context-candidates" aria-live="polite">
-          {candidates.length ? candidates.slice(0, 9).map((word, index) => <span className={`context-word${index === 0 ? ' leading' : ''}`} key={`${word}-${index}`} title={word}>{word}{rawFallback && <span className="raw-input-label">原始输入</span>}</span>) : <p className="context-empty">{!context ? '填写前文后，查看拼音候选。' : !query ? '输入后续拼音，看看前文如何影响选词。' : lookupPending ? '正在根据前文查找…' : lookupError ? '拼音候选查询未完成。' : '没有找到候选，试试别的拼音。'}</p>}
-        </div>
+        <PagedCandidates words={candidates} label="前文候选" variant="context" pending={lookupPending} rawFallback={rawFallback} emptyText={!context ? "填写前文后，查看拼音候选。" : !query ? "输入后续拼音，看看前文如何影响选词。" : lookupPending ? "正在根据前文查找…" : lookupError ? "拼音候选查询未完成。" : "没有找到候选，试试别的拼音。"} />
         <ErrorNotice message={lookupError} />
       </section>
     </div>
     <div className="context-preview-footer"><span>试用不会写入学习记录；关闭前文联想开关后，仍可以在这里查询。</span><button className="text-button" onClick={() => { setPrecedingText('我想'); setPinyin(''); }}>重置试用</button></div>
-    <div className="prediction-shortcuts"><Icon name="keyboard" size={16} /><p>实际输入时，词语上屏后按 <kbd>Tab</kbd> 接受首个联想词，按 <kbd>Esc</kbd> 关闭联想。空格和数字保持原来的输入行为，不会自动续写。</p></div>
+    <div className="prediction-shortcuts"><Icon name="keyboard" size={16} /><p>实际输入时，词语上屏后按 <kbd>Tab</kbd> 接受当前页选中的联想词，按 <kbd>Esc</kbd> 关闭联想。空格和数字保持原来的输入行为，不会自动续写。</p></div>
   </div>;
 }
 

@@ -111,7 +111,13 @@ public:
               const std::vector<Candidate>& candidates,
               size_t selected_index,
               const RECT& caret_rect,
-              const CandidateWindowOwnerInfo& owner_info = {});
+              const CandidateWindowOwnerInfo& owner_info = {},
+              const std::vector<UINT>& page_indices = {});
+    // Builds the same measured page model without showing or requiring an anchor.
+    CandidateLayoutResult prepare_layout(const std::wstring& composition_text,
+              const std::vector<Candidate>& candidates, size_t selected_index,
+              const RECT& caret_rect, const CandidateWindowOwnerInfo& owner_info = {},
+              const std::vector<UINT>& page_indices = {});
     void hide(const wchar_t* reason = L"explicit");
     bool schedule_layout_retry(std::function<void()> callback,
                                unsigned int attempt,
@@ -119,11 +125,13 @@ public:
     void cancel_layout_retry();
     [[nodiscard]] bool is_visible() const noexcept;
     void set_selection_callback(std::function<void(size_t)> callback);
+    void set_page_callback(std::function<void(int)> callback) { page_callback_ = std::move(callback); }
     void set_options_changed_callback(std::function<void()> callback);
     void set_prediction_mode(bool enabled) noexcept { prediction_mode_ = enabled; }
 
 private:
     friend class SettingsWindowCapture;
+    friend class CandidateWindowCapture;
     static LRESULT CALLBACK window_proc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam);
     LRESULT handle_message(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam);
     bool create_with_owner(HWND requested_owner);
@@ -140,6 +148,8 @@ private:
     void paint();
     void render(HDC hdc);
     void draw_settings_button(HDC hdc);
+    void draw_page_controls(HDC hdc);
+    int page_direction_at_point(POINT point) const noexcept;
     bool hit_test_settings_button(POINT point) const noexcept;
     void update_settings_button_hot(bool hot);
     void update_candidate_hot(POINT point);
@@ -155,6 +165,7 @@ private:
     std::wstring composition_text_;
     std::vector<std::wstring> candidate_texts_;
     size_t selected_index_ = 0;
+    std::vector<UINT> page_indices_;
     RECT caret_rect_{};
     CandidateWindowOwnerInfo owner_info_{};
     bool has_cached_show_state_ = false;
@@ -169,9 +180,11 @@ private:
     CandidateTextSize font_text_size_ = CandidateTextSize::Standard;
     bool settings_button_hot_ = false;
     bool settings_button_pressed_ = false;
+    int pressed_page_direction_ = 0;
     bool tracking_mouse_leave_ = false;
     CandidatePointerState candidate_pointer_;
     std::function<void(size_t)> selection_callback_;
+    std::function<void(int)> page_callback_;
     std::function<void()> options_changed_callback_;
     UINT_PTR layout_retry_timer_ = 0;
     unsigned int layout_retry_attempt_ = 0;

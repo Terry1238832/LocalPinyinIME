@@ -9,6 +9,7 @@
 #include <functional>
 #include <string>
 #include <utility>
+#include <vector>
 
 namespace localpinyin {
 
@@ -86,6 +87,12 @@ public:
     void update(const CandidateModelSnapshot& snapshot);
     void set_finalize_callback(std::function<void(size_t)> callback) { finalize_callback_ = std::move(callback); }
     void set_abort_callback(std::function<void()> callback) { abort_callback_ = std::move(callback); }
+    void set_page_indices_changed_callback(std::function<void(const std::vector<UINT>&)> callback) {
+        page_indices_changed_callback_ = std::move(callback);
+    }
+    void set_selection_changed_callback(std::function<void(size_t)> callback) {
+        selection_changed_callback_ = std::move(callback);
+    }
     [[nodiscard]] bool finalized() const noexcept { return finalized_; }
     [[nodiscard]] bool aborted() const noexcept { return aborted_; }
 
@@ -98,11 +105,12 @@ private:
     bool shown_ = true;
     DWORD updated_flags_ = TF_CLUIE_DOCUMENTMGR | TF_CLUIE_COUNT | TF_CLUIE_SELECTION |
                            TF_CLUIE_STRING | TF_CLUIE_PAGEINDEX | TF_CLUIE_CURRENTPAGE;
-    UINT current_page_ = 0;
     bool finalized_ = false;
     bool aborted_ = false;
     std::function<void(size_t)> finalize_callback_;
     std::function<void()> abort_callback_;
+    std::function<void(const std::vector<UINT>&)> page_indices_changed_callback_;
+    std::function<void(size_t)> selection_changed_callback_;
 };
 
 class CandidateUIElementSession {
@@ -122,6 +130,8 @@ public:
     void reset_without_end();
     void set_finalize_callback(std::function<void(size_t)> callback);
     void set_abort_callback(std::function<void()> callback);
+    void set_page_indices_changed_callback(std::function<void(const std::vector<UINT>&)> callback);
+    void set_selection_changed_callback(std::function<void(size_t)> callback);
 
     [[nodiscard]] bool active() const noexcept { return active_; }
     [[nodiscard]] DWORD id() const noexcept { return id_; }
@@ -163,6 +173,8 @@ private:
     CandidatePresentationDiagnostics diagnostics_{};
     std::function<void(size_t)> finalize_callback_;
     std::function<void()> abort_callback_;
+    std::function<void(const std::vector<UINT>&)> page_indices_changed_callback_;
+    std::function<void(size_t)> selection_changed_callback_;
 };
 
 }  // namespace localpinyin

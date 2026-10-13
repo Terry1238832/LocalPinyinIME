@@ -1,0 +1,630 @@
+{
+  "format_version": 1,
+  "version": "0.7.1",
+  "evaluated_at_utc": "2026-10-13T14:46:06.470103+00:00",
+  "scope": "Frozen typing fixtures, read-only dictionary integrity audit, native single-line paging validation and controlled historical-data replay.",
+  "method": {
+    "fixture_tool": "tools/evaluate_typing.py",
+    "engine": ".build/bin/LocalPinyinImeEval.exe",
+    "resources": ".build/bin",
+    "personal_data_isolated": true,
+    "expected_answers_learned": false,
+    "blind_evaluation": false,
+    "fixtures_previously_observed": true,
+    "fixture_answers_or_dictionary_weights_adjusted_after_observation": false,
+    "keystroke_benchmark_run": false,
+    "raw_reports_location": ".build/quality-071",
+    "all_paths_repository_relative": true,
+    "raw_reports_retained_after_delivery": false,
+    "retained_evidence": "Summaries, per-case candidate changes, hashes and complete batch009 final ranks remain in source; temporary raw evaluation and UI reports are cleaned after verified delivery."
+  },
+  "historical_comparison": {
+    "report": "docs/context-release-quality.json",
+    "report_sha256": "77fa983378e64e4cd3706cb047760553e7268143ae123838553df903c1d11de5",
+    "version": "0.7.0",
+    "original_0_7_0_raw_candidate_arrays_available": false,
+    "array_comparison_method": "Reconstruct five 0.7.0 runtime TSV files and verify each byte hash against the 0.7.0 report; replay them with the same final 0.7.1 evaluator used for current data. Compare these replay arrays with final current arrays. This is a controlled replay, not the unavailable original 0.7.0 binary/raw output.",
+    "replay_engine_sha256": "9a8b9814d5784298c0ebcabf50f56b3476e0ffb8ddc9e9c1c9d2e31802fc0125",
+    "all_five_reconstructed_data_hashes_match": true,
+    "replay_quality_summaries_match_historical": true
+  },
+  "artifact_sha256": {
+    "evaluation_engine": "9a8b9814d5784298c0ebcabf50f56b3476e0ffb8ddc9e9c1c9d2e31802fc0125",
+    "ime_dll": "11acacb65c7ab0da9a5809b1f51222ac08af7cb5b2292ba6f6c722f073c02970",
+    "runtime_data": {
+      "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+      "local_core_zh_pinyin.tsv": "253019237faca0af4cc7bc17453bc0a8cfc7d0a6391b83b8162d0a2da8b1c75d",
+      "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+      "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+      "continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e"
+    }
+  },
+  "fixtures": {
+    "fixed": {
+      "input": "tests/data/typing_holdout.tsv",
+      "cases_sha256": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+      "current_summary": {
+        "cases": 138,
+        "top1_correct": 89,
+        "top9_present": 120,
+        "top1_percent": 64.49,
+        "top9_percent": 86.96,
+        "character_error_rate": 0.0482
+      },
+      "historical_0_7_0_summary": {
+        "cases": 138,
+        "top1_correct": 89,
+        "top9_present": 121,
+        "top1_percent": 64.49,
+        "top9_percent": 87.68,
+        "character_error_rate": 0.0482
+      },
+      "quality_delta": {
+        "cases": 0,
+        "top1_correct": 0,
+        "top9_present": -1,
+        "top1_percent": 0.0,
+        "top9_percent": -0.72,
+        "character_error_rate": 0.0
+      },
+      "groups": {
+        "article": {
+          "cases": 47,
+          "top1_correct": 20,
+          "top9_present": 34,
+          "top1_percent": 42.55,
+          "top9_percent": 72.34,
+          "character_error_rate": 0.1
+        },
+        "daily": {
+          "cases": 91,
+          "top1_correct": 69,
+          "top9_present": 86,
+          "top1_percent": 75.82,
+          "top9_percent": 94.51,
+          "character_error_rate": 0.0254
+        }
+      },
+      "comparison": {
+        "candidate_arrays_changed": 2,
+        "top1_changed": 0,
+        "expected_rank_changed": 1,
+        "top1_improvements": 0,
+        "top1_regressions": 0,
+        "top9_improvements": 0,
+        "top9_regressions": 1
+      },
+      "per_case_candidate_changes": [
+        {
+          "source": "daily:044",
+          "pinyin": "zhetiaoluzoudaodiyouzhuanjiudaole",
+          "expected": "这条路走到底右转就到了",
+          "old_rank": 2,
+          "new_rank": 2,
+          "replay_0_7_0_data_candidates": [
+            "这条路走到第右转就到了",
+            "这条路走到底右转就到了",
+            "这条路走到第右转就倒了",
+            "这条路走到第右转酒到了",
+            "这条路走到第右转久到了",
+            "这条路走到第右转旧到了",
+            "这条路走到第右转九到了",
+            "这条路走到第右转救到了",
+            "这条路"
+          ],
+          "current_candidates": [
+            "这条路走到第右转就到了",
+            "这条路走到底右转就到了",
+            "这条路走到第右转久到了",
+            "这条路走到第右转就倒了",
+            "这条路走到底右转久到了",
+            "这条路走到第右转酒到了",
+            "这条路走到第右转旧到了",
+            "这条路走到第右转九到了",
+            "这条路"
+          ]
+        },
+        {
+          "source": "daily:087",
+          "pinyin": "womenxianzaixianbuyaotaolunzhegewenti",
+          "expected": "我们现在先不要讨论这个问题",
+          "old_rank": 2,
+          "new_rank": 0,
+          "replay_0_7_0_data_candidates": [
+            "我们先在先不要讨论这个问题",
+            "我们现在先不要讨论这个问题",
+            "我们先在先不要讨论这个问提",
+            "我们先在先不要讨论这个文体",
+            "我们先在先不要讨论这个问体",
+            "我们先在先不要讨论这个问踢",
+            "我们现在先不要讨论这个问提",
+            "我们现在先不要讨论这个文体",
+            "我们"
+          ],
+          "current_candidates": [
+            "我们先在先不要讨论这个问题",
+            "我们先在线不要讨论这个问题",
+            "我们先在先不要讨论这个问提",
+            "我们先在先不要讨论这个文体",
+            "我们先在先不要讨论这个问体",
+            "我们先在线不要讨论这个问提",
+            "我们先在先不要讨论这个问踢",
+            "我们先在线不要讨论这个文体",
+            "我们"
+          ]
+        }
+      ]
+    },
+    "fresh": {
+      "input": "tests/data/typing_fresh.tsv",
+      "cases_sha256": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+      "current_summary": {
+        "cases": 67,
+        "top1_correct": 37,
+        "top9_present": 52,
+        "top1_percent": 55.22,
+        "top9_percent": 77.61,
+        "character_error_rate": 0.0915
+      },
+      "historical_0_7_0_summary": {
+        "cases": 67,
+        "top1_correct": 37,
+        "top9_present": 52,
+        "top1_percent": 55.22,
+        "top9_percent": 77.61,
+        "character_error_rate": 0.0915
+      },
+      "quality_delta": {
+        "cases": 0,
+        "top1_correct": 0,
+        "top9_present": 0,
+        "top1_percent": 0.0,
+        "top9_percent": 0.0,
+        "character_error_rate": 0.0
+      },
+      "groups": {
+        "article": {
+          "cases": 47,
+          "top1_correct": 24,
+          "top9_present": 32,
+          "top1_percent": 51.06,
+          "top9_percent": 68.09,
+          "character_error_rate": 0.1265
+        },
+        "daily": {
+          "cases": 20,
+          "top1_correct": 13,
+          "top9_present": 20,
+          "top1_percent": 65.0,
+          "top9_percent": 100.0,
+          "character_error_rate": 0.0424
+        }
+      },
+      "comparison": {
+        "candidate_arrays_changed": 0,
+        "top1_changed": 0,
+        "expected_rank_changed": 0,
+        "top1_improvements": 0,
+        "top1_regressions": 0,
+        "top9_improvements": 0,
+        "top9_regressions": 0
+      },
+      "per_case_candidate_changes": []
+    },
+    "independent": {
+      "input": "tests/data/typing_independent.tsv",
+      "cases_sha256": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98",
+      "current_summary": {
+        "cases": 62,
+        "top1_correct": 24,
+        "top9_present": 30,
+        "top1_percent": 38.71,
+        "top9_percent": 48.39,
+        "character_error_rate": 0.1375
+      },
+      "historical_0_7_0_summary": {
+        "cases": 62,
+        "top1_correct": 24,
+        "top9_present": 30,
+        "top1_percent": 38.71,
+        "top9_percent": 48.39,
+        "character_error_rate": 0.1375
+      },
+      "quality_delta": {
+        "cases": 0,
+        "top1_correct": 0,
+        "top9_present": 0,
+        "top1_percent": 0.0,
+        "top9_percent": 0.0,
+        "character_error_rate": 0.0
+      },
+      "groups": {
+        "article": {
+          "cases": 42,
+          "top1_correct": 12,
+          "top9_present": 18,
+          "top1_percent": 28.57,
+          "top9_percent": 42.86,
+          "character_error_rate": 0.2
+        },
+        "daily": {
+          "cases": 20,
+          "top1_correct": 12,
+          "top9_present": 12,
+          "top1_percent": 60.0,
+          "top9_percent": 60.0,
+          "character_error_rate": 0.0651
+        }
+      },
+      "comparison": {
+        "candidate_arrays_changed": 1,
+        "top1_changed": 0,
+        "expected_rank_changed": 0,
+        "top1_improvements": 0,
+        "top1_regressions": 0,
+        "top9_improvements": 0,
+        "top9_regressions": 0
+      },
+      "per_case_candidate_changes": [
+        {
+          "source": "daily:independent:06",
+          "pinyin": "dianyuanjianyixianshichuanzaijuedingyaonayigechima",
+          "expected": "店员建议先试穿再决定要哪一个尺码",
+          "old_rank": 0,
+          "new_rank": 0,
+          "replay_0_7_0_data_candidates": [
+            "店员建议显示传再决定要哪一个尺码",
+            "店员建议显示穿再决定要哪一个尺码",
+            "店员建议显示传再决定要哪一个赤吗",
+            "店员建议显示穿再决定要哪一个赤吗",
+            "店员建议显示传再决定要哪一个吃吗",
+            "店员建议显示穿再决定要哪一个吃吗",
+            "店员建议显示传再决定要哪一个赤码",
+            "店员建议显示穿再决定要哪一个赤码",
+            "电源键"
+          ],
+          "current_candidates": [
+            "店员建议显示传再决定要哪一个尺码",
+            "店员建议显示穿再决定要哪一个尺码",
+            "店员建议显示传再决定要哪一个赤吗",
+            "店员建议显示穿再决定要哪一个赤吗",
+            "店员建议显示传再决定要哪一个吃吗",
+            "店员建议显示穿再决定要哪一个吃吗",
+            "店员建议显示传再决定要哪一个尺吗",
+            "店员建议显示穿再决定要哪一个尺吗",
+            "电源键"
+          ]
+        }
+      ]
+    }
+  },
+  "overall": {
+    "current": {
+      "cases": 267,
+      "top1_correct": 150,
+      "top9_present": 202,
+      "top1_percent": 56.18,
+      "top9_percent": 75.66,
+      "character_error_rate": 0.0785
+    },
+    "historical_data_replay": {
+      "cases": 267,
+      "top1_correct": 150,
+      "top9_present": 203,
+      "top1_percent": 56.18,
+      "top9_percent": 76.03,
+      "character_error_rate": 0.0785
+    },
+    "candidate_arrays_changed": 3,
+    "candidate_arrays_unchanged": 264,
+    "top1_improvements": 0,
+    "top1_regressions": 0,
+    "top9_improvements": 0,
+    "top9_regressions": 1
+  },
+  "complete_word_retention_fix": {
+    "problem": "An eligible exact-match long word already at candidate nine was skipped by the earlier presence check and then removed when the shorter-prefix slot was reserved.",
+    "change": "Only when a shorter prefix is actually reserved, move an eligible ninth complete word into candidate eight before truncating; keep candidates one through seven and the ninth prefix; no-prefix lists remain intact.",
+    "source": "src/engine/pinyin_engine.cpp",
+    "test": "tests/test_pinyin_engine.cpp",
+    "frozen_candidate_arrays_changed_by_fix": {
+      "fixed": 0,
+      "fresh": 0,
+      "independent": 0
+    },
+    "all_frozen_candidate_arrays_unchanged_by_fix": true
+  },
+  "timing_scope": "Complete-input engine lookups only; concurrent jobs and build activity mean observed latencies are not a controlled performance comparison. No host dispatch/edit-session or per-keystroke timings.",
+  "status": "native_paging_passed_with_known_frozen_quality_regression",
+  "integrity_audit": {
+    "validators": {
+      "local_core": {
+        "valid_entries": 40943,
+        "status": "passed"
+      },
+      "standard": {
+        "valid_entries": 55716,
+        "status": "passed"
+      },
+      "context": {
+        "valid_ngrams": 119220,
+        "attributed_inputs": 21,
+        "excluded_fixtures": 3,
+        "status": "passed"
+      },
+      "continuations": {
+        "entries": 346,
+        "prefixes": 117,
+        "status": "passed"
+      }
+    },
+    "files": {
+      "core_zh_pinyin.tsv": {
+        "path": "resources/dictionary/core_zh_pinyin.tsv",
+        "sha256": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+        "bytes": 7236,
+        "entries": 402,
+        "utf8_bom": false,
+        "cr_bytes": 0,
+        "final_lf": true,
+        "runtime_byte_identical": true,
+        "unique_key_display": 402,
+        "duplicates_within_layer": 0
+      },
+      "local_core_zh_pinyin.tsv": {
+        "path": "resources/dictionary/local_core_zh_pinyin.tsv",
+        "sha256": "253019237faca0af4cc7bc17453bc0a8cfc7d0a6391b83b8162d0a2da8b1c75d",
+        "bytes": 1243906,
+        "entries": 40943,
+        "utf8_bom": false,
+        "cr_bytes": 0,
+        "final_lf": true,
+        "runtime_byte_identical": true,
+        "metadata_sha256_matches": true,
+        "metadata_count_matches": true,
+        "unique_key_display": 40943,
+        "duplicates_within_layer": 0
+      },
+      "standard_zh_pinyin.tsv": {
+        "path": "resources/dictionary/standard_zh_pinyin.tsv",
+        "sha256": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+        "bytes": 1151061,
+        "entries": 55716,
+        "utf8_bom": false,
+        "cr_bytes": 0,
+        "final_lf": true,
+        "runtime_byte_identical": true,
+        "metadata_sha256_matches": true,
+        "metadata_count_matches": true,
+        "unique_key_display": 55716,
+        "duplicates_within_layer": 0
+      },
+      "context_zh.tsv": {
+        "path": "resources/dictionary/context_zh.tsv",
+        "sha256": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+        "bytes": 1434475,
+        "entries": 119220,
+        "utf8_bom": false,
+        "cr_bytes": 0,
+        "final_lf": true,
+        "runtime_byte_identical": true,
+        "metadata_sha256_matches": true,
+        "metadata_count_matches": true
+      },
+      "continuations_zh.tsv": {
+        "path": "resources/dictionary/continuations_zh.tsv",
+        "sha256": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e",
+        "bytes": 8380,
+        "entries": 346,
+        "utf8_bom": false,
+        "cr_bytes": 0,
+        "final_lf": true,
+        "runtime_byte_identical": true,
+        "metadata_sha256_matches": true,
+        "metadata_count_matches": true
+      }
+    },
+    "fixtures": {
+      "typing_holdout.tsv": {
+        "path": "tests/data/typing_holdout.tsv",
+        "sha256": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+        "cr_bytes": 0,
+        "final_lf": true
+      },
+      "typing_fresh.tsv": {
+        "path": "tests/data/typing_fresh.tsv",
+        "sha256": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+        "cr_bytes": 0,
+        "final_lf": true
+      },
+      "typing_independent.tsv": {
+        "path": "tests/data/typing_independent.tsv",
+        "sha256": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98",
+        "cr_bytes": 0,
+        "final_lf": true
+      }
+    },
+    "three_candidate_layers": {
+      "raw_rows": 97061,
+      "effective_unique_key_display": 87844,
+      "cross_layer_repeated_rows": 9217
+    },
+    "new_batch": {
+      "path": "resources/dictionary/expansion/lexicon_batch_009.tsv",
+      "entries": 2245,
+      "unique_key_display": 2245,
+      "unique_display": 2245,
+      "sha256": "2aa696d03a0dc0e4ea28c99db4e2c22067db02e3fcdf5ecd23e45747d6f93bf6",
+      "metadata_sha256_matches": true,
+      "all_rows_present_in_local_core": true,
+      "existing_pair_overlap": 0,
+      "existing_display_overlap": 0,
+      "fixture_answer_overlap": 0,
+      "cr_bytes": 0,
+      "final_lf": true
+    }
+  },
+  "full_native_build_validation": {
+    "log": ".build/package-071-final.log",
+    "ctest_total": 34,
+    "ctest_passed": 34,
+    "ctest_failed": 0
+  },
+  "native_paging_validation": {
+    "tests": [
+      {
+        "name": "test_candidate_ui",
+        "result": "passed",
+        "layout_configurations": 420,
+        "themes": [
+          "system",
+          "light",
+          "dark"
+        ],
+        "text_size_levels": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "dpi": [
+          96,
+          120,
+          144,
+          192
+        ],
+        "work_width_px": [
+          80,
+          160,
+          360,
+          800,
+          1920
+        ],
+        "additional_host_forced_page": {
+          "width_px": 240,
+          "dpi": 192,
+          "font_level": 7,
+          "long_candidates": 9
+        },
+        "assertions": [
+          "one horizontal row",
+          "every original model index appears on exactly one page in order",
+          "monitor bounds",
+          "page-relative numbering",
+          "ellipsis display retains full text",
+          "mouse model index mapping"
+        ]
+      },
+      {
+        "name": "test_candidate_ui_element",
+        "result": "passed",
+        "lifecycle_stress_iterations": 10000,
+        "assertions": [
+          "all page starts",
+          "buffer-limited page read",
+          "valid/invalid host page updates",
+          "global selection/current page/finalize consistency",
+          "callback lifetime"
+        ]
+      },
+      {
+        "name": "test_tsf_integration",
+        "result": "passed",
+        "host": "real Windows TSF contexts/ranges/edit sessions with in-memory key/UI manager adapter",
+        "assertions": [
+          "two-or-more measured pages without self-drawn anchor",
+          "left/right clamps without moving document caret",
+          "page-two digit one/Space full original commit",
+          "input insertion/deletion resets page",
+          "host page boundaries/selection and digit override",
+          "synchronous Begin/Update callbacks do not recurse",
+          "multi-page prediction arrows and Tab full-text acceptance",
+          "existing privacy/focus/context/Shift/CtrlSpace/edit passthrough regressions retained"
+        ]
+      },
+      {
+        "name": "test_pinyin_engine",
+        "result": "passed",
+        "synthetic_retention_regression": "Nine synthetic five-character exact words: ninth word survives prefix reservation at slot eight; prefix remains slot nine; no-prefix list keeps all nine words; first seven are unchanged. Fixture is unrelated to frozen sentence or batch coverage answers."
+      }
+    ],
+    "capture_tool": {
+      "source": "src/tools/candidate_capture.cpp",
+      "target": "LocalPinyinCandidateCapture",
+      "presentation": "actual native renderer to DIB/PNG in hidden HWND; never displayed or activated; no OS profile installation"
+    },
+    "captures": [
+      {
+        "path": ".build/candidate-captures/candidate-dark-large-first.png",
+        "sha256": "c440298ff69bb9e30f7fad9b08f1f8719d2f7db75fcb988ec3f0d80bbb54a281",
+        "dimensions_px": [
+          625,
+          104
+        ],
+        "visually_inspected": true
+      },
+      {
+        "path": ".build/candidate-captures/candidate-dark-large-last.png",
+        "sha256": "0abd0cbe101319a7cf9a4e8a5dc857d8f54468bacf2f2ada208ee157c0af04cb",
+        "dimensions_px": [
+          900,
+          104
+        ],
+        "visually_inspected": true
+      },
+      {
+        "path": ".build/candidate-captures/candidate-light-first.png",
+        "sha256": "91da76a60398033d3fb8ff6c0f14b35a961d3a8690178602ff4178d3d290b4f3",
+        "dimensions_px": [
+          446,
+          46
+        ],
+        "visually_inspected": true
+      },
+      {
+        "path": ".build/candidate-captures/candidate-light-last.png",
+        "sha256": "1874a224fb7ee7885b4ad23993c8afbc8c5af83cb587ff721540265ed164b9b2",
+        "dimensions_px": [
+          752,
+          46
+        ],
+        "visually_inspected": true
+      },
+      {
+        "path": ".build/candidate-captures/prediction-narrow-last.png",
+        "sha256": "9270788308993ea0236e264ffb5d6cc44de7d887091809309d75f8f37c4de5a8",
+        "dimensions_px": [
+          360,
+          76
+        ],
+        "visually_inspected": true
+      }
+    ],
+    "installed_os_profile_verified": false,
+    "external_installed_application_hosts_verified": false,
+    "boundary": "Integration and hidden rendering verify service logic and layout; they do not establish installed OS profile routing or live behavior in third-party desktop applications."
+  },
+  "new_word_coverage": {
+    "report": "resources/dictionary/expansion/lexicon_batch_009.validation.json",
+    "report_sha256": "af2cd3c91c87e11df3531597fc44503089a84535ee56086412882edd72cff0fa",
+    "engine_sha256": "9a8b9814d5784298c0ebcabf50f56b3476e0ffb8ddc9e9c1c9d2e31802fc0125",
+    "summary": {
+      "cases": 2245,
+      "top1_correct": 1624,
+      "top1_percent": 72.3385,
+      "top9_present": 2245,
+      "top9_percent": 100.0,
+      "missing_from_top9_count": 0,
+      "non_top1_count": 621,
+      "max_returned_candidate_count": 9,
+      "p50_engine_lookup_ms": 3.985,
+      "p95_engine_lookup_ms": 7.594,
+      "max_engine_lookup_ms": 14.947
+    },
+    "not_blind": true,
+    "scope": "Frozen authored batch display words checked for native top9 selectability, not independent sentence accuracy."
+  }
+}

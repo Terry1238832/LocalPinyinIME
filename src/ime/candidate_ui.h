@@ -145,6 +145,9 @@ struct CandidateLayoutInput {
     std::vector<int> candidate_text_widths_px;
     std::vector<int> number_text_widths_px;
     size_t selected_index = 0;
+    // A host may supply its own valid page boundaries. Empty computes widths.
+    std::vector<UINT> page_indices;
+    int composition_text_width_px = 0;
     RECT caret_rect{};
     RECT work_area{};
     int dpi = 96;
@@ -152,7 +155,8 @@ struct CandidateLayoutInput {
 };
 
 struct CandidateItemLayout {
-    size_t candidate_index = 0;
+    size_t candidate_index = 0; // Original model index, never a truncated label lookup.
+    size_t page_number = 1;
     RECT bounds{};
     RECT number_bounds{};
     RECT text_bounds{};
@@ -174,6 +178,13 @@ struct CandidateLayoutResult {
     RECT candidate_area_rect{};
     RECT action_button_rect{};
     RECT hint_rect{};
+    RECT previous_page_rect{};
+    RECT page_indicator_rect{};
+    RECT next_page_rect{};
+    std::vector<UINT> page_indices;
+    size_t current_page = 0;
+    bool has_previous_page = false;
+    bool has_next_page = false;
     bool show_hint = false;
     int width = 0;
     int height = 0;

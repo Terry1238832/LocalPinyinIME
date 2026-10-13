@@ -16,6 +16,7 @@ struct CandidateModelSnapshot {
     bool active = false;
     std::wstring composition_text;
     std::vector<std::wstring> candidate_texts;
+    std::vector<UINT> page_indices{0};
     std::size_t selection = 0;
     std::uintptr_t context_identity = 0;
     ITfDocumentMgr* document_mgr = nullptr;

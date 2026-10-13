@@ -342,9 +342,28 @@ public:
     HRESULT STDMETHODCALLTYPE BeginUIElement(ITfUIElement* element, BOOL* show, DWORD* id) override {
         if (!element || !show || !id) return E_POINTER;
         current_element = element; *show = FALSE; *id = ++element_id_;
+        if (synchronous_page_callback) {
+            ComPtr<ITfCandidateListUIElementBehavior> behavior;
+            if (SUCCEEDED(current_element.As(&behavior))) {
+                UINT page = 0;
+                check(behavior->SetPageIndex(&page, 1), "synchronous Begin host pages");
+                check(behavior->SetSelection(0), "synchronous Begin host selection");
+            }
+        }
         return S_OK;
     }
-    HRESULT STDMETHODCALLTYPE UpdateUIElement(DWORD) override { return S_OK; }
+    HRESULT STDMETHODCALLTYPE UpdateUIElement(DWORD) override {
+        ++updates;
+        if (synchronous_page_callback && current_element) {
+            ComPtr<ITfCandidateListUIElementBehavior> behavior;
+            if (SUCCEEDED(current_element.As(&behavior))) {
+                UINT page = 0;
+                check(behavior->SetPageIndex(&page, 1), "synchronous Update host pages");
+                check(behavior->SetSelection(0), "synchronous Update host selection");
+            }
+        }
+        return S_OK;
+    }
     HRESULT STDMETHODCALLTYPE EndUIElement(DWORD id) override {
         if (id == element_id_) current_element.Reset();
         return S_OK;
@@ -359,6 +378,8 @@ public:
         if (out) *out = nullptr; return E_NOTIMPL;
     }
     ComPtr<ITfUIElement> current_element;
+    bool synchronous_page_callback = false;
+    unsigned int updates = 0;
 private:
     DWORD element_id_ = 0;
     ULONG refs_ = 1;
@@ -382,6 +403,29 @@ struct Session {
     std::array<bool, 256> modifier_keys{};
     static bool test_key_state(int key, void* context) noexcept {
         return key >= 0 && key < 256 && static_cast<Session*>(context)->modifier_keys[static_cast<size_t>(key)];
+    }
+    std::vector<UINT> pages() {
+        ComPtr<ITfCandidateListUIElement> list;
+        if (!adapter->current_element) std::wcerr << L"Missing page model; host text=" << store->text << L"\n";
+        require(adapter->current_element != nullptr, "page model exists without self-drawn window");
+        check(adapter->current_element.As(&list), "paged list");
+        UINT count = 0;
+        check(list->GetPageIndex(nullptr, 0, &count), "page count");
+        std::vector<UINT> result(count);
+        check(list->GetPageIndex(result.data(), count, &count), "page boundaries");
+        return result;
+    }
+    UINT current_page() {
+        require(adapter->current_element != nullptr, "current page model exists");
+        ComPtr<ITfCandidateListUIElement> list;
+        check(adapter->current_element.As(&list), "current page list");
+        UINT result = 0; check(list->GetCurrentPage(&result), "current page"); return result;
+    }
+    std::wstring candidate(UINT index) {
+        ComPtr<ITfCandidateListUIElement> list;
+        check(adapter->current_element.As(&list), "candidate text list");
+        BSTR word = nullptr; check(list->GetString(index, &word), "candidate text");
+        std::wstring result(word, SysStringLen(word)); SysFreeString(word); return result;
     }
     std::wstring first_candidate() {
         require(adapter->current_element != nullptr, "candidate UI element exists");
@@ -444,6 +488,9 @@ int wmain(int argc, wchar_t** argv) {
             // production text quality is measured by the separate evaluations.
             std::ofstream core(native / L"dictionary" / L"core_zh_pinyin.tsv", std::ios::binary | std::ios::trunc);
             core << "nihao\t你好\t9000\nsuibian\t随便\t9000\npengyou\t朋友\t9000\nni\t你\t9000\ntianqi\t天气\t9000\nweixing\t卫星\t9100\nweixing\t微信\t9000\n";
+            for (int i = 0; i < 9; ++i)
+                core << "ceshi\t这是用于单行分页完整上屏验证的很长候选文字" << i + 1 << "\t" << 9000 - i * 100 << "\n";
+            core << "fenye\t分页\t9000\n";
             require(static_cast<bool>(core), "write isolated core fixture");
             for (const auto* name : {L"local_core_zh_pinyin.tsv", L"standard_zh_pinyin.tsv", L"context_zh.tsv"}) {
                 std::ofstream empty(native / L"dictionary" / name, std::ios::binary | std::ios::trunc);
@@ -453,6 +500,9 @@ int wmain(int argc, wchar_t** argv) {
             context << "发送微信\t20000\n气象卫星\t20000\n";
             std::ofstream file(native / L"dictionary" / L"continuations_zh.tsv", std::ios::binary);
             file << "你好\t世界\t10000\n你好\t朋友\t9000\n天气\t不错\t10000\n";
+            const char* ordinal[] = {"一", "二", "三", "四", "五", "六", "七", "八", "九"};
+            for (int i = 0; i < 9; ++i)
+                file << "分页\t这是跨页联想接续完整文字候选" << ordinal[i] << "\t" << 10000 - i * 100 << "\n";
             require(static_cast<bool>(file), "write isolated continuation fixture");
         }
         {
@@ -495,6 +545,84 @@ int wmain(int argc, wchar_t** argv) {
             s.adapter.Attach(new ManagerAdapter(s.manager.Get()));
             check(s.service->Activate(static_cast<ITfThreadMgr*>(s.adapter.Get()), service_client), "text service activation");
             s.service_active = true;
+            s.adapter->synchronous_page_callback = true;
+            const auto updates_before = s.adapter->updates;
+            for (const auto letter : std::wstring(L"CESHI")) s.key(letter);
+            require(s.pages() == std::vector<UINT>({0}), "Begin/Update host callbacks preserve supplied pages");
+            require(s.adapter->updates - updates_before < 10, "synchronous host page/selection callbacks never recurse");
+            s.key(VK_ESCAPE);
+            s.adapter->synchronous_page_callback = false;
+
+            // Real TSF paging through the same model while the host owns UI.
+            for (const auto letter : std::wstring(L"CESHI")) s.key(letter);
+            const auto default_pages = s.pages();
+            require(default_pages.size() > 1, "long candidate fixture has multiple measured pages");
+            s.key(VK_LEFT);
+            require(s.current_page() == 0 && s.store->text == L"ceshi", "left boundary clamps and never moves host caret");
+            s.key(VK_RIGHT);
+            require(s.current_page() == 1, "right changes candidate page");
+            for (size_t page = 2; page < default_pages.size(); ++page) s.key(VK_RIGHT);
+            s.key(VK_RIGHT);
+            require(s.current_page() == default_pages.size() - 1 && s.store->text == L"ceshi", "right tail boundary clamps without document movement");
+            for (size_t page = default_pages.size() - 1; page > 1; --page) s.key(VK_LEFT);
+            const auto second_first = s.candidate(default_pages[1]);
+            s.key(L'1');
+            require(s.store->text == second_first, "page two digit one commits the full original model candidate");
+            s.store->host_replace(L"");
+            for (const auto letter : std::wstring(L"CESHI")) s.key(letter);
+            s.key(VK_RIGHT);
+            const auto space_word = s.candidate(s.pages()[1]);
+            s.key(VK_SPACE);
+            require(s.store->text == space_word, "Space commits the first selection after page change");
+            s.store->host_replace(L"");
+            for (const auto letter : std::wstring(L"CESHI")) s.key(letter);
+            s.key(VK_RIGHT); s.key(VK_LEFT);
+            require(s.current_page() == 0, "left returns to previous page");
+            s.key(VK_RIGHT); s.key(L'A');
+            require(s.current_page() == 0, "new input resets page one");
+            s.key(VK_ESCAPE);
+            for (const auto letter : std::wstring(L"CESHI")) s.key(letter);
+            s.key(VK_RIGHT); s.key(VK_BACK);
+            require(s.current_page() == 0, "deleting input resets page one");
+            s.key(VK_ESCAPE);
+            for (const auto letter : std::wstring(L"CESHI")) s.key(letter);
+            ComPtr<ITfCandidateListUIElementBehavior> paged_behavior;
+            check(s.adapter->current_element.As(&paged_behavior), "host page behavior");
+            UINT host_pages[] = {0, 2, 5};
+            check(paged_behavior->SetPageIndex(host_pages, 3), "host page boundaries");
+            require(s.pages() == std::vector<UINT>({0, 2, 5}), "host page model matches keyboard pages");
+            check(paged_behavior->SetSelection(4), "host selects page two item");
+            require(s.current_page() == 1, "host selection changes visible current page");
+            const auto host_word = s.candidate(4);
+            s.key(VK_SPACE);
+            require(s.store->text == host_word, "Space honors host selection");
+            paged_behavior.Reset();
+            s.store->host_replace(L"");
+            for (const auto letter : std::wstring(L"CESHI")) s.key(letter);
+            check(s.adapter->current_element.As(&paged_behavior), "host page behavior for digit");
+            check(paged_behavior->SetPageIndex(host_pages, 3), "host pages for digit");
+            check(paged_behavior->SetSelection(4), "host selects later page two item before digit");
+            const auto digit_word = s.candidate(2);
+            s.key(L'1');
+            require(s.store->text == digit_word, "digit overrides host selection using current page slot");
+            paged_behavior.Reset();
+            s.store->host_replace(L"");
+            for (const auto letter : std::wstring(L"FENYE")) s.key(letter);
+            s.key(VK_SPACE);
+            const auto prediction_pages = s.pages();
+            require(prediction_pages.size() > 1, "prediction has multiple single-line pages");
+            s.key(VK_LEFT);
+            require(s.current_page() == 0 && s.store->text == L"分页", "prediction left boundary consumes arrow without document editing");
+            for (size_t page = 1; page < prediction_pages.size(); ++page) s.key(VK_RIGHT);
+            s.key(VK_RIGHT);
+            require(s.current_page() == prediction_pages.size() - 1 && s.store->text == L"分页", "prediction last boundary clamps without document editing");
+            for (size_t page = prediction_pages.size() - 1; page > 1; --page) s.key(VK_LEFT);
+            const auto extension = s.candidate(prediction_pages[1]);
+            require(s.current_page() == 1 && s.store->text == L"分页", "prediction arrows page without inserting or moving caret");
+            s.key(VK_TAB);
+            require(s.store->text == L"分页" + extension, "Tab inserts full selected continuation across pages");
+            s.store->host_replace(L"");
+
             for (const auto letter : std::wstring(L"NIHAO")) s.key(letter);
             require(s.store->text == L"nihao", "real edit sessions update pinyin");
             s.key(VK_SPACE);
@@ -791,7 +919,7 @@ int wmain(int argc, wchar_t** argv) {
             }
             check(s.service->Deactivate(), "text service deactivation");
             s.service_active = false;
-            std::cout << "PASS: DLL COM creation, real TSF edit sessions, context-ranked pinyin, bounded/private preceding text, Tab prediction, host-managed selection, edit/focus/context invalidation, ordinary key passthrough and composition regressions.\n"
+            std::cout << "PASS: single-line candidate pages, page-relative digit/Space commits, host page boundaries/selection, cross-page prediction Tab, DLL COM creation, real TSF edit sessions, context-ranked pinyin, bounded/private preceding text, Tab prediction, host-managed selection, edit/focus/context invalidation, ordinary key passthrough and composition regressions.\n"
                 << "Scope: key-sink registration is in memory; OS profile loading/key routing and candidate presentation require desktop acceptance.\n";
         }
         std::filesystem::remove_all(isolated);

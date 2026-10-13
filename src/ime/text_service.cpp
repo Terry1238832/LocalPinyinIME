@@ -284,6 +284,18 @@ void read_open_close_compartment(ITfThreadMgr* thread_mgr, HRESULT* hr, bool* op
 TextService::TextService() {
     dll_add_ref();
     candidate_window_.set_selection_callback([this](size_t index) { accept_candidate_from_ui(index); });
+    candidate_window_.set_page_callback([this](int direction) {
+        if (candidate_context_) change_candidate_page(candidate_context_, direction);
+    });
+    candidate_ui_element_session_.set_selection_changed_callback([this](size_t index) {
+        selected_index_ = index;
+        refresh_candidate_window_from_host();
+    });
+    candidate_ui_element_session_.set_page_indices_changed_callback([this](const std::vector<UINT>& pages) {
+        candidate_page_indices_ = pages;
+        host_page_indices_ = true;
+        refresh_candidate_window_from_host();
+    });
     candidate_ui_element_session_.set_finalize_callback([this](size_t index) { accept_candidate_from_ui(index); });
     candidate_ui_element_session_.set_abort_callback([this]() {
         if (prediction_active_) dismiss_prediction(L"host_abort");
@@ -292,6 +304,7 @@ TextService::TextService() {
     candidate_window_.set_options_changed_callback([this]() {
         if (prediction_active_ && !settings_store_.load_input_mode_options().prediction_enabled)
             dismiss_prediction(L"prediction_disabled");
+        else if (candidate_context_) update_candidate_window(candidate_context_);
     });
 }
 
@@ -303,6 +316,9 @@ void TextService::set_key_state_reader_for_testing(KeyStateReader reader,
 
 TextService::~TextService() {
     candidate_window_.set_selection_callback({});
+    candidate_window_.set_page_callback({});
+    candidate_ui_element_session_.set_selection_changed_callback({});
+    candidate_ui_element_session_.set_page_indices_changed_callback({});
     candidate_window_.set_options_changed_callback({});
     candidate_ui_element_session_.set_finalize_callback({});
     candidate_ui_element_session_.set_abort_callback({});
@@ -860,7 +876,10 @@ HRESULT TextService::OnTestKeyDown(ITfContext* context, WPARAM wparam, LPARAM, B
     ctrl_space_key_down_.accepted_by_test_key_down = false;
     if (prediction_active_) {
         if (!prediction_still_valid(context)) dismiss_prediction(L"prediction_caret_changed");
-        else if (wparam == VK_TAB && !modifiers.shift && !modifiers.ctrl && !modifiers.alt && !modifiers.win) {
+        else if ((wparam == VK_LEFT || wparam == VK_RIGHT) && candidate_page_indices_.size() > 1 &&
+                 !modifiers.shift && !modifiers.ctrl && !modifiers.alt && !modifiers.win) {
+            *eaten = TRUE; return S_OK;
+        } else if (wparam == VK_TAB && !modifiers.shift && !modifiers.ctrl && !modifiers.alt && !modifiers.win) {
             *eaten = TRUE; return S_OK;
         } else if (wparam == VK_ESCAPE && !modifiers.ctrl && !modifiers.alt && !modifiers.win) {
             *eaten = TRUE; return S_OK;
@@ -887,7 +906,7 @@ HRESULT TextService::OnTestKeyDown(ITfContext* context, WPARAM wparam, LPARAM, B
         return S_OK;
     }
     if (wparam >= L'1' && wparam <= L'9') {
-        *eaten = can_select_candidate_by_digit(key, candidates_.size(), !composing_.empty(),
+        *eaten = can_select_candidate_by_digit(key, current_candidate_page_count(), !composing_.empty(),
             candidate_window_.is_visible() || candidate_ui_element_session_.host_managed());
         return S_OK;
     }
@@ -933,7 +952,11 @@ HRESULT TextService::OnKeyDown(ITfContext* context, WPARAM wparam, LPARAM, BOOL*
     const unsigned long key = static_cast<unsigned long>(wparam);
     if (prediction_active_) {
         if (!prediction_still_valid(context)) dismiss_prediction(L"prediction_caret_changed");
-        else if (key == VK_TAB && !modifiers.shift && !modifiers.ctrl && !modifiers.alt && !modifiers.win) {
+        else if ((key == VK_LEFT || key == VK_RIGHT) && candidate_page_indices_.size() > 1 &&
+                 !modifiers.shift && !modifiers.ctrl && !modifiers.alt && !modifiers.win) {
+            change_candidate_page(context, key == VK_LEFT ? -1 : 1);
+            *eaten = TRUE; return S_OK;
+        } else if (key == VK_TAB && !modifiers.shift && !modifiers.ctrl && !modifiers.alt && !modifiers.win) {
             const HRESULT hr = commit_prediction(context);
             *eaten = SUCCEEDED(hr) && hr != S_FALSE; return S_OK;
         } else if (key == VK_ESCAPE && !modifiers.ctrl && !modifiers.alt && !modifiers.win) {
@@ -1312,10 +1335,10 @@ bool TextService::handle_chinese_key(ITfContext* context, WPARAM wparam, BOOL* e
     }
 
     if (wparam >= L'1' && wparam <= L'9') {
-        if (can_select_candidate_by_digit(static_cast<unsigned long>(wparam), candidates_.size(), !composing_.empty(),
+        if (can_select_candidate_by_digit(static_cast<unsigned long>(wparam), current_candidate_page_count(), !composing_.empty(),
             candidate_window_.is_visible() || candidate_ui_element_session_.host_managed())) {
             const size_t index = static_cast<size_t>(candidate_index_from_digit_key(static_cast<unsigned long>(wparam)));
-            selected_index_ = index;
+            selected_index_ = (candidate_page_indices_.empty() ? 0 : candidate_page_indices_[current_candidate_page()]) + index;
             commit_selected(context);
             *eaten = TRUE;
             return true;
@@ -1326,8 +1349,7 @@ bool TextService::handle_chinese_key(ITfContext* context, WPARAM wparam, BOOL* e
     if (should_eat_candidate_navigation_key(
             static_cast<unsigned long>(wparam), !composing_.empty(), candidates_.size(),
             transient_context_matches(context)) && wparam == VK_LEFT) {
-        selected_index_ = selected_index_ == 0 ? candidates_.size() - 1 : selected_index_ - 1;
-        update_candidate_window(context);
+        change_candidate_page(context, -1);
         *eaten = TRUE;
         return true;
     }
@@ -1335,8 +1357,7 @@ bool TextService::handle_chinese_key(ITfContext* context, WPARAM wparam, BOOL* e
     if (should_eat_candidate_navigation_key(
             static_cast<unsigned long>(wparam), !composing_.empty(), candidates_.size(),
             transient_context_matches(context)) && wparam == VK_RIGHT) {
-        selected_index_ = (selected_index_ + 1) % candidates_.size();
-        update_candidate_window(context);
+        change_candidate_page(context, 1);
         *eaten = TRUE;
         return true;
     }
@@ -1345,8 +1366,33 @@ bool TextService::handle_chinese_key(ITfContext* context, WPARAM wparam, BOOL* e
 }
 
 void TextService::refresh_candidates() {
+    candidate_page_indices_.clear();
+    host_page_indices_ = false;
+    selected_index_ = 0;
     engine_.refresh_user_lexicon_if_needed(!composing_.empty());
     candidates_ = engine_.lookup(composing_, preceding_committed_text_);
+}
+
+size_t TextService::current_candidate_page() const noexcept {
+    if (candidate_page_indices_.empty()) return 0;
+    const auto after = std::upper_bound(candidate_page_indices_.begin(), candidate_page_indices_.end(), selected_index_);
+    return after == candidate_page_indices_.begin() ? 0 : static_cast<size_t>(after - candidate_page_indices_.begin() - 1);
+}
+
+size_t TextService::current_candidate_page_count() const noexcept {
+    if (candidate_page_indices_.empty()) return candidates_.size();
+    const size_t page = current_candidate_page();
+    const size_t end = page + 1 < candidate_page_indices_.size() ? candidate_page_indices_[page + 1] : candidates_.size();
+    return end - candidate_page_indices_[page];
+}
+
+void TextService::change_candidate_page(ITfContext* context, int direction) {
+    if (candidate_page_indices_.empty() || !transient_context_matches(context)) return;
+    const size_t page = current_candidate_page();
+    const size_t next = direction < 0 ? (page > 0 ? page - 1 : 0) :
+        (std::min)(page + 1, candidate_page_indices_.size() - 1);
+    if (next != page) selected_index_ = candidate_page_indices_[next];
+    update_candidate_window(context);
 }
 
 HRESULT TextService::update_composition(ITfContext* context) {
@@ -1364,7 +1410,7 @@ void TextService::update_candidate_window(ITfContext* context) {
     if (prediction_active_ && !settings_store_.load_input_mode_options().prediction_enabled) {
         dismiss_prediction(L"prediction_disabled"); return;
     }
-    const std::wstring display_label = prediction_active_ ? L"联想 · Tab续写，Esc关闭" : composing_;
+    const std::wstring display_label = prediction_active_ ? L"联想 · Tab" : composing_;
     const bool logical_show_requested =
         mode_ == InputMode::Chinese && !display_label.empty() && !candidates_.empty();
     if (logical_show_requested) {
@@ -1381,8 +1427,28 @@ void TextService::update_candidate_window(ITfContext* context) {
         set_candidate_context(nullptr);
     }
 
+    RECT anchor_rect{};
+    bool anchor_available = false;
+    if (logical_show_requested) {
+        anchor_available = candidate_anchor_rect(context, &anchor_rect);
+    }
+    // The page model exists before host UI negotiation and without a caret HWND.
+    RECT layout_anchor = anchor_rect;
+    const CandidateWindowOwnerInfo layout_owner = candidate_owner_info(context);
+    if (!anchor_available) {
+        if (has_last_caret_rect_) layout_anchor = last_caret_rect_;
+        else if (layout_owner.context_valid) GetWindowRect(layout_owner.context_hwnd, &layout_anchor);
+        else layout_anchor = RECT{0, 0, 1, 20};
+    }
+    if (logical_show_requested) {
+        const auto layout = candidate_window_.prepare_layout(display_label, candidates_, selected_index_,
+            layout_anchor, layout_owner, host_page_indices_ ? candidate_page_indices_ : std::vector<UINT>{});
+        candidate_page_indices_ = layout.page_indices;
+    }
+
     CandidateModelSnapshot snapshot =
         make_candidate_model_snapshot(display_label, candidates_, selected_index_, context);
+    snapshot.page_indices = candidate_page_indices_;
     if (logical_show_requested) {
         HRESULT ui_element_hr = S_OK;
         if (!candidate_ui_element_session_.active()) {
@@ -1395,11 +1461,6 @@ void TextService::update_candidate_window(ITfContext* context) {
         }
     }
 
-    RECT anchor_rect{};
-    bool anchor_available = false;
-    if (logical_show_requested) {
-        anchor_available = candidate_anchor_rect(context, &anchor_rect);
-    }
     candidate_ui_element_session_.set_anchor_available(anchor_available);
 
     const CandidateDisplayDecision decision = decide_candidate_display(CandidateDisplayState{
@@ -1461,7 +1522,7 @@ void TextService::update_candidate_window(ITfContext* context) {
     }
     candidate_layout_retry_attempts_ = 0;
     const CandidateWindowOwnerInfo owner_info = candidate_owner_info(context);
-    candidate_window_.show(display_label, candidates_, selected_index_, anchor_rect, owner_info);
+    candidate_window_.show(display_label, candidates_, selected_index_, anchor_rect, owner_info, candidate_page_indices_);
     candidate_ui_element_session_.set_self_draw_enabled(true);
     candidate_ui_element_session_.set_window_visible(candidate_window_.is_visible());
     const bool begin_failed =
@@ -1477,6 +1538,19 @@ void TextService::update_candidate_window(ITfContext* context) {
         show_fallback_reason,
         false);
     release_candidate_model_snapshot(snapshot);
+}
+
+void TextService::refresh_candidate_window_from_host() {
+    // A host can set page boundaries/selection synchronously during Begin or
+    // UpdateUIElement. Notify only our HWND here; calling the manager again
+    // would recursively negotiate the same UI element with that host.
+    if (!candidate_ui_element_session_.active() || candidate_ui_element_session_.host_managed() ||
+        !candidate_window_.is_visible() || !candidate_context_) return;
+    RECT anchor{};
+    if (!candidate_anchor_rect(candidate_context_, &anchor)) return;
+    const std::wstring label = prediction_active_ ? L"联想 · Tab" : composing_;
+    candidate_window_.show(label, candidates_, selected_index_, anchor,
+        candidate_owner_info(candidate_context_), candidate_page_indices_);
 }
 
 void TextService::end_candidate_ui_element(const wchar_t* reason) {
@@ -1527,6 +1601,8 @@ void TextService::start_prediction(ITfContext* context) {
     }
     prediction_caret_ = caret;
     prediction_before_ = std::move(before);
+    candidate_page_indices_.clear();
+    host_page_indices_ = false;
     prediction_active_ = true;
     candidates_ = std::move(predictions);
     selected_index_ = 0;
@@ -1706,6 +1782,8 @@ void TextService::reset_transient_input_state(const wchar_t* reason) {
     composing_.clear();
     preceding_committed_text_.clear();
     candidates_.clear();
+    candidate_page_indices_.clear();
+    host_page_indices_ = false;
     selected_index_ = 0;
     has_last_caret_rect_ = false;
     candidate_layout_retry_attempts_ = 0;

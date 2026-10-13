@@ -421,7 +421,18 @@ std::vector<Candidate> PinyinEngine::lookup(const std::wstring& pinyin, const st
         }
     }
     if (!prefixes.empty()) {
-        if (ranked.size() >= kMaxCandidateCount) ranked.resize(kMaxCandidateCount - 1);
+        if (ranked.size() >= kMaxCandidateCount) {
+            // An eligible complete word may already be ranked ninth. The
+            // earlier retention pass then leaves it in place; protect it here
+            // before its slot is reassigned to a shorter prefix. Preserve its
+            // original score/commit metadata and the first seven choices.
+            if (std::any_of(complete_words.begin(), complete_words.end(), [&](const auto& word) {
+                    return word.text == ranked[kMaxCandidateCount - 1].text;
+                })) {
+                ranked[kMaxCandidateCount - 2] = ranked[kMaxCandidateCount - 1];
+            }
+            ranked.resize(kMaxCandidateCount - 1);
+        }
         std::unordered_set<std::wstring> seen;
         for (const auto& candidate : ranked) seen.insert(candidate.text);
         for (auto& candidate : prefixes) {

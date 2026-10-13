@@ -84,8 +84,12 @@ private:
     HRESULT toggle_input_mode_from_language_bar(const wchar_t* reason);
     HRESULT open_settings_from_language_bar(const wchar_t* source);
     void refresh_candidates();
+    void change_candidate_page(ITfContext* context, int direction);
+    [[nodiscard]] size_t current_candidate_page() const noexcept;
+    [[nodiscard]] size_t current_candidate_page_count() const noexcept;
     HRESULT update_composition(ITfContext* context);
     void update_candidate_window(ITfContext* context);
+    void refresh_candidate_window_from_host();
     void end_candidate_ui_element(const wchar_t* reason);
     HRESULT commit_selected(ITfContext* context);
     void start_prediction(ITfContext* context);
@@ -138,6 +142,8 @@ private:
     bool opening_single_quote_ = true;
     std::vector<Candidate> candidates_;
     size_t selected_index_ = 0;
+    std::vector<UINT> candidate_page_indices_;
+    bool host_page_indices_ = false;
     PinyinEngine engine_;
     SettingsStore settings_store_;
     CompositionManager composition_;

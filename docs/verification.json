@@ -1,17 +1,17 @@
 {
-  "version": "0.7.0",
-  "clientDate": "2026-10-12",
-  "installer": "https://github.com/Terry1238832/LocalPinyinIME/releases/download/v0.7.0/LocalPinyinIME-0.7.0-x64.exe",
-  "installerBytes": 105197883,
-  "installedPayloadBytes": 342767366,
-  "sha256": "1F66343F2CDA74529268AED57A00ADCCDCFE2C14AE6C3D901D43B5EA6E4A4847",
+  "version": "0.7.1",
+  "clientDate": "2026-10-13",
+  "installer": "https://github.com/Terry1238832/LocalPinyinIME/releases/download/v0.7.1/LocalPinyinIME-0.7.1-x64.exe",
+  "installerBytes": 105226609,
+  "installedPayloadBytes": 342864181,
+  "sha256": "D819FF94E9CBA3E309B1316BC8BCC41DCEABDF599FCC6B62C28EDADD9BF380C7",
   "testsPassed": 34,
   "testsFailed": 0,
-  "desktopIntegrationChecks": 14,
-  "interfaceScreenshotsChecked": 37,
+  "desktopIntegrationChecks": 15,
+  "interfaceScreenshotsChecked": 41,
   "navigationTransitions": 80,
   "navigationFrames": 160,
-  "dictionaryEntries": 85599,
+  "dictionaryEntries": 87844,
   "contextNgrams": 119220,
   "desktopStack": {
     "electron": "44.7.0",
@@ -21,15 +21,17 @@
   },
   "verified": [
     "Full native Release build and 34 CTests, including ten cross-process native bridge scenarios",
-    "Real TSF preceding text, 32 UTF-16 limit, protected fields, caret movement and context/focus/edit invalidation",
-    "Explicit Tab/host-selected continuation, ordinary key passthrough, Shift/CtrlSpace and immediate settings change",
-    "Complete long dictionary entries remain selectable without replacing the contextual first choice or shorter prefix",
+    "Single-row native layout across three themes, seven fonts, four DPIs and five available widths; five final real DirectWrite captures",
+    "Left/right page clamps, page-local digits and Space, full long text commits, input reset and prediction paging/Tab",
+    "TSF UIElement host page boundaries, global selection, explicit finalize and synchronous callback reentrancy",
+    "Real TSF preceding text, privacy fields, caret/focus/edit invalidation and immediate prediction settings change",
+    "Complete long dictionary words in ninth place remain selectable beside shorter-prefix candidates",
     "Real final packaged Electron executable, ASAR, native bridge and five adjacent runtime resources",
-    "14 desktop flows, 80 sidebar changes over 160 animation frames and 37 light/dark screenshots",
-    "Context lookup, continuation preview, preview clicks do not write private data, option persists across restart",
+    "15 desktop flows, 80 sidebar transitions over 160 animation frames and 41 light/dark screenshots",
+    "Desktop one-row pages retain all native candidates, seven fonts across two widths, reset, long clipping and preview-only selection",
     "Context isolation, sandbox, fixed validated IPC, 13 invalid payloads rejected, external navigation denied",
-    "267 frozen sentence regressions and all 2537 newly added word lookups evaluated without learning answers",
-    "Runtime data, generators and current checksums use reproducible UTF-8 LF; historical evaluation evidence retained",
+    "267 public sentence regressions and all 2245 newly added word lookups evaluated without learning answers",
+    "Runtime data, current checksums and authoring files use reproducible UTF-8 LF",
     "Original PI assets unchanged, Chinese/English runtime locales only and all vendor licenses retained"
   ],
   "notTested": [
@@ -43,7 +45,7 @@
   ],
   "cleanCheckoutBuildVerified": false,
   "freshNativeBuildVerified": true,
-  "typingEvaluation": "context-release-quality.json",
+  "typingEvaluation": "paging-release-quality.json",
   "payloadSha256": {
     "bin/chrome_100_percent.pak": "ab7c4b7b6cb8832a31d44b95ec50ce52294f49422a3bdde4e21968eca2930cbe",
     "bin/chrome_200_percent.pak": "30fa4a6e27c9ff2fb0f939f01158477e621a67d86e9ecb84cf11b3947db8eb9d",
@@ -51,7 +53,7 @@
     "bin/dictionary/context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
     "bin/dictionary/continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e",
     "bin/dictionary/core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
-    "bin/dictionary/local_core_zh_pinyin.tsv": "a1a74d0284ec336075b28676208d8e8fe6b7d1edd4f4e988ea220f2abc5ad59b",
+    "bin/dictionary/local_core_zh_pinyin.tsv": "253019237faca0af4cc7bc17453bc0a8cfc7d0a6391b83b8162d0a2da8b1c75d",
     "bin/dictionary/standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
     "bin/dxcompiler.dll": "22d415f86ce445f4beb57afbb6856b3b83f19918ad270b6ae6047168ec73956d",
     "bin/dxil.dll": "77e039c905030a641e53658a008b74e90635a5ea9b6b79eabd0f2003bdfca59a",
@@ -62,11 +64,11 @@
     "bin/LICENSES.chromium.html": "e6e6b1f9cb0f32235412be113de7716333e88121f9159a0ea0ff3be652021af7",
     "bin/locales/en-US.pak": "23b271e8009bfa14783700cd0712b4ecaa5b8f2ea28a4d81ae1d7e05bc0c96b1",
     "bin/locales/zh-CN.pak": "7887bd3d01e12306e32a11d9a20566ca0e93688a0375e6ff59da04cf782b1681",
-    "bin/LocalPinyinIME.dll": "c6f28fd10c47be9796b51a9f9001775dc791a77b538fc12b453dc82f29dec1c2",
-    "bin/LocalPinyinImeSetup.exe": "02493441c63695d581d89a042640b91d453bad3004e6b35e7b4f903b5bc0e2fa",
-    "bin/LocalPinyinSettings.exe": "931c19365e1a498f195a758898bb9262dc485f01287da8ed03121feb158c7fe7",
-    "bin/LocalPinyinSettingsBridge.exe": "1f3e885bfbad6b49c394a42686adfe81d46a89f31e4ffbc71f1e417e97a152a7",
-    "bin/resources/app.asar": "1cdb97002594f5d006e42b0f82299d3d28fa91bb68e0e35065811e31bf06b257",
+    "bin/LocalPinyinIME.dll": "11acacb65c7ab0da9a5809b1f51222ac08af7cb5b2292ba6f6c722f073c02970",
+    "bin/LocalPinyinImeSetup.exe": "358d5d25cdc727c1e89abb835cab166566b333ffd9ff45a2993206623b5778b4",
+    "bin/LocalPinyinSettings.exe": "c0dfc731ee56691b42e52ccf0e1d2d343f1f3a3ccbc7c42294b9d7604b894965",
+    "bin/LocalPinyinSettingsBridge.exe": "8d19135f7c0c0c13983258912a66a2ff9199508dea2fd5c03b870ba0ecf82897",
+    "bin/resources/app.asar": "7522f02c0144d43281fef14ac88279a3d587d06852e85be8018334cb9ffdaf8a",
     "bin/resources.pak": "335d91338d271cc341cbea39179941cf043965f47aa5d1cd8ef0c98401ddcf9f",
     "bin/snapshot_blob.bin": "ec901619d6c0d2589d30e94cb60c313b49dd9c2e4334b6deeb454ac97a67ce21",
     "bin/v8_context_snapshot.bin": "883f08309bf436fb442d1903452a69c03747ed77c5f502e88667d9aa1b706556",
@@ -83,6 +85,7 @@
     "Rapid side navigation preserves shell and all page state",
     "Light/dark and minimum-window layout",
     "Native persistence through UI and process restart",
+    "Single-row paging preserves complete native candidates across sizes and keyboard boundaries",
     "Contextual suggestions and preview use the real native engine without learning writes",
     "Contextual-suggestion setting persists restart while disabled preview remains usable",
     "Personal words add/edit/search/delete and restart",
@@ -94,43 +97,47 @@
     "External navigation and windows are denied"
   ],
   "desktopScreenshotSha256": {
-    "appearance-unknown.png": "4df0011cca21a46aef7993cea30626d8eccdcbe37a1bdcabdfe2b9899d151fa1",
-    "appearance-empty.png": "b5f77515710e2d49f44474e5ff226c3ad5510ae2793b1637733cc4c16c9a2198",
-    "navigation-appearance.png": "28a2adf0b9ae8c7dfdb828fe832d503beeb9923dd1d05e47695f39a990c79681",
-    "navigation-input.png": "aebe21666c9f882624b0222c8fa6ccc730438525edee9ec1b59a94a3af18dcc5",
-    "navigation-dictionary.png": "0c5bf5bec27853d9944fe7e0ab6f470b5b5af2d9bfac4712fac6ee5543b26694",
-    "navigation-learning.png": "d0d1d944ae8223dabb9904a6528eae29d6493bdd99cfd9f7704748904b3ab780",
-    "navigation-about.png": "48effba3ae8037e5dd575621518dc3dff80e75209ec27b20781e73a4bfaf5782",
-    "light-1160-appearance.png": "bb7f232673871cac544c16b483a5e524ea01d857d4ac2989bb4ed4430c6563b3",
-    "light-1160-input.png": "aebe21666c9f882624b0222c8fa6ccc730438525edee9ec1b59a94a3af18dcc5",
-    "light-1160-dictionary.png": "0c5bf5bec27853d9944fe7e0ab6f470b5b5af2d9bfac4712fac6ee5543b26694",
-    "light-1160-learning.png": "d0d1d944ae8223dabb9904a6528eae29d6493bdd99cfd9f7704748904b3ab780",
-    "light-1160-about.png": "48effba3ae8037e5dd575621518dc3dff80e75209ec27b20781e73a4bfaf5782",
-    "light-920-appearance.png": "66735d1643a614dc233df9f4015478472967167ddc3c535ea46b5a2511356c40",
-    "light-920-input.png": "1cb1b862012515044016b772336f2a0770f5fe9cf434e1fb1a9cc0ede622d618",
-    "light-920-dictionary.png": "219835b635cccbb2bf83fec99488331d746d7e1b127c5adcf40d64684936f89e",
-    "light-920-learning.png": "a718f9ff5890f9896605211e1cce31c0da8982c7ec9667ac1afe0b8f4ce050a5",
-    "light-920-about.png": "7a5d687891d55232a50a96fd0265820837a73bdaf096f1b4e0abf1c5b3d5e06a",
-    "dark-1160-appearance.png": "707c8a42b80e604392ca6a0a50a92c2144ed9fbf10b6a986e76d27dd3db14560",
-    "dark-1160-input.png": "7bf72858496b5246ea714e8da067fdaddd17f9f868db9c4c4cc182196ab4ba8c",
-    "dark-1160-dictionary.png": "31f05abbe899124a3a0ca83c93c1e0be68903fd0a32c95c782241060639ff123",
-    "dark-1160-learning.png": "737973e3e8e977d21826092319cd30eb41d3567bd108a90115b7aa6e6071384d",
-    "dark-1160-about.png": "d3679b50beb7812b17811f65f644783e77b68696589d9da18702e8ae5570e7b8",
-    "dark-920-appearance.png": "fdd51e5caef55abefe8006d85d03753ac3f2c5487d4eebf39a3d4ab4a7907231",
-    "dark-920-input.png": "6acf9c13a9801658603ed0af9ae3adae2302f4f8778370474b07a2c164d33427",
-    "dark-920-dictionary.png": "a391296470673df2d201735bd5995f2783eaac64d5a08e2d50bc2e3516973edd",
-    "dark-920-learning.png": "89a0a0652a38cb4a67b88921bb740753edf5e5de1958ab251ef5aa7e14898473",
-    "dark-920-about.png": "d227eaa8b96c2bed8f0db9ea518c3b93da22ff5db863aa247d91758a8342b5e3",
-    "context-preview.png": "55bcef31517e41ad2be7cf3f3aa008dbc2149a2852aa7b7cc8c77eafb180465e",
-    "context-preview-appended.png": "8fb1c13decca2b279cda9cf4f897d1bb45f1766bb10ba5f87ddd73a4ab8e679b",
-    "context-preview-disabled.png": "50c0de86f07cbb95b56ad1e9081bedcb3be4c52ffc900117921f6fe12243b4a3",
-    "personal-search-empty.png": "6013fcd6f8a2e0eaf9cd8969a8b3a5bccad4bcfffd6037fe23db8f8ae6d1fa3f",
-    "personal-word-added.png": "1a504feb900817e9241a98ef79073d9590945c2518ddcbb48e3b51cfe77f48b6",
-    "builtin-search-suibian.png": "a74d09c10a1de0ea1cf625074ef523cf47e5cd77b5922122eeb12abeacaa2724",
-    "builtin-search-empty.png": "57d98173abae8d37588772c8e083012e903227382548e10db5f5373c3968d8fe",
-    "learning-confirm.png": "f3bbc1f1287e3ece604f6779ba65d2eed628dcd13df555afa0da8bc096f160a3",
-    "learning-cleared.png": "867d9595a41ee1c7d46f23eb3f3d288f7f700dd75ee0a1a8eef32c26a9e29b7a",
-    "personal-deleted.png": "31f05abbe899124a3a0ca83c93c1e0be68903fd0a32c95c782241060639ff123"
+    "appearance-unknown.png": "03172c7be338c7b28adc6058d72269db566fe3a11cfeddf10849802c28662edf",
+    "appearance-empty.png": "033666f6f69595b305d32ea83ab2fffa8b0c9ce70c0e1b00e597c40ddc1496c5",
+    "navigation-appearance.png": "692ef4023fb005bf40ff351b4e9ece07aee3779b74e0414cb0f87a6b39194ff8",
+    "navigation-input.png": "d167e683fcdcbd9054e61726cfa1d63ce6cc9acc5256057cabe9dd589df646af",
+    "navigation-dictionary.png": "05ff4fdb8b10dda57197874405ae53e09f5b644e041a555be8986e8518d43030",
+    "navigation-learning.png": "205f17263c251c62c18b9fc4f3b2d3f69bb689ff2e0a5b6e42bde9e72dad0cbf",
+    "navigation-about.png": "05822d9277139e4a6cfa124364cf8ca757b6d4e2936de0ab48dab15f1c492a25",
+    "light-1160-appearance.png": "66ea440e819da855642e339b7d70e721aef9dcb753c97e5abe893a2730d693a5",
+    "light-1160-input.png": "d167e683fcdcbd9054e61726cfa1d63ce6cc9acc5256057cabe9dd589df646af",
+    "light-1160-dictionary.png": "05ff4fdb8b10dda57197874405ae53e09f5b644e041a555be8986e8518d43030",
+    "light-1160-learning.png": "205f17263c251c62c18b9fc4f3b2d3f69bb689ff2e0a5b6e42bde9e72dad0cbf",
+    "light-1160-about.png": "05822d9277139e4a6cfa124364cf8ca757b6d4e2936de0ab48dab15f1c492a25",
+    "light-920-appearance.png": "691467a8e37ee29658445b160c8a932c4e39c11e83cc022ce083e64111f03784",
+    "light-920-input.png": "6f653d044988d2932c407232d5adf74cc54d32817955ea9bd29eed9807a5ca50",
+    "light-920-dictionary.png": "2c65ed5cf5fab7fdc65c91f649829e7a86fa3e927725c875d1f93530668a91af",
+    "light-920-learning.png": "559724f9c7f712d86c1e4c49d5868d18f73e0a86dfca539a6dd281995a09afb3",
+    "light-920-about.png": "c70de0ada2c274a82baa2984b148e512b6cbf1071c5b37e46b02d10faec0da91",
+    "dark-1160-appearance.png": "771f33c2ff29b91b9fcfe30ecdbdacbf00f88b3134e0903cbd33b571615d1616",
+    "dark-1160-input.png": "5dfda993cb60b3a0ea01f52b85f1f4d663be191e316152c5149cf21fb1621cd7",
+    "dark-1160-dictionary.png": "92290b9c83367679664f20241f7cf7f598fc60dd95a8b1aa9f09b97503591c4b",
+    "dark-1160-learning.png": "63d8c0f8d0919f0c15024b7e0e38d2ae132ffc018264d873acb142171b844b79",
+    "dark-1160-about.png": "8b4f70d697729a8ca430582733657fa0092331bcd80d2f6f74ba6113d6fed7ff",
+    "dark-920-appearance.png": "f036d96eb1fc30c961ac0d455a40422846ad1ff5aaad112608c2b5a51ee5a33e",
+    "dark-920-input.png": "a11581590dd499cbd702919796fbfbd4d5c7b95a639851e7a48ce110f713d96b",
+    "dark-920-dictionary.png": "9e0ecc8de2687f08384e0a4817b37fac9dd80c0059b5ac9f2f95af6cedd676c5",
+    "dark-920-learning.png": "da08ff64862cc9787485b06a63405a17e57499e3bdbc786661fda5e7232738ff",
+    "dark-920-about.png": "83e5391e6e405641f89a5fe2cd73e4dc1b1e81ec02ab5927573a098bb3ddb99f",
+    "paging-preview-page-1.png": "cb4de16fdab105c1baa619d96e837e8eb3f74f17c1c8f707c502a27096bfd401",
+    "paging-preview-page-2.png": "0206e4560266e3679b174c6885509a3756a2c2729ca7e2783d92dcc0e4c9626b",
+    "paging-preview-long-clip.png": "ba227ba441e951fa69741b0271f31925b395a77eade5848b1b48f73b2937f7b7",
+    "paging-context-page-2.png": "c686bf2d923290262c4933b28f6f4655877dcc67471b7cca7bb911eba7ca45db",
+    "context-preview.png": "3e77430062730267aa4bd663d5eedbb565a92f6fefb08f8bc0b66bd8dc0995ad",
+    "context-preview-appended.png": "9f27e5408724f11d0b61ff39d7c2ebf796b02b959d1a967a3e4f3fa2f2afb898",
+    "context-preview-disabled.png": "9bf11a76a98366630d6a527b2f3f26c674e86c5bb2f61eb4067e1082155c7ff5",
+    "personal-search-empty.png": "e2e2f88268c6a32abf44a0eaad0ad8af02265c75f9c3d33b726ad71d833325e0",
+    "personal-word-added.png": "e568b862fa10d0ad84a2c5d38832bcb55bdd4fb0ec7709b523c878acbc2dfcf4",
+    "builtin-search-suibian.png": "8baecb59cfe1aec80b5a01a067a37b4e289e7c2f60720c48f1ecdc42c1c6f1f5",
+    "builtin-search-empty.png": "9888649ca6c81a915a02757e4b4425f0a407cde05672c6cc78cdae554deedb6d",
+    "learning-confirm.png": "80ddba112b603bb4b8e4753ba71303ef3ba3f547daa48f11718ffd2d9a74d839",
+    "learning-cleared.png": "6840af951e8bc1e70a37fa71c67d548da4ed283b1725fb0147adff44e1c2d259",
+    "personal-deleted.png": "92290b9c83367679664f20241f7cf7f598fc60dd95a8b1aa9f09b97503591c4b"
   },
   "gitHistoryRetained": true,
   "restoredIconAssetsSha256": {
@@ -138,8 +145,8 @@
     "assets/branding/icon/small/LocalPinyinIME-40.png": "b20b3dc72692de8db9c549a5b545cd30b56243bf486e0c2beaa4cf6853895816"
   },
   "navigationIconReferenceCommit": "de52fbced9020f9d65b9ceea221599b9d3eb47cd",
-  "engineRegressionEvidenceVersion": "0.7.0",
-  "addedDictionaryEntries": 2537,
+  "engineRegressionEvidenceVersion": "0.7.1",
+  "addedDictionaryEntries": 2245,
   "continuationAssociations": 346,
   "continuationPrefixes": 117,
   "precedingTextUtf16Limit": 32,
@@ -152,6 +159,550 @@
       "historical_byte_references_preserved": 54,
       "all_data_words_weights_and_frozen_answers_preserved": true
     },
-    "details": "model-data-reproducibility.json"
+    "details": "model-data-reproducibility.json",
+    "historicalLineEndingMigrationVersion": "0.7.0"
+  },
+  "candidatePaging": {
+    "singleRow": true,
+    "keys": [
+      "Left",
+      "Right"
+    ],
+    "pageLocalDigits": true,
+    "boundaryBehavior": "clamp without cycling",
+    "longText": "ellipsis display, original full text committed",
+    "hostManagedPages": true,
+    "predictionAcceptKey": "Tab",
+    "engineCandidateLimit": 9
+  },
+  "nativePagingLayoutMatrix": {
+    "themes": [
+      "light",
+      "dark",
+      "system"
+    ],
+    "configurations": 420,
+    "fontLevels": 7,
+    "dpis": [
+      96,
+      120,
+      144,
+      192
+    ],
+    "availableWidths": [
+      80,
+      160,
+      360,
+      800,
+      1920
+    ],
+    "forcedHostPage": {
+      "width": 240,
+      "dpi": 192,
+      "longCandidates": 9
+    }
+  },
+  "nativeCandidateScreenshotSha256": {
+    "candidate-dark-large-first.png": "c440298ff69bb9e30f7fad9b08f1f8719d2f7db75fcb988ec3f0d80bbb54a281",
+    "candidate-dark-large-last.png": "0abd0cbe101319a7cf9a4e8a5dc857d8f54468bacf2f2ada208ee157c0af04cb",
+    "candidate-light-first.png": "91da76a60398033d3fb8ff6c0f14b35a961d3a8690178602ff4178d3d290b4f3",
+    "candidate-light-last.png": "1874a224fb7ee7885b4ad23993c8afbc8c5af83cb587ff721540265ed164b9b2",
+    "prediction-narrow-last.png": "9270788308993ea0236e264ffb5d6cc44de7d887091809309d75f8f37c4de5a8"
+  },
+  "addedDictionaryCoverage": {
+    "report": "../resources/dictionary/expansion/lexicon_batch_009.validation.json",
+    "cases": 2245,
+    "top1_correct": 1624,
+    "top1_percent": 72.3385,
+    "top9_present": 2245,
+    "top9_percent": 100.0,
+    "missing_from_top9_count": 0,
+    "non_top1_count": 621,
+    "max_returned_candidate_count": 9,
+    "p50_engine_lookup_ms": 3.985,
+    "p95_engine_lookup_ms": 7.594,
+    "max_engine_lookup_ms": 14.947
+  },
+  "desktopSecurity": {
+    "contextIsolation": true,
+    "sandbox": true,
+    "fixedIpc": true,
+    "offscreen": true,
+    "hiddenWindow": true,
+    "focused": false,
+    "packaged": true,
+    "isolatedPersonalData": true
+  },
+  "desktopPaging": {
+    "nativeCandidates": [
+      "你",
+      "拟",
+      "尼",
+      "呢",
+      "泥",
+      "妳",
+      "妮",
+      "腻",
+      "嗯"
+    ],
+    "matrix": [
+      {
+        "width": 1160,
+        "fontSize": 14,
+        "pages": [
+          {
+            "status": "1/2",
+            "candidates": [
+              "你",
+              "拟",
+              "尼",
+              "呢",
+              "泥",
+              "妳",
+              "妮"
+            ]
+          },
+          {
+            "status": "2/2",
+            "candidates": [
+              "腻",
+              "嗯"
+            ]
+          }
+        ]
+      },
+      {
+        "width": 1160,
+        "fontSize": 16,
+        "pages": [
+          {
+            "status": "1/2",
+            "candidates": [
+              "你",
+              "拟",
+              "尼",
+              "呢",
+              "泥",
+              "妳",
+              "妮"
+            ]
+          },
+          {
+            "status": "2/2",
+            "candidates": [
+              "腻",
+              "嗯"
+            ]
+          }
+        ]
+      },
+      {
+        "width": 1160,
+        "fontSize": 17,
+        "pages": [
+          {
+            "status": "1/2",
+            "candidates": [
+              "你",
+              "拟",
+              "尼",
+              "呢",
+              "泥",
+              "妳",
+              "妮"
+            ]
+          },
+          {
+            "status": "2/2",
+            "candidates": [
+              "腻",
+              "嗯"
+            ]
+          }
+        ]
+      },
+      {
+        "width": 1160,
+        "fontSize": 18,
+        "pages": [
+          {
+            "status": "1/2",
+            "candidates": [
+              "你",
+              "拟",
+              "尼",
+              "呢",
+              "泥",
+              "妳"
+            ]
+          },
+          {
+            "status": "2/2",
+            "candidates": [
+              "妮",
+              "腻",
+              "嗯"
+            ]
+          }
+        ]
+      },
+      {
+        "width": 1160,
+        "fontSize": 20,
+        "pages": [
+          {
+            "status": "1/2",
+            "candidates": [
+              "你",
+              "拟",
+              "尼",
+              "呢",
+              "泥",
+              "妳"
+            ]
+          },
+          {
+            "status": "2/2",
+            "candidates": [
+              "妮",
+              "腻",
+              "嗯"
+            ]
+          }
+        ]
+      },
+      {
+        "width": 1160,
+        "fontSize": 22,
+        "pages": [
+          {
+            "status": "1/2",
+            "candidates": [
+              "你",
+              "拟",
+              "尼",
+              "呢",
+              "泥",
+              "妳"
+            ]
+          },
+          {
+            "status": "2/2",
+            "candidates": [
+              "妮",
+              "腻",
+              "嗯"
+            ]
+          }
+        ]
+      },
+      {
+        "width": 1160,
+        "fontSize": 24,
+        "pages": [
+          {
+            "status": "1/2",
+            "candidates": [
+              "你",
+              "拟",
+              "尼",
+              "呢",
+              "泥",
+              "妳"
+            ]
+          },
+          {
+            "status": "2/2",
+            "candidates": [
+              "妮",
+              "腻",
+              "嗯"
+            ]
+          }
+        ]
+      },
+      {
+        "width": 920,
+        "fontSize": 14,
+        "pages": [
+          {
+            "status": "1/3",
+            "candidates": [
+              "你",
+              "拟",
+              "尼",
+              "呢"
+            ]
+          },
+          {
+            "status": "2/3",
+            "candidates": [
+              "泥",
+              "妳",
+              "妮",
+              "腻"
+            ]
+          },
+          {
+            "status": "3/3",
+            "candidates": [
+              "嗯"
+            ]
+          }
+        ]
+      },
+      {
+        "width": 920,
+        "fontSize": 16,
+        "pages": [
+          {
+            "status": "1/3",
+            "candidates": [
+              "你",
+              "拟",
+              "尼",
+              "呢"
+            ]
+          },
+          {
+            "status": "2/3",
+            "candidates": [
+              "泥",
+              "妳",
+              "妮",
+              "腻"
+            ]
+          },
+          {
+            "status": "3/3",
+            "candidates": [
+              "嗯"
+            ]
+          }
+        ]
+      },
+      {
+        "width": 920,
+        "fontSize": 17,
+        "pages": [
+          {
+            "status": "1/3",
+            "candidates": [
+              "你",
+              "拟",
+              "尼",
+              "呢"
+            ]
+          },
+          {
+            "status": "2/3",
+            "candidates": [
+              "泥",
+              "妳",
+              "妮",
+              "腻"
+            ]
+          },
+          {
+            "status": "3/3",
+            "candidates": [
+              "嗯"
+            ]
+          }
+        ]
+      },
+      {
+        "width": 920,
+        "fontSize": 18,
+        "pages": [
+          {
+            "status": "1/3",
+            "candidates": [
+              "你",
+              "拟",
+              "尼",
+              "呢"
+            ]
+          },
+          {
+            "status": "2/3",
+            "candidates": [
+              "泥",
+              "妳",
+              "妮",
+              "腻"
+            ]
+          },
+          {
+            "status": "3/3",
+            "candidates": [
+              "嗯"
+            ]
+          }
+        ]
+      },
+      {
+        "width": 920,
+        "fontSize": 20,
+        "pages": [
+          {
+            "status": "1/3",
+            "candidates": [
+              "你",
+              "拟",
+              "尼",
+              "呢"
+            ]
+          },
+          {
+            "status": "2/3",
+            "candidates": [
+              "泥",
+              "妳",
+              "妮",
+              "腻"
+            ]
+          },
+          {
+            "status": "3/3",
+            "candidates": [
+              "嗯"
+            ]
+          }
+        ]
+      },
+      {
+        "width": 920,
+        "fontSize": 22,
+        "pages": [
+          {
+            "status": "1/3",
+            "candidates": [
+              "你",
+              "拟",
+              "尼",
+              "呢"
+            ]
+          },
+          {
+            "status": "2/3",
+            "candidates": [
+              "泥",
+              "妳",
+              "妮",
+              "腻"
+            ]
+          },
+          {
+            "status": "3/3",
+            "candidates": [
+              "嗯"
+            ]
+          }
+        ]
+      },
+      {
+        "width": 920,
+        "fontSize": 24,
+        "pages": [
+          {
+            "status": "1/3",
+            "candidates": [
+              "你",
+              "拟",
+              "尼",
+              "呢"
+            ]
+          },
+          {
+            "status": "2/3",
+            "candidates": [
+              "泥",
+              "妳",
+              "妮",
+              "腻"
+            ]
+          },
+          {
+            "status": "3/3",
+            "candidates": [
+              "嗯"
+            ]
+          }
+        ]
+      }
+    ],
+    "keyboardClamped": true,
+    "newInputReset": true,
+    "emptyInputReset": true,
+    "longCandidate": {
+      "length": 256,
+      "clipped": true,
+      "completeValuePreserved": true
+    },
+    "predictionPages": [
+      {
+        "status": "1/4",
+        "candidates": [
+          "去",
+          "看看",
+          "试试"
+        ]
+      },
+      {
+        "status": "2/4",
+        "candidates": [
+          "问一下",
+          "去北京"
+        ]
+      },
+      {
+        "status": "3/4",
+        "candidates": [
+          "吃晚饭",
+          "喝点水",
+          "我"
+        ]
+      },
+      {
+        "status": "4/4",
+        "candidates": [
+          "要"
+        ]
+      }
+    ],
+    "contextPages": [
+      {
+        "status": "1/3",
+        "candidates": [
+          "你",
+          "呢",
+          "泥",
+          "腻"
+        ]
+      },
+      {
+        "status": "2/3",
+        "candidates": [
+          "拟",
+          "尼",
+          "妳",
+          "妮"
+        ]
+      },
+      {
+        "status": "3/3",
+        "candidates": [
+          "嗯"
+        ]
+      }
+    ],
+    "selectedSecondPageWord": "问一下",
+    "previewFilesUnchanged": true
+  },
+  "desktopVisualReview": {
+    "screenshots": 41,
+    "allVisuallyInspected": true,
+    "reviewSummarySha256": "fb0b10f92ae99d4a183a75be6f02dc13dbde8e3e9dc442e73d68188bb468c13b"
   }
 }

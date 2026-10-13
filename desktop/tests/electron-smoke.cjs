@@ -74,6 +74,13 @@ async function waitState(predicate) {
   }
   throw new Error('Native state did not reach the expected value.');
 }
+async function waitFontLevel(level) {
+  await waitState(value => value.settings.textSize === level);
+  await page.waitForFunction(expected => {
+    const slider = document.querySelector('input[type="range"]');
+    return slider && !slider.disabled && Number(slider.value) === expected;
+  }, level);
+}
 async function navigate(id) {
   await page.locator('nav').getByRole('button', { name: id.label, exact: true }).click();
   await page.getByRole('heading', { name: id.heading, exact: true }).waitFor();
@@ -149,8 +156,19 @@ async function viewport(width, height) {
 }
 
 async function noOverflow() {
-  const measurements = await page.evaluate(() => ({ width: innerWidth, scrollWidth: document.documentElement.scrollWidth, body: document.body.scrollWidth }));
-  assert(measurements.scrollWidth <= measurements.width + 1 && measurements.body <= measurements.width + 1, `Horizontal overflow: ${JSON.stringify(measurements)}`);
+  const measurements = await page.evaluate(() => {
+    const main = document.querySelector('.main-content');
+    return { width: innerWidth, scrollWidth: document.documentElement.scrollWidth, body: document.body.scrollWidth,
+      mainWidth: main.clientWidth, mainScrollWidth: main.scrollWidth,
+      cards: Array.from(document.querySelectorAll('.page:not([hidden]) .card, .page:not([hidden]) .live-preview, .page:not([hidden]) .paged-candidate-row')).map(element => {
+        const bounds = element.getBoundingClientRect();
+        const parent = element.parentElement.getBoundingClientRect();
+        return { className: element.className, left: bounds.left, right: bounds.right,
+          inside: bounds.left >= parent.left - 1 && bounds.right <= parent.right + 1 && bounds.right <= innerWidth + 1 };
+      }) };
+  });
+  assert(measurements.scrollWidth <= measurements.width + 1 && measurements.body <= measurements.width + 1 &&
+    measurements.mainScrollWidth <= measurements.mainWidth + 1 && measurements.cards.every(card => card.inside), `Horizontal overflow: ${JSON.stringify(measurements)}`);
 }
 
 async function api(name, args = []) {
@@ -181,18 +199,77 @@ async function waitContextCandidates(expected) {
   await page.waitForFunction(words => {
     const region = document.querySelector('[aria-label="前文拼音候选"]');
     if (region?.getAttribute('aria-busy') !== 'false') return false;
-    const actual = Array.from(region.querySelectorAll('.context-word')).map(element => element.firstChild?.textContent);
-    return JSON.stringify(actual) === JSON.stringify(words.slice(0, 9));
+    const actual = Array.from(region.querySelectorAll('.candidate-measurements .context-word')).map(element => element.firstChild?.textContent);
+    return JSON.stringify(actual) === JSON.stringify(words);
   }, expected);
+  assert.deepEqual(await collectCandidatePages('前文候选', '.context-word'), expected);
 }
 
 async function waitPredictions(expected) {
   await page.waitForFunction(words => {
     const region = document.querySelector('[aria-label="联想后续词"]');
     if (region?.getAttribute('aria-busy') !== 'false') return false;
-    const actual = Array.from(region.querySelectorAll('.prediction-chip')).map(element => element.textContent);
-    return JSON.stringify(actual) === JSON.stringify(words.slice(0, 9));
+    const actual = Array.from(region.querySelectorAll('.candidate-measurements .prediction-chip')).map(element => element.textContent);
+    return JSON.stringify(actual) === JSON.stringify(words);
   }, expected);
+  assert.deepEqual(await collectCandidatePages('联想候选', '.prediction-chip'), expected);
+}
+
+async function waitPreviewCandidates(expected, snapshots) {
+  await page.waitForFunction(words => {
+    const panel = document.querySelector('[aria-label="候选预览"]');
+    if (panel?.getAttribute('aria-busy') !== 'false') return false;
+    const actual = Array.from(panel.querySelectorAll('.candidate-measurements .candidate-word')).map(element => element.textContent);
+    return JSON.stringify(actual) === JSON.stringify(words);
+  }, expected);
+  if (expected.length) assert.match(await page.getByLabel('候选预览', { exact: true }).locator('.candidate-page-status').textContent(), /^1\//, 'New preview input or font size did not reset to page 1.');
+  assert.deepEqual(await collectCandidatePages('候选预览', '.preview-candidate', snapshots), expected);
+}
+
+async function collectCandidatePages(label, selector, snapshots) {
+  // Font and viewport edits resize the measured row after React has committed the words.
+  await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+  const panel = page.getByLabel(label, { exact: true });
+  const previous = panel.getByRole('button', { name: `${label}上一页`, exact: true });
+  const next = panel.getByRole('button', { name: `${label}下一页`, exact: true });
+  if (!(await panel.locator('.paged-candidate-items ' + selector).count())) return [];
+  for (let i = 0; i < 64 && await previous.isEnabled(); ++i) {
+    const current = Number((await panel.locator('.candidate-page-status').textContent()).split('/')[0]);
+    await previous.click();
+    await page.waitForFunction(({ label, number }) => document.querySelector(`[aria-label="${label}"] .candidate-page-status`)?.textContent.startsWith(`${number}/`), { label, number: current - 1 });
+  }
+  assert(!(await previous.isEnabled()), `${label}: pagination did not return to first page`);
+  const result = [];
+  for (let i = 0; i < 64; ++i) {
+    const items = panel.locator('.paged-candidate-items ' + selector);
+    const measurements = await items.evaluateAll(elements => elements.map(element => {
+      const bounds = element.getBoundingClientRect();
+      const parent = element.closest('.paged-candidate-items').getBoundingClientRect();
+      return { text: element.querySelector('.candidate-word')?.textContent || element.firstChild?.textContent, title: element.title,
+        number: element.querySelector('.candidate-number')?.textContent, top: bounds.top, bottom: bounds.bottom,
+        inside: bounds.left >= parent.left - 1 && bounds.right <= parent.right + 1 };
+    }));
+    assert(measurements.length, `${label}: page ${i + 1} has no candidates`);
+    assert(measurements.every(item => item.inside), `${label}: candidate overflow`);
+    assert(measurements.every(item => Math.abs(item.top - measurements[0].top) <= 1 && Math.abs(item.bottom - measurements[0].bottom) <= 1), `${label}: more than one row`);
+    assert(measurements.every(item => item.title === item.text), `${label}: displayed value differs from complete candidate`);
+    if (selector === '.preview-candidate') assert.deepEqual(measurements.map(item => item.number), measurements.map((_, index) => String(index + 1)), `${label}: page numbers do not restart at 1`);
+    const status = await panel.locator('.candidate-page-status').textContent();
+    assert.equal(Number(status.split('/')[0]), i + 1, `${label}: incorrect page status`);
+    if (snapshots) snapshots.push({ status, candidates: measurements.map(item => item.text) });
+    result.push(...measurements.map(item => item.text));
+    if (!(await next.isEnabled())) break;
+    await next.click();
+    await page.waitForFunction(({ label, number }) => document.querySelector(`[aria-label="${label}"] .candidate-page-status`)?.textContent.startsWith(`${number}/`), { label, number: i + 2 });
+  }
+  assert(!(await next.isEnabled()), `${label}: pagination did not reach last page`);
+  for (let i = 0; i < 64 && await previous.isEnabled(); ++i) {
+    const current = Number((await panel.locator('.candidate-page-status').textContent()).split('/')[0]);
+    await previous.click();
+    await page.waitForFunction(({ label, number }) => document.querySelector(`[aria-label="${label}"] .candidate-page-status`)?.textContent.startsWith(`${number}/`), { label, number: current - 1 });
+  }
+  assert(!(await previous.isEnabled()), `${label}: pagination did not return to first page`);
+  return result;
 }
 
 async function run() {
@@ -201,7 +278,8 @@ async function run() {
     const initial = await state();
     assert.equal(initial.version, expectedVersion);
     assert.equal(initial.settings.predictionEnabled, true, 'Fresh installations enable contextual suggestions.');
-    assert(initial.dictionary.total >= 83062, 'Built-in resources were not loaded.');
+    assert.equal(initial.dictionary.total, 87844, 'The 0.7.1 built-in resources were not loaded.');
+    report.dictionary = initial.dictionary;
     assert.equal(path.resolve(initial.dataDirectory), path.join(data, 'LocalPinyinIME'));
     assert.deepEqual((await api('listUserLexicon')).entries, []);
     assert.equal((await api('lookup', ['suibian'])).candidates[0], '随便');
@@ -212,14 +290,15 @@ async function run() {
     assert.deepEqual((await api('lookup', [''])).candidates, []);
     const preview = page.getByLabel('试试拼音', { exact: true });
     await preview.fill('suibian');
-    await page.getByLabel('候选预览', { exact: true }).getByText('随便', { exact: true }).waitFor();
+    await waitPreviewCandidates(native('lookup', ['suibian']).candidates);
     await preview.fill('zzzzzzzzzzzzzz');
-    await page.waitForFunction(() => !document.querySelector('[aria-label="候选预览"]')?.textContent.includes('随便'));
+    await waitPreviewCandidates(native('lookup', ['zzzzzzzzzzzzzz']).candidates);
     await screenshot('appearance-unknown');
     await preview.fill('');
+    await waitPreviewCandidates([]);
     await screenshot('appearance-empty');
     await preview.fill('suibian');
-    await page.getByLabel('候选预览', { exact: true }).getByText('随便', { exact: true }).waitFor();
+    await waitPreviewCandidates(native('lookup', ['suibian']).candidates);
   });
   await check('Electron renderer isolation and fixed bridge', async () => {
     const exposed = await page.evaluate(() => ({ require: typeof window.require, process: typeof window.process, api: Object.keys(window.localPinyin).sort(), frozen: Object.isFrozen(window.localPinyin) }));
@@ -234,6 +313,17 @@ async function run() {
     assert.equal(preferences.contextIsolation, true);
     assert.equal(preferences.sandbox, true);
     assert.equal(preferences.webSecurity, true);
+    const windowState = await app.evaluate(({ app, BrowserWindow }) => ({ packaged: app.isPackaged,
+      visible: BrowserWindow.getAllWindows()[0].isVisible(), focused: BrowserWindow.getAllWindows()[0].isFocused(),
+      offscreen: BrowserWindow.getAllWindows()[0].webContents.isOffscreen(),
+      backgroundThrottling: BrowserWindow.getAllWindows()[0].webContents.getBackgroundThrottling() }));
+    assert.equal(windowState.offscreen, true);
+    assert.equal(windowState.backgroundThrottling, false);
+    assert.equal(windowState.visible, false);
+    assert.equal(windowState.focused, false);
+    if (cli.packaged) assert.equal(windowState.packaged, true);
+    report.security = { contextIsolation: true, sandbox: true, fixedIpc: true, offscreen: true,
+      hiddenWindow: true, focused: false, packaged: windowState.packaged, isolatedPersonalData: (await state()).dataDirectory };
   });
   await check('Rapid side navigation preserves shell and all page state', async () => {
     const beforeNavigation = navigationCount;
@@ -305,6 +395,128 @@ async function run() {
     await navigate(pages[1]);
     assert.equal(await page.getByRole('switch', { name: '按 Shift 切换中英文', exact: true }).getAttribute('aria-checked'), String(saved.shiftToggleEnabled));
     report.persistedSettings = saved;
+  });
+  await check('Single-row paging preserves complete native candidates across sizes and keyboard boundaries', async () => {
+    await navigate(pages[0]);
+    const initial = await state();
+    const originalTextSize = initial.settings.textSize;
+    const personalBefore = savedFiles(initial.dataDirectory, false);
+    const previewInput = page.getByLabel('试试拼音', { exact: true });
+    const previewPanel = page.getByLabel('候选预览', { exact: true });
+    const previewRow = previewPanel.getByRole('group', { name: '候选预览，左右箭头翻页', exact: true });
+    const slider = page.getByRole('slider');
+    const nativeCandidates = native('lookup', ['ni']).candidates;
+    assert(nativeCandidates.length >= 9, 'Paging needs the full native ni result set.');
+    assert.deepEqual((await api('lookup', ['ni'])).candidates, nativeCandidates);
+    await previewInput.fill('ni');
+    const matrix = [];
+    for (const [width, height] of [[1160, 800], [920, 680]]) {
+      await viewport(width, height);
+      await slider.focus(); await page.keyboard.press('Home');
+      await waitFontLevel(1);
+      for (let level = 1; level <= 7; ++level) {
+        if (level > 1) {
+          await slider.focus(); await page.keyboard.press('ArrowRight');
+          await waitFontLevel(level);
+        }
+        const fontSize = [14, 16, 17, 18, 20, 22, 24][level - 1];
+        await page.waitForFunction(expected => getComputedStyle(document.querySelector('[aria-label="候选预览"]')).fontSize === `${expected}px`, fontSize);
+        const snapshots = [];
+        await waitPreviewCandidates(nativeCandidates, snapshots);
+        await noOverflow();
+        matrix.push({ width, fontSize, pages: snapshots });
+      }
+    }
+    const pageCount = Number((await previewPanel.locator('.candidate-page-status').textContent()).split('/')[1]);
+    assert(pageCount > 1, 'Large ni preview should require several pages.');
+    await screenshot('paging-preview-page-1');
+    await previewRow.focus();
+    await page.keyboard.press('ArrowLeft');
+    assert.equal(await previewPanel.locator('.candidate-page-status').textContent(), `1/${pageCount}`);
+    await page.keyboard.press('ArrowRight');
+    assert.equal(await previewPanel.locator('.candidate-page-status').textContent(), `2/${pageCount}`);
+    assert.equal(await previewPanel.locator('.paged-candidate-items .candidate-number').first().textContent(), '1');
+    await screenshot('paging-preview-page-2');
+    for (let index = 0; index < pageCount + 2; ++index) await page.keyboard.press('ArrowRight');
+    assert.equal(await previewPanel.locator('.candidate-page-status').textContent(), `${pageCount}/${pageCount}`);
+    assert.equal(await previewPanel.getByRole('button', { name: '候选预览下一页', exact: true }).isDisabled(), true);
+    for (let index = 0; index < pageCount + 2; ++index) await page.keyboard.press('ArrowLeft');
+    assert.equal(await previewPanel.locator('.candidate-page-status').textContent(), `1/${pageCount}`);
+    assert.equal(await previewPanel.getByRole('button', { name: '候选预览上一页', exact: true }).isDisabled(), true);
+
+    // A changed query must restart paging even when normalization produces the same words.
+    await page.keyboard.press('ArrowRight');
+    await previewInput.fill('NI');
+    assert.deepEqual(native('lookup', ['NI']).candidates, nativeCandidates);
+    await waitPreviewCandidates(nativeCandidates);
+    await previewRow.focus(); await page.keyboard.press('ArrowRight');
+    await previewInput.fill('');
+    await waitPreviewCandidates([]);
+    assert.equal(await previewPanel.locator('.candidate-page-controls').isVisible(), false);
+    await previewInput.fill('ni');
+    await waitPreviewCandidates(nativeCandidates);
+
+    // Restore the saved font before proving that all remaining previews leave all four files unchanged.
+    await slider.focus(); await page.keyboard.press('Home');
+    await waitFontLevel(1);
+    for (let level = 2; level <= originalTextSize; ++level) {
+      await slider.focus(); await page.keyboard.press('ArrowRight');
+      await waitFontLevel(level);
+    }
+    assert.deepEqual(savedFiles(initial.dataDirectory, false), personalBefore, 'Font or paging controls changed personal learning data.');
+    const filesBefore = savedFiles(initial.dataDirectory);
+    const longQuery = 'z'.repeat(256);
+    const longCandidates = native('lookup', [longQuery]).candidates;
+    assert.deepEqual(longCandidates, [longQuery], 'The native long-input fallback must retain the whole value.');
+    await previewInput.fill(longQuery);
+    await waitPreviewCandidates(longCandidates);
+    const clipping = await previewPanel.locator('.paged-candidate-items .candidate-word').evaluate(element => ({
+      text: element.textContent, width: element.clientWidth, scrollWidth: element.scrollWidth,
+      whiteSpace: getComputedStyle(element).whiteSpace, overflow: getComputedStyle(element).textOverflow,
+    }));
+    assert.equal(clipping.text, longQuery);
+    assert(clipping.scrollWidth > clipping.width + 10, 'Long candidate should be clipped within the row.');
+    assert.equal(clipping.whiteSpace, 'nowrap');
+    assert.equal(clipping.overflow, 'ellipsis');
+    await noOverflow();
+    await screenshot('paging-preview-long-clip');
+    await previewInput.fill('suibian');
+    await waitPreviewCandidates(native('lookup', ['suibian']).candidates);
+
+    await navigate(pages[1]);
+    const contextField = page.getByLabel('前文', { exact: true });
+    const pinyinField = page.getByLabel(/^后续拼音/);
+    await contextField.fill('我想'); await pinyinField.fill('ni');
+    const nativePredictions = native('predict', ['我想']).candidates;
+    const nativeContextCandidates = native('lookup', ['ni', '我想']).candidates;
+    await waitPredictions(nativePredictions);
+    await waitContextCandidates(nativeContextCandidates);
+    const predictionPages = [], contextPages = [];
+    assert.deepEqual(await collectCandidatePages('联想候选', '.prediction-chip', predictionPages), nativePredictions);
+    assert.deepEqual(await collectCandidatePages('前文候选', '.context-word', contextPages), nativeContextCandidates);
+    assert(predictionPages.length > 1, 'Context suggestions need a second page for the click test.');
+    assert(contextPages.length > 1, 'Contextual lookup should also require paging.');
+    const predictions = page.getByLabel('联想候选', { exact: true });
+    await predictions.getByRole('button', { name: '联想候选下一页', exact: true }).click();
+    const selection = predictions.locator('.paged-candidate-items .prediction-chip').first();
+    const selectedWord = await selection.textContent();
+    assert.equal(selectedWord, predictionPages[1].candidates[0]);
+    await page.locator('.context-preview-card').scrollIntoViewIfNeeded();
+    await screenshot('paging-context-page-2');
+    await selection.click();
+    assert.equal(await contextField.inputValue(), `我想${selectedWord}`);
+    await waitPredictions(native('predict', [`我想${selectedWord}`]).candidates);
+    await waitContextCandidates(native('lookup', ['ni', `我想${selectedWord}`]).candidates);
+    await pinyinField.fill(longQuery);
+    await waitContextCandidates(native('lookup', [longQuery, `我想${selectedWord}`]).candidates);
+    await noOverflow();
+    assert.deepEqual(savedFiles(initial.dataDirectory), filesBefore, 'Paging, long previews, or a second-page selection changed personal files.');
+    await contextField.fill('我想'); await pinyinField.fill('');
+    await waitPredictions(nativePredictions); await waitContextCandidates([]);
+    await viewport(1160, 800);
+    report.pagination = { nativeCandidates, matrix, keyboardClamped: true, newInputReset: true, emptyInputReset: true,
+      longCandidate: { length: longQuery.length, clipped: true, completeValuePreserved: true },
+      predictionPages, contextPages, selectedSecondPageWord: selectedWord, previewFilesUnchanged: true };
   });
   await check('Contextual suggestions and preview use the real native engine without learning writes', async () => {
     await navigate(pages[1]);

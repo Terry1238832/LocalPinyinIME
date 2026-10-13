@@ -120,6 +120,8 @@ if(BUILD_TESTING)
     target_link_libraries(LocalPinyinImeDictionarySmoke PRIVATE pinyin_engine)
     add_executable(LocalPinyinImeEval src/tools/ime_eval.cpp)
     target_link_libraries(LocalPinyinImeEval PRIVATE pinyin_engine)
+    add_executable(LocalPinyinCandidateCapture src/tools/candidate_capture.cpp)
+    target_link_libraries(LocalPinyinCandidateCapture PRIVATE pinyin_service gdiplus)
     add_test(NAME test_settings_bridge COMMAND "${Python3_EXECUTABLE}"
         "${CMAKE_CURRENT_SOURCE_DIR}/tests/test_settings_bridge.py"
         --bridge "$<TARGET_FILE:LocalPinyinSettingsBridge>" --temp-root "${CMAKE_BINARY_DIR}/test-tmp")
@@ -132,7 +134,7 @@ if(BUILD_TESTING)
         "${CMAKE_CURRENT_SOURCE_DIR}/tools/validate_local_core_lexicon.py"
         --path "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/local_core_zh_pinyin.tsv"
         --metadata "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/local_core_zh_pinyin.metadata.json"
-        --min-entries 8000 --max-entries 40000)
+        --min-entries 8000 --max-entries 45000)
     add_test(NAME test_standard_dictionary COMMAND "${Python3_EXECUTABLE}"
         "${CMAKE_CURRENT_SOURCE_DIR}/tools/validate_standard_dictionary.py"
         --path "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/standard_zh_pinyin.tsv"

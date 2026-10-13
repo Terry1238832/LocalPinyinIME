@@ -100,7 +100,7 @@ int main() {
     const std::vector<std::wstring> pointer_candidates{L"", L"你好", L"你好", L"您好", L"世界"};
     const auto pointer_layout = layout_for(pointer_candidates, make_rect(200, 200, 202, 220),
                                             make_rect(0, 0, 1920, 1080));
-    REQUIRE_EQ(pointer_layout.items.size(), size_t{3});
+    REQUIRE_EQ(pointer_layout.items.size(), pointer_candidates.size());
     for (const auto& item : pointer_layout.items) {
         const POINT center{(item.bounds.left + item.bounds.right) / 2,
                              (item.bounds.top + item.bounds.bottom) / 2};
@@ -113,9 +113,9 @@ int main() {
         POINT{pointer_layout.items.back().bounds.right, pointer_layout.items.back().bounds.bottom}));
     REQUIRE_TRUE(!candidate_index_at_point(pointer_layout,
         POINT{pointer_layout.action_button_rect.left + 1, pointer_layout.action_button_rect.top + 1}));
-    REQUIRE_EQ(candidate_model_index(pointer_layout, 0, pointer_candidates), std::optional<size_t>{1});
-    REQUIRE_EQ(candidate_model_index(pointer_layout, 1, pointer_candidates), std::optional<size_t>{3});
-    REQUIRE_EQ(candidate_model_index(pointer_layout, 2, pointer_candidates), std::optional<size_t>{4});
+    REQUIRE_EQ(candidate_model_index(pointer_layout, 0, pointer_candidates), std::optional<size_t>{0});
+    REQUIRE_EQ(candidate_model_index(pointer_layout, 1, pointer_candidates), std::optional<size_t>{1});
+    REQUIRE_EQ(candidate_model_index(pointer_layout, 2, pointer_candidates), std::optional<size_t>{2});
     REQUIRE_TRUE(!candidate_model_index(pointer_layout, 9, pointer_candidates));
     auto hidden_pointer_layout = pointer_layout;
     hidden_pointer_layout.visible = false;
@@ -359,7 +359,8 @@ int main() {
         REQUIRE_TRUE(is_inside(work, result.window_rect));
         REQUIRE_TRUE(width(result.window_rect) <= width(work));
         REQUIRE_TRUE(height(result.window_rect) <= height(work));
-        REQUIRE_TRUE(result.items.size() == 1);
+        REQUIRE_TRUE(!result.items.empty());
+        REQUIRE_TRUE(result.items.size() <= count);
     }
 
     const auto three = layout_for({
@@ -370,7 +371,7 @@ int main() {
     REQUIRE_TRUE(three.visible);
     REQUIRE_EQ(three.items.size(), size_t{3});
     REQUIRE_TRUE(is_inside(work, three.window_rect));
-    REQUIRE_TRUE(three.panel_padding_px >= scale_dip(12, three.dpi));
+    REQUIRE_TRUE(three.panel_padding_px == scale_dip(8, three.dpi));
     REQUIRE_TRUE(three.corner_radius >= scale_dip(12, three.dpi));
     REQUIRE_TRUE(three.selected_corner_radius >= scale_dip(7, three.dpi));
     REQUIRE_EQ(three.composition_font_px, scale_dip(15, three.dpi));
@@ -381,7 +382,7 @@ int main() {
     REQUIRE_TRUE(three.reserves_action_icon_space);
     REQUIRE_TRUE(three.action_button_visible);
     REQUIRE_TRUE(three.action_button_size_px >= scale_dip(28, three.dpi));
-    REQUIRE_TRUE(three.action_button_gap_px >= scale_dip(8, three.dpi));
+    REQUIRE_TRUE(three.action_button_gap_px == scale_dip(4, three.dpi));
     REQUIRE_TRUE(width(three.action_button_rect) == three.action_button_size_px);
     REQUIRE_TRUE(height(three.action_button_rect) == three.action_button_size_px);
     REQUIRE_TRUE(is_inside(make_rect(0, 0, three.width, three.height), three.action_button_rect));
@@ -400,7 +401,8 @@ int main() {
         L"\u516D", L"\u4E03", L"\u516B", L"\u4E5D"
     }, middle, work);
     REQUIRE_TRUE(nine.visible);
-    REQUIRE_EQ(nine.items.size(), size_t{9});
+    REQUIRE_TRUE(nine.items.size() < size_t{9});
+    REQUIRE_TRUE(nine.page_indices.size() > 1);
     REQUIRE_TRUE(is_inside(work, nine.window_rect));
     REQUIRE_TRUE(candidate_items_do_not_overlap(nine.items));
 
@@ -442,6 +444,84 @@ int main() {
         REQUIRE_TRUE(dpi_layout.action_button_visible);
         REQUIRE_TRUE(dpi_layout.action_button_size_px == scale_dip(30, dpi));
         previous_width = dpi_layout.width;
+    }
+
+    // Every original candidate appears on exactly one page, in model order.
+    // Fonts/themes/DPI and narrow monitors never introduce a second row.
+    for (const int dpi : {96, 120, 144, 192}) {
+        for (int level = 1; level <= 7; ++level) {
+            for (const auto theme : {CandidateThemeMode::Light, CandidateThemeMode::Dark, CandidateThemeMode::System}) {
+                for (const int work_width : {80, 160, 360, 800, 1920}) {
+                    CandidateLayoutInput input;
+                    input.composition_text = std::wstring(128, L'a');
+                    input.candidate_texts = {L"一", L"你好", L"你好", L"", std::wstring(80, L'长'),
+                        L"第六候选", L"第七候选", L"第八候选", L"第九候选"};
+                    input.work_area = make_rect(30, 40, 30 + work_width, 600);
+                    input.caret_rect = make_rect(900, 590, 901, 610);
+                    input.dpi = dpi;
+                    input.options.theme_mode = theme;
+                    input.options.text_size = candidate_text_size_from_level(level);
+                    const auto first = make_candidate_layout(input);
+                    REQUIRE_TRUE(first.visible && !first.show_hint && first.row_gap_px == 0);
+                    REQUIRE_TRUE(is_inside(input.work_area, first.window_rect));
+                    REQUIRE_EQ(first.page_indices.front(), UINT{0});
+                    std::vector<size_t> visited;
+                    for (size_t page = 0; page < first.page_indices.size(); ++page) {
+                        input.selected_index = first.page_indices[page];
+                        const auto current = make_candidate_layout(input);
+                        REQUIRE_EQ(current.current_page, page);
+                        REQUIRE_EQ(current.page_indices, first.page_indices);
+                        REQUIRE_TRUE(!current.items.empty());
+                        REQUIRE_TRUE(is_inside(input.work_area, current.window_rect));
+                        REQUIRE_TRUE(is_inside(make_rect(0, 0, current.width, current.height), current.composition_rect));
+                        REQUIRE_TRUE(is_inside(make_rect(0, 0, current.width, current.height), current.action_button_rect));
+                        REQUIRE_EQ(current.height, first.height);
+                        REQUIRE_TRUE(candidate_items_do_not_overlap(current.items));
+                        REQUIRE_TRUE(current.items.front().selected);
+                        for (size_t slot = 0; slot < current.items.size(); ++slot) {
+                            const auto& item = current.items[slot];
+                            REQUIRE_EQ(item.page_number, slot + 1);
+                            REQUIRE_EQ(item.bounds.top, current.items.front().bounds.top);
+                            REQUIRE_EQ(item.bounds.bottom, current.items.front().bounds.bottom);
+                            REQUIRE_TRUE(is_inside(current.candidate_area_rect, item.bounds));
+                            REQUIRE_EQ(item.display_text, input.candidate_texts[item.candidate_index]);
+                            REQUIRE_EQ(candidate_model_index(current, item.candidate_index, input.candidate_texts),
+                                std::optional<size_t>{item.candidate_index});
+                            if (item.candidate_index == 4) {
+                                REQUIRE_TRUE(item.truncated);
+                                REQUIRE_EQ(item.display_text.size(), size_t{80});
+                            }
+                            visited.push_back(item.candidate_index);
+                        }
+                    }
+                    REQUIRE_EQ(visited.size(), input.candidate_texts.size());
+                    for (size_t i = 0; i < visited.size(); ++i) REQUIRE_EQ(visited[i], i);
+                }
+            }
+        }
+    }
+
+    CandidateLayoutInput forced_host;
+    forced_host.composition_text = L"longcompositionlabel";
+    forced_host.candidate_texts.assign(9, std::wstring(80, L'词'));
+    forced_host.page_indices = {0};
+    forced_host.options.text_size = CandidateTextSize::Level7;
+    forced_host.dpi = 192;
+    forced_host.work_area = make_rect(0, 0, 240, 200);
+    forced_host.caret_rect = make_rect(230, 180, 231, 200);
+    const auto forced = make_candidate_layout(forced_host);
+    REQUIRE_EQ(forced.items.size(), size_t{9});
+    REQUIRE_EQ(forced.page_indices.size(), size_t{1});
+    REQUIRE_TRUE(!forced.show_hint && candidate_items_do_not_overlap(forced.items));
+    REQUIRE_TRUE(is_inside(forced_host.work_area, forced.window_rect));
+    for (size_t i = 0; i < forced.items.size(); ++i) {
+        const auto& item = forced.items[i];
+        REQUIRE_TRUE(is_inside(forced.candidate_area_rect, item.bounds));
+        REQUIRE_TRUE(width(item.bounds) > 0 && item.truncated);
+        REQUIRE_EQ(item.candidate_index, i);
+        REQUIRE_EQ(candidate_model_index(forced, i, forced_host.candidate_texts), std::optional<size_t>{i});
+        REQUIRE_EQ(item.bounds.top, forced.items.front().bounds.top);
+        REQUIRE_EQ(item.bounds.bottom, forced.items.front().bounds.bottom);
     }
 
     REQUIRE_TRUE(!make_candidate_palette(CandidateThemeMode::Light, true).dark);

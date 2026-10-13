@@ -301,7 +301,8 @@ void CandidateWindow::show(const std::wstring& composition_text,
                            const std::vector<Candidate>& candidates,
                            size_t selected_index,
                            const RECT& caret_rect,
-                           const CandidateWindowOwnerInfo& owner_info) {
+                           const CandidateWindowOwnerInfo& owner_info,
+                           const std::vector<UINT>& page_indices) {
     const bool continuing_session = has_cached_show_state_;
     cancel_pointer_interaction();
     reset_presentation_state();
@@ -325,22 +326,11 @@ void CandidateWindow::show(const std::wstring& composition_text,
     }
     cancel_layout_retry();
 
-    candidate_texts_.clear();
-    candidate_texts_.reserve(std::min(candidates.size(), kMaxCandidateCount));
-    for (const auto& candidate : candidates) {
-        candidate_texts_.push_back(candidate.text);
-    }
-    composition_text_ = composition_text;
-    selected_index_ = selected_index;
-    caret_rect_ = caret_rect;
-    has_cached_show_state_ = true;
-
-    reload_options();
-    const int dpi = GetDpiForWindow(hwnd_);
-    if (!rebuild_layout(dpi)) {
+    if (!prepare_layout(composition_text, candidates, selected_index, caret_rect, owner_info, page_indices).visible) {
         hide(L"layout_hidden");
         return;
     }
+    has_cached_show_state_ = true;
 
     if (!position_and_show_current_layout()) {
         hide(L"set_window_pos_failed");
@@ -350,6 +340,31 @@ void CandidateWindow::show(const std::wstring& composition_text,
     notify_ime_window_shown(hwnd_);
 
     maybe_recover_from_shell_cloak();
+}
+
+CandidateLayoutResult CandidateWindow::prepare_layout(const std::wstring& composition_text,
+    const std::vector<Candidate>& candidates, size_t selected_index, const RECT& caret_rect,
+    const CandidateWindowOwnerInfo& owner_info, const std::vector<UINT>& page_indices) {
+    candidate_texts_.clear();
+    for (const auto& candidate : candidates) candidate_texts_.push_back(candidate.text);
+    composition_text_ = composition_text;
+    selected_index_ = selected_index;
+    page_indices_ = page_indices;
+    caret_rect_ = caret_rect;
+    owner_info_ = owner_info;
+    reload_options();
+    const HWND dpi_window = owner_info.context_valid ? owner_info.context_hwnd : nullptr;
+    int dpi = dpi_window ? static_cast<int>(GetDpiForWindow(dpi_window)) : static_cast<int>(GetDpiForSystem());
+    // A hidden candidate HWND can remain on the previous monitor. Measure using
+    // the target monitor so host-managed UI and first presentation agree.
+    using MonitorDpiFn = HRESULT(WINAPI*)(HMONITOR, int, UINT*, UINT*);
+    static const HMODULE shcore = LoadLibraryW(L"shcore.dll");
+    static const auto monitor_dpi = shcore ? reinterpret_cast<MonitorDpiFn>(GetProcAddress(shcore, "GetDpiForMonitor")) : nullptr;
+    UINT dpi_x = 0, dpi_y = 0;
+    if (monitor_dpi && SUCCEEDED(monitor_dpi(MonitorFromRect(&caret_rect_, MONITOR_DEFAULTTONEAREST), 0, &dpi_x, &dpi_y)))
+        dpi = static_cast<int>(dpi_x);
+    rebuild_layout((std::max)(1, dpi));
+    return layout_;
 }
 
 void CandidateWindow::hide(const wchar_t*) {
@@ -550,6 +565,13 @@ LRESULT CandidateWindow::handle_message(HWND hwnd, UINT message, WPARAM wparam, 
         case WM_LBUTTONDOWN: {
             const POINTS points = MAKEPOINTS(lparam);
             const POINT point{points.x, points.y};
+            const int page_direction = page_direction_at_point(point);
+            if (page_direction && page_callback_) {
+                candidate_pointer_.cancel();
+                pressed_page_direction_ = page_direction;
+                SetCapture(hwnd_);
+                return 0;
+            }
             if (hit_test_settings_button(point)) {
                 candidate_pointer_.cancel();
                 settings_button_pressed_ = true;
@@ -572,6 +594,8 @@ LRESULT CandidateWindow::handle_message(HWND hwnd, UINT message, WPARAM wparam, 
         case WM_LBUTTONUP: {
             const POINTS points = MAKEPOINTS(lparam);
             const POINT point{points.x, points.y};
+            const int page_direction = pressed_page_direction_ == page_direction_at_point(point) ? pressed_page_direction_ : 0;
+            pressed_page_direction_ = 0;
             const bool activate_settings = settings_button_pressed_ && hit_test_settings_button(point);
             const auto display_index = candidate_pointer_.release(
                 selection_callback_ ? candidate_index_at_point(layout_, point) : std::nullopt);
@@ -582,6 +606,11 @@ LRESULT CandidateWindow::handle_message(HWND hwnd, UINT message, WPARAM wparam, 
             update_candidate_hot(point);
             track_mouse_leave();
             InvalidateRect(hwnd_, nullptr, FALSE);
+            if (page_direction && page_callback_) {
+                const auto callback = page_callback_;
+                callback(page_direction);
+                return 0;
+            }
             if (activate_settings) {
                 open_settings_window();
                 return 0;
@@ -682,6 +711,8 @@ bool CandidateWindow::rebuild_layout(int dpi) {
     input.candidate_text_widths_px = std::move(candidate_text_widths);
     input.number_text_widths_px = std::move(number_text_widths);
     input.selected_index = selected_index_;
+    input.page_indices = page_indices_;
+    input.composition_text_width_px = renderer_.measure_text(composition_text_, static_cast<float>(scale_dip(15, dpi)));
     input.caret_rect = caret_rect_;
     input.work_area = monitor_work_area_for(caret_rect_);
     input.dpi = dpi;
@@ -754,6 +785,7 @@ void CandidateWindow::cancel_pointer_interaction() noexcept {
     candidate_pointer_.cancel();
     settings_button_hot_ = false;
     settings_button_pressed_ = false;
+    pressed_page_direction_ = 0;
     if (tracking_mouse_leave_ && hwnd_) {
         TRACKMOUSEEVENT event{};
         event.cbSize = sizeof(event);
@@ -817,12 +849,38 @@ void CandidateWindow::open_settings_window() {
     CloseHandle(process.hProcess);
 }
 
+int CandidateWindow::page_direction_at_point(POINT point) const noexcept {
+    if (!layout_.visible) return 0;
+    if (PtInRect(&layout_.previous_page_rect, point)) return -1;
+    if (PtInRect(&layout_.next_page_rect, point)) return 1;
+    return 0;
+}
+
+void CandidateWindow::draw_page_controls(HDC hdc) {
+    const std::wstring page = std::to_wstring(layout_.current_page + 1) + L"/" + std::to_wstring(layout_.page_indices.size());
+    auto draw = [&](const std::wstring& text, RECT rect, bool enabled) {
+        const COLORREF color = enabled ? palette_.muted_text : blend_color(palette_.background, palette_.muted_text, 40);
+        const UINT flags = DT_SINGLELINE | DT_VCENTER | DT_CENTER | DT_NOPREFIX;
+        if (auto* canvas = active_modern_renderer()) {
+            canvas->text(text, rect, color, static_cast<float>(layout_.hint_font_px), FW_NORMAL, flags);
+        } else {
+            if (hint_font_) SelectObject(hdc, hint_font_);
+            SetTextColor(hdc, color);
+            DrawTextW(hdc, text.c_str(), static_cast<int>(text.size()), &rect, flags);
+        }
+    };
+    draw(L"‹", layout_.previous_page_rect, layout_.has_previous_page);
+    draw(page, layout_.page_indicator_rect, true);
+    draw(L"›", layout_.next_page_rect, layout_.has_next_page);
+}
+
 void CandidateWindow::draw_settings_button(HDC hdc) {
     if (!layout_.action_button_visible) {
         return;
     }
 
     const RECT rect = layout_.action_button_rect;
+    const int icon_extent = (std::min)(rect.right - rect.left, rect.bottom - rect.top);
     COLORREF fill = blend_color(palette_.background, palette_.border, 30);
     if (settings_button_hot_) {
         fill = blend_color(fill, palette_.selected_background, palette_.dark ? 28 : 16);
@@ -834,7 +892,8 @@ void CandidateWindow::draw_settings_button(HDC hdc) {
     if (auto* canvas = active_modern_renderer()) {
         canvas->rounded(rect, static_cast<float>(scale_dip(7, layout_.dpi)), fill, border_color);
         RECT icon = rect;
-        InflateRect(&icon, -scale_dip(6, layout_.dpi), -scale_dip(6, layout_.dpi));
+        const int inset = (std::min)(scale_dip(6, layout_.dpi), icon_extent / 4);
+        InflateRect(&icon, -inset, -inset);
         canvas->icon(8, icon, settings_button_hot_ ? palette_.number_text : palette_.muted_text,
                        scale_dip(1, layout_.dpi) * 1.5f);
         return;
@@ -853,11 +912,11 @@ void CandidateWindow::draw_settings_button(HDC hdc) {
                               settings_button_hot_ ? palette_.number_text : palette_.muted_text);
     HGDIOBJ old_pen = SelectObject(hdc, icon_pen);
     HGDIOBJ old_brush = SelectObject(hdc, GetStockObject(NULL_BRUSH));
-    const int radius = scale_dip(5, layout_.dpi);
+    const int radius = (std::min)(scale_dip(5, layout_.dpi), icon_extent / 6);
     Ellipse(hdc, center_x - radius, center_y - radius, center_x + radius, center_y + radius);
-    const int inner = scale_dip(2, layout_.dpi);
+    const int inner = (std::min)(scale_dip(2, layout_.dpi), icon_extent / 12);
     Ellipse(hdc, center_x - inner, center_y - inner, center_x + inner, center_y + inner);
-    const int outer = scale_dip(8, layout_.dpi);
+    const int outer = (std::min)(scale_dip(8, layout_.dpi), icon_extent / 3);
     const POINT spokes[][2] = {
         {{center_x - outer, center_y}, {center_x - radius, center_y}},
         {{center_x + radius, center_y}, {center_x + outer, center_y}},
@@ -900,7 +959,7 @@ void CandidateWindow::render(HDC hdc) {
         renderer_.fill(rect, palette_.background);
         renderer_.rounded(rect, static_cast<float>(layout_.corner_radius), palette_.background, palette_.border);
         renderer_.text(composition_text_, layout_.composition_rect, palette_.muted_text,
-                         static_cast<float>(layout_.composition_font_px));
+                         static_cast<float>(layout_.composition_font_px), FW_NORMAL, candidate_text_draw_flags(true));
         for (const auto& item : layout_.items) {
             if (item.selected) renderer_.rounded(item.bounds, static_cast<float>(layout_.selected_corner_radius),
                                                  palette_.selected_background, palette_.selected_border);
@@ -909,13 +968,14 @@ void CandidateWindow::render(HDC hdc) {
                 const COLORREF hover = blend_color(palette_.background, palette_.selected_background, tint);
                 renderer_.rounded(item.bounds, static_cast<float>(layout_.selected_corner_radius), hover, hover);
             }
-            renderer_.text(std::to_wstring(item.candidate_index + 1), item.number_bounds,
+            renderer_.text(std::to_wstring(item.page_number), item.number_bounds,
                              item.selected ? palette_.selected_text : palette_.number_text,
                              static_cast<float>(layout_.candidate_font_px));
             renderer_.text(item.display_text, item.text_bounds,
                              item.selected ? palette_.selected_text : palette_.text,
                              static_cast<float>(layout_.candidate_font_px), FW_MEDIUM, candidate_text_draw_flags(item.truncated));
         }
+        draw_page_controls(memory_dc);
         draw_settings_button(memory_dc);
         if (layout_.show_hint) {
             const float y = static_cast<float>(layout_.hint_rect.top - scale_dip(4, layout_.dpi));
@@ -965,7 +1025,7 @@ void CandidateWindow::render(HDC hdc) {
             DeleteObject(hover_brush);
         }
 
-        const std::wstring number = std::to_wstring(item.candidate_index + 1);
+        const std::wstring number = std::to_wstring(item.page_number);
         RECT number_rect = item.number_bounds;
         SetTextColor(memory_dc, item.selected ? palette_.selected_text : palette_.number_text);
         DrawTextW(memory_dc, number.c_str(), static_cast<int>(number.size()), &number_rect,
@@ -977,6 +1037,7 @@ void CandidateWindow::render(HDC hdc) {
                   candidate_text_draw_flags(item.truncated));
     }
 
+    draw_page_controls(memory_dc);
     draw_settings_button(memory_dc);
 
     if (layout_.show_hint) {

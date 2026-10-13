@@ -8,4 +8,6 @@ Windows x64需要Visual Studio C++/SDK、CMake/Ninja、Python 3、Node.js 22.12+
 
 desktop/tests/electron-smoke.cjs使用Playwright的真实Electron接口。LOCALPINYINIME_PLAYWRIGHT_MODULE可指定现有Playwright模块；--app与--executable指定应用，--bridge指定开发桥接，--output指定工作区输出，--packaged检验最终exe布局。测试拒绝覆盖非空用户数据，始终使用LOCALPINYINIME_LOCALAPPDATA隔离目录和隐藏offscreen窗口。QA不安装或注册输入法。生产renderer启用sandbox/contextIsolation，关闭Node；窗口关闭后退出。
 
+BUILD_TESTING启用时还构建LocalPinyinCandidateCapture.exe，传入绝对输出目录可生成真实DirectWrite候选窗的PNG。它仅在隐藏窗口中绘制，检查单行分页、明暗主题、DPI、大字号和长词省略；不注册输入法、不激活前台窗口，也不进入安装包。原生分页键盘与宿主交互由test_tsf_integration验证。
+
 源码无需保留node_modules、.build和dist缓存。首个完整构建会重新安装依赖与下载官方Electron，应用本身离线运行。

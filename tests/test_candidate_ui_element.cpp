@@ -6,6 +6,7 @@
 
 #include <new>
 #include <string>
+#include <vector>
 
 namespace {
 
@@ -102,6 +103,14 @@ localpinyin::CandidateModelSnapshot snapshot(size_t selection = 0) {
     value.candidate_texts = {L"\u4F60\u597D", L"\u4E16\u754C"};
     value.selection = selection;
     value.context_identity = 0x1234;
+    return value;
+}
+
+localpinyin::CandidateModelSnapshot paged_snapshot(size_t selection = 0) {
+    auto value = snapshot(selection);
+    value.candidate_texts = {L"zero", L"one", L"two", L"three", L"four", L"five",
+                             L"six", L"seven", L"eight", L"nine", L"ten"};
+    value.page_indices = {0, 4, 8};
     return value;
 }
 
@@ -297,6 +306,150 @@ int main() {
     REQUIRE_EQ(callback_element->Finalize(), S_OK);
     REQUIRE_EQ(finalized, 1);
     callback_element->Release();
+
+    FakeUIElementMgr paging_mgr;
+    CandidateUIElementSession paging_session;
+    int page_changes = 0, selection_changes = 0, paging_finalized = 0;
+    std::vector<UINT> reported_pages;
+    size_t reported_selection = 0, paging_committed_index = 0;
+    paging_session.set_page_indices_changed_callback([&](const std::vector<UINT>& pages) {
+        ++page_changes;
+        reported_pages = pages;
+    });
+    paging_session.set_selection_changed_callback([&](size_t index) {
+        ++selection_changes;
+        reported_selection = index;
+    });
+    paging_session.set_finalize_callback([&](size_t index) {
+        ++paging_finalized;
+        paging_committed_index = index;
+    });
+    REQUIRE_EQ(paging_session.begin_with_manager(&paging_mgr, S_OK, paged_snapshot(4)), S_OK);
+    auto* paging_element = paging_session.element_for_testing();
+    UINT page_count = 0, current_page = 0;
+    UINT page_indices[4] = {99, 99, 99, 99};
+    REQUIRE_EQ(paging_element->GetPageIndex(page_indices, 4, &page_count), S_OK);
+    REQUIRE_EQ(page_count, 3U);
+    REQUIRE_EQ(page_indices[0], 0U);
+    REQUIRE_EQ(page_indices[1], 4U);
+    REQUIRE_EQ(page_indices[2], 8U);
+    REQUIRE_EQ(page_indices[3], 99U);
+    REQUIRE_EQ(paging_element->GetPageIndex(nullptr, 0, &page_count), S_OK);
+    REQUIRE_EQ(page_count, 3U);
+    REQUIRE_EQ(paging_element->GetPageIndex(page_indices, 4, nullptr), E_POINTER);
+    page_indices[1] = 99;
+    REQUIRE_EQ(paging_element->GetPageIndex(page_indices, 1, &page_count), S_OK);
+    REQUIRE_EQ(page_count, 3U);
+    REQUIRE_EQ(page_indices[0], 0U);
+    REQUIRE_EQ(page_indices[1], 99U);
+    REQUIRE_EQ(paging_element->GetCurrentPage(&current_page), S_OK);
+    REQUIRE_EQ(current_page, 1U);
+    REQUIRE_EQ(paging_element->GetCurrentPage(nullptr), E_POINTER);
+    REQUIRE_EQ(page_changes, 0);
+    REQUIRE_EQ(selection_changes, 0);
+
+    DWORD updated_flags = 0;
+    REQUIRE_EQ(paging_element->GetUpdatedFlags(&updated_flags), S_OK);
+    UINT nonzero_start[] = {1, 4, 8};
+    UINT duplicate_pages[] = {0, 4, 4};
+    UINT descending_pages[] = {0, 8, 4};
+    UINT outside_model[] = {0, 4, 11};
+    REQUIRE_EQ(paging_element->SetPageIndex(nullptr, 3), E_INVALIDARG);
+    REQUIRE_EQ(paging_element->SetPageIndex(nullptr, 0), E_INVALIDARG);
+    REQUIRE_EQ(paging_element->SetPageIndex(duplicate_pages, 12), E_INVALIDARG);
+    REQUIRE_EQ(paging_element->SetPageIndex(nonzero_start, 3), E_INVALIDARG);
+    REQUIRE_EQ(paging_element->SetPageIndex(duplicate_pages, 3), E_INVALIDARG);
+    REQUIRE_EQ(paging_element->SetPageIndex(descending_pages, 3), E_INVALIDARG);
+    REQUIRE_EQ(paging_element->SetPageIndex(outside_model, 3), E_INVALIDARG);
+    REQUIRE_EQ(paging_element->GetUpdatedFlags(&updated_flags), S_OK);
+    REQUIRE_EQ(updated_flags, 0U);
+    REQUIRE_EQ(page_changes, 0);
+    REQUIRE_EQ(paging_element->GetPageIndex(page_indices, 4, &page_count), S_OK);
+    REQUIRE_EQ(page_count, 3U);
+    REQUIRE_EQ(page_indices[1], 4U);
+    REQUIRE_EQ(page_indices[2], 8U);
+
+    UINT host_pages[] = {0, 6, 9};
+    REQUIRE_EQ(paging_element->SetPageIndex(host_pages, 3), S_OK);
+    REQUIRE_EQ(page_changes, 1);
+    REQUIRE_TRUE(reported_pages == std::vector<UINT>({0, 6, 9}));
+    REQUIRE_EQ(paging_element->GetCurrentPage(&current_page), S_OK);
+    REQUIRE_EQ(current_page, 0U);
+    REQUIRE_EQ(paging_element->GetUpdatedFlags(&updated_flags), S_OK);
+    REQUIRE_EQ(updated_flags, DWORD{TF_CLUIE_PAGEINDEX | TF_CLUIE_CURRENTPAGE});
+    REQUIRE_EQ(paging_element->SetSelection(9), S_OK);
+    REQUIRE_EQ(selection_changes, 1);
+    REQUIRE_EQ(reported_selection, size_t{9});
+    REQUIRE_EQ(paging_element->GetSelection(&selected), S_OK);
+    REQUIRE_EQ(selected, 9U);
+    REQUIRE_EQ(paging_element->GetCurrentPage(&current_page), S_OK);
+    REQUIRE_EQ(current_page, 2U);
+    REQUIRE_EQ(paging_element->GetUpdatedFlags(&updated_flags), S_OK);
+    REQUIRE_EQ(updated_flags, DWORD{TF_CLUIE_SELECTION | TF_CLUIE_CURRENTPAGE});
+    REQUIRE_EQ(paging_element->GetString(9, &value), S_OK);
+    REQUIRE_TRUE(std::wstring(value) == L"nine");
+    SysFreeString(value);
+    REQUIRE_EQ(paging_element->Finalize(), S_OK);
+    REQUIRE_EQ(paging_finalized, 1);
+    REQUIRE_EQ(paging_committed_index, size_t{9});
+    REQUIRE_EQ(paging_element->SetSelection(11), E_INVALIDARG);
+    REQUIRE_EQ(selection_changes, 1);
+    REQUIRE_EQ(paging_element->GetUpdatedFlags(&updated_flags), S_OK);
+    REQUIRE_EQ(updated_flags, 0U);
+
+    // Model updates replace host pagination without reporting a host action.
+    REQUIRE_EQ(paging_session.update(paged_snapshot(8)), S_OK);
+    REQUIRE_EQ(page_changes, 1);
+    REQUIRE_EQ(selection_changes, 1);
+    REQUIRE_EQ(paging_element->GetPageIndex(page_indices, 4, &page_count), S_OK);
+    REQUIRE_EQ(page_indices[1], 4U);
+    REQUIRE_EQ(page_indices[2], 8U);
+    REQUIRE_EQ(paging_element->GetCurrentPage(&current_page), S_OK);
+    REQUIRE_EQ(current_page, 2U);
+    auto invalid_snapshot = paged_snapshot(8);
+    invalid_snapshot.page_indices = {0, 5, 5};
+    REQUIRE_EQ(paging_session.update(invalid_snapshot), S_OK);
+    REQUIRE_EQ(paging_element->GetPageIndex(page_indices, 4, &page_count), S_OK);
+    REQUIRE_EQ(page_count, 1U);
+    REQUIRE_EQ(page_indices[0], 0U);
+    REQUIRE_EQ(paging_element->GetCurrentPage(&current_page), S_OK);
+    REQUIRE_EQ(current_page, 0U);
+    invalid_snapshot.page_indices.clear();
+    REQUIRE_EQ(paging_session.update(invalid_snapshot), S_OK);
+    REQUIRE_EQ(paging_element->GetPageIndex(page_indices, 4, &page_count), S_OK);
+    REQUIRE_EQ(page_count, 1U);
+
+    // Setters also replace callbacks on an element that is already active.
+    paging_session.set_page_indices_changed_callback([&](const std::vector<UINT>& pages) {
+        page_changes += 10;
+        reported_pages = pages;
+    });
+    paging_session.set_selection_changed_callback([&](size_t index) {
+        selection_changes += 10;
+        reported_selection = index;
+    });
+    REQUIRE_EQ(paging_element->SetPageIndex(host_pages, 3), S_OK);
+    REQUIRE_EQ(page_changes, 11);
+    REQUIRE_EQ(paging_element->SetSelection(10), S_OK);
+    REQUIRE_EQ(selection_changes, 11);
+    REQUIRE_EQ(reported_selection, size_t{10});
+    paging_element->AddRef();
+    REQUIRE_EQ(paging_session.end(), S_OK);
+    REQUIRE_EQ(paging_element->SetPageIndex(host_pages, 3), S_OK);
+    REQUIRE_EQ(paging_element->SetSelection(9), S_OK);
+    REQUIRE_EQ(page_changes, 11);
+    REQUIRE_EQ(selection_changes, 11);
+    paging_element->Release();
+
+    CandidateModelSnapshot empty_snapshot;
+    auto* empty_element = new CandidateListUIElement(empty_snapshot);
+    REQUIRE_EQ(empty_element->GetPageIndex(page_indices, 4, &page_count), S_OK);
+    REQUIRE_EQ(page_count, 0U);
+    REQUIRE_EQ(empty_element->SetPageIndex(nullptr, 0), S_OK);
+    REQUIRE_EQ(empty_element->SetPageIndex(host_pages, 1), E_INVALIDARG);
+    REQUIRE_EQ(empty_element->GetCurrentPage(&current_page), S_OK);
+    REQUIRE_EQ(current_page, 0U);
+    empty_element->Release();
 
     constexpr std::size_t kLifecycleStressIterations = 10000;
     for (std::size_t iteration = 0; iteration < kLifecycleStressIterations; ++iteration) {

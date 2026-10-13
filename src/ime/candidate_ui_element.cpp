@@ -4,6 +4,7 @@
 #include "../common/win32_utils.h"
 
 #include <algorithm>
+#include <iterator>
 #include <limits>
 #include <new>
 #include <oleauto.h>
@@ -17,6 +18,31 @@ constexpr GUID kCandidateListUIElementGuid{
 
 const wchar_t* bool_text(bool value) noexcept {
     return value ? L"true" : L"false";
+}
+
+bool valid_page_indices(const UINT* indices, std::size_t page_count,
+                        std::size_t candidate_count) noexcept {
+    if (page_count == 0) {
+        return candidate_count == 0;
+    }
+    if (!indices || indices[0] != 0 || page_count > candidate_count) {
+        return false;
+    }
+    for (std::size_t page = 0; page < page_count; ++page) {
+        if (indices[page] >= candidate_count || (page > 0 && indices[page] <= indices[page - 1])) {
+            return false;
+        }
+    }
+    return true;
+}
+
+UINT current_page(const CandidateModelSnapshot& snapshot) noexcept {
+    if (snapshot.candidate_texts.empty() || snapshot.page_indices.empty()) {
+        return 0;
+    }
+    const auto next_page = std::upper_bound(snapshot.page_indices.begin(),
+                                            snapshot.page_indices.end(), snapshot.selection);
+    return static_cast<UINT>(std::distance(snapshot.page_indices.begin(), next_page) - 1);
 }
 
 }  // namespace
@@ -210,18 +236,29 @@ HRESULT CandidateListUIElement::GetPageIndex(UINT* index, UINT size, UINT* page_
     if (!page_count) {
         return E_POINTER;
     }
+    const auto count = snapshot_.candidate_texts.empty()
+                           ? std::size_t{0}
+                           : snapshot_.page_indices.size();
     if (index && size > 0) {
-        index[0] = 0;
+        std::copy_n(snapshot_.page_indices.begin(),
+                    (std::min)(count, static_cast<std::size_t>(size)), index);
     }
-    *page_count = snapshot_.candidate_texts.empty() ? 0 : 1;
+    *page_count = static_cast<UINT>(count);
     return S_OK;
 }
 
-HRESULT CandidateListUIElement::SetPageIndex(UINT*, UINT page_count) {
-    if (page_count > 1) {
+HRESULT CandidateListUIElement::SetPageIndex(UINT* index, UINT page_count) {
+    if (!valid_page_indices(index, page_count, snapshot_.candidate_texts.size())) {
         return E_INVALIDARG;
     }
+    std::vector<UINT> pages;
+    if (page_count > 0) {
+        pages.assign(index, index + page_count);
+    }
+    snapshot_.page_indices = pages;
     updated_flags_ |= TF_CLUIE_PAGEINDEX | TF_CLUIE_CURRENTPAGE;
+    const auto callback = page_indices_changed_callback_;
+    if (callback) callback(pages);
     return S_OK;
 }
 
@@ -229,7 +266,7 @@ HRESULT CandidateListUIElement::GetCurrentPage(UINT* page) {
     if (!page) {
         return E_POINTER;
     }
-    *page = current_page_;
+    *page = current_page(snapshot_);
     return S_OK;
 }
 
@@ -237,8 +274,14 @@ HRESULT CandidateListUIElement::SetSelection(UINT index) {
     if (index >= snapshot_.candidate_texts.size()) {
         return E_INVALIDARG;
     }
+    const UINT previous_page = current_page(snapshot_);
     snapshot_.selection = index;
     updated_flags_ |= TF_CLUIE_SELECTION;
+    if (current_page(snapshot_) != previous_page) {
+        updated_flags_ |= TF_CLUIE_CURRENTPAGE;
+    }
+    const auto callback = selection_changed_callback_;
+    if (callback) callback(index);
     return S_OK;
 }
 
@@ -265,6 +308,12 @@ void CandidateListUIElement::update(const CandidateModelSnapshot& snapshot) {
     snapshot_.active = snapshot.active;
     snapshot_.composition_text = snapshot.composition_text;
     snapshot_.candidate_texts = snapshot.candidate_texts;
+    snapshot_.page_indices = snapshot.page_indices;
+    if (snapshot_.page_indices.empty() ||
+        !valid_page_indices(snapshot_.page_indices.data(), snapshot_.page_indices.size(),
+                            snapshot_.candidate_texts.size())) {
+        snapshot_.page_indices = {0};
+    }
     snapshot_.selection = snapshot.selection;
     snapshot_.context_identity = snapshot.context_identity;
     set_document_mgr(snapshot.document_mgr);
@@ -332,6 +381,8 @@ HRESULT CandidateUIElementSession::begin_with_manager(ITfUIElementMgr* manager,
     }
     element_->set_finalize_callback(finalize_callback_);
     element_->set_abort_callback(abort_callback_);
+    element_->set_page_indices_changed_callback(page_indices_changed_callback_);
+    element_->set_selection_changed_callback(selection_changed_callback_);
 
     BOOL show = TRUE;
     DWORD id = 0;
@@ -368,6 +419,17 @@ void CandidateUIElementSession::set_finalize_callback(std::function<void(size_t)
 void CandidateUIElementSession::set_abort_callback(std::function<void()> callback) {
     abort_callback_ = std::move(callback);
     if (element_) element_->set_abort_callback(abort_callback_);
+}
+
+void CandidateUIElementSession::set_page_indices_changed_callback(
+    std::function<void(const std::vector<UINT>&)> callback) {
+    page_indices_changed_callback_ = std::move(callback);
+    if (element_) element_->set_page_indices_changed_callback(page_indices_changed_callback_);
+}
+
+void CandidateUIElementSession::set_selection_changed_callback(std::function<void(size_t)> callback) {
+    selection_changed_callback_ = std::move(callback);
+    if (element_) element_->set_selection_changed_callback(selection_changed_callback_);
 }
 
 HRESULT CandidateUIElementSession::update(const CandidateModelSnapshot& snapshot) {
@@ -425,6 +487,8 @@ void CandidateUIElementSession::release_element() noexcept {
     if (element_) {
         element_->set_finalize_callback({});
         element_->set_abort_callback({});
+        element_->set_page_indices_changed_callback({});
+        element_->set_selection_changed_callback({});
         element_->Release();
         element_ = nullptr;
     }

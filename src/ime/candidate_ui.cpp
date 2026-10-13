@@ -5,7 +5,6 @@
 #include <algorithm>
 #include <cwctype>
 #include <sstream>
-#include <unordered_set>
 
 namespace localpinyin {
 namespace {
@@ -42,24 +41,6 @@ std::wstring lower_ascii(std::wstring value) {
 
 bool is_cjk_or_wide(wchar_t ch) noexcept {
     return ch >= 0x2E80;
-}
-
-std::vector<std::wstring> unique_candidates(const std::vector<std::wstring>& candidates) {
-    std::vector<std::wstring> result;
-    std::unordered_set<std::wstring> seen;
-    for (const auto& candidate : candidates) {
-        if (candidate.empty()) {
-            continue;
-        }
-        if (!seen.insert(candidate).second) {
-            continue;
-        }
-        result.push_back(candidate);
-        if (result.size() >= kMaxCandidates) {
-            break;
-        }
-    }
-    return result;
 }
 
 int width_from_input_or_estimate(const std::vector<int>& widths,
@@ -389,15 +370,10 @@ std::optional<size_t> candidate_index_at_point(const CandidateLayoutResult& layo
     return std::nullopt;
 }
 
-std::optional<size_t> candidate_model_index(const CandidateLayoutResult& layout, size_t display_index,
+std::optional<size_t> candidate_model_index(const CandidateLayoutResult& layout, size_t model_index,
     const std::vector<std::wstring>& candidates) noexcept {
     for (const auto& item : layout.items) {
-        if (item.candidate_index != display_index) continue;
-        // Layout removes duplicate labels. Resolve the visible word back to its
-        // original model index instead of committing a different duplicate slot.
-        const auto found = std::find(candidates.begin(), candidates.end(), item.display_text);
-        if (found != candidates.end()) return static_cast<size_t>(found - candidates.begin());
-        break;
+        if (item.candidate_index == model_index && model_index < candidates.size()) return model_index;
     }
     return std::nullopt;
 }
@@ -405,176 +381,135 @@ std::optional<size_t> candidate_model_index(const CandidateLayoutResult& layout,
 CandidateLayoutResult make_candidate_layout(const CandidateLayoutInput& input) {
     CandidateLayoutResult result;
     result.dpi = std::max(1, input.dpi);
-
-    const auto candidates = unique_candidates(input.candidate_texts);
-    if (!should_show_candidate_window(input.composition_text, candidates.size(), false)) {
-        return result;
-    }
-
+    const size_t count = (std::min)(input.candidate_texts.size(), size_t{kMaxCandidates});
     const int work_width = rect_width(input.work_area);
     const int work_height = rect_height(input.work_area);
-    if (work_width <= 0 || work_height <= 0) {
-        return result;
-    }
+    if (!should_show_candidate_window(input.composition_text, count, false) ||
+        work_width <= 0 || work_height <= 0) return result;
 
     const int dpi = result.dpi;
-    const int padding = scale_dip(12, dpi);
-    const int row_gap = scale_dip(6, dpi);
-    const int item_gap = scale_dip(6, dpi);
-    const int item_pad_x = scale_dip(10, dpi);
-    const int item_pad_y = scale_dip(6, dpi);
-    const int number_gap = scale_dip(6, dpi);
-    const int placement_gap = scale_dip(6, dpi);
-    const int action_button_size = scale_dip(30, dpi);
-    const int action_button_gap = scale_dip(10, dpi);
-    const int action_reserved_width = action_button_size + action_button_gap;
-    result.corner_radius = scale_dip(12, dpi);
-    result.selected_corner_radius = scale_dip(7, dpi);
-    result.panel_padding_px = padding;
-    result.item_gap_px = item_gap;
-    result.row_gap_px = row_gap;
+    const int max_width = (std::min)(scale_dip(760, dpi), work_width);
+    const int padding = (std::min)(scale_dip(8, dpi), max_width / 32);
+    const int gap = (std::min)(scale_dip(4, dpi), max_width / 64);
+    const int control = (std::min)(scale_dip(30, dpi), max_width / 10);
+    const int page_width = (std::min)(scale_dip(32, dpi), max_width / 9);
+    const int controls_width = control * 3 + page_width + gap * 4;
     result.composition_font_px = scale_dip(15, dpi);
     result.candidate_font_px = candidate_font_px_for_size(input.options.text_size, dpi);
     result.hint_font_px = scale_dip(13, dpi);
-    result.reserves_action_icon_space = true;
-    result.action_button_visible = true;
-    result.action_button_size_px = action_button_size;
-    result.action_button_gap_px = action_button_gap;
-    const int text_slack = std::max(scale_dip(10, dpi), result.candidate_font_px / 2);
+    const int label_measured = input.composition_text_width_px > 0 ? input.composition_text_width_px :
+        estimate_candidate_text_width_px(input.composition_text, result.composition_font_px);
+    const int label_width = (std::min)({label_measured + gap, scale_dip(96, dpi), max_width / 7});
+    const int candidate_width = (std::max)(1, max_width - padding * 2 - label_width - gap - controls_width);
+    const int item_pad = (std::min)(scale_dip(9, dpi), candidate_width / 8);
+    const int number_gap = (std::min)(scale_dip(5, dpi), candidate_width / 12);
+    const int slack = scale_dip(4, dpi);
+    const int row_height = (std::max)(result.candidate_font_px + scale_dip(12, dpi), control);
+    result.height = (std::min)(row_height + padding * 2, work_height);
+    const int top = (std::min)(padding, result.height / 4);
+    const int bottom = result.height - top;
 
-    const int composition_height = input.composition_text.empty()
-                                       ? 0
-                                       : result.composition_font_px + scale_dip(4, dpi);
-    const int candidate_row_height = result.candidate_font_px + item_pad_y * 2;
-    const int hint_height = input.options.show_key_hints ? result.hint_font_px + scale_dip(4, dpi) : 0;
-    const int min_width = std::min(scale_dip(176, dpi), work_width);
-    const int max_width = std::max(min_width, std::min(scale_dip(760, dpi), work_width));
-    const int inner_max_width = std::max(1, max_width - padding * 2);
-    const int candidate_inner_max_width = std::max(scale_dip(96, dpi), inner_max_width - action_reserved_width);
-    const int max_item_width = std::max(scale_dip(96, dpi), candidate_inner_max_width);
-
-    std::vector<CandidateItemLayout> items;
-    int row_x = 0;
-    int row_y = 0;
-    int row_width = 0;
-    int content_width = 0;
-
-    for (size_t i = 0; i < candidates.size(); ++i) {
-        const std::wstring number = std::to_wstring(i + 1);
-        const int number_width = width_from_input_or_estimate(input.number_text_widths_px,
-                                                              i,
-                                                              number,
-                                                              result.candidate_font_px);
-        const int text_width = width_from_input_or_estimate(input.candidate_text_widths_px,
-                                                            i,
-                                                            candidates[i],
-                                                            result.candidate_font_px);
-        int item_width = item_pad_x * 2 + number_width + number_gap + text_width + text_slack;
-        item_width = std::min(item_width, max_item_width);
-        item_width = std::max(item_width, scale_dip(58, dpi));
-        const int text_available_width = std::max(0, item_width - item_pad_x * 2 - number_width - number_gap);
-
-        if (row_x > 0 && row_x + item_gap + item_width > candidate_inner_max_width) {
-            content_width = std::max(content_width, row_width);
-            row_x = 0;
-            row_width = 0;
-            row_y += candidate_row_height + row_gap;
+    std::vector<int> text_widths(count), number_widths(count), item_widths(count);
+    for (size_t i = 0; i < count; ++i) {
+        text_widths[i] = width_from_input_or_estimate(input.candidate_text_widths_px, i,
+            input.candidate_texts[i], result.candidate_font_px);
+        number_widths[i] = width_from_input_or_estimate(input.number_text_widths_px, i,
+            std::to_wstring(i + 1), result.candidate_font_px);
+        item_widths[i] = (std::min)(candidate_width,
+            item_pad * 2 + number_widths[i] + number_gap + text_widths[i] + slack);
+    }
+    result.page_indices = {0};
+    int used = 0;
+    for (size_t i = 0; i < count; ++i) {
+        if (used > 0 && used + gap + item_widths[i] > candidate_width) {
+            result.page_indices.push_back(static_cast<UINT>(i));
+            used = 0;
         }
+        used += (used ? gap : 0) + item_widths[i];
+    }
+    // ITfCandidateListUIElement permits the host to choose page boundaries.
+    // Preserve those boundaries in the popup and keyboard mapping as well.
+    if (!input.page_indices.empty() && input.page_indices.front() == 0 &&
+        input.page_indices.back() < count &&
+        std::adjacent_find(input.page_indices.begin(), input.page_indices.end(),
+            [](UINT a, UINT b) { return a >= b; }) == input.page_indices.end()) {
+        result.page_indices = input.page_indices;
 
+    }
+    const size_t selection = (std::min)(input.selected_index, count - 1);
+    const auto next_page = std::upper_bound(result.page_indices.begin(), result.page_indices.end(), selection);
+    result.current_page = static_cast<size_t>(next_page - result.page_indices.begin() - 1);
+    result.has_previous_page = result.current_page > 0;
+    result.has_next_page = result.current_page + 1 < result.page_indices.size();
+    const size_t begin = result.page_indices[result.current_page];
+    const size_t end = result.has_next_page ? result.page_indices[result.current_page + 1] : count;
+    int page_used = 0;
+    for (size_t i = begin; i < end; ++i) page_used += item_widths[i] + (i > begin ? gap : 0);
+    const int visible_width = (std::min)(candidate_width, page_used);
+    result.width = (std::min)(max_width, padding * 2 + label_width + gap + visible_width + controls_width);
+    result.visible = true;
+    result.panel_padding_px = padding;
+    result.item_gap_px = gap;
+    result.row_gap_px = 0;
+    result.corner_radius = scale_dip(12, dpi);
+    result.selected_corner_radius = scale_dip(7, dpi);
+    result.reserves_action_icon_space = true;
+    result.action_button_visible = control > 0;
+    result.action_button_size_px = (std::min)(control, bottom - top);
+    result.action_button_gap_px = gap;
+    result.show_hint = false;
+    result.composition_rect = RECT{padding, top, padding + label_width, bottom};
+    const int candidate_left = result.composition_rect.right + gap;
+    const int controls_left = result.width - padding - controls_width;
+    result.candidate_area_rect = RECT{candidate_left, top, controls_left, bottom};
+    int x = controls_left + gap;
+    const int control_top = top + (bottom - top - result.action_button_size_px) / 2;
+    const int control_bottom = control_top + result.action_button_size_px;
+    result.previous_page_rect = RECT{x, control_top, x + control, control_bottom}; x += control + gap;
+    result.page_indicator_rect = RECT{x, top, x + page_width, bottom}; x += page_width + gap;
+    result.next_page_rect = RECT{x, control_top, x + control, control_bottom}; x += control + gap;
+    result.action_button_rect = RECT{x, control_top, x + control, control_bottom};
+    const int available = (std::max)(1, controls_left - candidate_left);
+    x = candidate_left;
+    for (size_t i = begin; i < end; ++i) {
         CandidateItemLayout item;
         item.candidate_index = i;
-        item.selected = i == std::min(input.selected_index, candidates.size() - 1);
-        item.display_text = candidates[i];
-        item.truncated = text_width > text_available_width;
-        item.number_text_width_px = number_width;
-        item.candidate_text_width_px = text_width;
-        item.text_available_width_px = text_available_width;
-        item.horizontal_padding_px = item_pad_x;
+        item.page_number = i - begin + 1;
+        item.selected = i == selection;
+        item.display_text = input.candidate_texts[i];
+        const int item_width = page_used <= available ? item_widths[i] :
+            (std::max)(0, (available - gap * static_cast<int>(end - begin - 1)) / static_cast<int>(end - begin));
+        const int number_width = (std::min)(number_widths[i], (std::max)(0, item_width - item_pad * 2));
+        const int text_left = (std::min)(x + item_width, x + item_pad + number_width + number_gap);
+        const int text_right = (std::max)(text_left, x + item_width - item_pad);
+        item.bounds = RECT{x, top, x + item_width, bottom};
+        item.number_bounds = RECT{x + (std::min)(item_pad, item_width), top,
+            x + (std::min)(item_pad, item_width) + number_width, bottom};
+        item.text_bounds = RECT{text_left, top, text_right, bottom};
+        item.number_text_width_px = number_widths[i];
+        item.candidate_text_width_px = text_widths[i];
+        item.text_available_width_px = text_right - text_left;
+        item.horizontal_padding_px = item_pad;
         item.number_gap_px = number_gap;
-        item.bounds = RECT{row_x, row_y, row_x + item_width, row_y + candidate_row_height};
-        item.number_bounds = RECT{
-            item.bounds.left + item_pad_x,
-            item.bounds.top,
-            item.bounds.left + item_pad_x + number_width,
-            item.bounds.bottom
-        };
-        item.text_bounds = RECT{
-            item.number_bounds.right + number_gap,
-            item.bounds.top,
-            item.bounds.right - item_pad_x,
-            item.bounds.bottom
-        };
-        items.push_back(std::move(item));
-
-        row_x += item_width + item_gap;
-        row_width = row_x > 0 ? row_x - item_gap : 0;
+        item.truncated = text_widths[i] > item.text_available_width_px;
+        result.items.push_back(std::move(item));
+        x += item_width + gap;
     }
-
-    content_width = std::max(content_width, row_width);
-    int width = clamp_int(content_width + action_reserved_width + padding * 2, min_width, max_width);
-    const int rows_height = row_y + candidate_row_height;
-    const int composition_gap = composition_height > 0 ? scale_dip(8, dpi) : 0;
-    int height = padding + composition_height + composition_gap + rows_height + padding;
-    bool show_hint = input.options.show_key_hints;
-    if (show_hint) {
-        height += scale_dip(8, dpi) + hint_height;
-        if (height > work_height * 3 / 5) {
-            show_hint = false;
-            height -= scale_dip(8, dpi) + hint_height;
-        }
-    }
-
-    result.visible = true;
-    result.width = width;
-    result.height = std::min(height, work_height);
-    result.show_hint = show_hint;
-
-    const int candidate_top = padding + composition_height + composition_gap;
-    result.composition_rect = RECT{padding, padding, width - padding, padding + composition_height};
-    result.candidate_area_rect = RECT{padding,
-                                      candidate_top,
-                                      width - padding - action_reserved_width,
-                                      candidate_top + rows_height};
-    const int action_top = candidate_top + std::max(0, candidate_row_height - action_button_size) / 2;
-    result.action_button_rect = RECT{width - padding - action_button_size,
-                                     action_top,
-                                     width - padding,
-                                     action_top + action_button_size};
-    if (show_hint) {
-        result.hint_rect = RECT{
-            padding,
-            result.height - padding - hint_height,
-            width - padding,
-            result.height - padding
-        };
-    }
-
-    for (auto& item : items) {
-        OffsetRect(&item.bounds, padding, candidate_top);
-        OffsetRect(&item.number_bounds, padding, candidate_top);
-        OffsetRect(&item.text_bounds, padding, candidate_top);
-    }
-    result.items = std::move(items);
-
+    const int placement_gap = scale_dip(6, dpi);
     const int desired_x = input.caret_rect.left;
-    int x = clamp_int(desired_x, input.work_area.left, input.work_area.right - width);
-
+    const int window_x = clamp_int(desired_x, input.work_area.left, input.work_area.right - result.width);
     const int below_y = input.caret_rect.bottom + placement_gap;
     const int above_y = input.caret_rect.top - result.height - placement_gap;
-    const bool fits_below = below_y + result.height <= input.work_area.bottom;
-    const bool fits_above = above_y >= input.work_area.top;
-
-    int y = below_y;
     result.placement = CandidatePlacement::Below;
-    if (!fits_below && (fits_above || above_y - input.work_area.top >= input.work_area.bottom - below_y)) {
-        y = above_y;
+    int desired_y = below_y;
+    if (below_y + result.height > input.work_area.bottom &&
+        (above_y >= input.work_area.top || above_y - input.work_area.top >= input.work_area.bottom - below_y)) {
         result.placement = CandidatePlacement::Above;
+        desired_y = above_y;
     }
-    const int desired_y = y;
-    y = clamp_int(y, input.work_area.top, input.work_area.bottom - result.height);
-
-    result.rect_clamped = x != desired_x || y != desired_y;
-    result.window_rect = RECT{x, y, x + width, y + result.height};
+    const int y = clamp_int(desired_y, input.work_area.top, input.work_area.bottom - result.height);
+    result.rect_clamped = window_x != desired_x || y != desired_y;
+    result.window_rect = RECT{window_x, y, window_x + result.width, y + result.height};
     return result;
 }
 

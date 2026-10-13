@@ -3,9 +3,9 @@
   "dictionary_name": "LocalPinyinIME curated common lexicon v3",
   "maintainer": "LocalPinyinIME contributors",
   "intended_distribution": "Bundled with LocalPinyinIME source and unsigned development packages as the project-maintained local_core dictionary layer.",
-  "entry_count": 38698,
-  "sha256": "A1A74D0284EC336075B28676208D8E8FE6B7D1EDD4F4E988EA220F2ABC5AD59B",
-  "generated_at": "2026-10-12",
+  "entry_count": 40943,
+  "sha256": "253019237FACA0AF4CC7BC17453BC0A8CFC7D0A6391B83B8162D0A2DA8B1C75D",
+  "generated_at": "2026-10-13",
   "source_ids": [
     "first_party_curated",
     "first_party_curated_v2",
@@ -19,16 +19,17 @@
     "first_party_lexicon_batch_005",
     "first_party_lexicon_batch_006",
     "first_party_lexicon_batch_007",
-    "first_party_lexicon_batch_008"
+    "first_party_lexicon_batch_008",
+    "first_party_lexicon_batch_009"
   ],
-  "source_policy": "Project-maintained first-party authored lexicon. No third-party bulk lexicon was imported; no Rime, Sogou, Baidu, Microsoft, Google, or public GitHub candidate dictionary data is used. Pypinyin is an authoring-only pronunciation checker with manually reviewed compound overrides; neither Python nor its library is bundled in the input method. Independent prose used for the separate character context model is attributed in authoring/sources.json.",
-  "frequency_policy": "Frequency values are project-maintained relative ranking weights using coarse bands such as 9000, 7000, 5000, and 3000. They are not internet frequency, search frequency, commercial IME frequency, or external corpus statistics.",
+  "source_policy": "Project-maintained first-party authored local_core layer. No third-party bulk lexicon was imported into local_core; no Rime, Sogou, Baidu, Microsoft, Google, or public GitHub candidate dictionary data is used to author this layer. The separate standard_zh_pinyin.tsv layer contains licensed Rime/AOSP vocabulary recorded in sources/lexicon_sources.json and THIRD_PARTY_NOTICES.txt. Pypinyin is an authoring-only pronunciation checker with manually reviewed compound overrides; neither Python nor its library is bundled in the input method. Independent prose used for the separate character context model is attributed in authoring/sources.json.",
+  "frequency_policy": "Frequency values are project-maintained relative ranking weights using coarse bands such as 9000, 7000, 6000, 5500, 5000, and 3000. They are not internet frequency, search frequency, commercial IME frequency, or external corpus statistics.",
   "review_status": "approved for development release after format, duplicate-key, category, and benchmark validation; entries are first-party curated but have not all received formal linguistic review",
   "length_distribution": {
-    "fourplus": 20929,
+    "fourplus": 23102,
     "single": 1077,
-    "three": 6561,
-    "two": 10131
+    "three": 6630,
+    "two": 10134
   },
   "category_counts": {
     "common_actions": 74,
@@ -47,6 +48,7 @@
     "lexicon_batch_006": 1958,
     "lexicon_batch_007": 1419,
     "lexicon_batch_008": 1118,
+    "lexicon_batch_009": 2245,
     "manual_patch": 10713,
     "reviewed_pronunciation_aliases": 1,
     "shopping_food_transport": 368,
