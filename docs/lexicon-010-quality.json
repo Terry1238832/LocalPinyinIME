@@ -1,0 +1,903 @@
+{
+  "format_version": 1,
+  "version": "0.7.2",
+  "client_date": "2026-10-13",
+  "evaluated_at_utc": "2026-10-13T23:28:03.677699+00:00",
+  "method": {
+    "fixture_tool": "tools/evaluate_typing.py",
+    "engine": ".build/bin/LocalPinyinImeEval.exe",
+    "resources": ".build/bin",
+    "personal_data_isolated": true,
+    "expected_answers_learned": false,
+    "blind_evaluation": false,
+    "fixtures_previously_observed": true,
+    "expected_sentences_not_added_as_dictionary_entries": true,
+    "dictionary_weights_not_adjusted_after_evaluation": true,
+    "baseline_method": "Current final evaluator replaying the five exact 0.7.1 runtime resources snapshotted before expansion and verified against docs/paging-release-quality.json; these are controlled data replay outputs, not original 0.7.1 binary outputs.",
+    "baseline_resource_directory": ".build/baseline-071",
+    "baseline_fixtures_rerun_for_final_engine_hash": [],
+    "all_paths_repository_relative": true,
+    "raw_reports_location": ".build/quality-072",
+    "raw_reports_retained_after_delivery": false,
+    "retained_evidence": "Public summaries, every changed frozen-fixture candidate array, all five runtime hashes, integrity audit, and complete new-word ranks in the adjacent source validation JSON. Temporary build reports are cleaned after verified delivery.",
+    "keystroke_benchmark_run": false,
+    "latency_measurement": "Single-pass native engine lookup only. Machine-load-sensitive timings do not include per-prefix typing, OS event dispatch, TSF edit sessions, or application commit time."
+  },
+  "engine_sha256": "01d2f7c4e091833ee906ab361a734b64652ad6b7544d043c70afee81e1bb92f9",
+  "runtime_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "c18a4d7e752a6357eddf322dbd121fb00498a9dfc168cdede9d5f8f85a0a7b14",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+    "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+    "continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e"
+  },
+  "baseline_0_7_1_runtime_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "253019237faca0af4cc7bc17453bc0a8cfc7d0a6391b83b8162d0a2da8b1c75d",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+    "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+    "continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e"
+  },
+  "data_integrity": {
+    "status": "passed",
+    "audit_method": "Read-only byte hashes, UTF-8/LF checks, row and metadata counts, three-layer deduplication and exact key/display/weight multiset comparison.",
+    "historical_0_7_1_report": "docs/paging-release-quality.json",
+    "historical_0_7_1_report_sha256": "939ebd4f3ab155fc652b31f1dd707c438159faf12d0e9e64fb45ed4f006fc0c6",
+    "all_five_baseline_hashes_match_published_0_7_1": true,
+    "all_five_runtime_hashes_match_source": true,
+    "unchanged_from_0_7_1_runtime_files": [
+      "core_zh_pinyin.tsv",
+      "standard_zh_pinyin.tsv",
+      "context_zh.tsv",
+      "continuations_zh.tsv"
+    ],
+    "encoding": {
+      "resources/dictionary/core_zh_pinyin.tsv": {
+        "valid_utf8": true,
+        "bom_present": false,
+        "cr_bytes": 0,
+        "ends_with_lf": true
+      },
+      "resources/dictionary/local_core_zh_pinyin.tsv": {
+        "valid_utf8": true,
+        "bom_present": false,
+        "cr_bytes": 0,
+        "ends_with_lf": true
+      },
+      "resources/dictionary/standard_zh_pinyin.tsv": {
+        "valid_utf8": true,
+        "bom_present": false,
+        "cr_bytes": 0,
+        "ends_with_lf": true
+      },
+      "resources/dictionary/context_zh.tsv": {
+        "valid_utf8": true,
+        "bom_present": false,
+        "cr_bytes": 0,
+        "ends_with_lf": true
+      },
+      "resources/dictionary/continuations_zh.tsv": {
+        "valid_utf8": true,
+        "bom_present": false,
+        "cr_bytes": 0,
+        "ends_with_lf": true
+      },
+      "resources/dictionary/expansion/lexicon_batch_010.tsv": {
+        "valid_utf8": true,
+        "bom_present": false,
+        "cr_bytes": 0,
+        "ends_with_lf": true
+      },
+      "resources/dictionary/expansion/lexicon_batch_010.json": {
+        "valid_utf8": true,
+        "bom_present": false,
+        "cr_bytes": 0,
+        "ends_with_lf": true
+      },
+      "resources/dictionary/expansion/lexicon_batch_010.applied.json": {
+        "valid_utf8": true,
+        "bom_present": false,
+        "cr_bytes": 0,
+        "ends_with_lf": true
+      },
+      "resources/dictionary/expansion/batch010_pronunciation_review.tsv": {
+        "valid_utf8": true,
+        "bom_present": false,
+        "cr_bytes": 0,
+        "ends_with_lf": true
+      },
+      "resources/dictionary/sources/lexicon_sources.json": {
+        "valid_utf8": true,
+        "bom_present": false,
+        "cr_bytes": 0,
+        "ends_with_lf": true
+      }
+    },
+    "metadata": {
+      "local_core_zh_pinyin.tsv": {
+        "metadata": "resources/dictionary/local_core_zh_pinyin.metadata.json",
+        "sha256_matches": true,
+        "entry_count_matches": true,
+        "entry_count": 43556
+      },
+      "standard_zh_pinyin.tsv": {
+        "metadata": "resources/dictionary/standard_zh_pinyin.metadata.json",
+        "sha256_matches": true,
+        "entry_count_matches": true,
+        "entry_count": 55716
+      },
+      "context_zh.tsv": {
+        "metadata": "resources/dictionary/context_zh.metadata.json",
+        "sha256_matches": true,
+        "entry_count_matches": true,
+        "entry_count": 119220
+      },
+      "continuations_zh.tsv": {
+        "metadata": "resources/dictionary/continuations_zh.metadata.json",
+        "sha256_matches": true,
+        "entry_count_matches": true,
+        "entry_count": 346
+      }
+    },
+    "local_core_before_entries": 40943,
+    "local_core_after_entries": 43556,
+    "frozen_batch_entries": 2613,
+    "frozen_batch_sha256": "77b827c0b7440e34ce76f3ad38275508f06e37cb6aa6791ab739e624c1db1cec",
+    "all_existing_key_display_weight_triples_preserved": true,
+    "existing_rows_removed": 0,
+    "existing_weights_changed": 0,
+    "three_layer_before": {
+      "raw_rows": 97061,
+      "effective_unique_key_display_pairs": 87844,
+      "unique_display_words": 87389
+    },
+    "three_layer_after": {
+      "raw_rows": 99674,
+      "effective_unique_key_display_pairs": 90457,
+      "unique_display_words": 90002
+    },
+    "new_key_display_pairs": 2613,
+    "new_display_words": 2613,
+    "existing_layer_key_display_collisions": 0,
+    "existing_layer_display_collisions": 0,
+    "previous_frozen_batch_collisions": 0,
+    "frozen_fixture_cases_checked": 267,
+    "frozen_fixture_unique_full_answers_checked": 267,
+    "new_entries_equal_to_frozen_full_answers": 0,
+    "fixtures_sha256": {
+      "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+      "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+      "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+    },
+    "source_policy": {
+      "manifest": "resources/dictionary/sources/lexicon_sources.json",
+      "manifest_sha256": "7be80c50fb915198fe2872533398799ef69a2df4cf704f7c96d7a4fe0a0bbe4c",
+      "batch_source_id": "first_party_lexicon_batch_010",
+      "batch_authorship": "first_party_authored",
+      "batch_license": "MIT",
+      "batch_external_lexicon_import": false,
+      "authorship_evidence_scope": "Project authoring records and provenance declarations; this audit does not independently establish originality of every ordinary expression.",
+      "standard_layer_separate": true,
+      "standard_source_id": "rime_aosp_pinyin_simp",
+      "standard_license": "Apache-2.0",
+      "standard_upstream_commit": "0c6861ef7420ee780270ca6d993d18d4101049d0",
+      "third_party_notices": "resources/THIRD_PARTY_NOTICES.txt",
+      "third_party_notices_sha256": "c26f210eebaf06b7293ced2345c43aa6bebaaf18e229fe787437a671a4ddbe95",
+      "pronunciation_checker_authoring_only": true,
+      "runtime_python_dependency_added": false
+    }
+  },
+  "fixtures": {
+    "fixed": {
+      "fixture": "tests/data/typing_holdout.tsv",
+      "fixture_sha256": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+      "baseline_0_7_1_summary": {
+        "cases": 138,
+        "top1_correct": 89,
+        "top9_present": 120,
+        "top1_percent": 64.49,
+        "top9_percent": 86.96,
+        "character_error_rate": 0.0482,
+        "p50_lookup_ms": 12.052,
+        "p95_lookup_ms": 18.61,
+        "max_lookup_ms": 25.623
+      },
+      "current_summary": {
+        "cases": 138,
+        "top1_correct": 89,
+        "top9_present": 120,
+        "top1_percent": 64.49,
+        "top9_percent": 86.96,
+        "character_error_rate": 0.0482,
+        "p50_lookup_ms": 11.523,
+        "p95_lookup_ms": 18.835,
+        "max_lookup_ms": 23.241
+      },
+      "delta": {
+        "cases": 0,
+        "top1_correct": 0,
+        "top9_present": 0,
+        "top1_percent": 0.0,
+        "top9_percent": 0.0,
+        "character_error_rate": 0.0
+      },
+      "same_engine_baseline_quality_matches_published_0_7_1": true,
+      "current_groups": {
+        "article": {
+          "cases": 47,
+          "top1_correct": 20,
+          "top9_present": 34,
+          "top1_percent": 42.55,
+          "top9_percent": 72.34,
+          "character_error_rate": 0.1,
+          "p50_lookup_ms": 8.869,
+          "p95_lookup_ms": 19.342,
+          "max_lookup_ms": 23.241
+        },
+        "daily": {
+          "cases": 91,
+          "top1_correct": 69,
+          "top9_present": 86,
+          "top1_percent": 75.82,
+          "top9_percent": 94.51,
+          "character_error_rate": 0.0254,
+          "p50_lookup_ms": 11.919,
+          "p95_lookup_ms": 18.628,
+          "max_lookup_ms": 21.41
+        }
+      },
+      "baseline_0_7_1_groups": {
+        "article": {
+          "cases": 47,
+          "top1_correct": 20,
+          "top9_present": 34,
+          "top1_percent": 42.55,
+          "top9_percent": 72.34,
+          "character_error_rate": 0.1,
+          "p50_lookup_ms": 8.276,
+          "p95_lookup_ms": 18.294,
+          "max_lookup_ms": 21.211
+        },
+        "daily": {
+          "cases": 91,
+          "top1_correct": 69,
+          "top9_present": 86,
+          "top1_percent": 75.82,
+          "top9_percent": 94.51,
+          "character_error_rate": 0.0254,
+          "p50_lookup_ms": 12.662,
+          "p95_lookup_ms": 19.8,
+          "max_lookup_ms": 25.623
+        }
+      },
+      "candidate_array_changes": [
+        {
+          "source": "article:beiying:11",
+          "pinyin": "wowangzhetazouchuqu",
+          "expected": "我望着他走出去",
+          "old_candidates": [
+            "我望着他走出去",
+            "我望着她走出去",
+            "我望着他邹出去",
+            "我望着他奏出去",
+            "我望着他揍出去",
+            "我望着他走出取",
+            "我望着他走除去",
+            "我望着他走出趣",
+            "我往"
+          ],
+          "current_candidates": [
+            "我望着他走出去",
+            "我望着她走出去",
+            "我望着他邹出去",
+            "我望着他奏出去",
+            "我望着他揍出去",
+            "我望着他走出取",
+            "我望着他走出曲",
+            "我望着他走除去",
+            "我往"
+          ],
+          "old_rank": 1,
+          "current_rank": 1
+        },
+        {
+          "source": "daily:006",
+          "pinyin": "zhegeshurufadehouxuancishunxubudui",
+          "expected": "这个输入法的候选词顺序不对",
+          "old_candidates": [
+            "这个输入法的候选词顺序不对",
+            "这个输入法的候选次顺序不对",
+            "这个输入法的候选词顺序部队",
+            "这个输入法的候选次顺序部队",
+            "这个输入法的候选词顺序不队",
+            "这个输入法的候选词顺序部对",
+            "这个输入法的候选词顺序补对",
+            "这个输入法的候选词顺序布对",
+            "这个"
+          ],
+          "current_candidates": [
+            "这个输入法的候选词顺序不对",
+            "这个输入法的候选次顺序不对",
+            "这个输入法的候选词顺序部队",
+            "这个输入法的候选次顺序部队",
+            "这个输入法的候选词顺序部对",
+            "这个输入法的候选词顺序不队",
+            "这个输入法的候选词顺序补对",
+            "这个输入法的候选次顺序部对",
+            "这个"
+          ],
+          "old_rank": 1,
+          "current_rank": 1
+        },
+        {
+          "source": "daily:007",
+          "pinyin": "wojintianbutaixiangchuquchifan",
+          "expected": "我今天不太想出去吃饭",
+          "old_candidates": [
+            "我今天不太想出去吃饭",
+            "我今天不太像出去吃饭",
+            "我今天不太想出去吃烦",
+            "我今天不太想出去吃翻",
+            "我今天不太想出去吃反",
+            "我今天不太想出去吃番",
+            "我今天不太想出去吃泛",
+            "我今天不太想出去齿饭",
+            "握紧"
+          ],
+          "current_candidates": [
+            "我今天不太想出去吃饭",
+            "我今天不太像出去吃饭",
+            "我今天不太想出曲吃饭",
+            "我今天不太想出去吃烦",
+            "我今天不太想出去吃翻",
+            "我今天不太想出去吃反",
+            "我今天不太想出去吃番",
+            "我今天不太想出去吃泛",
+            "握紧"
+          ],
+          "old_rank": 1,
+          "current_rank": 1
+        },
+        {
+          "source": "daily:046",
+          "pinyin": "woganggangshoudaoleyitiaoxindexiaoxi",
+          "expected": "我刚刚收到了一条新的消息",
+          "old_candidates": [
+            "我刚刚收到了一条新的消息",
+            "我刚刚收到了一条心的消息",
+            "我刚刚收到了一条心得消息",
+            "我刚刚收到了一条心地消息",
+            "我刚刚收到了一条新的小西",
+            "我刚刚收到了一条新德消息",
+            "我刚刚收到了一条新的小系",
+            "我刚刚收到了一条新的小溪",
+            "我刚"
+          ],
+          "current_candidates": [
+            "我刚刚收到了一条新的消息",
+            "我刚刚收到了一条心的消息",
+            "我刚刚收到了一条心得消息",
+            "我刚刚收到了一条心地消息",
+            "我刚刚收到了一条新的小西",
+            "我刚刚收到了一条新德消息",
+            "我刚刚收到了一条信得消息",
+            "我刚刚收到了一条新的小系",
+            "我刚"
+          ],
+          "old_rank": 1,
+          "current_rank": 1
+        },
+        {
+          "source": "daily:049",
+          "pinyin": "wodasuancongmingtiankaishizaodianqichuang",
+          "expected": "我打算从明天开始早点起床",
+          "old_candidates": [
+            "我打算聪明天开始早点起床",
+            "我打算从明天开始早点起床",
+            "我打算聪明天开始早店起床",
+            "我打算聪明天开始早点气床",
+            "我打算聪明天开始早点骑床",
+            "我打算聪明天开始早点企床",
+            "我打算聪明天开始早点其床",
+            "我打算聪明天开始早点期床",
+            "我打"
+          ],
+          "current_candidates": [
+            "我打算聪明天开始早点起床",
+            "我打算从明天开始早点起床",
+            "我打算聪明天开始早点气床",
+            "我打算聪明天开始早点期床",
+            "我打算聪明天开始早点骑床",
+            "我打算聪明天开始早点企床",
+            "我打算聪明天开始早点其床",
+            "我打算聪明天开始早点器床",
+            "我打"
+          ],
+          "old_rank": 2,
+          "current_rank": 2
+        },
+        {
+          "source": "daily:052",
+          "pinyin": "zhejianshiqingmeiyounixiangdenamefuza",
+          "expected": "这件事情没有你想的那么复杂",
+          "old_candidates": [
+            "这件事情没有你想的那么复杂",
+            "这件事情没有你想得那么复杂",
+            "这件事情没有你想的那么付杂",
+            "这件事情没有你想得那么付杂",
+            "这件事情没有你想的那么副杂",
+            "这件事情没有你想的那么付砸",
+            "这件事情没有你想的那么服杂",
+            "这件事情没有你想得那么副杂",
+            "这件事"
+          ],
+          "current_candidates": [
+            "这件事情没有你想的那么复杂",
+            "这件事情没有你想得那么复杂",
+            "这件事情没有你想的那么付杂",
+            "这件事情没有你想得那么付杂",
+            "这件事情没有你想的那么副杂",
+            "这件事情没有你想的那么付砸",
+            "这件事情没有你想的那么服杂",
+            "这件事情没有你想的那么福杂",
+            "这件事"
+          ],
+          "old_rank": 1,
+          "current_rank": 1
+        }
+      ],
+      "candidate_change_counts": {
+        "candidate_arrays_changed": 6,
+        "top1_candidate_changed": 0,
+        "top1_improved": 0,
+        "top1_regressed": 0,
+        "top9_gained": 0,
+        "top9_lost": 0,
+        "expected_rank_improved": 0,
+        "expected_rank_regressed": 0,
+        "expected_rank_unchanged": 138
+      },
+      "top1_changes": 0
+    },
+    "fresh": {
+      "fixture": "tests/data/typing_fresh.tsv",
+      "fixture_sha256": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+      "baseline_0_7_1_summary": {
+        "cases": 67,
+        "top1_correct": 37,
+        "top9_present": 52,
+        "top1_percent": 55.22,
+        "top9_percent": 77.61,
+        "character_error_rate": 0.0915,
+        "p50_lookup_ms": 8.24,
+        "p95_lookup_ms": 14.611,
+        "max_lookup_ms": 19.27
+      },
+      "current_summary": {
+        "cases": 67,
+        "top1_correct": 37,
+        "top9_present": 52,
+        "top1_percent": 55.22,
+        "top9_percent": 77.61,
+        "character_error_rate": 0.0915,
+        "p50_lookup_ms": 8.257,
+        "p95_lookup_ms": 13.072,
+        "max_lookup_ms": 16.724
+      },
+      "delta": {
+        "cases": 0,
+        "top1_correct": 0,
+        "top9_present": 0,
+        "top1_percent": 0.0,
+        "top9_percent": 0.0,
+        "character_error_rate": 0.0
+      },
+      "same_engine_baseline_quality_matches_published_0_7_1": true,
+      "current_groups": {
+        "article": {
+          "cases": 47,
+          "top1_correct": 24,
+          "top9_present": 32,
+          "top1_percent": 51.06,
+          "top9_percent": 68.09,
+          "character_error_rate": 0.1265,
+          "p50_lookup_ms": 6.113,
+          "p95_lookup_ms": 11.8,
+          "max_lookup_ms": 12.362
+        },
+        "daily": {
+          "cases": 20,
+          "top1_correct": 13,
+          "top9_present": 20,
+          "top1_percent": 65.0,
+          "top9_percent": 100.0,
+          "character_error_rate": 0.0424,
+          "p50_lookup_ms": 10.836,
+          "p95_lookup_ms": 16.724,
+          "max_lookup_ms": 16.724
+        }
+      },
+      "baseline_0_7_1_groups": {
+        "article": {
+          "cases": 47,
+          "top1_correct": 24,
+          "top9_present": 32,
+          "top1_percent": 51.06,
+          "top9_percent": 68.09,
+          "character_error_rate": 0.1265,
+          "p50_lookup_ms": 5.794,
+          "p95_lookup_ms": 11.313,
+          "max_lookup_ms": 12.683
+        },
+        "daily": {
+          "cases": 20,
+          "top1_correct": 13,
+          "top9_present": 20,
+          "top1_percent": 65.0,
+          "top9_percent": 100.0,
+          "character_error_rate": 0.0424,
+          "p50_lookup_ms": 12.798,
+          "p95_lookup_ms": 19.27,
+          "max_lookup_ms": 19.27
+        }
+      },
+      "candidate_array_changes": [
+        {
+          "source": "article:hetang:28",
+          "pinyin": "suiranyueguangyehaishidandande",
+          "expected": "虽然月光也还是淡淡的",
+          "old_candidates": [
+            "虽然月光也还是淡淡的",
+            "虽然说逛也还是淡淡的",
+            "虽然月光也还是淡淡得",
+            "虽然月光也还是淡淡地",
+            "虽然月光也还是淡淡底",
+            "虽然月光也还是单单的",
+            "虽然月光也还是淡淡德",
+            "虽然说逛也还是淡淡得",
+            "虽然"
+          ],
+          "current_candidates": [
+            "虽然月光也还是淡淡的",
+            "虽然说逛也还是淡淡的",
+            "虽然月光也还是淡淡得",
+            "虽然月光也还是淡淡地",
+            "虽然月光也还是淡淡底",
+            "虽然月光也还是淡淡德",
+            "虽然月光也还是单单的",
+            "虽然说逛也还是淡淡得",
+            "虽然"
+          ],
+          "old_rank": 1,
+          "current_rank": 1
+        }
+      ],
+      "candidate_change_counts": {
+        "candidate_arrays_changed": 1,
+        "top1_candidate_changed": 0,
+        "top1_improved": 0,
+        "top1_regressed": 0,
+        "top9_gained": 0,
+        "top9_lost": 0,
+        "expected_rank_improved": 0,
+        "expected_rank_regressed": 0,
+        "expected_rank_unchanged": 67
+      },
+      "top1_changes": 0
+    },
+    "independent": {
+      "fixture": "tests/data/typing_independent.tsv",
+      "fixture_sha256": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98",
+      "baseline_0_7_1_summary": {
+        "cases": 62,
+        "top1_correct": 24,
+        "top9_present": 30,
+        "top1_percent": 38.71,
+        "top9_percent": 48.39,
+        "character_error_rate": 0.1375,
+        "p50_lookup_ms": 9.191,
+        "p95_lookup_ms": 21.997,
+        "max_lookup_ms": 24.831
+      },
+      "current_summary": {
+        "cases": 62,
+        "top1_correct": 24,
+        "top9_present": 32,
+        "top1_percent": 38.71,
+        "top9_percent": 51.61,
+        "character_error_rate": 0.136,
+        "p50_lookup_ms": 11.105,
+        "p95_lookup_ms": 22.655,
+        "max_lookup_ms": 26.945
+      },
+      "delta": {
+        "cases": 0,
+        "top1_correct": 0,
+        "top9_present": 2,
+        "top1_percent": 0.0,
+        "top9_percent": 3.22,
+        "character_error_rate": -0.0015
+      },
+      "same_engine_baseline_quality_matches_published_0_7_1": true,
+      "current_groups": {
+        "article": {
+          "cases": 42,
+          "top1_correct": 12,
+          "top9_present": 19,
+          "top1_percent": 28.57,
+          "top9_percent": 45.24,
+          "character_error_rate": 0.2,
+          "p50_lookup_ms": 7.268,
+          "p95_lookup_ms": 15.861,
+          "max_lookup_ms": 26.945
+        },
+        "daily": {
+          "cases": 20,
+          "top1_correct": 12,
+          "top9_present": 13,
+          "top1_percent": 60.0,
+          "top9_percent": 65.0,
+          "character_error_rate": 0.0619,
+          "p50_lookup_ms": 15.765,
+          "p95_lookup_ms": 26.45,
+          "max_lookup_ms": 26.45
+        }
+      },
+      "baseline_0_7_1_groups": {
+        "article": {
+          "cases": 42,
+          "top1_correct": 12,
+          "top9_present": 18,
+          "top1_percent": 28.57,
+          "top9_percent": 42.86,
+          "character_error_rate": 0.2,
+          "p50_lookup_ms": 6.81,
+          "p95_lookup_ms": 18.143,
+          "max_lookup_ms": 24.066
+        },
+        "daily": {
+          "cases": 20,
+          "top1_correct": 12,
+          "top9_present": 12,
+          "top1_percent": 60.0,
+          "top9_percent": 60.0,
+          "character_error_rate": 0.0651,
+          "p50_lookup_ms": 13.088,
+          "p95_lookup_ms": 24.831,
+          "max_lookup_ms": 24.831
+        }
+      },
+      "candidate_array_changes": [
+        {
+          "source": "article:fengzheng:16",
+          "pinyin": "hehaizimendetianshangdedianzhuixiangzhaoying",
+          "expected": "和孩子们的天上的点缀相照应",
+          "old_candidates": [
+            "和孩子们的天上的点缀想找应",
+            "和孩子们的天上的店追想找应",
+            "和孩子们的天上的点缀想找影",
+            "和孩子们的天上的店追想找影",
+            "和孩子们的天上的点缀想找硬",
+            "和孩子们的天上的点缀想找英",
+            "和孩子们的天上的点缀想找赢",
+            "和孩子们的天上的点缀想找营",
+            "喝"
+          ],
+          "current_candidates": [
+            "和孩子们的天上的点缀想找应",
+            "和孩子们的天上的店追想找应",
+            "和孩子们的天上的点缀想找影",
+            "和孩子们的天上的点缀相照应",
+            "和孩子们的天上的店追想找影",
+            "和孩子们的天上的点缀想找硬",
+            "和孩子们的天上的点缀想找英",
+            "和孩子们的天上的点缀想找赢",
+            "喝"
+          ],
+          "old_rank": 0,
+          "current_rank": 4
+        },
+        {
+          "source": "article:fengzheng:26",
+          "pinyin": "hewoxiangfandeshiwodexiaoxiongdi",
+          "expected": "和我相反的是我的小兄弟",
+          "old_candidates": [
+            "和我相反的是我的小兄弟",
+            "和我想饭的是我的小兄弟",
+            "和我相反的是我的小熊地",
+            "和我想饭的是我的小熊地",
+            "和我相反的是我的小熊低",
+            "和我想饭的是我的小熊低",
+            "和我相反的是我的小熊底",
+            "和我相反的是我的小熊的",
+            "和我"
+          ],
+          "current_candidates": [
+            "和我相反的是我的小兄弟",
+            "和我想饭的是我的小兄弟",
+            "和我相反的是我的小熊地",
+            "和我想饭的是我的小熊地",
+            "和我相反的是我的小熊低",
+            "和我相反的是我的小熊底",
+            "和我相反的是我的小熊的",
+            "和我相反的是我的小熊第",
+            "和我"
+          ],
+          "old_rank": 1,
+          "current_rank": 1
+        },
+        {
+          "source": "article:fengzheng:29",
+          "pinyin": "shoudebukan",
+          "expected": "瘦得不堪",
+          "old_candidates": [
+            "收的不看",
+            "收得不看",
+            "熟得不看",
+            "熟的不看",
+            "收地不看",
+            "收的部看",
+            "收的不堪",
+            "手地不看",
+            "手"
+          ],
+          "current_candidates": [
+            "收的不看",
+            "收得不看",
+            "熟得不看",
+            "熟的不看",
+            "收的部看",
+            "收地不看",
+            "熟的部看",
+            "收的不堪",
+            "手"
+          ],
+          "old_rank": 0,
+          "current_rank": 0
+        },
+        {
+          "source": "daily:independent:02",
+          "pinyin": "mafanbakaochuangdezuoweiliugeidaihaizidechengke",
+          "expected": "麻烦把靠窗的座位留给带孩子的乘客",
+          "old_candidates": [
+            "麻烦吧靠窗的作为留给带孩子的乘客",
+            "麻烦吧靠窗的座位留给带孩子的乘客",
+            "麻烦吧靠窗的作为留给带孩子底乘客",
+            "麻烦吧靠窗的作为留给带孩子地乘客",
+            "麻烦吧靠窗的座位留给带孩子底乘客",
+            "麻烦吧靠窗的座位留给带孩子地乘客",
+            "麻烦吧靠窗的作为留给带孩子得乘客",
+            "麻烦吧靠窗的作为留给带孩子的成可",
+            "麻烦"
+          ],
+          "current_candidates": [
+            "麻烦吧靠窗的作为留给带孩子的乘客",
+            "麻烦吧靠窗的座位留给带孩子的乘客",
+            "麻烦吧靠窗的作为留给带孩子底乘客",
+            "麻烦吧靠窗的作为留给带孩子地乘客",
+            "麻烦吧靠窗的座位留给带孩子底乘客",
+            "麻烦吧靠窗的座位留给带孩子地乘客",
+            "麻烦吧靠窗的作为留给带孩子得乘客",
+            "麻烦吧靠窗的座位留给带孩子得乘客",
+            "麻烦"
+          ],
+          "old_rank": 0,
+          "current_rank": 0
+        },
+        {
+          "source": "daily:independent:11",
+          "pinyin": "nibashiyifuguadetaijinleburongyigan",
+          "expected": "你把湿衣服挂得太近了不容易干",
+          "old_candidates": [
+            "你把事衣服挂得太紧了不容易干",
+            "你把时衣服挂得太紧了不容易干",
+            "你把事衣服挂得太紧了不容易感",
+            "你把时衣服挂得太紧了不容易感",
+            "你把事衣服挂得太紧了不容易赶",
+            "你把时衣服挂得太紧了不容易赶",
+            "你把事衣服挂得太紧了不容易杆",
+            "你把时衣服挂得太紧了不容易杆",
+            "泥巴"
+          ],
+          "current_candidates": [
+            "你把湿衣服挂得太紧了不容易干",
+            "你把湿衣服挂得太近了不容易干",
+            "你把湿衣服挂得太紧了不容易感",
+            "你把湿衣服挂得太近了不容易感",
+            "你把湿衣服挂得太紧了不容易赶",
+            "你把湿衣服挂得太紧了不容易杆",
+            "你把湿衣服挂得太近了不容易赶",
+            "你把湿衣服挂得太紧了不容易敢",
+            "泥巴"
+          ],
+          "old_rank": 0,
+          "current_rank": 2
+        },
+        {
+          "source": "daily:independent:14",
+          "pinyin": "louxiadezaocandianmeizhouyidoubuyingye",
+          "expected": "楼下的早餐店每周一都不营业",
+          "old_candidates": [
+            "楼下的早餐店每周一都不营业",
+            "楼下的早餐点没周一都不营业",
+            "楼下的早餐店每周一抖部营业",
+            "楼下的早餐点每周一抖部营业",
+            "楼下的早餐店每周一抖补营业",
+            "楼下的早餐店每周一都不影也",
+            "楼下的早餐点没周一都不影也",
+            "楼下的早餐店每周一抖布营业",
+            "楼下"
+          ],
+          "current_candidates": [
+            "楼下的早餐店每周一都不营业",
+            "楼下的早餐点没周一都不营业",
+            "楼下的早餐店每周一抖部营业",
+            "楼下的早餐点每周一抖部营业",
+            "楼下的早餐店每周一抖补营业",
+            "楼下的早餐店每周一都不影也",
+            "楼下的早餐店每周一抖布营业",
+            "楼下的早餐点没周一都不影也",
+            "楼下"
+          ],
+          "old_rank": 1,
+          "current_rank": 1
+        }
+      ],
+      "candidate_change_counts": {
+        "candidate_arrays_changed": 6,
+        "top1_candidate_changed": 1,
+        "top1_improved": 0,
+        "top1_regressed": 0,
+        "top9_gained": 2,
+        "top9_lost": 0,
+        "expected_rank_improved": 2,
+        "expected_rank_regressed": 0,
+        "expected_rank_unchanged": 60
+      },
+      "top1_changes": 1
+    }
+  },
+  "aggregate_current": {
+    "cases": 267,
+    "top1_correct": 150,
+    "top9_present": 204,
+    "top1_percent": 56.18,
+    "top9_percent": 76.4,
+    "character_error_rate": 0.0781,
+    "p50_lookup_ms": 10.561,
+    "p95_lookup_ms": 18.871,
+    "max_lookup_ms": 26.945
+  },
+  "aggregate_baseline_0_7_1": {
+    "cases": 267,
+    "top1_correct": 150,
+    "top9_present": 202,
+    "top1_percent": 56.18,
+    "top9_percent": 75.66,
+    "character_error_rate": 0.0785,
+    "p50_lookup_ms": 10.345,
+    "p95_lookup_ms": 18.61,
+    "max_lookup_ms": 25.623
+  },
+  "new_word_coverage": {
+    "report": "resources/dictionary/expansion/lexicon_batch_010.validation.json",
+    "report_sha256": "4d301e5e2159a3bbec15223eb8c2510a4057d4d08ecf1be8d01305b84d677640",
+    "summary": {
+      "cases": 2613,
+      "top1_correct": 2256,
+      "top9_present": 2613,
+      "top1_percent": 86.3375,
+      "top9_percent": 100.0,
+      "missing_from_top9_count": 0,
+      "non_top1_count": 357,
+      "max_returned_candidate_count": 9,
+      "p50_engine_lookup_ms": 4.403,
+      "p95_engine_lookup_ms": 8.677,
+      "max_engine_lookup_ms": 16.259
+    },
+    "all_ranks_and_candidates_retained": true,
+    "expected_words_are_direct_dictionary_entries": true,
+    "measurement_scope": "All frozen batch words queried by native full-key lookup in isolation; this is dictionary candidate coverage, not a blind sentence evaluation or installed-app typing test."
+  },
+  "scope": "Dictionary expansion with four other runtime resources unchanged. Full installer install/uninstall on a new machine and installed OS keyboard routing in third-party applications were not tested."
+}

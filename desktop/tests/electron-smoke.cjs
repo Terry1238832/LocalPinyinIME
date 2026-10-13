@@ -278,7 +278,7 @@ async function run() {
     const initial = await state();
     assert.equal(initial.version, expectedVersion);
     assert.equal(initial.settings.predictionEnabled, true, 'Fresh installations enable contextual suggestions.');
-    assert.equal(initial.dictionary.total, 87844, 'The 0.7.1 built-in resources were not loaded.');
+    assert.equal(initial.dictionary.total, 90457, 'The 0.7.2 built-in resources were not loaded.');
     report.dictionary = initial.dictionary;
     assert.equal(path.resolve(initial.dataDirectory), path.join(data, 'LocalPinyinIME'));
     assert.deepEqual((await api('listUserLexicon')).entries, []);

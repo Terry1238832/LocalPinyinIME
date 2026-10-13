@@ -1,0 +1,189 @@
+{
+  "batch": "lexicon_batch_010",
+  "authoring_source": "first_party_authored",
+  "external_lexicon_import": false,
+  "license": "MIT",
+  "pronunciation_tool": "pypinyin 0.55.0 authoring-only; individually reviewed compounds",
+  "authoring_files_sha256": {
+    "batch010_work_service_draft.txt": "4d583317395d4ee4db94907d25a402b5a1377aaca96ae55924f8695e16695508",
+    "batch010_life_play_draft.txt": "98edec343db255be430a970bcc7031a84e22d4fec802f24e1b59c648a11042b8",
+    "batch010_personal_draft.txt": "93edb464e60b492a50ca46453b4ab0afa4ee66b4afd53b3bfca0fec45779a3f7"
+  },
+  "authored_candidates": 2635,
+  "new_entries": 2613,
+  "unique_words": 2613,
+  "sha256": "77b827c0b7440e34ce76f3ad38275508f06e37cb6aa6791ab739e624c1db1cec",
+  "category_counts": {
+    "appointments_and_admin": 185,
+    "customer_service": 197,
+    "delivery_and_billing": 287,
+    "emotional_communication": 237,
+    "entertainment_and_recreation": 270,
+    "everyday_clarification": 67,
+    "everyday_negotiation": 69,
+    "everyday_observations": 66,
+    "everyday_wellbeing": 179,
+    "family_care": 224,
+    "personal_money_and_consumption": 67,
+    "personal_planning": 68,
+    "project_collaboration": 317,
+    "social_boundaries_and_courtesy": 60,
+    "sports_and_training": 192,
+    "work_communication": 128
+  },
+  "length_distribution": {
+    "3": 3,
+    "4": 1736,
+    "5": 738,
+    "6": 136
+  },
+  "frequency_range": [
+    5000,
+    5500,
+    6000
+  ],
+  "frequency_distribution": {
+    "5000": 462,
+    "5500": 1718,
+    "6000": 433
+  },
+  "frequency_policy": "Coarse project-relative 5000/5500/6000 bands by everyday utility, fixed before native evaluation; no corpus statistics or requirement to force first place.",
+  "dedup_policy": "Exclude existing key/display pair and all existing display words across core, local_core, standard and all previous frozen batches",
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "253019237faca0af4cc7bc17453bc0a8cfc7d0a6391b83b8162d0a2da8b1c75d",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+    "lexicon_batch_001.tsv": "9a915d049683f1ad294dab31bffc9da927676b721101597212e0d7afd2e293d0",
+    "lexicon_batch_002.tsv": "0d26aa30a7b7a415b776f2af7cc26287d54bcf123df4e5502f26988f5e315679",
+    "lexicon_batch_003.tsv": "19760d53ede819c3905190a76402ebfe22a886e2ebb717fc7905dbace8cea6af",
+    "lexicon_batch_004.tsv": "436cd4b221218d0665afd26433174cde0a3e13cd47a52a5478ea0985b4b5d436",
+    "lexicon_batch_005.tsv": "7460f5820d21590fc220c0e4ec2328a4c9baecfb0e94f4c0bc02f419587223a4",
+    "lexicon_batch_006.tsv": "271084b116a5a7a297c91eea22366aebe50812871441e8df7162a7af06e6af8d",
+    "lexicon_batch_007.tsv": "ce5f1974850277f358948b999b66ca13cc2ff06f1681fda214ea55b6da42dc49",
+    "lexicon_batch_008.tsv": "22d5c696f3930876aefbce12b490f7d6ebd3b2dc45deb48eb9b014ea00354362",
+    "lexicon_batch_009.tsv": "2aa696d03a0dc0e4ea28c99db4e2c22067db02e3fcdf5ecd23e45747d6f93bf6"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_full_answers_added": 0,
+  "benchmark_answers_excluded": [],
+  "duplicate_author_candidates_excluded": [
+    "听我说完",
+    "让你费心了",
+    "照顾好自己"
+  ],
+  "existing_display_words_excluded": [
+    "说来话长",
+    "我理解错了",
+    "有什么区别",
+    "要注意什么",
+    "不完全一样",
+    "先缓口气",
+    "转账备注",
+    "到账时间",
+    "多谢提醒",
+    "谢谢理解",
+    "感谢配合",
+    "改天一起吃饭",
+    "下次好好聊",
+    "祝一切顺利",
+    "忙里偷闲"
+  ],
+  "alternate_pronunciation_candidates_excluded": [],
+  "quality_candidates_excluded": [
+    {
+      "word": "擦边球了",
+      "reason": "Awkward standalone nominal fragment; ordinary sports phrases already cover the use case."
+    },
+    {
+      "word": "留意身体啊",
+      "reason": "Less natural than ordinary care expressions; omit rather than pad vocabulary."
+    },
+    {
+      "word": "恍然想起来",
+      "reason": "Unidiomatic modifier; other authored recall phrases already suffice."
+    },
+    {
+      "word": "先抓紧要紧的",
+      "reason": "Repetitive and underspecified fragment; omit rather than pad vocabulary."
+    }
+  ],
+  "manual_pronunciation_overrides": {
+    "一点薄礼": "yidianboli",
+    "发票没收到": "fapiaomeishoudao",
+    "学系鞋带": "xuejixiedai",
+    "孩子闹觉": "haizinaojiao",
+    "尊重选择": "zunzhongxuanze",
+    "屏幕调暗": "pingmutiaoan",
+    "差旅报销单": "chailvbaoxiaodan",
+    "得分情况看": "deifenqingkuangkan",
+    "得有个先后": "deiyougexianhou",
+    "得花点功夫": "deihuadiangongfu",
+    "我得斟酌下": "wodeizhenzhuoxia",
+    "把觉补足": "bajiaobuzu",
+    "指甲太长": "zhijiataichang",
+    "灯光调暗": "dengguangtiaoan",
+    "球没过网": "qiumeiguowang",
+    "绳子太长": "shengzitaichang",
+    "补个觉吧": "bugejiaoba",
+    "让我再琢磨": "rangwozaizuomo",
+    "调低音量": "tiaodiyinliang",
+    "调整绳长": "tiaozhengshengchang",
+    "调高伴奏": "tiaogaobanzou",
+    "过期需重办": "guoqixuchongban",
+    "还得再磨磨": "haideizaimomo",
+    "还款凭证": "huankuanpingzheng",
+    "还款未到账": "huankuanweidaozhang",
+    "重开发票": "chongkaifapiao"
+  },
+  "pronunciation_review_file": "batch010_pronunciation_review.tsv",
+  "pronunciation_review_sha256": "639c6e69ef80e0d06e6be976b6dc6e94f12eb426e1082d9fe6a58827e0e6b9f0",
+  "polyphone_review_detection": "Any character with more than one toneless normal-style possible reading in pinned pypinyin 0.55.0; each compound is reviewed in context.",
+  "pronunciation_review_reference_links": {
+    "薄礼": "https://dict.revised.moe.edu.tw/dictView.jsp?ID=13333&la=0&powerMode=0",
+    "得空": "https://dict.revised.moe.edu.tw/dictView.jsp?ID=42006&la=1&powerMode=0",
+    "得（必须）": "https://dict.mini.moe.edu.tw/SearchIndex/word_detail?breadcrumbs=Search_%E5%BE%97_one&dictSearchField=%E5%BE%97&wordID=D0002532",
+    "琢磨（考虑，单词读音查证）": "https://www.moe.gov.cn/jyb_sjzl/ziliao/A19/201010/W020220124393643101738.pdf",
+    "粘贴（单词读音查证）": "https://www.moe.gov.cn/jyb_sjzl/ziliao/A19/201001/W020190416497956176438.pdf",
+    "差旅费": "https://dict.concised.moe.edu.tw/dictView.jsp?ID=31706",
+    "还钱": "https://dict.concised.moe.edu.tw/dictView.jsp?ID=20767&la=0&powerMode=0"
+  },
+  "pronunciation_reference_scope": "Individual word pronunciation definitions only; no external lexicon, definition text, or usage examples imported.",
+  "validation": {
+    "all_outputs_two_to_six_han": true,
+    "format_valid": true,
+    "per_character_possible_readings_valid": true,
+    "canonical_or_previous_batch_collisions": 0,
+    "automatic_default_readings_corrected": 26,
+    "polyphone_reviewed_display_words": 2061,
+    "canonical_validator": {
+      "tool": "tools/validate_local_core_lexicon.py",
+      "min_entries": 8000,
+      "max_entries": 60000,
+      "valid_entries": 43556,
+      "sha256": "c18a4d7e752a6357eddf322dbd121fb00498a9dfc168cdede9d5f8f85a0a7b14",
+      "result": "passed"
+    },
+    "native_engine_top9_coverage": {
+      "status": "passed",
+      "validation_file": "lexicon_batch_010.validation.json",
+      "validation_sha256": "4d301e5e2159a3bbec15223eb8c2510a4057d4d08ecf1be8d01305b84d677640",
+      "engine_sha256": "01d2f7c4e091833ee906ab361a734b64652ad6b7544d043c70afee81e1bb92f9",
+      "cases": 2613,
+      "top1_correct": 2256,
+      "top9_present": 2613,
+      "missing_from_top9_count": 0,
+      "frozen_batch_unchanged": true
+    }
+  },
+  "canonical_dictionaries_modified": false,
+  "line_endings": "UTF-8 LF",
+  "reviewer_worklists_sha256": {
+    "batch010_work_service_review.tsv": "62a602258a131b76ac6642f48e67eb2f1c17b17e685cdcd0afa45b0d701b2880",
+    "batch010_life_play_review.tsv": "d23bce077dc1b9ed6fd46859970299cb5de86fdb7bf47a608bd0eaa3caf5fc26",
+    "batch010_personal_review.tsv": "6b664c00d0d2e92c05f319f36d79f361842c175baaf907b5b67f7ec2cb3e0ab8"
+  }
+}
