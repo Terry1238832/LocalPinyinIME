@@ -1,0 +1,345 @@
+{
+  "batch": "lexicon_batch_027",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "宠物日常、植物养护、户外活动与手作材料词语",
+  "author": "root",
+  "review_scope": "Single AI author reads each selected vocabulary item and toneless pinyin key in context; recorded positional choices are structurally verified. No animal medical, outdoor-safety or gardening prescription is supplied by these vocabulary labels.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 1091,
+  "sha256": "4d1d1df9533bd68dd0f852ac5e9eca8956246984055e15eb5149f9baf3108654",
+  "authoring_files_sha256": {
+    "lexicon_batch_027.authoring.json": "da0d1d786d03775f763efd40e07fed338626b9e95807001a6d1cb5938183ab58",
+    "batch027_pets_outdoors_crafts_draft.txt": "cfef1a8b15aafebb81e00b58c8f7413987817745c7ddb99f3d4e6c01f11e0b5d",
+    "batch027_pronunciation_review.tsv": "aadb73e3a1a67977a6fc7e5fdb66a65dc69dbf5f0377f40e7041d8aa33968223"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "a620e83398cfe306b819864829465cf0cc55ca95d3cb5847ee7f4b0f26012d7e",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "pet_daily_objects": 5500,
+    "pet_feeding_and_cleaning": 5500,
+    "pet_walks_and_behaviour": 5500,
+    "pet_grooming_and_rest": 5500,
+    "garden_pots_and_soil": 5500,
+    "garden_growth_and_pruning": 5500,
+    "garden_tools_and_arrangement": 5000,
+    "outdoor_walking_and_routes": 5500,
+    "outdoor_packs_and_clothing": 5500,
+    "outdoor_camping_objects": 5500,
+    "outdoor_weather_and_scene": 5500,
+    "craft_paper_and_cutting": 5000,
+    "craft_drawing_and_paints": 5000,
+    "craft_knitting_and_threads": 5000,
+    "craft_models_and_gluing": 5000,
+    "craft_material_storage": 5000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "craft_drawing_and_paints": 71,
+    "craft_knitting_and_threads": 72,
+    "craft_material_storage": 71,
+    "craft_models_and_gluing": 71,
+    "craft_paper_and_cutting": 72,
+    "garden_growth_and_pruning": 69,
+    "garden_pots_and_soil": 65,
+    "garden_tools_and_arrangement": 66,
+    "outdoor_camping_objects": 69,
+    "outdoor_packs_and_clothing": 71,
+    "outdoor_walking_and_routes": 63,
+    "outdoor_weather_and_scene": 66,
+    "pet_daily_objects": 61,
+    "pet_feeding_and_cleaning": 69,
+    "pet_grooming_and_rest": 68,
+    "pet_walks_and_behaviour": 67
+  },
+  "length_distribution": {
+    "4": 916,
+    "5": 141,
+    "3": 27,
+    "6": 7
+  },
+  "authoring_rejections": [
+    {
+      "word": "宠物饮水机",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "宠物背包",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "宠物外出包",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "猫砂垫",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "宠物项圈",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "牵引绳扣",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "伸缩牵引绳",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "宠物毯子",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "宠物窝垫",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "猫抓柱",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "宠物围栏",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "饮水机清洗",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "按份分装",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "定时喂食器",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "遛狗路线",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "东张西望",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "走走停停",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "绕到身后",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "拾便袋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "宠物毛刷",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "毛发打结",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "梳掉浮毛",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "毛发蓬松",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "塑料花盆",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "透气花盆",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "育苗盆",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "盆底排水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "颗粒土",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "腐叶土",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "泥炭土",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "枝条徒长",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "扦插枝条",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "扦插基质",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "园艺剪刀",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "园艺手套",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "松土叉",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "园艺扎带",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "植物标签",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "浇水记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "步行路线",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "徒步路线",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "徒步时长",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "导航轨迹",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "走错方向",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "偏离路线",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "原路返回",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "林间步道",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "连续下坡",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "背包雨罩",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "天幕杆",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "折叠支架",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电池收纳盒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "天气变化",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "云层散开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "云雾缭绕",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "雨后积水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "树影斑驳",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "湖面平静",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "画面层次",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "零件分装",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "小件收纳",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 790,
+  "manual_pronunciation_overrides": {
+    "好奇地看": "haoqidekan",
+    "安静地趴着": "anjingdepazhe",
+    "便袋扎紧": "biandaizajin",
+    "肩带调短": "jiandaitiaoduan",
+    "肩带调长": "jiandaitiaochang",
+    "户外长裤": "huwaichangku",
+    "雨滴落下": "yudiluoxia",
+    "铅笔削尖": "qianbixiaojian",
+    "编织针长": "bianzhizhenchang",
+    "行数记录": "hangshujilu",
+    "行数核对": "hangshuhedui",
+    "行数标记": "hangshubiaoji",
+    "行数计数器": "hangshujishuqi"
+  },
+  "reading_variant_choices": {
+    "铅笔削尖": "qianbixiaojian"
+  },
+  "semantic_pronunciation_corrections": 12,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

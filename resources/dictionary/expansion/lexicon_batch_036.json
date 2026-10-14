@@ -1,0 +1,357 @@
+{
+  "batch": "lexicon_batch_036",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "天气变化、自然环境、街巷生活与日常观察描述词语",
+  "author": "root",
+  "review_scope": "Single AI author reads each selected natural descriptive expression and flagged toneless key, recording positional contextual choices and rewrites. Structural checks are distinct from a second linguistic editor. These are authored vocabulary labels rather than copied article sentences or private observations.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 734,
+  "sha256": "56af6592d9dddcb61f5414efe1a6a175115659f331a49ab0024c848c6676da13",
+  "authoring_files_sha256": {
+    "lexicon_batch_036.authoring.json": "bdc32ae737adc060b8007c5d5716170d5a913bf763a49e79f39c08cacc5a3d68",
+    "batch036_weather_scene_daily_observation_draft.txt": "f2af89a590cd680b87500f8a58de7078f97736a8883c7596e427e4a5b67373ae",
+    "batch036_pronunciation_review.tsv": "ab6b614aa2da789eda921d1601ef5e6a535f1f6fc23a51a3577cfd7e6644760d"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "760aaa3ff090327609ded4aee1672d54dc6efb799fd85d26927fe8460e9e150f",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "weather_and_wind": 5500,
+    "rain_and_wet_surfaces": 5500,
+    "sky_and_light": 5500,
+    "morning_and_evening": 5500,
+    "water_and_riverside": 5500,
+    "trees_and_greenery": 5500,
+    "streets_and_walks": 5500,
+    "sounds_and_quiet": 5500,
+    "seasonal_colours": 5500,
+    "everyday_observations": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "everyday_observations": 80,
+    "morning_and_evening": 69,
+    "rain_and_wet_surfaces": 76,
+    "seasonal_colours": 73,
+    "sky_and_light": 73,
+    "sounds_and_quiet": 69,
+    "streets_and_walks": 79,
+    "trees_and_greenery": 75,
+    "water_and_riverside": 69,
+    "weather_and_wind": 71
+  },
+  "length_distribution": {
+    "5": 104,
+    "4": 629,
+    "6": 1
+  },
+  "authoring_rejections": [
+    {
+      "word": "风有点大",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "风声渐起",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "天气转晴",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "天气转阴",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "空气微凉",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "空气干燥",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "空气湿润",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "空气闷热",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "空气清冷",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "雨还没停",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "雨滴落下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "雨后路面",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "雨声连绵",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "云层渐厚",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "云层散开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "云影移动",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "阳光斜照",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "光线柔和",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "树影斑驳",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "树影婆娑",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "晨光渐亮",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "夕阳余晖",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "夕阳西沉",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "暮色渐浓",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "暮色渐深",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "暮色降临",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "暮色笼罩",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "暮色苍茫",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "夜色渐深",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "夜色渐浓",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "夜色朦胧",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水面微波",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水面倒影",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水面反光",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水面粼粼",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水面波纹",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "河边步道",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "河水清澈",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "河水流动",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "湖面平静",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "岸边石阶",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "岸边步道",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "叶片舒展",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "草叶露珠",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "花瓣飘落",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "林间步道",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "绿意盎然",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "走走停停",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "鸟声清脆",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "脚步轻快",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "脚步急促",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "脚步沉重",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "四周安静",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "四周寂静",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "静静坐着",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "静静看着",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "静静听着",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "静静走着",
+      "reason": "duplicate_draft"
+    },
+    {
+      "word": "静静站着",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "春色满园",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "夏日午后",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "夏日傍晚",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "秋色斑斓",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "落叶堆积",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "冬日清晨",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "冬日午后",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 547,
+  "manual_pronunciation_overrides": {
+    "细雨落下": "xiyuluoxia",
+    "小雨落下": "xiaoyuluoxia",
+    "阳光落下来": "yangguangluoxialai",
+    "树影渐长": "shuyingjianchang",
+    "夕阳落下": "xiyangluoxia",
+    "暮色中行走": "musezhongxingzou",
+    "夜色中行走": "yesezhongxingzou",
+    "河水落了": "heshuiluole",
+    "桥上行人": "qiaoshangxingren",
+    "树下乘凉": "shuxiachengliang",
+    "鸟声悠长": "niaoshengyouchang",
+    "薄霜覆叶": "boshuangfuye",
+    "薄霜覆草": "boshuangfucao",
+    "薄霜覆地": "boshuangfudi",
+    "薄霜微亮": "boshuangweiliang"
+  },
+  "reading_variant_choices": {
+    "薄霜覆叶": "boshuangfuye",
+    "薄霜覆草": "boshuangfucao",
+    "薄霜覆地": "boshuangfudi",
+    "薄霜微亮": "boshuangweiliang"
+  },
+  "semantic_pronunciation_corrections": 11,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

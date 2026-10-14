@@ -41,24 +41,29 @@ function(localpinyin_add_version_resource target file_description original_filen
     configure_file(cmake/LocalPinyinVersion.rc.in "${CMAKE_BINARY_DIR}/generated/${target}_version.rc" @ONLY)
     target_sources(${target} PRIVATE "${CMAKE_BINARY_DIR}/generated/${target}_version.rc")
 endfunction()
+set(localpinyin_dictionary_output_dir "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
+get_property(localpinyin_multi_config GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
+if(localpinyin_multi_config)
+    string(APPEND localpinyin_dictionary_output_dir "/$<CONFIG>")
+endif()
+string(APPEND localpinyin_dictionary_output_dir "/dictionary")
+set(localpinyin_dictionary_sources)
+set(localpinyin_dictionary_outputs)
+foreach(name IN ITEMS core_zh_pinyin local_core_zh_pinyin context_zh standard_zh_pinyin continuations_zh)
+    list(APPEND localpinyin_dictionary_sources "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/${name}.tsv")
+    list(APPEND localpinyin_dictionary_outputs "${localpinyin_dictionary_output_dir}/${name}.tsv")
+endforeach()
+# A single dependency owns the shared files. Parallel DLL/bridge builds must
+# never copy into the same dictionary directory concurrently. Explicit outputs
+# also refresh data-only edits and restore deleted output files without relinking.
+add_custom_command(OUTPUT ${localpinyin_dictionary_outputs}
+    COMMAND "${CMAKE_COMMAND}" -E make_directory "${localpinyin_dictionary_output_dir}"
+    COMMAND "${CMAKE_COMMAND}" -E copy_if_different ${localpinyin_dictionary_sources}
+        "${localpinyin_dictionary_output_dir}"
+    DEPENDS ${localpinyin_dictionary_sources} VERBATIM)
+add_custom_target(localpinyin_dictionary_resources ALL DEPENDS ${localpinyin_dictionary_outputs})
 function(localpinyin_copy_dictionary_resource target)
-    # Updating runtime TSVs must refresh the build output even if no C++ code
-    # changed. Relinking also executes the existing resource-copy command.
-    set_property(TARGET ${target} APPEND PROPERTY LINK_DEPENDS
-        "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/core_zh_pinyin.tsv"
-        "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/local_core_zh_pinyin.tsv"
-        "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/context_zh.tsv"
-        "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/standard_zh_pinyin.tsv"
-        "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/continuations_zh.tsv")
-    add_custom_command(TARGET ${target} POST_BUILD
-        COMMAND "${CMAKE_COMMAND}" -E make_directory "$<TARGET_FILE_DIR:${target}>/dictionary"
-        COMMAND "${CMAKE_COMMAND}" -E copy_if_different
-            "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/core_zh_pinyin.tsv"
-            "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/local_core_zh_pinyin.tsv"
-            "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/context_zh.tsv"
-            "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/standard_zh_pinyin.tsv"
-            "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/continuations_zh.tsv"
-            "$<TARGET_FILE_DIR:${target}>/dictionary" VERBATIM)
+    add_dependencies(${target} localpinyin_dictionary_resources)
 endfunction()
 # One copy of shared code is compiled for the product and all regression tests.
 add_library(pinyin_common STATIC src/common/logging.cpp src/common/utf_utils.cpp src/common/win32_utils.cpp)
@@ -79,13 +84,6 @@ add_library(LocalPinyinIME SHARED src/ime/dllmain.cpp src/ime/exports.cpp src/im
 target_link_libraries(LocalPinyinIME PRIVATE pinyin_service)
 localpinyin_add_version_resource(LocalPinyinIME "本地拼音" "LocalPinyinIME.dll" "VFT_DLL")
 localpinyin_copy_dictionary_resource(LocalPinyinIME)
-set_property(TARGET LocalPinyinIME APPEND PROPERTY LINK_DEPENDS
-    "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/core_zh_pinyin.tsv"
-    "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/local_core_zh_pinyin.tsv"
-    "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/standard_zh_pinyin.tsv"
-    "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/context_zh.tsv")
-set_property(TARGET LocalPinyinIME APPEND PROPERTY LINK_DEPENDS
-    "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/continuations_zh.tsv")
 add_executable(LocalPinyinSettingsBridge src/tools/settings_bridge.cpp)
 target_link_libraries(LocalPinyinSettingsBridge PRIVATE pinyin_settings)
 localpinyin_add_version_resource(LocalPinyinSettingsBridge "本地拼音设置服务" "LocalPinyinSettingsBridge.exe" "VFT_APP")
@@ -126,10 +124,13 @@ if(BUILD_TESTING)
     add_test(NAME test_tsf_integration COMMAND test_tsf_integration "$<TARGET_FILE:LocalPinyinIME>")
     add_executable(LocalPinyinImeDictionarySmoke src/tools/dictionary_smoke.cpp)
     target_link_libraries(LocalPinyinImeDictionarySmoke PRIVATE pinyin_engine)
+    localpinyin_copy_dictionary_resource(LocalPinyinImeDictionarySmoke)
     add_executable(LocalPinyinImeEval src/tools/ime_eval.cpp)
     target_link_libraries(LocalPinyinImeEval PRIVATE pinyin_engine)
+    localpinyin_copy_dictionary_resource(LocalPinyinImeEval)
     add_executable(LocalPinyinCandidateCapture src/tools/candidate_capture.cpp)
     target_link_libraries(LocalPinyinCandidateCapture PRIVATE pinyin_service gdiplus)
+    localpinyin_copy_dictionary_resource(LocalPinyinCandidateCapture)
     add_test(NAME test_settings_bridge COMMAND "${Python3_EXECUTABLE}"
         "${CMAKE_CURRENT_SOURCE_DIR}/tests/test_settings_bridge.py"
         --bridge "$<TARGET_FILE:LocalPinyinSettingsBridge>" --temp-root "${CMAKE_BINARY_DIR}/test-tmp")
@@ -142,7 +143,7 @@ if(BUILD_TESTING)
         "${CMAKE_CURRENT_SOURCE_DIR}/tools/validate_local_core_lexicon.py"
         --path "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/local_core_zh_pinyin.tsv"
         --metadata "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/local_core_zh_pinyin.metadata.json"
-        --min-entries 8000 --max-entries 120000)
+        --min-entries 8000 --max-entries 160000)
     add_test(NAME test_standard_dictionary COMMAND "${Python3_EXECUTABLE}"
         "${CMAKE_CURRENT_SOURCE_DIR}/tools/validate_standard_dictionary.py"
         --path "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/standard_zh_pinyin.tsv"

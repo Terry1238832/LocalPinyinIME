@@ -1,0 +1,829 @@
+{
+  "batch": "lexicon_batch_033",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "阅读写作、图书借阅、学习笔记、常见学科与观察记录词语",
+  "author": "root",
+  "review_scope": "Single AI author contextually reads each selected expression and flagged toneless key. Ordinary vocabulary labels are authored here; reading reporting selected a broad theme, not a bulk text import. Positional checks are structural, not a second linguistic editor.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 935,
+  "sha256": "898290574a6618a8968eac21fdb5935059455935af9d1c8b83c72fce110d08e8",
+  "authoring_files_sha256": {
+    "lexicon_batch_033.authoring.json": "02f4c8d1acc7e2a99fb2d943520c0b1ac51d1d7234a722ab9482bf02838843f2",
+    "batch033_reading_learning_observation_draft.txt": "88dc17363a737e3ec2717a246505fbc13d5888ec0e7884a4b67ee04e9a64c0f3",
+    "batch033_pronunciation_review.tsv": "eb6dc93169fc9e3f1c0169a98bdfe3105c444352fde5205f213da42a532eaa3b"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "ff4e503c90d83a5ea8cbf4c633d332290ef6c97c6398f78b4cc96d51f04c0e9f",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "library_and_borrowing": 5500,
+    "books_and_reading": 5500,
+    "writing_and_drafts": 5500,
+    "language_and_expression": 5000,
+    "notes_and_stationery": 5500,
+    "study_planning": 5500,
+    "classroom_and_projects": 5500,
+    "exams_and_revision": 5500,
+    "math_and_graphs": 5000,
+    "science_observations": 5000,
+    "lab_objects_and_labels": 5000,
+    "measurements_and_records": 5000,
+    "geography_and_history": 5000,
+    "learning_daily_expressions": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "books_and_reading": 64,
+    "classroom_and_projects": 59,
+    "exams_and_revision": 51,
+    "geography_and_history": 72,
+    "lab_objects_and_labels": 75,
+    "language_and_expression": 73,
+    "learning_daily_expressions": 79,
+    "library_and_borrowing": 79,
+    "math_and_graphs": 70,
+    "measurements_and_records": 69,
+    "notes_and_stationery": 76,
+    "science_observations": 65,
+    "study_planning": 47,
+    "writing_and_drafts": 56
+  },
+  "length_distribution": {
+    "4": 832,
+    "5": 95,
+    "6": 6,
+    "3": 2
+  },
+  "authoring_rejections": [
+    {
+      "word": "阅读习惯",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "章节标题",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "章节目录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "阅读进度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "阅读时段",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "阅读记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "阅读笔记",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "阅读批注",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "阅读目标",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "阅读计划",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "人物关系",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "人物形象",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "人物线索",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "人物动机",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "故事背景",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "故事情节",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "故事线索",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "写作提纲",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "写作计划",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "写作记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "写作素材",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "草稿版本",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "初稿修改",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "初稿完成",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "文章开头",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "文章结尾",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "文章结构",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "文章摘要",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "段落顺序",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "段落衔接",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "句子衔接",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "句子改写",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "素材整理",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "素材分类",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "素材标签",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "素材记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "素材筛选",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "素材收集",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "修改内容",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "修改说明",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "修改记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "词语搭配",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "词语积累",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "修辞效果",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "叙述视角",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "描写角度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "论据来源",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "标点用法",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "笔记标签",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "笔记内容",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "笔记分享",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "铅笔笔芯",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "学习进度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "学习记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "学习笔记",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "学习目标",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "学习计划",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "学习安排",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "学习清单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "学习提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "复习时段",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "复习进度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "复习记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "复习目标",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "复习计划",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "复习安排",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "复习清单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "复习提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "预习记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "预习目标",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "预习计划",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "预习安排",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "预习提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "知识结构",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "知识联系",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "知识框架",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "知识梳理",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "知识归纳",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "错题原因",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "错题整理",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "错题分析",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "练习记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "练习内容",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "练习计划",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "练习安排",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "课堂内容",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "课堂笔记",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "课堂记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "课堂提问",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "课堂讨论",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "课堂作业",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "课堂展示",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "课堂反馈",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "小组分工",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "小组讨论",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "小组展示",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "小组作业",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "项目进度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "项目分工",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "作业内容",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "作业要求",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "作业记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "作业检查",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "作业反馈",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "资料记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "资料清单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "考试地点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "考试科目",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "考试范围",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "考试记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "考试提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "考试安排",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "试卷编号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "答题顺序",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "答题时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "答题思路",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "答题步骤",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "题目要求",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "题目出处",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "题目编号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "解题思路",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "解题步骤",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "解题过程",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "解题方法",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "答案内容",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "答案记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "答案解析",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "复习范围",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "复习重点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "复习资料",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "复习提纲",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "成绩记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "成绩分析",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "成绩查询",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "成绩通知",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "函数定义",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "函数参数",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "图形面积",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "图形周长",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "公式推导",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "公式记忆",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "计算过程",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "计算结果",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "计算方法",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "计算精度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "观察顺序",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "观察角度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "实验材料",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "实验记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "实验过程",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "实验现象",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "实验结果",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "实验分析",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "实验结论",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "实验变量",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "实验数据",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "对照分析",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "样本编号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "样本数量",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "速度变化",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "烧杯刻度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "试管标签",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "镜头盖",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "实验台面",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "器材标签",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "记录内容",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "数据表头",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "数据标注",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "数据范围",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "数据来源",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "数据记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "统计范围",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "统计结果",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "统计图表",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "图表标题",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "图表图例",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "气候变化",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "地理位置",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "地理环境",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "历史事件",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "历史人物",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "历史背景",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "历史记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "时间排序",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "再想一下",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 662,
+  "manual_pronunciation_overrides": {
+    "图形边长": "tuxingbianchang",
+    "边长数值": "bianchangshuzhi",
+    "边长单位": "bianchangdanwei",
+    "边长标注": "bianchangbiaozhu",
+    "边长关系": "bianchangguanxi",
+    "数据行数": "shujuhangshu",
+    "这本先还了": "zhebenxianhuanle"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 7,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

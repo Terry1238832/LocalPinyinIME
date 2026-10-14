@@ -1,0 +1,1463 @@
+{
+  "batch": "lexicon_batch_032",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "数字生活、软件操作、文件管理、文字编辑与线上沟通词语",
+  "author": "root",
+  "review_scope": "A single AI author contextually reads selected natural software and communication expressions with all flagged toneless keys. Positional choices are recorded and structurally verified. No external bulk text, private account data or complete public typing answer is imported.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 942,
+  "sha256": "5abb37bc8c2660d0570bdfdce1153d24dc758e0cd949c7825bf2fae40ec76c63",
+  "authoring_files_sha256": {
+    "lexicon_batch_032.authoring.json": "0c38cbf2767aabfb2ee5705acb0a02949cc31483e2f37ea5b5dea1915443f8c2",
+    "batch032_digital_life_files_chat_draft.txt": "c263cd87c4041ba3046136a5d5f1f9043b301a578a02c70bd7b3b1b4fd76ed2d",
+    "batch032_pronunciation_review.tsv": "595f329e9c2c6664e9f5f99322a8c8868f4c26d0b696d037923853a80c117c7f"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "7456eea601c16acedcd85ef42fc0387db8fd1f7c1deb02f77cc29e06fa04041d",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "accounts_and_sessions": 5500,
+    "desktop_and_windows": 5500,
+    "application_preferences": 5500,
+    "browser_navigation": 5500,
+    "search_and_filter": 5500,
+    "files_and_paths": 5500,
+    "downloads_and_uploads": 5500,
+    "archives_and_backups": 5500,
+    "document_layout": 5500,
+    "text_editing": 5500,
+    "devices_and_connections": 5500,
+    "remote_meetings": 5500,
+    "messages_and_contacts": 5500,
+    "calendar_and_tasks": 5500,
+    "notifications_and_permissions": 5500,
+    "digital_daily_expressions": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "accounts_and_sessions": 47,
+    "application_preferences": 56,
+    "archives_and_backups": 60,
+    "browser_navigation": 64,
+    "calendar_and_tasks": 54,
+    "desktop_and_windows": 65,
+    "devices_and_connections": 56,
+    "digital_daily_expressions": 76,
+    "document_layout": 52,
+    "downloads_and_uploads": 51,
+    "files_and_paths": 55,
+    "messages_and_contacts": 61,
+    "notifications_and_permissions": 64,
+    "remote_meetings": 51,
+    "search_and_filter": 62,
+    "text_editing": 68
+  },
+  "length_distribution": {
+    "4": 706,
+    "5": 222,
+    "6": 14
+  },
+  "authoring_rejections": [
+    {
+      "word": "账号设置",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "账号状态",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "账号切换",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "账号绑定",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "登录页面",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "登录窗口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "登录按钮",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "登录提示",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "登录状态",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "登录时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "登录记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "登录方式",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "登录设备",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "退出账号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "退出登录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "重新登录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "切换账号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "解除绑定",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "密码重置",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "验证码错误",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "邮箱验证",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "手机验证",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "登录验证",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "会话状态",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "会话退出",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "会话恢复",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "会话过期",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "会话记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "设备名称",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "设备授权",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "设备记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "设备管理",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "验证码过期",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "桌面图标",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "桌面壁纸",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "桌面快捷方式",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "窗口位置",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "窗口大小",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "窗口置顶",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "右键菜单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "左键点击",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "双击打开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "拖动文件",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "拖动窗口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "屏幕亮度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "屏幕录制",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "屏幕共享",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "分屏显示",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "设置页面",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "主题颜色",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "主题设置",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "字体大小",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "字体颜色",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "字体预览",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "界面缩放",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "界面布局",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "界面语言",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "默认选项",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "默认设置",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "默认路径",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "默认语言",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "默认应用",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "自动启动",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "自动保存",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "自动更新",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "自动刷新",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "自动同步",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "自动恢复",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "手动保存",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "手动更新",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "手动刷新",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "手动同步",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "浏览器扩展",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "地址栏输入",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "地址栏搜索",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "新建标签页",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "网页刷新",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "网页打印",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "刷新按钮",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "主页按钮",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "下载按钮",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "搜索按钮",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "书签文件夹",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "书签导出",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "书签导入",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "书签同步",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "历史搜索",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "历史恢复",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "搜索关键词",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "搜索条件",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "搜索范围",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "搜索建议",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "搜索结果",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "搜索记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "筛选条件",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "筛选范围",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "筛选结果",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "筛选按钮",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "结果排序",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "结果筛选",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "匹配结果",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "排序方式",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "排序字段",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "排序方向",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "升序排列",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "降序排列",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "文件扩展名",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "文件类型",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "文件大小",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "文件列表",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "文件预览",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "文件属性",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "文件权限",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "文件路径",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "文件目录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "文件编号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "文件版本",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "目录位置",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "目录层级",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "目录结构",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "新建文件",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "新建文件夹",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "移动文件",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "复制文件",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "删除文件",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "文件夹路径",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "文件夹权限",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "取消选中",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "上级目录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "文件找不到",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "文件打不开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "下载文件",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "下载地址",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "下载链接",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "下载位置",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "下载列表",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "下载速度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "下载状态",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "下载任务",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "下载记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "下载完成",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "下载失败",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "下载暂停",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "下载继续",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "下载重试",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "下载设置",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "下载按钮",
+      "reason": "duplicate_draft"
+    },
+    {
+      "word": "上传文件",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "上传速度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "上传状态",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "上传记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "上传完成",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "上传失败",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "上传暂停",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "继续上传",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "上传重试",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "上传队列",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "上传设置",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "上传按钮",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "传输速度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "压缩文件",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "压缩比例",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "压缩包密码",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "压缩包内容",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "压缩包预览",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "解压目录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "解压密码",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "备份文件",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "备份目录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "备份路径",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "备份位置",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "备份记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "备份状态",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "备份完成",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "备份恢复",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "备份版本",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "恢复文件",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "恢复时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "文件损坏了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "重新压缩",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "页面尺寸",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "页面方向",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "页面边距",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "页面编号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "页面背景",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "页面缩放",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "页面布局",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "页面设置",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "页码格式",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "页码位置",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "段落样式",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "段落缩进",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "段落间距",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "段落对齐",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "段落边框",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "首行缩进",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "悬挂缩进",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "行间距",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "标题样式",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "标题编号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "标题位置",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "图片位置",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "图片环绕",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "图片对齐",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "图片尺寸",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "图片缩放",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "图片裁剪",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "图片边框",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "文字颜色",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "复制文字",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "查找范围",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "全部替换",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "区分大小写",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "全字匹配",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "精确匹配",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "模糊匹配",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "撤销修改",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "格式转换",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "格式检查",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "标点替换",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "蓝牙名称",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "蓝牙连接",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "蓝牙配对",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "蓝牙列表",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "蓝牙搜索",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "配对密码",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "配对记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "配对失败",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "连接设备",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "连接记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "连接速度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "连接方式",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "连接失败",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "鼠标指针",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "鼠标滚轮",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "键盘配对",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "键盘背光",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "键盘设置",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "耳机配对",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "耳机音量",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "打印机型号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "打印机连接",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "打印机队列",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "打印机纸盒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "会议链接",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "会议号码",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "会议密码",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "会议时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "会议主题",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "会议地点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "会议提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "会议通知",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "会议记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "退出会议",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "会议预约",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "会议取消",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "会议邀请",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "会议录制",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "入会密码",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "麦克风音量",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "麦克风权限",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "摄像头预览",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "摄像头权限",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "共享屏幕",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "共享窗口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "共享文件",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "共享声音",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "共享权限",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "参会人员",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "参会名单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "参会记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "声音断断续续",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "麦克风没开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "消息列表",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "消息提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "消息发送",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "消息接收",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "消息转发",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "消息收藏",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "消息置顶",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "聊天窗口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "聊天列表",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "聊天记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "聊天内容",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "聊天时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "联系人头像",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "消息已读",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "消息未读",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "消息草稿",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发给我看看",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发个文件",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发个消息",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "日历提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "日程标题",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "日程地点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "日程备注",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "日程提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "日程颜色",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "新建日程",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "修改日程",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "删除日程",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "复制日程",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "移动日程",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "任务状态",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "任务备注",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "任务提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "待办清单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "待办提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "任务延期",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "任务取消",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "任务进度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "提醒时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "提醒方式",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "重复提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "重复日程",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "重复提醒",
+      "reason": "duplicate_draft"
+    },
+    {
+      "word": "每日提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "每周提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "通知时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "通知设置",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "通知声音",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "通知横幅",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "通知角标",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "通知分组",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "权限范围",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "权限设置",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "访问权限",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "下载权限",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "允许下载",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "请求权限",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "修改权限",
+      "reason": "duplicate_draft"
+    },
+    {
+      "word": "检查权限",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "查看权限",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "关闭通知",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "页面不显示",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "再发一遍",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "看得到吗",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "听得到吗",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 718,
+  "manual_pronunciation_overrides": {
+    "窗口重叠": "chuangkouchongdie",
+    "全屏退出": "quanpingtuichu",
+    "设置重置": "shezhichongzhi",
+    "重命名文件": "chongmingmingwenjian",
+    "重命名目录": "chongmingmingmulu",
+    "已经传完了": "yijingchuanwanle",
+    "表格行高": "biaogehanggao",
+    "重做修改": "chongzuoxiugai",
+    "重做输入": "chongzuoshuru",
+    "重做删除": "chongzuoshanchu",
+    "重做粘贴": "chongzuozhantie",
+    "重做替换": "chongzuotihuan",
+    "消息重发": "xiaoxichongfa",
+    "通知弹窗": "tongzhitanchuang",
+    "弹窗提示": "tanchuangtishi",
+    "弹窗内容": "tanchuangneirong",
+    "弹窗标题": "tanchuangbiaoti",
+    "弹窗按钮": "tanchuanganniu",
+    "弹窗位置": "tanchuangweizhi",
+    "弹窗大小": "tanchuangdaxiao",
+    "弹窗关闭": "tanchuangguanbi",
+    "弹窗显示": "tanchuangxianshi",
+    "弹窗确认": "tanchuangqueren",
+    "弹窗取消": "tanchuangquxiao",
+    "已经传好了": "yijingchuanhaole",
+    "改得了吗": "gaideliaoma"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 26,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

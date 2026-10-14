@@ -1,0 +1,794 @@
+{
+  "batch": "lexicon_batch_034",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "商务沟通、询价报价、采购供货、项目协作与工作文件词语",
+  "author": "root",
+  "review_scope": "One AI author reads selected natural business and coordination expressions plus all flagged toneless keys in their declared context. Positional choices and rewrites are recorded, with structural verification separate from authorship; vocabulary labels supply no contractual or financial advice.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 942,
+  "sha256": "d10e81b199ff836b1e7bf19ba5181fc220c050f12c8584e809a997bc2cc89eb3",
+  "authoring_files_sha256": {
+    "lexicon_batch_034.authoring.json": "5aa984aece4d3c7e83847d61e8c698947389015ade2e32ab64eff6bbc9192765",
+    "batch034_business_work_coordination_draft.txt": "b9b9986ee69964c9fc9d2f08ff30020f1929aefaea70cd650098bb3672bb6d6c",
+    "batch034_pronunciation_review.tsv": "a53c677b0812066d72aeabcf0c96d2ddb2a853e2698269ba0d3a34e6ae8c44ad"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "4a6f7e0bc90c2a914a26871b1c94ef5572f60555662bc9aa793bb1b5e6dc8fe2",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "inquiries_and_quotations": 5500,
+    "products_and_specifications": 5500,
+    "purchasing_and_suppliers": 5500,
+    "stock_and_materials": 5500,
+    "sales_and_contacts": 5500,
+    "contracts_and_documents": 5500,
+    "billing_and_reconciliation": 5500,
+    "deliveries_and_acceptance": 5500,
+    "projects_and_schedule": 5500,
+    "work_coordination": 5500,
+    "forms_and_approvals": 5500,
+    "work_messages": 6000,
+    "presentations_and_reports": 5500,
+    "business_trips_and_visits": 5500
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "billing_and_reconciliation": 49,
+    "business_trips_and_visits": 65,
+    "contracts_and_documents": 70,
+    "deliveries_and_acceptance": 75,
+    "forms_and_approvals": 61,
+    "inquiries_and_quotations": 73,
+    "presentations_and_reports": 75,
+    "products_and_specifications": 73,
+    "projects_and_schedule": 60,
+    "purchasing_and_suppliers": 72,
+    "sales_and_contacts": 66,
+    "stock_and_materials": 67,
+    "work_coordination": 63,
+    "work_messages": 73
+  },
+  "length_distribution": {
+    "4": 828,
+    "5": 90,
+    "6": 24
+  },
+  "authoring_rejections": [
+    {
+      "word": "包装费用",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "配件费用",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "请发型号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "请发规格",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "请发清单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "请发说明",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "先确认费用",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "型号说明",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "型号选择",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "规格选择",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "尺寸标注",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "材质说明",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "参数说明",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "版本更新",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "采购数量",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "采购清单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "采购备注",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "采购确认",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "采购申请",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "采购审批",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "到货提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "到货通知",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "库存数量",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "库存型号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "库存规格",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "库存批次",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "入库时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "出库时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "出库单号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "出库清单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "出库记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "出库确认",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "出库批次",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "库存提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "库存查询",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "客户联系人",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "客户备注",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "客户记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "客户信息",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "联系时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "联系方式",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "联系备注",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "需求确认",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "需求记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "跟进进度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "回访备注",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "回访记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "联系人姓名",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "联系人备注",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "合同编号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "合同附件",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "合同条款",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "合同期限",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "合同原件",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "合同复印件",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "文件目录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "签名确认",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "附件清单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "附件版本",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "账单金额",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "账单明细",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "账单记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "账单查询",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "对账清单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "对账差异",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "对账联系人",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "付款金额",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "付款明细",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "付款记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "付款备注",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "付款确认",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "付款凭证",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "付款进度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "收款金额",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "收款记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "收款备注",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "收款确认",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "收款凭证",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "开票备注",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发票明细",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发票内容",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发票附件",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发票备注",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发票重开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发票补开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发票更正",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "到账时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "到账金额",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "到账提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "到账通知",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "验收清单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "验收记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "核对清单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "货物包装",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "货物清点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "项目范围",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "项目目标",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "进度安排",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "进度记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "进度更新",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "任务分工",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "任务日期",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "任务备注",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "任务确认",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "节点提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "计划调整",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "交付日期",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "交付时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "交付内容",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "交付清单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "交付记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "交付确认",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "延期原因",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "延期说明",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "排期调整",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "分工安排",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "分工确认",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "分工调整",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "对接人员",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "交接人员",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "交接日期",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "交接记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "交接备注",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "交接确认",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "沟通时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "沟通内容",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "沟通记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "沟通进度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "沟通提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "确认时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "调整时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "同步进度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "表单确认",
+      "reason": "duplicate_draft"
+    },
+    {
+      "word": "审批时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "审批进度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "审批意见",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "审核记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "审核意见",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "申请日期",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "申请时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "申请记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "申请说明",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "申请备注",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "提交日期",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "提交时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "提交记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "提交说明",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "退回时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "退回原因",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "办结时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "办结通知",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我先确认下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我先看一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "稍后发给你",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "稍后联系你",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "今天能到吗",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "明天能到吗",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "还没整理完",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "汇报材料",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "报告内容",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "报告下载",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "报告打印",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "演示备注",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "出差安排",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "出差申请",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "出差审批",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "出差报告",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "出差总结",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "接待安排",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "接待记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "参会人员",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "参会记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "参会确认",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "参会通知",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "行程路线",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "行程安排",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "行程记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "行程确认",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 764,
+  "manual_pronunciation_overrides": {
+    "表单重填": "biaodanchongtian"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 1,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

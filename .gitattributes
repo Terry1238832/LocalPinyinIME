@@ -11,6 +11,11 @@ CMakeLists.txt text working-tree-encoding=UTF-8 eol=lf
 *.tsv text working-tree-encoding=UTF-8 eol=lf
 *.json text working-tree-encoding=UTF-8 eol=lf
 *.py text working-tree-encoding=UTF-8 eol=lf
+# Frozen 024-036 authoring records bind this existing helper's CRLF bytes.
+# Preserve those bytes on fresh checkouts without rewriting frozen evidence.
+tools/evaluate_typing.py text working-tree-encoding=UTF-8 eol=crlf
+resources/dictionary/expansion/lexicon_batch_029.authoring.json text working-tree-encoding=UTF-8 eol=crlf
+resources/dictionary/expansion/lexicon_batch_03[0-6].authoring.json text working-tree-encoding=UTF-8 eol=crlf
 *.txt text working-tree-encoding=UTF-8 eol=lf
 *.rc text working-tree-encoding=UTF-8 eol=lf
 *.def text working-tree-encoding=UTF-8 eol=lf

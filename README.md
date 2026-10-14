@@ -1,8 +1,10 @@
-# 本地拼音 0.7.5
+# 本地拼音 0.7.6
 
 Windows 10/11 x64离线中文拼音输入法。输入核心是原生C++20/Windows TSF，设置使用Electron、React、TypeScript和Vite。关闭设置后桌面程序退出，输入核心继续独立工作。安装包自带运行时，使用时无需联网或另外安装Node.js、Python。
 
-本轮新增6,062条自然书面表达、叙事描写、软件协作、厨房餐食及邮件日历词语，内置词库共148,282条。新增词逐项审音、三层去重及原生候选验证；既有词面、读音和权重保留。少数同音词仍可能超出前九候选，长句和同音输入仍需选词。
+本轮接入GitHub新增7,708行词库，并补充12,885条日常生活、聊天表达、出行办事、阅读学习及工作场景词语，内置有效词库共168,873条。原创补词逐项核对拼音、三层去重及原生候选验证，原本地层记录保持。导入新覆盖造成的跨层有效权重变化单独记录；少数同音词仍可能超出前九候选，长句和同音输入仍需选词。
+
+本轮新增词的前九覆盖为12,885/12,885。267句公开整句回放首选154句、前九204句；同一引擎使用旧词库为153句、206句，前九少了两句，详见[排名变化](docs/lexicon-076-rank-changes.json)。另外32句开发场景回放前九从23句变为26句，详见[补充回放](docs/scenario-replay-076.json)。这些结果仍不能代表全部应用或所有长句；本轮没有独立人类语言编辑验收。
 
 候选栏只显示一行，按字号和窗口可用宽度分页，左右箭头或窗口箭头切换。每页数字从1重新编号，空格接受当前页选中的候选；长词省略显示但完整上屏。设置页的拼音与联想预览也使用单行分页。
 
@@ -10,7 +12,7 @@ Windows 10/11 x64离线中文拼音输入法。输入核心是原生C++20/Window
 
 设置保留原蓝色PI品牌和侧栏图标、明暗主题、七档字号、真实候选预览、Shift切换、个人词库增改删查、内置词库查询与学习清除。五页保持挂载，切换保留输入状态；启动先读取保存主题和配置。
 
-从[GitHub Release v0.7.5](https://github.com/Terry1238832/LocalPinyinIME/releases/tag/v0.7.5)下载[Windows x64安装包](https://github.com/Terry1238832/LocalPinyinIME/releases/download/v0.7.5/LocalPinyinIME-0.7.5-x64.exe)（100.88 MiB）及同页SHA-256文件。安装内容约328.87 MiB，仅保留中文与英文运行时语言资源。双击安装后按Win＋空格选择“本地拼音”；升级后重新打开输入应用。
+从[GitHub Release v0.7.6](https://github.com/Terry1238832/LocalPinyinIME/releases/tag/v0.7.6)下载[Windows x64安装包](https://github.com/Terry1238832/LocalPinyinIME/releases/download/v0.7.6/LocalPinyinIME-0.7.6-x64.exe)（101.06 MiB）及同页SHA-256文件。安装内容约329.53 MiB，仅保留中文与英文运行时语言资源。双击安装后按Win＋空格选择“本地拼音”；升级后重新打开输入应用。
 
 普通拼音候选使用空格确认当前选项、数字1–9选择当前页对应词、左右箭头翻页、Esc取消、Enter提交原始拼音；Ctrl＋Space切换中英文。支持全拼、连续拼音与整句候选、简拼、补全、单次拼写容错、中文标点、鼠标选词和本地学习。长句和同音词仍可能需要选词。
 
@@ -30,8 +32,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\Build.ps1
 
 个人设置、词库和学习沿用%LOCALAPPDATA%\LocalPinyinIME；Electron缓存在desktop子目录。学习最多保存2,048条记录；清除学习保留个人词库，卸载保留个人数据。前文查询和试用在本机完成，接受联想不新增学习记录，普通拼音选词沿用原有学习。
 
-34项原生回归通过（含10个跨进程桥接场景），实际交付ASAR通过15个桌面流程、80次侧栏切换及41张截图检查。267句公开回归首选153/267、前九覆盖206/267，结果见[输入质量记录](docs/lexicon-075-quality.json)；新增原创词逐项原生查询与上游名称审计分开记录。新增词作者与独立审查见[词库审计](docs/lexicon-075-authoring-audit.md)。完整验证见[verification.json](docs/verification.json)和[兼容范围](docs/COMPATIBILITY.md)。未完成干净机器完整安装卸载和全部应用的安装后验收。
+34项原生回归通过（含10个跨进程桥接场景），实际交付ASAR通过15个桌面流程、80次侧栏切换及41张截图检查。267句公开回归首选154/267、前九覆盖204/267，结果见[输入质量记录](docs/lexicon-076-quality.json)；新增原创词逐项原生查询与上游名称审计分开记录。新增词作者与结构审计见[词库审计](docs/lexicon-076-authoring-audit.md)。完整验证见[verification.json](docs/verification.json)和[兼容范围](docs/COMPATIBILITY.md)。未完成干净机器完整安装卸载和全部应用的安装后验收。
 
 ## 许可
 
-项目代码、原创词库与联想关系采用MIT；标准词库为Apache-2.0，字符模型使用原创和公有领域语料。上游页面标题整理的名称索引有独立来源记录及原站条款，不统一声称MIT授权；参见[来源审计](docs/remote-lexicon-audit-074.md)。Electron/React采用MIT；运行时组件声明保留在LICENSE.electron.txt、LICENSES.chromium.html和THIRD_PARTY_NOTICES.txt。作者工具、训练原文与node_modules不进入安装包。
+项目代码、原创词库与联想关系采用MIT；标准词库为Apache-2.0，字符模型使用原创和公有领域语料。上游页面标题整理的名称索引有独立来源记录及原站条款，不统一声称MIT授权；参见[历史来源审计](docs/remote-lexicon-audit-074.md)及[本轮上游审计](docs/remote-lexicon-audit-076.md)。Electron/React采用MIT；运行时组件声明保留在LICENSE.electron.txt、LICENSES.chromium.html和THIRD_PARTY_NOTICES.txt。作者工具、训练原文与node_modules不进入安装包。

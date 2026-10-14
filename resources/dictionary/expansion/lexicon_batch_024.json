@@ -1,0 +1,455 @@
+{
+  "batch": "lexicon_batch_024",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "家居整理、衣物护理与日常生活短语",
+  "author": "root",
+  "review_scope": "Single AI author editorial review of every selected display/key; explicit contextual decisions for all detected polyphones. Structural checks are separate and are not described as an independent human review.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 1198,
+  "sha256": "d8f05add0875f221694a20eed9c258291df2f1260bd78ace1eb4c0d795275384",
+  "authoring_files_sha256": {
+    "lexicon_batch_024.authoring.json": "c0fbe79314933c966b94c6a8447a1b294dfddcaf9a518a754807ba0a8677f342",
+    "batch024_daily_home_draft.txt": "dccf8cd1870f01de6be1a695a583dffe2335cac02d7bf82ec78b47d3964eea2e",
+    "batch024_pronunciation_review.tsv": "0f2141acdef274b0ac4f77d70d3e392af198da072bb62fde6570f546b123c9bb"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "2eaa02e69160295086038f1ba1a7bb3c57a138a8b354584b112468df745c9029",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "home_entryway_storage": 5500,
+    "home_wardrobe_sorting": 5500,
+    "home_laundry_sorting": 5500,
+    "home_laundry_washing": 5500,
+    "home_laundry_drying": 5500,
+    "home_clothing_repairs": 5000,
+    "home_clothing_materials": 5000,
+    "home_bedding_and_linen": 5500,
+    "home_kitchen_storage": 5500,
+    "home_bathroom_cleaning": 5500,
+    "home_surface_cleaning": 5500,
+    "home_floor_and_dust": 5500,
+    "home_storage_boxes": 5500,
+    "home_balcony_and_plants": 5500,
+    "home_packing_and_moving": 5500,
+    "home_neighbour_services": 5500,
+    "daily_routine_fragments": 6000,
+    "daily_request_fragments": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "daily_request_fragments": 67,
+    "daily_routine_fragments": 65,
+    "home_balcony_and_plants": 62,
+    "home_bathroom_cleaning": 69,
+    "home_bedding_and_linen": 67,
+    "home_clothing_materials": 68,
+    "home_clothing_repairs": 69,
+    "home_entryway_storage": 57,
+    "home_floor_and_dust": 67,
+    "home_kitchen_storage": 70,
+    "home_laundry_drying": 71,
+    "home_laundry_sorting": 71,
+    "home_laundry_washing": 68,
+    "home_neighbour_services": 61,
+    "home_packing_and_moving": 68,
+    "home_storage_boxes": 70,
+    "home_surface_cleaning": 66,
+    "home_wardrobe_sorting": 62
+  },
+  "length_distribution": {
+    "4": 1101,
+    "3": 54,
+    "5": 43
+  },
+  "authoring_rejections": [
+    {
+      "word": "玄关柜",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "钥匙挂钩",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "鞋柜隔板",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "衣柜顶层",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "换季整理",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "换季收纳",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "衣架挂钩",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "挂衣杆",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "裤架夹子",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "衣服叠齐",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "袜子配对",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "真空压缩",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "抽屉分格",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "洗衣网袋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "温水浸泡",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "洗涤剂残留",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "衣物缠绕",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "清洗滤网",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "烘干温度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "裤脚改短",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "改裤脚",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "拉链卡住",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "精梳棉",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "长绒棉",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "羽绒填充",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "填充棉",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "床单铺平",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "床垫翻面",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "清洁抹布",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吸水布",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "擦拭布",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "锅盖架",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "砧板晾干",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "龙头起泡器",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "地漏滤网",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "洗漱用品",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "擦净桌面",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "清洁海绵",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "软毛刷",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "缝隙刷",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "清洁刮板",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "沙发缝隙",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "平板拖把",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吸尘器刷头",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "尘袋更换",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "扫地机边刷",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "扫地机滚刷",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "防尘盖",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "抽屉卡住",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "花盆托盘",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "花盆底孔",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "盆土干湿",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "盆土板结",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "浇水频率",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "叶尖发干",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "新叶展开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "植物换盆",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "枝条扶正",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "花盆间距",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "装箱清单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "纸箱封口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "纸箱加固",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "搬运路线",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "邻里互助",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "工具归还",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "取件凭证",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "取件号码",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "物业前台",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "物业报修",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "维修预约",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "上门时段",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "工单编号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "报修编号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "维修回访",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "洗漱用品",
+      "reason": "duplicate_draft"
+    },
+    {
+      "word": "带好证件",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "忙完再说",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "稍等一会",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "晚点再来",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "找不到了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "顺手一放",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "收进抽屉",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "别落东西",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "再看一遍",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "还要多久",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "到了叫我",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 869,
+  "manual_pronunciation_overrides": {
+    "长柄雨伞": "changbingyusan",
+    "避免暴晒": "bimianbaoshai",
+    "防止褪色": "fangzhituise",
+    "缩短袖长": "suoduanxiuchang",
+    "拉链卡布": "lalianqiabu",
+    "面料褪色": "mianliaotuise",
+    "地漏格栅": "dilougeshan",
+    "地刷卡毛": "dishuaqiamao",
+    "袋口扎紧": "daikouzajin",
+    "长嘴水壶": "changzuishuihu",
+    "支架绑扎": "zhijiabangza",
+    "扎带剪断": "zadaijianduan",
+    "扎带固定": "zadaiguding",
+    "垃圾扎紧": "lajizajin",
+    "把袋扎好": "badaizahao"
+  },
+  "reading_variant_choices": {
+    "避免暴晒": "bimianbaoshai",
+    "防止褪色": "fangzhituise",
+    "拉链卡布": "lalianqiabu",
+    "面料褪色": "mianliaotuise",
+    "地漏格栅": "dilougeshan",
+    "地刷卡毛": "dishuaqiamao"
+  },
+  "semantic_pronunciation_corrections": 9,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

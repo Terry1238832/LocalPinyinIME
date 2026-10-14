@@ -1,0 +1,721 @@
+{
+  "batch": "lexicon_batch_031",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "住房沟通、搬家收纳、家具部件、室内设施与维修报修词语",
+  "author": "root",
+  "review_scope": "A single AI author reads each selected expression and flagged key in its named household context. Positional readings and naturalness rewrites are recorded; structural validation is not independent linguistic editing or a legal, plumbing, electrical or construction prescription.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 1122,
+  "sha256": "a1602a51c2029f3b8c175d2bb8c3cc7971a2379df2dc4d9b60760c6f93a7316e",
+  "authoring_files_sha256": {
+    "lexicon_batch_031.authoring.json": "07ba42a9d63688042240bf981669e25f6ae3d6a110941a1cf0d8163139a1b736",
+    "batch031_housing_furniture_repairs_draft.txt": "45e9cfa88a14e16050627a86f7edf9a2cd6744764191d9a5f4617a6f265118c8",
+    "batch031_pronunciation_review.tsv": "3f7a9484f344cdc44c012b310cbeb00239fde243d4487a94294e48f7a5feaea2"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "bcdf5fe80db085cd7f9b2cd75c5ef4b7ba536ac1506426f0ccca98a701163f96",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "housing_search": 5500,
+    "room_viewing_and_layout": 5500,
+    "housing_communication": 5500,
+    "moving_boxes_and_lists": 5500,
+    "moving_arrangements": 5500,
+    "furniture_storage_parts": 5500,
+    "tables_chairs_and_beds": 5500,
+    "sofas_and_soft_furnishings": 5500,
+    "doors_windows_and_hardware": 5500,
+    "curtains_and_tracks": 5000,
+    "bathroom_fixtures": 5500,
+    "kitchen_fixed_fittings": 5500,
+    "lighting_and_switches": 5500,
+    "wall_floor_and_finishes": 5000,
+    "repair_requests": 6000,
+    "building_common_areas": 5500
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "bathroom_fixtures": 68,
+    "building_common_areas": 62,
+    "curtains_and_tracks": 76,
+    "doors_windows_and_hardware": 78,
+    "furniture_storage_parts": 71,
+    "housing_communication": 64,
+    "housing_search": 65,
+    "kitchen_fixed_fittings": 76,
+    "lighting_and_switches": 73,
+    "moving_arrangements": 63,
+    "moving_boxes_and_lists": 65,
+    "repair_requests": 49,
+    "room_viewing_and_layout": 76,
+    "sofas_and_soft_furnishings": 80,
+    "tables_chairs_and_beds": 78,
+    "wall_floor_and_finishes": 78
+  },
+  "length_distribution": {
+    "4": 1010,
+    "5": 101,
+    "6": 11
+  },
+  "authoring_rejections": [
+    {
+      "word": "租房区域",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "租房预算",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "租房需求",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "租房信息",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "房源信息",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "押金凭证",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "押金退还",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "押金收据",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "入住时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "入住准备",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "入住人数",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "入住确认",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "入住清单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "入住通知",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "周边环境",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "看房时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "看房记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "厨房窗户",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "阳台排水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "房东电话",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "房东联系方式",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "房屋交接",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "钥匙交接",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "钥匙丢失",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水表读数",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电表读数",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "费用分摊",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "费用明细",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "费用核对",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "续租确认",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "家具清单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "交接清单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "交接照片",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "提前告知",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "提前说明",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "搬家纸箱",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "搬家封条",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "搬家清单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "纸箱尺寸",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "纸箱封口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "纸箱加固",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "物品分类",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "物品标签",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "物品清单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "分箱打包",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "箱内隔板",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "箱内填充",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "箱底加固",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "箱角保护",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "分类标记",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "搬家时段",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "搬家路线",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "搬家预约",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "搬家费用",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "搬运路线",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "搬运费用",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "搬运人员",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电梯预约",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电梯尺寸",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车辆到达",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "上楼搬运",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "下楼搬运",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "楼梯搬运",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "大件搬运",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "家具搬运",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "到场时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "到场确认",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "衣柜背板",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "衣柜侧板",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "鞋柜隔板",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "抽屉滑轨",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "抽屉底板",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "抽屉分隔",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "柜门铰链",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "柜门磁吸",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "柜门调节",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "床垫边缘",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "床垫保护套",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门框缝隙",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门锁记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "窗帘轨道",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "窗帘挂钩",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "窗帘绑带",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "窗帘清洗",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "洗手盆边",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "洗手盆下水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "浴室镜面",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "浴室柜门",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "浴室地漏",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "花洒喷头",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "花洒软管",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "花洒支架",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "淋浴隔断",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "马桶水箱",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "地漏滤网",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "地漏堵塞",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "橱柜隔板",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水槽滤篮",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "龙头阀芯",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "橱柜拉篮",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "台灯底座",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "台灯开关",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "台灯色温",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "开关面板",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "插座面板",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "插座位置",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "灯带接头",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "地板缝隙",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "地砖接缝",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "报修时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "报修内容",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "报修照片",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "报修编号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "报修进度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "故障现象",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "故障照片",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "故障描述",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "故障范围",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "上门时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "上门地址",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "上门预约",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "上门时段",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "维修预约",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "维修人员",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "维修记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "维修进度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "维修确认",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门关不严",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门锁松了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门锁坏了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门把手松了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "窗户漏风",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水龙头漏水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水龙头松了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "花洒漏水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "软管漏水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "灯光闪烁",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "插座松了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "抽屉卡住了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "柜门关不严",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "楼梯扶手",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "楼梯转角",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电梯轿厢",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电梯楼层",
+      "reason": "duplicate_draft"
+    },
+    {
+      "word": "单元门口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "单元门牌",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "单元门禁",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "单元入口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "物业前台",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "物业公告",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "物业报修",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "物业服务",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "公共走廊",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "公共照明",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "公共座椅",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "公共绿地",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "公共设施",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门厅清洁",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 943,
+  "manual_pronunciation_overrides": {
+    "轨道长度": "guidaochangdu",
+    "滑轨卡住了": "huaguiqiazhule"
+  },
+  "reading_variant_choices": {
+    "滑轨卡住了": "huaguiqiazhule"
+  },
+  "semantic_pronunciation_corrections": 1,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

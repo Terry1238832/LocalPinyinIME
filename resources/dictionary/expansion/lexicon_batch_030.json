@@ -1,0 +1,593 @@
+{
+  "batch": "lexicon_batch_030",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "购物选择、订单售后、餐饮服务、衣物鞋包和生活采购词语",
+  "author": "root",
+  "review_scope": "One AI author reads each selected expression and flagged toneless key in a shopping or everyday service context. Positional decisions are recorded and structurally checked; no independent human language editor, external bulk dictionary or public full-answer import is claimed.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 1157,
+  "sha256": "8f74b03c33465cd6510511be4aab64b3071f153e917c872f3edad68163da4400",
+  "authoring_files_sha256": {
+    "lexicon_batch_030.authoring.json": "97d7f012c4d16c68091e2e854e55d558dc6de1ffa368159144d421c858871ad5",
+    "batch030_shopping_dining_daily_draft.txt": "41ef41da2f79275506971e0e7faed38437f2be8f35ec9d99b96360b61234f20f",
+    "batch030_pronunciation_review.tsv": "8ef1bda7bd4ef0652c27e377c73f5dbaa56d19e180c77a135408bd736a64118a"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "50013d18b8da9788869382e1bfcdf83a279d2e4afca395f24a63c40c6d76811c",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "product_browsing": 5500,
+    "shopping_comparisons": 5500,
+    "cart_and_checkout": 5500,
+    "payments_and_receipts": 5500,
+    "orders_and_reminders": 5500,
+    "customer_service_chat": 6000,
+    "returns_and_aftercare": 5500,
+    "ratings_and_experience": 5500,
+    "food_orders_and_takeaway": 5500,
+    "dining_and_table_service": 5500,
+    "clothing_sizes_and_fit": 5500,
+    "shoes_and_bags": 5500,
+    "market_and_grocery": 5500,
+    "household_purchases": 5500,
+    "shop_hours_and_pickup": 5500,
+    "informal_shopping_expressions": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "cart_and_checkout": 69,
+    "clothing_sizes_and_fit": 77,
+    "customer_service_chat": 66,
+    "dining_and_table_service": 79,
+    "food_orders_and_takeaway": 77,
+    "household_purchases": 74,
+    "informal_shopping_expressions": 80,
+    "market_and_grocery": 75,
+    "orders_and_reminders": 65,
+    "payments_and_receipts": 57,
+    "product_browsing": 70,
+    "ratings_and_experience": 76,
+    "returns_and_aftercare": 64,
+    "shoes_and_bags": 78,
+    "shop_hours_and_pickup": 78,
+    "shopping_comparisons": 72
+  },
+  "length_distribution": {
+    "5": 117,
+    "4": 1019,
+    "6": 6,
+    "3": 15
+  },
+  "authoring_rejections": [
+    {
+      "word": "商品细节图",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "商品选项",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "商品参数",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "商品编号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "商品库存",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "商品收藏",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "使用说明",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "店铺首页",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "店铺客服",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "浏览记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "版本对比",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "价格偏高",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "价格区间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "价格走势",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "表面平整",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "质地柔软",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "手感细腻",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "实物尺寸",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "移出购物车",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "取消勾选",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "结算明细",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "结算方式",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "满减门槛",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "折扣码",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "提交订单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "确认订单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "取消订单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "查看订单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "订单备注",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "付款方式",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "付款凭证",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "扫码付款",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "支付凭证",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "支付超时",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "支付失败",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "支付成功",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "支付记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "收款记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "收款凭证",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "收款确认",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发票抬头",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发票税号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发票金额",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发票号码",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发票类型",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发票备注",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发票下载",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电子发票",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发票补开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发票重开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发票作废",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "收据原件",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "下单时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "订单编号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "订单状态",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "订单详情",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "订单列表",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "订单查询",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "订单确认",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发货仓库",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "等待确认",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "等待回复",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "出库时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "预售时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "预售商品",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "补货时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "补货提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "有没有现货",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "能开发票吗",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帮我问一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帮我看一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帮我确认下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帮我改一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "稍后回复",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "稍后确认",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "稍后补充",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "稍后联系",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "稍后处理",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "已经确认",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "已经回复",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "已经收到",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "退款金额",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "退款原因",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "退款记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "退款凭证",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "原路退款",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "退款审核",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "退款申请",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "退款处理",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "售后进度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "售后凭证",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "售后记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "退换说明",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "退换流程",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "退换记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "配件补发",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "保留凭证",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "评价记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "评价回复",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "颜色柔和",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "手感柔软",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "少放辣椒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "调料分装",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "饭菜分装",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "添一碗饭",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "尺码说明",
+      "reason": "duplicate_draft"
+    },
+    {
+      "word": "尺码选择",
+      "reason": "duplicate_draft"
+    },
+    {
+      "word": "试穿记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "鞋带松紧",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "鞋垫厚度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "蔬菜价格",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水果价格",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "称重标签",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "散装称重",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "整箱购买",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "采购清单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "采购预算",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "备用袋子",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "备用牙刷",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "备用毛巾",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "备用电池",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门店自提",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "到店时间",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 946,
+  "manual_pronunciation_overrides": {
+    "还没收货": "haimeishouhuo",
+    "还没收到": "haimeishoudao",
+    "袖长尺寸": "xiuchangchicun",
+    "衣长尺寸": "yichangchicun",
+    "裤长尺寸": "kuchangchicun",
+    "裙长尺寸": "qunchangchicun",
+    "衣长合适": "yichangheshi",
+    "袖长合适": "xiuchangheshi",
+    "裤长合适": "kuchangheshi",
+    "裙长合适": "qunchangheshi",
+    "下摆偏长": "xiabaipianchang",
+    "裤腿偏长": "kutuipianchang",
+    "裙摆偏长": "qunbaipianchang",
+    "这个太长": "zhegetaichang",
+    "有点偏长": "youdianpianchang"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 15,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

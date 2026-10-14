@@ -1,0 +1,105 @@
+{
+  "version": "0.7.6",
+  "quality_report_sha256": "048326845aa3b93ac32de8e19c2d569bd378e9753c32b477bf736aeaacf2d47b",
+  "runtime_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "aeb69f672af44f92f04b7857f69cee3da908e3ca2f55bd7f425e605c2433ef53",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+    "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+    "continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e"
+  },
+  "scope": "Same final evaluator, isolated personal data, unchanged 267 public fixtures. These observed changes do not trigger per-case weight tuning or importing full answers.",
+  "lost_from_top9": [
+    {
+      "source": "article:guxiang:17",
+      "pinyin": "zouderenduoleyebianchenglelu",
+      "expected": "走的人多了也便成了路",
+      "baseline_rank": 2,
+      "current_rank": 0,
+      "baseline_candidates": [
+        "走的人多了也变成了路",
+        "走的人多了也便成了路",
+        "走的人多了也变成了录",
+        "走的人多了也便成了录",
+        "走的人多了也变成了炉",
+        "走的人多了也便成了炉",
+        "走的人多了也变成了掳",
+        "走的人多了也变成了陆",
+        "走的"
+      ],
+      "current_candidates": [
+        "走的人多了也变成了路",
+        "走的人多了叶变成了路",
+        "走的人多了也变成了录",
+        "走的人多了叶变成了录",
+        "走的人多了也变成了炉",
+        "走的人多了叶变成了炉",
+        "走的人多了也变成了掳",
+        "走的人多了也变成了陆",
+        "走的"
+      ]
+    },
+    {
+      "source": "article:yijian:11",
+      "pinyin": "chefutinglezhelaonvrendehuaquehaobuchouchu",
+      "expected": "车夫听了这老女人的话却毫不踌躇",
+      "baseline_rank": 6,
+      "current_rank": 0,
+      "baseline_candidates": [
+        "车夫停了这老女人的话却毫不抽出",
+        "车夫听了这老女人的话却毫不抽出",
+        "车夫停了这老女人的话却好补抽出",
+        "车夫听了这老女人的话却好补抽出",
+        "车夫停了这老女人的话却毫不踌躇",
+        "车夫听了这老女人的话却毫不踌躇",
+        "车夫停了这老女人的话却好补踌躇",
+        "车夫听了这老女人的话却好补踌躇",
+        "车夫"
+      ],
+      "current_candidates": [
+        "车夫停了这老女人的话却毫不抽出",
+        "车夫停了这老女人的话确毫不抽出",
+        "车夫停了这老女人的话却好补抽出",
+        "车夫听了这老女人的话却好补抽出",
+        "车夫停了这老女人的话却毫不踌躇",
+        "车夫停了这老女人的话确毫不踌躇",
+        "车夫停了这老女人的话却好补踌躇",
+        "车夫听了这老女人的话却好补踌躇",
+        "车夫"
+      ]
+    }
+  ],
+  "gained_in_top9": [],
+  "lost_first_place": [],
+  "gained_first_place": [
+    {
+      "source": "daily:024",
+      "pinyin": "shoujimeidianlewodeizhaogechongdianqi",
+      "expected": "手机没电了我得找个充电器",
+      "baseline_rank": 2,
+      "current_rank": 1,
+      "baseline_candidates": [
+        "手机没点了我得找个充电器",
+        "手机没电了我得找个充电器",
+        "手机没点了我得找个充电气",
+        "手机没点了我得找个充电起",
+        "手机没电了我得找个充电气",
+        "手机没点了我得找个充电期",
+        "手机没点了我得找个充电齐",
+        "手机没电了我得找个充电起",
+        "手机"
+      ],
+      "current_candidates": [
+        "手机没电了我得找个充电器",
+        "手机没点了我得找个充电器",
+        "手机没电了我得找个充电气",
+        "手机没点了我得找个充电气",
+        "手机没电了我得找个充电起",
+        "手机没电了我得找个充电期",
+        "手机没电了我得找个充电齐",
+        "手机没点了我得找个充电起",
+        "手机"
+      ]
+    }
+  ]
+}

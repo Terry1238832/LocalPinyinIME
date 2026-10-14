@@ -1,0 +1,1512 @@
+{
+  "batch": "lexicon_batch_028",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "交通出行、车辆日常、快递收发、公共服务与生活办事词语",
+  "author": "root",
+  "review_scope": "One AI author reads all selected expressions and every flagged toneless key in its declared everyday context. Positional pronunciation choices are recorded and structurally checked; this is not a second linguistic reviewer or travel, vehicle-maintenance or legal advice.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 925,
+  "sha256": "2ba1b820f01baf21f45494f0eaa930e6e6eccdd2d2bdb9c3301b79f0e5e51643",
+  "authoring_files_sha256": {
+    "lexicon_batch_028.authoring.json": "38aa593664f8ed7de0a2c0604359dd761ec78bd80892c3247c468fa26bf291b7",
+    "batch028_travel_deliveries_services_draft.txt": "47a8840edca7aaec8717ed74b3bec4d9c19a6ccc6032622873949425edbe145c",
+    "batch028_pronunciation_review.tsv": "a75e0686bb69347d2e49e1d5a4093dacf244b02f14d26456952ba30d31b37c40"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "0bdcca2211a0d6d5cc9b262c3caf55f28653e692f03df434b94744d25528df67",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "commuting_routes": 5500,
+    "metro_and_bus": 5500,
+    "rail_tickets_and_stations": 5500,
+    "air_travel_objects": 5000,
+    "travel_luggage_and_stays": 5500,
+    "walking_and_navigation": 5500,
+    "bicycles_and_rides": 5000,
+    "vehicles_and_parking": 5500,
+    "vehicle_cabin_and_controls": 5000,
+    "parcel_sending": 5500,
+    "parcel_receiving": 5500,
+    "delivery_and_returns": 5500,
+    "address_and_contacts": 5500,
+    "service_hall_and_queue": 5500,
+    "document_handling": 5500,
+    "appointments_and_followup": 5500
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "address_and_contacts": 68,
+    "air_travel_objects": 48,
+    "appointments_and_followup": 44,
+    "bicycles_and_rides": 69,
+    "commuting_routes": 57,
+    "delivery_and_returns": 43,
+    "document_handling": 65,
+    "metro_and_bus": 60,
+    "parcel_receiving": 48,
+    "parcel_sending": 53,
+    "rail_tickets_and_stations": 60,
+    "service_hall_and_queue": 44,
+    "travel_luggage_and_stays": 64,
+    "vehicle_cabin_and_controls": 72,
+    "vehicles_and_parking": 62,
+    "walking_and_navigation": 68
+  },
+  "length_distribution": {
+    "4": 853,
+    "5": 61,
+    "3": 8,
+    "6": 3
+  },
+  "authoring_rejections": [
+    {
+      "word": "通勤距离",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "通勤时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "通勤班车",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "到站时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "到岗时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "避开拥堵",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "路上耽搁",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "路上堵车",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "跨站换乘",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "同站换乘",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "站内换乘",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "出站换乘",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "换乘通道",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "换乘距离",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发车间隔",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "等车时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "步行时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "坐过站了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车还没来",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "还有几站",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "线路调整",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "临时停运",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "临时改道",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "公交报站",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "公交到站",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "地铁入口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "地铁出口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "地铁闸机",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "地铁站厅",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "地铁站台",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "安检队伍",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "安检托盘",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "安检通道",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "候车区域",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车厢编号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "列车方向",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "换乘指引",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "换乘标识",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "到站广播",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "闸机故障",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "乘车码失效",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "乘车码刷新",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "票卡充值",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车次取消",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车票改签",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车票退票",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "候补订单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "候补进度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "起售时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "检票时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "开车时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "到达时刻",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "乘车日期",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "乘车区间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "联程车票",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "余票查询",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "靠窗座位",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "连排座位",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车厢位置",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "检票队伍",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "进站大厅",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "退票进度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "改签差价",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "航班动态",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "航班延误",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "航班取消",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "航站楼入口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "航站楼出口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "值机柜台",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "自助值机",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "网上值机",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "值机时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "值机截止",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "值机凭证",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "登机口变更",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "登机顺序",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "登机队伍",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "登机时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "登机桥",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "摆渡车",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "机坪摆渡",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "登机箱",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "手提行李",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "随身行李",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "托运行李",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "行李托运",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "行李标签",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "行李条码",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "行李转盘",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "行李遗失",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "行李破损",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "行李超重",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "行李打包",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "座椅扶手",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "中转柜台",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "行李分装",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "备用衣物",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "住宿地点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "住宿订单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "住宿确认",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "入住日期",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "退房日期",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "退房时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "延迟退房",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "办理入住",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "前台咨询",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "房卡失效",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "连通房间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "寄存行李",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "住宿发票",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "住宿收据",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "步行导航",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "步行路线",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "步行距离",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "走到路口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "过街天桥",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "过街通道",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门口位置",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "小区侧门",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "路线规划",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "路线收藏",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "导航路线",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "定位漂移",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车座角度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "轮胎漏气",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "链条脱落",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "骑行头盔",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "骑行手套",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "共享单车",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "扫码开锁",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "还车地点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "还车时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车辆定位",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "下车推行",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车牌号码",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车牌绑定",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车辆登记",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车辆颜色",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车辆信息",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "停车缴费",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "地下车库",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "地面车位",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "临时车位",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "固定车位",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "访客车位",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "月租车位",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车位编号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车库坡道",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车库出口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车库入口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "停车记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "临时停车",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "座椅调节",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "座椅高度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "空调出风口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "空调风向",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "空调风速",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "前窗除雾",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车载支架",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车内吸尘",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "寄件地址",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "寄件姓名",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "寄件电话",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "寄件网点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "寄件预约",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "寄件方式",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "寄件凭证",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "上门寄件",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "上门取件",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "预约取件",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "取件地址",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "快递取件",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "快递寄件",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "快递单号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "包裹外观",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "包裹称重",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "封箱胶带",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "贴好面单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "面单打印",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "面单粘贴",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "面单信息",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "运费到付",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "运费估算",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "运费明细",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "运费补差",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "计费重量",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "揽件记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "收件地址",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "收件姓名",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "收件电话",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "收件备注",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "收件人电话",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "收件人地址",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "代收电话",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "代收包裹",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "代收凭证",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "快递驿站",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "快递柜取件",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "快递柜超时",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "取件号码",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "取件短信",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "取件通知",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "取件凭证",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "取件失败",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "签收时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "签收记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "签收照片",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "签收凭证",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "本人签收",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "拒绝签收",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "包裹破损",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "包裹丢失",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "包裹滞留",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "包装完好",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "包装破损",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "外箱破损",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "物品缺失",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "领取时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "领取记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "转运记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "物流轨迹",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "物流节点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "物流更新",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "物流停滞",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "物流异常",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "物流查询",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "派送时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "派送范围",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "派送地址",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "派送人员",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "派送延迟",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "配送时段",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "送到门口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "送到楼下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "送到前台",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "放在门口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "放在前台",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门卫代收",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "修改地址",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "地址有误",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "无人接听",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "无人签收",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "退货申请",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "退货单号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "退货地址",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "退货运费",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "退货凭证",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "退货进度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "换货地址",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "换货单号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "换货进度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "换货申请",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "补发单号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "补发地址",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "补发记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "补发进度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "详细地址",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "居住地址",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "办公地址",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "单元入口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "地址补充",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "默认地址",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "地址校验",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "联系电话",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "联系姓名",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "联系方式",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "联系网点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电话占线",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "办事大厅",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "服务大厅",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "服务窗口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "综合窗口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "咨询窗口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "受理窗口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "办理窗口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "导办台",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "排队号码",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "排队进度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "排队取号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "叫号提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "叫号屏幕",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "叫号顺序",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "过号提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "过号处理",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "重新取号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "预约取号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "现场取号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "等待叫号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "窗口号码",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "窗口位置",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "窗口暂停",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "窗口咨询",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "业务受理",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "业务咨询",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "业务查询",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "业务办理",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "业务办结",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "服务时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "服务指引",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "服务台账",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "服务反馈",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "服务评价",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "服务记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "服务提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "申请材料",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "申请日期",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "申请回执",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "材料清单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "原件核验",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "证件号码",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "证件照片",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "证件复印件",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "证件扫描件",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "证件有效期",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "填写表格",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "表格打印",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "受理回执",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "签收回执",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "回执领取",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "预约日期",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "预约时段",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "预约时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "预约地点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "预约编号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "预约人数",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "预约名额",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "预约确认",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "预约凭证",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "预约取消",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "预约成功",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "预约失败",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "预约提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "预约记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "改约时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "改约日期",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "取消预约",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "重新预约",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "提前预约",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "分时预约",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "按时到场",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "提前到场",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "签到记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "签到提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "办理进度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "办理状态",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "办理结果",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "办理时限",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "办理地点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "等待审核",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "审核通过",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "审核退回",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "领取凭证",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "领取回执",
+      "reason": "duplicate_draft"
+    },
+    {
+      "word": "回访电话",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "回访记录",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 777,
+  "manual_pronunciation_overrides": {
+    "上行列车": "shangxinglieche",
+    "骑行距离": "qixingjuli",
+    "扫码还车": "saomahuanche",
+    "还车区域": "huanchequyu",
+    "还车成功": "huanchechenggong",
+    "闸杆落下": "zhaganluoxia"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 6,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

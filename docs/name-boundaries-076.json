@@ -1,0 +1,126 @@
+{
+  "evaluation": {
+    "personal_data_isolated": true,
+    "expected_answers_learned": false,
+    "engine_sha256": "8449dddae0183be06cf0f5ad90b44e4088fdcacab66bbb3776520621a89a0b5f",
+    "cases_sha256": "a1b3c50702b291707cbc92e001dffac64a03a98f092ec2616999d542d2bbc565",
+    "resource_sha256": {
+      "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+      "local_core_zh_pinyin.tsv": "aeb69f672af44f92f04b7857f69cee3da908e3ca2f55bd7f425e605c2433ef53",
+      "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+      "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d"
+    }
+  },
+  "summary": {
+    "cases": 3,
+    "top1_correct": 0,
+    "top9_present": 2,
+    "top1_percent": 0.0,
+    "top9_percent": 66.67,
+    "character_error_rate": 0.5556,
+    "p50_lookup_ms": 1.03,
+    "p95_lookup_ms": 1.413,
+    "max_lookup_ms": 1.413
+  },
+  "groups": {
+    "boundary_probe": {
+      "cases": 3,
+      "top1_correct": 0,
+      "top9_present": 2,
+      "top1_percent": 0.0,
+      "top9_percent": 66.67,
+      "character_error_rate": 0.5556,
+      "p50_lookup_ms": 1.03,
+      "p95_lookup_ms": 1.413,
+      "max_lookup_ms": 1.413
+    }
+  },
+  "failures": [
+    {
+      "source": "boundary_probe:plain",
+      "pinyin": "jianshi",
+      "expected": "吉安市",
+      "actual": "监视",
+      "rank": 0
+    },
+    {
+      "source": "boundary_probe:explicit_three_syllables",
+      "pinyin": "ji'an'shi",
+      "expected": "吉安市",
+      "actual": "集安市",
+      "rank": 2
+    },
+    {
+      "source": "boundary_probe:first_boundary",
+      "pinyin": "ji'anshi",
+      "expected": "吉安市",
+      "actual": "集安市",
+      "rank": 2
+    }
+  ],
+  "rows": [
+    {
+      "pinyin": "jianshi",
+      "expected": "吉安市",
+      "source": "boundary_probe:plain",
+      "lookup_us": 1413,
+      "candidates": [
+        "监视",
+        "坚实",
+        "件事",
+        "见识",
+        "集安市",
+        "监事",
+        "剑士",
+        "检视",
+        "件"
+      ],
+      "expected_rank": 0
+    },
+    {
+      "pinyin": "ji'an'shi",
+      "expected": "吉安市",
+      "source": "boundary_probe:explicit_three_syllables",
+      "lookup_us": 1030,
+      "candidates": [
+        "集安市",
+        "吉安市",
+        "既暗示",
+        "既按时",
+        "即暗示",
+        "鸡暗示",
+        "即按时",
+        "几暗示",
+        "吉安"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "ji'anshi",
+      "expected": "吉安市",
+      "source": "boundary_probe:first_boundary",
+      "lookup_us": 792,
+      "candidates": [
+        "集安市",
+        "吉安市",
+        "既暗示",
+        "既按时",
+        "即暗示",
+        "鸡暗示",
+        "即按时",
+        "几暗示",
+        "吉安"
+      ],
+      "expected_rank": 2
+    }
+  ],
+  "version": "0.7.6",
+  "runtime_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "aeb69f672af44f92f04b7857f69cee3da908e3ca2f55bd7f425e605c2433ef53",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+    "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+    "continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e"
+  },
+  "scope": "Read-only isolated final-engine boundary probe, not installation or end-to-end keyboard verification. Existing TSF separator path was inspected in text_service.cpp."
+}

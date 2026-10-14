@@ -1,0 +1,247 @@
+{
+  "batch": "lexicon_batch_035",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "日常聊天、思考判断、协商回应与情绪表达词语",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected everyday expression and flagged toneless key in context, recording positional choices and naturalness changes. Structural checks are not a second linguistic reviewer; no external corpus or complete typing-answer import is used.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 521,
+  "sha256": "cba8090882948fd25a0dbdad7fa6475c4d5acc7f2148c01587cbedd00fcfbba7",
+  "authoring_files_sha256": {
+    "lexicon_batch_035.authoring.json": "4e0c9263b83dc0d0d02f993011000b0a2ad39018bfe59cbb4405a631b8a71a0c",
+    "batch035_everyday_spoken_expression_draft.txt": "0975337660ce0f525d293e167bb2447e1859b72025436bc786bc4047a070f57d",
+    "batch035_pronunciation_review.tsv": "ca0f013a9be87e194ae2e1013119b3eff45f6e46f40f3b816e205b2f2ab8ef36"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "18b00e42f01c124cf2c636e81a13412fe39b444350a743be881d40c64a2cdc25",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "thinking_and_deciding": 6000,
+    "reactions_and_realisation": 6000,
+    "asking_and_clarifying": 6000,
+    "negotiating_and_responding": 6000,
+    "feelings_and_reassurance": 6000,
+    "time_and_availability": 6000,
+    "difficulty_and_progress": 6000,
+    "casual_storytelling": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "asking_and_clarifying": 66,
+    "casual_storytelling": 69,
+    "difficulty_and_progress": 68,
+    "feelings_and_reassurance": 62,
+    "negotiating_and_responding": 64,
+    "reactions_and_realisation": 63,
+    "thinking_and_deciding": 60,
+    "time_and_availability": 69
+  },
+  "length_distribution": {
+    "5": 395,
+    "6": 62,
+    "4": 64
+  },
+  "authoring_rejections": [
+    {
+      "word": "我想通了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "先想清楚",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "应该是这样",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "原来是这样",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我觉得可以",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我觉得不错",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我觉得不行",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "拿不定主意",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "心里没底",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "想得太多了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "这下明白了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "这下放心了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "原来如此啊",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "怪不得呢",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "刚刚才收到",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我才知道",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我才发现",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "哪里不合适",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "能说清楚点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "能说具体点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我没听清楚",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "再商量一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "再讨论一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "再沟通一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "再确认一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "再安排一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "再调整一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "有点紧张",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "有点担心",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "别太着急",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "别太担心",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "别太紧张",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "别想太多",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "慢慢想清楚",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "慢慢就习惯了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "等我忙完",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "一下就好了",
+      "reason": "duplicate_draft"
+    },
+    {
+      "word": "一下就通了",
+      "reason": "duplicate_draft"
+    },
+    {
+      "word": "随口说说",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 484,
+  "manual_pronunciation_overrides": {
+    "我琢磨着": "wozuomozhe",
+    "我寻思着": "woxunsizhe",
+    "先琢磨琢磨": "xianzuomozuomo",
+    "先寻思寻思": "xianxunsixunsi",
+    "这事得想想": "zheshideixiangxiang",
+    "这事得商量": "zheshideishangliang",
+    "这事得问问": "zheshideiwenwen",
+    "这事得确认": "zheshideiqueren",
+    "这事得核对": "zheshideihedui",
+    "这事得考虑": "zheshideikaolv",
+    "这事得安排": "zheshideianpai",
+    "这事得处理": "zheshideichuli",
+    "这事得说明": "zheshideishuoming",
+    "这事得等等": "zheshideidengdeng",
+    "你说哪一行": "nishuonayihang",
+    "是这一行吗": "shizheyihangma",
+    "是那一行吗": "shinayihangma"
+  },
+  "reading_variant_choices": {
+    "我琢磨着": "wozuomozhe",
+    "我寻思着": "woxunsizhe",
+    "先琢磨琢磨": "xianzuomozuomo",
+    "先寻思寻思": "xianxunsixunsi"
+  },
+  "semantic_pronunciation_corrections": 13,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

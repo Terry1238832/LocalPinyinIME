@@ -1,0 +1,461 @@
+{
+  "batch": "lexicon_batch_025",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "日常聊天、礼貌沟通、情绪表达与安排短语",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and main key in context, with explicit positional polyphone choices; no independent human linguistic review or corpus-derived frequency is claimed.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 1065,
+  "sha256": "c4e29ed294a02ce566e6461360403147f668986cdff384978a1b933c00fedd5f",
+  "authoring_files_sha256": {
+    "lexicon_batch_025.authoring.json": "bc7454e1f776205a5eb7c8e7c7b96aca8b879abd3351bf28cd8457fb48cebac4",
+    "batch025_daily_conversation_draft.txt": "3e4f70518dc9dc10dfdf29ceec0d79fd2eed8bf09d08a6230eb4d2e76c0c9f0b",
+    "batch025_pronunciation_review.tsv": "afee9aa275eb2c15d578043ad7d5c187a463eae29433537e29f191714b65bfc7"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "43d3cd445ca6fc9a0c8ccd8d34f118399aac896c4d89ccbc5e811af6429cce8b",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "talk_acknowledgements": 6000,
+    "talk_clarifying_questions": 6000,
+    "talk_confirming_meaning": 6000,
+    "talk_polite_requests": 6000,
+    "talk_gratitude_and_apology": 6000,
+    "talk_disagreement_and_limits": 6000,
+    "talk_choices_and_preferences": 6000,
+    "talk_plans_and_timing": 6000,
+    "talk_reactions_and_surprise": 6000,
+    "talk_mood_and_feelings": 5500,
+    "talk_comfort_and_support": 6000,
+    "talk_neighbours_and_friends": 5500,
+    "talk_family_arrangements": 5500,
+    "talk_phone_connections": 5500,
+    "talk_messages_and_replies": 5500,
+    "talk_visits_and_meetings": 5500
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "talk_acknowledgements": 58,
+    "talk_choices_and_preferences": 70,
+    "talk_clarifying_questions": 65,
+    "talk_comfort_and_support": 62,
+    "talk_confirming_meaning": 67,
+    "talk_disagreement_and_limits": 64,
+    "talk_family_arrangements": 69,
+    "talk_gratitude_and_apology": 59,
+    "talk_messages_and_replies": 71,
+    "talk_mood_and_feelings": 69,
+    "talk_neighbours_and_friends": 66,
+    "talk_phone_connections": 70,
+    "talk_plans_and_timing": 70,
+    "talk_polite_requests": 64,
+    "talk_reactions_and_surprise": 71,
+    "talk_visits_and_meetings": 70
+  },
+  "length_distribution": {
+    "5": 740,
+    "6": 279,
+    "3": 1,
+    "4": 45
+  },
+  "authoring_rejections": [
+    {
+      "word": "这样就好",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "原来如此",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "你说得对",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "说得有道理",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "确实是这样",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "也有道理",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "确实如此",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我懂你的意思",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "明白就好",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "就这么定了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "接着往下说",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我听着呢",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "大致是这样",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "哪个地方",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "到底怎么回事",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "是什么原因",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "举个例子吧",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "再解释一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "是这个意思吗",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "刚才没听清",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "再确认一次",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "不是这个意思",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "换个说法吧",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "理解有偏差",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "不完全一样",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帮忙照看下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "方便说话吗",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "方便接电话吗",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "现在方便吗",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "想请教一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "容我想想",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "给我留点时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "等我忙完",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "感谢你提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "多谢你帮忙",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "谢谢你关心",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "谢谢你体谅",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "谢谢你理解",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "真不好意思",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "实在不好意思",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "刚才没注意",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "刚才说错了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "刚才看错了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "给你添麻烦了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "让你久等了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "让你费心了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "未必是这样",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "先别下结论",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "别急着否定",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我想再考虑",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "再考虑考虑",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我得想一想",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "就到这里吧",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我想静一静",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我再看看",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "看实际情况",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "稍微提前些",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "等忙完这阵",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "一时没想起来",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "有点失落",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "有点委屈",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "心里堵得慌",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "慢慢来就好",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "先缓一缓吧",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "别往心里去",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "你已经尽力了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "已经尽力了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "各有各的难处",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "会慢慢好起来",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "先休息一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "先吃点东西",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "想说就说吧",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "最近怎么样",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "什么时候有空",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "哪天有空",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "什么时候方便",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我先告辞了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "有空来坐坐",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "家里有人吗",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "今天谁在家",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "到家说一声",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电话没接通",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "麦克风没开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发错人了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我在楼下等",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "在路口等",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 978,
+  "manual_pronunciation_overrides": {
+    "哪一步没过": "nayibumeiguo",
+    "指的是谁呢": "zhideshisheine",
+    "你说的是谁": "nishuodeshishei",
+    "我还得考虑": "wohaideikaolv",
+    "得再商量下": "deizaishangliangxia",
+    "得有所取舍": "deiyousuoqushe",
+    "得适应一阵": "deishiyingyizhen",
+    "可能得推迟": "kenengdeituichi",
+    "得再等一阵": "deizaidengyizhen",
+    "还得忙一阵": "haideimangyizhen",
+    "出乎意料地快": "chuhuyiliaodekuai",
+    "意外地顺利": "yiwaideshunli",
+    "还得缓一缓": "haideihuanyihuan",
+    "得歇一歇了": "deixieyixiele",
+    "好久没见着了": "haojiumeijianzhaole",
+    "谁在家里呢": "sheizaijialine",
+    "待会谁在家": "daihuisheizaijia",
+    "家里还有谁": "jialihaiyoushei",
+    "我重拨一次": "wochongboyici",
+    "挂了再重打": "gualezaichongda",
+    "先挂了重拨": "xiangualechongbo",
+    "消息没收到": "xiaoximeishoudao",
+    "信息没收到": "xinximeishoudao",
+    "一直没收到": "yizhimeishoudao",
+    "找不着入口": "zhaobuzhaorukou"
+  },
+  "reading_variant_choices": {
+    "指的是谁呢": "zhideshisheine",
+    "你说的是谁": "nishuodeshishei",
+    "谁在家里呢": "sheizaijialine",
+    "待会谁在家": "daihuisheizaijia",
+    "家里还有谁": "jialihaiyoushei"
+  },
+  "semantic_pronunciation_corrections": 20,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

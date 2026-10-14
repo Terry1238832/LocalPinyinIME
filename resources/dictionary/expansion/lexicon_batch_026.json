@@ -1,0 +1,713 @@
+{
+  "batch": "lexicon_batch_026",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "摄影摄像、视频剪辑、声音录制与媒体处理词语",
+  "author": "root",
+  "review_scope": "Single AI author contextual review of all selected words and keys with complete positional polyphone records; no independent human editor or blind benchmark is claimed.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 1145,
+  "sha256": "e92aa61473747a29dc03f5e53bd11752b22f9061de33ff0d179768f5913830b0",
+  "authoring_files_sha256": {
+    "lexicon_batch_026.authoring.json": "6a46e5323358e8be47093561944f26d89d3612c3abcca3f33caf746128b98e2a",
+    "batch026_photography_media_draft.txt": "d6db400346c392c2e56359a4f8e30d8276fc53623d146dd35ea012a79fb65c76",
+    "batch026_pronunciation_review.tsv": "24d7a3e55748074990803f983f502b07ce15e3879633aae2fff832e9a5f82c43"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "a8eceed76139c35d2d3e20cbbdd1b1f8d41f2ecc11cce10fc8d6c2a2edf41e12",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "photo_camera_controls": 5500,
+    "photo_lens_and_focus": 5500,
+    "photo_framing_and_composition": 5500,
+    "photo_exposure_and_metering": 5500,
+    "photo_light_and_colour": 5500,
+    "photo_portraits_and_events": 5500,
+    "photo_scene_and_motion": 5500,
+    "photo_tripods_and_accessories": 5000,
+    "photo_file_and_selection": 5500,
+    "photo_image_adjustments": 5500,
+    "video_shooting_and_clips": 5500,
+    "video_timeline_and_cutting": 5500,
+    "video_captions_and_graphics": 5500,
+    "video_transitions_and_motion": 5500,
+    "video_audio_and_sync": 5500,
+    "video_export_and_delivery": 5500,
+    "audio_recording_and_tracks": 5500,
+    "audio_editing_and_levels": 5500
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "audio_editing_and_levels": 65,
+    "audio_recording_and_tracks": 61,
+    "photo_camera_controls": 63,
+    "photo_exposure_and_metering": 65,
+    "photo_file_and_selection": 63,
+    "photo_framing_and_composition": 64,
+    "photo_image_adjustments": 62,
+    "photo_lens_and_focus": 65,
+    "photo_light_and_colour": 66,
+    "photo_portraits_and_events": 66,
+    "photo_scene_and_motion": 67,
+    "photo_tripods_and_accessories": 69,
+    "video_audio_and_sync": 67,
+    "video_captions_and_graphics": 55,
+    "video_export_and_delivery": 58,
+    "video_shooting_and_clips": 65,
+    "video_timeline_and_cutting": 65,
+    "video_transitions_and_motion": 59
+  },
+  "length_distribution": {
+    "4": 964,
+    "5": 136,
+    "6": 24,
+    "3": 21
+  },
+  "authoring_rejections": [
+    {
+      "word": "取景范围",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "屏幕触控",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "对焦锁定",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "对焦区域",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "快门优先",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "光圈优先",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "手动曝光",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "机身防抖",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "镜头防抖",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "镜头卡口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "单次对焦",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "连续对焦",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "手动对焦",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "镜头畸变",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "暗角校正",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "色差校正",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "主体突出",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "画面留白",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "视觉引导",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "前景遮挡",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "建筑透视",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "透视变形",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "透视校正",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "画面倾斜",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "曝光补偿",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "曝光锁定",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "阴影细节",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "高光细节",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "测光锁定",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "感光度上限",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "曝光包围",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "光线柔和",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "混合光源",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "白平衡校正",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "色彩还原",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "饱和度调整",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "对比度调整",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "站姿调整",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "坐姿调整",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "脸部阴影",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "视线方向",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "合影站位",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "环境人像",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "运动轨迹",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "运动模糊",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "背景模糊",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "微距细节",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "街头抓拍",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "云台锁紧",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "相机肩带",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "滤镜口径",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "照片筛选",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "原片保留",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "原片归档",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "照片备份",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "标签筛选",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "原始文件",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "原图对比",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "照片导入",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "删除定位信息",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "批量修图",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "选择性同步",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "色相调整",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "阴影提亮",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "曲线调整",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "亮度曲线",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "色彩曲线",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "色彩范围",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "蒙版羽化",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "修复画笔",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "视频码率",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "镜头推近",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "镜头拉远",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "镜头跟随",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "运镜速度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "分镜脚本",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "素材标签",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "片段拼接",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "波纹删除",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "轨道锁定",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "轨道静音",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "粗剪版本",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "精剪版本",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "剪辑节奏",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "字幕校对",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "字幕错字",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "字幕间距",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "字幕描边",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "字幕阴影",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "字幕位置",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "字幕安全区",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "字幕对齐",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "字幕样式",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "字幕字号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "字幕颜色",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "字幕动画",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "字幕导入",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "箭头标注",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "局部模糊",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "马赛克区域",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "画面遮罩",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "转场时长",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "转场位置",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "画面淡入",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "画面淡出",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "交叉溶解",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "关键帧曲线",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "关键帧删除",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "关键帧缓动",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "运动跟踪",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水平翻转",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "垂直翻转",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "变速曲线",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "定格画面",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "音画同步",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "配乐节奏",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "人声增强",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "音量包络",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "音轨分离",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "恒定码率",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "可变码率",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "视频编码",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "音频编码",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "导出质量",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "导出范围",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "序列设置",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "素材链接",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "预览渲染",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "渲染缓存",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "导出进度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "成片检查",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "交付版本",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "交付格式",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "录音电平",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "监听音量",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "监听耳机",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "输入增益",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "麦克风支架",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "防喷罩",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "防风罩",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "防风毛套",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "话筒夹",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "话筒线",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "干声录制",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "去除空白",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "去除底噪",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "降噪强度",
+      "reason": "duplicate_draft"
+    },
+    {
+      "word": "降噪效果",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "语音增强",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "峰值限制",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "压缩比例",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 913,
+  "manual_pronunciation_overrides": {
+    "重置拍摄参数": "chongzhipaishecanshu",
+    "自动伺服": "zidongsifu",
+    "伺服对焦": "sifuduijiao",
+    "长时曝光": "changshibaoguang",
+    "多重曝光": "duochongbaoguang",
+    "暗部欠曝": "anbuqianbao",
+    "亮部过曝": "liangbuguobao",
+    "照片重命名": "zhaopianchongmingming",
+    "筛除过曝片": "shaichuguobaopian",
+    "黑色调整": "heisetiaozheng",
+    "白色调整": "baisetiaozheng",
+    "中间调色调": "zhongjiandiaosediao",
+    "中间调调整": "zhongjiandiaotiaozheng",
+    "字幕行数": "zimuhangshu",
+    "配音重录": "peiyinchonglu"
+  },
+  "reading_variant_choices": {
+    "暗部欠曝": "anbuqianbao",
+    "亮部过曝": "liangbuguobao",
+    "筛除过曝片": "shaichuguobaopian"
+  },
+  "semantic_pronunciation_corrections": 12,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}
