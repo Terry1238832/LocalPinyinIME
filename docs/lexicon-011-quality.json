@@ -1,0 +1,534 @@
+{
+  "version": "0.7.3",
+  "client_date": "2026-10-13",
+  "evaluated_at_utc": "2026-10-14T00:55:46.639352+00:00",
+  "method": {
+    "personal_data_isolated": true,
+    "expected_answers_learned": false,
+    "blind_evaluation": false,
+    "dictionary_weights_not_adjusted_after_evaluation": true,
+    "keystroke_benchmark_run": false,
+    "baseline_method": "Same final evaluator replaying byte-exact prior-release data, not an unavailable old binary.",
+    "raw_reports_retained_after_delivery": false
+  },
+  "engine_sha256": "abc616a4d925969bf685886caa929a9f1005cc422c1164bbbea2ddb85dc4ee52",
+  "runtime_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "4214dcc27c4d16403b76aafb72996009c6fe4adfdd9ddec4083048a0eb8d4d02",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+    "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+    "continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e"
+  },
+  "baseline_runtime_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "c18a4d7e752a6357eddf322dbd121fb00498a9dfc168cdede9d5f8f85a0a7b14",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+    "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+    "continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e"
+  },
+  "fixtures": {
+    "fixed": {
+      "fixture": "tests/data/typing_holdout.tsv",
+      "fixture_sha256": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+      "baseline_summary": {
+        "cases": 138,
+        "top1_correct": 89,
+        "top9_present": 120,
+        "top1_percent": 64.49,
+        "top9_percent": 86.96,
+        "character_error_rate": 0.0482,
+        "p50_lookup_ms": 11.16,
+        "p95_lookup_ms": 16.933,
+        "max_lookup_ms": 24.232
+      },
+      "current_summary": {
+        "cases": 138,
+        "top1_correct": 89,
+        "top9_present": 121,
+        "top1_percent": 64.49,
+        "top9_percent": 87.68,
+        "character_error_rate": 0.0476,
+        "p50_lookup_ms": 11.088,
+        "p95_lookup_ms": 18.145,
+        "max_lookup_ms": 25.962
+      },
+      "comparison": {
+        "top1_changes": 1,
+        "top1_improvements": 0,
+        "top1_regressions": 0,
+        "top9_improvements": 1,
+        "top9_regressions": 0
+      },
+      "candidate_array_changes": [
+        {
+          "source": "article:beiying:02",
+          "pinyin": "naniandongtian",
+          "expected": "那年冬天",
+          "before": [
+            "那年冬天",
+            "那年冬添",
+            "那年动天",
+            "那年动填",
+            "那年懂天",
+            "那年东天",
+            "那年冬填",
+            "那年洞天",
+            "那年"
+          ],
+          "current": [
+            "那年冬天",
+            "那年冻天",
+            "那年冬添",
+            "那年动天",
+            "那年动填",
+            "那年懂天",
+            "那年东天",
+            "那年冬填",
+            "那年"
+          ],
+          "before_rank": 1,
+          "current_rank": 1
+        },
+        {
+          "source": "article:beiying:11",
+          "pinyin": "wowangzhetazouchuqu",
+          "expected": "我望着他走出去",
+          "before": [
+            "我望着他走出去",
+            "我望着她走出去",
+            "我望着他邹出去",
+            "我望着他奏出去",
+            "我望着他揍出去",
+            "我望着他走出取",
+            "我望着他走出曲",
+            "我望着他走除去",
+            "我往"
+          ],
+          "current": [
+            "我望着他走出去",
+            "我望着她走出去",
+            "我望着他邹出去",
+            "我望着他奏出去",
+            "我望着他走出取",
+            "我望着他揍出去",
+            "我望着他走出曲",
+            "我望着他走除去",
+            "我往"
+          ],
+          "before_rank": 1,
+          "current_rank": 1
+        },
+        {
+          "source": "daily:007",
+          "pinyin": "wojintianbutaixiangchuquchifan",
+          "expected": "我今天不太想出去吃饭",
+          "before": [
+            "我今天不太想出去吃饭",
+            "我今天不太像出去吃饭",
+            "我今天不太想出曲吃饭",
+            "我今天不太想出去吃烦",
+            "我今天不太想出去吃翻",
+            "我今天不太想出去吃反",
+            "我今天不太想出去吃番",
+            "我今天不太想出去吃泛",
+            "握紧"
+          ],
+          "current": [
+            "我今天不太想出去吃饭",
+            "我今天不太像出去吃饭",
+            "我今天不太想出取吃饭",
+            "我今天不太想出曲吃饭",
+            "我今天不太想出去吃烦",
+            "我今天不太想出去吃翻",
+            "我今天不太想出去吃反",
+            "我今天不太想出去吃番",
+            "握紧"
+          ],
+          "before_rank": 1,
+          "current_rank": 1
+        },
+        {
+          "source": "daily:017",
+          "pinyin": "mingtianxiawusandianbanwomenzaimenkoujian",
+          "expected": "明天下午三点半我们在门口见",
+          "before": [
+            "明天下午三点半我们在门口见",
+            "明天下午三点半我们在门口间",
+            "明天下午三点半我们在门口件",
+            "明天下午三点半我们在门口键",
+            "明天下午三点半我们在门口鉴",
+            "明天下午三点半我们在门口煎",
+            "明天下午三点半我们在门口荐",
+            "明天下午三点半我们在门口尖",
+            "明天"
+          ],
+          "current": [
+            "明天下午三点半我们在门口见",
+            "明天下午三点半我们在门口间",
+            "明天下午三点半我们在门口件",
+            "明天下午三点半我们在门口减",
+            "明天下午三点半我们在门口键",
+            "明天下午三点半我们在门口鉴",
+            "明天下午三点半我们在门口煎",
+            "明天下午三点半我们在门口荐",
+            "明天"
+          ],
+          "before_rank": 1,
+          "current_rank": 1
+        },
+        {
+          "source": "daily:040",
+          "pinyin": "qingbazhezhangbiaogelideneirongheduiyixia",
+          "expected": "请把这张表格里的内容核对一下",
+          "before": [
+            "请把这张表格里的内容核对一下",
+            "请把这涨表格里的内容核对一下",
+            "请把这张表格里的内容核对一吓",
+            "请把这张表格里的内容核对以下",
+            "请把这张表格里的内容核对一夏",
+            "请把这张表格里的内容核对一霞",
+            "请把这张表格里的内容核对一虾",
+            "请把这张表格里的内容核对伊下",
+            "请把"
+          ],
+          "current": [
+            "请把这张表格里的内容核对一下",
+            "请把这涨表格里的内容核对一下",
+            "请把这张表格里的内容核对以下",
+            "请把这张表格里的内容核对一吓",
+            "请把这张表格里的内容核对一夏",
+            "请把这张表格里的内容核对一霞",
+            "请把这张表格里的内容核对一虾",
+            "请把这张表格里的内容核对伊下",
+            "请把"
+          ],
+          "before_rank": 1,
+          "current_rank": 1
+        },
+        {
+          "source": "daily:043",
+          "pinyin": "tazaiyangtaishanggeihuajiaoshui",
+          "expected": "她在阳台上给花浇水",
+          "before": [
+            "他在阳台上给话浇水",
+            "他在阳台上给花浇水",
+            "他在阳台上给化浇水",
+            "他在阳台上给画浇水",
+            "他在阳台上给华浇水",
+            "他在阳台上给划浇水",
+            "他在阳台上给滑浇水",
+            "她在阳台上给话浇水",
+            "他在"
+          ],
+          "current": [
+            "他在阳台上给花浇水",
+            "她在阳台上给花浇水",
+            "他在阳台上给话浇水",
+            "他在阳台上给化浇水",
+            "他在阳台上给画浇水",
+            "他在阳台上给华浇水",
+            "他在阳台上给划浇水",
+            "他在阳台上给滑浇水",
+            "他在"
+          ],
+          "before_rank": 0,
+          "current_rank": 2
+        },
+        {
+          "source": "daily:080",
+          "pinyin": "nengbunengzaipianyiyidian",
+          "expected": "能不能再便宜一点",
+          "before": [
+            "能不能再便宜一点",
+            "能不能再偏移一点",
+            "能不能再片已一点",
+            "能不能在便宜一点",
+            "能不能再篇一一点",
+            "能不能再便以一点",
+            "能不能再片意一点",
+            "能不能再便一一点",
+            "能不能"
+          ],
+          "current": [
+            "能不能再便宜一点",
+            "能不能再偏移一点",
+            "能不能再片意一点",
+            "能不能再片已一点",
+            "能不能在便宜一点",
+            "能不能再篇一一点",
+            "能不能再便以一点",
+            "能不能再便一一点",
+            "能不能"
+          ],
+          "before_rank": 1,
+          "current_rank": 1
+        },
+        {
+          "source": "daily:089",
+          "pinyin": "biewanglebamensuohao",
+          "expected": "别忘了把门锁好",
+          "before": [
+            "别忘了把门锁好",
+            "别忘了把门锁号",
+            "别忘了八门锁好",
+            "别忘了把门所好",
+            "别忘了八门锁号",
+            "别忘了把门所号",
+            "别忘了把门索好",
+            "别忘了把门缩好",
+            "别忘了"
+          ],
+          "current": [
+            "别忘了把门锁好",
+            "别忘了八门锁好",
+            "别忘了把门锁号",
+            "别忘了把门所好",
+            "别忘了八门锁号",
+            "别忘了把门所号",
+            "别忘了把门索好",
+            "别忘了把门缩好",
+            "别忘了"
+          ],
+          "before_rank": 1,
+          "current_rank": 1
+        }
+      ]
+    },
+    "fresh": {
+      "fixture": "tests/data/typing_fresh.tsv",
+      "fixture_sha256": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+      "baseline_summary": {
+        "cases": 67,
+        "top1_correct": 37,
+        "top9_present": 52,
+        "top1_percent": 55.22,
+        "top9_percent": 77.61,
+        "character_error_rate": 0.0915,
+        "p50_lookup_ms": 8.271,
+        "p95_lookup_ms": 13.235,
+        "max_lookup_ms": 17.381
+      },
+      "current_summary": {
+        "cases": 67,
+        "top1_correct": 37,
+        "top9_present": 52,
+        "top1_percent": 55.22,
+        "top9_percent": 77.61,
+        "character_error_rate": 0.0915,
+        "p50_lookup_ms": 7.621,
+        "p95_lookup_ms": 13.246,
+        "max_lookup_ms": 17.216
+      },
+      "comparison": {
+        "top1_changes": 0,
+        "top1_improvements": 0,
+        "top1_regressions": 0,
+        "top9_improvements": 0,
+        "top9_regressions": 0
+      },
+      "candidate_array_changes": [
+        {
+          "source": "article:hetang:06",
+          "pinyin": "yueliangjianjiandeshenggaole",
+          "expected": "月亮渐渐地升高了",
+          "before": [
+            "月亮渐渐的升高了",
+            "月亮渐渐的声高了",
+            "月亮渐渐的生高了",
+            "月亮渐渐地升高了",
+            "月亮渐渐的声告了",
+            "月亮渐渐的声搞了",
+            "月亮渐渐的生告了",
+            "月亮渐渐的声稿了",
+            "月亮"
+          ],
+          "current": [
+            "月亮渐渐的升高了",
+            "月亮渐渐的声高了",
+            "月亮渐渐地升高了",
+            "月亮渐渐的生高了",
+            "月亮渐渐的声告了",
+            "月亮渐渐的声搞了",
+            "月亮渐渐的生告了",
+            "月亮渐渐的声稿了",
+            "月亮"
+          ],
+          "before_rank": 4,
+          "current_rank": 3
+        }
+      ]
+    },
+    "independent": {
+      "fixture": "tests/data/typing_independent.tsv",
+      "fixture_sha256": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98",
+      "baseline_summary": {
+        "cases": 62,
+        "top1_correct": 24,
+        "top9_present": 32,
+        "top1_percent": 38.71,
+        "top9_percent": 51.61,
+        "character_error_rate": 0.136,
+        "p50_lookup_ms": 9.543,
+        "p95_lookup_ms": 20.866,
+        "max_lookup_ms": 23.83
+      },
+      "current_summary": {
+        "cases": 62,
+        "top1_correct": 24,
+        "top9_present": 32,
+        "top1_percent": 38.71,
+        "top9_percent": 51.61,
+        "character_error_rate": 0.136,
+        "p50_lookup_ms": 9.125,
+        "p95_lookup_ms": 21.88,
+        "max_lookup_ms": 23.854
+      },
+      "comparison": {
+        "top1_changes": 0,
+        "top1_improvements": 0,
+        "top1_regressions": 0,
+        "top9_improvements": 0,
+        "top9_regressions": 0
+      },
+      "candidate_array_changes": [
+        {
+          "source": "article:fengzheng:10",
+          "pinyin": "haiyoujimodewapianfengzheng",
+          "expected": "还有寂寞的瓦片风筝",
+          "before": [
+            "还有几末的瓦片风筝",
+            "还有几末的瓦片封整",
+            "还有几末得瓦片风筝",
+            "还有几末得瓦片封整",
+            "还有几末的瓦片封正",
+            "还有几末的瓦片风整",
+            "还有几末得瓦片封正",
+            "还有几末的瓦片封争",
+            "还有"
+          ],
+          "current": [
+            "还有几末的瓦片风筝",
+            "还有几末的瓦片封整",
+            "还有几末得瓦片风筝",
+            "还有几末得瓦片封整",
+            "还有几末的瓦片封正",
+            "还有几末的瓦片风整",
+            "还有几末得瓦片封正",
+            "还有几末的瓦片风正",
+            "还有"
+          ],
+          "before_rank": 0,
+          "current_rank": 0
+        },
+        {
+          "source": "article:fengzheng:34",
+          "pinyin": "daikanzhekongzhongchushen",
+          "expected": "呆看着空中出神",
+          "before": [
+            "带看着空中出身",
+            "大看着空中出身",
+            "带看着空中出神",
+            "大看着空中出神",
+            "带看着空中初审",
+            "大看着空中初审",
+            "带看着空中处神",
+            "大看着空中处神",
+            "待"
+          ],
+          "current": [
+            "带看着空中出身",
+            "带看着空中出神",
+            "大看着空中出身",
+            "大看着空中出神",
+            "带看着空中初审",
+            "带看着空中处神",
+            "带看着空中处身",
+            "带看着空中出什",
+            "待"
+          ],
+          "before_rank": 0,
+          "current_rank": 0
+        },
+        {
+          "source": "daily:independent:12",
+          "pinyin": "nengbunengbazheduanluyinjianchenglianggebufen",
+          "expected": "能不能把这段录音剪成两个部分",
+          "before": [
+            "能不能把这段录音简称两个部分",
+            "能不能把这段录音建成两个部分",
+            "能不能把这段录音简称量各部分",
+            "能不能把这段录音简称两个部份",
+            "能不能把这段录音简称两个不分",
+            "能不能把这段录音简称两各部分",
+            "能不能把这段录音简称量格部分",
+            "能不能把这段录音简称量歌部分",
+            "能不能"
+          ],
+          "current": [
+            "能不能把这段录音简称两个部分",
+            "能不能把这段录音建成两个部分",
+            "能不能把这段录音简称量各部分",
+            "能不能把这段录音简称两个部份",
+            "能不能把这段录音简称两个不分",
+            "能不能把这段录音简称量格部分",
+            "能不能把这段录音简称量歌部分",
+            "能不能把这段录音简称量哥部分",
+            "能不能"
+          ],
+          "before_rank": 0,
+          "current_rank": 0
+        }
+      ]
+    }
+  },
+  "aggregate_current": {
+    "cases": 267,
+    "top1_correct": 150,
+    "top9_present": 205,
+    "top1_percent": 56.18,
+    "top9_percent": 76.78,
+    "character_error_rate": 0.0778,
+    "p50_lookup_ms": 9.593,
+    "p95_lookup_ms": 18.145,
+    "max_lookup_ms": 25.962
+  },
+  "aggregate_baseline": {
+    "cases": 267,
+    "top1_correct": 150,
+    "top9_present": 204,
+    "top1_percent": 56.18,
+    "top9_percent": 76.4,
+    "character_error_rate": 0.0781,
+    "p50_lookup_ms": 9.88,
+    "p95_lookup_ms": 17.381,
+    "max_lookup_ms": 24.232
+  },
+  "data_integrity": {
+    "utf8_lf": true,
+    "metadata_hash_valid": true,
+    "existing_local_keys_words_weights_preserved": 43556,
+    "raw_dictionary_rows": 102875,
+    "effective_unique_key_display_pairs": 93658,
+    "added_entries": 3201,
+    "new_existing_display_collisions": 0,
+    "frozen_full_answers_added": 0
+  },
+  "new_word_coverage": {
+    "report": "../resources/dictionary/expansion/lexicon_batch_011.validation.json",
+    "report_sha256": "122c2e2be7c5c1871f0029cb75d5be6a7821e935f10cbcb927cc50ac218fcd31",
+    "summary": {
+      "cases": 3201,
+      "top1_correct": 2588,
+      "top9_present": 3201,
+      "top1_percent": 80.8497,
+      "top9_percent": 100.0,
+      "missing_from_top9_count": 0,
+      "non_top1_count": 613,
+      "max_returned_candidate_count": 9,
+      "p50_engine_lookup_ms": 4.016,
+      "p95_engine_lookup_ms": 9.155,
+      "max_engine_lookup_ms": 18.444
+    }
+  },
+  "scope": "Dictionary expansion, not an independently blind evaluation. Clean-machine install/uninstall and installed OS profile routing in third-party applications were not tested."
+}
