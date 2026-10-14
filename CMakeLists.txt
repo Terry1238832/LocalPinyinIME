@@ -42,6 +42,14 @@ function(localpinyin_add_version_resource target file_description original_filen
     target_sources(${target} PRIVATE "${CMAKE_BINARY_DIR}/generated/${target}_version.rc")
 endfunction()
 function(localpinyin_copy_dictionary_resource target)
+    # Updating runtime TSVs must refresh the build output even if no C++ code
+    # changed. Relinking also executes the existing resource-copy command.
+    set_property(TARGET ${target} APPEND PROPERTY LINK_DEPENDS
+        "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/core_zh_pinyin.tsv"
+        "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/local_core_zh_pinyin.tsv"
+        "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/context_zh.tsv"
+        "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/standard_zh_pinyin.tsv"
+        "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/continuations_zh.tsv")
     add_custom_command(TARGET ${target} POST_BUILD
         COMMAND "${CMAKE_COMMAND}" -E make_directory "$<TARGET_FILE_DIR:${target}>/dictionary"
         COMMAND "${CMAKE_COMMAND}" -E copy_if_different

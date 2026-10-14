@@ -1,0 +1,130 @@
+{
+  "status": "reviewed_recommendations_only_not_applied_by_auditor",
+  "remote_commit": "cc2eeff4ab73240e276d913bcda93c4a1ca254cd",
+  "scope": "No benchmark-driven frequency tuning, no remote vocabulary deletion, no change to historical evidence.",
+  "weight_patch": {
+    "category": "lexicon_batch_015",
+    "before_weight": 9000,
+    "recommended_weight": 5500,
+    "pairs": [
+      ["yizhi", "一智"],
+      ["wangyi", "王一"],
+      ["wangyi", "王伊"],
+      ["wangyi", "王壹"],
+      ["wangyi", "王奕"],
+      ["wangyi", "王彝"],
+      ["wangyi", "王祎"],
+      ["wangyi", "王绎"],
+      ["wangyi", "王逸"]
+    ],
+    "reason": "Use the same 5500 editorial band as the other 28231 names in this batch. The immutable remote snapshot makes eight 9000 names occupy all first eight wangyi slots and removes 网易, previously first, from the returned candidates. 一智 becomes first for yizhi. Retain every name; report natural candidate collisions rather than forcing all names above daily words.",
+    "retain_existing_weight_changes": [
+      ["yiqi", "一起", 7000, 7200],
+      ["yizhi", "一直", 7000, 7500],
+      ["yishi", "意识", 7000, 7200],
+      ["tuan", "图案", 5000, 6000]
+    ]
+  },
+  "stored_key_corrections": [
+    {
+      "word": "行商羊驼",
+      "before_key": "hangshangyangtuo",
+      "recommended_key": "xingshangyangtuo",
+      "weight": 5500,
+      "evidence_url": "https://dict.concised.moe.edu.tw/dictView.jsp?ID=28261&la=0&powerMode=0",
+      "evidence": "Education Ministry concise dictionary: 行商 xing shang, a traveling trader. Native sentence decoding already sometimes recovers the correct xing reading from shorter tokens, which does not make the stored hang key correct."
+    },
+    {
+      "word": "行商羊驼生成蛋",
+      "before_key": "hangshangyangtuoshengchengdan",
+      "recommended_key": "xingshangyangtuoshengchengdan",
+      "weight": 5500,
+      "evidence_url": "https://dict.concised.moe.edu.tw/dictView.jsp?ID=28261&la=0&powerMode=0",
+      "evidence": "Same reviewed 行商 compound; suffix pronunciation unchanged."
+    },
+    {
+      "word": "行商羊驼刷怪蛋",
+      "before_key": "hangshangyangtuoshuaguaidan",
+      "recommended_key": "xingshangyangtuoshuaguaidan",
+      "weight": 5500,
+      "evidence_url": "https://dict.concised.moe.edu.tw/dictView.jsp?ID=28261&la=0&powerMode=0",
+      "evidence": "Same reviewed 行商 compound; suffix pronunciation unchanged."
+    },
+    {
+      "word": "马尾",
+      "before_key": "mayi",
+      "recommended_key": "mawei",
+      "weight": 5500,
+      "evidence_url": "https://dict.revised.moe.edu.tw/dictView.jsp?ID=27152",
+      "evidence": "Education Ministry dictionary gives ma wei for the horse tail, hair style and plant senses. The correct mawei display already exists in standard, while the remote mayi alias introduces 马尾 into 蚂蚁 candidates. Correcting the canonical key preserves the display; cross-layer pair deduplication means the effective pair count can decrease by one."
+    }
+  ],
+  "review_flags_not_asserted_as_errors": [
+    {"word": "胜利只在朝夕间", "key": "shenglizhizaizhaoxijian", "decision": "retain", "evidence_url": "https://dict.revised.moe.edu.tw/dictView.jsp?ID=115397&la=0&powerMode=0", "reason": "Official 朝夕 zhao xi confirms the stored spelling. Pypinyin default chaoxi is incorrect here."},
+    {"word": "种村有菜", "key": "chongcunyoucai", "possible_input_alias": "zhongcunyoucai", "evidence_url": "https://shueisha.online/list/persons/65a9e2798ce1151456000447", "reason": "Publisher confirms Japanese Tanemura identity; generic Chinese-surname 种→chong overrides may not describe Mandarin character-by-character input for a Japanese compound surname. Recommend a reviewed alternative input alias, not a claim that a primary source specifies a Mandarin reading."},
+    {"word": "折原一", "key": "sheyuanyi", "possible_input_alias": "zheyuanyi", "evidence_url": "https://www.kodansha.co.jp/book/products/0000177706", "reason": "Publisher identifies Japanese Orihara; generic Chinese-surname 折→she overrides need contextual review. A zhe alias is a useful input alternative, but the Japanese publisher does not prescribe Mandarin pinyin."},
+    {"word": "乐瞳", "key": "yuetong", "possible_input_alias": "letong", "evidence_url": "https://en.wikipedia.org/wiki/Cilla_Kung", "reason": "Contributor's declared reference site records Le tong and identifies a stage name rather than a 乐 surname. This is secondary reference evidence; retain the flag as a possible alias until contextual review."}
+  ],
+  "proposed_source_policy": "Project-maintained local_core includes independently authored vocabulary and reference-derived words/name/title lists contributed in batches 012 through 015. Those batches are attributed separately with immutable contribution commits and the known source sites; exact page/revision manifests were not supplied. Their source-site content and trademarks are not relicensed by the project's MIT code license. Project-generated pinyin and relative ranking weights are editorial data, not scraped internet/search/corpus frequencies. No third-party bulk Rime, Sogou, Baidu, Microsoft, Google, or public GitHub candidate dictionary was imported into local_core. The separate standard_zh_pinyin.tsv layer contains licensed Rime/AOSP vocabulary recorded in sources/lexicon_sources.json and THIRD_PARTY_NOTICES.txt. Pypinyin is an authoring-only pronunciation checker and is not bundled. The earlier pronunciation_review dated 2026-10-12 does not claim formal linguistic review of the remote 2026-10-14 batches.",
+  "source_registry_recommendations": [
+    {
+      "historical_source_id": "first_party_lexicon_batch_012",
+      "recommended_source_id": "reference_derived_lexicon_batch_012",
+      "category": "lexicon_batch_012",
+      "source_type": "public_text_word_selection",
+      "contribution_commit": "7abb248bf2a62255aa5ddb3163fe9a3b393549c9",
+      "recorded_source_sites": [],
+      "source_description": "Contributor says three public texts: news, forum thread, fiction chapter. The repository does not identify exact URLs, authors or revisions.",
+      "reference_site_content_license": "not established from supplied repository evidence",
+      "review_status": "technical integrity measured; exact provenance and source rights incomplete",
+      "redistribution_scope": "Do not describe the underlying public texts as project-authored MIT material. No article/chapter bodies are included in the contributed TSV."
+    },
+    {
+      "historical_source_id": "first_party_lexicon_batch_013",
+      "recommended_source_id": "reference_derived_lexicon_batch_013",
+      "category": "lexicon_batch_013",
+      "source_type": "wiki_name_title_selection",
+      "contribution_commit": "97e2e9e7876d53dfc3756964fe58ac81e9ab74b2",
+      "recorded_source_sites": ["https://zh.minecraft.wiki/"],
+      "source_description": "Items, blocks, mobs, effects and aliases according to the upstream commit. Contains English titles/commands as well as Chinese names.",
+      "reference_site_content_license": "CC-BY-NC-SA-3.0; additional site licensing terms may apply",
+      "license_verified_url": "https://zh.minecraft.wiki/w/Minecraft_Wiki:%E8%91%97%E4%BD%9C%E6%9D%83",
+      "license_url": "https://creativecommons.org/licenses/by-nc-sa/3.0/",
+      "additional_terms_url": "https://meta.weirdgloop.org/w/Licensing",
+      "license_verification": "2026-10-14 direct readonly HTTPS response: rel=license and site footer both point to CC BY-NC-SA 3.0; copyright page last edited 2025-06-22.",
+      "exact_page_or_revision_manifest_supplied": false,
+      "review_status": "technical integrity measured; site terms identified, exact attribution manifest incomplete",
+      "redistribution_scope": "Record original site license and attribution without claiming that the project's MIT license grants a new license to site content. The copyright scope of individual names and factual identifiers is not adjudicated by this audit."
+    },
+    {
+      "historical_source_id": "first_party_lexicon_batch_014",
+      "recommended_source_id": "reference_derived_lexicon_batch_014",
+      "category": "lexicon_batch_014",
+      "source_type": "game_community_name_title_selection",
+      "contribution_commit": "0228b69d96cb4ec3c63abe19cfac49727f25c0ae",
+      "recorded_source_sites": ["https://www.hoyolab.com/"],
+      "source_description": "HoYoLAB home page and Genshin/Star Rail/Zenless wiki names according to the contributor. Exact wiki domains, pages, authors and revisions not supplied.",
+      "reference_site_content_license": "No blanket MIT or other unrestricted redistribution grant established",
+      "terms_reference_url": "https://genshin.hoyoverse.com/en-us/company/terms",
+      "exact_page_or_revision_manifest_supplied": false,
+      "review_status": "technical integrity measured; exact provenance and source rights incomplete",
+      "redistribution_scope": "Names and identifiers are included as input vocabulary; no logos, artwork or article bodies. Do not mark external source content as MIT or unrestricted commercial reuse. Terms reference alone is not permission to redistribute protected material."
+    },
+    {
+      "historical_source_id": "first_party_lexicon_batch_015",
+      "recommended_source_id": "reference_derived_lexicon_batch_015",
+      "category": "lexicon_batch_015",
+      "source_type": "wikipedia_category_title_selection",
+      "contribution_commit": "025b5893ce6fcfedb05edf5106303404181e36df",
+      "recorded_source_sites": ["https://zh.wikipedia.org/"],
+      "source_description": "Chinese Wikipedia category member titles; no article bodies. Contributor's methodology and counts are recorded in docs/famous-people-lexicon.md.",
+      "reference_site_content_license": "CC-BY-SA-4.0/GFDL text framework, subject to project exceptions; individual factual-name copyright scope not adjudicated",
+      "terms_verified_url": "https://foundation.wikimedia.org/wiki/Policy:Terms_of_Use#7._Licensing_of_Content",
+      "exact_category_page_or_revision_manifest_supplied": false,
+      "review_status": "technical integrity measured; stated title-only scope consistent with rows, exact attribution manifest incomplete",
+      "redistribution_scope": "Distinguish gathered factual names from authored pronunciation keys/weights. Source licenses are not replaced by the project MIT license. The Wikimedia terms separately discuss factual data rights; do not infer the license of all names solely from article-text terms."
+    }
+  ],
+  "notice_recommendation": "Ship a short attribution notice for reference-derived batches 012-015 that names each known site and contribution commit, separates reference-site content licenses from MIT source code, records incomplete exact-page provenance, and preserves upstream terms links. No unsupported blanket approval, commercial-use boolean or permission claim.",
+  "generic_engine_recommendation": "Preserve exact whole-key Latin name lookup and explicitly learned/personal terms; filter built-in Latin-containing tokens from automatic Chinese sentence assembly and unfinished suffix composition. The script rule applies independently of the public sentence fixture contents."
+}

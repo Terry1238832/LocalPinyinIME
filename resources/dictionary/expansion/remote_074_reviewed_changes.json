@@ -1,0 +1,116 @@
+{
+  "reviewed_at": "2026-10-14",
+  "upstream_snapshot_commit": "cc2eeff4ab73240e276d913bcda93c4a1ca254cd",
+  "canonical_before_sha256": "9cba30224b8137896e1bbbf80af4edcbdc5864119d1f2c48224f1b97c28c38f6",
+  "canonical_after_sha256": "21b6f7fce443bb14b1886e8e5d3307746d6fa82525e4253039459732128c268e",
+  "canonical_entries_before": 88283,
+  "canonical_entries_after": 88283,
+  "display_words_removed": 0,
+  "weight_changes": [
+    {
+      "pinyin": "yizhi",
+      "word": "一智",
+      "before": 9000,
+      "after": 5500
+    },
+    {
+      "pinyin": "wangyi",
+      "word": "王一",
+      "before": 9000,
+      "after": 5500
+    },
+    {
+      "pinyin": "wangyi",
+      "word": "王伊",
+      "before": 9000,
+      "after": 5500
+    },
+    {
+      "pinyin": "wangyi",
+      "word": "王壹",
+      "before": 9000,
+      "after": 5500
+    },
+    {
+      "pinyin": "wangyi",
+      "word": "王奕",
+      "before": 9000,
+      "after": 5500
+    },
+    {
+      "pinyin": "wangyi",
+      "word": "王彝",
+      "before": 9000,
+      "after": 5500
+    },
+    {
+      "pinyin": "wangyi",
+      "word": "王祎",
+      "before": 9000,
+      "after": 5500
+    },
+    {
+      "pinyin": "wangyi",
+      "word": "王绎",
+      "before": 9000,
+      "after": 5500
+    },
+    {
+      "pinyin": "wangyi",
+      "word": "王逸",
+      "before": 9000,
+      "after": 5500
+    }
+  ],
+  "stored_key_corrections": [
+    {
+      "word": "行商羊驼",
+      "before_key": "hangshangyangtuo",
+      "recommended_key": "xingshangyangtuo",
+      "weight": 5500,
+      "evidence_url": "https://dict.concised.moe.edu.tw/dictView.jsp?ID=28261&la=0&powerMode=0",
+      "evidence": "Education Ministry concise dictionary: 行商 xing shang, a traveling trader. Native sentence decoding already sometimes recovers the correct xing reading from shorter tokens, which does not make the stored hang key correct."
+    },
+    {
+      "word": "行商羊驼生成蛋",
+      "before_key": "hangshangyangtuoshengchengdan",
+      "recommended_key": "xingshangyangtuoshengchengdan",
+      "weight": 5500,
+      "evidence_url": "https://dict.concised.moe.edu.tw/dictView.jsp?ID=28261&la=0&powerMode=0",
+      "evidence": "Same reviewed 行商 compound; suffix pronunciation unchanged."
+    },
+    {
+      "word": "行商羊驼刷怪蛋",
+      "before_key": "hangshangyangtuoshuaguaidan",
+      "recommended_key": "xingshangyangtuoshuaguaidan",
+      "weight": 5500,
+      "evidence_url": "https://dict.concised.moe.edu.tw/dictView.jsp?ID=28261&la=0&powerMode=0",
+      "evidence": "Same reviewed 行商 compound; suffix pronunciation unchanged."
+    },
+    {
+      "word": "马尾",
+      "before_key": "mayi",
+      "recommended_key": "mawei",
+      "weight": 5500,
+      "evidence_url": "https://dict.revised.moe.edu.tw/dictView.jsp?ID=27152",
+      "evidence": "Education Ministry dictionary gives ma wei for the horse tail, hair style and plant senses. The correct mawei display already exists in standard, while the remote mayi alias introduces 马尾 into 蚂蚁 candidates. Correcting the canonical key preserves the display; cross-layer pair deduplication means the effective pair count can decrease by one."
+    }
+  ],
+  "basis": "Independent daily homophones and contextual primary pronunciation references, not public typing benchmark answers. Four upstream daily-word weight changes retained.",
+  "source_ids_corrected": 4,
+  "source_page_manifest_complete": false,
+  "new_full_fixture_answers": 0,
+  "current_native_coverage_status": "measured_with_documented_candidate_collisions",
+  "current_native_coverage": {
+    "report": "../../../docs/upstream-074-current-coverage.json",
+    "report_sha256": "58e11e594731aa32b3178ad865932d25565c73c91e8b8c369312ecdbd9c93232",
+    "engine_sha256": "c8727cc3dae20af7e2ba69ff208daa535a616c1231c92185ab4a7233004818f4",
+    "cases": 41526,
+    "top1_correct": 27006,
+    "top9_present": 41519,
+    "missing_count": 7,
+    "p50_lookup_ms": 2.398,
+    "p95_lookup_ms": 6.629,
+    "max_lookup_ms": 19.485
+  }
+}

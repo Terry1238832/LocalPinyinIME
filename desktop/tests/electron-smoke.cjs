@@ -152,7 +152,20 @@ async function screenshot(name) {
 
 async function viewport(width, height) {
   await app.evaluate(({ BrowserWindow }, size) => BrowserWindow.getAllWindows()[0].setContentSize(size.width, size.height), { width, height });
-  await page.waitForFunction(size => innerWidth === size.width && innerHeight === size.height, { width, height });
+  const metrics = await app.evaluate(({ BrowserWindow, screen }) => {
+    const window = BrowserWindow.getAllWindows()[0];
+    return { contentSize: window.getContentSize(), windowSize: window.getSize(), minimumSize: window.getMinimumSize(),
+      scaleFactor: screen.getDisplayMatching(window.getBounds()).scaleFactor, platform: process.platform };
+  });
+  // Windows offscreen frameless windows at 150% DPI report 800 client DIP as
+  // 801 renderer pixels, and the native 680 minimum clamps to 682. This is
+  // stable native rounding, not delayed layout. Keep the tested width exact;
+  // allow only the observed upward physical-pixel rounding in height.
+  const heightRounding = metrics.platform === 'win32' ? Math.min(2, Math.ceil(metrics.scaleFactor)) : 0;
+  await page.waitForFunction(size => innerWidth === size.width && innerHeight >= size.height &&
+    innerHeight <= size.height + size.heightRounding, { width, height, heightRounding });
+  const actual = await page.evaluate(() => ({ width: innerWidth, height: innerHeight, devicePixelRatio, zoom: visualViewport.scale }));
+  (report.viewportMeasurements ||= []).push({ requested: { width, height }, actual, heightRounding, native: metrics });
 }
 
 async function noOverflow() {
@@ -278,7 +291,7 @@ async function run() {
     const initial = await state();
     assert.equal(initial.version, expectedVersion);
     assert.equal(initial.settings.predictionEnabled, true, 'Fresh installations enable contextual suggestions.');
-    assert.equal(initial.dictionary.total, 93658, 'The 0.7.3 built-in resources were not loaded.');
+    assert.equal(initial.dictionary.total, 142220, `The ${expectedVersion} built-in resources were not loaded.`);
     report.dictionary = initial.dictionary;
     assert.equal(path.resolve(initial.dataDirectory), path.join(data, 'LocalPinyinIME'));
     assert.deepEqual((await api('listUserLexicon')).entries, []);

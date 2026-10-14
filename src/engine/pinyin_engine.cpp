@@ -56,6 +56,16 @@ int lexical_score(const Candidate& candidate) {
     return static_cast<int>(std::log1p(static_cast<double>(frequency)) * 150) - 1450 + word_prior + frequency_prior;
 }
 
+bool can_compose_token(const Candidate& candidate, bool whole_key_match) {
+    // Imported Latin names have spelling keys, which can also be valid pinyin
+    // syllables. Keep explicit whole-name lookup and personal choices, while
+    // avoiding accidental Latin fragments in automatically composed Chinese.
+    return whole_key_match || candidate.is_user_lexicon_entry || candidate.user_frequency > 0 ||
+           std::none_of(candidate.text.begin(), candidate.text.end(), [](wchar_t ch) {
+               return (ch >= L'A' && ch <= L'Z') || (ch >= L'a' && ch <= L'z');
+           });
+}
+
 std::wstring transition_history(const std::wstring& preceding, const std::wstring& text) {
     if (text.size() >= 3) return text.substr(text.size() - 3);
     const auto joined = preceding.substr(preceding.size() > 3 ? preceding.size() - 3 : 0) + text;
@@ -149,6 +159,7 @@ std::vector<std::vector<SegmentPath>> decode(const Dictionary& dictionary, const
             std::vector<PreparedCandidate> prepared;
             prepared.reserve(part_candidates.size());
             for (auto& candidate : part_candidates) {
+                if (!can_compose_token(candidate, offset == 0 && next == pinyin.size())) continue;
                 if (!dictionary.reading_matches_boundaries(part_pinyin, candidate.text, boundaries)) continue;
                 const int prior = lexical_score(candidate) + candidate.user_frequency / 3;
                 prepared.push_back({std::move(candidate), prior});
@@ -354,7 +365,10 @@ std::vector<Candidate> PinyinEngine::lookup(const std::wstring& pinyin, const st
          dp.back().empty() && offset < normalized.size(); ++offset) {
         if (dp[offset].empty()) continue;
         const auto suffix = normalized.substr(offset);
-        const auto completions = ranker_.rank(suffix, dictionary_.lookup_completion(suffix, true), &learning_);
+        auto completions = ranker_.rank(suffix, dictionary_.lookup_completion(suffix, true), &learning_);
+        completions.erase(std::remove_if(completions.begin(), completions.end(), [&](const auto& word) {
+            return !can_compose_token(word, offset == 0);
+        }), completions.end());
         if (completions.empty()) continue;
         for (const auto& path : dp[offset]) {
             for (size_t index = 0; index < std::min<size_t>(12, completions.size()); ++index) {

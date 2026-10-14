@@ -1,0 +1,1197 @@
+{
+  "format_version": 1,
+  "audit": "fixed_remote_lexicon_snapshot_074",
+  "audited_at_utc": "2026-10-14T05:49:09.512966+00:00",
+  "base_commit": "4bb1a63a6d3475301f0e1900a9e90ace40d96a51",
+  "remote_commit": "cc2eeff4ab73240e276d913bcda93c4a1ca254cd",
+  "method": "Immutable Git blobs; no source dictionary or rank edits. Native coverage, when present, uses temporary empty personal dictionaries and exact immutable remote resources.",
+  "resource_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "9cba30224b8137896e1bbbf80af4edcbdc5864119d1f2c48224f1b97c28c38f6",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+    "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+    "continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e"
+  },
+  "unchanged_runtime_files": [
+    "core_zh_pinyin.tsv",
+    "standard_zh_pinyin.tsv",
+    "context_zh.tsv",
+    "continuations_zh.tsv"
+  ],
+  "static": {
+    "base_rows": 46757,
+    "remote_rows": 88283,
+    "added_rows": 41526,
+    "removed_rows": 0,
+    "removed": [],
+    "existing_weights_changed": [
+      {
+        "pinyin": "yiqi",
+        "word": "一起",
+        "before_weight": 7000,
+        "after_weight": 7200
+      },
+      {
+        "pinyin": "yizhi",
+        "word": "一直",
+        "before_weight": 7000,
+        "after_weight": 7500
+      },
+      {
+        "pinyin": "yishi",
+        "word": "意识",
+        "before_weight": 7000,
+        "after_weight": 7200
+      },
+      {
+        "pinyin": "tuan",
+        "word": "图案",
+        "before_weight": 5000,
+        "after_weight": 6000
+      }
+    ],
+    "invalid_format_rows": [],
+    "duplicate_pairs": [],
+    "metadata_count_matches": true,
+    "metadata_sha_matches": true,
+    "metadata_categories_match": true,
+    "metadata_lengths_match": true,
+    "missing_source_registry_ids": [
+      "first_party_lexicon_batch_012",
+      "first_party_lexicon_batch_013",
+      "first_party_lexicon_batch_014",
+      "first_party_lexicon_batch_015",
+      "first_party_manual_patch",
+      "first_party_targeted_input_mode_037",
+      "first_party_targeted_product_baseline_036"
+    ],
+    "added_pairs_already_in_other_layers": 4,
+    "added_displays_already_in_other_layers_or_base": 6,
+    "added_full_fixture_answer_matches": [],
+    "frozen_fixture_answers_checked": 267,
+    "all_three_layer_unique_key_display_pairs": 135180,
+    "canonical_utf8_lf": true,
+    "by_batch": {
+      "lexicon_batch_012": {
+        "rows": 124,
+        "unique_key_display_pairs": 124,
+        "distinct_displays": 124,
+        "distinct_keys": 124,
+        "weights": {
+          "5500": 122,
+          "7000": 1,
+          "7200": 1
+        },
+        "display_lengths": {
+          "2": 63,
+          "3": 29,
+          "4": 30,
+          "6": 2
+        },
+        "max_display_characters": 6,
+        "max_key_characters": 21,
+        "same_key_multiple_displays": 0,
+        "same_display_multiple_keys": 0
+      },
+      "lexicon_batch_013": {
+        "rows": 7092,
+        "unique_key_display_pairs": 7092,
+        "distinct_displays": 7092,
+        "distinct_keys": 7013,
+        "weights": {
+          "5500": 7060,
+          "6000": 2,
+          "7000": 21,
+          "7200": 8,
+          "7500": 1
+        },
+        "display_lengths": {
+          "1": 24,
+          "2": 446,
+          "3": 733,
+          "4": 1349,
+          "5": 1218,
+          "6": 1150,
+          "7": 925,
+          "8": 497,
+          "9": 298,
+          "10": 234,
+          "11": 72,
+          "12": 42,
+          "13": 42,
+          "14": 21,
+          "15": 15,
+          "16": 18,
+          "17": 6,
+          "20": 1,
+          "22": 1
+        },
+        "max_display_characters": 22,
+        "max_key_characters": 51,
+        "same_key_multiple_displays": 79,
+        "same_display_multiple_keys": 0
+      },
+      "lexicon_batch_014": {
+        "rows": 6027,
+        "unique_key_display_pairs": 6027,
+        "distinct_displays": 6027,
+        "distinct_keys": 6023,
+        "weights": {
+          "5500": 6023,
+          "7000": 1,
+          "7200": 2,
+          "7500": 1
+        },
+        "display_lengths": {
+          "1": 1,
+          "2": 532,
+          "3": 835,
+          "4": 1485,
+          "5": 930,
+          "6": 678,
+          "7": 810,
+          "8": 409,
+          "9": 214,
+          "10": 64,
+          "11": 35,
+          "12": 22,
+          "13": 2,
+          "14": 8,
+          "15": 2
+        },
+        "max_display_characters": 15,
+        "max_key_characters": 42,
+        "same_key_multiple_displays": 4,
+        "same_display_multiple_keys": 0
+      },
+      "lexicon_batch_015": {
+        "rows": 28283,
+        "unique_key_display_pairs": 28283,
+        "distinct_displays": 28283,
+        "distinct_keys": 26567,
+        "weights": {
+          "5500": 28231,
+          "6000": 5,
+          "7000": 35,
+          "7200": 3,
+          "9000": 9
+        },
+        "display_lengths": {
+          "2": 3337,
+          "3": 11868,
+          "4": 4398,
+          "5": 1914,
+          "6": 2126,
+          "7": 1878,
+          "8": 1079,
+          "9": 671,
+          "10": 435,
+          "11": 247,
+          "12": 148,
+          "13": 78,
+          "14": 46,
+          "15": 34,
+          "16": 24
+        },
+        "max_display_characters": 16,
+        "max_key_characters": 40,
+        "same_key_multiple_displays": 1610,
+        "same_display_multiple_keys": 0
+      }
+    }
+  },
+  "provenance": {
+    "status": "external-reference-derived title/name lists need accurately separated provenance; not a determination of the copyrightability or license of individual factual names",
+    "batch012": {
+      "commit": "7abb248bf2a62255aa5ddb3163fe9a3b393549c9",
+      "declared_source": "Three public texts: news, forum thread, fiction chapter",
+      "exact_urls_or_revision_ids_in_repository": false
+    },
+    "batch013": {
+      "commit": "97e2e9e7876d53dfc3756964fe58ac81e9ab74b2",
+      "declared_source": "zh.minecraft.wiki items, blocks, mobs, effects, aliases",
+      "exact_page_urls_or_revision_ids_in_repository": false
+    },
+    "batch014": {
+      "commit": "0228b69d96cb4ec3c63abe19cfac49727f25c0ae",
+      "declared_source": "HoYoLAB home-page games/channels/tools and Genshin, Star Rail, Zenless Zone Zero wiki names",
+      "exact_page_urls_or_revision_ids_in_repository": false
+    },
+    "batch015": {
+      "commit": "025b5893ce6fcfedb05edf5106303404181e36df",
+      "declared_source": "Chinese Wikipedia category member article titles, not article bodies; documented in docs/famous-people-lexicon.md",
+      "exact_category_urls_or_revision_ids_in_repository": false
+    },
+    "metadata_policy_needs_revision": "Unqualified first-party authored and first_party_lexicon_batch_012..015 imply original authoring even though upstream commits and document describe externally gathered names/titles. Record source-derived facts separately; do not fabricate a blanket MIT grant or unsupported third-party license."
+  },
+  "latin_title_audit": {
+    "contains_ascii_letters": 1594,
+    "non_han_latin_titles": 1202,
+    "mixed_han_latin_titles": 392,
+    "non_han_title_key_equals_lowercased_ascii_letters": 1202,
+    "by_batch": {
+      "lexicon_batch_012": {
+        "non_han_latin_titles": 0,
+        "mixed_han_latin_titles": 0
+      },
+      "lexicon_batch_013": {
+        "non_han_latin_titles": 990,
+        "mixed_han_latin_titles": 134
+      },
+      "lexicon_batch_014": {
+        "non_han_latin_titles": 13,
+        "mixed_han_latin_titles": 9
+      },
+      "lexicon_batch_015": {
+        "non_han_latin_titles": 199,
+        "mixed_han_latin_titles": 249
+      }
+    },
+    "representative_syllable_collisions": [
+      {
+        "pinyin": "ban",
+        "word": "Ban",
+        "weight": 7200,
+        "category": "lexicon_batch_013",
+        "line": 47271
+      },
+      {
+        "pinyin": "gui",
+        "word": "GUI",
+        "weight": 7200,
+        "category": "lexicon_batch_013",
+        "line": 48988
+      },
+      {
+        "pinyin": "kai",
+        "word": "Kai",
+        "weight": 7000,
+        "category": "lexicon_batch_013",
+        "line": 49810
+      },
+      {
+        "pinyin": "lan",
+        "word": "LAN",
+        "weight": 7000,
+        "category": "lexicon_batch_013",
+        "line": 49931
+      },
+      {
+        "pinyin": "lang",
+        "word": "Lang",
+        "weight": 7000,
+        "category": "lexicon_batch_013",
+        "line": 49933
+      },
+      {
+        "pinyin": "long",
+        "word": "Long",
+        "weight": 7000,
+        "category": "lexicon_batch_013",
+        "line": 50120
+      },
+      {
+        "pinyin": "jin",
+        "word": "Jin",
+        "weight": 7200,
+        "category": "lexicon_batch_015",
+        "line": 60409
+      },
+      {
+        "pinyin": "keng",
+        "word": "KENG",
+        "weight": 5500,
+        "category": "lexicon_batch_015",
+        "line": 60432
+      },
+      {
+        "pinyin": "ran",
+        "word": "RAN",
+        "weight": 5500,
+        "category": "lexicon_batch_015",
+        "line": 60504
+      },
+      {
+        "pinyin": "zun",
+        "word": "ZUN",
+        "weight": 5500,
+        "category": "lexicon_batch_015",
+        "line": 60582
+      }
+    ],
+    "recommendation": "Keep factual Latin titles for exact key lookup. Do not treat their letters as Han syllable words during default Chinese sentence composition. Apply a generic script eligibility rule rather than changing weights to fit public typing fixtures."
+  },
+  "pronunciation_screen": {
+    "checker": "pypinyin 0.55.0 authoring-only",
+    "method": "Remove middle-dot punctuation; dynamic matching against all toneless per-character readings. Default compound disagreement is a review flag, never proof of an error. Mixed-script titles and unknown characters are separate.",
+    "full_screen_sha256": "91c3d74e6741ddd42fdd08a4847930ce176667eea57c9257632f58bd204f946a",
+    "full_screen_retention": "Temporary authoring details only; this tool can regenerate the complete flags from fixed Git commits.",
+    "counts": {
+      "incompatible_per_character_readings": 0,
+      "default_compound_disagreements": 400,
+      "unknown_characters": 0,
+      "mixed_script_rows": 2018
+    },
+    "default_disagreements_by_batch": {
+      "lexicon_batch_013": 29,
+      "lexicon_batch_014": 50,
+      "lexicon_batch_015": 321
+    },
+    "representative_review_flags": [
+      {
+        "pinyin": "hangshangyangtuo",
+        "word": "行商羊驼",
+        "weight": 5500,
+        "category": "lexicon_batch_013",
+        "line": 49090,
+        "default_compound_key": "xingshangyangtuo"
+      },
+      {
+        "pinyin": "shenglizhizaizhaoxijian",
+        "word": "胜利只在朝夕间",
+        "weight": 5500,
+        "category": "lexicon_batch_014",
+        "line": 55040,
+        "default_compound_key": "shenglizhizaichaoxijian"
+      },
+      {
+        "pinyin": "yuetong",
+        "word": "乐瞳",
+        "weight": 5500,
+        "category": "lexicon_batch_015",
+        "line": 61238,
+        "default_compound_key": "letong"
+      },
+      {
+        "pinyin": "sheyuanyi",
+        "word": "折原一",
+        "weight": 5500,
+        "category": "lexicon_batch_015",
+        "line": 71561,
+        "default_compound_key": "zheyuanyi"
+      },
+      {
+        "pinyin": "chongcunyoucai",
+        "word": "种村有菜",
+        "weight": 5500,
+        "category": "lexicon_batch_015",
+        "line": 79250,
+        "default_compound_key": "zhongcunyoucai"
+      },
+      {
+        "pinyin": "chonggangdayi",
+        "word": "重冈大毅",
+        "weight": 5500,
+        "category": "lexicon_batch_015",
+        "line": 84778,
+        "default_compound_key": "zhonggangdayi"
+      }
+    ],
+    "linguistic_review_scope": "Per-character compatibility is a structural screen only. Default compound disagreements and mixed scripts have not all received formal linguistic review. A successful stored-key lookup does not prove the spelling is the preferred input reading."
+  },
+  "native_coverage": {
+    "summary": {
+      "cases": 41526,
+      "top1_present": 26776,
+      "top8_present": 41522,
+      "top9_present": 41522,
+      "max_returned_candidates": 9,
+      "p50_lookup_ms": 2.433,
+      "p95_lookup_ms": 6.659,
+      "max_lookup_ms": 18.666
+    },
+    "by_batch": {
+      "lexicon_batch_012": {
+        "cases": 124,
+        "top1_present": 94,
+        "top8_present": 123,
+        "top9_present": 123
+      },
+      "lexicon_batch_013": {
+        "cases": 7092,
+        "top1_present": 4288,
+        "top8_present": 7089,
+        "top9_present": 7089
+      },
+      "lexicon_batch_014": {
+        "cases": 6027,
+        "top1_present": 3064,
+        "top8_present": 6027,
+        "top9_present": 6027
+      },
+      "lexicon_batch_015": {
+        "cases": 28283,
+        "top1_present": 19330,
+        "top8_present": 28283,
+        "top9_present": 28283
+      }
+    },
+    "missing_top9": [
+      {
+        "pinyin": "shiren",
+        "word": "实人",
+        "rank": 0,
+        "candidates": [
+          "诗人",
+          "使人",
+          "世人",
+          "时任",
+          "是人",
+          "示人",
+          "十人",
+          "施仁",
+          "湿热"
+        ]
+      },
+      {
+        "pinyin": "lishi",
+        "word": "砾石",
+        "rank": 0,
+        "candidates": [
+          "历史",
+          "历时",
+          "理事",
+          "李时",
+          "李石",
+          "李适",
+          "立式",
+          "力士",
+          "里"
+        ]
+      },
+      {
+        "pinyin": "redaiyushengchengdan",
+        "word": "热带鱼生成蛋",
+        "rank": 0,
+        "candidates": [
+          "热带雨声承担",
+          "热带雨生成蛋",
+          "热带于生成蛋",
+          "热带雨声称单",
+          "热带雨生成单",
+          "热带于生成单",
+          "热带雨声称蛋",
+          "热带鱼 生成蛋",
+          "热带"
+        ]
+      },
+      {
+        "pinyin": "zhishi",
+        "word": "芝士",
+        "rank": 0,
+        "candidates": [
+          "只是",
+          "知识",
+          "指示",
+          "之时",
+          "致使",
+          "之事",
+          "之势",
+          "智识",
+          "知"
+        ]
+      }
+    ],
+    "rows_sha256": "029c571e499b4d8ddefcc78a9c93a941aecae2cee701c54579951b642913d68d",
+    "full_output_file_sha256": "a29a58b35cf72cfe48f69b412c8dda11d3e14ec39a4e9e22788ced400ee364f4",
+    "evaluated_at_utc": "2026-10-14T05:35:37.843043+00:00",
+    "pass_reused_without_requery": true,
+    "engine_sha256": "f164160dff0f31baca47d1f5255e68332f9fa1a653b2da4d4bcde186dd2a5164",
+    "personal_data_isolated": true,
+    "expected_answers_learned": false
+  },
+  "independent_samples": {
+    "method": "Independent homophone and pronunciation probes selected by inspection of remote entries; not a blind benchmark or training input. Same native executable, exact base/remote Git resources, isolated empty personal data, no answer learning.",
+    "engine_sha256": "f164160dff0f31baca47d1f5255e68332f9fa1a653b2da4d4bcde186dd2a5164",
+    "samples": {
+      "base": [
+        {
+          "pinyin": "wangyi",
+          "expected": "网易",
+          "source": "independent-homophone-and-pronunciation-sample",
+          "lookup_us": 945,
+          "candidates": [
+            "网易",
+            "王毅",
+            "网以",
+            "望以",
+            "王以",
+            "网意",
+            "网义",
+            "网一",
+            "网"
+          ],
+          "expected_rank": 1
+        },
+        {
+          "pinyin": "yizhi",
+          "expected": "一直",
+          "source": "independent-homophone-and-pronunciation-sample",
+          "lookup_us": 728,
+          "candidates": [
+            "遗址",
+            "一只",
+            "一致",
+            "一支",
+            "抑制",
+            "意志",
+            "移植",
+            "以致",
+            "一"
+          ],
+          "expected_rank": 0
+        },
+        {
+          "pinyin": "yizhi",
+          "expected": "一致",
+          "source": "independent-homophone-and-pronunciation-sample",
+          "lookup_us": 520,
+          "candidates": [
+            "遗址",
+            "一只",
+            "一致",
+            "一支",
+            "抑制",
+            "意志",
+            "移植",
+            "以致",
+            "一"
+          ],
+          "expected_rank": 3
+        },
+        {
+          "pinyin": "yiqi",
+          "expected": "一起",
+          "source": "independent-homophone-and-pronunciation-sample",
+          "lookup_us": 643,
+          "candidates": [
+            "一期",
+            "仪器",
+            "以其",
+            "一齐",
+            "一汽",
+            "遗弃",
+            "以期",
+            "义气",
+            "一"
+          ],
+          "expected_rank": 0
+        },
+        {
+          "pinyin": "yishi",
+          "expected": "意识",
+          "source": "independent-homophone-and-pronunciation-sample",
+          "lookup_us": 646,
+          "candidates": [
+            "一是",
+            "一时",
+            "已是",
+            "一事",
+            "医师",
+            "一世",
+            "遗失",
+            "亦是",
+            "一"
+          ],
+          "expected_rank": 0
+        },
+        {
+          "pinyin": "tuan",
+          "expected": "图案",
+          "source": "independent-homophone-and-pronunciation-sample",
+          "lookup_us": 376,
+          "candidates": [
+            "团",
+            "途安",
+            "湍",
+            "鏄",
+            "團",
+            "疃",
+            "抟",
+            "彖",
+            "图"
+          ],
+          "expected_rank": 0
+        },
+        {
+          "pinyin": "wangyi",
+          "expected": "王一",
+          "source": "independent-homophone-and-pronunciation-sample",
+          "lookup_us": 616,
+          "candidates": [
+            "网易",
+            "王毅",
+            "网以",
+            "望以",
+            "王以",
+            "网意",
+            "网义",
+            "网一",
+            "网"
+          ],
+          "expected_rank": 0
+        },
+        {
+          "pinyin": "wangyi",
+          "expected": "王逸",
+          "source": "independent-homophone-and-pronunciation-sample",
+          "lookup_us": 435,
+          "candidates": [
+            "网易",
+            "王毅",
+            "网以",
+            "望以",
+            "王以",
+            "网意",
+            "网义",
+            "网一",
+            "网"
+          ],
+          "expected_rank": 0
+        },
+        {
+          "pinyin": "yizhi",
+          "expected": "一智",
+          "source": "independent-homophone-and-pronunciation-sample",
+          "lookup_us": 453,
+          "candidates": [
+            "遗址",
+            "一只",
+            "一致",
+            "一支",
+            "抑制",
+            "意志",
+            "移植",
+            "以致",
+            "一"
+          ],
+          "expected_rank": 0
+        },
+        {
+          "pinyin": "xingshangyangtuo",
+          "expected": "行商羊驼",
+          "source": "independent-homophone-and-pronunciation-sample",
+          "lookup_us": 4470,
+          "candidates": [
+            "星上扬妥",
+            "幸上扬妥",
+            "星上扬陀",
+            "星上扬驼",
+            "幸上扬陀",
+            "星上扬托",
+            "幸上扬驼",
+            "星上扬拖",
+            "行善"
+          ],
+          "expected_rank": 0
+        },
+        {
+          "pinyin": "hangshangyangtuo",
+          "expected": "行商羊驼",
+          "source": "independent-homophone-and-pronunciation-sample",
+          "lookup_us": 3591,
+          "candidates": [
+            "行上扬妥",
+            "行上扬陀",
+            "行上扬驼",
+            "行上扬托",
+            "行上扬拖",
+            "行上扬脱",
+            "行上扬拓",
+            "行上扬坨",
+            "行"
+          ],
+          "expected_rank": 0
+        },
+        {
+          "pinyin": "zhongcunyoucai",
+          "expected": "种村有菜",
+          "source": "independent-homophone-and-pronunciation-sample",
+          "lookup_us": 1614,
+          "candidates": [
+            "中村油菜",
+            "中存油菜",
+            "中寸油菜",
+            "中存有菜",
+            "终村油菜",
+            "中村有菜",
+            "中存有才",
+            "中存有彩",
+            "中"
+          ],
+          "expected_rank": 0
+        },
+        {
+          "pinyin": "chongcunyoucai",
+          "expected": "种村有菜",
+          "source": "independent-homophone-and-pronunciation-sample",
+          "lookup_us": 1265,
+          "candidates": [
+            "充村油菜",
+            "重村油菜",
+            "充存油菜",
+            "重存油菜",
+            "充寸油菜",
+            "充存有菜",
+            "重寸油菜",
+            "重存有菜",
+            "冲"
+          ],
+          "expected_rank": 0
+        },
+        {
+          "pinyin": "zheyuanyi",
+          "expected": "折原一",
+          "source": "independent-homophone-and-pronunciation-sample",
+          "lookup_us": 2293,
+          "candidates": [
+            "这愿意",
+            "着愿意",
+            "者愿意",
+            "折愿意",
+            "这原意",
+            "遮愿意",
+            "哲愿意",
+            "这元以",
+            "这与"
+          ],
+          "expected_rank": 0
+        },
+        {
+          "pinyin": "sheyuanyi",
+          "expected": "折原一",
+          "source": "independent-homophone-and-pronunciation-sample",
+          "lookup_us": 1881,
+          "candidates": [
+            "设愿意",
+            "社愿意",
+            "蛇愿意",
+            "射愿意",
+            "舍愿意",
+            "摄愿意",
+            "涉愿意",
+            "折愿意",
+            "社员"
+          ],
+          "expected_rank": 0
+        },
+        {
+          "pinyin": "letong",
+          "expected": "乐瞳",
+          "source": "independent-homophone-and-pronunciation-sample",
+          "lookup_us": 291,
+          "candidates": [
+            "了同",
+            "了通",
+            "勒同",
+            "勒通",
+            "了桶",
+            "乐同",
+            "乐通",
+            "勒桶",
+            "了"
+          ],
+          "expected_rank": 0
+        },
+        {
+          "pinyin": "yuetong",
+          "expected": "乐瞳",
+          "source": "independent-homophone-and-pronunciation-sample",
+          "lookup_us": 997,
+          "candidates": [
+            "月同",
+            "越同",
+            "月通",
+            "越通",
+            "月桶",
+            "说同",
+            "越桶",
+            "粤同",
+            "月"
+          ],
+          "expected_rank": 0
+        },
+        {
+          "pinyin": "mawei",
+          "expected": "马尾",
+          "source": "independent-homophone-and-pronunciation-sample",
+          "lookup_us": 649,
+          "candidates": [
+            "马尾",
+            "妈为",
+            "麻为",
+            "妈位",
+            "麻位",
+            "马为",
+            "妈味",
+            "麻味",
+            "骂"
+          ],
+          "expected_rank": 1
+        },
+        {
+          "pinyin": "mayi",
+          "expected": "马尾",
+          "source": "independent-homophone-and-pronunciation-sample",
+          "lookup_us": 931,
+          "candidates": [
+            "蚂蚁",
+            "麻衣",
+            "妈以",
+            "麻以",
+            "马以",
+            "妈易",
+            "麻易",
+            "妈意",
+            "骂"
+          ],
+          "expected_rank": 0
+        }
+      ],
+      "remote": [
+        {
+          "pinyin": "wangyi",
+          "expected": "网易",
+          "source": "independent-homophone-and-pronunciation-sample",
+          "lookup_us": 961,
+          "candidates": [
+            "王一",
+            "王伊",
+            "王壹",
+            "王奕",
+            "王彝",
+            "王祎",
+            "王绎",
+            "王逸",
+            "网"
+          ],
+          "expected_rank": 0
+        },
+        {
+          "pinyin": "yizhi",
+          "expected": "一直",
+          "source": "independent-homophone-and-pronunciation-sample",
+          "lookup_us": 737,
+          "candidates": [
+            "一智",
+            "遗址",
+            "一只",
+            "一致",
+            "一支",
+            "抑制",
+            "意志",
+            "移植",
+            "一"
+          ],
+          "expected_rank": 0
+        },
+        {
+          "pinyin": "yizhi",
+          "expected": "一致",
+          "source": "independent-homophone-and-pronunciation-sample",
+          "lookup_us": 472,
+          "candidates": [
+            "一智",
+            "遗址",
+            "一只",
+            "一致",
+            "一支",
+            "抑制",
+            "意志",
+            "移植",
+            "一"
+          ],
+          "expected_rank": 4
+        },
+        {
+          "pinyin": "yiqi",
+          "expected": "一起",
+          "source": "independent-homophone-and-pronunciation-sample",
+          "lookup_us": 687,
+          "candidates": [
+            "一期",
+            "仪器",
+            "以其",
+            "一齐",
+            "一汽",
+            "一起",
+            "遗器",
+            "遗弃",
+            "一"
+          ],
+          "expected_rank": 6
+        },
+        {
+          "pinyin": "yishi",
+          "expected": "意识",
+          "source": "independent-homophone-and-pronunciation-sample",
+          "lookup_us": 783,
+          "candidates": [
+            "一是",
+            "一时",
+            "已是",
+            "一事",
+            "医师",
+            "一世",
+            "意识",
+            "遗失",
+            "一"
+          ],
+          "expected_rank": 7
+        },
+        {
+          "pinyin": "tuan",
+          "expected": "图案",
+          "source": "independent-homophone-and-pronunciation-sample",
+          "lookup_us": 411,
+          "candidates": [
+            "团",
+            "途安",
+            "湍",
+            "鏄",
+            "图案",
+            "團",
+            "疃",
+            "抟",
+            "图"
+          ],
+          "expected_rank": 5
+        },
+        {
+          "pinyin": "wangyi",
+          "expected": "王一",
+          "source": "independent-homophone-and-pronunciation-sample",
+          "lookup_us": 644,
+          "candidates": [
+            "王一",
+            "王伊",
+            "王壹",
+            "王奕",
+            "王彝",
+            "王祎",
+            "王绎",
+            "王逸",
+            "网"
+          ],
+          "expected_rank": 1
+        },
+        {
+          "pinyin": "wangyi",
+          "expected": "王逸",
+          "source": "independent-homophone-and-pronunciation-sample",
+          "lookup_us": 441,
+          "candidates": [
+            "王一",
+            "王伊",
+            "王壹",
+            "王奕",
+            "王彝",
+            "王祎",
+            "王绎",
+            "王逸",
+            "网"
+          ],
+          "expected_rank": 8
+        },
+        {
+          "pinyin": "yizhi",
+          "expected": "一智",
+          "source": "independent-homophone-and-pronunciation-sample",
+          "lookup_us": 549,
+          "candidates": [
+            "一智",
+            "遗址",
+            "一只",
+            "一致",
+            "一支",
+            "抑制",
+            "意志",
+            "移植",
+            "一"
+          ],
+          "expected_rank": 1
+        },
+        {
+          "pinyin": "xingshangyangtuo",
+          "expected": "行商羊驼",
+          "source": "independent-homophone-and-pronunciation-sample",
+          "lookup_us": 4221,
+          "candidates": [
+            "行商羊驼",
+            "星上扬妥",
+            "星商羊驼",
+            "幸上扬妥",
+            "星上扬陀",
+            "星上扬驼",
+            "星上羊驼",
+            "幸上扬陀",
+            "行善"
+          ],
+          "expected_rank": 1
+        },
+        {
+          "pinyin": "hangshangyangtuo",
+          "expected": "行商羊驼",
+          "source": "independent-homophone-and-pronunciation-sample",
+          "lookup_us": 3510,
+          "candidates": [
+            "行商羊驼",
+            "行上扬妥",
+            "行上扬陀",
+            "行上扬驼",
+            "行上羊驼",
+            "行商鞅妥",
+            "行上扬托",
+            "行上扬拖",
+            "行"
+          ],
+          "expected_rank": 1
+        },
+        {
+          "pinyin": "zhongcunyoucai",
+          "expected": "种村有菜",
+          "source": "independent-homophone-and-pronunciation-sample",
+          "lookup_us": 1515,
+          "candidates": [
+            "中村有菜",
+            "中村油菜",
+            "中村优菜",
+            "中存有菜",
+            "中村优彩",
+            "中存油菜",
+            "中村有才",
+            "中村友菜",
+            "中村优"
+          ],
+          "expected_rank": 0
+        },
+        {
+          "pinyin": "chongcunyoucai",
+          "expected": "种村有菜",
+          "source": "independent-homophone-and-pronunciation-sample",
+          "lookup_us": 1231,
+          "candidates": [
+            "种村有菜",
+            "充存有菜",
+            "重存有菜",
+            "充村有菜",
+            "充村油菜",
+            "重村油菜",
+            "充存油菜",
+            "重存油菜",
+            "冲"
+          ],
+          "expected_rank": 1
+        },
+        {
+          "pinyin": "zheyuanyi",
+          "expected": "折原一",
+          "source": "independent-homophone-and-pronunciation-sample",
+          "lookup_us": 2173,
+          "candidates": [
+            "这愿意",
+            "着愿意",
+            "者愿意",
+            "折愿意",
+            "这原意",
+            "遮愿意",
+            "哲愿意",
+            "这元以",
+            "这与"
+          ],
+          "expected_rank": 0
+        },
+        {
+          "pinyin": "sheyuanyi",
+          "expected": "折原一",
+          "source": "independent-homophone-and-pronunciation-sample",
+          "lookup_us": 1844,
+          "candidates": [
+            "折原一",
+            "设愿意",
+            "社愿意",
+            "蛇愿意",
+            "射愿意",
+            "舍愿意",
+            "摄愿意",
+            "涉愿意",
+            "社员"
+          ],
+          "expected_rank": 1
+        },
+        {
+          "pinyin": "letong",
+          "expected": "乐瞳",
+          "source": "independent-homophone-and-pronunciation-sample",
+          "lookup_us": 296,
+          "candidates": [
+            "了同",
+            "了通",
+            "勒同",
+            "勒通",
+            "了桶",
+            "乐同",
+            "乐通",
+            "勒桶",
+            "了"
+          ],
+          "expected_rank": 0
+        },
+        {
+          "pinyin": "yuetong",
+          "expected": "乐瞳",
+          "source": "independent-homophone-and-pronunciation-sample",
+          "lookup_us": 940,
+          "candidates": [
+            "乐瞳",
+            "月同",
+            "越同",
+            "月通",
+            "越通",
+            "月桶",
+            "说同",
+            "越桶",
+            "月"
+          ],
+          "expected_rank": 1
+        },
+        {
+          "pinyin": "mawei",
+          "expected": "马尾",
+          "source": "independent-homophone-and-pronunciation-sample",
+          "lookup_us": 636,
+          "candidates": [
+            "马尾",
+            "妈为",
+            "麻为",
+            "妈位",
+            "麻位",
+            "马为",
+            "妈味",
+            "麻味",
+            "骂"
+          ],
+          "expected_rank": 1
+        },
+        {
+          "pinyin": "mayi",
+          "expected": "马尾",
+          "source": "independent-homophone-and-pronunciation-sample",
+          "lookup_us": 594,
+          "candidates": [
+            "蚂蚁",
+            "麻衣",
+            "马尾",
+            "马奕",
+            "马异",
+            "妈以",
+            "麻以",
+            "马以",
+            "骂"
+          ],
+          "expected_rank": 3
+        }
+      ]
+    }
+  }
+}

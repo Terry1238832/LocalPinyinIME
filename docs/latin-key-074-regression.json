@@ -1,0 +1,484 @@
+{
+  "evaluation": "generic_latin_key_composition_fix",
+  "version": "0.7.4",
+  "method": {
+    "data_identical": true,
+    "personal_data_isolated": true,
+    "expected_answers_learned": false,
+    "blind_evaluation": false,
+    "fix_basis": "Actual non-pinyin Latin spelling keys, not fixture-specific filtering. Synthetic independent C++ fixture tests exact names, complete/incomplete composition, personal overrides and explicit learning."
+  },
+  "before_engine_sha256": "f164160dff0f31baca47d1f5255e68332f9fa1a653b2da4d4bcde186dd2a5164",
+  "after_engine_sha256": "aebdb903e1a043ae2020d332d70b6a5e3da72ec3e45cf519cebe84b9eaa7ce51",
+  "runtime_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "9cba30224b8137896e1bbbf80af4edcbdc5864119d1f2c48224f1b97c28c38f6",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+    "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+    "continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e"
+  },
+  "before_summary": {
+    "cases": 267,
+    "top1_correct": 150,
+    "top9_present": 204,
+    "top1_percent": 56.18,
+    "top9_percent": 76.4,
+    "character_error_rate": 0.0778,
+    "p50_lookup_ms": 10.35,
+    "p95_lookup_ms": 18.281,
+    "max_lookup_ms": 27.117
+  },
+  "after_summary": {
+    "cases": 267,
+    "top1_correct": 150,
+    "top9_present": 205,
+    "top1_percent": 56.18,
+    "top9_percent": 76.78,
+    "character_error_rate": 0.0778,
+    "p50_lookup_ms": 10.127,
+    "p95_lookup_ms": 17.453,
+    "max_lookup_ms": 26.651
+  },
+  "mixed_script_candidates_before": 28,
+  "mixed_script_candidates_after": 0,
+  "top1_regressions": 0,
+  "top9_regressions": 0,
+  "changed_candidate_arrays": [
+    {
+      "source": "article:yijian:03",
+      "pinyin": "jiangwoconghuaipiqilituokai",
+      "expected": "将我从坏脾气里拖开",
+      "before": [
+        "将我从坏脾气里拖开",
+        "将我从坏脾气里托Kai",
+        "将我从坏脾气里托开",
+        "将我从坏脾气力拖开",
+        "将我从坏脾气里拖Kai",
+        "将我从坏脾气里脱开",
+        "将我从坏脾气李拖开",
+        "将我从坏脾气力托开",
+        "降"
+      ],
+      "after": [
+        "将我从坏脾气里拖开",
+        "将我从坏脾气里托开",
+        "将我从坏脾气力拖开",
+        "将我从坏脾气里脱开",
+        "将我从坏脾气李拖开",
+        "将我从坏脾气力托开",
+        "将我从坏脾气里拓开",
+        "将我从坏脾气里妥开",
+        "降"
+      ],
+      "before_rank": 1,
+      "after_rank": 1
+    },
+    {
+      "source": "daily:004",
+      "pinyin": "nibanagewenjianchongxindakaiyixia",
+      "expected": "你把那个文件重新打开一下",
+      "before": [
+        "你把那个文件重新打开一下",
+        "你把那个文件重新打开以下",
+        "你把那个文件重新大开一下",
+        "你把那个文件重新打Kai一下",
+        "你把那个文件重新大Kai一下",
+        "你把那个文件重新打开一吓",
+        "你把那个文件重新打开以夏",
+        "你把那个文件重新打开一夏",
+        "泥巴"
+      ],
+      "after": [
+        "你把那个文件重新打开一下",
+        "你把那个文件重新打开以下",
+        "你把那个文件重新大开一下",
+        "你把那个文件重新打开一吓",
+        "你把那个文件重新打开以夏",
+        "你把那个文件重新打开一夏",
+        "你把那个文件重新打开以霞",
+        "你把那个文件重新打开以虾",
+        "泥巴"
+      ],
+      "before_rank": 1,
+      "after_rank": 1
+    },
+    {
+      "source": "daily:013",
+      "pinyin": "nixianbachuanghudakaitoutouqi",
+      "expected": "你先把窗户打开透透气",
+      "before": [
+        "你先把窗户打开透透气",
+        "你先把窗户大Kai透透气",
+        "你先把窗户打开头透气",
+        "你先把窗户大开头透气",
+        "你先把窗户打开投透气",
+        "你先把窗户打开偷透气",
+        "你先把窗户打开偷偷起",
+        "你先把窗户打开偷偷期",
+        "你"
+      ],
+      "after": [
+        "你先把窗户打开透透气",
+        "你先把窗户大开透透气",
+        "你先把窗户打开头透气",
+        "你先把窗户大开头透气",
+        "你先把窗户打开投透气",
+        "你先把窗户打开偷透气",
+        "你先把窗户打开偷偷起",
+        "你先把窗户打开偷偷期",
+        "你"
+      ],
+      "before_rank": 1,
+      "after_rank": 1
+    },
+    {
+      "source": "daily:018",
+      "pinyin": "wowangjidaiyaoshilezenmeban",
+      "expected": "我忘记带钥匙了怎么办",
+      "before": [
+        "我忘记带钥匙了怎么办",
+        "我忘记带钥匙乐怎么办",
+        "我忘记带钥匙了怎么Ban",
+        "我忘记带钥匙了怎么半",
+        "我忘记带钥匙了怎么班",
+        "我忘记带钥匙了怎么般",
+        "我忘记带钥匙了怎么板",
+        "我忘记带钥匙了怎么搬",
+        "我忘记"
+      ],
+      "after": [
+        "我忘记带钥匙了怎么办",
+        "我忘记带钥匙乐怎么办",
+        "我忘记带钥匙了怎么半",
+        "我忘记带钥匙了怎么班",
+        "我忘记带钥匙了怎么般",
+        "我忘记带钥匙了怎么板",
+        "我忘记带钥匙了怎么搬",
+        "我忘记带钥匙了怎么版",
+        "我忘记"
+      ],
+      "before_rank": 1,
+      "after_rank": 1
+    },
+    {
+      "source": "daily:030",
+      "pinyin": "womenkeyihuanyigegengjiandandebanfa",
+      "expected": "我们可以换一个更简单的办法",
+      "before": [
+        "我们可以换一个更简单的办法",
+        "我们可以换一个更简单的版发",
+        "我们可以换一个更简单地办法",
+        "我们可以换一个更简单的版法",
+        "我们可以换一个更简单得办法",
+        "我们可以换一个更简单的颁发",
+        "我们可以换一个更简单的Ban发",
+        "我们可以换一个更简单的Ban法",
+        "我们"
+      ],
+      "after": [
+        "我们可以换一个更简单的办法",
+        "我们可以换一个更简单的版发",
+        "我们可以换一个更简单地办法",
+        "我们可以换一个更简单的版法",
+        "我们可以换一个更简单得办法",
+        "我们可以换一个更简单的颁发",
+        "我们可以换一个更简单德办法",
+        "我们可以换一个更简单的版罚",
+        "我们"
+      ],
+      "before_rank": 1,
+      "after_rank": 1
+    },
+    {
+      "source": "daily:049",
+      "pinyin": "wodasuancongmingtiankaishizaodianqichuang",
+      "expected": "我打算从明天开始早点起床",
+      "before": [
+        "我打算聪明天开始早点起床",
+        "我打算聪明天Kai是早点起床",
+        "我打算聪明天开始早点气床",
+        "我打算聪明天开始早点期床",
+        "我打算聪明天开始早点骑床",
+        "我打算聪明天开始早点企床",
+        "我打算聪明天开始早点其床",
+        "我打算聪明天开始早点气窗",
+        "我打"
+      ],
+      "after": [
+        "我打算聪明天开始早点起床",
+        "我打算从明天开始早点起床",
+        "我打算聪明天开始早点气床",
+        "我打算聪明天开始早点期床",
+        "我打算聪明天开始早点骑床",
+        "我打算聪明天开始早点企床",
+        "我打算聪明天开始早点其床",
+        "我打算聪明天开始早点气窗",
+        "我打"
+      ],
+      "before_rank": 0,
+      "after_rank": 2
+    },
+    {
+      "source": "daily:052",
+      "pinyin": "zhejianshiqingmeiyounixiangdenamefuza",
+      "expected": "这件事情没有你想的那么复杂",
+      "before": [
+        "这件事情没有你想的那么复杂",
+        "这件事情没有你想得那么复杂",
+        "这件事情没有你想的Name复杂",
+        "这件事情没有你想得Name复杂",
+        "这件事情没有你想的那么付杂",
+        "这件事情没有你想得那么付杂",
+        "这件事情没有你想的那么副杂",
+        "这件事情没有你想的那么付砸",
+        "这件事"
+      ],
+      "after": [
+        "这件事情没有你想的那么复杂",
+        "这件事情没有你想得那么复杂",
+        "这件事情没有你想的那么付杂",
+        "这件事情没有你想得那么付杂",
+        "这件事情没有你想的那么副杂",
+        "这件事情没有你想的那么付砸",
+        "这件事情没有你想的那么服杂",
+        "这件事情没有你想的那么福杂",
+        "这件事"
+      ],
+      "before_rank": 1,
+      "after_rank": 1
+    },
+    {
+      "source": "daily:082",
+      "pinyin": "qingwenzhefujinnaliyouxishoujian",
+      "expected": "请问这附近哪里有洗手间",
+      "before": [
+        "请问这附近哪里有洗手间",
+        "请问这幅Jin哪里有洗手间",
+        "请问这附近哪里有吸收件",
+        "请问这附近哪里有戏收件",
+        "请问这幅Jin哪里有吸收件",
+        "请问这幅Jin哪里有戏收件",
+        "请问这附近哪里有洗手见",
+        "请问这附近哪里有希收件",
+        "请问"
+      ],
+      "after": [
+        "请问这附近哪里有洗手间",
+        "请问者附近哪里有洗手间",
+        "请问这附近哪里有吸收件",
+        "请问这附近哪里有戏收件",
+        "请问者附近哪里有吸收件",
+        "请问者附近哪里有戏收件",
+        "请问这附近哪里有洗手见",
+        "请问这附近哪里有希收件",
+        "请问"
+      ],
+      "before_rank": 1,
+      "after_rank": 1
+    },
+    {
+      "source": "daily:088",
+      "pinyin": "woxianggeinikankanwozuijinpaidezhaopian",
+      "expected": "我想给你看看我最近拍的照片",
+      "before": [
+        "我想给你看看我最近拍的照片",
+        "我想给你看看我最Jin拍的照片",
+        "我想给你看看我最近排得照片",
+        "我想给你看看我最近拍得照片",
+        "我想给你看看我最近排地照片",
+        "我想给你看看我最近派地照片",
+        "我想给你看看我最近拍德照片",
+        "我想给你看看我最近排德照片",
+        "我想"
+      ],
+      "after": [
+        "我想给你看看我最近拍的照片",
+        "我想给你看看我最紧拍的照片",
+        "我想给你看看我最近排得照片",
+        "我想给你看看我最近拍得照片",
+        "我想给你看看我最近排地照片",
+        "我想给你看看我最近派地照片",
+        "我想给你看看我最近拍德照片",
+        "我想给你看看我最近排德照片",
+        "我想"
+      ],
+      "before_rank": 1,
+      "after_rank": 1
+    },
+    {
+      "source": "article:hetang:38",
+      "pinyin": "xiangjinwanshang",
+      "expected": "像今晚上",
+      "before": [
+        "向今晚上",
+        "像今晚上",
+        "向Jin晚上",
+        "相近晚上",
+        "详尽晚上",
+        "像Jin晚上",
+        "想尽晚上",
+        "想进晚上",
+        "相近"
+      ],
+      "after": [
+        "向今晚上",
+        "像今晚上",
+        "相近晚上",
+        "详尽晚上",
+        "想尽晚上",
+        "想进晚上",
+        "向金晚上",
+        "项禁晚上",
+        "相近"
+      ],
+      "before_rank": 2,
+      "after_rank": 2
+    },
+    {
+      "source": "daily:fresh:16",
+      "pinyin": "xiagexingqiwomenzhunbeibandaoxinjia",
+      "expected": "下个星期我们准备搬到新家",
+      "before": [
+        "下个星期我们准备搬到新家",
+        "下个星期我们准备搬到新加",
+        "下个星期我们准备Ban到新家",
+        "下个星期我们准备Ban到新加",
+        "下个星期我们准备搬到新假",
+        "下个星期我们准备半岛新家",
+        "下个星期我们准备半岛新加",
+        "下个星期我们准备搬到新价",
+        "下个"
+      ],
+      "after": [
+        "下个星期我们准备搬到新家",
+        "下个星期我们准备搬到新加",
+        "下个星期我们准备办到新家",
+        "下个星期我们准备办到新加",
+        "下个星期我们准备搬到新假",
+        "下个星期我们准备半岛新家",
+        "下个星期我们准备半岛新加",
+        "下个星期我们准备搬到新价",
+        "下个"
+      ],
+      "before_rank": 1,
+      "after_rank": 1
+    },
+    {
+      "source": "article:fengzheng:17",
+      "pinyin": "dachengyipianchunridewenhe",
+      "expected": "打成一片春日的温和",
+      "before": [
+        "大成一片春日的问和",
+        "大成一片春日的文和",
+        "大成一篇春日的问和",
+        "大成一篇春日的文和",
+        "大成一片春Ride温和",
+        "大成一片春日的温和",
+        "大成一篇春Ride温和",
+        "大成一篇春日的温和",
+        "达成"
+      ],
+      "after": [
+        "大成一片春日的问和",
+        "大成一片春日的文和",
+        "大成一篇春日的问和",
+        "大成一篇春日的文和",
+        "大成一片春日的温和",
+        "大成一篇春日的温和",
+        "大成一片春日的吻合",
+        "大成一片春日的问喝",
+        "达成"
+      ],
+      "before_rank": 0,
+      "after_rank": 0
+    },
+    {
+      "source": "article:fengzheng:35",
+      "pinyin": "youshizhiyuxiaobanri",
+      "expected": "有时至于小半日",
+      "before": [
+        "有时至于小半日",
+        "有时至于小Ban日",
+        "有时至于小班日",
+        "有时至于晓Ban日",
+        "有时至于晓半日",
+        "有时至于笑半日",
+        "有时至于小板日",
+        "有时至于校半日",
+        "优势"
+      ],
+      "after": [
+        "有时至于小半日",
+        "有时至于小班日",
+        "有时至于晓半日",
+        "有时至于笑半日",
+        "有时至于小板日",
+        "有时至于校半日",
+        "有时至于萧半日",
+        "有时至于消半日",
+        "优势"
+      ],
+      "before_rank": 1,
+      "after_rank": 1
+    },
+    {
+      "source": "daily:independent:08",
+      "pinyin": "jialideluyouqizuijinzongshituranduankai",
+      "expected": "家里的路由器最近总是突然断开",
+      "before": [
+        "家里的路由器最近总是突然断开",
+        "家里的路由起最近总是突然断开",
+        "家里的路由器最近总是突然段Kai",
+        "家里的路由器最近总是突然段开",
+        "家里的路由器最近总是突然短Kai",
+        "家里的路由器最近总是突然短开",
+        "家里的路由器最近总是突然端开",
+        "家里的路由器最近总是突然锻开",
+        "家里"
+      ],
+      "after": [
+        "家里的路由器最近总是突然断开",
+        "家里的路由起最近总是突然断开",
+        "家里的路由器最近总是突然段开",
+        "家里的路由器最近总是突然短开",
+        "家里的路由器最近总是突然端开",
+        "家里的路由器最近总是突然锻开",
+        "家里的路由器最近总是突然缎开",
+        "家里的路由器最近总是突然椴开",
+        "家里"
+      ],
+      "before_rank": 1,
+      "after_rank": 1
+    },
+    {
+      "source": "daily:independent:19",
+      "pinyin": "ruguowanshangyoushijianwoxianggennitantanhaizidejinkuang",
+      "expected": "如果晚上有时间我想跟你谈谈孩子的近况",
+      "before": [
+        "如果晚上有时间我想跟你谈谈孩子的近况",
+        "如果晚上有时间我想跟你谈谈孩子的Jin况",
+        "如果晚上有时间我想跟你谈谈孩子的金矿",
+        "如果晚上有时间我想跟你弹谈孩子的近况",
+        "如果晚上有时间我想跟你谈谈孩子的Jin眶",
+        "如果晚上有时间我想跟你谈谈孩子的进况",
+        "如果晚上有时间我想跟你谈谈孩子的尽况",
+        "如果晚上有时间我想跟你谈谈孩子的Jin狂",
+        "如果"
+      ],
+      "after": [
+        "如果晚上有时间我想跟你谈谈孩子的近况",
+        "如果晚上有时间我想跟你谈谈孩子的金矿",
+        "如果晚上有时间我想跟你弹谈孩子的近况",
+        "如果晚上有时间我想跟你谈谈孩子的进况",
+        "如果晚上有时间我想跟你谈谈孩子的尽况",
+        "如果晚上有时间我想跟你谈谈孩子的金况",
+        "如果晚上有时间我想跟你弹谈孩子的金矿",
+        "如果晚上有时间我想跟你谈谈孩子的进眶",
+        "如果"
+      ],
+      "before_rank": 1,
+      "after_rank": 1
+    }
+  ],
+  "scope": "Only the public Chinese regression fixtures and isolated synthetic tests; direct Latin lookup and explicitly chosen personal words remain allowed."
+}

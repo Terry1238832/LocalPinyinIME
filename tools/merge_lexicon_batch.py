@@ -59,11 +59,13 @@ def main():
     source_id = "first_party_" + a.batch.stem
     if source_id not in meta["source_ids"]:
         meta["source_ids"].append(source_id)
-    meta["source_policy"] = ("Project-maintained first-party authored lexicon. No third-party bulk lexicon was imported; "
+    # A new first-party batch does not relicense or change the provenance of
+    # existing layers. Preserve the reviewed policy, including upstream indexes.
+    meta.setdefault("source_policy", ("Project-maintained first-party authored lexicon. No third-party bulk lexicon was imported; "
         "no Rime, Sogou, Baidu, Microsoft, Google, or public GitHub candidate dictionary data is used. "
         "Pypinyin is an authoring-only pronunciation checker with manually reviewed compound overrides; "
         "neither Python nor its library is bundled in the input method. Independent prose used for the separate "
-        "character context model is attributed in authoring/sources.json.")
+        "character context model is attributed in authoring/sources.json."))
     meta_path.write_text(json.dumps(meta, ensure_ascii=False, indent=2)+"\n", encoding="utf-8", newline="\n")
     print(json.dumps({"added": len(additions), "entry_count": meta["entry_count"], "sha256": meta["sha256"]}))
 

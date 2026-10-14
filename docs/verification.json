@@ -1,17 +1,17 @@
 {
-  "version": "0.7.3",
-  "clientDate": "2026-10-13",
-  "installer": "https://github.com/Terry1238832/LocalPinyinIME/releases/download/v0.7.3/LocalPinyinIME-0.7.3-x64.exe",
-  "installerBytes": 105291283,
-  "installedPayloadBytes": 343060604,
-  "sha256": "4C52A530CCE592515F1160EC2B9BA2227B926320979D763796B23070E1AEC328",
+  "version": "0.7.4",
+  "clientDate": "2026-10-14",
+  "installer": "https://github.com/Terry1238832/LocalPinyinIME/releases/download/v0.7.4/LocalPinyinIME-0.7.4-x64.exe",
+  "installerBytes": 105725839,
+  "installedPayloadBytes": 344642283,
+  "sha256": "C3827F9AC1F84A4BE23693B5386A43C24A6CF86ADF99524F8CB621462FAEFF65",
   "testsPassed": 34,
   "testsFailed": 0,
   "desktopIntegrationChecks": 15,
   "interfaceScreenshotsChecked": 41,
   "navigationTransitions": 80,
   "navigationFrames": 160,
-  "dictionaryEntries": 93658,
+  "dictionaryEntries": 142220,
   "contextNgrams": 119220,
   "desktopStack": {
     "electron": "44.7.0",
@@ -30,9 +30,10 @@
     "15 desktop flows, 80 sidebar transitions over 160 animation frames and 41 light/dark screenshots",
     "Desktop one-row pages retain all native candidates, seven fonts across two widths, reset, long clipping and preview-only selection",
     "Context isolation, sandbox, fixed validated IPC, 13 invalid payloads rejected, external navigation denied",
-    "267 public sentence regressions and all 3201 newly added word lookups evaluated without learning answers",
     "Runtime data, current checksums and authoring files use reproducible UTF-8 LF",
-    "Original PI assets unchanged, Chinese/English runtime locales only and all vendor licenses retained"
+    "Original PI assets unchanged, Chinese/English runtime locales only and all vendor licenses retained",
+    "267 public sentence regressions and all 7041 newly authored word lookups evaluated without learning answers",
+    "Upstream 41526-row snapshot audited independently; Latin names retain direct lookup without unintended Chinese sentence composition"
   ],
   "notTested": [
     "Clean Windows machine full installer install/uninstall cycle",
@@ -45,7 +46,7 @@
   ],
   "cleanCheckoutBuildVerified": false,
   "freshNativeBuildVerified": false,
-  "typingEvaluation": "lexicon-011-quality.json",
+  "typingEvaluation": "lexicon-017-quality.json",
   "payloadSha256": {
     "bin/chrome_100_percent.pak": "ab7c4b7b6cb8832a31d44b95ec50ce52294f49422a3bdde4e21968eca2930cbe",
     "bin/chrome_200_percent.pak": "30fa4a6e27c9ff2fb0f939f01158477e621a67d86e9ecb84cf11b3947db8eb9d",
@@ -53,7 +54,7 @@
     "bin/dictionary/context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
     "bin/dictionary/continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e",
     "bin/dictionary/core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
-    "bin/dictionary/local_core_zh_pinyin.tsv": "4214dcc27c4d16403b76aafb72996009c6fe4adfdd9ddec4083048a0eb8d4d02",
+    "bin/dictionary/local_core_zh_pinyin.tsv": "967761ea656065ebf0557ceb346ae20e29df951eb562452cb35cbcac02bef8ad",
     "bin/dictionary/standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
     "bin/dxcompiler.dll": "22d415f86ce445f4beb57afbb6856b3b83f19918ad270b6ae6047168ec73956d",
     "bin/dxil.dll": "77e039c905030a641e53658a008b74e90635a5ea9b6b79eabd0f2003bdfca59a",
@@ -64,11 +65,11 @@
     "bin/LICENSES.chromium.html": "e6e6b1f9cb0f32235412be113de7716333e88121f9159a0ea0ff3be652021af7",
     "bin/locales/en-US.pak": "23b271e8009bfa14783700cd0712b4ecaa5b8f2ea28a4d81ae1d7e05bc0c96b1",
     "bin/locales/zh-CN.pak": "7887bd3d01e12306e32a11d9a20566ca0e93688a0375e6ff59da04cf782b1681",
-    "bin/LocalPinyinIME.dll": "54b2f32116190208265c457a6cfb97606bb7852f576f40926581df9f901d7a5e",
-    "bin/LocalPinyinImeSetup.exe": "2ad81e39438fb3c95f60899afc634d4b50cdedacf54debd20bf1e3a3d151cfd9",
-    "bin/LocalPinyinSettings.exe": "0c13be2801c583f3af6c2f19efc6336c3488853b6cf54026fa71fd039c55b823",
-    "bin/LocalPinyinSettingsBridge.exe": "dae08ec7d3ca9fb10e778d2a10dcbb16e549b81c927cc118d8ce3b8ac2152d54",
-    "bin/resources/app.asar": "495b42247e8e4893ccc014d26920911b9d1fe2f263b2b52c5685d8acccd5226d",
+    "bin/LocalPinyinIME.dll": "7c0c62e17bdc9227dd5f27cc0999ced8c75d2e369c4e3ac97a977381aa385f79",
+    "bin/LocalPinyinImeSetup.exe": "d40a1347929432a627dd6a3a34e5dd7e1a705da96f7d1bb69f14b67d9e729d70",
+    "bin/LocalPinyinSettings.exe": "242f0d4954a6b951f8d259e9a8cfd144cea57fac25378bc187e50d332c3a0965",
+    "bin/LocalPinyinSettingsBridge.exe": "1f59fbbd27680dc156aee758d5a8999da7f63740857bee96337cc194313630c1",
+    "bin/resources/app.asar": "73f86538b34e892d933610f004faa79e6e822aa844edf8205c6bc5f19331cc44",
     "bin/resources.pak": "335d91338d271cc341cbea39179941cf043965f47aa5d1cd8ef0c98401ddcf9f",
     "bin/snapshot_blob.bin": "ec901619d6c0d2589d30e94cb60c313b49dd9c2e4334b6deeb454ac97a67ce21",
     "bin/v8_context_snapshot.bin": "883f08309bf436fb442d1903452a69c03747ed77c5f502e88667d9aa1b706556",
@@ -77,7 +78,7 @@
     "bin/vk_swiftshader_icd.json": "32d83ff113fef532a9f97e0d2831f8656628ab1c99e9060f0332b1532839afd9",
     "bin/vulkan-1.dll": "85d52af200d0020855e91477f6334b59e12167f051991b2a0bb35b9697c0c778",
     "LICENSE": "9e8eb61c0d9e2b3162e73203bda1031604ca85738f2a7247c0ed6fa53d990052",
-    "THIRD_PARTY_NOTICES.txt": "c26f210eebaf06b7293ced2345c43aa6bebaaf18e229fe787437a671a4ddbe95"
+    "THIRD_PARTY_NOTICES.txt": "e4e84dd1a4ceab6ccf178b4b48842c931b7aec0aee7c581e82eb79837d5c4efb"
   },
   "desktopChecks": [
     "Real native state and preview",
@@ -97,47 +98,47 @@
     "External navigation and windows are denied"
   ],
   "desktopScreenshotSha256": {
-    "appearance-unknown.png": "72251a8d167e67c654cc0ddeb319642bb1664b2e07a19a35df50cfb3a299bc48",
-    "appearance-empty.png": "f6283c434777b8a3e47327b0f4d59dc604525ca70646af44141d836b13c18938",
-    "navigation-appearance.png": "49c281180260bbd2cf7aa51d799555360a4939780d6edf4d953a7fdc2bd35cc3",
-    "navigation-input.png": "e11ab91a0e4f5a24ca5b900fb3a133b58c6eee3fc88791b3ff545e9f395bd14a",
-    "navigation-dictionary.png": "f7d87372d9c2e0b1df51bdb538edbf6d0c6640e1f8719f32ecbbbe8e3f6d5f96",
-    "navigation-learning.png": "463ff22c83bb61f1474dae451cd0a53642f14e4ef628c7100891b94356e79e19",
-    "navigation-about.png": "8cfb6faf73839167145e4f652595648e7fa257b27f64b22bf8e787426f6c7a70",
-    "light-1160-appearance.png": "9a566383364e401ad0d60e6c8db1a3a40ded2568f3cf2ad5320d2ae2bf244e64",
-    "light-1160-input.png": "e11ab91a0e4f5a24ca5b900fb3a133b58c6eee3fc88791b3ff545e9f395bd14a",
-    "light-1160-dictionary.png": "f7d87372d9c2e0b1df51bdb538edbf6d0c6640e1f8719f32ecbbbe8e3f6d5f96",
-    "light-1160-learning.png": "463ff22c83bb61f1474dae451cd0a53642f14e4ef628c7100891b94356e79e19",
-    "light-1160-about.png": "8cfb6faf73839167145e4f652595648e7fa257b27f64b22bf8e787426f6c7a70",
-    "light-920-appearance.png": "be38ecd67490217dc259e3857ecdb916536639b8e9ec51adbb5bf881b58f307e",
-    "light-920-input.png": "e4b4ee863a91e51a8aa99035d370b4d2bc535a3606451637ed1ff088c65a3226",
-    "light-920-dictionary.png": "3d1268579e0ba8ce4460a65715ef3311110fc0ff0966912ce20f67de9521f918",
-    "light-920-learning.png": "2d51d1eb529e5bbd4372f1cc2dbef3396839922bbd1b0e62a06d36ded20417f0",
-    "light-920-about.png": "016cc058d4efac8cbf59bcf801c159504ea4dbfc2bde9724bc5bf3b7913f3534",
-    "dark-1160-appearance.png": "d78dba63786d1b10695bbf52b4e7bae3921532a6bb25f71cf50eb5039b91bbf8",
-    "dark-1160-input.png": "853551a4826e2a645a991ae6f0aa5fe493869df64bf11054129b0d7863053d91",
-    "dark-1160-dictionary.png": "f16130324f7c473f541f72c932232d6c488cfd3d5cd68d965aad25160d1cbb41",
-    "dark-1160-learning.png": "13979ef91f40375dca5aa675ae7e590b942ca1a96d3a1460d2a87da3dca7210c",
-    "dark-1160-about.png": "661662b025e6580b01f0967e403e99710bc79af8e38d423487faed4389793eb1",
-    "dark-920-appearance.png": "1bc51c3808929fc88166ba9ad5ac02f5a2cd8af9534e67f67216a6bcb706984a",
-    "dark-920-input.png": "1b2fcddf2aa94d923637961279d8cf92861b4df79fec9bbb9c383422dd4a0f4a",
-    "dark-920-dictionary.png": "d267cbb52a508aab49e2c69260f53bf5b6f8e9b7b9bb4ed2a3ef082064dd0695",
-    "dark-920-learning.png": "f8ba86384b2ab08d32fa6faae53460b78a98d1575ed17bc69ffb8b1b4cd56c71",
-    "dark-920-about.png": "4cf08550d8b4f771bfe7ebd1d9e2068387c7e814e334bf8b153b46651c0c5f9e",
-    "paging-preview-page-1.png": "bf38f3db669f735f43080a3e2c570dcd96d8c8c03c96463bdb114523672ce6bb",
-    "paging-preview-page-2.png": "f143ceb3fcb3e5aea8279a1da99650e3278bb845aaa45da6068d4c9326cb352e",
-    "paging-preview-long-clip.png": "544ba9672a32da14c23d470bb0136915f9668d8b827afd7caf6225e77d719d0f",
-    "paging-context-page-2.png": "90f26d7523d2a6b8c5395691a2f29c9ba34d8c00cc30db6815ee7fc3c0ccc9e0",
-    "context-preview.png": "58a5e3345ac8f8a074799863417d5ffbe9fe9d6966c3025052ca4362ff9ea95b",
-    "context-preview-appended.png": "d76f9445f41591c361f8da142bc9e80bdb8ac17139551886bec09f6ab36eefd7",
-    "context-preview-disabled.png": "e6ad76e7715e25e98ee8a23c12044d752880757df9b0d89978b3f8d44b92baf7",
-    "personal-search-empty.png": "2ac67f58fa6a0a09dc2d6ce83cf7d1583d5cc25837d7e9c9305f13f2fae8e0d8",
-    "personal-word-added.png": "6a6280d4757041869b5bceb7a596d04c8c1de27d055449b8856bc5dadb027222",
-    "builtin-search-suibian.png": "e127602a26d1129013822dc155a9e1ed634b7c2cba011960c681729e60ae3da9",
-    "builtin-search-empty.png": "e69418236012cef8222dc7a89e2e88dd6a71c57d725ed65e3a18ed892468271a",
-    "learning-confirm.png": "22c9b7608a8640eb1223c81f9d1e9ec470086e32d0c0c5aa3b9258fcfb46ed8e",
-    "learning-cleared.png": "9f4b466139d40a47bbd4cad07575711c113743ab78fa5fd41e56786e2f42f6da",
-    "personal-deleted.png": "f16130324f7c473f541f72c932232d6c488cfd3d5cd68d965aad25160d1cbb41"
+    "appearance-unknown.png": "249095789f6c0cf4d8194be8ce16decd670cd5f012826888cb269a01b313adda",
+    "appearance-empty.png": "13d4c1436ed9cb4297f4c5b28d089135d78d60851eaad8cfaa2a6e73606e77af",
+    "navigation-appearance.png": "bda02e45f054eff9ef17efd4a720349c0b51df3db80f7a2adee87ce091a89f2a",
+    "navigation-input.png": "aa23fba737287462e1588d2da8754a5e02d417a87b3e8d291753007fa86dc44a",
+    "navigation-dictionary.png": "a3ef5cb77c23aa3949dec666eb506db07320a8058b90392efaa0ec00881d53b6",
+    "navigation-learning.png": "953a262eface723b78684117bc6571bdd8967c17d12dac8bef80ed5eb45b86cb",
+    "navigation-about.png": "376d72104f80ef2430bc40e1b6404e7ef87ba84c5e78acd876566fbcff5410bf",
+    "light-1160-appearance.png": "cb5b49ebe073e8ad3088c42c82c7df9ffdc8b3edc1afd2c0f01c84673c125e40",
+    "light-1160-input.png": "ee017dadda920ba5725ac6833291a67d0c50b977177e499cc112c4b7bde0af69",
+    "light-1160-dictionary.png": "b0bc4e643a407182b7b4b2e183885a1c12b8835e27db5ad502d96df3e08952c6",
+    "light-1160-learning.png": "14dd654af733f586f2eca9a019de1e5a4916e39022d8e9c0a0b4a622088e005c",
+    "light-1160-about.png": "e44e04a9561b89cfc650761e982bb8cd56e1f152e718607a8b9678d95e662fcc",
+    "light-920-appearance.png": "36738823f494f745ed335272084363d7531b5c80420d97b8aab637bdbc130593",
+    "light-920-input.png": "fc0d036d7a6c6b301248c3d3f8c53d3e6d4bab6ed353bb7e815bdd052d5988f5",
+    "light-920-dictionary.png": "be05abf9132b3a9f6a83a4c838966a9abc2e8a5bddd875fc2eec24d56cfdc57e",
+    "light-920-learning.png": "ecc48d0c02e6ba0cf1b2166ffe4c84a54879814d45ae6f955a0c4cfe0ab05cf6",
+    "light-920-about.png": "0222f28c5f89d658d43d45d5ca50894986ddd602d06e0379f642548fe0815bce",
+    "dark-1160-appearance.png": "f29029c755ad1952e15076093d22d4f7c10c28f9950d5abec82d32b8291707db",
+    "dark-1160-input.png": "223c59d5c89c6d0ae43560a0a1e7e5a4d1826c264b326ed7775849d35572b5bb",
+    "dark-1160-dictionary.png": "195c712a9009c3ea9c96b4ce0ec2cd678fcd443e5e4aa01fc4966c8bca835a13",
+    "dark-1160-learning.png": "815548fb775ddd0c1dee790bd9d19539007c97c9215301a923dbf105935e5b7a",
+    "dark-1160-about.png": "21b28b8713336a41eafa51f2a7f35ada32530b4b064dc82732029337b16a9e7a",
+    "dark-920-appearance.png": "0d1e6342c6f242050fc2457ba27f4f3033793b7ee421091e48fc942e6ff39831",
+    "dark-920-input.png": "dd7aee50904b8fc25393a132982b0c1a06d16997155e06d47e89ee156b54ddfe",
+    "dark-920-dictionary.png": "7984c5963b4f45f5fd1bd28ca5b8492936c389300246344d050319afb85d3a7d",
+    "dark-920-learning.png": "0d033d38e2df1e14a4a6a83be84401b2882332d9d7e05f44c2f576d94bf1a6f6",
+    "dark-920-about.png": "05429527ee8ec6ad19e1e6c250c9fa965e5ccf43b5ff802d4c7afc263273dece",
+    "paging-preview-page-1.png": "fabbfd42e698e05ec07ae01b1e578f147f7e1ce56b4b4cf03e1606ae055d1cf0",
+    "paging-preview-page-2.png": "720e71a5aee8e989c99c76b150ed6969c357df72d372566a40da9045c0133467",
+    "paging-preview-long-clip.png": "0335024fe3f5839ecf76461202e3dabadeb01fb8dbb7cbdd22bab71af26a76e8",
+    "paging-context-page-2.png": "0d19ad05d156bed8fda7f7972f6f907c78036e3c3bb37e32f311da922d5a1490",
+    "context-preview.png": "57220e7e8f63c71a2c7f7aeebca1ed86da6e4356f8821f5f8182ff8fa5f7a064",
+    "context-preview-appended.png": "b0b5d05d8d6922d1be7cf38fdfc1cbcaefd44fcb8f30035d4e804f0fc44ccbb5",
+    "context-preview-disabled.png": "8c9e15fd2d84cf6fa7fdbbb058d6e6c49ab779ab0f21921864cb62e86bb6c6eb",
+    "personal-search-empty.png": "cf7a0ab09171a38241820985d2239b16d27329956517dbc80df7d45a11bcab7b",
+    "personal-word-added.png": "5a47d6d1bed1a7aff7bf60b6c6339063c83ae26904c8f9e85b4b2066255a24a1",
+    "builtin-search-suibian.png": "8c8f1de4bcdd57e3b997a58469bb7a3981a19d2e35cc622b2cdd99801c320541",
+    "builtin-search-empty.png": "e2c15be80d2623898b5b97c668ef47b94848756604dafcecdbd415feab1f7367",
+    "learning-confirm.png": "644db3f88aac67bd259398ae710ede23993fa0dcd36aa76f1c12fb50c7819845",
+    "learning-cleared.png": "d23c1db0d2041de7756d7cb18e179a65b3d61ef209aa60179bbb043d10c6c99f",
+    "personal-deleted.png": "fffadca8812a34afd3ed445be36776c90d709448735693a57fa5702e9cae211b"
   },
   "gitHistoryRetained": true,
   "restoredIconAssetsSha256": {
@@ -145,8 +146,8 @@
     "assets/branding/icon/small/LocalPinyinIME-40.png": "b20b3dc72692de8db9c549a5b545cd30b56243bf486e0c2beaa4cf6853895816"
   },
   "navigationIconReferenceCommit": "de52fbced9020f9d65b9ceea221599b9d3eb47cd",
-  "engineRegressionEvidenceVersion": "0.7.3",
-  "addedDictionaryEntries": 3201,
+  "engineRegressionEvidenceVersion": "0.7.4",
+  "addedDictionaryEntries": 48562,
   "continuationAssociations": 346,
   "continuationPrefixes": 117,
   "precedingTextUtf16Limit": 32,
@@ -210,18 +211,46 @@
     "prediction-narrow-last.png": "9270788308993ea0236e264ffb5d6cc44de7d887091809309d75f8f37c4de5a8"
   },
   "addedDictionaryCoverage": {
-    "report": "../resources/dictionary/expansion/lexicon_batch_011.validation.json",
-    "cases": 3201,
-    "top1_correct": 2588,
-    "top9_present": 3201,
-    "top1_percent": 80.8497,
-    "top9_percent": 100.0,
+    "cases": 7041,
+    "top1_correct": 6441,
+    "top9_present": 7041,
     "missing_from_top9_count": 0,
-    "non_top1_count": 613,
-    "max_returned_candidate_count": 9,
-    "p50_engine_lookup_ms": 4.016,
-    "p95_engine_lookup_ms": 9.155,
-    "max_engine_lookup_ms": 18.444
+    "batches": [
+      {
+        "batch": 16,
+        "report": "../resources/dictionary/expansion/lexicon_batch_016.validation.json",
+        "report_sha256": "d9a5ff460def1cc1da579e9d4ceadbfc2c771ee86a0ce2a37b8dacfb1b4feecd",
+        "cases": 4397,
+        "top1_correct": 4179,
+        "top9_present": 4397,
+        "top1_percent": 95.0421,
+        "top9_percent": 100.0,
+        "missing_from_top9_count": 0,
+        "missing_from_top9": [],
+        "non_top1_count": 218,
+        "max_returned_candidate_count": 9,
+        "p50_engine_lookup_ms": 3.175,
+        "p95_engine_lookup_ms": 5.616,
+        "max_engine_lookup_ms": 9.216
+      },
+      {
+        "batch": 17,
+        "report": "../resources/dictionary/expansion/lexicon_batch_017.validation.json",
+        "report_sha256": "ef90bc38bbaea21a87c307f0304ea71fbd39fa2bc49f84882eab4dff78e713a6",
+        "cases": 2644,
+        "top1_correct": 2262,
+        "top9_present": 2644,
+        "top1_percent": 85.5522,
+        "top9_percent": 100.0,
+        "missing_from_top9_count": 0,
+        "missing_from_top9": [],
+        "non_top1_count": 382,
+        "max_returned_candidate_count": 9,
+        "p50_engine_lookup_ms": 3.525,
+        "p95_engine_lookup_ms": 6.399,
+        "max_engine_lookup_ms": 11.222
+      }
+    ]
   },
   "desktopSecurity": {
     "contextIsolation": true,
@@ -240,9 +269,9 @@
       "尼",
       "呢",
       "泥",
+      "鿭",
       "妳",
       "妮",
-      "腻",
       "嗯"
     ],
     "matrix": [
@@ -258,14 +287,14 @@
               "尼",
               "呢",
               "泥",
-              "妳",
-              "妮"
+              "鿭",
+              "妳"
             ]
           },
           {
             "status": "2/2",
             "candidates": [
-              "腻",
+              "妮",
               "嗯"
             ]
           }
@@ -283,14 +312,14 @@
               "尼",
               "呢",
               "泥",
-              "妳",
-              "妮"
+              "鿭",
+              "妳"
             ]
           },
           {
             "status": "2/2",
             "candidates": [
-              "腻",
+              "妮",
               "嗯"
             ]
           }
@@ -308,14 +337,14 @@
               "尼",
               "呢",
               "泥",
-              "妳",
-              "妮"
+              "鿭",
+              "妳"
             ]
           },
           {
             "status": "2/2",
             "candidates": [
-              "腻",
+              "妮",
               "嗯"
             ]
           }
@@ -333,14 +362,14 @@
               "尼",
               "呢",
               "泥",
-              "妳"
+              "鿭"
             ]
           },
           {
             "status": "2/2",
             "candidates": [
+              "妳",
               "妮",
-              "腻",
               "嗯"
             ]
           }
@@ -358,14 +387,14 @@
               "尼",
               "呢",
               "泥",
-              "妳"
+              "鿭"
             ]
           },
           {
             "status": "2/2",
             "candidates": [
+              "妳",
               "妮",
-              "腻",
               "嗯"
             ]
           }
@@ -383,14 +412,14 @@
               "尼",
               "呢",
               "泥",
-              "妳"
+              "鿭"
             ]
           },
           {
             "status": "2/2",
             "candidates": [
+              "妳",
               "妮",
-              "腻",
               "嗯"
             ]
           }
@@ -408,14 +437,14 @@
               "尼",
               "呢",
               "泥",
-              "妳"
+              "鿭"
             ]
           },
           {
             "status": "2/2",
             "candidates": [
+              "妳",
               "妮",
-              "腻",
               "嗯"
             ]
           }
@@ -438,9 +467,9 @@
             "status": "2/3",
             "candidates": [
               "泥",
+              "鿭",
               "妳",
-              "妮",
-              "腻"
+              "妮"
             ]
           },
           {
@@ -468,9 +497,9 @@
             "status": "2/3",
             "candidates": [
               "泥",
+              "鿭",
               "妳",
-              "妮",
-              "腻"
+              "妮"
             ]
           },
           {
@@ -498,9 +527,9 @@
             "status": "2/3",
             "candidates": [
               "泥",
+              "鿭",
               "妳",
-              "妮",
-              "腻"
+              "妮"
             ]
           },
           {
@@ -528,9 +557,9 @@
             "status": "2/3",
             "candidates": [
               "泥",
+              "鿭",
               "妳",
-              "妮",
-              "腻"
+              "妮"
             ]
           },
           {
@@ -558,9 +587,9 @@
             "status": "2/3",
             "candidates": [
               "泥",
+              "鿭",
               "妳",
-              "妮",
-              "腻"
+              "妮"
             ]
           },
           {
@@ -588,9 +617,9 @@
             "status": "2/3",
             "candidates": [
               "泥",
+              "鿭",
               "妳",
-              "妮",
-              "腻"
+              "妮"
             ]
           },
           {
@@ -618,9 +647,9 @@
             "status": "2/3",
             "candidates": [
               "泥",
+              "鿭",
               "妳",
-              "妮",
-              "腻"
+              "妮"
             ]
           },
           {
@@ -686,8 +715,8 @@
         "candidates": [
           "拟",
           "尼",
-          "妳",
-          "妮"
+          "鿭",
+          "妳"
         ]
       },
       {
@@ -702,8 +731,249 @@
   },
   "desktopVisualReview": {
     "screenshots": 41,
-    "allVisuallyInspected": false,
+    "allVisuallyInspected": true,
     "automatedScreenshotChecksPassed": 41,
-    "reviewSummarySha256": "d8b5a8053c41e51243df2b0faf0f7b1e121a35bfcf09133a0a84e5d95e426704"
-  }
+    "reviewSummarySha256": "f5113ea1a0ef4129f65a7b769420c2e77d4a7e6dbcfcb2d26a636cdc526b6ae5"
+  },
+  "authoredDictionaryEntries": 7041,
+  "pulledDictionaryRows": 41526,
+  "desktopViewportMeasurements": [
+    {
+      "requested": {
+        "width": 1160,
+        "height": 800
+      },
+      "actual": {
+        "width": 1160,
+        "height": 801,
+        "devicePixelRatio": 1,
+        "zoom": 1
+      },
+      "heightRounding": 2,
+      "native": {
+        "contentSize": [
+          1160,
+          800
+        ],
+        "windowSize": [
+          1160,
+          801
+        ],
+        "minimumSize": [
+          920,
+          680
+        ],
+        "scaleFactor": 1.5,
+        "platform": "win32"
+      }
+    },
+    {
+      "requested": {
+        "width": 920,
+        "height": 680
+      },
+      "actual": {
+        "width": 920,
+        "height": 682,
+        "devicePixelRatio": 1,
+        "zoom": 1
+      },
+      "heightRounding": 2,
+      "native": {
+        "contentSize": [
+          920,
+          682
+        ],
+        "windowSize": [
+          920,
+          682
+        ],
+        "minimumSize": [
+          920,
+          680
+        ],
+        "scaleFactor": 1.5,
+        "platform": "win32"
+      }
+    },
+    {
+      "requested": {
+        "width": 1160,
+        "height": 800
+      },
+      "actual": {
+        "width": 1160,
+        "height": 801,
+        "devicePixelRatio": 1,
+        "zoom": 1
+      },
+      "heightRounding": 2,
+      "native": {
+        "contentSize": [
+          1160,
+          800
+        ],
+        "windowSize": [
+          1160,
+          801
+        ],
+        "minimumSize": [
+          920,
+          680
+        ],
+        "scaleFactor": 1.5,
+        "platform": "win32"
+      }
+    },
+    {
+      "requested": {
+        "width": 920,
+        "height": 680
+      },
+      "actual": {
+        "width": 920,
+        "height": 682,
+        "devicePixelRatio": 1,
+        "zoom": 1
+      },
+      "heightRounding": 2,
+      "native": {
+        "contentSize": [
+          920,
+          682
+        ],
+        "windowSize": [
+          920,
+          682
+        ],
+        "minimumSize": [
+          920,
+          680
+        ],
+        "scaleFactor": 1.5,
+        "platform": "win32"
+      }
+    },
+    {
+      "requested": {
+        "width": 1160,
+        "height": 800
+      },
+      "actual": {
+        "width": 1160,
+        "height": 801,
+        "devicePixelRatio": 1,
+        "zoom": 1
+      },
+      "heightRounding": 2,
+      "native": {
+        "contentSize": [
+          1160,
+          800
+        ],
+        "windowSize": [
+          1160,
+          801
+        ],
+        "minimumSize": [
+          920,
+          680
+        ],
+        "scaleFactor": 1.5,
+        "platform": "win32"
+      }
+    },
+    {
+      "requested": {
+        "width": 1160,
+        "height": 800
+      },
+      "actual": {
+        "width": 1160,
+        "height": 801,
+        "devicePixelRatio": 1,
+        "zoom": 1
+      },
+      "heightRounding": 2,
+      "native": {
+        "contentSize": [
+          1160,
+          800
+        ],
+        "windowSize": [
+          1160,
+          801
+        ],
+        "minimumSize": [
+          920,
+          680
+        ],
+        "scaleFactor": 1.5,
+        "platform": "win32"
+      }
+    },
+    {
+      "requested": {
+        "width": 920,
+        "height": 680
+      },
+      "actual": {
+        "width": 920,
+        "height": 682,
+        "devicePixelRatio": 1,
+        "zoom": 1
+      },
+      "heightRounding": 2,
+      "native": {
+        "contentSize": [
+          920,
+          682
+        ],
+        "windowSize": [
+          920,
+          682
+        ],
+        "minimumSize": [
+          920,
+          680
+        ],
+        "scaleFactor": 1.5,
+        "platform": "win32"
+      }
+    },
+    {
+      "requested": {
+        "width": 1160,
+        "height": 800
+      },
+      "actual": {
+        "width": 1160,
+        "height": 801,
+        "devicePixelRatio": 1,
+        "zoom": 1
+      },
+      "heightRounding": 2,
+      "native": {
+        "contentSize": [
+          1160,
+          800
+        ],
+        "windowSize": [
+          1160,
+          801
+        ],
+        "minimumSize": [
+          920,
+          680
+        ],
+        "scaleFactor": 1.5,
+        "platform": "win32"
+      }
+    }
+  ],
+  "desktopViewportPolicy": "Widths exactly 920/1160 CSS pixels; height permits only the measured Windows client-edge rounding, bounded by min(2,ceil(display scale factor)); no timeout extension or UI changes.",
+  "upstreamCurrentCoverage": "upstream-074-current-coverage.json",
+  "latinKeyRegression": "latin-key-074-regression.json",
+  "remoteLexiconAudit": "remote-lexicon-audit-074.json",
+  "remoteLexiconReview": "../resources/dictionary/expansion/remote_074_reviewed_changes.json"
 }

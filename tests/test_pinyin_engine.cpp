@@ -121,6 +121,55 @@ int main() {
         return word.text == retention_words.back();
     }), 1);
 
+    // High-frequency spelling keys may coincide with pinyin. These synthetic
+    // names remain directly selectable, but must not form Chinese sentences
+    // unless the user explicitly selected or added that token.
+    const auto mixed_fixture = user_lexicon_root / L"mixed_fixture.tsv";
+    {
+        std::ofstream file(mixed_fixture, std::ios::binary);
+        file << localpinyin::wide_to_utf8(
+            L"yu\t雨\t9000\n"
+            L"yu\tYu\t20000\n"
+            L"xue\t雪\t9000\n"
+            L"xue\tXue\t20000\n"
+            L"yutian\t雨天\t9000\n"
+            L"yutian\tYu天\t20000\n"
+            L"mingcheng\tVeryLongLatinCompanyName\t5500\n");
+    }
+    localpinyin::PinyinEngine mixed(localpinyin::DictionaryLoadMode::Empty);
+    REQUIRE_TRUE(mixed.load_dictionary(mixed_fixture.wstring()));
+    REQUIRE_TRUE(contains(mixed.lookup(L"yu"), L"Yu"));
+    REQUIRE_TRUE(contains(mixed.lookup(L"yu", L"今天"), L"Yu"));
+    REQUIRE_TRUE(contains(mixed.lookup(L"yutian"), L"Yu天"));
+    REQUIRE_TRUE(contains(mixed.lookup(L"mingcheng"), L"VeryLongLatinCompanyName"));
+    for (const auto& key : {L"yuxue", L"yutianxue", L"yux"}) {
+        const auto choices = mixed.lookup(key);
+        REQUIRE_TRUE(!choices.empty());
+        for (const auto& choice : choices) {
+            if (choice.consumed_pinyin != 0) continue;
+            REQUIRE_TRUE(std::none_of(choice.text.begin(), choice.text.end(), [](wchar_t ch) {
+                return (ch >= L'A' && ch <= L'Z') || (ch >= L'a' && ch <= L'z');
+            }));
+        }
+    }
+    REQUIRE_TRUE(contains(mixed.lookup(L"yuxue"), L"雨雪"));
+    REQUIRE_TRUE(contains(mixed.lookup(L"yutianxue"), L"雨天雪"));
+    mixed.learn(L"yu", L"Yu");
+    REQUIRE_TRUE(contains(mixed.lookup(L"yuxue"), L"Yu雪"));
+    REQUIRE_TRUE(cleaner.clear());
+
+    const auto personal_resources = user_lexicon_root / L"mixed_resources";
+    std::filesystem::create_directories(personal_resources / L"dictionary");
+    std::filesystem::copy_file(mixed_fixture, personal_resources / L"dictionary/core_zh_pinyin.tsv");
+    const auto personal_file = user_lexicon_root / L"mixed_personal.tsv";
+    {
+        std::ofstream file(personal_file, std::ios::binary);
+        file << localpinyin::wide_to_utf8(L"yu\tYu\t20000\n");
+    }
+    localpinyin::PinyinEngine personal_mixed(localpinyin::DictionaryLoadMode::Empty);
+    REQUIRE_TRUE(personal_mixed.load_dictionary_resource_directory(personal_resources.wstring(), personal_file.wstring()));
+    REQUIRE_TRUE(contains(personal_mixed.lookup(L"yuxue"), L"Yu雪"));
+
     std::filesystem::remove_all(user_lexicon_root);
     return 0;
 }

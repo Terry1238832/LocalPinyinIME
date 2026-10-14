@@ -1,0 +1,962 @@
+{
+  "version": "0.7.4",
+  "evaluated_at_utc": "2026-10-14T06:14:53.235856+00:00",
+  "evaluation": "current_upstream_vocabulary_after_review_and_final_authoring",
+  "engine_sha256": "c8727cc3dae20af7e2ba69ff208daa535a616c1231c92185ab4a7233004818f4",
+  "runtime_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "967761ea656065ebf0557ceb346ae20e29df951eb562452cb35cbcac02bef8ad",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+    "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+    "continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e"
+  },
+  "input_sha256": "2821fc1fbdacf8f41810101d1f3923d06928c48898c7106e523b67a76e07ff5a",
+  "full_native_output_sha256": "19093e033874cca0fd5fa7f30aad03a85a2c033487a74181043135744a8e2a77",
+  "full_native_output_retained_in_git": false,
+  "method": {
+    "personal_data_isolated": true,
+    "expected_answers_learned": false,
+    "upstream_rows_not_deleted": true,
+    "all_current_stored_keys_queried": true,
+    "raw_upstream_evidence_unchanged": "remote-lexicon-audit-074.json",
+    "review_changes": "../resources/dictionary/expansion/remote_074_reviewed_changes.json"
+  },
+  "summary": {
+    "cases": 41526,
+    "top1_correct": 27006,
+    "top9_present": 41519,
+    "missing_count": 7,
+    "p50_lookup_ms": 2.398,
+    "p95_lookup_ms": 6.629,
+    "max_lookup_ms": 19.485
+  },
+  "batches": {
+    "lexicon_batch_012": {
+      "cases": 124,
+      "top1_correct": 94,
+      "top9_present": 123,
+      "missing_count": 1,
+      "p50_lookup_ms": 1.463,
+      "p95_lookup_ms": 4.055,
+      "max_lookup_ms": 6.932
+    },
+    "lexicon_batch_013": {
+      "cases": 7092,
+      "top1_correct": 4403,
+      "top9_present": 7089,
+      "missing_count": 3,
+      "p50_lookup_ms": 3.251,
+      "p95_lookup_ms": 8.246,
+      "max_lookup_ms": 18.118
+    },
+    "lexicon_batch_014": {
+      "cases": 6027,
+      "top1_correct": 3082,
+      "top9_present": 6027,
+      "missing_count": 0,
+      "p50_lookup_ms": 3.592,
+      "p95_lookup_ms": 8.184,
+      "max_lookup_ms": 19.485
+    },
+    "lexicon_batch_015": {
+      "cases": 28283,
+      "top1_correct": 19427,
+      "top9_present": 28280,
+      "missing_count": 3,
+      "p50_lookup_ms": 2.157,
+      "p95_lookup_ms": 5.231,
+      "max_lookup_ms": 14.517
+    }
+  },
+  "missing": [
+    {
+      "pinyin": "shiren",
+      "expected": "实人",
+      "source": "lexicon_batch_012",
+      "lookup_us": 361,
+      "candidates": [
+        "诗人",
+        "使人",
+        "世人",
+        "时任",
+        "是人",
+        "示人",
+        "十人",
+        "施仁",
+        "湿热"
+      ],
+      "expected_rank": 0
+    },
+    {
+      "pinyin": "lishi",
+      "expected": "砾石",
+      "source": "lexicon_batch_013",
+      "lookup_us": 546,
+      "candidates": [
+        "历史",
+        "历时",
+        "理事",
+        "李时",
+        "李石",
+        "李适",
+        "立式",
+        "力士",
+        "里"
+      ],
+      "expected_rank": 0
+    },
+    {
+      "pinyin": "redaiyushengchengdan",
+      "expected": "热带鱼生成蛋",
+      "source": "lexicon_batch_013",
+      "lookup_us": 5687,
+      "candidates": [
+        "热带雨声承担",
+        "热带雨生成蛋",
+        "热带于生成蛋",
+        "热带雨声称单",
+        "热带雨生成单",
+        "热带于生成单",
+        "热带雨声称蛋",
+        "热带鱼 生成蛋",
+        "热带"
+      ],
+      "expected_rank": 0
+    },
+    {
+      "pinyin": "zhishi",
+      "expected": "芝士",
+      "source": "lexicon_batch_013",
+      "lookup_us": 649,
+      "candidates": [
+        "只是",
+        "知识",
+        "指示",
+        "之时",
+        "致使",
+        "之事",
+        "之势",
+        "智识",
+        "知"
+      ],
+      "expected_rank": 0
+    },
+    {
+      "pinyin": "yizhi",
+      "expected": "一智",
+      "source": "lexicon_batch_015",
+      "lookup_us": 638,
+      "candidates": [
+        "遗址",
+        "一只",
+        "一致",
+        "一支",
+        "抑制",
+        "意志",
+        "移植",
+        "一直",
+        "一"
+      ],
+      "expected_rank": 0
+    },
+    {
+      "pinyin": "wangyi",
+      "expected": "王绎",
+      "source": "lexicon_batch_015",
+      "lookup_us": 556,
+      "candidates": [
+        "网易",
+        "王毅",
+        "王一",
+        "王伊",
+        "王壹",
+        "王奕",
+        "王彝",
+        "王祎",
+        "网"
+      ],
+      "expected_rank": 0
+    },
+    {
+      "pinyin": "wangyi",
+      "expected": "王逸",
+      "source": "lexicon_batch_015",
+      "lookup_us": 503,
+      "candidates": [
+        "网易",
+        "王毅",
+        "王一",
+        "王伊",
+        "王壹",
+        "王奕",
+        "王彝",
+        "王祎",
+        "网"
+      ],
+      "expected_rank": 0
+    }
+  ],
+  "daily_homophone_probe_status": "measured",
+  "daily_homophone_probes": [
+    {
+      "pinyin": "wangyi",
+      "expected": "网易",
+      "before": [
+        "网易",
+        "王毅",
+        "网以",
+        "望以",
+        "王以",
+        "网意",
+        "网义",
+        "网一",
+        "网"
+      ],
+      "raw_upstream": [
+        "王一",
+        "王伊",
+        "王壹",
+        "王奕",
+        "王彝",
+        "王祎",
+        "王绎",
+        "王逸",
+        "网"
+      ],
+      "current": [
+        "网易",
+        "王毅",
+        "王一",
+        "王伊",
+        "王壹",
+        "王奕",
+        "王彝",
+        "王祎",
+        "网"
+      ],
+      "before_rank": 1,
+      "raw_upstream_rank": 0,
+      "current_rank": 1
+    },
+    {
+      "pinyin": "yizhi",
+      "expected": "一直",
+      "before": [
+        "遗址",
+        "一只",
+        "一致",
+        "一支",
+        "抑制",
+        "意志",
+        "移植",
+        "以致",
+        "一"
+      ],
+      "raw_upstream": [
+        "一智",
+        "遗址",
+        "一只",
+        "一致",
+        "一支",
+        "抑制",
+        "意志",
+        "移植",
+        "一"
+      ],
+      "current": [
+        "遗址",
+        "一只",
+        "一致",
+        "一支",
+        "抑制",
+        "意志",
+        "移植",
+        "一直",
+        "一"
+      ],
+      "before_rank": 0,
+      "raw_upstream_rank": 0,
+      "current_rank": 8
+    },
+    {
+      "pinyin": "yizhi",
+      "expected": "一致",
+      "before": [
+        "遗址",
+        "一只",
+        "一致",
+        "一支",
+        "抑制",
+        "意志",
+        "移植",
+        "以致",
+        "一"
+      ],
+      "raw_upstream": [
+        "一智",
+        "遗址",
+        "一只",
+        "一致",
+        "一支",
+        "抑制",
+        "意志",
+        "移植",
+        "一"
+      ],
+      "current": [
+        "遗址",
+        "一只",
+        "一致",
+        "一支",
+        "抑制",
+        "意志",
+        "移植",
+        "一直",
+        "一"
+      ],
+      "before_rank": 3,
+      "raw_upstream_rank": 4,
+      "current_rank": 3
+    },
+    {
+      "pinyin": "yiqi",
+      "expected": "一起",
+      "before": [
+        "一期",
+        "仪器",
+        "以其",
+        "一齐",
+        "一汽",
+        "遗弃",
+        "以期",
+        "义气",
+        "一"
+      ],
+      "raw_upstream": [
+        "一期",
+        "仪器",
+        "以其",
+        "一齐",
+        "一汽",
+        "一起",
+        "遗器",
+        "遗弃",
+        "一"
+      ],
+      "current": [
+        "一期",
+        "仪器",
+        "以其",
+        "一齐",
+        "一汽",
+        "一起",
+        "遗器",
+        "遗弃",
+        "一"
+      ],
+      "before_rank": 0,
+      "raw_upstream_rank": 6,
+      "current_rank": 6
+    },
+    {
+      "pinyin": "yishi",
+      "expected": "意识",
+      "before": [
+        "一是",
+        "一时",
+        "已是",
+        "一事",
+        "医师",
+        "一世",
+        "遗失",
+        "亦是",
+        "一"
+      ],
+      "raw_upstream": [
+        "一是",
+        "一时",
+        "已是",
+        "一事",
+        "医师",
+        "一世",
+        "意识",
+        "遗失",
+        "一"
+      ],
+      "current": [
+        "一是",
+        "一时",
+        "已是",
+        "一事",
+        "医师",
+        "一世",
+        "意识",
+        "遗失",
+        "一"
+      ],
+      "before_rank": 0,
+      "raw_upstream_rank": 7,
+      "current_rank": 7
+    },
+    {
+      "pinyin": "tuan",
+      "expected": "图案",
+      "before": [
+        "团",
+        "途安",
+        "湍",
+        "鏄",
+        "團",
+        "疃",
+        "抟",
+        "彖",
+        "图"
+      ],
+      "raw_upstream": [
+        "团",
+        "途安",
+        "湍",
+        "鏄",
+        "图案",
+        "團",
+        "疃",
+        "抟",
+        "图"
+      ],
+      "current": [
+        "团",
+        "途安",
+        "湍",
+        "鏄",
+        "图案",
+        "團",
+        "疃",
+        "抟",
+        "图"
+      ],
+      "before_rank": 0,
+      "raw_upstream_rank": 5,
+      "current_rank": 5
+    },
+    {
+      "pinyin": "wangyi",
+      "expected": "王一",
+      "before": [
+        "网易",
+        "王毅",
+        "网以",
+        "望以",
+        "王以",
+        "网意",
+        "网义",
+        "网一",
+        "网"
+      ],
+      "raw_upstream": [
+        "王一",
+        "王伊",
+        "王壹",
+        "王奕",
+        "王彝",
+        "王祎",
+        "王绎",
+        "王逸",
+        "网"
+      ],
+      "current": [
+        "网易",
+        "王毅",
+        "王一",
+        "王伊",
+        "王壹",
+        "王奕",
+        "王彝",
+        "王祎",
+        "网"
+      ],
+      "before_rank": 0,
+      "raw_upstream_rank": 1,
+      "current_rank": 3
+    },
+    {
+      "pinyin": "wangyi",
+      "expected": "王逸",
+      "before": [
+        "网易",
+        "王毅",
+        "网以",
+        "望以",
+        "王以",
+        "网意",
+        "网义",
+        "网一",
+        "网"
+      ],
+      "raw_upstream": [
+        "王一",
+        "王伊",
+        "王壹",
+        "王奕",
+        "王彝",
+        "王祎",
+        "王绎",
+        "王逸",
+        "网"
+      ],
+      "current": [
+        "网易",
+        "王毅",
+        "王一",
+        "王伊",
+        "王壹",
+        "王奕",
+        "王彝",
+        "王祎",
+        "网"
+      ],
+      "before_rank": 0,
+      "raw_upstream_rank": 8,
+      "current_rank": 0
+    },
+    {
+      "pinyin": "yizhi",
+      "expected": "一智",
+      "before": [
+        "遗址",
+        "一只",
+        "一致",
+        "一支",
+        "抑制",
+        "意志",
+        "移植",
+        "以致",
+        "一"
+      ],
+      "raw_upstream": [
+        "一智",
+        "遗址",
+        "一只",
+        "一致",
+        "一支",
+        "抑制",
+        "意志",
+        "移植",
+        "一"
+      ],
+      "current": [
+        "遗址",
+        "一只",
+        "一致",
+        "一支",
+        "抑制",
+        "意志",
+        "移植",
+        "一直",
+        "一"
+      ],
+      "before_rank": 0,
+      "raw_upstream_rank": 1,
+      "current_rank": 0
+    },
+    {
+      "pinyin": "xingshangyangtuo",
+      "expected": "行商羊驼",
+      "before": [
+        "星上扬妥",
+        "幸上扬妥",
+        "星上扬陀",
+        "星上扬驼",
+        "幸上扬陀",
+        "星上扬托",
+        "幸上扬驼",
+        "星上扬拖",
+        "行善"
+      ],
+      "raw_upstream": [
+        "行商羊驼",
+        "星上扬妥",
+        "星商羊驼",
+        "幸上扬妥",
+        "星上扬陀",
+        "星上扬驼",
+        "星上羊驼",
+        "幸上扬陀",
+        "行善"
+      ],
+      "current": [
+        "行商羊驼",
+        "星上扬妥",
+        "星商羊驼",
+        "幸上扬妥",
+        "星上扬陀",
+        "星上扬驼",
+        "星上羊驼",
+        "幸上扬陀",
+        "行善"
+      ],
+      "before_rank": 0,
+      "raw_upstream_rank": 1,
+      "current_rank": 1
+    },
+    {
+      "pinyin": "hangshangyangtuo",
+      "expected": "行商羊驼",
+      "before": [
+        "行上扬妥",
+        "行上扬陀",
+        "行上扬驼",
+        "行上扬托",
+        "行上扬拖",
+        "行上扬脱",
+        "行上扬拓",
+        "行上扬坨",
+        "行"
+      ],
+      "raw_upstream": [
+        "行商羊驼",
+        "行上扬妥",
+        "行上扬陀",
+        "行上扬驼",
+        "行上羊驼",
+        "行商鞅妥",
+        "行上扬托",
+        "行上扬拖",
+        "行"
+      ],
+      "current": [
+        "行商羊驼",
+        "行上扬妥",
+        "行上扬陀",
+        "行上扬驼",
+        "行上羊驼",
+        "行商鞅妥",
+        "行上扬托",
+        "行上扬拖",
+        "行"
+      ],
+      "before_rank": 0,
+      "raw_upstream_rank": 1,
+      "current_rank": 1
+    },
+    {
+      "pinyin": "zhongcunyoucai",
+      "expected": "种村有菜",
+      "before": [
+        "中村油菜",
+        "中存油菜",
+        "中寸油菜",
+        "中存有菜",
+        "终村油菜",
+        "中村有菜",
+        "中存有才",
+        "中存有彩",
+        "中"
+      ],
+      "raw_upstream": [
+        "中村有菜",
+        "中村油菜",
+        "中村优菜",
+        "中存有菜",
+        "中村优彩",
+        "中存油菜",
+        "中村有才",
+        "中村友菜",
+        "中村优"
+      ],
+      "current": [
+        "中村有菜",
+        "中村油菜",
+        "中村优菜",
+        "中存有菜",
+        "中村优彩",
+        "中存油菜",
+        "中村有才",
+        "中村友菜",
+        "中村优"
+      ],
+      "before_rank": 0,
+      "raw_upstream_rank": 0,
+      "current_rank": 0
+    },
+    {
+      "pinyin": "chongcunyoucai",
+      "expected": "种村有菜",
+      "before": [
+        "充村油菜",
+        "重村油菜",
+        "充存油菜",
+        "重存油菜",
+        "充寸油菜",
+        "充存有菜",
+        "重寸油菜",
+        "重存有菜",
+        "冲"
+      ],
+      "raw_upstream": [
+        "种村有菜",
+        "充存有菜",
+        "重存有菜",
+        "充村有菜",
+        "充村油菜",
+        "重村油菜",
+        "充存油菜",
+        "重存油菜",
+        "冲"
+      ],
+      "current": [
+        "种村有菜",
+        "充存有菜",
+        "重存有菜",
+        "充村有菜",
+        "充村油菜",
+        "重村油菜",
+        "充存油菜",
+        "重存油菜",
+        "冲"
+      ],
+      "before_rank": 0,
+      "raw_upstream_rank": 1,
+      "current_rank": 1
+    },
+    {
+      "pinyin": "zheyuanyi",
+      "expected": "折原一",
+      "before": [
+        "这愿意",
+        "着愿意",
+        "者愿意",
+        "折愿意",
+        "这原意",
+        "遮愿意",
+        "哲愿意",
+        "这元以",
+        "这与"
+      ],
+      "raw_upstream": [
+        "这愿意",
+        "着愿意",
+        "者愿意",
+        "折愿意",
+        "这原意",
+        "遮愿意",
+        "哲愿意",
+        "这元以",
+        "这与"
+      ],
+      "current": [
+        "这愿意",
+        "着愿意",
+        "者愿意",
+        "折愿意",
+        "这原意",
+        "遮愿意",
+        "哲愿意",
+        "这元以",
+        "这与"
+      ],
+      "before_rank": 0,
+      "raw_upstream_rank": 0,
+      "current_rank": 0
+    },
+    {
+      "pinyin": "sheyuanyi",
+      "expected": "折原一",
+      "before": [
+        "设愿意",
+        "社愿意",
+        "蛇愿意",
+        "射愿意",
+        "舍愿意",
+        "摄愿意",
+        "涉愿意",
+        "折愿意",
+        "社员"
+      ],
+      "raw_upstream": [
+        "折原一",
+        "设愿意",
+        "社愿意",
+        "蛇愿意",
+        "射愿意",
+        "舍愿意",
+        "摄愿意",
+        "涉愿意",
+        "社员"
+      ],
+      "current": [
+        "折原一",
+        "设愿意",
+        "社愿意",
+        "蛇愿意",
+        "射愿意",
+        "舍愿意",
+        "摄愿意",
+        "涉愿意",
+        "社员"
+      ],
+      "before_rank": 0,
+      "raw_upstream_rank": 1,
+      "current_rank": 1
+    },
+    {
+      "pinyin": "letong",
+      "expected": "乐瞳",
+      "before": [
+        "了同",
+        "了通",
+        "勒同",
+        "勒通",
+        "了桶",
+        "乐同",
+        "乐通",
+        "勒桶",
+        "了"
+      ],
+      "raw_upstream": [
+        "了同",
+        "了通",
+        "勒同",
+        "勒通",
+        "了桶",
+        "乐同",
+        "乐通",
+        "勒桶",
+        "了"
+      ],
+      "current": [
+        "了同",
+        "了通",
+        "勒同",
+        "勒通",
+        "了桶",
+        "乐同",
+        "乐通",
+        "勒桶",
+        "了"
+      ],
+      "before_rank": 0,
+      "raw_upstream_rank": 0,
+      "current_rank": 0
+    },
+    {
+      "pinyin": "yuetong",
+      "expected": "乐瞳",
+      "before": [
+        "月同",
+        "越同",
+        "月通",
+        "越通",
+        "月桶",
+        "说同",
+        "越桶",
+        "粤同",
+        "月"
+      ],
+      "raw_upstream": [
+        "乐瞳",
+        "月同",
+        "越同",
+        "月通",
+        "越通",
+        "月桶",
+        "说同",
+        "越桶",
+        "月"
+      ],
+      "current": [
+        "乐瞳",
+        "月同",
+        "越同",
+        "月通",
+        "越通",
+        "月桶",
+        "说同",
+        "越桶",
+        "月"
+      ],
+      "before_rank": 0,
+      "raw_upstream_rank": 1,
+      "current_rank": 1
+    },
+    {
+      "pinyin": "mawei",
+      "expected": "马尾",
+      "before": [
+        "马尾",
+        "妈为",
+        "麻为",
+        "妈位",
+        "麻位",
+        "马为",
+        "妈味",
+        "麻味",
+        "骂"
+      ],
+      "raw_upstream": [
+        "马尾",
+        "妈为",
+        "麻为",
+        "妈位",
+        "麻位",
+        "马为",
+        "妈味",
+        "麻味",
+        "骂"
+      ],
+      "current": [
+        "马尾",
+        "妈为",
+        "麻为",
+        "妈位",
+        "麻位",
+        "马为",
+        "妈味",
+        "麻味",
+        "骂"
+      ],
+      "before_rank": 1,
+      "raw_upstream_rank": 1,
+      "current_rank": 1
+    },
+    {
+      "pinyin": "mayi",
+      "expected": "马尾",
+      "before": [
+        "蚂蚁",
+        "麻衣",
+        "妈以",
+        "麻以",
+        "马以",
+        "妈易",
+        "麻易",
+        "妈意",
+        "骂"
+      ],
+      "raw_upstream": [
+        "蚂蚁",
+        "麻衣",
+        "马尾",
+        "马奕",
+        "马异",
+        "妈以",
+        "麻以",
+        "马以",
+        "骂"
+      ],
+      "current": [
+        "蚂蚁",
+        "麻衣",
+        "马奕",
+        "马异",
+        "妈以",
+        "麻以",
+        "马以",
+        "马一",
+        "骂"
+      ],
+      "before_rank": 0,
+      "raw_upstream_rank": 3,
+      "current_rank": 0
+    }
+  ]
+}
