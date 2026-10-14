@@ -1,0 +1,610 @@
+{
+  "version": "0.7.5",
+  "baseline_version": "0.7.4",
+  "evaluated_at_utc": "2026-10-14T13:59:29.414312+00:00",
+  "method": {
+    "personal_data_isolated": true,
+    "expected_answers_learned": false,
+    "blind_evaluation": false,
+    "weights_not_adjusted_from_public_sentence_answers": true,
+    "runtime_frozen_during_evaluation": true,
+    "keystroke_benchmark_run": false,
+    "baseline_method": "Same final evaluator replaying byte-exact prior-release data, not an unavailable old binary.",
+    "raw_reports_retained_after_delivery": false
+  },
+  "engine_sha256": "8449dddae0183be06cf0f5ad90b44e4088fdcacab66bbb3776520621a89a0b5f",
+  "runtime_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "147787b3b3de2eac625d36cf1815c97c6326b7c5d16feae49a8c56b8bff0fd2d",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+    "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+    "continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e"
+  },
+  "baseline_runtime_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "967761ea656065ebf0557ceb346ae20e29df951eb562452cb35cbcac02bef8ad",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+    "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+    "continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e"
+  },
+  "data_changes": {
+    "baseline_unique_key_display_pairs": 142220,
+    "current_unique_key_display_pairs": 148282,
+    "added_key_display_pairs": 6062,
+    "removed_key_display_pairs": 0,
+    "baseline_local_core_entries": 95324,
+    "current_local_core_entries": 101386,
+    "added_local_core_rows": 6062,
+    "existing_local_core_weight_changes": [],
+    "effective_max_layer_weight_changes": [],
+    "new_full_fixture_answers": [],
+    "new_full_fixture_answer_count": 0
+  },
+  "fixtures": {
+    "fixed": {
+      "fixture": "tests/data/typing_holdout.tsv",
+      "fixture_sha256": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+      "baseline_summary": {
+        "cases": 138,
+        "top1_correct": 89,
+        "top9_present": 121,
+        "top1_percent": 64.49,
+        "top9_percent": 87.68,
+        "character_error_rate": 0.0476,
+        "p50_lookup_ms": 11.206,
+        "p95_lookup_ms": 17.628,
+        "max_lookup_ms": 25.846
+      },
+      "current_summary": {
+        "cases": 138,
+        "top1_correct": 90,
+        "top9_present": 121,
+        "top1_percent": 65.22,
+        "top9_percent": 87.68,
+        "character_error_rate": 0.0469,
+        "p50_lookup_ms": 11.608,
+        "p95_lookup_ms": 17.831,
+        "max_lookup_ms": 25.985
+      },
+      "comparison": {
+        "top1_changes": 1,
+        "top1_improvements": 1,
+        "top1_regressions": 0,
+        "top9_improvements": 0,
+        "top9_regressions": 0
+      },
+      "candidate_array_changes": [
+        {
+          "source": "article:beiying:03",
+          "pinyin": "daonanjingshiyoupengyouyuequyouguang",
+          "expected": "到南京时有朋友约去游逛",
+          "before": [
+            "到南京时有朋友约去油光",
+            "到南京时有朋友约区有光",
+            "到南京是有朋友约去油光",
+            "到南京时有朋友约去游逛",
+            "到南京是有朋友约区有光",
+            "到南京时有朋友乐曲有光",
+            "到南京时有朋友约取有光",
+            "到南京时有朋友乐曲游逛",
+            "到哪"
+          ],
+          "current": [
+            "到南京时有朋友约去油光",
+            "到南京时有朋友约区有光",
+            "到南京是有朋友约去油光",
+            "到南京时有朋友约去游逛",
+            "到南京时有朋友乐曲有光",
+            "到南京是有朋友约区有光",
+            "到南京时有朋友约取有光",
+            "到南京时有朋友乐曲游逛",
+            "到哪"
+          ],
+          "before_rank": 4,
+          "current_rank": 4
+        },
+        {
+          "source": "article:guxiang:13",
+          "pinyin": "wozhidaowuhuakeshuole",
+          "expected": "我知道无话可说了",
+          "before": [
+            "我知道无话客说了",
+            "我知道无话可说了",
+            "我知道物化可说了",
+            "我知道无话课说了",
+            "我知道无话克说了",
+            "我知道物化课说了",
+            "我知道无话科说了",
+            "我知道无话刻说了",
+            "我知道"
+          ],
+          "current": [
+            "我知道无话可说了",
+            "我知道无话客说了",
+            "我知道物化可说了",
+            "我知道无话课说了",
+            "我知道无话克说了",
+            "我知道物化课说了",
+            "我知道无话科说了",
+            "我知道无话刻说了",
+            "我知道"
+          ],
+          "before_rank": 2,
+          "current_rank": 1
+        },
+        {
+          "source": "article:yijian:06",
+          "pinyin": "lushangfuchenzaoyiguajing",
+          "expected": "路上浮尘早已刮净",
+          "before": [
+            "路上浮沉早已挂静",
+            "路上浮沉早已挂经",
+            "路上浮沉早已挂景",
+            "路上浮沉早已挂净",
+            "路上浮沉早已挂惊",
+            "路上浮沉早已挂镜",
+            "路上浮沉早已挂京",
+            "路上浮沉早已挂劲",
+            "陆上"
+          ],
+          "current": [
+            "路上浮沉早已挂静",
+            "路上浮沉早已挂经",
+            "路上浮沉早已挂景",
+            "路上浮沉早已挂净",
+            "路上浮沉早已挂惊",
+            "路上浮沉早已刮净",
+            "路上浮沉早已挂镜",
+            "路上浮沉早已挂京",
+            "陆上"
+          ],
+          "before_rank": 0,
+          "current_rank": 0
+        },
+        {
+          "source": "daily:006",
+          "pinyin": "zhegeshurufadehouxuancishunxubudui",
+          "expected": "这个输入法的候选词顺序不对",
+          "before": [
+            "这个输入法的候选词顺序不对",
+            "这个输入法的候选次顺序不对",
+            "这个输入法的候选词顺序部队",
+            "这个输入法的候选次顺序部队",
+            "这个输入法的候选词顺序部对",
+            "这个输入法的候选词顺序不队",
+            "这个输入法的候选词顺序补对",
+            "这个输入法的候选次顺序部对",
+            "这个"
+          ],
+          "current": [
+            "这个输入法的候选词顺序不对",
+            "这个输入法的候选次顺序不对",
+            "这个输入法的候选词顺序部队",
+            "这个输入法的候选次顺序部队",
+            "这个输入法的候选词顺序部对",
+            "这个输入法的候选词顺序布对",
+            "这个输入法的候选词顺序不队",
+            "这个输入法的候选词顺序补对",
+            "这个"
+          ],
+          "before_rank": 1,
+          "current_rank": 1
+        },
+        {
+          "source": "daily:007",
+          "pinyin": "wojintianbutaixiangchuquchifan",
+          "expected": "我今天不太想出去吃饭",
+          "before": [
+            "我今天不太想出去吃饭",
+            "我今天不太像出去吃饭",
+            "我今天不太想出取吃饭",
+            "我今天不太想出曲吃饭",
+            "我今天不太想出去吃烦",
+            "我今天不太想出去吃翻",
+            "我今天不太想出去吃反",
+            "我今天不太想出去吃番",
+            "握紧"
+          ],
+          "current": [
+            "我今天不太想出去吃饭",
+            "我今天不太像出去吃饭",
+            "我今天不太想出区吃饭",
+            "我今天不太想出取吃饭",
+            "我今天不太想出去吃烦",
+            "我今天不太想出去吃翻",
+            "我今天不太想出去吃反",
+            "我今天不太想出去吃番",
+            "握紧"
+          ],
+          "before_rank": 1,
+          "current_rank": 1
+        },
+        {
+          "source": "daily:011",
+          "pinyin": "fujinyoumeiyoupianyiyidiandefandian",
+          "expected": "附近有没有便宜一点的饭店",
+          "before": [
+            "附近有没有偏移一点的饭店",
+            "附近有没有便宜一点的饭店",
+            "附近有没有偏移一点的返点",
+            "附近有没有偏移一点的饭点",
+            "附近有没有偏移一点的番点",
+            "附近有没有偏移一点的繁点",
+            "附近有没有偏移一点的饭电",
+            "附近有没有便宜一点的返点",
+            "福晋"
+          ],
+          "current": [
+            "附近有没有偏移一点的饭店",
+            "附近有没有便宜一点的饭店",
+            "附近有没有偏移一点的返点",
+            "附近有没有偏移一点的饭点",
+            "附近有没有偏移一点的番点",
+            "附近有没有偏移一点的繁点",
+            "附近有没有偏移一点的饭电",
+            "附近有没有偏移一点的番店",
+            "福晋"
+          ],
+          "before_rank": 2,
+          "current_rank": 2
+        },
+        {
+          "source": "daily:025",
+          "pinyin": "nibangwobazhegedizhifuzhixialai",
+          "expected": "你帮我把这个地址复制下来",
+          "before": [
+            "你帮我把这个地址复制下来",
+            "你帮我把这个地址赋值下来",
+            "你帮我把这个地址副职下来",
+            "你帮我把这个地质复制下来",
+            "你帮我把这个地址福祉下来",
+            "你帮我把这个地址扶植下来",
+            "你帮我把这个地址肤质下来",
+            "你帮我把这个地址付之下来",
+            "你帮我"
+          ],
+          "current": [
+            "你帮我把这个地址复制下来",
+            "你帮我把这个地址赋值下来",
+            "你帮我把这个地址副职下来",
+            "你帮我把这个地址福祉下来",
+            "你帮我把这个地质复制下来",
+            "你帮我把这个地址扶植下来",
+            "你帮我把这个地址肤质下来",
+            "你帮我把这个地址付之下来",
+            "你帮我"
+          ],
+          "before_rank": 1,
+          "current_rank": 1
+        },
+        {
+          "source": "daily:030",
+          "pinyin": "womenkeyihuanyigegengjiandandebanfa",
+          "expected": "我们可以换一个更简单的办法",
+          "before": [
+            "我们可以换一个更简单的办法",
+            "我们可以换一个更简单的版发",
+            "我们可以换一个更简单地办法",
+            "我们可以换一个更简单的版法",
+            "我们可以换一个更简单得办法",
+            "我们可以换一个更简单的颁发",
+            "我们可以换一个更简单德办法",
+            "我们可以换一个更简单的版罚",
+            "我们"
+          ],
+          "current": [
+            "我们可以换一个更简单的办法",
+            "我们可以换一个更简单地办法",
+            "我们可以换一个更简单的版发",
+            "我们可以换一个更简单的版法",
+            "我们可以换一个更简单得办法",
+            "我们可以换一个更简单的颁发",
+            "我们可以换一个更简单德办法",
+            "我们可以换一个更简单的版罚",
+            "我们"
+          ],
+          "before_rank": 1,
+          "current_rank": 1
+        },
+        {
+          "source": "daily:040",
+          "pinyin": "qingbazhezhangbiaogelideneirongheduiyixia",
+          "expected": "请把这张表格里的内容核对一下",
+          "before": [
+            "请把这张表格里的内容核对一下",
+            "请把这涨表格里的内容核对一下",
+            "请把这张表格里的内容核对一吓",
+            "请把这张表格里的内容核对以下",
+            "请把这张表格里的内容和队一下",
+            "请把这张表格里的内容和堆一下",
+            "请把这张表格里的内容核对一夏",
+            "请把这张表格里的内容核对一霞",
+            "请把"
+          ],
+          "current": [
+            "请把这张表格里的内容核对一下",
+            "请把这涨表格里的内容核对一下",
+            "请把这张表格里的内容核对以下",
+            "请把这张表格里的内容核对一吓",
+            "请把这张表格里的内容和队一下",
+            "请把这张表格里的内容和堆一下",
+            "请把这张表格里的内容核对一夏",
+            "请把这张表格里的内容核对一霞",
+            "请把"
+          ],
+          "before_rank": 1,
+          "current_rank": 1
+        },
+        {
+          "source": "daily:082",
+          "pinyin": "qingwenzhefujinnaliyouxishoujian",
+          "expected": "请问这附近哪里有洗手间",
+          "before": [
+            "请问这附近哪里有洗手间",
+            "请问者附近哪里有洗手间",
+            "请问这附近哪里有吸收件",
+            "请问这附近哪里有戏收件",
+            "请问者附近哪里有吸收件",
+            "请问者附近哪里有戏收件",
+            "请问这附近哪里有洗手见",
+            "请问这附近哪里有希收件",
+            "请问"
+          ],
+          "current": [
+            "请问这附近哪里有洗手间",
+            "请问者附近哪里有洗手间",
+            "请问这附近哪里有吸收件",
+            "请问这附近哪里有戏收件",
+            "请问者附近哪里有吸收件",
+            "请问者附近哪里有戏收件",
+            "请问这附近哪里有洗手见",
+            "请问这附近哪里有洗手键",
+            "请问"
+          ],
+          "before_rank": 1,
+          "current_rank": 1
+        }
+      ]
+    },
+    "fresh": {
+      "fixture": "tests/data/typing_fresh.tsv",
+      "fixture_sha256": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+      "baseline_summary": {
+        "cases": 67,
+        "top1_correct": 38,
+        "top9_present": 52,
+        "top1_percent": 56.72,
+        "top9_percent": 77.61,
+        "character_error_rate": 0.088,
+        "p50_lookup_ms": 7.882,
+        "p95_lookup_ms": 14.075,
+        "max_lookup_ms": 16.227
+      },
+      "current_summary": {
+        "cases": 67,
+        "top1_correct": 38,
+        "top9_present": 52,
+        "top1_percent": 56.72,
+        "top9_percent": 77.61,
+        "character_error_rate": 0.088,
+        "p50_lookup_ms": 9.036,
+        "p95_lookup_ms": 15.076,
+        "max_lookup_ms": 17.129
+      },
+      "comparison": {
+        "top1_changes": 0,
+        "top1_improvements": 0,
+        "top1_regressions": 0,
+        "top9_improvements": 0,
+        "top9_regressions": 0
+      },
+      "candidate_array_changes": [
+        {
+          "source": "article:hetang:41",
+          "pinyin": "shenmedoukeyibuxiang",
+          "expected": "什么都可以不想",
+          "before": [
+            "什么都可以不想",
+            "什么都可以不像",
+            "什么都可以不相",
+            "什么都可以不象",
+            "什么都可以不向",
+            "什么都可以不详",
+            "什么都可以不香",
+            "什么都可以布箱",
+            "什么都"
+          ],
+          "current": [
+            "什么都可以不想",
+            "什么都可以不像",
+            "什么都可以不相",
+            "什么都可以不象",
+            "什么都可以不响",
+            "什么都可以不向",
+            "什么都可以不详",
+            "什么都可以不香",
+            "什么都"
+          ],
+          "before_rank": 1,
+          "current_rank": 1
+        }
+      ]
+    },
+    "independent": {
+      "fixture": "tests/data/typing_independent.tsv",
+      "fixture_sha256": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98",
+      "baseline_summary": {
+        "cases": 62,
+        "top1_correct": 25,
+        "top9_present": 33,
+        "top1_percent": 40.32,
+        "top9_percent": 53.23,
+        "character_error_rate": 0.1329,
+        "p50_lookup_ms": 10.121,
+        "p95_lookup_ms": 23.885,
+        "max_lookup_ms": 27.463
+      },
+      "current_summary": {
+        "cases": 62,
+        "top1_correct": 25,
+        "top9_present": 33,
+        "top1_percent": 40.32,
+        "top9_percent": 53.23,
+        "character_error_rate": 0.1329,
+        "p50_lookup_ms": 9.753,
+        "p95_lookup_ms": 23.64,
+        "max_lookup_ms": 26.553
+      },
+      "comparison": {
+        "top1_changes": 0,
+        "top1_improvements": 0,
+        "top1_regressions": 0,
+        "top9_improvements": 0,
+        "top9_regressions": 0
+      },
+      "candidate_array_changes": [
+        {
+          "source": "article:fengzheng:13",
+          "pinyin": "lingdingdexianchuqiaocuikelianmuyang",
+          "expected": "伶仃地显出憔悴可怜模样",
+          "before": [
+            "令定的显出憔悴可怜模样",
+            "领定的显出憔悴可怜模样",
+            "令定的显出憔悴可连模样",
+            "领定的显出憔悴可连模样",
+            "令定的显出憔悴可怜木阳",
+            "令定的显出憔悴可怜幕样",
+            "领定的显出憔悴可怜木阳",
+            "领定的显出憔悴可怜幕样",
+            "领地"
+          ],
+          "current": [
+            "令定的显出憔悴可怜模样",
+            "领定的显出憔悴可怜模样",
+            "令定的显出憔悴可连模样",
+            "领定的显出憔悴可连模样",
+            "令定的显出憔悴可怜木阳",
+            "令定的显出憔悴可怜幕样",
+            "领定的显出憔悴可怜木阳",
+            "令定的显出憔悴可怜牧羊",
+            "领地"
+          ],
+          "before_rank": 0,
+          "current_rank": 0
+        },
+        {
+          "source": "daily:independent:01",
+          "pinyin": "zhebayizizuojiulehuiyouyidianhuangdong",
+          "expected": "这把椅子坐久了会有一点晃动",
+          "before": [
+            "这把椅子坐久了会有一点晃动",
+            "这把椅子坐久了会有一点黄洞",
+            "这把椅子坐久了会有一点黄动",
+            "这把椅子坐久了会有一点黄东",
+            "这把椅子坐久了会有一点黄懂",
+            "这把椅子坐久了会有一点皇动",
+            "这把椅子坐久了会有一点慌动",
+            "这把椅子坐久了会有一点荒动",
+            "这把"
+          ],
+          "current": [
+            "这把椅子坐久了会有一点晃动",
+            "这把椅子坐久了会有一点黄洞",
+            "这把椅子坐久了会有一点黄动",
+            "这把椅子坐久了会有一点黄东",
+            "这把椅子坐久了会有一点黄懂",
+            "这把椅子坐久了会有一点黄冻",
+            "这把椅子坐久了会有一点黄冬",
+            "这把椅子坐久了会有一点皇动",
+            "这把"
+          ],
+          "before_rank": 1,
+          "current_rank": 1
+        },
+        {
+          "source": "daily:independent:02",
+          "pinyin": "mafanbakaochuangdezuoweiliugeidaihaizidechengke",
+          "expected": "麻烦把靠窗的座位留给带孩子的乘客",
+          "before": [
+            "麻烦吧靠窗的作为留给带孩子的乘客",
+            "麻烦吧靠窗的座位留给带孩子的乘客",
+            "麻烦吧靠窗的作为留给带孩子底乘客",
+            "麻烦吧靠窗的作为留给带孩子地乘客",
+            "麻烦吧靠窗的座位留给带孩子底乘客",
+            "麻烦吧靠窗的作为留给带孩子的程可",
+            "麻烦吧靠窗的座位留给带孩子地乘客",
+            "麻烦吧靠窗的座位留给带孩子的程可",
+            "麻烦"
+          ],
+          "current": [
+            "麻烦吧靠窗的作为留给带孩子的乘客",
+            "麻烦吧靠窗的座位留给带孩子的乘客",
+            "麻烦吧靠窗的作为留给带孩子底乘客",
+            "麻烦吧靠窗的作为留给带孩子地乘客",
+            "麻烦吧靠窗的作为留给带孩子的程可",
+            "麻烦吧靠窗的座位留给带孩子底乘客",
+            "麻烦吧靠窗的座位留给带孩子地乘客",
+            "麻烦吧靠窗的座位留给带孩子的程可",
+            "麻烦"
+          ],
+          "before_rank": 0,
+          "current_rank": 0
+        },
+        {
+          "source": "daily:independent:07",
+          "pinyin": "yutingyihouyuanzilidekongqitebieqingxin",
+          "expected": "雨停以后院子里的空气特别清新",
+          "before": [
+            "雨停以后院子里的空气特别清新",
+            "雨停以后院子里的空气特别轻信",
+            "雨停以后院子里的空气特别倾心",
+            "雨停以后院子里的空气特别清心",
+            "雨停以后院子里的空气特别情心",
+            "雨停以后院子里的空气特别轻心",
+            "雨停以后院子里的空气特别清信",
+            "雨停以后院子里的空气特别请新",
+            "雨"
+          ],
+          "current": [
+            "雨停以后院子里的空气特别清新",
+            "雨停以后院子里的空气特别轻信",
+            "雨停以后院子里的空气特别倾心",
+            "雨停以后院子里的空气特别清心",
+            "雨停以后院子里的空气特别轻心",
+            "雨停以后院子里的空气特别情心",
+            "雨停以后院子里的空气特别清信",
+            "雨停以后院子里的空气特别请新",
+            "雨"
+          ],
+          "before_rank": 1,
+          "current_rank": 1
+        }
+      ]
+    }
+  },
+  "overall": {
+    "baseline_summary": {
+      "cases": 267,
+      "top1_correct": 152,
+      "top9_present": 206,
+      "top1_percent": 56.93,
+      "top9_percent": 77.15,
+      "character_error_rate": 0.0763,
+      "p50_lookup_ms": 10.172,
+      "p95_lookup_ms": 18.269,
+      "max_lookup_ms": 27.463
+    },
+    "current_summary": {
+      "cases": 267,
+      "top1_correct": 153,
+      "top9_present": 206,
+      "top1_percent": 57.3,
+      "top9_percent": 77.15,
+      "character_error_rate": 0.0759,
+      "p50_lookup_ms": 10.242,
+      "p95_lookup_ms": 18.027,
+      "max_lookup_ms": 26.553
+    }
+  },
+  "scope": "Public sentence regressions evaluated through the actual native engine. No OS keyboard dispatch, installed-profile compatibility or blind general-language accuracy claim."
+}

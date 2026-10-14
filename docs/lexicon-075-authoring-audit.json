@@ -1,0 +1,353 @@
+{
+  "format_version": 1,
+  "version": "0.7.5",
+  "audited_at_utc": "2026-10-14T13:59:32.063569+00:00",
+  "status": "passed",
+  "baseline_version": "0.7.4",
+  "baseline_commit": "d62c22c94d25b40e7da7c966f7fcfd78e4530d68",
+  "method": "Independent immutable Git-blob baseline, AST-read preset policy, draft/review reconstruction, and exact canonical merge bytes; no native compilation, dictionary writes or public-answer weight adjustments.",
+  "audit_tool_sha256": "07c0a6f20322b724fd140fa27db9afb37618109c6afe31cc5bcd761896863aa1",
+  "pronunciation_dependency": "pypinyin 0.55.0, authoring only",
+  "baseline_runtime_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "967761ea656065ebf0557ceb346ae20e29df951eb562452cb35cbcac02bef8ad",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+    "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+    "continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e"
+  },
+  "runtime_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "147787b3b3de2eac625d36cf1815c97c6326b7c5d16feae49a8c56b8bff0fd2d",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+    "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+    "continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e"
+  },
+  "typing_fixture_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "complete_typing_answers_excluded": 267,
+  "baseline_local_core_entries": 95324,
+  "current_local_core_entries": 101386,
+  "baseline_three_layer_unique_pairs": 142220,
+  "current_three_layer_unique_pairs": 148282,
+  "baseline_rows_and_weights_preserved": true,
+  "runtime_exact_frozen_merge_verified": true,
+  "unchanged_other_runtime_layers": [
+    "core_zh_pinyin.tsv",
+    "standard_zh_pinyin.tsv",
+    "context_zh.tsv",
+    "continuations_zh.tsv"
+  ],
+  "all_prior_source_records_preserved_exactly": true,
+  "reviewed_source_policy_preserved": true,
+  "inherited_unregistered_metadata_source_ids": [
+    "first_party_manual_patch",
+    "first_party_targeted_input_mode_037",
+    "first_party_targeted_product_baseline_036"
+  ],
+  "current_source_registry_sha256": "7adfc05a87597017cc1f7546505ba1901d7da35df90bfa30cddea1893fb74a0d",
+  "reference_derived_batches": [
+    "lexicon_batch_012",
+    "lexicon_batch_013",
+    "lexicon_batch_014",
+    "lexicon_batch_015"
+  ],
+  "provenance_scope": "New individually authored batches are project first-party material. Existing 012–015 remain reference-derived name/title indexes with their original recorded limitations; the entire local dictionary is not described as first-party MIT material.",
+  "batches": [
+    {
+      "batch": "lexicon_batch_018",
+      "applied": true,
+      "entries": 3877,
+      "sha256": "6bea3c3c6a7f11732db13a7ccee2068de6bd9a9cfac07970bf254f1dc0c16757",
+      "authoring_tools_sha256": {
+        "build_lexicon_batch_018.py": "f78411d1e1701f94f58878259b4b597d324ecb0b269d41299ff2550a6952d9f7",
+        "apply_lexicon_batch_018.py": "a7f3f6f5a42a9e184af30c2f83ba2a74fd5258c9c0c92917241805e734ae5616",
+        "validate_lexicon_batch_018_native.py": "613aa666f9836f65a6dce6d047e17691ff7be4dab9219598eb1733ae1a7e2b4e"
+      },
+      "authoring_files_sha256": {
+        "batch018_formal_words_draft.txt": "2c54668e11e3948372a4aa879d735fc04dddf4ba5a69fd3eba8f8690a1ce4e7d",
+        "batch018_software_work_draft.txt": "d9a7f6ee3361d35e4e7ee2f28d40031ae8a24390285435b1353347a49854ebf0"
+      },
+      "reviewer_worklists_sha256": {
+        "batch018_formal_words_review.tsv": "ee80847e7512d7279a8b89a1ad9da57ec14e3ae3fcad95ab8439d38a059ac80a",
+        "batch018_software_work_review.tsv": "fa1ede173617617c1910a7b6d6ebd3e8563823365988a83c871bc73abc6cd84b"
+      },
+      "pronunciation_review_sha256": "92338c14dcb3fce4543e4fca6cf1d671b590bf01369e66e9eb32a1ae761d581d",
+      "three_layer_display_collisions": 0,
+      "full_typing_answer_matches": 0,
+      "independent_draft_selection_matches_frozen_batch": true,
+      "preset_category_weights": {
+        "formal_argument_structure": 5500,
+        "formal_reasoning_and_qualification": 5500,
+        "formal_sequence_and_connection": 6000,
+        "formal_evidence_and_inference": 5000,
+        "formal_discussion_and_contrast": 5500,
+        "formal_scope_and_emphasis": 5500,
+        "narrative_perception_and_attention": 5500,
+        "narrative_movement_and_posture": 5500,
+        "narrative_hands_and_small_actions": 5500,
+        "narrative_speech_and_reaction": 5500,
+        "narrative_expression_and_emotion": 5500,
+        "narrative_thought_and_realization": 5500,
+        "narrative_instinct_and_hesitation": 5500,
+        "narrative_silence_and_waiting": 5500,
+        "descriptive_light_and_weather": 5000,
+        "descriptive_season_and_landscape": 5000,
+        "descriptive_flowers_and_surroundings": 5000,
+        "descriptive_sound_and_senses": 5000,
+        "descriptive_appearance_and_texture": 5000,
+        "descriptive_mood_and_atmosphere": 5500,
+        "narrative_time_and_change": 5500,
+        "software_install_update": 5500,
+        "software_navigation": 5500,
+        "software_preferences": 5500,
+        "software_account_access": 5500,
+        "software_browser_downloads": 5500,
+        "software_files_archives": 5500,
+        "software_cloud_sharing": 5500,
+        "work_text_editing": 5500,
+        "work_document_layout": 5500,
+        "work_document_review": 5500,
+        "work_spreadsheet_cells": 5500,
+        "work_spreadsheet_filter": 5500,
+        "work_presentations": 5500,
+        "work_remote_meetings": 5500,
+        "work_data_cleaning": 5500,
+        "work_spreadsheet_calculation": 5000,
+        "work_charts_reporting": 5000,
+        "software_media_export": 5000,
+        "software_code_editors": 5000,
+        "software_version_control": 5000,
+        "software_review_testing": 5000,
+        "software_build_debugging": 5000,
+        "work_database_queries": 5000,
+        "software_automation": 5000,
+        "work_digital_messages": 6000,
+        "software_errors_help": 6000
+      },
+      "polyphone_review_required": 3015,
+      "polyphone_review_membership_exact": true,
+      "per_character_readings_compatible": true,
+      "context_notes_cover_every_detected_polyphone": true,
+      "note_readings_match_frozen_key": true,
+      "automatic_default_disagreements": 96,
+      "semantic_pronunciation_corrections": 90,
+      "reading_variant_choices": {
+        "安全密钥": "anquanmiyue",
+        "密钥登录": "miyuedenglu",
+        "慢慢褪去": "manmantuiqu",
+        "访问密钥": "fangwenmiyue",
+        "软件卡住了": "ruanjianqiazhule",
+        "逐渐褪去": "zhujiantuiqu"
+      },
+      "high_risk_display_counts": {
+        "卡": 5,
+        "调": 13,
+        "行": 74,
+        "重": 84,
+        "薄": 0,
+        "为": 26,
+        "着": 12,
+        "了": 50,
+        "血": 0,
+        "得": 9,
+        "的": 3
+      },
+      "linguistic_scope": "Complete contextual author review membership and key structure verified; notes are evidence of recorded decisions, not independent proof of naturalness or preferred pronunciation."
+    },
+    {
+      "batch": "lexicon_batch_019",
+      "applied": true,
+      "entries": 2185,
+      "sha256": "7df00f1d48a2097fa9521ef321de47aa03a579d9af4bb221218d546755eb5836",
+      "authoring_tools_sha256": {
+        "build_lexicon_batch_019.py": "bf09ed9b89d305d10785927fb57483339c589d2c94bfb8a7fc3b8bbbcd4e43bb",
+        "apply_lexicon_batch_019.py": "5b8201ff1b24acffe5a4f333260ee1188ccf32dc82dff808753d467f11ef0b17",
+        "validate_lexicon_batch_019_native.py": "79deabbcdeb11f5efff69c1b66b3ddaa7b5065d14e9792834fa24f24f8914156"
+      },
+      "authoring_files_sha256": {
+        "batch019_food_kitchen_draft.txt": "53583131f42a2ce5cd7bd7c9312cf0a8a335b7de8a665ad0d458c62fa0652c7a",
+        "batch019_messages_schedule_draft.txt": "a8a97a6852f85c22eb225d5be4e927231af4e47415fdee2ab882fd81aaf12808"
+      },
+      "reviewer_worklists_sha256": {
+        "batch019_food_kitchen_review.tsv": "b30102318dc2b8bf433c916eab6510d381d2e394692f4c23acc2c19ee6951f69",
+        "batch019_messages_schedule_review.tsv": "0ee8c8e444b1dbba2effc021ab3f7cc5157290747393a7c9736662716af516cc"
+      },
+      "pronunciation_review_sha256": "40470a55414d2bd25f17e1bbc87df0165297c6123cf6ac639dc842fdd962784c",
+      "three_layer_display_collisions": 0,
+      "full_typing_answer_matches": 0,
+      "independent_draft_selection_matches_frozen_batch": true,
+      "preset_category_weights": {
+        "food_grocery_selection": 5500,
+        "food_refrigeration_and_portions": 5500,
+        "food_washing_and_preparation": 5500,
+        "food_peeling_and_knife_work": 5500,
+        "food_marinating_and_seasoning": 5500,
+        "food_heat_and_pan_control": 5500,
+        "food_stir_frying_and_pan_frying": 5500,
+        "food_soups_stews_and_sauces": 5500,
+        "food_steaming_and_boiling": 5500,
+        "food_rice_and_porridge": 5500,
+        "food_leftovers_and_kitchen_cleanup": 5500,
+        "food_package_and_pantry": 5000,
+        "food_cutting_shapes": 5000,
+        "food_noodles_dough_and_wrapping": 5000,
+        "food_baking_and_cold_dishes": 5000,
+        "food_kitchen_utensils_and_setup": 5000,
+        "food_serving_and_mealtime": 6000,
+        "work_email_compose": 5500,
+        "work_email_inbox": 5500,
+        "work_email_delivery": 5500,
+        "work_calendar_events": 5500,
+        "work_calendar_invitations": 5500,
+        "work_calendar_views": 5500,
+        "work_image_annotations": 5500,
+        "work_design_collaboration": 5500,
+        "software_input_method": 5500,
+        "software_keyboard_input": 5500,
+        "software_accessibility_navigation": 5500,
+        "software_network_file_transfer": 5500,
+        "work_design_assets": 5000,
+        "software_screen_reader": 5000,
+        "work_mail_schedule_messages": 6000
+      },
+      "polyphone_review_required": 1692,
+      "polyphone_review_membership_exact": true,
+      "per_character_readings_compatible": true,
+      "context_notes_cover_every_detected_polyphone": true,
+      "note_readings_match_frozen_key": true,
+      "automatic_default_disagreements": 64,
+      "semantic_pronunciation_corrections": 53,
+      "reading_variant_choices": {
+        "削去外皮": "xiaoquwaipi",
+        "削好土豆": "xiaohaotudou",
+        "削好苹果": "xiaohaopingguo",
+        "削掉外皮": "xiaodiaowaipi",
+        "剥去外皮": "baoquwaipi",
+        "剥去虾壳": "baoquxiake",
+        "剥好虾仁": "baohaoxiaren",
+        "剥开菜叶": "baokaicaiye",
+        "剥掉外皮": "baodiaowaipi",
+        "择净菜叶": "zhaijingcaiye",
+        "饧面备用": "xingmianbeiyong"
+      },
+      "high_risk_display_counts": {
+        "卡": 1,
+        "调": 45,
+        "行": 4,
+        "重": 40,
+        "薄": 5,
+        "为": 5,
+        "着": 3,
+        "了": 24,
+        "血": 1,
+        "得": 0,
+        "的": 11
+      },
+      "linguistic_scope": "Complete contextual author review membership and key structure verified; notes are evidence of recorded decisions, not independent proof of naturalness or preferred pronunciation."
+    }
+  ],
+  "independent_linguistic_review": {
+    "status": "passed",
+    "reviewer": "lexicon_075_qa",
+    "manual_record_sha256": "1b988b797e9bc791e5e7dcfaff3e29b2425b27320155066d66cb5e8b180e59b8",
+    "batches": {
+      "lexicon_batch_018": {
+        "frozen_batch_sha256": "6bea3c3c6a7f11732db13a7ccee2068de6bd9a9cfac07970bf254f1dc0c16757",
+        "pronunciation_review_sha256": "92338c14dcb3fce4543e4fca6cf1d671b590bf01369e66e9eb32a1ae761d581d",
+        "display_words_inspected": 3877,
+        "display_reading_segments": [
+          [
+            1,
+            1000
+          ],
+          [
+            1001,
+            2000
+          ],
+          [
+            2001,
+            3000
+          ],
+          [
+            3001,
+            3877
+          ]
+        ],
+        "high_risk_display_counts": {
+          "卡": 5,
+          "调": 13,
+          "行": 74,
+          "重": 84,
+          "薄": 0,
+          "为": 26,
+          "着": 12,
+          "了": 50,
+          "血": 0,
+          "得": 9,
+          "的": 3
+        },
+        "automatic_default_disagreements_inspected": 96,
+        "findings": [
+          "All frozen display words were independently read for naturalness in four complete ordered segments; no unresolved wording issue remains after the authors revised the flagged draft expressions.",
+          "All 96 automatic default disagreements were independently read as complete words and final keys; row/line hang is distinguished from executing/parallel xing, repeated/retry/dedup chong from heavy/important zhong, aspectual zhe and structural de from other character readings.",
+          "Six legal main-key choices are separated from 90 semantic key corrections: two figurative fade expressions use tui with tun acknowledged, three authentication-key terms use yue with yao acknowledged, and software stuck uses mainland qia with colloquial/regional ka acknowledged. No existing display gets an automatic alternate-key alias.",
+          "Recorded contextual choices cover every detected polyphone and reconstruct all 3015 reviewed compound keys; this structural check supports but does not replace the independent word-level editorial review."
+        ],
+        "variant_reference_links": {
+          "褪": "https://dict.revised.moe.edu.tw/dictView.jsp?ID=2889&la=1&powerMode=0",
+          "鑰": "https://dict.variants.moe.edu.tw/dictView.jsp?ID=47761&la=1",
+          "卡": "https://dict.variants.moe.edu.tw/dictView.jsp?ID=4805&q=1",
+          "著": "https://dict.concised.moe.edu.tw/dictView.jsp?ID=29560&q=1"
+        },
+        "unresolved_findings": []
+      },
+      "lexicon_batch_019": {
+        "frozen_batch_sha256": "7df00f1d48a2097fa9521ef321de47aa03a579d9af4bb221218d546755eb5836",
+        "pronunciation_review_sha256": "40470a55414d2bd25f17e1bbc87df0165297c6123cf6ac639dc842fdd962784c",
+        "display_words_inspected": 2185,
+        "display_reading_segments": [
+          [
+            1,
+            1100
+          ],
+          [
+            1101,
+            2185
+          ]
+        ],
+        "high_risk_display_counts": {
+          "卡": 1,
+          "调": 45,
+          "行": 4,
+          "重": 40,
+          "薄": 5,
+          "为": 5,
+          "着": 3,
+          "了": 24,
+          "血": 1,
+          "得": 0,
+          "的": 11
+        },
+        "automatic_default_disagreements_inspected": 64,
+        "findings": [
+          "All 2185 frozen display words were independently read in two complete ordered segments. Draft wording issues were sent to authors before freeze and the final natural expressions were re-read; no unresolved issue remains.",
+          "All 64 default-key disagreements were independently read after the final five spoken bao choices: 53 semantic key corrections and 11 legitimate main-reading variants. Food serving uses cheng, seasoning/fire adjustment tiao, dough mixing huo, long segments chang; text rows hang, resending/reset/retry chong, scheduling diao, colour adjustment tiao, long-press chang and negated receipt mei are distinguished in context.",
+          "Eleven food main-key choices preserve legitimate alternatives: four knife-peeling xiao/xue, five hand-peeling bao/bo, dough-resting xing/tang, and picking vegetable leaves zhai/ze. Primary MOE definitions were read independently; none is described as a globally impossible default reading. Existing displays receive no new aliases.",
+          "All 1692 mandatory contextual review records cover every detected polyphone and their stated character choices reconstruct the final keys. Thin slices/thickening bao, cooked shu and blood-water xue defaults are retained after contextual review."
+        ],
+        "variant_reference_links": {
+          "削": "https://dict.concised.moe.edu.tw/dictView.jsp?ID=26873&la=0&powerMode=0",
+          "剝": "https://dict.revised.moe.edu.tw/dictView.jsp?ID=210&la=0&powerMode=0",
+          "餳": "https://dict.variants.moe.edu.tw/dictView.jsp?ID=75492&la=1",
+          "擇": "https://dict.variants.moe.edu.tw/dictView.jsp?ID=18153&la=1",
+          "薄": "https://dict.variants.moe.edu.tw/dictView.jsp?ID=38865&la=1"
+        },
+        "unresolved_findings": []
+      }
+    },
+    "scope": "Independent visual reading of every new display word, all default disagreements, and common polyphones in context; this is editorial QA, not a blind general-language accuracy result."
+  }
+}
