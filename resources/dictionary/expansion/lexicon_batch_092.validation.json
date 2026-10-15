@@ -1,0 +1,5899 @@
+{
+  "batch": "lexicon_batch_092",
+  "evaluation": "native_engine_candidate_coverage",
+  "evaluated_at_utc": "2026-10-15T05:08:11.213340+00:00",
+  "engine_sha256": "6ff136157953783aceead540e32080c9b9b8dbb409ad5c6f659b2532c64d02cc",
+  "resource_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "efdee973d19f691d9ea5978bd2b091a441ac0d4e0c683d6e166e5253aa25cf7e",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+    "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+    "continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e"
+  },
+  "frozen_batch_sha256": "51df9125c82e81e66feafa6590551c405e43242318412bc9f8a9e92037e66fc0",
+  "personal_data_isolated": true,
+  "expected_answers_learned": false,
+  "summary": {
+    "cases": 325,
+    "top1_correct": 288,
+    "top9_present": 325,
+    "top1_percent": 88.62,
+    "top9_percent": 100.0,
+    "character_error_rate": 0.0316,
+    "p50_lookup_ms": 3.28,
+    "p95_lookup_ms": 6.39,
+    "max_lookup_ms": 10.373,
+    "missing_from_top9_count": 0,
+    "missing_from_top9": [],
+    "max_returned_candidate_count": 9
+  },
+  "rows": [
+    {
+      "pinyin": "gangbanwan",
+      "expected": "刚拌完",
+      "source": "5500",
+      "lookup_us": 2776,
+      "candidates": [
+        "刚拌完",
+        "刚搬完",
+        "刚办完",
+        "刚半碗",
+        "刚班晚",
+        "刚搬晚",
+        "刚版完",
+        "刚搬碗",
+        "钢板"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangbanwan",
+      "expected": "刚搬完",
+      "source": "5500",
+      "lookup_us": 1659,
+      "candidates": [
+        "刚拌完",
+        "刚搬完",
+        "刚办完",
+        "刚半碗",
+        "刚班晚",
+        "刚搬晚",
+        "刚版完",
+        "刚搬碗",
+        "钢板"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "gangbaowan",
+      "expected": "刚包完",
+      "source": "5500",
+      "lookup_us": 2234,
+      "candidates": [
+        "刚包完",
+        "刚包晚",
+        "刚包碗",
+        "刚包玩",
+        "刚报完",
+        "刚宝完",
+        "刚报晚",
+        "刚保完",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangbeiwan",
+      "expected": "刚背完",
+      "source": "5500",
+      "lookup_us": 1584,
+      "candidates": [
+        "刚背完",
+        "刚被完",
+        "刚被晚",
+        "刚被碗",
+        "刚备晚",
+        "刚被玩",
+        "刚背晚",
+        "刚被弯",
+        "刚被"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangcawan",
+      "expected": "刚擦完",
+      "source": "5500",
+      "lookup_us": 877,
+      "candidates": [
+        "刚擦完",
+        "刚擦晚",
+        "刚擦碗",
+        "刚擦玩",
+        "刚拆完",
+        "刚擦弯",
+        "刚擦湾",
+        "刚擦丸",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangchaiwan",
+      "expected": "刚拆完",
+      "source": "5500",
+      "lookup_us": 1211,
+      "candidates": [
+        "刚拆完",
+        "刚拆晚",
+        "刚拆碗",
+        "刚拆玩",
+        "刚柴完",
+        "刚柴晚",
+        "刚差完",
+        "刚差晚",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangchaowan",
+      "expected": "刚抄完",
+      "source": "5500",
+      "lookup_us": 1438,
+      "candidates": [
+        "刚抄完",
+        "刚炒完",
+        "刚炒晚",
+        "刚抄晚",
+        "刚炒碗",
+        "刚炒玩",
+        "刚抄碗",
+        "刚超完",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangchaowan",
+      "expected": "刚炒完",
+      "source": "5500",
+      "lookup_us": 1103,
+      "candidates": [
+        "刚抄完",
+        "刚炒完",
+        "刚炒晚",
+        "刚抄晚",
+        "刚炒碗",
+        "刚炒玩",
+        "刚抄碗",
+        "刚超完",
+        "刚"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "gangchawan",
+      "expected": "刚查完",
+      "source": "5500",
+      "lookup_us": 1557,
+      "candidates": [
+        "刚查完",
+        "刚查晚",
+        "刚茶碗",
+        "刚查碗",
+        "刚查玩",
+        "刚差完",
+        "刚差晚",
+        "刚茶完",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangchiwan",
+      "expected": "刚吃完",
+      "source": "5500",
+      "lookup_us": 1977,
+      "candidates": [
+        "刚吃完",
+        "刚吃晚",
+        "港吃完",
+        "钢吃完",
+        "岗吃完",
+        "刚吃碗",
+        "缸吃完",
+        "纲吃完",
+        "钢尺"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangchuanwan",
+      "expected": "刚传完",
+      "source": "5500",
+      "lookup_us": 2805,
+      "candidates": [
+        "刚传完",
+        "刚穿完",
+        "刚传晚",
+        "刚传碗",
+        "刚传玩",
+        "刚穿晚",
+        "刚船完",
+        "刚船晚",
+        "刚出"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangdianwan",
+      "expected": "刚点完",
+      "source": "5500",
+      "lookup_us": 3733,
+      "candidates": [
+        "刚点完",
+        "刚点晚",
+        "刚店晚",
+        "刚电玩",
+        "刚点碗",
+        "刚点玩",
+        "刚点弯",
+        "刚典完",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangdiewan",
+      "expected": "刚叠完",
+      "source": "5500",
+      "lookup_us": 2491,
+      "candidates": [
+        "刚叠完",
+        "刚叠晚",
+        "刚跌完",
+        "刚叠碗",
+        "刚跌晚",
+        "刚碟完",
+        "刚叠玩",
+        "刚爹完",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangdingwan",
+      "expected": "刚订完",
+      "source": "5500",
+      "lookup_us": 2076,
+      "candidates": [
+        "刚订完",
+        "刚订晚",
+        "刚订碗",
+        "刚定完",
+        "刚顶完",
+        "刚订玩",
+        "刚定晚",
+        "刚顶晚",
+        "钢钉"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangdunwan",
+      "expected": "刚炖完",
+      "source": "5500",
+      "lookup_us": 2138,
+      "candidates": [
+        "刚炖完",
+        "刚炖晚",
+        "刚炖碗",
+        "刚顿完",
+        "刚炖玩",
+        "刚顿晚",
+        "刚吨完",
+        "刚盾完",
+        "刚度"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangfangwan",
+      "expected": "刚放完",
+      "source": "5500",
+      "lookup_us": 2159,
+      "candidates": [
+        "刚放完",
+        "刚放晚",
+        "刚放碗",
+        "刚放玩",
+        "刚方完",
+        "刚房完",
+        "刚方晚",
+        "刚房晚",
+        "刚发"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangfawan",
+      "expected": "刚发完",
+      "source": "5500",
+      "lookup_us": 1538,
+      "candidates": [
+        "刚发完",
+        "刚发晚",
+        "刚法完",
+        "刚发碗",
+        "刚发玩",
+        "刚法晚",
+        "刚伐完",
+        "刚发弯",
+        "刚发"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangfenwan",
+      "expected": "刚分完",
+      "source": "5500",
+      "lookup_us": 1430,
+      "candidates": [
+        "刚分完",
+        "刚分晚",
+        "刚份完",
+        "刚分碗",
+        "刚分玩",
+        "刚粉完",
+        "刚份晚",
+        "刚粉晚",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangfuwan",
+      "expected": "刚付完",
+      "source": "5500",
+      "lookup_us": 1773,
+      "candidates": [
+        "刚付完",
+        "刚付晚",
+        "刚复完",
+        "刚付碗",
+        "刚副完",
+        "刚付玩",
+        "刚副晚",
+        "刚服完",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganggaiwan",
+      "expected": "刚改完",
+      "source": "5500",
+      "lookup_us": 1373,
+      "candidates": [
+        "刚改完",
+        "刚盖完",
+        "刚改晚",
+        "刚盖晚",
+        "港改完",
+        "刚改碗",
+        "刚该完",
+        "刚改玩",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganggaiwan",
+      "expected": "刚盖完",
+      "source": "5500",
+      "lookup_us": 753,
+      "candidates": [
+        "刚改完",
+        "刚盖完",
+        "刚改晚",
+        "刚盖晚",
+        "港改完",
+        "刚改碗",
+        "刚该完",
+        "刚改玩",
+        "刚"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "ganggangbanwan",
+      "expected": "刚刚搬完",
+      "source": "5500",
+      "lookup_us": 3567,
+      "candidates": [
+        "刚刚搬完",
+        "刚刚办完",
+        "刚刚半碗",
+        "刚刚拌完",
+        "刚刚搬晚",
+        "刚刚班晚",
+        "刚刚搬碗",
+        "刚刚搬玩",
+        "刚刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganggangchaiwan",
+      "expected": "刚刚拆完",
+      "source": "5500",
+      "lookup_us": 2749,
+      "candidates": [
+        "刚刚拆完",
+        "刚刚拆晚",
+        "刚刚拆碗",
+        "刚刚拆玩",
+        "刚刚柴完",
+        "刚刚拆弯",
+        "刚刚拆湾",
+        "刚刚拆丸",
+        "刚刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganggangchawan",
+      "expected": "刚刚查完",
+      "source": "5500",
+      "lookup_us": 2639,
+      "candidates": [
+        "刚刚查完",
+        "刚刚查晚",
+        "刚刚查碗",
+        "刚刚查玩",
+        "刚刚茶碗",
+        "刚刚差完",
+        "刚刚差晚",
+        "刚刚茶完",
+        "刚刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganggangchiwan",
+      "expected": "刚刚吃完",
+      "source": "5500",
+      "lookup_us": 3161,
+      "candidates": [
+        "刚刚吃完",
+        "刚刚吃晚",
+        "刚刚吃碗",
+        "刚刚吃玩",
+        "刚刚吃弯",
+        "刚刚吃湾",
+        "刚刚吃丸",
+        "刚刚吃婉",
+        "刚刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganggangchuanwan",
+      "expected": "刚刚传完",
+      "source": "5500",
+      "lookup_us": 4088,
+      "candidates": [
+        "刚刚传完",
+        "刚刚穿完",
+        "刚刚传晚",
+        "刚刚传碗",
+        "刚刚传玩",
+        "刚刚穿晚",
+        "刚刚船完",
+        "刚刚传弯",
+        "刚刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganggangfawan",
+      "expected": "刚刚发完",
+      "source": "5500",
+      "lookup_us": 2496,
+      "candidates": [
+        "刚刚发完",
+        "刚刚发晚",
+        "刚刚发碗",
+        "刚刚法完",
+        "刚刚发玩",
+        "刚刚发弯",
+        "刚刚发湾",
+        "刚刚发丸",
+        "刚刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganggangfuwan",
+      "expected": "刚刚付完",
+      "source": "5500",
+      "lookup_us": 3039,
+      "candidates": [
+        "刚刚付完",
+        "刚刚付晚",
+        "刚刚付碗",
+        "刚刚复完",
+        "刚刚付玩",
+        "刚刚副完",
+        "刚刚副晚",
+        "刚刚服完",
+        "刚刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangganggaiwan",
+      "expected": "刚刚改完",
+      "source": "5500",
+      "lookup_us": 2479,
+      "candidates": [
+        "刚刚改完",
+        "刚刚盖完",
+        "刚刚改晚",
+        "刚刚改碗",
+        "刚刚改玩",
+        "刚刚盖晚",
+        "刚刚该完",
+        "刚刚该晚",
+        "刚刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangganghewan",
+      "expected": "刚刚喝完",
+      "source": "5500",
+      "lookup_us": 3066,
+      "candidates": [
+        "刚刚喝完",
+        "刚刚合晚",
+        "刚刚喝玩",
+        "刚刚喝晚",
+        "刚刚和完",
+        "刚刚喝碗",
+        "刚刚和晚",
+        "刚刚和碗",
+        "刚刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangganghuanwan",
+      "expected": "刚刚换完",
+      "source": "5500",
+      "lookup_us": 4503,
+      "candidates": [
+        "刚刚换完",
+        "刚刚还完",
+        "刚刚换晚",
+        "刚刚换碗",
+        "刚刚换玩",
+        "刚刚还玩",
+        "刚刚换弯",
+        "刚刚换湾",
+        "刚刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangganghuanwan",
+      "expected": "刚刚还完",
+      "source": "5500",
+      "lookup_us": 3862,
+      "candidates": [
+        "刚刚换完",
+        "刚刚还完",
+        "刚刚换晚",
+        "刚刚换碗",
+        "刚刚换玩",
+        "刚刚还玩",
+        "刚刚换弯",
+        "刚刚换湾",
+        "刚刚"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "ganggangjiaowan",
+      "expected": "刚刚交完",
+      "source": "5500",
+      "lookup_us": 5029,
+      "candidates": [
+        "刚刚交完",
+        "刚刚较晚",
+        "刚刚教完",
+        "刚刚交晚",
+        "刚刚交碗",
+        "刚刚交玩",
+        "刚刚叫完",
+        "刚刚叫晚",
+        "刚刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganggangjiewan",
+      "expected": "刚刚借完",
+      "source": "5500",
+      "lookup_us": 4464,
+      "candidates": [
+        "刚刚借完",
+        "刚刚接完",
+        "刚刚借晚",
+        "刚刚结玩",
+        "刚刚借碗",
+        "刚刚结完",
+        "刚刚节晚",
+        "刚刚借玩",
+        "刚刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganggangkanwan",
+      "expected": "刚刚看完",
+      "source": "5500",
+      "lookup_us": 2276,
+      "candidates": [
+        "刚刚看完",
+        "刚刚看晚",
+        "刚刚看碗",
+        "刚刚看玩",
+        "刚刚看弯",
+        "刚刚看湾",
+        "刚刚看丸",
+        "刚刚看婉",
+        "刚刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganggangliaowan",
+      "expected": "刚刚聊完",
+      "source": "5500",
+      "lookup_us": 4240,
+      "candidates": [
+        "刚刚聊完",
+        "刚刚聊晚",
+        "刚刚聊碗",
+        "刚刚聊玩",
+        "刚刚了完",
+        "刚刚了晚",
+        "刚刚料完",
+        "刚刚聊弯",
+        "刚刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganggangmaiwan",
+      "expected": "刚刚买完",
+      "source": "5500",
+      "lookup_us": 3574,
+      "candidates": [
+        "刚刚买完",
+        "刚刚卖完",
+        "刚刚买晚",
+        "刚刚买碗",
+        "刚刚买玩",
+        "刚刚买弯",
+        "刚刚买湾",
+        "刚刚买丸",
+        "刚刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganggangnawan",
+      "expected": "刚刚拿完",
+      "source": "5500",
+      "lookup_us": 2543,
+      "candidates": [
+        "刚刚拿完",
+        "刚刚那晚",
+        "刚刚拿碗",
+        "刚刚拿晚",
+        "刚刚拿玩",
+        "刚刚那完",
+        "刚刚哪完",
+        "刚刚那碗",
+        "刚刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganggangnongwan",
+      "expected": "刚刚弄完",
+      "source": "5500",
+      "lookup_us": 2787,
+      "candidates": [
+        "刚刚弄完",
+        "刚刚弄晚",
+        "刚刚弄碗",
+        "刚刚弄玩",
+        "刚刚弄弯",
+        "刚刚弄湾",
+        "刚刚弄丸",
+        "刚刚弄婉",
+        "刚刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganggangqianwan",
+      "expected": "刚刚签完",
+      "source": "5500",
+      "lookup_us": 5290,
+      "candidates": [
+        "刚刚签完",
+        "刚刚前晚",
+        "刚刚千万",
+        "刚刚前完",
+        "刚刚签晚",
+        "刚刚签碗",
+        "刚刚签玩",
+        "刚刚钱完",
+        "刚刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganggangquwan",
+      "expected": "刚刚取完",
+      "source": "5500",
+      "lookup_us": 3556,
+      "candidates": [
+        "刚刚取完",
+        "刚刚去玩",
+        "刚刚去完",
+        "刚刚去晚",
+        "刚刚取晚",
+        "刚刚去碗",
+        "刚刚取碗",
+        "刚刚取玩",
+        "刚刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganggangshiwan",
+      "expected": "刚刚试完",
+      "source": "5500",
+      "lookup_us": 3681,
+      "candidates": [
+        "刚刚试完",
+        "刚刚试玩",
+        "刚刚是晚",
+        "刚刚是完",
+        "刚刚时完",
+        "刚刚试晚",
+        "刚刚石完",
+        "刚刚十万",
+        "刚刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganggangshouwan",
+      "expected": "刚刚收完",
+      "source": "5500",
+      "lookup_us": 3099,
+      "candidates": [
+        "刚刚收完",
+        "刚刚收碗",
+        "刚刚受完",
+        "刚刚收晚",
+        "刚刚手腕",
+        "刚刚收玩",
+        "刚刚手完",
+        "刚刚手晚",
+        "刚刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganggangshuwan",
+      "expected": "刚刚数完",
+      "source": "5500",
+      "lookup_us": 2896,
+      "candidates": [
+        "刚刚数完",
+        "刚刚数万",
+        "刚刚输完",
+        "刚刚数晚",
+        "刚刚数碗",
+        "刚刚输晚",
+        "刚刚数玩",
+        "刚刚输碗",
+        "刚刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganggangsuanwan",
+      "expected": "刚刚算完",
+      "source": "5500",
+      "lookup_us": 3214,
+      "candidates": [
+        "刚刚算完",
+        "刚刚算晚",
+        "刚刚算碗",
+        "刚刚算玩",
+        "刚刚算弯",
+        "刚刚算湾",
+        "刚刚算丸",
+        "刚刚算婉",
+        "刚刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganggangtianwan",
+      "expected": "刚刚填完",
+      "source": "5500",
+      "lookup_us": 3860,
+      "candidates": [
+        "刚刚填完",
+        "刚刚天晚",
+        "刚刚田完",
+        "刚刚填晚",
+        "刚刚填碗",
+        "刚刚田晚",
+        "刚刚填玩",
+        "刚刚天完",
+        "刚刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganggangtingwan",
+      "expected": "刚刚听完",
+      "source": "5500",
+      "lookup_us": 3783,
+      "candidates": [
+        "刚刚听完",
+        "刚刚听晚",
+        "刚刚听碗",
+        "刚刚听玩",
+        "刚刚停完",
+        "刚刚停晚",
+        "刚刚挺完",
+        "刚刚停碗",
+        "刚刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganggangwenwan",
+      "expected": "刚刚问完",
+      "source": "5500",
+      "lookup_us": 3430,
+      "candidates": [
+        "刚刚问完",
+        "刚刚问晚",
+        "刚刚温婉",
+        "刚刚问碗",
+        "刚刚问玩",
+        "刚刚文完",
+        "刚刚问弯",
+        "刚刚问湾",
+        "刚刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganggangxiewan",
+      "expected": "刚刚写完",
+      "source": "5500",
+      "lookup_us": 5610,
+      "candidates": [
+        "刚刚写完",
+        "刚刚些晚",
+        "刚刚写晚",
+        "刚刚写碗",
+        "刚刚写玩",
+        "刚刚些完",
+        "刚刚写弯",
+        "刚刚写湾",
+        "刚刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganggangxiuwan",
+      "expected": "刚刚修完",
+      "source": "5500",
+      "lookup_us": 3992,
+      "candidates": [
+        "刚刚修完",
+        "刚刚修晚",
+        "刚刚修碗",
+        "刚刚修玩",
+        "刚刚秀完",
+        "刚刚休完",
+        "刚刚秀晚",
+        "刚刚修弯",
+        "刚刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganggangxiwan",
+      "expected": "刚刚洗完",
+      "source": "5500",
+      "lookup_us": 3462,
+      "candidates": [
+        "刚刚洗完",
+        "刚刚洗碗",
+        "刚刚洗晚",
+        "刚刚洗玩",
+        "刚刚洗弯",
+        "刚刚洗湾",
+        "刚刚洗丸",
+        "刚刚洗婉",
+        "刚刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganggangzhuangwan",
+      "expected": "刚刚装完",
+      "source": "5500",
+      "lookup_us": 4962,
+      "candidates": [
+        "刚刚装完",
+        "刚刚装玩",
+        "刚刚装碗",
+        "刚刚装晚",
+        "刚刚装弯",
+        "刚刚装湾",
+        "刚刚状完",
+        "刚刚装丸",
+        "刚刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganggangzuowan",
+      "expected": "刚刚做完",
+      "source": "5500",
+      "lookup_us": 3015,
+      "candidates": [
+        "刚刚做完",
+        "刚刚昨晚",
+        "刚刚做晚",
+        "刚刚做碗",
+        "刚刚做玩",
+        "刚刚作完",
+        "刚刚坐完",
+        "刚刚坐晚",
+        "刚刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganghewan",
+      "expected": "刚喝完",
+      "source": "5500",
+      "lookup_us": 1636,
+      "candidates": [
+        "刚喝完",
+        "刚合晚",
+        "刚喝玩",
+        "刚和完",
+        "刚喝晚",
+        "刚和晚",
+        "刚喝碗",
+        "刚和碗",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganghuanwan",
+      "expected": "刚换完",
+      "source": "5500",
+      "lookup_us": 2805,
+      "candidates": [
+        "刚换完",
+        "刚还完",
+        "刚换晚",
+        "刚换碗",
+        "刚换玩",
+        "刚换弯",
+        "刚换湾",
+        "刚还玩",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganghuanwan",
+      "expected": "刚还完",
+      "source": "5500",
+      "lookup_us": 2751,
+      "candidates": [
+        "刚换完",
+        "刚还完",
+        "刚换晚",
+        "刚换碗",
+        "刚换玩",
+        "刚换弯",
+        "刚换湾",
+        "刚还玩",
+        "刚"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "ganghuawan",
+      "expected": "刚画完",
+      "source": "5500",
+      "lookup_us": 1607,
+      "candidates": [
+        "刚画完",
+        "刚花完",
+        "刚画晚",
+        "刚话完",
+        "刚画碗",
+        "刚话晚",
+        "刚画玩",
+        "刚化完",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangjiangwan",
+      "expected": "刚讲完",
+      "source": "5500",
+      "lookup_us": 3505,
+      "candidates": [
+        "刚讲完",
+        "刚讲晚",
+        "刚将完",
+        "刚讲碗",
+        "刚将晚",
+        "刚讲玩",
+        "刚将碗",
+        "刚将玩",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangjiaowan",
+      "expected": "刚交完",
+      "source": "5500",
+      "lookup_us": 3173,
+      "candidates": [
+        "刚交完",
+        "刚较晚",
+        "刚教完",
+        "刚交晚",
+        "刚叫完",
+        "刚交碗",
+        "肛交完",
+        "刚叫晚",
+        "肛交"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangjiewan",
+      "expected": "刚借完",
+      "source": "5500",
+      "lookup_us": 2583,
+      "candidates": [
+        "刚借完",
+        "刚接完",
+        "刚结玩",
+        "刚结完",
+        "刚借晚",
+        "刚节晚",
+        "刚结晚",
+        "刚借碗",
+        "港姐"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangkanwan",
+      "expected": "刚看完",
+      "source": "5500",
+      "lookup_us": 1480,
+      "candidates": [
+        "刚看完",
+        "刚看晚",
+        "刚看碗",
+        "刚看玩",
+        "刚看弯",
+        "刚看湾",
+        "刚看丸",
+        "刚看婉",
+        "刚看"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangkaowan",
+      "expected": "刚烤完",
+      "source": "5500",
+      "lookup_us": 1223,
+      "candidates": [
+        "刚烤完",
+        "刚考完",
+        "刚烤晚",
+        "刚靠完",
+        "岗考完",
+        "刚靠晚",
+        "刚考晚",
+        "刚烤碗",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangliangwan",
+      "expected": "刚晾完",
+      "source": "5500",
+      "lookup_us": 3099,
+      "candidates": [
+        "刚晾完",
+        "刚亮完",
+        "刚亮晚",
+        "刚亮碗",
+        "刚亮玩",
+        "刚两碗",
+        "刚两万",
+        "刚亮弯",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganglianwan",
+      "expected": "刚练完",
+      "source": "5500",
+      "lookup_us": 2881,
+      "candidates": [
+        "刚练完",
+        "刚练晚",
+        "刚练碗",
+        "刚连完",
+        "刚练玩",
+        "刚连晚",
+        "刚脸完",
+        "刚脸晚",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangliaowan",
+      "expected": "刚聊完",
+      "source": "5500",
+      "lookup_us": 2787,
+      "candidates": [
+        "刚聊完",
+        "刚聊晚",
+        "刚聊碗",
+        "刚聊玩",
+        "刚了完",
+        "刚了晚",
+        "刚料完",
+        "刚料晚",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangmaiwan",
+      "expected": "刚买完",
+      "source": "5500",
+      "lookup_us": 2338,
+      "candidates": [
+        "刚买完",
+        "刚卖完",
+        "刚买晚",
+        "刚买碗",
+        "刚买玩",
+        "刚买弯",
+        "刚买湾",
+        "刚买丸",
+        "刚买"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangnawan",
+      "expected": "刚拿完",
+      "source": "5500",
+      "lookup_us": 1275,
+      "candidates": [
+        "刚拿完",
+        "刚那晚",
+        "刚拿碗",
+        "刚拿晚",
+        "刚那完",
+        "刚拿玩",
+        "刚哪完",
+        "刚那碗",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangnianwan",
+      "expected": "刚念完",
+      "source": "5500",
+      "lookup_us": 2828,
+      "candidates": [
+        "刚念完",
+        "刚年完",
+        "刚念晚",
+        "刚年晚",
+        "刚念碗",
+        "刚年碗",
+        "刚念玩",
+        "刚年玩",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangnongwan",
+      "expected": "刚弄完",
+      "source": "5500",
+      "lookup_us": 1229,
+      "candidates": [
+        "刚弄完",
+        "刚弄晚",
+        "刚弄碗",
+        "刚弄玩",
+        "刚浓完",
+        "刚农完",
+        "刚弄弯",
+        "刚弄湾",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangqianwan",
+      "expected": "刚签完",
+      "source": "5500",
+      "lookup_us": 2958,
+      "candidates": [
+        "刚签完",
+        "刚前晚",
+        "刚千万",
+        "刚前完",
+        "刚签晚",
+        "刚钱完",
+        "刚钱晚",
+        "刚签碗",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangqiewan",
+      "expected": "刚切完",
+      "source": "5500",
+      "lookup_us": 2621,
+      "candidates": [
+        "刚切完",
+        "刚切晚",
+        "刚切碗",
+        "刚切玩",
+        "刚且完",
+        "刚且晚",
+        "刚且碗",
+        "刚且玩",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangquwan",
+      "expected": "刚取完",
+      "source": "5500",
+      "lookup_us": 1731,
+      "candidates": [
+        "刚取完",
+        "刚去玩",
+        "刚去完",
+        "刚去晚",
+        "刚去碗",
+        "刚取晚",
+        "刚去弯",
+        "刚去湾",
+        "刚去"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangsaowan",
+      "expected": "刚扫完",
+      "source": "5500",
+      "lookup_us": 1301,
+      "candidates": [
+        "刚扫完",
+        "刚扫晚",
+        "刚扫碗",
+        "刚扫玩",
+        "刚嫂完",
+        "刚骚完",
+        "刚嫂晚",
+        "刚骚晚",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangshiwan",
+      "expected": "刚试完",
+      "source": "5500",
+      "lookup_us": 1827,
+      "candidates": [
+        "刚试完",
+        "刚是晚",
+        "刚试玩",
+        "刚是完",
+        "刚时完",
+        "刚石完",
+        "刚十万",
+        "刚石晚",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangshouwan",
+      "expected": "刚收完",
+      "source": "5500",
+      "lookup_us": 1458,
+      "candidates": [
+        "刚收完",
+        "刚收碗",
+        "刚受完",
+        "刚收晚",
+        "刚手腕",
+        "刚收玩",
+        "刚手完",
+        "刚手晚",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangshuawan",
+      "expected": "刚刷完",
+      "source": "5500",
+      "lookup_us": 1708,
+      "candidates": [
+        "刚刷完",
+        "刚刷碗",
+        "刚刷晚",
+        "港刷碗",
+        "刚刷玩",
+        "钢刷碗",
+        "岗刷碗",
+        "缸刷碗",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangshuwan",
+      "expected": "刚数完",
+      "source": "5500",
+      "lookup_us": 1667,
+      "candidates": [
+        "刚数完",
+        "刚输完",
+        "刚数万",
+        "刚数晚",
+        "刚输晚",
+        "刚数碗",
+        "刚输碗",
+        "刚数玩",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangsuanwan",
+      "expected": "刚算完",
+      "source": "5500",
+      "lookup_us": 1850,
+      "candidates": [
+        "刚算完",
+        "刚算晚",
+        "刚算碗",
+        "刚算玩",
+        "刚酸完",
+        "刚酸晚",
+        "刚算弯",
+        "刚算湾",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangtianwan",
+      "expected": "刚填完",
+      "source": "5500",
+      "lookup_us": 2646,
+      "candidates": [
+        "刚填完",
+        "刚天晚",
+        "刚田完",
+        "刚田晚",
+        "刚填晚",
+        "刚天完",
+        "刚田碗",
+        "刚填碗",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangtingwan",
+      "expected": "刚听完",
+      "source": "5500",
+      "lookup_us": 1871,
+      "candidates": [
+        "刚听完",
+        "港听完",
+        "钢听完",
+        "刚听晚",
+        "岗听完",
+        "刚停完",
+        "缸听完",
+        "纲听完",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangtuowan",
+      "expected": "刚拖完",
+      "source": "5500",
+      "lookup_us": 2115,
+      "candidates": [
+        "刚拖完",
+        "刚拖晚",
+        "刚拖碗",
+        "刚拖玩",
+        "刚拖弯",
+        "刚拖湾",
+        "刚拖丸",
+        "刚拖婉",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangwenwan",
+      "expected": "刚问完",
+      "source": "5500",
+      "lookup_us": 1681,
+      "candidates": [
+        "刚问完",
+        "刚温婉",
+        "刚问晚",
+        "刚问碗",
+        "刚问玩",
+        "刚文完",
+        "刚闻玩",
+        "刚文晚",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangxiawan",
+      "expected": "刚下完",
+      "source": "5500",
+      "lookup_us": 2702,
+      "candidates": [
+        "刚下完",
+        "刚下碗",
+        "刚下晚",
+        "刚下玩",
+        "刚下弯",
+        "刚下湾",
+        "刚下丸",
+        "刚下婉",
+        "刚下"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangxiewan",
+      "expected": "刚写完",
+      "source": "5500",
+      "lookup_us": 3334,
+      "candidates": [
+        "刚写完",
+        "刚些晚",
+        "刚写晚",
+        "刚写碗",
+        "刚写玩",
+        "港写完",
+        "钢写完",
+        "刚写弯",
+        "刚写"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangxiuwan",
+      "expected": "刚修完",
+      "source": "5500",
+      "lookup_us": 1990,
+      "candidates": [
+        "刚修完",
+        "刚修晚",
+        "刚修碗",
+        "刚修玩",
+        "刚秀完",
+        "刚休完",
+        "刚秀晚",
+        "刚休晚",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangxiwan",
+      "expected": "刚洗完",
+      "source": "5500",
+      "lookup_us": 1567,
+      "candidates": [
+        "刚洗完",
+        "刚洗碗",
+        "港洗碗",
+        "刚洗晚",
+        "港洗完",
+        "刚洗玩",
+        "钢洗完",
+        "岗洗完",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangxuanwan",
+      "expected": "刚选完",
+      "source": "5500",
+      "lookup_us": 2725,
+      "candidates": [
+        "刚选完",
+        "刚选晚",
+        "刚选碗",
+        "刚选玩",
+        "刚玄完",
+        "刚旋完",
+        "刚宣完",
+        "刚选弯",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangxuewan",
+      "expected": "刚学完",
+      "source": "5500",
+      "lookup_us": 2444,
+      "candidates": [
+        "刚学完",
+        "刚学晚",
+        "刚学碗",
+        "刚学玩",
+        "刚血完",
+        "刚雪完",
+        "刚血晚",
+        "刚雪晚",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangyuewan",
+      "expected": "刚约完",
+      "source": "5500",
+      "lookup_us": 2633,
+      "candidates": [
+        "刚约完",
+        "刚说完",
+        "刚约晚",
+        "刚说晚",
+        "刚说碗",
+        "刚月完",
+        "刚约碗",
+        "刚说玩",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangzhengwan",
+      "expected": "刚蒸完",
+      "source": "5500",
+      "lookup_us": 2595,
+      "candidates": [
+        "刚蒸完",
+        "刚蒸碗",
+        "刚整晚",
+        "刚蒸晚",
+        "刚正完",
+        "刚正晚",
+        "刚整完",
+        "刚证完",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangzhuangwan",
+      "expected": "刚装完",
+      "source": "5500",
+      "lookup_us": 2497,
+      "candidates": [
+        "刚装完",
+        "刚装玩",
+        "刚装碗",
+        "刚装晚",
+        "港装完",
+        "钢装完",
+        "岗装完",
+        "缸装完",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangzhuwan",
+      "expected": "刚煮完",
+      "source": "5500",
+      "lookup_us": 1542,
+      "candidates": [
+        "刚煮完",
+        "刚煮晚",
+        "刚柱完",
+        "刚住完",
+        "刚朱湾",
+        "刚猪完",
+        "刚主完",
+        "刚煮碗",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangzuowan",
+      "expected": "刚做完",
+      "source": "5500",
+      "lookup_us": 1496,
+      "candidates": [
+        "刚做完",
+        "刚昨晚",
+        "港做完",
+        "钢做完",
+        "岗做完",
+        "缸做完",
+        "纲做完",
+        "冈做完",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangcaichuqule",
+      "expected": "刚才出去了",
+      "source": "5500",
+      "lookup_us": 2571,
+      "candidates": [
+        "刚才出去了",
+        "刚才除去了",
+        "刚才处去了",
+        "刚才初去了",
+        "刚才楚去了",
+        "刚才触去了",
+        "刚才厨去了",
+        "刚才储去了",
+        "钢材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangcaidadianhua",
+      "expected": "刚才打电话",
+      "source": "5500",
+      "lookup_us": 4886,
+      "candidates": [
+        "刚才打电话",
+        "钢材打电话",
+        "刚才大电话",
+        "刚才搭电话",
+        "刚才达电话",
+        "刚才答电话",
+        "刚才哒电话",
+        "刚才嗒电话",
+        "钢材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangcaifaxiaoxi",
+      "expected": "刚才发消息",
+      "source": "5500",
+      "lookup_us": 6181,
+      "candidates": [
+        "刚才发消息",
+        "刚才法消息",
+        "刚才发小西",
+        "刚才发笑系",
+        "刚才发笑西",
+        "刚才发笑洗",
+        "刚才发消系",
+        "刚才发笑戏",
+        "钢材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangcaihuilaile",
+      "expected": "刚才回来了",
+      "source": "5500",
+      "lookup_us": 3312,
+      "candidates": [
+        "刚才回来了",
+        "刚才会来了",
+        "刚才灰来了",
+        "刚才辉来了",
+        "刚才汇来了",
+        "刚才惠来了",
+        "刚才毁来了",
+        "刚才慧来了",
+        "钢材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangcaihuixiaoxi",
+      "expected": "刚才回消息",
+      "source": "5500",
+      "lookup_us": 7729,
+      "candidates": [
+        "刚才会消息",
+        "刚才回消息",
+        "刚才灰消息",
+        "刚才辉消息",
+        "刚才汇消息",
+        "刚才惠消息",
+        "刚才毁消息",
+        "刚才慧消息",
+        "钢材"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "gangcaijiedianhua",
+      "expected": "刚才接电话",
+      "source": "5500",
+      "lookup_us": 8098,
+      "candidates": [
+        "刚才接电话",
+        "刚才节电话",
+        "刚才截电话",
+        "刚才借电话",
+        "刚才解电话",
+        "刚才街电话",
+        "刚才姐电话",
+        "刚才界电话",
+        "钢材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangcaijinlaile",
+      "expected": "刚才进来了",
+      "source": "5500",
+      "lookup_us": 3345,
+      "candidates": [
+        "刚才进来了",
+        "刚才近来了",
+        "刚才金来了",
+        "刚才今来了",
+        "刚才尽来了",
+        "刚才仅来了",
+        "刚才紧来了",
+        "刚才劲来了",
+        "钢材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangcaikanxiaoxi",
+      "expected": "刚才看消息",
+      "source": "5500",
+      "lookup_us": 6270,
+      "candidates": [
+        "刚才看消息",
+        "刚才砍消息",
+        "刚才刊消息",
+        "刚才坎消息",
+        "刚才堪消息",
+        "刚才侃消息",
+        "刚才槛消息",
+        "刚才勘消息",
+        "钢材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangcaimeifanying",
+      "expected": "刚才没反应",
+      "source": "5500",
+      "lookup_us": 6918,
+      "candidates": [
+        "刚才没反应",
+        "刚才没反映",
+        "刚才没饭应",
+        "刚才每反应",
+        "刚才美反应",
+        "刚才没泛应",
+        "刚才没反影",
+        "刚才梅反应",
+        "钢材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangcaimeikandao",
+      "expected": "刚才没看到",
+      "source": "5500",
+      "lookup_us": 4027,
+      "candidates": [
+        "刚才没看到",
+        "刚才每看到",
+        "刚才美看到",
+        "刚才梅看到",
+        "刚才妹看到",
+        "刚才眉看到",
+        "刚才镅看到",
+        "刚才煤看到",
+        "钢材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangcaimeikanshouji",
+      "expected": "刚才没看手机",
+      "source": "5500",
+      "lookup_us": 4487,
+      "candidates": [
+        "刚才没看手机",
+        "刚才每看手机",
+        "刚才没砍手机",
+        "刚才没刊手机",
+        "刚才没坎手机",
+        "刚才没堪手机",
+        "刚才没侃手机",
+        "刚才没槛手机",
+        "钢材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangcaimeitingdao",
+      "expected": "刚才没听到",
+      "source": "5500",
+      "lookup_us": 5130,
+      "candidates": [
+        "刚才没听到",
+        "刚才没听道",
+        "刚才没听倒",
+        "刚才没听刀",
+        "刚才没听导",
+        "刚才没听岛",
+        "刚才没听盗",
+        "刚才没听稻",
+        "钢材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangcaiquchale",
+      "expected": "刚才去查了",
+      "source": "5500",
+      "lookup_us": 2362,
+      "candidates": [
+        "刚才去查了",
+        "刚才去察了",
+        "刚才去差了",
+        "刚才去查乐",
+        "刚才去茶了",
+        "刚才去插了",
+        "刚才去岔了",
+        "刚才去叉了",
+        "钢材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangcaiquhuanle",
+      "expected": "刚才去还了",
+      "source": "5500",
+      "lookup_us": 4749,
+      "candidates": [
+        "刚才去换了",
+        "刚才去欢乐",
+        "刚才区换了",
+        "刚才取换了",
+        "刚才去患了",
+        "刚才曲换了",
+        "刚才趋缓了",
+        "刚才去还了",
+        "钢材"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "gangcaiqujiele",
+      "expected": "刚才去借了",
+      "source": "5500",
+      "lookup_us": 4621,
+      "candidates": [
+        "刚才去接了",
+        "刚才曲解了",
+        "刚才去解了",
+        "刚才区接了",
+        "刚才去借了",
+        "刚才去结了",
+        "刚才取结了",
+        "刚才区借了",
+        "钢材"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "gangcaiqukanle",
+      "expected": "刚才去看了",
+      "source": "5500",
+      "lookup_us": 1774,
+      "candidates": [
+        "刚才去看了",
+        "刚才区看了",
+        "刚才取看了",
+        "刚才曲看了",
+        "刚才佢看了",
+        "刚才屈看了",
+        "刚才娶看了",
+        "刚才趣看了",
+        "钢材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangcaiqumaile",
+      "expected": "刚才去买了",
+      "source": "5500",
+      "lookup_us": 3281,
+      "candidates": [
+        "刚才去买了",
+        "刚才区买了",
+        "刚才取买了",
+        "刚才曲买了",
+        "刚才佢买了",
+        "刚才屈买了",
+        "刚才娶买了",
+        "刚才趣买了",
+        "钢材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangcaiqunale",
+      "expected": "刚才去拿了",
+      "source": "5500",
+      "lookup_us": 1680,
+      "candidates": [
+        "刚才去哪了",
+        "刚才去拿了",
+        "刚才去那了",
+        "刚才去哪乐",
+        "刚才去拿乐",
+        "刚才去那乐",
+        "刚才去哪勒",
+        "刚才去拿勒",
+        "钢材"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "gangcaiququle",
+      "expected": "刚才去取了",
+      "source": "5500",
+      "lookup_us": 2141,
+      "candidates": [
+        "刚才去去了",
+        "刚才区去了",
+        "刚才取去了",
+        "刚才曲去了",
+        "刚才佢去了",
+        "刚才屈去了",
+        "刚才娶去了",
+        "刚才去取了",
+        "钢材"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "gangcaiquwenle",
+      "expected": "刚才去问了",
+      "source": "5500",
+      "lookup_us": 2156,
+      "candidates": [
+        "刚才去问了",
+        "刚才去稳了",
+        "刚才去吻了",
+        "刚才区稳了",
+        "刚才去问乐",
+        "刚才取稳了",
+        "刚才区问了",
+        "刚才趣闻了",
+        "钢材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangcaiquzhaole",
+      "expected": "刚才去找了",
+      "source": "5500",
+      "lookup_us": 2744,
+      "candidates": [
+        "刚才去找了",
+        "刚才去着了",
+        "刚才去找乐",
+        "刚才区着了",
+        "刚才取着了",
+        "刚才去招了",
+        "刚才去找勒",
+        "刚才去照了",
+        "钢材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangcaishangloule",
+      "expected": "刚才上楼了",
+      "source": "5500",
+      "lookup_us": 2594,
+      "candidates": [
+        "刚才上漏了",
+        "刚才商漏了",
+        "刚才伤漏了",
+        "刚才尚漏了",
+        "刚才上楼了",
+        "刚才赏漏了",
+        "刚才上楼乐",
+        "刚才上喽了",
+        "钢材"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "gangcaishoujijingyin",
+      "expected": "刚才手机静音",
+      "source": "5500",
+      "lookup_us": 8783,
+      "candidates": [
+        "刚才手机静音",
+        "刚才收集静音",
+        "刚才手记静音",
+        "刚才手机景音",
+        "刚才手机境因",
+        "刚才手机经因",
+        "刚才手机境音",
+        "刚才手机静因",
+        "钢材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangcaishoujimeidian",
+      "expected": "刚才手机没电",
+      "source": "5500",
+      "lookup_us": 7326,
+      "candidates": [
+        "刚才手机没电",
+        "刚才手机没点",
+        "刚才手机没店",
+        "刚才手机煤电",
+        "刚才手机没垫",
+        "刚才手机美电",
+        "刚才手机每点",
+        "刚才手机美点",
+        "钢材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangcaiwangluobuhao",
+      "expected": "刚才网络不好",
+      "source": "5500",
+      "lookup_us": 5578,
+      "candidates": [
+        "刚才网络不好",
+        "刚才网络不号",
+        "刚才忘络不好",
+        "刚才忘落不好",
+        "刚才网罗不好",
+        "刚才网络部好",
+        "刚才网络部号",
+        "刚才网络步好",
+        "钢材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangcaixialoule",
+      "expected": "刚才下楼了",
+      "source": "5500",
+      "lookup_us": 2921,
+      "candidates": [
+        "刚才下楼了",
+        "刚才下漏了",
+        "刚才夏漏了",
+        "刚才吓漏了",
+        "刚才下楼乐",
+        "刚才虾漏了",
+        "刚才霞漏了",
+        "刚才瞎漏了",
+        "钢材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangcaixinhaobuhao",
+      "expected": "刚才信号不好",
+      "source": "5500",
+      "lookup_us": 4302,
+      "candidates": [
+        "刚才信号不好",
+        "刚才新好不好",
+        "刚才心好不好",
+        "刚才新毫不好",
+        "刚才心毫不好",
+        "刚才新号不好",
+        "刚才信号补好",
+        "刚才信号步好",
+        "钢材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangcaizoukaile",
+      "expected": "刚才走开了",
+      "source": "5500",
+      "lookup_us": 1388,
+      "candidates": [
+        "刚才走开了",
+        "刚才奏开了",
+        "刚才邹开了",
+        "刚才揍开了",
+        "刚才走开乐",
+        "刚才诹开了",
+        "刚才驺开了",
+        "刚才走凯了",
+        "钢材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangchuchaoshi",
+      "expected": "刚出超市",
+      "source": "5500",
+      "lookup_us": 2616,
+      "candidates": [
+        "刚出超市",
+        "刚出超时",
+        "刚出超是",
+        "刚出潮湿",
+        "刚出超事",
+        "刚出超式",
+        "刚出炒时",
+        "刚出超试",
+        "刚出"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangchudianti",
+      "expected": "刚出电梯",
+      "source": "5500",
+      "lookup_us": 3931,
+      "candidates": [
+        "刚出电梯",
+        "刚出点提",
+        "刚出点题",
+        "刚出点体",
+        "刚出电提",
+        "刚出电题",
+        "刚出电体",
+        "刚出店提",
+        "刚出"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangchufandian",
+      "expected": "刚出饭店",
+      "source": "5500",
+      "lookup_us": 4639,
+      "candidates": [
+        "刚出饭店",
+        "刚出返点",
+        "刚出范点",
+        "刚出饭点",
+        "刚出反点",
+        "刚出饭电",
+        "刚出反店",
+        "刚出反电",
+        "刚出发"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangchuloudao",
+      "expected": "刚出楼道",
+      "source": "5500",
+      "lookup_us": 2615,
+      "candidates": [
+        "刚出楼道",
+        "刚出楼到",
+        "刚出楼倒",
+        "刚出漏到",
+        "刚出喽到",
+        "刚出露到",
+        "刚出楼刀",
+        "刚处楼道",
+        "刚出"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangchushangchang",
+      "expected": "刚出商场",
+      "source": "5500",
+      "lookup_us": 4660,
+      "candidates": [
+        "刚出商场",
+        "刚出上唱",
+        "刚出上场",
+        "刚出上常",
+        "刚出商长",
+        "刚出商唱",
+        "刚出商常",
+        "刚出上长",
+        "刚出"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangchuxiaoqu",
+      "expected": "刚出小区",
+      "source": "5500",
+      "lookup_us": 5025,
+      "candidates": [
+        "刚出小区",
+        "刚出小曲",
+        "刚出校去",
+        "刚出小去",
+        "刚出小取",
+        "刚出笑去",
+        "刚出小觑",
+        "刚出消去",
+        "刚出"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangcongcheshangxialai",
+      "expected": "刚从车上下来",
+      "source": "5500",
+      "lookup_us": 5069,
+      "candidates": [
+        "刚从车上下来",
+        "刚从扯上下来",
+        "刚从车商下来",
+        "刚从车伤下来",
+        "刚从车尚下来",
+        "刚从车赏下来",
+        "刚从扯商下来",
+        "刚从扯伤下来",
+        "刚从"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangcongjiachulai",
+      "expected": "刚从家出来",
+      "source": "5500",
+      "lookup_us": 3733,
+      "candidates": [
+        "刚从家出来",
+        "刚从架出来",
+        "刚从嫁出来",
+        "刚从夹出来",
+        "刚从加出来",
+        "刚从假出来",
+        "刚从价出来",
+        "刚从甲出来",
+        "刚从"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangcongwaimianhuilai",
+      "expected": "刚从外面回来",
+      "source": "5500",
+      "lookup_us": 4892,
+      "candidates": [
+        "刚从外面回来",
+        "刚葱外面回来",
+        "刚从外面会来",
+        "刚从外免回来",
+        "刚从外棉回来",
+        "刚从外眠回来",
+        "刚从外绵回来",
+        "刚葱外面会来",
+        "刚从"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangdaobangongshi",
+      "expected": "刚到办公室",
+      "source": "5500",
+      "lookup_us": 4026,
+      "candidates": [
+        "刚到办公室",
+        "刚到办公式",
+        "刚道办公室",
+        "刚到办公时",
+        "刚到办公事",
+        "刚到办公是",
+        "刚到办公示",
+        "刚到办公试",
+        "刚到"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangdaochezhan",
+      "expected": "刚到车站",
+      "source": "5500",
+      "lookup_us": 2419,
+      "candidates": [
+        "刚到车站",
+        "刚倒车站",
+        "刚到车展",
+        "刚道车站",
+        "刚刀车站",
+        "刚导车站",
+        "刚岛车站",
+        "刚盗车站",
+        "刚到"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangdaodianli",
+      "expected": "刚到店里",
+      "source": "5500",
+      "lookup_us": 4679,
+      "candidates": [
+        "刚到店里",
+        "刚到电力",
+        "刚道店里",
+        "刚倒店里",
+        "刚刀店里",
+        "刚导店里",
+        "刚岛店里",
+        "刚盗店里",
+        "刚到"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangdaoditiezhan",
+      "expected": "刚到地铁站",
+      "source": "5500",
+      "lookup_us": 4673,
+      "candidates": [
+        "刚到地铁站",
+        "刚倒地铁站",
+        "刚到地铁展",
+        "刚到地铁粘",
+        "刚到第铁站",
+        "刚到底铁站",
+        "刚到地铁盏",
+        "刚到地铁斩",
+        "刚到"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangdaofujin",
+      "expected": "刚到附近",
+      "source": "5500",
+      "lookup_us": 4047,
+      "candidates": [
+        "刚到附近",
+        "港到附近",
+        "刚道附近",
+        "刚倒附近",
+        "刚刀附近",
+        "刚导附近",
+        "刚岛附近",
+        "刚盗附近",
+        "刚到"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangdaotingchechang",
+      "expected": "刚到停车场",
+      "source": "5500",
+      "lookup_us": 4294,
+      "candidates": [
+        "刚到停车场",
+        "刚到停车长",
+        "刚道停车场",
+        "刚到停车唱",
+        "刚到停车常",
+        "刚到停车厂",
+        "刚道停车长",
+        "刚到停车猖",
+        "刚到"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangdaoxiaoqu",
+      "expected": "刚到小区",
+      "source": "5500",
+      "lookup_us": 5400,
+      "candidates": [
+        "刚到小区",
+        "刚到小曲",
+        "刚到校去",
+        "刚到消去",
+        "刚到小去",
+        "刚到小取",
+        "刚到小觑",
+        "刚到校区",
+        "刚到"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganggangshanglou",
+      "expected": "刚刚上楼",
+      "source": "5500",
+      "lookup_us": 3155,
+      "candidates": [
+        "刚刚上楼",
+        "刚刚上漏",
+        "刚刚上陋",
+        "刚刚商楼",
+        "刚刚伤楼",
+        "刚刚上喽",
+        "刚刚尚楼",
+        "刚刚上露",
+        "刚刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganggangxialou",
+      "expected": "刚刚下楼",
+      "source": "5500",
+      "lookup_us": 3060,
+      "candidates": [
+        "刚刚下楼",
+        "刚刚下漏",
+        "刚刚下陋",
+        "刚刚下喽",
+        "刚刚下露",
+        "刚刚下搂",
+        "刚刚下娄",
+        "刚刚夏楼",
+        "刚刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganghuidaobangongshi",
+      "expected": "刚回到办公室",
+      "source": "5500",
+      "lookup_us": 6639,
+      "candidates": [
+        "刚回到办公室",
+        "港回到办公室",
+        "刚回到办公式",
+        "刚回到办公时",
+        "刚回到办公事",
+        "刚回到办公是",
+        "刚回到办公示",
+        "刚回到办公试",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganghuidaogongsi",
+      "expected": "刚回到公司",
+      "source": "5500",
+      "lookup_us": 3848,
+      "candidates": [
+        "刚回到公司",
+        "港回到公司",
+        "刚回到共思",
+        "刚回到共死",
+        "刚回到工思",
+        "刚回到工死",
+        "刚回到公私",
+        "刚回到共丝",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganghuidaojiali",
+      "expected": "刚回到家里",
+      "source": "5500",
+      "lookup_us": 5382,
+      "candidates": [
+        "刚回到家里",
+        "港回到家里",
+        "刚回到家利",
+        "刚回到家立",
+        "刚回到家丽",
+        "刚回到家礼",
+        "刚回到家力",
+        "刚回到家理",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganghuidaolouxia",
+      "expected": "刚回到楼下",
+      "source": "5500",
+      "lookup_us": 4286,
+      "candidates": [
+        "刚回到楼下",
+        "港回到楼下",
+        "刚会道楼下",
+        "刚回到漏下",
+        "刚回道楼下",
+        "刚回倒楼下",
+        "刚回刀楼下",
+        "刚回导楼下",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganghuidaomenkou",
+      "expected": "刚回到门口",
+      "source": "5500",
+      "lookup_us": 3744,
+      "candidates": [
+        "刚回到门口",
+        "港回到门口",
+        "刚会道门口",
+        "刚回道门口",
+        "刚回盗门口",
+        "刚回倒门口",
+        "刚回刀门口",
+        "刚回导门口",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganghuidaosushe",
+      "expected": "刚回到宿舍",
+      "source": "5500",
+      "lookup_us": 2648,
+      "candidates": [
+        "刚回到宿舍",
+        "港回到宿舍",
+        "刚回到宿蛇",
+        "刚回到素蛇",
+        "刚回到苏蛇",
+        "刚回到速蛇",
+        "刚回到宿设",
+        "刚回到宿社",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganghuidaoxiaoqu",
+      "expected": "刚回到小区",
+      "source": "5500",
+      "lookup_us": 5752,
+      "candidates": [
+        "刚回到小曲",
+        "刚回到小区",
+        "刚回到校去",
+        "刚回到消去",
+        "刚回到小去",
+        "刚回到小取",
+        "港回到小曲",
+        "刚回到校区",
+        "刚"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "ganghuidaoxuexiao",
+      "expected": "刚回到学校",
+      "source": "5500",
+      "lookup_us": 6900,
+      "candidates": [
+        "刚回到学校",
+        "港回到学校",
+        "刚回导学校",
+        "刚会道学校",
+        "刚回到学小",
+        "刚会导学校",
+        "刚回道学校",
+        "刚回倒学校",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangjinchaoshi",
+      "expected": "刚进超市",
+      "source": "5500",
+      "lookup_us": 3283,
+      "candidates": [
+        "刚进超市",
+        "刚进超时",
+        "刚进超是",
+        "刚进潮湿",
+        "刚进超事",
+        "刚进超式",
+        "刚进超试",
+        "刚进炒时",
+        "钢筋"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangjindianti",
+      "expected": "刚进电梯",
+      "source": "5500",
+      "lookup_us": 4342,
+      "candidates": [
+        "刚进电梯",
+        "刚进店提",
+        "刚进点提",
+        "刚进电提",
+        "刚进点题",
+        "刚进电题",
+        "刚进点体",
+        "刚进店题",
+        "钢筋"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangjinfandian",
+      "expected": "刚进饭店",
+      "source": "5500",
+      "lookup_us": 5228,
+      "candidates": [
+        "刚进饭店",
+        "刚进返点",
+        "刚进饭点",
+        "刚进范点",
+        "刚进饭电",
+        "刚进反点",
+        "刚进烦点",
+        "刚进翻点",
+        "钢筋"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangjinloudao",
+      "expected": "刚进楼道",
+      "source": "5500",
+      "lookup_us": 2817,
+      "candidates": [
+        "刚进楼道",
+        "刚进楼到",
+        "刚金楼道",
+        "刚近楼道",
+        "刚进楼倒",
+        "钢筋楼道",
+        "刚仅楼道",
+        "刚尽楼道",
+        "钢筋"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangjinshangchang",
+      "expected": "刚进商场",
+      "source": "5500",
+      "lookup_us": 5179,
+      "candidates": [
+        "刚进商场",
+        "刚进上唱",
+        "刚进上场",
+        "刚进上常",
+        "刚进商长",
+        "刚进商唱",
+        "刚进商常",
+        "刚进上长",
+        "钢筋"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangjinxiaoqu",
+      "expected": "刚进小区",
+      "source": "5500",
+      "lookup_us": 5967,
+      "candidates": [
+        "刚进小区",
+        "刚进小曲",
+        "刚进校去",
+        "刚进小去",
+        "刚进小取",
+        "刚进校区",
+        "刚进小觑",
+        "刚进消去",
+        "钢筋"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganglikaidianli",
+      "expected": "刚离开店里",
+      "source": "5500",
+      "lookup_us": 4502,
+      "candidates": [
+        "刚离开店里",
+        "刚离开电力",
+        "刚莉开店里",
+        "刚离开典礼",
+        "刚李锴店里",
+        "刚离开电里",
+        "刚离开店离",
+        "刚莉开电力",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganglikaigongsi",
+      "expected": "刚离开公司",
+      "source": "5500",
+      "lookup_us": 2413,
+      "candidates": [
+        "刚离开公司",
+        "刚莉开公司",
+        "刚离开公私",
+        "刚离开公思",
+        "刚离开工思",
+        "刚离开供思",
+        "刚离开公死",
+        "刚离开工死",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganglikaixuexiao",
+      "expected": "刚离开学校",
+      "source": "5500",
+      "lookup_us": 6354,
+      "candidates": [
+        "刚离开学校",
+        "刚莉开学校",
+        "刚离开学小",
+        "刚离开学笑",
+        "刚李锴学校",
+        "刚离开学效",
+        "刚李凯学校",
+        "刚离开血小",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangshangditie",
+      "expected": "刚上地铁",
+      "source": "5500",
+      "lookup_us": 4265,
+      "candidates": [
+        "刚上地铁",
+        "刚商地铁",
+        "刚伤地铁",
+        "港上地铁",
+        "刚尚地铁",
+        "港商地铁",
+        "刚赏地铁",
+        "刚上的铁",
+        "港商"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangshanggongjiao",
+      "expected": "刚上公交",
+      "source": "5500",
+      "lookup_us": 5940,
+      "candidates": [
+        "刚上公交",
+        "刚商公交",
+        "刚伤公交",
+        "刚尚公交",
+        "港上公交",
+        "港商公交",
+        "刚赏公交",
+        "刚上攻叫",
+        "港商"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangxiaditie",
+      "expected": "刚下地铁",
+      "source": "5500",
+      "lookup_us": 4463,
+      "candidates": [
+        "刚下地铁",
+        "刚下的铁",
+        "刚下地贴",
+        "刚下地帖",
+        "刚下的贴",
+        "刚下的帖",
+        "刚下地貼",
+        "刚下地萜",
+        "刚下"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangxiagongjiao",
+      "expected": "刚下公交",
+      "source": "5500",
+      "lookup_us": 6123,
+      "candidates": [
+        "刚下公交",
+        "刚下公叫",
+        "刚下工叫",
+        "刚下宫叫",
+        "刚下公脚",
+        "刚下共交",
+        "刚下公教",
+        "刚下公觉",
+        "刚下"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangzouchulai",
+      "expected": "刚走出来",
+      "source": "5500",
+      "lookup_us": 1836,
+      "candidates": [
+        "刚走出来",
+        "港走出来",
+        "刚邹出来",
+        "刚奏出来",
+        "刚揍出来",
+        "刚诹出来",
+        "刚驺出来",
+        "刚赱出来",
+        "刚走"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangzoudaojia",
+      "expected": "刚走到家",
+      "source": "5500",
+      "lookup_us": 3091,
+      "candidates": [
+        "刚走到家",
+        "港走到家",
+        "刚走到加",
+        "刚走到假",
+        "刚走道家",
+        "刚走到价",
+        "刚走到钾",
+        "刚走到架",
+        "刚走"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangzoudaolouxia",
+      "expected": "刚走到楼下",
+      "source": "5500",
+      "lookup_us": 3342,
+      "candidates": [
+        "刚走到楼下",
+        "港走到楼下",
+        "刚走道楼下",
+        "刚走到漏下",
+        "刚走倒楼下",
+        "刚走刀楼下",
+        "刚走导楼下",
+        "刚走岛楼下",
+        "刚走"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangzoudaomenkou",
+      "expected": "刚走到门口",
+      "source": "5500",
+      "lookup_us": 2742,
+      "candidates": [
+        "刚走到门口",
+        "港走到门口",
+        "刚走道门口",
+        "刚走盗门口",
+        "刚走倒门口",
+        "刚走刀门口",
+        "刚走导门口",
+        "刚走岛门口",
+        "刚走"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangzouguoqu",
+      "expected": "刚走过去",
+      "source": "5500",
+      "lookup_us": 2202,
+      "candidates": [
+        "刚走过去",
+        "港走过去",
+        "刚邹过去",
+        "刚奏过去",
+        "刚揍过去",
+        "刚诹过去",
+        "刚驺过去",
+        "刚赱过去",
+        "刚走"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangzouhuilai",
+      "expected": "刚走回来",
+      "source": "5500",
+      "lookup_us": 2229,
+      "candidates": [
+        "刚走回来",
+        "刚邹回来",
+        "刚奏回来",
+        "刚揍回来",
+        "港走回来",
+        "刚诹回来",
+        "刚驺回来",
+        "刚赱回来",
+        "刚走"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangzoujinqu",
+      "expected": "刚走进去",
+      "source": "5500",
+      "lookup_us": 2370,
+      "candidates": [
+        "刚走进去",
+        "港走进去",
+        "刚走进取",
+        "刚邹进去",
+        "刚奏进去",
+        "刚揍进去",
+        "刚走进趣",
+        "刚走进屈",
+        "刚走"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangzuoshangche",
+      "expected": "刚坐上车",
+      "source": "5500",
+      "lookup_us": 2349,
+      "candidates": [
+        "刚坐上车",
+        "刚座上车",
+        "刚做上车",
+        "刚左上车",
+        "刚作上车",
+        "刚昨上车",
+        "刚佐上车",
+        "港座上车",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeibaihao",
+      "expected": "还没摆好",
+      "source": "5500",
+      "lookup_us": 2553,
+      "candidates": [
+        "还没摆好",
+        "还没摆号",
+        "还没白好",
+        "还没百好",
+        "还没白号",
+        "还没拜好",
+        "还没败好",
+        "还没百号",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeibanchuqu",
+      "expected": "还没搬出去",
+      "source": "5500",
+      "lookup_us": 3674,
+      "candidates": [
+        "还没办出去",
+        "还没搬出去",
+        "还没拌出去",
+        "还没版出去",
+        "还没半出去",
+        "还没班出去",
+        "还没板出去",
+        "还没般出去",
+        "还没"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "haimeibanghao",
+      "expected": "还没绑好",
+      "source": "5500",
+      "lookup_us": 3062,
+      "candidates": [
+        "还没绑好",
+        "还没绑号",
+        "还没帮好",
+        "还没帮号",
+        "还没棒好",
+        "还没榜好",
+        "还没邦好",
+        "还没浜好",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeibanhao",
+      "expected": "还没拌好",
+      "source": "5500",
+      "lookup_us": 2721,
+      "candidates": [
+        "还没拌好",
+        "还没办好",
+        "还没办号",
+        "还没班号",
+        "还没拌号",
+        "还没版好",
+        "还没半好",
+        "还没班好",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeibaohao",
+      "expected": "还没包好",
+      "source": "5500",
+      "lookup_us": 2977,
+      "candidates": [
+        "还没包好",
+        "还没保号",
+        "还没保好",
+        "还没包号",
+        "还没剥好",
+        "还没报好",
+        "还没宝好",
+        "还没保豪",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeibeihao",
+      "expected": "还没背好",
+      "source": "5500",
+      "lookup_us": 2384,
+      "candidates": [
+        "还没背好",
+        "还没备好",
+        "还没被好",
+        "还没被号",
+        "还没背号",
+        "还没备号",
+        "还没悲号",
+        "还没北好",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeichaihao",
+      "expected": "还没拆好",
+      "source": "5500",
+      "lookup_us": 2149,
+      "candidates": [
+        "还没拆好",
+        "还没拆号",
+        "还没柴好",
+        "还没差好",
+        "还没柴号",
+        "还没钗好",
+        "还没差号",
+        "还没钗号",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeichanghao",
+      "expected": "还没唱好",
+      "source": "5500",
+      "lookup_us": 3625,
+      "candidates": [
+        "还没唱好",
+        "还没长号",
+        "还没唱号",
+        "还没常好",
+        "还没场号",
+        "还没厂号",
+        "还没长好",
+        "还没场好",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeichaohao",
+      "expected": "还没炒好",
+      "source": "5500",
+      "lookup_us": 2775,
+      "candidates": [
+        "还没炒好",
+        "还没抄好",
+        "还没绰号",
+        "还没抄号",
+        "还没炒号",
+        "还没超好",
+        "还没朝好",
+        "还没吵好",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeichaqingchu",
+      "expected": "还没查清楚",
+      "source": "5500",
+      "lookup_us": 4583,
+      "candidates": [
+        "还没查清楚",
+        "还没差清楚",
+        "还没察清楚",
+        "还没茶清楚",
+        "还没插清楚",
+        "还没查清除",
+        "还没叉清楚",
+        "还没茬清楚",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeichuanguoqu",
+      "expected": "还没传过去",
+      "source": "5500",
+      "lookup_us": 5394,
+      "candidates": [
+        "还没穿过去",
+        "还没传过去",
+        "还没穿过取",
+        "还没穿过趣",
+        "还没穿过屈",
+        "还没穿过曲",
+        "还没穿过区",
+        "还没穿过佢",
+        "还没"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "haimeidaihuilai",
+      "expected": "还没带回来",
+      "source": "5500",
+      "lookup_us": 5061,
+      "candidates": [
+        "还没带回来",
+        "还没待回来",
+        "还没代回来",
+        "还没呆回来",
+        "还没戴回来",
+        "还没袋回来",
+        "还没贷回来",
+        "还没黛回来",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeidianhao",
+      "expected": "还没点好",
+      "source": "5500",
+      "lookup_us": 3939,
+      "candidates": [
+        "还没点好",
+        "还没点号",
+        "还没电号",
+        "还没电好",
+        "还没垫好",
+        "还没店好",
+        "还没店号",
+        "还没典好",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeidiehao",
+      "expected": "还没叠好",
+      "source": "5500",
+      "lookup_us": 3632,
+      "candidates": [
+        "还没叠好",
+        "还没叠号",
+        "还没跌好",
+        "还没碟好",
+        "还没爹好",
+        "还没跌号",
+        "还没蝶好",
+        "还没碟号",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeidinghao",
+      "expected": "还没订好",
+      "source": "5500",
+      "lookup_us": 2819,
+      "candidates": [
+        "还没订好",
+        "还没鼎好",
+        "还没定好",
+        "还没订号",
+        "还没顶好",
+        "还没丁好",
+        "还没定号",
+        "还没顶号",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeidunhao",
+      "expected": "还没炖好",
+      "source": "5500",
+      "lookup_us": 3023,
+      "candidates": [
+        "还没炖好",
+        "还没顿号",
+        "还没炖号",
+        "还没顿好",
+        "还没吨好",
+        "还没盾好",
+        "还没蹲好",
+        "还没敦好",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeifachuqu",
+      "expected": "还没发出去",
+      "source": "5500",
+      "lookup_us": 2848,
+      "candidates": [
+        "还没发出去",
+        "还美发出去",
+        "还没法出去",
+        "还没发出取",
+        "还没发出曲",
+        "还没发出趣",
+        "还没发除去",
+        "还没发出区",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeifanghao",
+      "expected": "还没放好",
+      "source": "5500",
+      "lookup_us": 2943,
+      "candidates": [
+        "还没放好",
+        "还没放号",
+        "还没房号",
+        "还没方好",
+        "还没房好",
+        "还没防好",
+        "还没方号",
+        "还没仿好",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeifanghuiqu",
+      "expected": "还没放回去",
+      "source": "5500",
+      "lookup_us": 4435,
+      "candidates": [
+        "还没放回去",
+        "孩没放回去",
+        "还没访回去",
+        "还没方回去",
+        "还没房回去",
+        "还没防回去",
+        "还没仿回去",
+        "还没芳回去",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeifenghao",
+      "expected": "还没封好",
+      "source": "5500",
+      "lookup_us": 2451,
+      "candidates": [
+        "还没封好",
+        "还没封号",
+        "还没缝好",
+        "还没风好",
+        "还没疯好",
+        "还没风号",
+        "还没峰好",
+        "还没丰好",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeifenqingchu",
+      "expected": "还没分清楚",
+      "source": "5500",
+      "lookup_us": 4227,
+      "candidates": [
+        "还没分清楚",
+        "还美分清楚",
+        "还没分清除",
+        "还没份清楚",
+        "还没粉清楚",
+        "还没芬清楚",
+        "还没坟清楚",
+        "还没粪清楚",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeigaihao",
+      "expected": "还没盖好",
+      "source": "5500",
+      "lookup_us": 1869,
+      "candidates": [
+        "还没改好",
+        "还没盖好",
+        "还没改号",
+        "还没盖号",
+        "还没该好",
+        "还没该号",
+        "还没钙好",
+        "还没概好",
+        "还没"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "haimeigaomingbai",
+      "expected": "还没搞明白",
+      "source": "5500",
+      "lookup_us": 4396,
+      "candidates": [
+        "还没搞明白",
+        "还没高明白",
+        "还没告明白",
+        "还没稿明白",
+        "还没膏明白",
+        "还没糕明白",
+        "还没皋明白",
+        "还没镐明白",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeiguahao",
+      "expected": "还没挂好",
+      "source": "5500",
+      "lookup_us": 2597,
+      "candidates": [
+        "还没挂好",
+        "还没挂号",
+        "还没刮好",
+        "还没瓜好",
+        "还没卦好",
+        "还没寡好",
+        "还没刮号",
+        "还没瓜号",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeihonghao",
+      "expected": "还没烘好",
+      "source": "5500",
+      "lookup_us": 1899,
+      "candidates": [
+        "还没烘好",
+        "还没红好",
+        "还没烘号",
+        "还没红号",
+        "还没宏好",
+        "还没洪好",
+        "还没哄好",
+        "还没虹好",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeihuahao",
+      "expected": "还没画好",
+      "source": "5500",
+      "lookup_us": 2947,
+      "candidates": [
+        "还没画好",
+        "还没话号",
+        "还没化好",
+        "还没话好",
+        "还没化号",
+        "还没画号",
+        "还没花好",
+        "还没华好",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeihuanhao",
+      "expected": "还没换好",
+      "source": "5500",
+      "lookup_us": 4312,
+      "candidates": [
+        "还没换好",
+        "还没换号",
+        "还没还好",
+        "还没环好",
+        "还没欢好",
+        "还没还号",
+        "还没患好",
+        "还没缓好",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeijiahao",
+      "expected": "还没夹好",
+      "source": "5500",
+      "lookup_us": 3420,
+      "candidates": [
+        "还没夹好",
+        "还没加号",
+        "还没家好",
+        "还没加好",
+        "还没架好",
+        "还没夹号",
+        "还没家号",
+        "还没假好",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeijianghao",
+      "expected": "还没讲好",
+      "source": "5500",
+      "lookup_us": 5549,
+      "candidates": [
+        "还没讲好",
+        "还没讲号",
+        "还没将好",
+        "还没降号",
+        "还没将号",
+        "还没江好",
+        "还没奖好",
+        "还没降好",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeijiaohao",
+      "expected": "还没交好",
+      "source": "5500",
+      "lookup_us": 5469,
+      "candidates": [
+        "还没交好",
+        "还没较好",
+        "还没叫号",
+        "还没叫好",
+        "还没教好",
+        "还没交号",
+        "还没脚好",
+        "还没角好",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeijichuqu",
+      "expected": "还没寄出去",
+      "source": "5500",
+      "lookup_us": 3349,
+      "candidates": [
+        "还没寄出去",
+        "还没记出去",
+        "还没己出去",
+        "还没机出去",
+        "还没几出去",
+        "还没集出去",
+        "还没急出去",
+        "还没挤出去",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeijiehuilai",
+      "expected": "还没借回来",
+      "source": "5500",
+      "lookup_us": 6488,
+      "candidates": [
+        "还没结回来",
+        "还没接回来",
+        "还没解回来",
+        "还没借回来",
+        "还没节回来",
+        "还没街回来",
+        "还没姐回来",
+        "还没界回来",
+        "还没"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "haimeijihao",
+      "expected": "还没系好",
+      "source": "5500",
+      "lookup_us": 2677,
+      "candidates": [
+        "还没系好",
+        "还没记号",
+        "还没极好",
+        "还没记好",
+        "还没几号",
+        "还没几好",
+        "还没机号",
+        "还没挤好",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeijuanhao",
+      "expected": "还没卷好",
+      "source": "5500",
+      "lookup_us": 3866,
+      "candidates": [
+        "还没卷好",
+        "还没卷号",
+        "还没捐好",
+        "还没娟好",
+        "还没倦好",
+        "还没捐号",
+        "还没绢好",
+        "还没涓好",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeikanqingchu",
+      "expected": "还没看清楚",
+      "source": "5500",
+      "lookup_us": 4704,
+      "candidates": [
+        "还没看清楚",
+        "还没看清除",
+        "还没阚清楚",
+        "还没砍清楚",
+        "还没刊清楚",
+        "还没坎清楚",
+        "还没堪清楚",
+        "还没侃清楚",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeikaohao",
+      "expected": "还没烤好",
+      "source": "5500",
+      "lookup_us": 1897,
+      "candidates": [
+        "还没烤好",
+        "还没考号",
+        "还没烤号",
+        "还没靠好",
+        "还没考好",
+        "还没靠号",
+        "还没拷好",
+        "还没拷号",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeikouhao",
+      "expected": "还没扣好",
+      "source": "5500",
+      "lookup_us": 1583,
+      "candidates": [
+        "还没扣好",
+        "还没口号",
+        "还没扣号",
+        "还没口好",
+        "还没寇好",
+        "还没抠好",
+        "还没叩好",
+        "还没寇号",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeilianghao",
+      "expected": "还没晾好",
+      "source": "5500",
+      "lookup_us": 5018,
+      "candidates": [
+        "还没晾好",
+        "还没良好",
+        "还没凉好",
+        "还没凉号",
+        "还没量好",
+        "还没亮好",
+        "还没良号",
+        "还没亮号",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeilianhao",
+      "expected": "还没练好",
+      "source": "5500",
+      "lookup_us": 4239,
+      "candidates": [
+        "还没练好",
+        "还没脸好",
+        "还没练号",
+        "还没脸号",
+        "还没连好",
+        "还没连号",
+        "还没联好",
+        "还没链好",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeiliqingchu",
+      "expected": "还没理清楚",
+      "source": "5500",
+      "lookup_us": 5160,
+      "candidates": [
+        "还没里清楚",
+        "还没理清楚",
+        "还没李清楚",
+        "还没力清楚",
+        "还没离清楚",
+        "还没厘清楚",
+        "还没利清楚",
+        "还没立清楚",
+        "还没"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "haimeiluhao",
+      "expected": "还没录好",
+      "source": "5500",
+      "lookup_us": 2226,
+      "candidates": [
+        "还没录好",
+        "还没录号",
+        "还没路好",
+        "还没路号",
+        "还没陆好",
+        "还没鲁好",
+        "还没露好",
+        "还没卢好",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeimaihuilai",
+      "expected": "还没买回来",
+      "source": "5500",
+      "lookup_us": 5107,
+      "candidates": [
+        "还没买回来",
+        "还没卖回来",
+        "还没麦回来",
+        "还没埋回来",
+        "还没迈回来",
+        "还没脉回来",
+        "还没鿏回来",
+        "还没劢回来",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeinachuqu",
+      "expected": "还没拿出去",
+      "source": "5500",
+      "lookup_us": 2887,
+      "candidates": [
+        "还没拿出去",
+        "还没那出去",
+        "还没哪出去",
+        "孩没拿出去",
+        "还没纳出去",
+        "还没娜出去",
+        "还没呐出去",
+        "还没镎出去",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeinahuilai",
+      "expected": "还没拿回来",
+      "source": "5500",
+      "lookup_us": 3446,
+      "candidates": [
+        "还没那回来",
+        "还没拿回来",
+        "还没哪回来",
+        "还没纳回来",
+        "还没娜回来",
+        "还没呐回来",
+        "还没镎回来",
+        "还没钠回来",
+        "还没"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "haimeinianhao",
+      "expected": "还没念好",
+      "source": "5500",
+      "lookup_us": 3042,
+      "candidates": [
+        "还没念好",
+        "还没粘好",
+        "还没念号",
+        "还没年好",
+        "还没粘号",
+        "还没年号",
+        "还没捻好",
+        "还没廿好",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeinonghao",
+      "expected": "还没弄好",
+      "source": "5500",
+      "lookup_us": 1679,
+      "candidates": [
+        "还没弄好",
+        "还没侬好",
+        "还没弄号",
+        "还没浓好",
+        "还没农好",
+        "还没浓号",
+        "还没农号",
+        "还没侬号",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeinongmingbai",
+      "expected": "还没弄明白",
+      "source": "5500",
+      "lookup_us": 4420,
+      "candidates": [
+        "还没弄明白",
+        "还没浓明白",
+        "还没农明白",
+        "还没侬明白",
+        "孩没弄明白",
+        "还没脓明白",
+        "还没哝明白",
+        "还没濃明白",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeipaihao",
+      "expected": "还没拍好",
+      "source": "5500",
+      "lookup_us": 2076,
+      "candidates": [
+        "还没拍好",
+        "还没排好",
+        "还没拍号",
+        "还没牌号",
+        "还没排号",
+        "还没牌好",
+        "还没派好",
+        "还没派号",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeipaohao",
+      "expected": "还没泡好",
+      "source": "5500",
+      "lookup_us": 2055,
+      "candidates": [
+        "还没泡好",
+        "还没泡号",
+        "还没跑好",
+        "还没跑号",
+        "还没抛好",
+        "还没炮好",
+        "还没抛号",
+        "还没袍好",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeipuhao",
+      "expected": "还没铺好",
+      "source": "5500",
+      "lookup_us": 2068,
+      "candidates": [
+        "还没铺好",
+        "还没谱号",
+        "还没铺号",
+        "还没谱好",
+        "还没普好",
+        "还没扑好",
+        "还没镤好",
+        "还没普号",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeiqianhao",
+      "expected": "还没签好",
+      "source": "5500",
+      "lookup_us": 3841,
+      "candidates": [
+        "还没签好",
+        "还没牵好",
+        "还没钱好",
+        "还没钱号",
+        "还没签号",
+        "还没前好",
+        "还没前号",
+        "还没千好",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeiqiehao",
+      "expected": "还没切好",
+      "source": "5500",
+      "lookup_us": 3567,
+      "candidates": [
+        "还没切好",
+        "还没切号",
+        "还没且好",
+        "还没且号",
+        "还没妾好",
+        "还没窃好",
+        "还没茄好",
+        "还没怯好",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeirouhao",
+      "expected": "还没揉好",
+      "source": "5500",
+      "lookup_us": 1563,
+      "candidates": [
+        "还没揉好",
+        "还没揉号",
+        "还没肉好",
+        "还没肉号",
+        "还没柔好",
+        "还没柔号",
+        "还没厹好",
+        "还没鍒好",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeishaihao",
+      "expected": "还没晒好",
+      "source": "5500",
+      "lookup_us": 1721,
+      "candidates": [
+        "还没晒好",
+        "还没晒号",
+        "还没筛好",
+        "还没筛号",
+        "还没曬好",
+        "还没曬号",
+        "还没晒豪",
+        "还没晒浩",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeishihao",
+      "expected": "还没试好",
+      "source": "5500",
+      "lookup_us": 2370,
+      "candidates": [
+        "还没试好",
+        "还没拾好",
+        "还没时好",
+        "还没事号",
+        "还没是好",
+        "还没事好",
+        "还没嗜好",
+        "还没时号",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeishouhao",
+      "expected": "还没收好",
+      "source": "5500",
+      "lookup_us": 1829,
+      "candidates": [
+        "还没收好",
+        "还没收号",
+        "还没手好",
+        "还没熟好",
+        "还没收豪",
+        "还没熟号",
+        "还没收浩",
+        "还没收郝",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeishouhuilai",
+      "expected": "还没收回来",
+      "source": "5500",
+      "lookup_us": 3545,
+      "candidates": [
+        "还没收回来",
+        "孩没收回来",
+        "还没手回来",
+        "还没熟回来",
+        "还没受回来",
+        "还没首回来",
+        "还没瘦回来",
+        "还没守回来",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeishuhao",
+      "expected": "还没数好",
+      "source": "5500",
+      "lookup_us": 2332,
+      "candidates": [
+        "还没数好",
+        "还没书号",
+        "还没熟好",
+        "还没数号",
+        "还没熟号",
+        "还没书好",
+        "还没梳好",
+        "还没树好",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeishuohao",
+      "expected": "还没说好",
+      "source": "5500",
+      "lookup_us": 2361,
+      "candidates": [
+        "还没说好",
+        "还没说号",
+        "还没数好",
+        "还没数号",
+        "还没说豪",
+        "还没说浩",
+        "还没说郝",
+        "还没說好",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeishuoqingchu",
+      "expected": "还没说清楚",
+      "source": "5500",
+      "lookup_us": 4527,
+      "candidates": [
+        "还没说清楚",
+        "孩没说清楚",
+        "还没说清除",
+        "还没数清楚",
+        "还没说清出",
+        "还没说清处",
+        "还没说清初",
+        "还没说清躇",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeishuqingchu",
+      "expected": "还没数清楚",
+      "source": "5500",
+      "lookup_us": 4718,
+      "candidates": [
+        "还没数清楚",
+        "还没熟清楚",
+        "还没书清楚",
+        "还没树清楚",
+        "还没输清楚",
+        "还没属清楚",
+        "还没舒清楚",
+        "还没术清楚",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeisongchuqu",
+      "expected": "还没送出去",
+      "source": "5500",
+      "lookup_us": 2861,
+      "candidates": [
+        "还没送出去",
+        "还没松出去",
+        "还没宋出去",
+        "还没颂出去",
+        "还没诵出去",
+        "还没耸出去",
+        "还没嵩出去",
+        "还没怂出去",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeisonghuilai",
+      "expected": "还没送回来",
+      "source": "5500",
+      "lookup_us": 4165,
+      "candidates": [
+        "还没送回来",
+        "还没松回来",
+        "还没宋回来",
+        "还没颂回来",
+        "还没诵回来",
+        "还没耸回来",
+        "还没嵩回来",
+        "还没怂回来",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeisuanhao",
+      "expected": "还没算好",
+      "source": "5500",
+      "lookup_us": 3158,
+      "candidates": [
+        "还没算好",
+        "还没算号",
+        "还没酸好",
+        "还没蒜好",
+        "还没酸号",
+        "还没蒜号",
+        "还没算豪",
+        "还没算浩",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeisuanqingchu",
+      "expected": "还没算清楚",
+      "source": "5500",
+      "lookup_us": 4604,
+      "candidates": [
+        "还没算清楚",
+        "还没算清除",
+        "还没酸清楚",
+        "还没蒜清楚",
+        "还没酸清除",
+        "还没蒜清除",
+        "孩没算清楚",
+        "还没算情处",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeitianhao",
+      "expected": "还没填好",
+      "source": "5500",
+      "lookup_us": 3131,
+      "candidates": [
+        "还没填好",
+        "还没填号",
+        "还没添好",
+        "还没天好",
+        "还没天号",
+        "还没田好",
+        "还没甜好",
+        "还每天好",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeitiehao",
+      "expected": "还没贴好",
+      "source": "5500",
+      "lookup_us": 3540,
+      "candidates": [
+        "还没贴好",
+        "还没贴号",
+        "还没铁好",
+        "还没帖好",
+        "还没铁号",
+        "还没帖号",
+        "还没貼好",
+        "还没萜好",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeitingqingchu",
+      "expected": "还没听清楚",
+      "source": "5500",
+      "lookup_us": 5045,
+      "candidates": [
+        "还没听清楚",
+        "还没听清除",
+        "孩没听清楚",
+        "还没挺清楚",
+        "还没听清出",
+        "还没听清处",
+        "还没听清初",
+        "还没听清躇",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeiwenqingchu",
+      "expected": "还没问清楚",
+      "source": "5500",
+      "lookup_us": 5221,
+      "candidates": [
+        "还没问清楚",
+        "还没文清楚",
+        "还没温清楚",
+        "还没稳清楚",
+        "还没闻清楚",
+        "还没纹清楚",
+        "还没吻清楚",
+        "还没蚊清楚",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeixiangqingchu",
+      "expected": "还没想清楚",
+      "source": "5500",
+      "lookup_us": 8376,
+      "candidates": [
+        "还没想清楚",
+        "还没想清除",
+        "孩没想清楚",
+        "还没向清楚",
+        "还没项清楚",
+        "还没响清楚",
+        "还没箱清楚",
+        "还没像清楚",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeixiehao",
+      "expected": "还没写好",
+      "source": "5500",
+      "lookup_us": 4289,
+      "candidates": [
+        "还没写好",
+        "还没写号",
+        "还没谢好",
+        "还没鞋号",
+        "还没些好",
+        "还没携号",
+        "还没些号",
+        "还没鞋好",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeixieqingchu",
+      "expected": "还没写清楚",
+      "source": "5500",
+      "lookup_us": 7375,
+      "candidates": [
+        "还没写清楚",
+        "还没写清除",
+        "还没血清楚",
+        "还没些清楚",
+        "还没谢清楚",
+        "还没鞋清楚",
+        "还没燮清楚",
+        "还没斜清楚",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeixihao",
+      "expected": "还没洗好",
+      "source": "5500",
+      "lookup_us": 2875,
+      "candidates": [
+        "还没洗好",
+        "还没喜好",
+        "还没系好",
+        "还没系号",
+        "还没洗号",
+        "还没戏好",
+        "还没戏号",
+        "还没息好",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeixinghao",
+      "expected": "还没醒好",
+      "source": "5500",
+      "lookup_us": 3740,
+      "candidates": [
+        "还没醒好",
+        "还没幸好",
+        "还没型号",
+        "还没性好",
+        "还没行号",
+        "还没醒号",
+        "还没行好",
+        "还没型好",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeixuehao",
+      "expected": "还没学好",
+      "source": "5500",
+      "lookup_us": 3829,
+      "candidates": [
+        "还没学好",
+        "还没学号",
+        "还没血好",
+        "还没雪好",
+        "还没削好",
+        "还没血号",
+        "还没雪号",
+        "还没薛好",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeiyanhao",
+      "expected": "还没腌好",
+      "source": "5500",
+      "lookup_us": 3535,
+      "candidates": [
+        "还没腌好",
+        "还没眼好",
+        "还没烟好",
+        "还没言好",
+        "还没演好",
+        "还没严好",
+        "还没盐好",
+        "还没沿好",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeiyuehao",
+      "expected": "还没约好",
+      "source": "5500",
+      "lookup_us": 4367,
+      "candidates": [
+        "还没约好",
+        "还没越好",
+        "还没说好",
+        "还没约号",
+        "还没月号",
+        "还没月好",
+        "还没说号",
+        "还没越号",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeizahao",
+      "expected": "还没扎好",
+      "source": "5500",
+      "lookup_us": 1773,
+      "candidates": [
+        "还没扎好",
+        "还没扎号",
+        "还没咋好",
+        "还没砸好",
+        "还没杂好",
+        "还没咋号",
+        "还没砸号",
+        "还没杂号",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeizhanhao",
+      "expected": "还没粘好",
+      "source": "5500",
+      "lookup_us": 2755,
+      "candidates": [
+        "还没粘好",
+        "还没站好",
+        "还没粘号",
+        "还没占好",
+        "还没展好",
+        "还没战好",
+        "还没站号",
+        "还没占号",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeizhaohuilai",
+      "expected": "还没找回来",
+      "source": "5500",
+      "lookup_us": 4487,
+      "candidates": [
+        "还没找回来",
+        "还没招回来",
+        "还没着回来",
+        "还没召回来",
+        "还没照回来",
+        "还没赵回来",
+        "还没朝回来",
+        "还没罩回来",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeizhehao",
+      "expected": "还没折好",
+      "source": "5500",
+      "lookup_us": 2203,
+      "candidates": [
+        "还没折好",
+        "还没折号",
+        "还没这好",
+        "还没着好",
+        "还没这号",
+        "还没者好",
+        "还没着号",
+        "还没辙好",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeizhenghao",
+      "expected": "还没蒸好",
+      "source": "5500",
+      "lookup_us": 3882,
+      "candidates": [
+        "还没蒸好",
+        "还没正好",
+        "还没整好",
+        "还没证好",
+        "还没证号",
+        "还没郑好",
+        "还没蒸号",
+        "还没正号",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeizhuanghao",
+      "expected": "还没装好",
+      "source": "5500",
+      "lookup_us": 3815,
+      "candidates": [
+        "还没装好",
+        "还没装号",
+        "还没状好",
+        "还没庄好",
+        "还没撞好",
+        "还没壮好",
+        "还没状号",
+        "还没庄号",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeizhuhao",
+      "expected": "还没煮好",
+      "source": "5500",
+      "lookup_us": 2448,
+      "candidates": [
+        "还没煮好",
+        "还没注好",
+        "还没注号",
+        "还没煮号",
+        "还没住好",
+        "还没猪好",
+        "还没主好",
+        "还没柱号",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeizuohao",
+      "expected": "还没做好",
+      "source": "5500",
+      "lookup_us": 2468,
+      "candidates": [
+        "还没做好",
+        "孩没做好",
+        "还没做号",
+        "还没作好",
+        "还没坐好",
+        "还没做豪",
+        "还没做浩",
+        "还没做郝",
+        "还没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haizaianzhuangne",
+      "expected": "还在安装呢",
+      "source": "5500",
+      "lookup_us": 4469,
+      "candidates": [
+        "还在安装呢",
+        "还在安装哪",
+        "还再安装呢",
+        "还在安装呐",
+        "还在安装讷",
+        "还在安装吶",
+        "还在暗装呢",
+        "还在岸装呢",
+        "还在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haizaibanlizhong",
+      "expected": "还在办理中",
+      "source": "5500",
+      "lookup_us": 3399,
+      "candidates": [
+        "还在办理中",
+        "还在班里中",
+        "还在班里重",
+        "还在办理重",
+        "还在办理种",
+        "还在班里种",
+        "还在半里中",
+        "还在板栗中",
+        "还在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haizaiceshine",
+      "expected": "还在测试呢",
+      "source": "5500",
+      "lookup_us": 2317,
+      "candidates": [
+        "还在测试呢",
+        "还在策事呢",
+        "还在测事呢",
+        "还在侧事呢",
+        "还在测试哪",
+        "还在测试呐",
+        "还在测试讷",
+        "还再测试呢",
+        "还在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haizaichazhene",
+      "expected": "还在查着呢",
+      "source": "5500",
+      "lookup_us": 3920,
+      "candidates": [
+        "还在插着呢",
+        "还在茶着呢",
+        "还在叉着呢",
+        "还在差着呢",
+        "还在查着呢",
+        "还在察着呢",
+        "还在茬着呢",
+        "还在搽着呢",
+        "还在"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "haizaicheshangne",
+      "expected": "还在车上呢",
+      "source": "5500",
+      "lookup_us": 3337,
+      "candidates": [
+        "还在车上呢",
+        "还在扯上呢",
+        "还在车上哪",
+        "还在车上呐",
+        "还在车商呢",
+        "还在车上讷",
+        "还在车伤呢",
+        "还在车尚呢",
+        "还在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haizaichongqine",
+      "expected": "还在重启呢",
+      "source": "5500",
+      "lookup_us": 3695,
+      "candidates": [
+        "还在重启呢",
+        "还在充气呢",
+        "还在充其呢",
+        "还在重启哪",
+        "还在充器呢",
+        "还在重启呐",
+        "还在重启讷",
+        "还在重其呢",
+        "还在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haizaichuanzhene",
+      "expected": "还在传着呢",
+      "source": "5500",
+      "lookup_us": 4641,
+      "candidates": [
+        "还在穿着呢",
+        "还在船着呢",
+        "还再穿着呢",
+        "还在喘着呢",
+        "还在传着呢",
+        "还在川着呢",
+        "还在串着呢",
+        "还在傳着呢",
+        "还在"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "haizaichulizhong",
+      "expected": "还在处理中",
+      "source": "5500",
+      "lookup_us": 2465,
+      "candidates": [
+        "还在处理中",
+        "还在处理重",
+        "还在处理种",
+        "还在处理钟",
+        "还再处理中",
+        "还在处理冢",
+        "还在处理仲",
+        "还在处理众",
+        "还在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haizaidabaone",
+      "expected": "还在打包呢",
+      "source": "5500",
+      "lookup_us": 3196,
+      "candidates": [
+        "还在大包呢",
+        "还在大宝呢",
+        "还在打包呢",
+        "还在大暴呢",
+        "还在大报呢",
+        "还在大保呢",
+        "还在大抱呢",
+        "还在大爆呢",
+        "还在"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "haizaidengjine",
+      "expected": "还在登记呢",
+      "source": "5500",
+      "lookup_us": 3712,
+      "candidates": [
+        "还在等金额",
+        "还在灯金额",
+        "还在澄金额",
+        "还在登金额",
+        "还再等金额",
+        "还在邓金额",
+        "还在瞪金额",
+        "还在登记呢",
+        "还在"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "haizaidengzhene",
+      "expected": "还在等着呢",
+      "source": "5500",
+      "lookup_us": 3521,
+      "candidates": [
+        "还在等着呢",
+        "还再等着呢",
+        "还在灯着呢",
+        "还在瞪着呢",
+        "还在澄着呢",
+        "还在登着呢",
+        "还在邓着呢",
+        "还在蹬着呢",
+        "还在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haizaidianline",
+      "expected": "还在店里呢",
+      "source": "5500",
+      "lookup_us": 5249,
+      "candidates": [
+        "还在店里呢",
+        "还在电里呢",
+        "还在点里呢",
+        "还在电力呢",
+        "还在店离呢",
+        "还在典礼呢",
+        "还在点离呢",
+        "还在店里哪",
+        "还在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haizaigaizhene",
+      "expected": "还在改着呢",
+      "source": "5500",
+      "lookup_us": 3387,
+      "candidates": [
+        "还在盖着呢",
+        "还在改着呢",
+        "还再盖着呢",
+        "还在该着呢",
+        "还在钙着呢",
+        "还在概着呢",
+        "还再改着呢",
+        "还在丐着呢",
+        "还在"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "haizaigengxinne",
+      "expected": "还在更新呢",
+      "source": "5500",
+      "lookup_us": 3879,
+      "candidates": [
+        "还在更新呢",
+        "还在更新哪",
+        "还在更新呐",
+        "还在更新讷",
+        "还在更新吶",
+        "孩在更新呢",
+        "还在更心呢",
+        "还在更信呢",
+        "还在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haizaigongsine",
+      "expected": "还在公司呢",
+      "source": "5500",
+      "lookup_us": 2536,
+      "candidates": [
+        "还在公司呢",
+        "还在公私呢",
+        "还在公司哪",
+        "还在公司呐",
+        "还在公司讷",
+        "还在公司吶",
+        "孩在公司呢",
+        "还在共死呢",
+        "还在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haizaiheduine",
+      "expected": "还在核对呢",
+      "source": "5500",
+      "lookup_us": 3262,
+      "candidates": [
+        "还在核对呢",
+        "还在何对呢",
+        "还在河对呢",
+        "还在和对呢",
+        "还在喝对呢",
+        "还在荷对呢",
+        "还在盒对呢",
+        "还在赫对呢",
+        "还在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haizaijiazaine",
+      "expected": "还在加载呢",
+      "source": "5500",
+      "lookup_us": 3857,
+      "candidates": [
+        "还在加载呢",
+        "还在加载哪",
+        "还在加载呐",
+        "还在加载讷",
+        "还在加在呢",
+        "还在家在呢",
+        "还在加载吶",
+        "还在夹在呢",
+        "还在加载"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haizaikanzhene",
+      "expected": "还在看着呢",
+      "source": "5500",
+      "lookup_us": 3270,
+      "candidates": [
+        "还在看着呢",
+        "还再看着呢",
+        "还在砍着呢",
+        "还在刊着呢",
+        "还在坎着呢",
+        "还在堪着呢",
+        "还在侃着呢",
+        "还在槛着呢",
+        "还在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haizailouxiane",
+      "expected": "还在楼下呢",
+      "source": "5500",
+      "lookup_us": 5708,
+      "candidates": [
+        "还在楼下呢",
+        "还在楼限额",
+        "还在楼险恶",
+        "还在漏限额",
+        "还在楼下哪",
+        "还在喽限额",
+        "还在露限额",
+        "还在楼下呐",
+        "还在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haizaimangzhene",
+      "expected": "还在忙着呢",
+      "source": "5500",
+      "lookup_us": 4532,
+      "candidates": [
+        "还在忙着呢",
+        "还再忙着呢",
+        "还在盲着呢",
+        "还在芒着呢",
+        "还在茫着呢",
+        "还在莽着呢",
+        "还在蟒着呢",
+        "还在氓着呢",
+        "还在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haizaimenkoune",
+      "expected": "还在门口呢",
+      "source": "5500",
+      "lookup_us": 2361,
+      "candidates": [
+        "还在门口呢",
+        "还在门口哪",
+        "还在门口呐",
+        "还在门口讷",
+        "还在门口吶",
+        "孩在门口呢",
+        "还在门扣呢",
+        "还在门寇呢",
+        "还在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haizainongzhene",
+      "expected": "还在弄着呢",
+      "source": "5500",
+      "lookup_us": 3245,
+      "candidates": [
+        "还在弄着呢",
+        "还在浓着呢",
+        "还在农着呢",
+        "还在侬着呢",
+        "还在脓着呢",
+        "还在哝着呢",
+        "还在濃着呢",
+        "孩在弄着呢",
+        "还在弄"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haizaipaiduine",
+      "expected": "还在排队呢",
+      "source": "5500",
+      "lookup_us": 2957,
+      "candidates": [
+        "还在派对呢",
+        "还在排队呢",
+        "还在拍对呢",
+        "还在排对呢",
+        "还在牌对呢",
+        "还在排队哪",
+        "还载排队呢",
+        "还在排队呐",
+        "还在"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "haizaipeisongzhong",
+      "expected": "还在配送中",
+      "source": "5500",
+      "lookup_us": 1741,
+      "candidates": [
+        "还在配送中",
+        "还在配送重",
+        "还在配送种",
+        "还在配送钟",
+        "还在陪送中",
+        "还在配送终",
+        "还再配送中",
+        "还在赔送中",
+        "还在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haizaiqianshouzhong",
+      "expected": "还在签收中",
+      "source": "5500",
+      "lookup_us": 3943,
+      "candidates": [
+        "还在前手中",
+        "还在牵手中",
+        "还在千手中",
+        "还在钱手中",
+        "还在迁手中",
+        "还在前首重",
+        "还在前收中",
+        "还在签收中",
+        "还在"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "haizaiquerenne",
+      "expected": "还在确认呢",
+      "source": "5500",
+      "lookup_us": 4467,
+      "candidates": [
+        "还再确认呢",
+        "还在确认呢",
+        "还在缺人呢",
+        "还再确认哪",
+        "还再确认呐",
+        "还再确认讷",
+        "还在确认哪",
+        "还再确认吶",
+        "还在"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "haizaishangchuanne",
+      "expected": "还在上传呢",
+      "source": "5500",
+      "lookup_us": 4853,
+      "candidates": [
+        "还在上传呢",
+        "还在上船呢",
+        "还在上传哪",
+        "还在上穿呢",
+        "还在上传呐",
+        "还在上传讷",
+        "还在上川呢",
+        "还在上喘呢",
+        "还在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haizaishangliangne",
+      "expected": "还在商量呢",
+      "source": "5500",
+      "lookup_us": 6259,
+      "candidates": [
+        "还在商量呢",
+        "还再商量呢",
+        "还在商量哪",
+        "还在上两呢",
+        "还在商量呐",
+        "还在商量讷",
+        "还在上梁呢",
+        "还在上凉呢",
+        "还在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haizaishenhezhong",
+      "expected": "还在审核中",
+      "source": "5500",
+      "lookup_us": 3280,
+      "candidates": [
+        "还在身河中",
+        "还在深河中",
+        "还在神河中",
+        "还在审核中",
+        "还在申河中",
+        "还在沈河中",
+        "还在甚河中",
+        "还在伸河中",
+        "还在"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "haizaishoushine",
+      "expected": "还在收拾呢",
+      "source": "5500",
+      "lookup_us": 2726,
+      "candidates": [
+        "还在收拾呢",
+        "还在手事呢",
+        "还在手势呢",
+        "还在手是呢",
+        "还在手实呢",
+        "还在手时呢",
+        "还在收视呢",
+        "还在收市呢",
+        "还在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haizaiwaimianne",
+      "expected": "还在外面呢",
+      "source": "5500",
+      "lookup_us": 3517,
+      "candidates": [
+        "还在外面呢",
+        "还在外面哪",
+        "还在外面呐",
+        "孩在外面呢",
+        "还在外面讷",
+        "还在外面吶",
+        "还在外免呢",
+        "还在外棉呢",
+        "还在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haizaiwenzhene",
+      "expected": "还在问着呢",
+      "source": "5500",
+      "lookup_us": 3624,
+      "candidates": [
+        "还在问着呢",
+        "还在文着呢",
+        "还在稳着呢",
+        "还在吻着呢",
+        "还在温着呢",
+        "还在闻着呢",
+        "还在纹着呢",
+        "还在蚊着呢",
+        "还在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haizaixiazaine",
+      "expected": "还在下载呢",
+      "source": "5500",
+      "lookup_us": 3054,
+      "candidates": [
+        "还在下载呢",
+        "还在下载哪",
+        "还在下载呐",
+        "还在下载讷",
+        "还在下在呢",
+        "还在下载吶",
+        "孩在下载呢",
+        "还在下再呢",
+        "还在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haizaixiezhene",
+      "expected": "还在写着呢",
+      "source": "5500",
+      "lookup_us": 5282,
+      "candidates": [
+        "还在写着呢",
+        "还在些着呢",
+        "还在歇着呢",
+        "还在斜着呢",
+        "还在谢着呢",
+        "还在鞋着呢",
+        "还在协着呢",
+        "还在邪着呢",
+        "还在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haizaixizhene",
+      "expected": "还在洗着呢",
+      "source": "5500",
+      "lookup_us": 4073,
+      "candidates": [
+        "还在洗着呢",
+        "还在戏着呢",
+        "还在西着呢",
+        "还在喜着呢",
+        "还在夕着呢",
+        "还在膝着呢",
+        "还在息着呢",
+        "还在熙着呢",
+        "还在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haizaixuexiaone",
+      "expected": "还在学校呢",
+      "source": "5500",
+      "lookup_us": 6415,
+      "candidates": [
+        "还在学校呢",
+        "还在学校哪",
+        "还在学校呐",
+        "还在学校讷",
+        "还在学校吶",
+        "孩在学校呢",
+        "还在学小呢",
+        "还在学笑呢",
+        "还在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haizaiyunshuzhong",
+      "expected": "还在运输中",
+      "source": "5500",
+      "lookup_us": 3417,
+      "candidates": [
+        "还在运输中",
+        "还在运输重",
+        "还在运输种",
+        "还在运输钟",
+        "还在运书中",
+        "还在运术中",
+        "还在运树种",
+        "还在允书中",
+        "还在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haizaizhaozhene",
+      "expected": "还在找着呢",
+      "source": "5500",
+      "lookup_us": 4200,
+      "candidates": [
+        "还在朝着呢",
+        "还在照着呢",
+        "还在找着呢",
+        "还在罩着呢",
+        "还在招着呢",
+        "还在爪着呢",
+        "还在赵着呢",
+        "还在着着呢",
+        "还在"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "haizaizhengline",
+      "expected": "还在整理呢",
+      "source": "5500",
+      "lookup_us": 4730,
+      "candidates": [
+        "还在整理呢",
+        "还在正里呢",
+        "还在整里呢",
+        "还在证里呢",
+        "还在整理哪",
+        "还在整理呐",
+        "还在整理讷",
+        "还再整理呢",
+        "还在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haizaizhunbeine",
+      "expected": "还在准备呢",
+      "source": "5500",
+      "lookup_us": 2300,
+      "candidates": [
+        "还在准备呢",
+        "还在准备哪",
+        "还在准备呐",
+        "还在准备讷",
+        "还在准备吶",
+        "孩在准备呢",
+        "还在准被呢",
+        "还在准北呢",
+        "还在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haizaizuozhene",
+      "expected": "还在做着呢",
+      "source": "5500",
+      "lookup_us": 3710,
+      "candidates": [
+        "还在坐着呢",
+        "还在做着呢",
+        "还在左着呢",
+        "还在座着呢",
+        "还在作着呢",
+        "还再坐着呢",
+        "还再做着呢",
+        "还在昨着呢",
+        "还在"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "shaoweikuaiyidian",
+      "expected": "稍微快一点",
+      "source": "5500",
+      "lookup_us": 6346,
+      "candidates": [
+        "稍微快一点",
+        "稍微块一点",
+        "少尉快一点",
+        "稍微筷一点",
+        "稍微会一点",
+        "稍微侩一点",
+        "稍微蒯一点",
+        "稍微脍一点",
+        "稍微"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shaoweiwanyidian",
+      "expected": "稍微晚一点",
+      "source": "5500",
+      "lookup_us": 5686,
+      "candidates": [
+        "稍微晚一点",
+        "稍微玩一点",
+        "稍微万一点",
+        "稍微完一点",
+        "稍微碗一点",
+        "稍微弯一点",
+        "稍微湾一点",
+        "稍微丸一点",
+        "稍微"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shaoweizaoyidian",
+      "expected": "稍微早一点",
+      "source": "5500",
+      "lookup_us": 5111,
+      "candidates": [
+        "稍微早一点",
+        "稍微造一点",
+        "稍微遭一点",
+        "稍微澡一点",
+        "少尉早一点",
+        "稍微枣一点",
+        "稍微灶一点",
+        "稍微糟一点",
+        "稍微"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozaichuanyibian",
+      "expected": "我再传一遍",
+      "source": "5500",
+      "lookup_us": 5607,
+      "candidates": [
+        "我再穿一遍",
+        "我在穿一遍",
+        "我在船一遍",
+        "我再传一遍",
+        "我再穿一边",
+        "我在传一遍",
+        "我在穿一边",
+        "我在船一边",
+        "我在"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "wozaicuiyisheng",
+      "expected": "我再催一声",
+      "source": "5500",
+      "lookup_us": 4816,
+      "candidates": [
+        "我在催一声",
+        "我在脆一声",
+        "我再催一声",
+        "我在崔一声",
+        "我在翠一声",
+        "我在摧一声",
+        "我在粹一声",
+        "我在萃一声",
+        "我在"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "wozaijiaoyisheng",
+      "expected": "我再叫一声",
+      "source": "5500",
+      "lookup_us": 7547,
+      "candidates": [
+        "我在叫一声",
+        "我再叫一声",
+        "我在脚一声",
+        "我在觉一声",
+        "我在较一声",
+        "我在教一声",
+        "我在角一声",
+        "我在校一声",
+        "我在"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "wozaijiyibian",
+      "expected": "我再寄一遍",
+      "source": "5500",
+      "lookup_us": 4696,
+      "candidates": [
+        "我再继一遍",
+        "我在即一遍",
+        "我在几一遍",
+        "我在记一遍",
+        "我在计一遍",
+        "我在及一遍",
+        "我在济一遍",
+        "我再寄一遍",
+        "我在"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "wozaiquchacha",
+      "expected": "我再去查查",
+      "source": "5500",
+      "lookup_us": 2330,
+      "candidates": [
+        "我再去查查",
+        "我在去查查",
+        "我在区查查",
+        "我在取查查",
+        "我再去查差",
+        "我在曲查查",
+        "我在去查差",
+        "我在佢查查",
+        "我在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozaiqugaigai",
+      "expected": "我再去改改",
+      "source": "5500",
+      "lookup_us": 2318,
+      "candidates": [
+        "我再去改改",
+        "我在去改改",
+        "我在区改改",
+        "我在取改改",
+        "我再去该改",
+        "我在去该改",
+        "我在曲改改",
+        "我在佢改改",
+        "我在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozaiqukankan",
+      "expected": "我再去看看",
+      "source": "5500",
+      "lookup_us": 1980,
+      "candidates": [
+        "我再去看看",
+        "我在去看看",
+        "我在区看看",
+        "我在取看看",
+        "我在曲看看",
+        "我在佢看看",
+        "我在屈看看",
+        "我在娶看看",
+        "我在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozaiqunongnong",
+      "expected": "我再去弄弄",
+      "source": "5500",
+      "lookup_us": 1644,
+      "candidates": [
+        "我再去弄弄",
+        "我再去浓浓",
+        "我在去浓浓",
+        "我在区浓浓",
+        "我在取浓浓",
+        "我在曲浓浓",
+        "我在佢浓浓",
+        "我在屈浓浓",
+        "我在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozaiqushishi",
+      "expected": "我再去试试",
+      "source": "5500",
+      "lookup_us": 3296,
+      "candidates": [
+        "我再去试试",
+        "我在去试试",
+        "我在区试试",
+        "我在取试试",
+        "我在曲试试",
+        "我在佢试试",
+        "我在屈试试",
+        "我在娶试试",
+        "我在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozaiquwenwen",
+      "expected": "我再去问问",
+      "source": "5500",
+      "lookup_us": 2781,
+      "candidates": [
+        "我再去问问",
+        "我在去问问",
+        "我在区问问",
+        "我在取问问",
+        "我在曲问问",
+        "我在佢问问",
+        "我在屈问问",
+        "我在娶问问",
+        "我在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozaiquxiangxiang",
+      "expected": "我再去想想",
+      "source": "5500",
+      "lookup_us": 10373,
+      "candidates": [
+        "我再去想象",
+        "我在去想象",
+        "我再去想想",
+        "我在去想想",
+        "我再去想像",
+        "我在去想像",
+        "我在区想象",
+        "我在取想象",
+        "我在"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "wozaiquzhaozhao",
+      "expected": "我再去找找",
+      "source": "5500",
+      "lookup_us": 3881,
+      "candidates": [
+        "我再去找找",
+        "我在去找找",
+        "我再去找着",
+        "我在去找着",
+        "我再去找照",
+        "我在去找照",
+        "我再去找罩",
+        "我在去找罩",
+        "我在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozaishuoyisheng",
+      "expected": "我再说一声",
+      "source": "5500",
+      "lookup_us": 4728,
+      "candidates": [
+        "我再说一声",
+        "我在说一声",
+        "我再说一生",
+        "我在说一生",
+        "我再说一升",
+        "我再说一盛",
+        "我再说一绳",
+        "我再说医生",
+        "我在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozaisongyibian",
+      "expected": "我再送一遍",
+      "source": "5500",
+      "lookup_us": 3831,
+      "candidates": [
+        "我在松一遍",
+        "我在松一边",
+        "我再松一遍",
+        "我在宋一遍",
+        "我在送一遍",
+        "我在悚一遍",
+        "我再送一遍",
+        "我在颂一遍",
+        "我在"
+      ],
+      "expected_rank": 7
+    },
+    {
+      "pinyin": "wozaiwenyisheng",
+      "expected": "我再问一声",
+      "source": "5500",
+      "lookup_us": 4083,
+      "candidates": [
+        "我再问一声",
+        "我在问一声",
+        "我在文一声",
+        "我在温一声",
+        "我在稳一声",
+        "我再问一生",
+        "我在问一生",
+        "我在闻一声",
+        "我在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaidengwoyihui",
+      "expected": "再等我一会",
+      "source": "5500",
+      "lookup_us": 3815,
+      "candidates": [
+        "再等我一会",
+        "在等我一会",
+        "再等我一回",
+        "在等我一回",
+        "再等我已会",
+        "再等我已回",
+        "再等我已灰",
+        "再等我以会",
+        "再等"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaidengwoyixia",
+      "expected": "再等我一下",
+      "source": "5500",
+      "lookup_us": 3715,
+      "candidates": [
+        "再等我一下",
+        "在等我一下",
+        "再等我以下",
+        "再等喔一下",
+        "再等握一下",
+        "再等窝一下",
+        "再等卧一下",
+        "再等沃一下",
+        "再等"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaigeiwodianshijian",
+      "expected": "再给我点时间",
+      "source": "5500",
+      "lookup_us": 7688,
+      "candidates": [
+        "再给我点时间",
+        "在给我点时间",
+        "再给我店时间",
+        "在给我店时间",
+        "再给我电时间",
+        "再给我垫时间",
+        "再给我典时间",
+        "再给我殿时间",
+        "再给"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaigeiwoyihui",
+      "expected": "再给我一会",
+      "source": "5500",
+      "lookup_us": 3874,
+      "candidates": [
+        "再给我一会",
+        "在给我一会",
+        "再给我一回",
+        "在给我一回",
+        "再给我已会",
+        "再给我已回",
+        "再给我一挥",
+        "再给我一辉",
+        "再给"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaihuanyixiaohui",
+      "expected": "再缓一小会",
+      "source": "5500",
+      "lookup_us": 8145,
+      "candidates": [
+        "再换一小会",
+        "在换一小会",
+        "再换一笑会",
+        "再换一小回",
+        "再换一笑回",
+        "再换一小灰",
+        "再换一笑灰",
+        "再缓一小会",
+        "在华"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zairangwochacha",
+      "expected": "再让我查查",
+      "source": "5500",
+      "lookup_us": 1868,
+      "candidates": [
+        "再让我查查",
+        "在让我查查",
+        "再让我察察",
+        "再让我叉叉",
+        "再让我查差",
+        "再让我差查",
+        "再让我查茶",
+        "再让我茶查",
+        "再让"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zairangwogaigai",
+      "expected": "再让我改改",
+      "source": "5500",
+      "lookup_us": 1637,
+      "candidates": [
+        "再让我改改",
+        "在让我改改",
+        "再让我该改",
+        "再让我改盖",
+        "在让我该改",
+        "再让我该盖",
+        "在让我改盖",
+        "再让我盖盖",
+        "再让"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zairangwokankan",
+      "expected": "再让我看看",
+      "source": "5500",
+      "lookup_us": 1903,
+      "candidates": [
+        "再让我看看",
+        "在让我看看",
+        "再让喔看看",
+        "再让握看看",
+        "再让窝看看",
+        "再让卧看看",
+        "再让沃看看",
+        "再让硪看看",
+        "再让"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zairangwonongnong",
+      "expected": "再让我弄弄",
+      "source": "5500",
+      "lookup_us": 1455,
+      "candidates": [
+        "再让我浓浓",
+        "在让我浓浓",
+        "再让我弄弄",
+        "再让我弄浓",
+        "在让我弄弄",
+        "在让我弄浓",
+        "再让我农浓",
+        "再让我侬浓",
+        "再让"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "zairangwoshishi",
+      "expected": "再让我试试",
+      "source": "5500",
+      "lookup_us": 2859,
+      "candidates": [
+        "再让我试试",
+        "在让我试试",
+        "再让我实时",
+        "再让我事实",
+        "再让我事事",
+        "再让我实事",
+        "再让我是试",
+        "再让我时时",
+        "再让"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zairangwowenwen",
+      "expected": "再让我问问",
+      "source": "5500",
+      "lookup_us": 2377,
+      "candidates": [
+        "再让我问问",
+        "在让我问问",
+        "再让我问文",
+        "再让我稳稳",
+        "再让我温文",
+        "再让我文文",
+        "再让我问稳",
+        "在让我问文",
+        "再让"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zairangwoxiangxiang",
+      "expected": "再让我想想",
+      "source": "5500",
+      "lookup_us": 9800,
+      "candidates": [
+        "再让我想想",
+        "再让我想象",
+        "在让我想想",
+        "在让我想象",
+        "再让我想像",
+        "在让我想像",
+        "再让我想向",
+        "再让我想香",
+        "再让"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaituoyixiaohui",
+      "expected": "再拖一小会",
+      "source": "5500",
+      "lookup_us": 6390,
+      "candidates": [
+        "再拖一小会",
+        "再托一小会",
+        "再脱衣小会",
+        "在脱衣小会",
+        "再拖一笑会",
+        "再拖一小回",
+        "再拖一笑回",
+        "再拖一小灰",
+        "在"
+      ],
+      "expected_rank": 1
+    }
+  ],
+  "previous_pass": {
+    "sha256": "11eefcf74c3d0cbba0a7d026b65681234e00b43b34c5c09cdf186db2b0029fe7",
+    "summary": {
+      "cases": 325,
+      "top1_correct": 288,
+      "top9_present": 325,
+      "top1_percent": 88.62,
+      "top9_percent": 100.0,
+      "character_error_rate": 0.0316,
+      "p50_lookup_ms": 3.315,
+      "p95_lookup_ms": 6.798,
+      "max_lookup_ms": 10.075,
+      "missing_from_top9_count": 0,
+      "missing_from_top9": [],
+      "max_returned_candidate_count": 9
+    }
+  }
+}

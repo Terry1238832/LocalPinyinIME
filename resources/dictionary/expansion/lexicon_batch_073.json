@@ -1,0 +1,131 @@
+{
+  "batch": "lexicon_batch_073",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "Individually authored common spoken connectors, qualifications, sequencing, estimates and references to a prior conversation.",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 347,
+  "sha256": "8600e802c60bbc58c8cdd808e09a8412bbe846ea5a0019ba31d6d61445e86141",
+  "authoring_files_sha256": {
+    "lexicon_batch_073.authoring.json": "7ed6ac2f2b93e9f9d3beef7db65473d3be63c526129a08418900e13d66e66d15",
+    "batch073_authored_daily_draft.txt": "0f20c9d069d20e38adf16bad774e2a116aa827074a5d254e145f30ce5260d293",
+    "batch073_pronunciation_review.tsv": "a8eabe863b4ebfbd2e6f60a60041e435e30da0a7ef59eb2dcbb303a607a49864"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "f4da9d796675ac044899ef3a188796df198da410cb188b355cbcd8f4f4e31db2",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "explaining_reasons_and_background": 5500,
+    "qualifying_and_reconsidering": 5500,
+    "sequencing_and_comparing": 5500,
+    "uncertainty_and_estimates": 5500,
+    "referring_to_prior_conversation": 5500
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "explaining_reasons_and_background": 62,
+    "qualifying_and_reconsidering": 71,
+    "referring_to_prior_conversation": 71,
+    "sequencing_and_comparing": 75,
+    "uncertainty_and_estimates": 68
+  },
+  "length_distribution": {
+    "4": 249,
+    "5": 93,
+    "6": 5
+  },
+  "authoring_rejections": [
+    {
+      "word": "后来才知道",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "后来才明白",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "后来才发现",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "后来才想起",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "说到这里",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "说起来也是",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "换个角度看",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "再考虑考虑",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "先这么定",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "先这么办",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "大概就这样",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "差不多这样",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "应该是这样",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "还说不准",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "按你说的来",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 326,
+  "manual_pronunciation_overrides": {
+    "再一琢磨": "zaiyizuomo",
+    "大概得等": "dagaideideng",
+    "估计得等": "gujideideng",
+    "估计还得": "gujihaidei",
+    "再琢磨琢磨": "zaizuomozuomo",
+    "也许还得": "yexuhaidei",
+    "可能还得": "kenenghaidei",
+    "可能得等": "kenengdeideng"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 8,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

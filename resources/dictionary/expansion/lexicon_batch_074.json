@@ -1,0 +1,381 @@
+{
+  "batch": "lexicon_batch_074",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "Individually authored home hardware, doors and windows, plumbing fault descriptions, small electrical items and balcony plant-care vocabulary.",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 265,
+  "sha256": "52afa165f2a2b862e51a162f4ff2c45156ae33869c7d98352feba3db89979fcf",
+  "authoring_files_sha256": {
+    "lexicon_batch_074.authoring.json": "6b9f75cd8456bf075c04698b630500db857307058d96bc94bb3320daf7cd4f58",
+    "batch074_authored_daily_draft.txt": "afa91222fbc4b652605102bf650c17f2955a2813c8eb8b92f300cf6bded4aff7",
+    "batch074_pronunciation_review.tsv": "ae9096676a6069e728f7a1974fc760c1b002c0ca49ce158523e51f92f59f0e4c"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "e749f20f084fc31bc0462ef8f04152c029fa9cb9babe23f4f97e47c159dde19c",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "doors_windows_and_furniture_issues": 5500,
+    "small_tools_and_fasteners": 5500,
+    "water_drainage_and_household_repairs": 5500,
+    "lights_and_small_electrical_items": 5500,
+    "balcony_and_plant_care_words": 5500
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "balcony_and_plant_care_words": 43,
+    "doors_windows_and_furniture_issues": 48,
+    "lights_and_small_electrical_items": 50,
+    "small_tools_and_fasteners": 62,
+    "water_drainage_and_household_repairs": 62
+  },
+  "length_distribution": {
+    "4": 58,
+    "5": 178,
+    "6": 29
+  },
+  "authoring_rejections": [
+    {
+      "word": "门轴异响",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门轴松了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门把手松了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门锁松了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门锁坏了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门锁卡住了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门锁打不开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门锁关不上",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门吸松了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门缝漏风",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门框歪了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "纱窗脱轨",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "纱窗破洞",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "窗把手松了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "窗户关不严",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "窗户推不动",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门底密封条",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "窗户滑轮",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "窗户轨道",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门锁锁舌",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门锁锁芯",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门锁面板",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "抽屉滑轨",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "抽屉拉手",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "抽屉卡住了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "抽屉拉不动",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "柜门铰链",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "柜门缓冲器",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "柜门关不严",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "桌角防撞条",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "内六角扳手",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "螺丝滑牙",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "墙面修补膏",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水龙头松了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水龙头滴水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "龙头滤网堵了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "龙头起泡器",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "下水管松了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "下水管堵了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "地漏盖松了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "地漏防臭芯",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "排水口滤网",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "洗手盆裂了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "洗手盆漏水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "洗手盆下水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "马桶盖松了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "马桶盖铰链",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "马桶水箱漏水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水箱浮球",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水箱进水阀",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水箱排水阀",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "花洒软管漏水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "花洒喷头堵了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "玻璃胶发霉",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "玻璃胶开裂",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "灯泡不亮了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "桌下理线架",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "理线魔术贴",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电池盖丢了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "遥控器没电",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "遥控器失灵",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "花盆接水盘",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "花架挂钩",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "花盆有点小",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "花盆有点浅",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "花盆有点深",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "花盆有裂缝",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "花盆排水孔",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "花盆底孔",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "盆底积水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "盆土结块",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "盆土板结",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "叶尖发黄",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "叶片卷边",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "枝条徒长",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "枝条倒伏",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "植物补光灯",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "园艺小铲子",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 221,
+  "manual_pronunciation_overrides": {
+    "橡胶小垫圈": "xiangjiaoxiaodianquan",
+    "硅胶小垫圈": "guijiaoxiaodianquan",
+    "理线扎带扣": "lixianzadaikou",
+    "扎带固定座": "zadaigudingzuo",
+    "浇花长嘴壶": "jiaohuachangzuihu",
+    "浇水长嘴壶": "jiaoshuichangzuihu"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 6,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

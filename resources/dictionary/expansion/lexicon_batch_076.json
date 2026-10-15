@@ -1,0 +1,137 @@
+{
+  "batch": "lexicon_batch_076",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "Individually authored daily washing and grooming items, personal bags, travel packing and ordinary pet-care item vocabulary.",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 329,
+  "sha256": "25f4f2e407406741a1a76fe601ae3aef18ef52ee82b1a2b6f3ed9b1014ee7228",
+  "authoring_files_sha256": {
+    "lexicon_batch_076.authoring.json": "a41a551eb57ba89848b1e0cd02788e7ff3efff9742aa530e85b4e16bb6a5fc0c",
+    "batch076_authored_daily_draft.txt": "706b687792690566ab5ac35ae3da09577a4e0f5a592dc068b69305beec932aed",
+    "batch076_pronunciation_review.tsv": "b6299c73138399f09d0f644236e8548ea18e93e9aa31066348cebac44bafda14"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "7e84e6dfa7f6ac286dbbb9320248bae1257d517c465cfedab54aaaf1bf271e22",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "washing_and_bathroom_items": 5500,
+    "hair_and_grooming_items": 5500,
+    "bags_and_ordinary_packing": 5500,
+    "pets_daily_items_and_chores": 5500
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "bags_and_ordinary_packing": 84,
+    "hair_and_grooming_items": 80,
+    "pets_daily_items_and_chores": 93,
+    "washing_and_bathroom_items": 72
+  },
+  "length_distribution": {
+    "5": 232,
+    "6": 59,
+    "4": 38
+  },
+  "authoring_rejections": [
+    {
+      "word": "牙膏挤不出",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "漱口杯架",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "洗脸巾盒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "毛巾挂杆",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "头发有点乱",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "刘海有点长",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "刘海有点短",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "背包挂扣",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "钥匙收纳盘",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "行李箱绑带",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "行李打包带",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "旅行分装罐",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "旅行鞋袋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "猫抓板底座",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "猫咪抓沙发",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "宠物擦脚巾",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "宠物饮水碗",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 272,
+  "manual_pronunciation_overrides": {
+    "长柄浴刷": "changbingyushua",
+    "头发打了结": "toufadalejie",
+    "头发扎起来": "toufazaqilai",
+    "头绳扎两圈": "toushengzaliangquan",
+    "头绳扎三圈": "toushengzasanquan",
+    "肩带太长了": "jiandaitaichangle",
+    "肩带调短点": "jiandaitiaoduandian",
+    "肩带调长点": "jiandaitiaochangdian"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 8,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

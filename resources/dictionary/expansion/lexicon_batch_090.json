@@ -1,0 +1,130 @@
+{
+  "batch": "lexicon_batch_090",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "Individually authored everyday family-school communication, pickup routines, school uniforms and bags, child household items and shared activities.",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 307,
+  "sha256": "2d191b381742a77b053f8b7dd17e55307537bad65ffd78e2da1b1a744ffe3d26",
+  "authoring_files_sha256": {
+    "lexicon_batch_090.authoring.json": "fa393cfdf80e24f188c968379f0661285fb4090e5b012f3dbb71958052c5edcc",
+    "batch090_authored_daily_draft.txt": "d2e7f93c953d97a658ea78452a852bc05c4c5aa5dfe89f782a636413dff891c8",
+    "batch090_pronunciation_review.tsv": "d262d6fd7e22118e985a4a2c5ee17430eb2dad7b1bb653975d5343852de4f21d"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "a71e49f9c91b64050a9ec550f81a207eecdd1de95697536ae3d749d9c85e25bb",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "family_school_communication": 5500,
+    "pick_up_and_after_school_routines": 5500,
+    "school_uniforms_bags_and_everyday_items": 5500,
+    "home_child_items_and_quiet_activities": 5500
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "family_school_communication": 66,
+    "home_child_items_and_quiet_activities": 80,
+    "pick_up_and_after_school_routines": 73,
+    "school_uniforms_bags_and_everyday_items": 88
+  },
+  "length_distribution": {
+    "6": 160,
+    "5": 131,
+    "4": 16
+  },
+  "authoring_rejections": [
+    {
+      "word": "家校联系册",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "家长会时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "家长会通知",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "家长会签到",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "家长会记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "班级图书角",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "放学别乱跑",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "明天你去接",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "到家说一声",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "到家报个平安",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "校服上衣",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "校服外套",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "书包内袋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "书包侧袋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "饭盒保温袋",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 286,
+  "manual_pronunciation_overrides": {
+    "家长群没收到": "jiazhangqunmeishoudao",
+    "校服裤脚太长": "xiaofukujiaotaichang",
+    "书包肩带太长": "shubaojiandaitaichang",
+    "书包落学校了": "shubaolaxuexiaole",
+    "书包落教室了": "shubaolajiaoshile",
+    "水杯落教室了": "shuibeilajiaoshile",
+    "水杯落学校了": "shuibeilaxuexiaole",
+    "饭盒落学校了": "fanhelaxuexiaole",
+    "饭盒落教室了": "fanhelajiaoshile"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 9,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

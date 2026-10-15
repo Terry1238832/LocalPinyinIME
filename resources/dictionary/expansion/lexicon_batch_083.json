@@ -1,0 +1,271 @@
+{
+  "batch": "lexicon_batch_083",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "Individually authored natural short conversational responses, reassurance, explanation requests, preferences and small agreements.",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 224,
+  "sha256": "83cb71e476e779961b724ecfc25e0b9feda3ae279642e838c17750137827f992",
+  "authoring_files_sha256": {
+    "lexicon_batch_083.authoring.json": "45a12b9b8692c0b273e3c4e07ff4bbdec085d241a3a6db047f2ff4832c71492c",
+    "batch083_authored_daily_draft.txt": "cfda3db3211b32ccc5cef64b85a94f5e5df46362da03597a5bef5b77c8c8f389",
+    "batch083_pronunciation_review.tsv": "0e310c8efbe48246cd4471be2994ec24197ceeb172711e538bb4b38f46a4a97a"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "4811b80f409048def76a27e1efe045d44ca3e0db491894a8888cb24cbd94f83e",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "responding_and_reconsidering": 5500,
+    "reassuring_and_waiting": 5500,
+    "requests_for_explanation_and_examples": 5500,
+    "understanding_preferences_and_small_agreements": 5500
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "reassuring_and_waiting": 53,
+    "requests_for_explanation_and_examples": 55,
+    "responding_and_reconsidering": 54,
+    "understanding_preferences_and_small_agreements": 62
+  },
+  "length_distribution": {
+    "5": 206,
+    "6": 12,
+    "4": 6
+  },
+  "authoring_rejections": [
+    {
+      "word": "那倒也是",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "那倒没有",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "这倒也是",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "这倒没有",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "还真是这样",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "还真没想到",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "确实是这样",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "确实没想到",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "确实有道理",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "说得有道理",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "不用太客气",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "不必太在意",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "先别太着急",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "先别想太多",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "先别急着定",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "先别急着改",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "先别急着删",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "先别急着扔",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "先别急着换",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "先别急着买",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "再往左一点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "再往右一点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "再靠近一点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "换个说法吧",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "换个位置吧",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "再解释一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "再说明一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "再补充一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "再确认一遍",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "再核对一遍",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "再检查一遍",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "先别打断我",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "先让我说完",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我还没说完",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我还没写完",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我还没决定",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我还没看懂",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我还没听懂",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我大概懂了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我心里有数",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我有个问题",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我有点犹豫",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我更喜欢这个",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我更喜欢那个",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我更想要这个",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我更想要那个",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我更想试这个",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我更想试那个",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我更想选这个",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我更想选那个",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "你看着办吧",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我来安排吧",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 194,
+  "manual_pronunciation_overrides": {
+    "再调小一点": "zaitiaoxiaoyidian",
+    "再调大一点": "zaitiaodayidian"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 2,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

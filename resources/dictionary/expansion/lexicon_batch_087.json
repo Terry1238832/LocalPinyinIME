@@ -1,0 +1,84 @@
+{
+  "batch": "lexicon_batch_087",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "Individually authored public spaces, accessibility, community dining and reading, voluntary services, recycling and environmental vocabulary.",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 355,
+  "sha256": "724c86084df70e97373bbafdc7ea1dc1a1fc3e4294515c8c24c421ca5c9f5ce5",
+  "authoring_files_sha256": {
+    "lexicon_batch_087.authoring.json": "7bf9febe2be3193b49d34a0f05d55732da8d97fd6fcf373d0518b84e71554a09",
+    "batch087_authored_daily_draft.txt": "4c99102c1115b214b55e2c847572a84821d5ad374fdab0a736f579aa192d65d3",
+    "batch087_pronunciation_review.tsv": "fe6aea5ae86a8314323be4b8f5d18ba20e5f1a8fd14c8da7f85a8bd75865bdf7"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "93505a8d3010a72f702b6ca4fc2f12344cf7e4f0c17d5ae50ef7f79aa35b4365",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "walking_access_and_small_public_spaces": 5500,
+    "everyday_accessibility_and_street_facilities": 5500,
+    "community_food_reading_and_shared_resources": 5500,
+    "community_activities_and_voluntary_services": 5500,
+    "recycling_and_community_environment": 5500
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "community_activities_and_voluntary_services": 70,
+    "community_food_reading_and_shared_resources": 79,
+    "everyday_accessibility_and_street_facilities": 76,
+    "recycling_and_community_environment": 72,
+    "walking_access_and_small_public_spaces": 58
+  },
+  "length_distribution": {
+    "5": 82,
+    "6": 271,
+    "4": 2
+  },
+  "authoring_rejections": [
+    {
+      "word": "垃圾桶满了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "社区阅览室",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "社区活动报名",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "志愿活动记录",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 345,
+  "manual_pronunciation_overrides": {
+    "街头休息长椅": "jietouxiuxichangyi",
+    "街角休息长椅": "jiejiaoxiuxichangyi",
+    "路边休息长椅": "lubianxiuxichangyi",
+    "公园休息长椅": "gongyuanxiuxichangyi",
+    "路边长椅坏了": "lubianchangyihuaile"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 5,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

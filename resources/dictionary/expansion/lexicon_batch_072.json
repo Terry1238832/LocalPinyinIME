@@ -1,0 +1,151 @@
+{
+  "batch": "lexicon_batch_072",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "Individually authored everyday clothing fit, washing, drying, repairs, fabric items and household storage vocabulary.",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 270,
+  "sha256": "efdb6cffdf5409d2d253af71eadcafe8cd8861dc773e16cc89a1cac52ce74e8a",
+  "authoring_files_sha256": {
+    "lexicon_batch_072.authoring.json": "341b9cccd252882e00125e739b6357a28a3a25585e0aee309da4cdf8dab06cd8",
+    "batch072_authored_daily_draft.txt": "ecbcb0c0810911d64a02fec3398892140f2d30ecf3de394b27a2265fc946f21f",
+    "batch072_pronunciation_review.tsv": "10161e5cc52582e18856edf940027dd0d6d20d872c48d9fb033d31b1bd190672"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "c8e7173af8c8468db096b0a9ae5fbb6757ecb9519197b0d0028c67eb0e91418a",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "clothing_fit_and_selection": 5500,
+    "washing_and_stain_handling": 5500,
+    "hanging_drying_and_folding": 5500,
+    "fabrics_repairs_and_storage": 5500
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "clothing_fit_and_selection": 64,
+    "fabrics_repairs_and_storage": 85,
+    "hanging_drying_and_folding": 61,
+    "washing_and_stain_handling": 60
+  },
+  "length_distribution": {
+    "5": 185,
+    "4": 56,
+    "6": 29
+  },
+  "authoring_rejections": [
+    {
+      "word": "肩膀有点紧",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "袜子有点厚",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "袜子有点薄",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "鞋底有点硬",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "鞋底有点软",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "鞋垫拿出来",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "鞋垫放进去",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "衣服有水印",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "洗衣槽清洁",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "洗衣机不排水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "洗衣机不进水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "洗衣机异响",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "晾衣杆太高",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "衣服淋湿了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "针织开衫",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "针线收纳盒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "衣服开线了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "衣物防尘罩",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "枕头收纳袋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帽子收纳架",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 232,
+  "manual_pronunciation_overrides": {
+    "袖子太长": "xiuzitaichang",
+    "衣长太短": "yichangtaiduan",
+    "衣长太长": "yichangtaichang",
+    "裤腿太长": "kutuitaichang",
+    "裤脚太长": "kujiaotaichang",
+    "裙摆太长": "qunbaitaichang",
+    "鞋带太长": "xiedaitaichang",
+    "衣服洗褪色": "yifuxituise"
+  },
+  "reading_variant_choices": {
+    "衣服洗褪色": "yifuxituise"
+  },
+  "semantic_pronunciation_corrections": 7,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

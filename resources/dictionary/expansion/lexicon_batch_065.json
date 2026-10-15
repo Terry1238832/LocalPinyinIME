@@ -1,0 +1,125 @@
+{
+  "batch": "lexicon_batch_065",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "Individually authored short movement, positioning, cleaning, completion and checking expressions",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 440,
+  "sha256": "18bead95b0b8cdd1eea8e7f7ccb240f968b1d53f3b64f1cc7f5b0d5266e85e3a",
+  "authoring_files_sha256": {
+    "lexicon_batch_065.authoring.json": "fb777b5319af748fd3891a0ebbf8f6dce27efebaa2d01818f751ebf05211675f",
+    "batch065_authored_daily_draft.txt": "84bb790504e373c22a2d3dae49d2ea6a1cbe370e565bb3f30259053300740ca5",
+    "batch065_pronunciation_review.tsv": "21ddd77f8a1d4a363463d7d98b44fe96aa4c2361ff8525df61cb217bb3bab28a"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "6ba92842007837aa2824a1e23c1b2a8a73501a0321c234f7989cebf71e629787",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "bringing_taking_and_returning": 5500,
+    "moving_and_positioning": 5500,
+    "cleaning_and_putting_away": 5500,
+    "fixing_and_finishing": 5500,
+    "checking_and_making_sure": 5500
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "bringing_taking_and_returning": 88,
+    "checking_and_making_sure": 82,
+    "cleaning_and_putting_away": 89,
+    "fixing_and_finishing": 90,
+    "moving_and_positioning": 91
+  },
+  "length_distribution": {
+    "4": 366,
+    "5": 74
+  },
+  "authoring_rejections": [
+    {
+      "word": "拿到门口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "放回原位",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "送到门口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "送到楼下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "搬到楼下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "挪到旁边",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "挪近一点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "冲洗干净",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "修好再用",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "问清再买",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "说得清楚点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "说清楚一点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "讲清楚一点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "再核对一遍",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "再检查一遍",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "再量一遍吧",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 300,
+  "manual_pronunciation_overrides": {},
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 0,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

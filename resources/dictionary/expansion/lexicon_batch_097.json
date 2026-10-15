@@ -1,0 +1,128 @@
+{
+  "batch": "lexicon_batch_097",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "Individually authored common polite requests, asking for practical help, thanks, avoiding interruption and everyday confirmation expressions.",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 280,
+  "sha256": "4650d37da9a0ef386688ad1e1f682fb290f5f55de2c80a01a1f45ca8e0bc2ee0",
+  "authoring_files_sha256": {
+    "lexicon_batch_097.authoring.json": "3a41c2c0d2e2ebf1e0959d3e752b043df09557e15754dd4b9618c12908cb1886",
+    "batch097_authored_daily_draft.txt": "47d5135874802a38a65da351d2af8f7c1541bbbca2afd76c859ac3e67e8c3957",
+    "batch097_pronunciation_review.tsv": "3d241ac1400cdc54e33c2a41a2cbcead76c0accb0bc77828e9e54c3427035656"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "aa049cbfd24320b1f6b4e52aaa67210c11ce1b68f346a3dac5c940cc0f12ffe6",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "brief_polite_requests": 5500,
+    "asking_for_practical_help": 5500,
+    "thanks_and_not_disturbing_someone": 5500,
+    "asking_and_confirming_politely": 5500
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "asking_and_confirming_politely": 64,
+    "asking_for_practical_help": 78,
+    "brief_polite_requests": 57,
+    "thanks_and_not_disturbing_someone": 81
+  },
+  "length_distribution": {
+    "5": 19,
+    "4": 1,
+    "6": 260
+  },
+  "authoring_rejections": [
+    {
+      "word": "方便帮忙吗",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "方便看一下吗",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "真是辛苦你了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我就不打扰了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "不用这么客气",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "不必这么客气",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我再确认下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "请帮忙确认",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "是这个意思吗",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "你看这样行吗",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "你看这样好吗",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "这样可以吗",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "这样合适吗",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 215,
+  "manual_pronunciation_overrides": {
+    "麻烦帮忙查查": "mafanbangmangchacha",
+    "辛苦帮忙查查": "xinkubangmangchacha",
+    "劳驾帮忙查查": "laojiabangmangchacha",
+    "得麻烦你了": "deimafannile",
+    "还得麻烦你": "haideimafanni",
+    "又得麻烦你": "youdeimafanni",
+    "得问下你": "deiwenxiani",
+    "得问你一下": "deiwenniyixia",
+    "得请你帮忙": "deiqingnibangmang",
+    "得让你看看": "deirangnikankan",
+    "得让你问问": "deirangniwenwen",
+    "得让你查查": "deirangnichacha",
+    "得让你试试": "deirangnishishi",
+    "得让你改改": "deirangnigaigai",
+    "得让你想想": "deirangnixiangxiang"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 15,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

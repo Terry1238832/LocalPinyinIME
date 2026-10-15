@@ -1,0 +1,142 @@
+{
+  "batch": "lexicon_batch_084",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "Individually authored familiar vegetable, meat and egg dishes, staples and desserts, groceries and brief meal preferences.",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 347,
+  "sha256": "70ca75626507ecb905274ecfbdddb62efc311911903dc0a9773965c6c4219b40",
+  "authoring_files_sha256": {
+    "lexicon_batch_084.authoring.json": "f5546993faaa5c61dc3ad8e2ae31a905a3b865248815178324e2939acf36e7e9",
+    "batch084_authored_daily_draft.txt": "bc0cc68ca3380a0151fbb87751d5489c6a77759e3f54d4694ac8c33d453f9e2e",
+    "batch084_pronunciation_review.tsv": "f644f50a58e05cef9ea48f297566dc4e700aa9b41455884baf01546ce11546c6"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "2de567b434a24dc08853eb1d6d45c41a77f8489326423f066ac7031970e7cddc",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "ordinary_vegetable_dishes": 5500,
+    "common_meat_fish_and_egg_dishes": 5500,
+    "staples_snacks_and_sweets": 5500,
+    "groceries_and_simple_preparation_names": 5500,
+    "short_meal_preferences_and_requests": 5500
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "common_meat_fish_and_egg_dishes": 70,
+    "groceries_and_simple_preparation_names": 70,
+    "ordinary_vegetable_dishes": 74,
+    "short_meal_preferences_and_requests": 62,
+    "staples_snacks_and_sweets": 71
+  },
+  "length_distribution": {
+    "6": 20,
+    "5": 234,
+    "4": 93
+  },
+  "authoring_rejections": [
+    {
+      "word": "黄瓜炒木耳",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "黄瓜炒鸡蛋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "黄瓜炒虾仁",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "黄瓜拌木耳",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "黄瓜拌豆皮",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "黄瓜拌粉丝",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "番茄炒虾仁",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "番茄炖牛肉",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "番茄炖土豆",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "萝卜炖牛腩",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "白菜炖粉条",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "白菜炖豆腐",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "白菜炒肉片",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "蒜蓉蒸扇贝",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "豆豉蒸排骨",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "芒果西米露",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "醋再多点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "醋再少点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "盐再少点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "糖再少点",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 270,
+  "manual_pronunciation_overrides": {},
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 0,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

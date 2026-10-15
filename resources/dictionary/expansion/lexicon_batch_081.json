@@ -1,0 +1,96 @@
+{
+  "batch": "lexicon_batch_081",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "Individually authored everyday workplace scheduling, handovers, meeting follow-ups, requirements, testing, support and technical-document vocabulary.",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 320,
+  "sha256": "499e1253de9d48b9ecba1962d5a745bd7a8a8086bfdf065e379462728eceabd0",
+  "authoring_files_sha256": {
+    "lexicon_batch_081.authoring.json": "acc88026226902225e809393608d28a08742fbbbf70fc446817852c5e19b36b6",
+    "batch081_authored_daily_draft.txt": "e4607a0e17a6b0b82f00abaf3d5d9998990565bd5288f2bc761053b648dc1a4c",
+    "batch081_pronunciation_review.tsv": "62d221b96852a31e6dc00bc354c3251835078b7716f22c769b3a438b96c02b9f"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "d79394b83b61224bdae6dbc5a86d2a49f8e7a63c3e23bcadcb6426618f402699",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "scheduling_work_and_handing_over": 5500,
+    "meeting_followups_and_feedback": 5500,
+    "requirements_and_design_communication": 5500,
+    "bugs_support_and_testing": 5500,
+    "practical_technical_documents": 5500
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "bugs_support_and_testing": 80,
+    "meeting_followups_and_feedback": 59,
+    "practical_technical_documents": 62,
+    "requirements_and_design_communication": 65,
+    "scheduling_work_and_handing_over": 54
+  },
+  "length_distribution": {
+    "6": 316,
+    "5": 4
+  },
+  "authoring_rejections": [
+    {
+      "word": "会议行动项",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "需求变更记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "需求变更确认",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "需求需要拆分",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "需求需要确认",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "客服没回复",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "客服转人工",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 245,
+  "manual_pronunciation_overrides": {
+    "议题临时调整": "yitilinshitiaozheng",
+    "接口联调记录": "jiekouliantiaojilu",
+    "接口联调环境": "jiekouliantiaohuanjing",
+    "接口联调失败": "jiekouliantiaoshibai",
+    "接口联调通过": "jiekouliantiaotongguo",
+    "数据去重记录": "shujuquchongjilu"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 6,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

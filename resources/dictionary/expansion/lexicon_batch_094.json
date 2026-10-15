@@ -1,0 +1,85 @@
+{
+  "batch": "lexicon_batch_094",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "Individually authored familiar terminal, path, process, script, source-control, code-review, build and release-management vocabulary.",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 315,
+  "sha256": "734cea640669fe5fe6b54dbb470546b3fb25e40509f83494038de9c2e409a732",
+  "authoring_files_sha256": {
+    "lexicon_batch_094.authoring.json": "740342021dc1829a02fe00b51e5b3015ef1b0a5f550e787b8c344f578d5d27fa",
+    "batch094_authored_daily_draft.txt": "5026791e7215c132c4594aeb52b3245ea8d34a2ca57311284ca5c86d84a217c3",
+    "batch094_pronunciation_review.tsv": "aec3b46b42d9c3941fbe11f7e90869f53b3a41f0311bd96d120772ed7c1c8ea3"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "7ac367cd740227bec913a3ad786ac3558771a7af8989ad6ac69a35cc99bd003c",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "terminal_paths_and_command_execution": 5500,
+    "scripts_configuration_and_processes": 5500,
+    "source_control_and_review": 5500,
+    "building_packaging_and_release_checks": 5500
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "building_packaging_and_release_checks": 89,
+    "scripts_configuration_and_processes": 76,
+    "source_control_and_review": 75,
+    "terminal_paths_and_command_execution": 75
+  },
+  "length_distribution": {
+    "6": 290,
+    "5": 25
+  },
+  "authoring_rejections": [
+    {
+      "word": "脚本执行权限",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "环境变量缺失",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "分支重命名",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 241,
+  "manual_pronunciation_overrides": {
+    "终端缓冲行数": "zhongduanhuanchonghangshu",
+    "命令行转义": "minglinghangzhuanyi",
+    "命令行引号": "minglinghangyinhao",
+    "命令行分隔符": "minglinghangfengefu",
+    "命令行占位符": "minglinghangzhanweifu",
+    "命令行补全": "minglinghangbuquan",
+    "命令行历史": "minglinghanglishi",
+    "命令行变量": "minglinghangbianliang",
+    "命令行选项": "minglinghangxuanxiang",
+    "命令行开关": "minglinghangkaiguan",
+    "输入流重定向": "shuruliuchongdingxiang",
+    "输出流重定向": "shuchuliuchongdingxiang",
+    "构建版本校验": "goujianbanbenjiaoyan"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 13,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

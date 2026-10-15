@@ -1,0 +1,106 @@
+{
+  "version": "0.7.8",
+  "quality_report_sha256": "546edcc91400a23b2abcce35e8282290b2acd1f40da80d2a7e2c1f5e04ee9d50",
+  "runtime_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "efdee973d19f691d9ea5978bd2b091a441ac0d4e0c683d6e166e5253aa25cf7e",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+    "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+    "continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e"
+  },
+  "scope": "Same final evaluator, isolated personal data, unchanged 267 public fixtures. These observed changes do not trigger per-case weight tuning or importing full answers.",
+  "lost_from_top9": [
+    {
+      "source": "daily:independent:11",
+      "pinyin": "nibashiyifuguadetaijinleburongyigan",
+      "expected": "你把湿衣服挂得太近了不容易干",
+      "baseline_rank": 2,
+      "current_rank": 0,
+      "baseline_candidates": [
+        "你把湿衣服挂得太紧了不容易干",
+        "你把湿衣服挂得太近了不容易干",
+        "你把湿衣服挂得太紧了不容易感",
+        "你把湿衣服挂得太近了不容易感",
+        "你把湿衣服挂得太紧了不容易赶",
+        "你把湿衣服挂得太紧了不容易杆",
+        "你把湿衣服挂得太近了不容易赶",
+        "你把湿衣服挂得太紧了不容易敢",
+        "泥巴"
+      ],
+      "current_candidates": [
+        "你把湿衣服挂得太紧了不容易干",
+        "你把湿衣服挂得太紧了不容易感",
+        "你把事衣服挂得太紧了不容易干",
+        "你把湿衣服挂得太紧了不容易赶",
+        "你把事衣服挂得太紧了不容易感",
+        "你把湿衣服挂得太紧了不容易杆",
+        "你把事衣服挂得太紧了不容易赶",
+        "你把湿衣服挂得太紧了不容易敢",
+        "泥巴"
+      ]
+    }
+  ],
+  "gained_in_top9": [],
+  "lost_first_place": [
+    {
+      "source": "article:fengzheng:14",
+      "pinyin": "dancishidishangdeyangliuyijingfaya",
+      "expected": "但此时地上的杨柳已经发芽",
+      "baseline_rank": 1,
+      "current_rank": 2,
+      "baseline_candidates": [
+        "但此时地上的杨柳已经发芽",
+        "单词实地上的杨柳已经发芽",
+        "但此时地上的样留一惊发芽",
+        "单词实地上的样留一惊发芽",
+        "但此时地上的杨柳已经发呀",
+        "单词实地上的杨柳已经发呀",
+        "但此时地上的杨柳已经发鸭",
+        "单词实地上的杨柳已经发鸭",
+        "单词"
+      ],
+      "current_candidates": [
+        "但此时地上的样留已经发芽",
+        "但此时地上的杨柳已经发芽",
+        "但此时地上的样留一惊发芽",
+        "单词实地上的样留一惊发芽",
+        "但此时地上的样留意境发芽",
+        "但此时地上的样留已经发呀",
+        "但此时地上的杨柳已经发呀",
+        "但此时地上的样留已经发鸭",
+        "单词"
+      ]
+    }
+  ],
+  "gained_first_place": [
+    {
+      "source": "daily:050",
+      "pinyin": "ruguoxiayudehuawomenjiudaizaijiali",
+      "expected": "如果下雨的话我们就待在家里",
+      "baseline_rank": 2,
+      "current_rank": 1,
+      "baseline_candidates": [
+        "如果下雨的话我们就呆在家里",
+        "如果下雨的话我们就待在家里",
+        "如果下雨的话我们就带再家里",
+        "如果下雨的话我们就带载家里",
+        "如果下雨的话我们就带仔家里",
+        "如果下雨的话我们就带哉家里",
+        "如果下雨的话我们就带灾家里",
+        "如果下雨的话我们就带宰家里",
+        "如果"
+      ],
+      "current_candidates": [
+        "如果下雨的话我们就待在家里",
+        "如果下雨的话我们就呆在家里",
+        "如果下雨的话我们就带再家里",
+        "如果下雨的话我们就待再家里",
+        "如果下雨的话我们就带载家里",
+        "如果下雨的话我们就带仔家里",
+        "如果下雨的话我们就带哉家里",
+        "如果下雨的话我们就带灾家里",
+        "如果"
+      ]
+    }
+  ]
+}

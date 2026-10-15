@@ -1,0 +1,185 @@
+{
+  "batch": "lexicon_batch_069",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "Individually authored everyday food ordering, taste and texture, ordinary meals, kitchen handling and food storage vocabulary.",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 321,
+  "sha256": "5ffb0fcf488a4b01388777f524ecc41ad80a621e33d4c3ad3ca4258837fc319b",
+  "authoring_files_sha256": {
+    "lexicon_batch_069.authoring.json": "67ec04fe10995f5e7164400482deddd19016f33d59e8c0c91ea52a434871e7b9",
+    "batch069_authored_daily_draft.txt": "7b20d674f6f7b40ac8a1d3256a87c41e8234d0d40d357e7db6086f653db488ba",
+    "batch069_pronunciation_review.tsv": "236a808a6901287e5bc5f04ba544c31cefc9e933dd7e6ce2fce8b0a403e5f549"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "533d0545f09eb83d5fdb66287cc5948a3d2fc963b7a70472dcf763855b056f59",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "ordering_small_adjustments": 5500,
+    "describing_taste_and_texture": 5500,
+    "meals_and_simple_food_names": 5500,
+    "preparing_food_and_small_kitchen_actions": 5500,
+    "food_storage_and_tableware": 5500
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "describing_taste_and_texture": 73,
+    "food_storage_and_tableware": 57,
+    "meals_and_simple_food_names": 62,
+    "ordering_small_adjustments": 72,
+    "preparing_food_and_small_kitchen_actions": 57
+  },
+  "length_distribution": {
+    "4": 162,
+    "5": 155,
+    "6": 4
+  },
+  "authoring_rejections": [
+    {
+      "word": "不放葱姜",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "不放蒜末",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "不放葱花",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "味道有点淡",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "味道有点重",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "虾仁滑蛋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "海带排骨汤",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "鸡丝凉面",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "麻酱凉面",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "番茄鸡蛋面",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "雪菜肉丝面",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "土豆焖饭",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "牛肉炒米粉",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "土豆切片",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "土豆切丝",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "黄瓜切条",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "番茄切块",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "粉丝泡软",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "鸡翅划两刀",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "大火收汁",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "食品封口夹",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "冷冻分装袋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "烤箱手套",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水果沥水篮",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "锅盖收纳架",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "餐具收纳盒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "抽屉分隔盒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "冰箱分隔盒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "冷冻抽屉",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "冰箱除味盒",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 263,
+  "manual_pronunciation_overrides": {
+    "有点没入味": "youdianmeiruwei",
+    "长柄汤勺": "changbingtangshao"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 2,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

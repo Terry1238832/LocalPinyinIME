@@ -1,0 +1,5539 @@
+{
+  "batch": "lexicon_batch_093",
+  "evaluation": "native_engine_candidate_coverage",
+  "evaluated_at_utc": "2026-10-15T05:08:14.039872+00:00",
+  "engine_sha256": "6ff136157953783aceead540e32080c9b9b8dbb409ad5c6f659b2532c64d02cc",
+  "resource_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "efdee973d19f691d9ea5978bd2b091a441ac0d4e0c683d6e166e5253aa25cf7e",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+    "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+    "continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e"
+  },
+  "frozen_batch_sha256": "08dafdb1be51ef5789fcec1458cf5094b6b086905421661989281ad14a505411",
+  "personal_data_isolated": true,
+  "expected_answers_learned": false,
+  "summary": {
+    "cases": 305,
+    "top1_correct": 256,
+    "top9_present": 305,
+    "top1_percent": 83.93,
+    "top9_percent": 100.0,
+    "character_error_rate": 0.0381,
+    "p50_lookup_ms": 4.101,
+    "p95_lookup_ms": 7.487,
+    "max_lookup_ms": 9.566,
+    "missing_from_top9_count": 0,
+    "missing_from_top9": [],
+    "max_returned_candidate_count": 9
+  },
+  "rows": [
+    {
+      "pinyin": "houtiananpaimanle",
+      "expected": "后天安排满了",
+      "source": "5500",
+      "lookup_us": 4478,
+      "candidates": [
+        "后天安排满了",
+        "后天安排慢了",
+        "候天安排满了",
+        "候天安排慢了",
+        "后天安排蛮了",
+        "后天安排曼了",
+        "后天安排漫了",
+        "后天安排瞒了",
+        "后天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "houtianshiqingduo",
+      "expected": "后天事情多",
+      "source": "5500",
+      "lookup_us": 6074,
+      "candidates": [
+        "后天事情多",
+        "后天事情朵",
+        "后天时请多",
+        "后天事情躲",
+        "后天事情夺",
+        "后提案事情多",
+        "后天是请多",
+        "后天事情踱",
+        "后天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintiananpaimanle",
+      "expected": "今天安排满了",
+      "source": "5500",
+      "lookup_us": 5091,
+      "candidates": [
+        "今天安排满了",
+        "今天安排慢了",
+        "今天安排蛮了",
+        "今天安排曼了",
+        "今天安排漫了",
+        "今天安排瞒了",
+        "今天安排熳了",
+        "今天安排蔓了",
+        "今天安排"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianshiqingduo",
+      "expected": "今天事情多",
+      "source": "5500",
+      "lookup_us": 6450,
+      "candidates": [
+        "今天事情多",
+        "今天事情朵",
+        "今天是请多",
+        "今天时请多",
+        "今天事情躲",
+        "今天是青多",
+        "今天试请多",
+        "今天事情夺",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mangwanshoutoudeshi",
+      "expected": "忙完手头的事",
+      "source": "5500",
+      "lookup_us": 2884,
+      "candidates": [
+        "忙完手头的事",
+        "忙完手头的时",
+        "忙完手头的是",
+        "忙玩手头的事",
+        "忙完手头的诗",
+        "忙玩手头的时",
+        "忙玩手头的是",
+        "忙完手头的世",
+        "忙完"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mangwanyanqiandeshi",
+      "expected": "忙完眼前的事",
+      "source": "5500",
+      "lookup_us": 6565,
+      "candidates": [
+        "忙完眼前的事",
+        "忙玩眼前的事",
+        "忙完眼前的时",
+        "忙完眼前的是",
+        "忙完眼前的诗",
+        "忙玩眼前的时",
+        "忙完眼前的世",
+        "忙完眼前的食",
+        "忙完"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mangwanzaihuiwo",
+      "expected": "忙完再回我",
+      "source": "5500",
+      "lookup_us": 3853,
+      "candidates": [
+        "忙完再回我",
+        "忙完再回握",
+        "忙完再回卧",
+        "忙完在回我",
+        "忙完在会我",
+        "忙完再会我",
+        "忙完再回喔",
+        "忙完再回窝",
+        "忙完"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mangwanzaijiaowo",
+      "expected": "忙完再叫我",
+      "source": "5500",
+      "lookup_us": 5967,
+      "candidates": [
+        "忙完在叫我",
+        "忙完再叫我",
+        "忙完再教我",
+        "忙完载叫我",
+        "忙完在教我",
+        "忙完仔叫我",
+        "忙完再交我",
+        "忙完哉叫我",
+        "忙完"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "mangwanzailianxiwo",
+      "expected": "忙完再联系我",
+      "source": "5500",
+      "lookup_us": 5391,
+      "candidates": [
+        "忙完再联系我",
+        "忙完再联系握",
+        "忙完再联系卧",
+        "忙完再练习我",
+        "忙完再联系喔",
+        "忙完再联系窝",
+        "忙完再联系沃",
+        "忙完再联系硪",
+        "忙完"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mangwanzaishuoyisheng",
+      "expected": "忙完再说一声",
+      "source": "5500",
+      "lookup_us": 6436,
+      "candidates": [
+        "忙完再说一声",
+        "忙完在说一声",
+        "忙完再说一生",
+        "忙完再说医生",
+        "忙完再说一升",
+        "忙完再说一盛",
+        "忙完再说一绳",
+        "忙完再说一省",
+        "忙完"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mangwanzaizhaowo",
+      "expected": "忙完再找我",
+      "source": "5500",
+      "lookup_us": 3818,
+      "candidates": [
+        "忙完再找我",
+        "忙完再着我",
+        "忙完在着我",
+        "忙完载着我",
+        "忙完在找我",
+        "忙完再照我",
+        "忙完载找我",
+        "忙完在照我",
+        "忙完"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mangwanzhedianshi",
+      "expected": "忙完这点事",
+      "source": "5500",
+      "lookup_us": 5888,
+      "candidates": [
+        "忙完这点时",
+        "忙完这点事",
+        "忙完这点是",
+        "忙完这点湿",
+        "忙完这点食",
+        "忙完这点失",
+        "忙完这点使",
+        "忙完这点式",
+        "忙完"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "mangwanzhegezhoumo",
+      "expected": "忙完这个周末",
+      "source": "5500",
+      "lookup_us": 4216,
+      "candidates": [
+        "忙完这个周末",
+        "忙完这个粥么",
+        "忙完这个周膜",
+        "忙完这个周摸",
+        "忙完这个州膜",
+        "忙完这个粥膜",
+        "忙完这个州摸",
+        "忙完这个粥摸",
+        "忙完"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mangwanzhejianshi",
+      "expected": "忙完这件事",
+      "source": "5500",
+      "lookup_us": 7519,
+      "candidates": [
+        "忙完这件事",
+        "忙完这件是",
+        "忙完这件时",
+        "忙完这件失",
+        "忙完这件式",
+        "忙完这件试",
+        "忙完这件室",
+        "忙完这件识",
+        "忙完"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mangwanzhejitian",
+      "expected": "忙完这几天",
+      "source": "5500",
+      "lookup_us": 4635,
+      "candidates": [
+        "忙完这几天",
+        "忙完着几天",
+        "忙玩这几天",
+        "忙完者几天",
+        "忙挽着几天",
+        "忙完这几添",
+        "忙完这几填",
+        "忙完这几田",
+        "忙完"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mangwanzhezhenzi",
+      "expected": "忙完这阵子",
+      "source": "5500",
+      "lookup_us": 4547,
+      "candidates": [
+        "忙完这阵子",
+        "忙完这真子",
+        "忙完这贞子",
+        "忙完这真字",
+        "忙完这真自",
+        "忙完这镇子",
+        "忙完这阵字",
+        "忙完这真紫",
+        "忙完"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mangwanzhezhoumo",
+      "expected": "忙完这周末",
+      "source": "5500",
+      "lookup_us": 3025,
+      "candidates": [
+        "忙完这周末",
+        "忙完这周膜",
+        "忙完这周摸",
+        "忙完这周么",
+        "忙完这周没",
+        "忙完着周末",
+        "忙完这周莫",
+        "忙完这周脉",
+        "忙完"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mingtiananpaimanle",
+      "expected": "明天安排满了",
+      "source": "5500",
+      "lookup_us": 5436,
+      "candidates": [
+        "明天安排满了",
+        "明天安排慢了",
+        "明天安排蛮了",
+        "明天安排曼了",
+        "明天安排漫了",
+        "明天安排瞒了",
+        "明天安排熳了",
+        "明天安排蔓了",
+        "明天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mingtianshiqingduo",
+      "expected": "明天事情多",
+      "source": "5500",
+      "lookup_us": 6704,
+      "candidates": [
+        "明天事情多",
+        "明天事情朵",
+        "明天时请多",
+        "明天事情躲",
+        "明天是请多",
+        "明天事情夺",
+        "明天事情踱",
+        "明天事情堕",
+        "明天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangwuanpaimanle",
+      "expected": "上午安排满了",
+      "source": "5500",
+      "lookup_us": 3772,
+      "candidates": [
+        "上午安排满了",
+        "上午安排慢了",
+        "上午安排蛮了",
+        "上午安排曼了",
+        "上午安排漫了",
+        "上午安排瞒了",
+        "上午安排熳了",
+        "上午安排蔓了",
+        "上午安排"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangwushiqingduo",
+      "expected": "上午事情多",
+      "source": "5500",
+      "lookup_us": 6542,
+      "candidates": [
+        "上午事情多",
+        "上午时请多",
+        "上午事情朵",
+        "上午十请多",
+        "上午事情躲",
+        "上午事情夺",
+        "上午事情踱",
+        "上午事情堕",
+        "商务"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wanshanganpaimanle",
+      "expected": "晚上安排满了",
+      "source": "5500",
+      "lookup_us": 5013,
+      "candidates": [
+        "晚上安排满了",
+        "晚上安排慢了",
+        "晚上安排蛮了",
+        "晚上安排曼了",
+        "晚上安排漫了",
+        "晚上安排瞒了",
+        "晚上安排熳了",
+        "晚上安排蔓了",
+        "晚上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wanshangshiqingduo",
+      "expected": "晚上事情多",
+      "source": "5500",
+      "lookup_us": 6502,
+      "candidates": [
+        "晚上事情多",
+        "晚上使请多",
+        "晚上时请多",
+        "晚上事情朵",
+        "晚上事情躲",
+        "晚上试请多",
+        "晚上事情夺",
+        "晚上使清多",
+        "晚上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiawuanpaimanle",
+      "expected": "下午安排满了",
+      "source": "5500",
+      "lookup_us": 3806,
+      "candidates": [
+        "下午安排满了",
+        "下午安排慢了",
+        "下午安排蛮了",
+        "下午安排曼了",
+        "下午安排漫了",
+        "下午安排瞒了",
+        "下午安排熳了",
+        "下午安排蔓了",
+        "下午安排"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiawushiqingduo",
+      "expected": "下午事情多",
+      "source": "5500",
+      "lookup_us": 5559,
+      "candidates": [
+        "下午事情多",
+        "下午时请多",
+        "下午事情朵",
+        "下午事情躲",
+        "下午十请多",
+        "下午事情夺",
+        "下午事情踱",
+        "下午事情堕",
+        "下午"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiazhouanpaimanle",
+      "expected": "下周安排满了",
+      "source": "5500",
+      "lookup_us": 2495,
+      "candidates": [
+        "下周安排满了",
+        "下周安排慢了",
+        "夏周安排满了",
+        "夏周安排慢了",
+        "下周安排蛮了",
+        "下周安排曼了",
+        "下周安排漫了",
+        "下周安排瞒了",
+        "下周"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiazhoushiqingduo",
+      "expected": "下周事情多",
+      "source": "5500",
+      "lookup_us": 5189,
+      "candidates": [
+        "下周事情多",
+        "下周事情朵",
+        "下周时请多",
+        "下周事情躲",
+        "下州事情多",
+        "下周事情夺",
+        "下周事情踱",
+        "下周事情堕",
+        "下周"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yihuierbufangbian",
+      "expected": "一会儿不方便",
+      "source": "5500",
+      "lookup_us": 6817,
+      "candidates": [
+        "一会儿不方便",
+        "一会而不方便",
+        "一会儿步方便",
+        "一会儿部方便",
+        "一会儿补方便",
+        "一会儿布方便",
+        "一会儿捕方便",
+        "一会儿卜方便",
+        "一会儿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yihuierganbushang",
+      "expected": "一会儿赶不上",
+      "source": "5500",
+      "lookup_us": 6210,
+      "candidates": [
+        "一会儿赶不上",
+        "一会儿干不上",
+        "一会儿敢不上",
+        "一会儿感不上",
+        "一会儿甘不上",
+        "一会儿擀不上",
+        "一会儿杆不上",
+        "一会儿肝不上",
+        "一会儿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yihuierlaibuliao",
+      "expected": "一会儿来不了",
+      "source": "5500",
+      "lookup_us": 6426,
+      "candidates": [
+        "一会儿来不了",
+        "一会儿来不料",
+        "一会儿赖不了",
+        "一会儿莱不了",
+        "一会儿來不了",
+        "一会儿濑不了",
+        "一会儿来不聊",
+        "一会儿来布料",
+        "一会儿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yihuiermeikong",
+      "expected": "一会儿没空",
+      "source": "5500",
+      "lookup_us": 3430,
+      "candidates": [
+        "一会儿没空",
+        "一会儿美空",
+        "一会儿每空",
+        "一会儿没孔",
+        "一会儿梅空",
+        "一会儿妹空",
+        "一会儿眉空",
+        "一会儿镅空",
+        "一会儿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yihuiermeishijian",
+      "expected": "一会儿没时间",
+      "source": "5500",
+      "lookup_us": 7855,
+      "candidates": [
+        "一会儿没时间",
+        "一会儿每时间",
+        "一会儿美时间",
+        "一会儿梅时间",
+        "一会儿妹时间",
+        "一会儿眉时间",
+        "一会儿镅时间",
+        "一会儿煤时间",
+        "一会儿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yihuierqubuliao",
+      "expected": "一会儿去不了",
+      "source": "5500",
+      "lookup_us": 6698,
+      "candidates": [
+        "一会儿去不了",
+        "一会儿取不了",
+        "一会儿屈不了",
+        "一会儿区不了",
+        "一会儿曲不了",
+        "一会儿佢不了",
+        "一会儿娶不了",
+        "一会儿去不料",
+        "一会儿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yihuieryoudianmang",
+      "expected": "一会儿有点忙",
+      "source": "5500",
+      "lookup_us": 8846,
+      "candidates": [
+        "一会儿有点忙",
+        "一会儿又点忙",
+        "一会儿优点忙",
+        "一会儿有点芒",
+        "一会儿又店忙",
+        "一会儿又电忙",
+        "一会儿有点盲",
+        "一会儿又垫忙",
+        "一会儿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yihuieryoukong",
+      "expected": "一会儿有空",
+      "source": "5500",
+      "lookup_us": 2560,
+      "candidates": [
+        "一会儿有空",
+        "一会儿又空",
+        "一会儿又孔",
+        "一会儿又控",
+        "一会儿又恐",
+        "一会儿有孔",
+        "一会儿又倥",
+        "一会儿又箜",
+        "一会儿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yihuierzoubukai",
+      "expected": "一会儿走不开",
+      "source": "5500",
+      "lookup_us": 2802,
+      "candidates": [
+        "一会儿奏不开",
+        "一会儿走不开",
+        "一会儿邹不开",
+        "一会儿揍不开",
+        "一会儿诹不开",
+        "一会儿驺不开",
+        "一会儿赱不开",
+        "一会儿陬不开",
+        "一会儿"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zhehuierganbushang",
+      "expected": "这会儿赶不上",
+      "source": "5500",
+      "lookup_us": 6286,
+      "candidates": [
+        "这会儿赶不上",
+        "这会儿干不上",
+        "这会儿敢不上",
+        "这会儿感不上",
+        "这会儿甘不上",
+        "这会儿擀不上",
+        "这会儿杆不上",
+        "这回而赶不上",
+        "这会儿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhehuierlaibuliao",
+      "expected": "这会儿来不了",
+      "source": "5500",
+      "lookup_us": 6169,
+      "candidates": [
+        "这会儿来不了",
+        "这回而来不了",
+        "这会儿来不料",
+        "这会儿赖不了",
+        "这回而来不料",
+        "这会儿莱不了",
+        "这会儿來不了",
+        "这会儿濑不了",
+        "这会儿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhehuiermeishijian",
+      "expected": "这会儿没时间",
+      "source": "5500",
+      "lookup_us": 8476,
+      "candidates": [
+        "这会儿没时间",
+        "这会儿每时间",
+        "这回而没时间",
+        "这会儿美时间",
+        "这会儿梅时间",
+        "这会儿妹时间",
+        "这会儿眉时间",
+        "这会儿镅时间",
+        "这会儿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhehuierqubuliao",
+      "expected": "这会儿去不了",
+      "source": "5500",
+      "lookup_us": 5894,
+      "candidates": [
+        "这会儿去不了",
+        "这回而去不了",
+        "这会儿取不了",
+        "这会儿屈不了",
+        "这会儿区不了",
+        "这会儿曲不了",
+        "这会儿佢不了",
+        "这回二区不了",
+        "这会儿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhehuieryoudianmang",
+      "expected": "这会儿有点忙",
+      "source": "5500",
+      "lookup_us": 7777,
+      "candidates": [
+        "这会儿有点忙",
+        "这回而有点忙",
+        "这会儿又点忙",
+        "这会儿优点忙",
+        "这回而又点忙",
+        "这会儿有点芒",
+        "这会儿有点盲",
+        "这会儿有点茫",
+        "这会儿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhehuierzoubukai",
+      "expected": "这会儿走不开",
+      "source": "5500",
+      "lookup_us": 3125,
+      "candidates": [
+        "这会儿奏不开",
+        "这会儿走不开",
+        "这回而走不开",
+        "这会儿邹不开",
+        "这会儿揍不开",
+        "这回而奏不开",
+        "这会儿诹不开",
+        "这会儿驺不开",
+        "这会儿"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zhejitianbufangbian",
+      "expected": "这几天不方便",
+      "source": "5500",
+      "lookup_us": 8211,
+      "candidates": [
+        "这几天不方便",
+        "着几天不方便",
+        "这几天步方便",
+        "这几天部方便",
+        "这几天补方便",
+        "这几天布方便",
+        "这几天捕方便",
+        "这几天卜方便",
+        "这几天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhejitianbutaixing",
+      "expected": "这几天不太行",
+      "source": "5500",
+      "lookup_us": 7198,
+      "candidates": [
+        "这几天不太行",
+        "这几天不太性",
+        "这几天不太型",
+        "这几天不太兴",
+        "这几天不太形",
+        "这几天不太星",
+        "这几天不太醒",
+        "这几天不太姓",
+        "这几天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhejitianhenmang",
+      "expected": "这几天很忙",
+      "source": "5500",
+      "lookup_us": 6159,
+      "candidates": [
+        "这几天很忙",
+        "这几天恨忙",
+        "这几天狠忙",
+        "这几天痕忙",
+        "这几天很芒",
+        "这几天恨芒",
+        "这几天狠芒",
+        "这几天很盲",
+        "这几天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhejitianmeikong",
+      "expected": "这几天没空",
+      "source": "5500",
+      "lookup_us": 4363,
+      "candidates": [
+        "这几天没空",
+        "这几天没孔",
+        "这几天美空",
+        "这几天没控",
+        "这几天没恐",
+        "这几天每空",
+        "这几天美孔",
+        "这几天梅空",
+        "这几天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhejitianpaimanle",
+      "expected": "这几天排满了",
+      "source": "5500",
+      "lookup_us": 4549,
+      "candidates": [
+        "这几天拍满了",
+        "这几天排满了",
+        "这几天牌满了",
+        "这几天派满了",
+        "这几天拍慢了",
+        "这几天排慢了",
+        "这几天牌慢了",
+        "这几天派慢了",
+        "这几天"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zhejitianshiqingduo",
+      "expected": "这几天事情多",
+      "source": "5500",
+      "lookup_us": 8409,
+      "candidates": [
+        "这几天事情多",
+        "这几天事情朵",
+        "这几天时请多",
+        "这几天事情躲",
+        "这几天事情夺",
+        "这几天是请多",
+        "这几天事情踱",
+        "这几天事情堕",
+        "这几天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhejitiantingmang",
+      "expected": "这几天挺忙",
+      "source": "5500",
+      "lookup_us": 5750,
+      "candidates": [
+        "这几天挺忙",
+        "这几天听忙",
+        "这几天庭忙",
+        "这几天停忙",
+        "这几天听芒",
+        "这几天厅忙",
+        "这几天亭忙",
+        "这几天婷忙",
+        "这几天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhejitianyoudianmang",
+      "expected": "这几天有点忙",
+      "source": "5500",
+      "lookup_us": 9111,
+      "candidates": [
+        "这几天有点忙",
+        "着几天有点忙",
+        "这几天有点芒",
+        "这几天优点忙",
+        "这几天有点盲",
+        "这几天有点茫",
+        "这几天有点莽",
+        "这几天有点蟒",
+        "这几天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhejitianyoukong",
+      "expected": "这几天有空",
+      "source": "5500",
+      "lookup_us": 3544,
+      "candidates": [
+        "这几天有空",
+        "这几天有孔",
+        "着几天有空",
+        "这几天由空",
+        "这几天游空",
+        "这几天又空",
+        "这几天尤空",
+        "这几天有控",
+        "这几天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhejitianzoubukai",
+      "expected": "这几天走不开",
+      "source": "5500",
+      "lookup_us": 3120,
+      "candidates": [
+        "这几天走不开",
+        "这几天奏不开",
+        "这几天邹不开",
+        "这几天揍不开",
+        "这几天诹不开",
+        "这几天驺不开",
+        "这几天赱不开",
+        "这几天陬不开",
+        "这几天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zheliangtianbufangbian",
+      "expected": "这两天不方便",
+      "source": "5500",
+      "lookup_us": 8693,
+      "candidates": [
+        "这两天不方便",
+        "这两天步方便",
+        "这两天部方便",
+        "这两天补方便",
+        "这两天布方便",
+        "这两天捕方便",
+        "这两天卜方便",
+        "这两天埠方便",
+        "这两天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zheliangtianbutaixing",
+      "expected": "这两天不太行",
+      "source": "5500",
+      "lookup_us": 7319,
+      "candidates": [
+        "这两天不太行",
+        "这两天不太性",
+        "这两天不太型",
+        "这两天不太兴",
+        "这两天不太形",
+        "这两天不太星",
+        "这两天不太醒",
+        "这两天不太姓",
+        "这两天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zheliangtianhenmang",
+      "expected": "这两天很忙",
+      "source": "5500",
+      "lookup_us": 6507,
+      "candidates": [
+        "这两天很忙",
+        "这两天恨忙",
+        "这两天狠忙",
+        "这两天痕忙",
+        "这两天很芒",
+        "这两天恨芒",
+        "这两天狠芒",
+        "这两天很盲",
+        "这两天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zheliangtianmeikong",
+      "expected": "这两天没空",
+      "source": "5500",
+      "lookup_us": 5069,
+      "candidates": [
+        "这两天没空",
+        "这两天没孔",
+        "这两天美空",
+        "这两天没控",
+        "这两天没恐",
+        "这两天每空",
+        "这两天美孔",
+        "这两天梅空",
+        "这两天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zheliangtianpaimanle",
+      "expected": "这两天排满了",
+      "source": "5500",
+      "lookup_us": 5369,
+      "candidates": [
+        "这两天拍满了",
+        "这两天排满了",
+        "这两天牌满了",
+        "这两天派满了",
+        "这两天拍慢了",
+        "这两天排慢了",
+        "这两天牌慢了",
+        "这两天派慢了",
+        "这两天"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zheliangtianshiqingduo",
+      "expected": "这两天事情多",
+      "source": "5500",
+      "lookup_us": 8326,
+      "candidates": [
+        "这两天事情多",
+        "这两天事情朵",
+        "这两天时请多",
+        "这两天事情躲",
+        "这两天事情夺",
+        "这两天是请多",
+        "这两天事情踱",
+        "这两天事情堕",
+        "这两天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zheliangtiantingmang",
+      "expected": "这两天挺忙",
+      "source": "5500",
+      "lookup_us": 6521,
+      "candidates": [
+        "这两天挺忙",
+        "这两天听忙",
+        "这两天庭忙",
+        "这两天停忙",
+        "这两天听芒",
+        "这两天厅忙",
+        "这两天亭忙",
+        "这两天婷忙",
+        "这两天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zheliangtianyoudianmang",
+      "expected": "这两天有点忙",
+      "source": "5500",
+      "lookup_us": 9164,
+      "candidates": [
+        "这两天有点忙",
+        "这两天有点芒",
+        "这两天优点忙",
+        "这两天有点盲",
+        "这两天有点茫",
+        "这两天有点莽",
+        "这两天有点蟒",
+        "这两天有点氓",
+        "这两天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zheliangtianyoukong",
+      "expected": "这两天有空",
+      "source": "5500",
+      "lookup_us": 4016,
+      "candidates": [
+        "这两天有空",
+        "这两天有孔",
+        "这两天由空",
+        "这两天游空",
+        "这两天又空",
+        "这两天尤空",
+        "这两天有控",
+        "这两天有恐",
+        "这两天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zheliangtianzoubukai",
+      "expected": "这两天走不开",
+      "source": "5500",
+      "lookup_us": 4349,
+      "candidates": [
+        "这两天走不开",
+        "这两天奏不开",
+        "这两天邹不开",
+        "这两天揍不开",
+        "这两天诹不开",
+        "这两天驺不开",
+        "这两天赱不开",
+        "这两天陬不开",
+        "这两天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhezhenzibufangbian",
+      "expected": "这阵子不方便",
+      "source": "5500",
+      "lookup_us": 5746,
+      "candidates": [
+        "这真自不方便",
+        "这阵子不方便",
+        "这真自步方便",
+        "这真滋补方便",
+        "这真字补方便",
+        "这真自部方便",
+        "这阵子步方便",
+        "这真自布方便",
+        "这阵子"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zhezhenzibutaixing",
+      "expected": "这阵子不太行",
+      "source": "5500",
+      "lookup_us": 4624,
+      "candidates": [
+        "这阵子不太行",
+        "这真子不太行",
+        "这阵子不太性",
+        "这阵子不太型",
+        "这真子不太性",
+        "这阵子不太兴",
+        "这阵子不太形",
+        "这真子不太型",
+        "这阵子"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhezhenzihenmang",
+      "expected": "这阵子很忙",
+      "source": "5500",
+      "lookup_us": 4575,
+      "candidates": [
+        "这阵子很忙",
+        "这真子很忙",
+        "这真自很忙",
+        "这真字很忙",
+        "这真紫很忙",
+        "这真资很忙",
+        "这真仔很忙",
+        "这真兹很忙",
+        "这阵子"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhezhenzimeikong",
+      "expected": "这阵子没空",
+      "source": "5500",
+      "lookup_us": 3617,
+      "candidates": [
+        "这阵子没空",
+        "这真自没空",
+        "这真子没空",
+        "这阵子美空",
+        "这真字没空",
+        "这真自美空",
+        "这真子美空",
+        "这真紫没空",
+        "这阵子"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhezhenzipaimanle",
+      "expected": "这阵子排满了",
+      "source": "5500",
+      "lookup_us": 3914,
+      "candidates": [
+        "这真自拍满了",
+        "这阵子排满了",
+        "这真自拍慢了",
+        "这阵子牌满了",
+        "这真子牌满了",
+        "这真自排满了",
+        "这真自派满了",
+        "这阵子牌慢了",
+        "这阵子"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zhezhenzishiqingduo",
+      "expected": "这阵子事情多",
+      "source": "5500",
+      "lookup_us": 6092,
+      "candidates": [
+        "这真自事情多",
+        "这阵子事情多",
+        "这真自事情朵",
+        "这阵子事情朵",
+        "这真自事情躲",
+        "这真自事情夺",
+        "这真自事情踱",
+        "这真自事情堕",
+        "这阵子"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zhezhenzitingmang",
+      "expected": "这阵子挺忙",
+      "source": "5500",
+      "lookup_us": 5446,
+      "candidates": [
+        "这真自挺忙",
+        "这阵子挺忙",
+        "这真子挺忙",
+        "这真字挺忙",
+        "这阵子听忙",
+        "这真自听忙",
+        "这阵子停忙",
+        "这真紫挺忙",
+        "这阵子"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zhezhenziyoudianmang",
+      "expected": "这阵子有点忙",
+      "source": "5500",
+      "lookup_us": 7260,
+      "candidates": [
+        "这阵子有点忙",
+        "这真子有点忙",
+        "这真自由点忙",
+        "这阵子有点芒",
+        "这真子有点芒",
+        "这阵子有点盲",
+        "这阵子有点茫",
+        "这阵子有点莽",
+        "这阵子"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhezhenziyoukong",
+      "expected": "这阵子有空",
+      "source": "5500",
+      "lookup_us": 2712,
+      "candidates": [
+        "这阵子有空",
+        "这真子有空",
+        "这真自有空",
+        "这真字有空",
+        "这真紫有空",
+        "这真资有空",
+        "这真仔有空",
+        "这真自由空",
+        "这阵子"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhezhenzizoubukai",
+      "expected": "这阵子走不开",
+      "source": "5500",
+      "lookup_us": 2695,
+      "candidates": [
+        "这阵子走不开",
+        "这真子走不开",
+        "这真自奏不开",
+        "这阵子奏不开",
+        "这真自邹不开",
+        "这真自揍不开",
+        "这阵子邹不开",
+        "这阵子揍不开",
+        "这阵子"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhezhouanpaimanle",
+      "expected": "这周安排满了",
+      "source": "5500",
+      "lookup_us": 3015,
+      "candidates": [
+        "这周安排满了",
+        "这周安排慢了",
+        "这州安排满了",
+        "这州安排慢了",
+        "这周安排蛮了",
+        "这周安排曼了",
+        "这周安排漫了",
+        "这周安排瞒了",
+        "褶皱"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhezhoushiqingduo",
+      "expected": "这周事情多",
+      "source": "5500",
+      "lookup_us": 5862,
+      "candidates": [
+        "这周事情多",
+        "这周事情朵",
+        "这州事情多",
+        "这周时请多",
+        "这周事情躲",
+        "这周事情夺",
+        "这周事情踱",
+        "这周事情堕",
+        "褶皱"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhoumoanpaimanle",
+      "expected": "周末安排满了",
+      "source": "5500",
+      "lookup_us": 4119,
+      "candidates": [
+        "周末安排满了",
+        "周末安排慢了",
+        "周末安排蛮了",
+        "周末安排曼了",
+        "周末安排漫了",
+        "周末安排瞒了",
+        "周末安排熳了",
+        "周末安排蔓了",
+        "周末安排"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhoumoshiqingduo",
+      "expected": "周末事情多",
+      "source": "5500",
+      "lookup_us": 6926,
+      "candidates": [
+        "周末事情多",
+        "周末时请多",
+        "周末事情朵",
+        "周末事情躲",
+        "周末事情夺",
+        "周末是请多",
+        "周末事情踱",
+        "周末事情堕",
+        "周末"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zuijinzhegezhoumo",
+      "expected": "最近这个周末",
+      "source": "5500",
+      "lookup_us": 4147,
+      "candidates": [
+        "最近这个周末",
+        "最近这个粥么",
+        "最近这歌周末",
+        "最近这个周膜",
+        "最紧这个周末",
+        "最近这个周摸",
+        "最近这隔周末",
+        "最近这个州膜",
+        "最近"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zuijinzhejitian",
+      "expected": "最近这几天",
+      "source": "5500",
+      "lookup_us": 4394,
+      "candidates": [
+        "最近这几天",
+        "最近着几天",
+        "最紧这几天",
+        "最近者几天",
+        "最近折几天",
+        "最近遮几天",
+        "最近哲几天",
+        "最近浙几天",
+        "最近"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zuijinzheyizhen",
+      "expected": "最近这一阵",
+      "source": "5500",
+      "lookup_us": 4334,
+      "candidates": [
+        "最近这一阵",
+        "最近着一阵",
+        "最近者一阵",
+        "最近这一真",
+        "最近折一阵",
+        "最近遮一阵",
+        "最近哲一阵",
+        "最近浙一阵",
+        "最近"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zuijinzheyizhenzi",
+      "expected": "最近这一阵子",
+      "source": "5500",
+      "lookup_us": 5328,
+      "candidates": [
+        "最近这一阵子",
+        "最近着一阵子",
+        "最近这一阵字",
+        "最近着一阵字",
+        "最近这一贞子",
+        "最近这一真子",
+        "最近这一阵自",
+        "最近这一真自",
+        "最近"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengmingtianzaicha",
+      "expected": "等明天再查",
+      "source": "5500",
+      "lookup_us": 4213,
+      "candidates": [
+        "等明天再查",
+        "灯明天再查",
+        "等明天再差",
+        "等明天再茶",
+        "等明天再察",
+        "灯明天再差",
+        "灯明天再茶",
+        "等明天再插",
+        "等"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengmingtianzaiding",
+      "expected": "等明天再定",
+      "source": "5500",
+      "lookup_us": 4767,
+      "candidates": [
+        "等明天再顶",
+        "等明天再定",
+        "灯明天再顶",
+        "灯明天再定",
+        "等明天再锭",
+        "等明天再丁",
+        "等明天再订",
+        "等明天再盯",
+        "等"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "dengmingtianzaigai",
+      "expected": "等明天再改",
+      "source": "5500",
+      "lookup_us": 4637,
+      "candidates": [
+        "等明天再改",
+        "灯明天再改",
+        "等明天再盖",
+        "灯明天再盖",
+        "等明天在改",
+        "等明天再概",
+        "等明天再该",
+        "灯明天在改",
+        "等"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengmingtianzaikan",
+      "expected": "等明天再看",
+      "source": "5500",
+      "lookup_us": 3787,
+      "candidates": [
+        "等明天再看",
+        "灯明天再看",
+        "等明天在看",
+        "等明天再刊",
+        "灯明天在看",
+        "等明天再砍",
+        "灯明天再刊",
+        "等明天再坎",
+        "等"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengmingtianzailiao",
+      "expected": "等明天再聊",
+      "source": "5500",
+      "lookup_us": 5138,
+      "candidates": [
+        "等明天再聊",
+        "灯明天再聊",
+        "等明天再了",
+        "等明天再料",
+        "灯明天再了",
+        "灯明天再料",
+        "等明天再寥",
+        "等明天再廖",
+        "等"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengmingtianzainong",
+      "expected": "等明天再弄",
+      "source": "5500",
+      "lookup_us": 3474,
+      "candidates": [
+        "等明天再浓",
+        "灯明天再浓",
+        "等明天再弄",
+        "等明天再农",
+        "等明天再侬",
+        "灯明天再弄",
+        "等明天再脓",
+        "灯明天再农",
+        "等"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "dengmingtianzaishi",
+      "expected": "等明天再试",
+      "source": "5500",
+      "lookup_us": 3552,
+      "candidates": [
+        "等明天再试",
+        "灯明天再试",
+        "等明天再使",
+        "等明天再是",
+        "等明天再时",
+        "等明天再事",
+        "灯明天再使",
+        "等明天再式",
+        "等"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengmingtianzaishuo",
+      "expected": "等明天再说",
+      "source": "5500",
+      "lookup_us": 3283,
+      "candidates": [
+        "等明天再说",
+        "灯明天再说",
+        "等明天在说",
+        "等名填再说",
+        "灯明天在说",
+        "等明天再烁",
+        "等明天再說",
+        "等明天再硕",
+        "等"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengmingtianzaiwen",
+      "expected": "等明天再问",
+      "source": "5500",
+      "lookup_us": 2788,
+      "candidates": [
+        "等明天再问",
+        "灯明天再问",
+        "等明天再文",
+        "等明天再稳",
+        "等明天再纹",
+        "灯明天再文",
+        "等明天再闻",
+        "灯明天再稳",
+        "等"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengmingtianzaixiang",
+      "expected": "等明天再想",
+      "source": "5500",
+      "lookup_us": 5965,
+      "candidates": [
+        "等明天再想",
+        "灯明天再想",
+        "等明天再向",
+        "等明天在想",
+        "灯明天再向",
+        "等明天再香",
+        "等明天再箱",
+        "等明天再响",
+        "等"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengmingtianzaiyue",
+      "expected": "等明天再约",
+      "source": "5500",
+      "lookup_us": 4819,
+      "candidates": [
+        "等明天再说",
+        "灯明天再说",
+        "等明天再约",
+        "等明天再月",
+        "灯明天再约",
+        "灯明天再月",
+        "等明天再曰",
+        "等明天再乐",
+        "等"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "dengmingtianzaizhao",
+      "expected": "等明天再找",
+      "source": "5500",
+      "lookup_us": 3587,
+      "candidates": [
+        "等明天再找",
+        "灯明天再找",
+        "等明天再着",
+        "等明天再照",
+        "等明天再罩",
+        "灯明天再着",
+        "灯明天再照",
+        "等明天再招",
+        "等"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengzhoumozaicha",
+      "expected": "等周末再查",
+      "source": "5500",
+      "lookup_us": 2315,
+      "candidates": [
+        "等周末再查",
+        "等周末在茶",
+        "等周末再差",
+        "等周末在查",
+        "等周末再茶",
+        "灯周末再查",
+        "等周末在差",
+        "等周末再察",
+        "邓州"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengzhoumozaiding",
+      "expected": "等周末再定",
+      "source": "5500",
+      "lookup_us": 2554,
+      "candidates": [
+        "等周末再顶",
+        "等周末再定",
+        "灯周末再顶",
+        "等周末在定",
+        "灯周末再定",
+        "等周末在顶",
+        "等周末再锭",
+        "等周末载定",
+        "邓州"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "dengzhoumozaigai",
+      "expected": "等周末再改",
+      "source": "5500",
+      "lookup_us": 2045,
+      "candidates": [
+        "等周末再改",
+        "等周末再盖",
+        "灯周末再改",
+        "等周末在改",
+        "灯周末再盖",
+        "灯周末在改",
+        "等周末在盖",
+        "等周末再概",
+        "邓州"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengzhoumozaikan",
+      "expected": "等周末再看",
+      "source": "5500",
+      "lookup_us": 1787,
+      "candidates": [
+        "等周末再看",
+        "灯周末再看",
+        "等周末在看",
+        "灯周末在看",
+        "等周末载看",
+        "等周末仔看",
+        "等周末哉看",
+        "等周末再刊",
+        "邓州"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengzhoumozailiao",
+      "expected": "等周末再聊",
+      "source": "5500",
+      "lookup_us": 3825,
+      "candidates": [
+        "等周末再聊",
+        "灯周末再聊",
+        "等周末再了",
+        "等周末载了",
+        "等周末再料",
+        "等周末在了",
+        "等周末在聊",
+        "等周末在料",
+        "邓州"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengzhoumozainong",
+      "expected": "等周末再弄",
+      "source": "5500",
+      "lookup_us": 1565,
+      "candidates": [
+        "等周末再浓",
+        "等周末在浓",
+        "等周末在弄",
+        "等周末再弄",
+        "灯周末再浓",
+        "等周末再农",
+        "等周末再侬",
+        "等周末载浓",
+        "邓州"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "dengzhoumozaishi",
+      "expected": "等周末再试",
+      "source": "5500",
+      "lookup_us": 1747,
+      "candidates": [
+        "等周末再试",
+        "灯周末再试",
+        "等周末在是",
+        "等周末再使",
+        "等周末再是",
+        "等周末在试",
+        "等周末再时",
+        "等周末在世",
+        "邓州"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengzhoumozaiwen",
+      "expected": "等周末再问",
+      "source": "5500",
+      "lookup_us": 1620,
+      "candidates": [
+        "等周末再问",
+        "灯周末再问",
+        "等周末在问",
+        "等周末在文",
+        "等周末再文",
+        "等周末再稳",
+        "等周末再纹",
+        "等周末载问",
+        "邓州"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengzhoumozaixiang",
+      "expected": "等周末再想",
+      "source": "5500",
+      "lookup_us": 5089,
+      "candidates": [
+        "等周末再想",
+        "等周末在想",
+        "灯周末再想",
+        "等周末再向",
+        "灯周末在想",
+        "等周末宰相",
+        "灯周末再向",
+        "等周末在响",
+        "邓州"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengzhoumozaiyue",
+      "expected": "等周末再约",
+      "source": "5500",
+      "lookup_us": 4101,
+      "candidates": [
+        "等周末再说",
+        "灯周末再说",
+        "等周末在月",
+        "等周末再月",
+        "等周末再约",
+        "等周末在说",
+        "等周末再曰",
+        "灯周末在月",
+        "邓州"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "dengzhoumozaizhao",
+      "expected": "等周末再找",
+      "source": "5500",
+      "lookup_us": 2524,
+      "candidates": [
+        "等周末再找",
+        "灯周末再找",
+        "等周末再着",
+        "等周末再照",
+        "等周末在找",
+        "等周末在着",
+        "等周末在照",
+        "等周末再罩",
+        "邓州"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guohuierzaicha",
+      "expected": "过会儿再查",
+      "source": "5500",
+      "lookup_us": 3180,
+      "candidates": [
+        "过会儿再查",
+        "过会儿再差",
+        "过会儿再茶",
+        "锅会儿再查",
+        "过会儿再察",
+        "锅会儿再差",
+        "过会儿再插",
+        "过会儿再叉",
+        "过会儿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guohuierzaiding",
+      "expected": "过会儿再定",
+      "source": "5500",
+      "lookup_us": 3220,
+      "candidates": [
+        "过会儿再顶",
+        "过会儿再定",
+        "锅会儿再顶",
+        "锅会儿再定",
+        "过会儿再锭",
+        "过会儿再丁",
+        "过会儿再订",
+        "过会儿再盯",
+        "过会儿"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "guohuierzaidui",
+      "expected": "过会儿再对",
+      "source": "5500",
+      "lookup_us": 2996,
+      "candidates": [
+        "过会儿再对",
+        "过会儿再队",
+        "锅会儿再对",
+        "过会儿再堆",
+        "过会儿在对",
+        "锅会儿再队",
+        "过会儿再對",
+        "过会儿再兑",
+        "过会儿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guohuierzaigai",
+      "expected": "过会儿再改",
+      "source": "5500",
+      "lookup_us": 2425,
+      "candidates": [
+        "过会儿再改",
+        "过会儿再盖",
+        "锅会儿再改",
+        "锅会儿再盖",
+        "过会儿再概",
+        "过会儿再该",
+        "过会儿在改",
+        "过会儿再钙",
+        "过会儿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guohuierzaikan",
+      "expected": "过会儿再看",
+      "source": "5500",
+      "lookup_us": 2050,
+      "candidates": [
+        "过会儿再看",
+        "锅会儿再看",
+        "过会儿再刊",
+        "过会儿在看",
+        "过会儿再砍",
+        "过会儿再坎",
+        "过会儿再堪",
+        "过会儿再侃",
+        "过会儿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guohuierzailiang",
+      "expected": "过会儿再量",
+      "source": "5500",
+      "lookup_us": 3796,
+      "candidates": [
+        "过会儿再量",
+        "过会儿再亮",
+        "过会儿再凉",
+        "过会儿再梁",
+        "过会儿再两",
+        "锅会儿再量",
+        "过会儿再晾",
+        "锅会儿再亮",
+        "过会儿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guohuierzailiao",
+      "expected": "过会儿再聊",
+      "source": "5500",
+      "lookup_us": 3368,
+      "candidates": [
+        "过会儿再聊",
+        "锅会儿再聊",
+        "过会儿再了",
+        "过会儿再料",
+        "锅会儿再了",
+        "过会儿再寥",
+        "锅会儿再料",
+        "过会儿再廖",
+        "过会儿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guohuierzainong",
+      "expected": "过会儿再弄",
+      "source": "5500",
+      "lookup_us": 1627,
+      "candidates": [
+        "过会儿再浓",
+        "过会儿再弄",
+        "锅会儿再浓",
+        "过会儿再农",
+        "过会儿再侬",
+        "过会儿再脓",
+        "过会儿再哝",
+        "锅会儿再弄",
+        "过会儿"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "guohuierzaishi",
+      "expected": "过会儿再试",
+      "source": "5500",
+      "lookup_us": 2126,
+      "candidates": [
+        "过会儿再试",
+        "锅会儿再试",
+        "过会儿再使",
+        "过会儿再是",
+        "过会儿再时",
+        "过会儿再事",
+        "过会儿再式",
+        "过会儿再室",
+        "过会儿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guohuierzaisuan",
+      "expected": "过会儿再算",
+      "source": "5500",
+      "lookup_us": 2394,
+      "candidates": [
+        "过会儿再算",
+        "锅会儿再算",
+        "过会儿再蒜",
+        "过会儿再酸",
+        "锅会儿再蒜",
+        "过会儿在算",
+        "锅会儿再酸",
+        "过会儿在蒜",
+        "过会儿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guohuierzaiwen",
+      "expected": "过会儿再问",
+      "source": "5500",
+      "lookup_us": 1848,
+      "candidates": [
+        "过会儿再问",
+        "锅会儿再问",
+        "过会儿再文",
+        "过会儿再稳",
+        "过会儿再纹",
+        "过会儿再闻",
+        "锅会儿再文",
+        "锅会儿再稳",
+        "过会儿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guohuierzaixiang",
+      "expected": "过会儿再想",
+      "source": "5500",
+      "lookup_us": 4681,
+      "candidates": [
+        "过会儿再想",
+        "锅会儿再想",
+        "过会儿再向",
+        "锅会儿再向",
+        "过会儿在想",
+        "过会儿再香",
+        "过会儿再箱",
+        "过会儿再响",
+        "过会儿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guohuierzaiyue",
+      "expected": "过会儿再约",
+      "source": "5500",
+      "lookup_us": 3341,
+      "candidates": [
+        "过会儿再说",
+        "锅会儿再说",
+        "过会儿再月",
+        "过会儿再约",
+        "过会儿再曰",
+        "锅会儿再月",
+        "过会儿再乐",
+        "过会儿再跃",
+        "过会儿"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "guohuierzaizhao",
+      "expected": "过会儿再找",
+      "source": "5500",
+      "lookup_us": 2214,
+      "candidates": [
+        "过会儿再找",
+        "锅会儿再找",
+        "过会儿再着",
+        "过会儿再照",
+        "过会儿再罩",
+        "锅会儿再着",
+        "过会儿再招",
+        "过会儿再赵",
+        "过会儿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huitouzaichaba",
+      "expected": "回头再查吧",
+      "source": "5500",
+      "lookup_us": 2151,
+      "candidates": [
+        "回头再查吧",
+        "回头再插拔",
+        "回头再茶吧",
+        "回头再查把",
+        "回头再差吧",
+        "回头再插吧",
+        "回头再查罢",
+        "回头再差把",
+        "回头"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huitouzaichacha",
+      "expected": "回头再查查",
+      "source": "5500",
+      "lookup_us": 1774,
+      "candidates": [
+        "回头再查查",
+        "回头再察察",
+        "回头再叉叉",
+        "回头再查差",
+        "回头再差查",
+        "回头再查茶",
+        "回头在查查",
+        "回头再茶查",
+        "回头"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huitouzaidingba",
+      "expected": "回头再定吧",
+      "source": "5500",
+      "lookup_us": 2541,
+      "candidates": [
+        "回头再定吧",
+        "回头再定把",
+        "回头再顶吧",
+        "回头再顶把",
+        "回头再顶罢",
+        "回头再顶拔",
+        "回头再定罢",
+        "回头再顶巴",
+        "回头"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huitouzaiduidui",
+      "expected": "回头再对对",
+      "source": "5500",
+      "lookup_us": 2676,
+      "candidates": [
+        "回头再对对",
+        "回头在对对",
+        "回头再队对",
+        "回头再队队",
+        "回头再堆对",
+        "回头再对队",
+        "回头再對对",
+        "回头再兑对",
+        "回头"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huitouzaigaiba",
+      "expected": "回头再改吧",
+      "source": "5500",
+      "lookup_us": 1795,
+      "candidates": [
+        "回头再改吧",
+        "回头再改把",
+        "回头再盖吧",
+        "回头再改罢",
+        "回头再该把",
+        "回头再改拔",
+        "回头再盖把",
+        "回头再该吧",
+        "回头"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huitouzaigaigai",
+      "expected": "回头再改改",
+      "source": "5500",
+      "lookup_us": 1488,
+      "candidates": [
+        "回头再改改",
+        "回头再改盖",
+        "回头再盖盖",
+        "回头再盖改",
+        "回头再改概",
+        "回头再改该",
+        "回头再该改",
+        "回头在改改",
+        "回头"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huitouzaikanba",
+      "expected": "回头再看吧",
+      "source": "5500",
+      "lookup_us": 1697,
+      "candidates": [
+        "回头再看罢",
+        "回头再看吧",
+        "回头再看把",
+        "回头再看拔",
+        "回头再看巴",
+        "回头再看疤",
+        "回头再看八",
+        "回头再看爸",
+        "回头再看"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "huitouzaikankan",
+      "expected": "回头再看看",
+      "source": "5500",
+      "lookup_us": 1431,
+      "candidates": [
+        "回头再看看",
+        "回头在看看",
+        "会头再看看",
+        "回头仔看看",
+        "回头载看看",
+        "回头哉看看",
+        "回头灾看看",
+        "回头宰看看",
+        "回头再看"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huitouzailiangliang",
+      "expected": "回头再量量",
+      "source": "5500",
+      "lookup_us": 8288,
+      "candidates": [
+        "回头再亮亮",
+        "回头再凉凉",
+        "回头再量量",
+        "回头再两两",
+        "回头再量两",
+        "回头再量亮",
+        "回头再两辆",
+        "回头再晾凉",
+        "回头"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "huitouzailiaoba",
+      "expected": "回头再聊吧",
+      "source": "5500",
+      "lookup_us": 4574,
+      "candidates": [
+        "回头再聊吧",
+        "回头再聊把",
+        "回头再聊罢",
+        "回头再聊拔",
+        "回头再了罢",
+        "回头再聊巴",
+        "回头再聊疤",
+        "回头再聊八",
+        "回头"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huitouzainongnong",
+      "expected": "回头再弄弄",
+      "source": "5500",
+      "lookup_us": 1390,
+      "candidates": [
+        "回头再浓浓",
+        "回头再弄弄",
+        "回头再弄浓",
+        "回头在浓浓",
+        "回头仔浓浓",
+        "回头再农浓",
+        "回头再侬浓",
+        "回头再脓浓",
+        "回头"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "huitouzaishishi",
+      "expected": "回头再试试",
+      "source": "5500",
+      "lookup_us": 2940,
+      "candidates": [
+        "回头再试试",
+        "回头在试试",
+        "回头再试时",
+        "回头再试是",
+        "回头再试失",
+        "回头再试事",
+        "回头再试式",
+        "回头再试室",
+        "回头"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huitouzaishuoba",
+      "expected": "回头再说吧",
+      "source": "5500",
+      "lookup_us": 2367,
+      "candidates": [
+        "回头再说吧",
+        "回头再说罢",
+        "回头再说把",
+        "回头再说拔",
+        "回头再说八",
+        "回头再说巴",
+        "回头再说疤",
+        "回头再说爸",
+        "回头"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huitouzaisuansuan",
+      "expected": "回头再算算",
+      "source": "5500",
+      "lookup_us": 3025,
+      "candidates": [
+        "回头再算算",
+        "回头再酸酸",
+        "回头再算蒜",
+        "回头再酸算",
+        "回头在算算",
+        "回头仔算算",
+        "回头再蒜算",
+        "回头再算酸",
+        "回头"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huitouzaiwenba",
+      "expected": "回头再问吧",
+      "source": "5500",
+      "lookup_us": 1918,
+      "candidates": [
+        "回头再问吧",
+        "回头再问把",
+        "回头再问罢",
+        "回头再问拔",
+        "回头再问巴",
+        "回头再问疤",
+        "回头再文吧",
+        "回头再问八",
+        "回头"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huitouzaiwenwen",
+      "expected": "回头再问问",
+      "source": "5500",
+      "lookup_us": 1933,
+      "candidates": [
+        "回头再问问",
+        "回头在问问",
+        "回头仔问问",
+        "回头载问问",
+        "回头哉问问",
+        "回头再问文",
+        "回头再稳稳",
+        "回头再问稳",
+        "回头"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huitouzaixiangba",
+      "expected": "回头再想吧",
+      "source": "5500",
+      "lookup_us": 5384,
+      "candidates": [
+        "回头再想把",
+        "回头再想吧",
+        "回头再向吧",
+        "回头在想把",
+        "回头再想罢",
+        "回头再向把",
+        "回头再想拔",
+        "回头再向罢",
+        "回头"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "huitouzaixiangxiang",
+      "expected": "回头再想想",
+      "source": "5500",
+      "lookup_us": 9566,
+      "candidates": [
+        "回头再想想",
+        "回头再想象",
+        "回头再想像",
+        "回头在想象",
+        "回头在想想",
+        "回头再想向",
+        "回头再香香",
+        "回头再向想",
+        "回头"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huitouzaiyueba",
+      "expected": "回头再约吧",
+      "source": "5500",
+      "lookup_us": 3672,
+      "candidates": [
+        "回头再说吧",
+        "回头再说罢",
+        "回头再说把",
+        "回头再约吧",
+        "回头再月罢",
+        "回头再说拔",
+        "回头再说八",
+        "回头再说巴",
+        "回头"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "huitouzaizhaozhao",
+      "expected": "回头再找找",
+      "source": "5500",
+      "lookup_us": 3262,
+      "candidates": [
+        "回头再找找",
+        "回头再找着",
+        "回头再照照",
+        "回头再找照",
+        "回头再朝着",
+        "回头再照着",
+        "回头再找罩",
+        "回头再招招",
+        "回头"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianbujizheding",
+      "expected": "先不急着定",
+      "source": "5500",
+      "lookup_us": 4895,
+      "candidates": [
+        "先不急着定",
+        "先不急着顶",
+        "先不急着锭",
+        "现不急着定",
+        "现不急着顶",
+        "先不记者定",
+        "先不急着丁",
+        "先不急着订",
+        "先"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianbujizhegai",
+      "expected": "先不急着改",
+      "source": "5500",
+      "lookup_us": 2818,
+      "candidates": [
+        "先不急着改",
+        "先不急着盖",
+        "先不及遮盖",
+        "先不急着概",
+        "先不急着该",
+        "现不急着改",
+        "先不记者改",
+        "现不急着盖",
+        "先"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianbujizhehuan",
+      "expected": "先不急着换",
+      "source": "5500",
+      "lookup_us": 4464,
+      "candidates": [
+        "先不急着还",
+        "现不急着还",
+        "先不急着换",
+        "先不记着还",
+        "先不及着还",
+        "先不急着欢",
+        "先不记者还",
+        "先不急着环",
+        "先"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "xianbujizhehui",
+      "expected": "先不急着回",
+      "source": "5500",
+      "lookup_us": 3985,
+      "candidates": [
+        "先不急着回",
+        "先不急着会",
+        "现不急着回",
+        "先不及这回",
+        "现不急着会",
+        "先不记者会",
+        "先不急着灰",
+        "先不及这会",
+        "先"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianbujizhelai",
+      "expected": "先不急着来",
+      "source": "5500",
+      "lookup_us": 3111,
+      "candidates": [
+        "先不急着来",
+        "现不急着来",
+        "先不记者来",
+        "先不记着来",
+        "先不及这来",
+        "先不及着来",
+        "先不急着赖",
+        "先不及者来",
+        "先"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianbujizhemai",
+      "expected": "先不急着买",
+      "source": "5500",
+      "lookup_us": 3861,
+      "candidates": [
+        "先不急着买",
+        "先不急着卖",
+        "现不急着买",
+        "先不急着脉",
+        "先不记者买",
+        "现不急着卖",
+        "先不记着买",
+        "先不及这买",
+        "先"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianbujizhequ",
+      "expected": "先不急着去",
+      "source": "5500",
+      "lookup_us": 2547,
+      "candidates": [
+        "先不急着去",
+        "先不急着取",
+        "先不急着趣",
+        "先不急着屈",
+        "现不急着去",
+        "先不急着曲",
+        "先不记者去",
+        "先不急着区",
+        "先"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianbujizhereng",
+      "expected": "先不急着扔",
+      "source": "5500",
+      "lookup_us": 3018,
+      "candidates": [
+        "先不急着扔",
+        "先不急着仍",
+        "现不急着扔",
+        "现不急着仍",
+        "先不记者扔",
+        "先不记着扔",
+        "先不急着礽",
+        "先不及这扔",
+        "先"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianbujizheshan",
+      "expected": "先不急着删",
+      "source": "5500",
+      "lookup_us": 3035,
+      "candidates": [
+        "先不急着山",
+        "先不急着善",
+        "先不急着删",
+        "先不急着衫",
+        "先不急着单",
+        "先不急着扇",
+        "先不急着闪",
+        "先不急着钐",
+        "先"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "xianbujizheshuo",
+      "expected": "先不急着说",
+      "source": "5500",
+      "lookup_us": 2661,
+      "candidates": [
+        "先不急着说",
+        "现不急着说",
+        "先不记着说",
+        "先不及着说",
+        "现不记着说",
+        "先不记者说",
+        "先不及者说",
+        "先不及这说",
+        "先"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianbujizhewen",
+      "expected": "先不急着问",
+      "source": "5500",
+      "lookup_us": 2216,
+      "candidates": [
+        "先不急着问",
+        "先不急着温",
+        "先不急着文",
+        "先不急着稳",
+        "先不记者问",
+        "先不急着纹",
+        "现不急着问",
+        "先不急着闻",
+        "先"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianbujizhezou",
+      "expected": "先不急着走",
+      "source": "5500",
+      "lookup_us": 1673,
+      "candidates": [
+        "先不急着走",
+        "现不急着走",
+        "先不记着走",
+        "先不及着走",
+        "现不记着走",
+        "先不急着奏",
+        "先不记者走",
+        "先不及这走",
+        "先"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dabangebaitian",
+      "expected": "大半个白天",
+      "source": "5500",
+      "lookup_us": 4441,
+      "candidates": [
+        "大半个白天",
+        "打半个白天",
+        "大半个白添",
+        "大半个白填",
+        "大半个白田",
+        "大半个拜天",
+        "大半个柏天",
+        "大半个白甜",
+        "大棒"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dabangejiaqi",
+      "expected": "大半个假期",
+      "source": "5500",
+      "lookup_us": 4710,
+      "candidates": [
+        "大半个假期",
+        "大半个架起",
+        "大半个假起",
+        "大半个假气",
+        "大半个假齐",
+        "大半个假器",
+        "打半个假期",
+        "大半个假弃",
+        "大棒"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dabangeshangwu",
+      "expected": "大半个上午",
+      "source": "5500",
+      "lookup_us": 4259,
+      "candidates": [
+        "大半个上午",
+        "打半个上午",
+        "大半个商务",
+        "大半个尚无",
+        "大半个上五",
+        "大半个上物",
+        "大半个上误",
+        "大半个上务",
+        "大棒"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dabangewanshang",
+      "expected": "大半个晚上",
+      "source": "5500",
+      "lookup_us": 4733,
+      "candidates": [
+        "大半个晚上",
+        "打半个晚上",
+        "大半个玩上",
+        "大半个玩尚",
+        "大半个玩伤",
+        "大半个碗上",
+        "大半个玩裳",
+        "大半个玩赏",
+        "大棒"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dabangexiawu",
+      "expected": "大半个下午",
+      "source": "5500",
+      "lookup_us": 4061,
+      "candidates": [
+        "大半个下午",
+        "打半个下午",
+        "大半个下无",
+        "大半个夏五",
+        "大半个下五",
+        "大半个夏物",
+        "大半个夏误",
+        "大半个下物",
+        "大棒"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dabangezhongtou",
+      "expected": "大半个钟头",
+      "source": "5500",
+      "lookup_us": 2253,
+      "candidates": [
+        "大半个钟头",
+        "大半个重头",
+        "大半个中头",
+        "大半个中投",
+        "大半个种头",
+        "大半个中透",
+        "大半个仲头",
+        "大半个众头",
+        "大棒"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dabangezhoumo",
+      "expected": "大半个周末",
+      "source": "5500",
+      "lookup_us": 4117,
+      "candidates": [
+        "大半个周末",
+        "打半个周末",
+        "大半个粥么",
+        "大半个周膜",
+        "大半个周摸",
+        "大半个州膜",
+        "大半个粥膜",
+        "大半个州摸",
+        "大棒"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gebalibai",
+      "expected": "个把礼拜",
+      "source": "5500",
+      "lookup_us": 1943,
+      "candidates": [
+        "个把礼拜",
+        "个把李白",
+        "各吧李白",
+        "个八李白",
+        "各把李白",
+        "个把理白",
+        "个吧李白",
+        "各把礼拜",
+        "个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gebaxiaoshi",
+      "expected": "个把小时",
+      "source": "5500",
+      "lookup_us": 3680,
+      "candidates": [
+        "个把小时",
+        "各把小时",
+        "个八小时",
+        "个把小事",
+        "各八小时",
+        "各把小事",
+        "个把消失",
+        "各吧小时",
+        "个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gebaxingqi",
+      "expected": "个把星期",
+      "source": "5500",
+      "lookup_us": 2553,
+      "candidates": [
+        "个把星期",
+        "各把星期",
+        "各吧星期",
+        "个八星期",
+        "个吧星期",
+        "各八星期",
+        "各爸星期",
+        "各巴星期",
+        "个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gebayuedeshijian",
+      "expected": "个把月的时间",
+      "source": "5500",
+      "lookup_us": 6239,
+      "candidates": [
+        "个八月的时间",
+        "各八月的时间",
+        "个八月地时间",
+        "个把约得时间",
+        "各八月地时间",
+        "各把约得时间",
+        "个八月德时间",
+        "个把月的时间",
+        "个"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "gebayueyinei",
+      "expected": "个把月以内",
+      "source": "5500",
+      "lookup_us": 4407,
+      "candidates": [
+        "个八月以内",
+        "各八月以内",
+        "个把约以内",
+        "各把约以内",
+        "个把越以内",
+        "各吧越以内",
+        "个八月一内",
+        "个把月以内",
+        "个"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "gebazhongtou",
+      "expected": "个把钟头",
+      "source": "5500",
+      "lookup_us": 1021,
+      "candidates": [
+        "个把钟头",
+        "各把钟头",
+        "个把重头",
+        "各把重头",
+        "各吧钟头",
+        "个八钟头",
+        "个八种头",
+        "个吧钟头",
+        "个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "houbangeshangwu",
+      "expected": "后半个上午",
+      "source": "5500",
+      "lookup_us": 3929,
+      "candidates": [
+        "后半个上午",
+        "候半个上午",
+        "后半个商务",
+        "后半个尚无",
+        "后半个上五",
+        "后半个上物",
+        "后半个上误",
+        "候半个商务",
+        "后半"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "houbangewanshang",
+      "expected": "后半个晚上",
+      "source": "5500",
+      "lookup_us": 4646,
+      "candidates": [
+        "后半个晚上",
+        "候半个晚上",
+        "后半个玩上",
+        "后半个玩尚",
+        "后半个玩伤",
+        "后半个碗上",
+        "后半个玩裳",
+        "后半个玩赏",
+        "后半"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "houbangexiaoshi",
+      "expected": "后半个小时",
+      "source": "5500",
+      "lookup_us": 5684,
+      "candidates": [
+        "后半个小时",
+        "候半个小时",
+        "后半个小事",
+        "后半个消失",
+        "候半个小事",
+        "后半个小实",
+        "后半个小诗",
+        "后半个小是",
+        "后半"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "houbangexiawu",
+      "expected": "后半个下午",
+      "source": "5500",
+      "lookup_us": 3819,
+      "candidates": [
+        "后半个下午",
+        "候半个下午",
+        "后半个下无",
+        "后半个夏五",
+        "后半个下五",
+        "后半个夏物",
+        "后半个夏误",
+        "后半个下物",
+        "后半"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "houbanniandeshijian",
+      "expected": "后半年的时间",
+      "source": "5500",
+      "lookup_us": 7487,
+      "candidates": [
+        "后半年的时间",
+        "后版年的时间",
+        "后半年地时间",
+        "后半年底时间",
+        "后半年得时间",
+        "后半年的事件",
+        "后半年的时见",
+        "后半年的时件",
+        "后半"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "houjifenzhong",
+      "expected": "后几分钟",
+      "source": "5500",
+      "lookup_us": 1497,
+      "candidates": [
+        "后几分钟",
+        "后记分钟",
+        "候几分钟",
+        "后继分钟",
+        "后积分钟",
+        "后几分中",
+        "后级分钟",
+        "后极分钟",
+        "后记"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "houliangsantian",
+      "expected": "后两三天",
+      "source": "5500",
+      "lookup_us": 3464,
+      "candidates": [
+        "后两三天",
+        "候两三天",
+        "后凉三天",
+        "后两三田",
+        "后量三天",
+        "后亮三天",
+        "后梁三天",
+        "后两三添",
+        "候"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "housanwutian",
+      "expected": "后三五天",
+      "source": "5500",
+      "lookup_us": 3711,
+      "candidates": [
+        "后三五天",
+        "后散五天",
+        "候三五天",
+        "后伞五天",
+        "后三五添",
+        "后三五填",
+        "后叁五天",
+        "后三五田",
+        "后三"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "houshilaifenzhong",
+      "expected": "后十来分钟",
+      "source": "5500",
+      "lookup_us": 1991,
+      "candidates": [
+        "后十来分钟",
+        "后事来分钟",
+        "后市赖分钟",
+        "后世赖分钟",
+        "后市莱分钟",
+        "后市來分钟",
+        "后世莱分钟",
+        "后市濑分钟",
+        "后市"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "houshilaitian",
+      "expected": "后十来天",
+      "source": "5500",
+      "lookup_us": 2594,
+      "candidates": [
+        "后十来天",
+        "后事来天",
+        "后市来天",
+        "后世来天",
+        "后十来添",
+        "后事来添",
+        "后十来填",
+        "后事来填",
+        "后市"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "houyiliangnian",
+      "expected": "后一两年",
+      "source": "5500",
+      "lookup_us": 5416,
+      "candidates": [
+        "后一两年",
+        "后一辆年",
+        "后裔两年",
+        "后一两念",
+        "后羿两年",
+        "厚一两年",
+        "后一亮年",
+        "后一辆念",
+        "后裔"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "houyiliangtian",
+      "expected": "后一两天",
+      "source": "5500",
+      "lookup_us": 5288,
+      "candidates": [
+        "后一两天",
+        "厚一两天",
+        "后裔两天",
+        "后羿两天",
+        "后以两天",
+        "后衣两天",
+        "后移两天",
+        "后已两天",
+        "后裔"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "liangsangexiaoshi",
+      "expected": "两三个小时",
+      "source": "5500",
+      "lookup_us": 6104,
+      "candidates": [
+        "两三个小时",
+        "晾三个小时",
+        "两三个小事",
+        "两三个消失",
+        "两三个小实",
+        "两三个小诗",
+        "两三个小是",
+        "两三个小师",
+        "两三"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "liangsanniangongfu",
+      "expected": "两三年工夫",
+      "source": "5500",
+      "lookup_us": 4608,
+      "candidates": [
+        "两三年工夫",
+        "两三念工夫",
+        "两三粘工夫",
+        "两三年功夫",
+        "两三捻工夫",
+        "两三廿工夫",
+        "两三黏工夫",
+        "两三碾工夫",
+        "两三"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "liangsantiangongfu",
+      "expected": "两三天工夫",
+      "source": "5500",
+      "lookup_us": 4069,
+      "candidates": [
+        "两三天工夫",
+        "两三天宫服",
+        "两三天宫复",
+        "两三天宫夫",
+        "两三天宫傅",
+        "两三天宫福",
+        "两三天宫父",
+        "两三天宫妇",
+        "两三天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nadabannian",
+      "expected": "那大半年",
+      "source": "5500",
+      "lookup_us": 3596,
+      "candidates": [
+        "那大半年",
+        "拿大半年",
+        "那大半念",
+        "那大半粘",
+        "那大班年",
+        "那大阪年",
+        "那打半年",
+        "那大板年",
+        "那"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "naliangsantian",
+      "expected": "那两三天",
+      "source": "5500",
+      "lookup_us": 4448,
+      "candidates": [
+        "那两三天",
+        "拿两三天",
+        "那辆三天",
+        "那两三田",
+        "那两三添",
+        "那两三填",
+        "那里昂三天",
+        "那量三天",
+        "那辆"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nasanwutian",
+      "expected": "那三五天",
+      "source": "5500",
+      "lookup_us": 3017,
+      "candidates": [
+        "那三五天",
+        "拿三五天",
+        "那三五添",
+        "那散五天",
+        "那三五填",
+        "那伞五天",
+        "那三五田",
+        "那叁五天",
+        "那"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nashilaitian",
+      "expected": "那十来天",
+      "source": "5500",
+      "lookup_us": 2982,
+      "candidates": [
+        "那十来天",
+        "那时来天",
+        "那是来天",
+        "那时来添",
+        "那时来填",
+        "那时赖天",
+        "那时来田",
+        "那时莱天",
+        "那是"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "naxiaobannian",
+      "expected": "那小半年",
+      "source": "5500",
+      "lookup_us": 7103,
+      "candidates": [
+        "那小半年",
+        "拿小半年",
+        "那小半念",
+        "那小班年",
+        "那小班念",
+        "那小半粘",
+        "那小版年",
+        "那笑半年",
+        "拿下"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nayiliangnian",
+      "expected": "那一两年",
+      "source": "5500",
+      "lookup_us": 5487,
+      "candidates": [
+        "那一两年",
+        "哪一两年",
+        "那一辆年",
+        "那一两念",
+        "那一量年",
+        "那一亮年",
+        "那以两年",
+        "那一辆念",
+        "那一"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qianbangeshangwu",
+      "expected": "前半个上午",
+      "source": "5500",
+      "lookup_us": 4616,
+      "candidates": [
+        "前半个上午",
+        "千半个上午",
+        "前半个商务",
+        "千半个商务",
+        "前半个尚无",
+        "前半个上五",
+        "千半个尚无",
+        "前半个上物",
+        "前半"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qianbangewanshang",
+      "expected": "前半个晚上",
+      "source": "5500",
+      "lookup_us": 5007,
+      "candidates": [
+        "前半个晚上",
+        "千半个晚上",
+        "前半个玩上",
+        "千半个玩上",
+        "前半个玩尚",
+        "前半个玩伤",
+        "前半个碗上",
+        "前半个玩裳",
+        "前半"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qianbangexiaoshi",
+      "expected": "前半个小时",
+      "source": "5500",
+      "lookup_us": 6373,
+      "candidates": [
+        "前半个小时",
+        "千半个小时",
+        "前半个小事",
+        "千半个小事",
+        "前半个消失",
+        "千半个消失",
+        "前半个小实",
+        "前半个小诗",
+        "前半"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qianbangexiawu",
+      "expected": "前半个下午",
+      "source": "5500",
+      "lookup_us": 4516,
+      "candidates": [
+        "前半个下午",
+        "千半个下午",
+        "前半个下无",
+        "前半个夏五",
+        "前半个下五",
+        "前半个夏物",
+        "前半个夏误",
+        "前半个下物",
+        "前半"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qianbanniandeshijian",
+      "expected": "前半年的时间",
+      "source": "5500",
+      "lookup_us": 6729,
+      "candidates": [
+        "前半年的时间",
+        "千半年的时间",
+        "前半年地时间",
+        "前半年底时间",
+        "前半年得时间",
+        "前半年的事件",
+        "千半年的事件",
+        "前半年的时见",
+        "前半"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qianliangsantian",
+      "expected": "前两三天",
+      "source": "5500",
+      "lookup_us": 4138,
+      "candidates": [
+        "前两三天",
+        "千两三天",
+        "前两三田",
+        "前量三天",
+        "钱亮三天",
+        "前亮三天",
+        "前梁三天",
+        "前两三添",
+        "前两"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qiansanwutian",
+      "expected": "前三五天",
+      "source": "5500",
+      "lookup_us": 3151,
+      "candidates": [
+        "前三五天",
+        "千三五天",
+        "前散五天",
+        "前三五添",
+        "前伞五天",
+        "前三无天",
+        "千散五天",
+        "前三五填",
+        "前三"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qianshilaitian",
+      "expected": "前十来天",
+      "source": "5500",
+      "lookup_us": 3123,
+      "candidates": [
+        "前十来天",
+        "欠十来天",
+        "前十来添",
+        "前十来填",
+        "前事来天",
+        "前世来天",
+        "前十来田",
+        "欠十来添",
+        "前世"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qianyiliangnian",
+      "expected": "前一两年",
+      "source": "5500",
+      "lookup_us": 5413,
+      "candidates": [
+        "前一两年",
+        "千一两年",
+        "浅议两年",
+        "千亿两年",
+        "前移两年",
+        "前一辆年",
+        "前一亮年",
+        "前一两念",
+        "迁移"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "sanwugexiaoshi",
+      "expected": "三五个小时",
+      "source": "5500",
+      "lookup_us": 6072,
+      "candidates": [
+        "三五个小时",
+        "散五个小时",
+        "三五个小事",
+        "三五个消失",
+        "散五个小事",
+        "散五个消失",
+        "三五个小实",
+        "三五个小诗",
+        "三五"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "sanwuniangongfu",
+      "expected": "三五年工夫",
+      "source": "5500",
+      "lookup_us": 3909,
+      "candidates": [
+        "三五年工夫",
+        "三五年功夫",
+        "散五年工夫",
+        "三五念工夫",
+        "三五粘工夫",
+        "三五捻工夫",
+        "三五廿工夫",
+        "三五黏工夫",
+        "三五"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "sanwutiangongfu",
+      "expected": "三五天工夫",
+      "source": "5500",
+      "lookup_us": 3571,
+      "candidates": [
+        "三五天工夫",
+        "三五天宫服",
+        "三五天宫复",
+        "三五天宫夫",
+        "三五天宫傅",
+        "三五天宫福",
+        "三五天宫父",
+        "三五天宫妇",
+        "三五天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shilaigexiaoshi",
+      "expected": "十来个小时",
+      "source": "5500",
+      "lookup_us": 5650,
+      "candidates": [
+        "事来个小时",
+        "是来个小时",
+        "事来个小事",
+        "事来个消失",
+        "是来个小事",
+        "是来个消失",
+        "事来个小实",
+        "十来个小时",
+        "十来"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "toujifenzhong",
+      "expected": "头几分钟",
+      "source": "5500",
+      "lookup_us": 1580,
+      "candidates": [
+        "头几分钟",
+        "投几分钟",
+        "投机分钟",
+        "头机分钟",
+        "头记分钟",
+        "投级分钟",
+        "投极分钟",
+        "投记分钟",
+        "投机"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tousanwutian",
+      "expected": "头三五天",
+      "source": "5500",
+      "lookup_us": 2385,
+      "candidates": [
+        "头三五天",
+        "投三五天",
+        "投散五天",
+        "投伞五天",
+        "头散五天",
+        "头伞五天",
+        "投叁五天",
+        "头三五添",
+        "头"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "toushilaifenzhong",
+      "expected": "头十来分钟",
+      "source": "5500",
+      "lookup_us": 1630,
+      "candidates": [
+        "投事来分钟",
+        "投十来分钟",
+        "透视赖分钟",
+        "头饰赖分钟",
+        "透视莱分钟",
+        "头饰莱分钟",
+        "透视來分钟",
+        "头十来分钟",
+        "透视"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "touyiliangtian",
+      "expected": "头一两天",
+      "source": "5500",
+      "lookup_us": 4874,
+      "candidates": [
+        "头一两天",
+        "投一两天",
+        "投以两天",
+        "头以两天",
+        "投已两天",
+        "头已两天",
+        "投易两天",
+        "投伊两天",
+        "头"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiaobangebaitian",
+      "expected": "小半个白天",
+      "source": "5500",
+      "lookup_us": 5419,
+      "candidates": [
+        "小半个白天",
+        "笑半个白天",
+        "小半个白添",
+        "小半个白填",
+        "小半个白田",
+        "小半个拜天",
+        "小半个柏天",
+        "小半个白甜",
+        "肖邦"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiaobangeshangwu",
+      "expected": "小半个上午",
+      "source": "5500",
+      "lookup_us": 4229,
+      "candidates": [
+        "小半个上午",
+        "笑半个上午",
+        "小半个商务",
+        "小半个尚无",
+        "小半个上五",
+        "笑半个商务",
+        "小半个上物",
+        "小半个上误",
+        "肖邦"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiaobangewanshang",
+      "expected": "小半个晚上",
+      "source": "5500",
+      "lookup_us": 5288,
+      "candidates": [
+        "小半个晚上",
+        "笑半个晚上",
+        "小半个玩上",
+        "小半个玩尚",
+        "小半个玩伤",
+        "小半个碗上",
+        "小半个玩裳",
+        "小半个玩赏",
+        "肖邦"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiaobangexiawu",
+      "expected": "小半个下午",
+      "source": "5500",
+      "lookup_us": 4574,
+      "candidates": [
+        "小半个下午",
+        "笑半个下午",
+        "小半个下无",
+        "小半个夏五",
+        "小半个下五",
+        "小半个夏物",
+        "小半个夏误",
+        "小半个下物",
+        "肖邦"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiaobangezhongtou",
+      "expected": "小半个钟头",
+      "source": "5500",
+      "lookup_us": 2751,
+      "candidates": [
+        "小半个钟头",
+        "小半个重头",
+        "小半个中头",
+        "小半个中投",
+        "小半个种头",
+        "小半个中透",
+        "小半个仲头",
+        "小半个众头",
+        "肖邦"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yiliangniangongfu",
+      "expected": "一两年工夫",
+      "source": "5500",
+      "lookup_us": 4832,
+      "candidates": [
+        "一两年工夫",
+        "以两年工夫",
+        "一两年功夫",
+        "一两念工夫",
+        "一辆念工夫",
+        "一两粘工夫",
+        "一辆粘工夫",
+        "一两捻工夫",
+        "一辆"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yiliangtiangongfu",
+      "expected": "一两天工夫",
+      "source": "5500",
+      "lookup_us": 4723,
+      "candidates": [
+        "一两天工夫",
+        "一两天宫服",
+        "一两天宫复",
+        "一两天宫夫",
+        "一两天宫傅",
+        "一两天宫福",
+        "一两天宫父",
+        "一两天宫妇",
+        "一两天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yizhenggebaitian",
+      "expected": "一整个白天",
+      "source": "5500",
+      "lookup_us": 4464,
+      "candidates": [
+        "一整个白天",
+        "已整个白天",
+        "一整各白天",
+        "一整格白天",
+        "一整歌白天",
+        "一整哥白天",
+        "一整个白添",
+        "一整个拜天",
+        "一整"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yizhenggejiaqi",
+      "expected": "一整个假期",
+      "source": "5500",
+      "lookup_us": 4445,
+      "candidates": [
+        "一整个假期",
+        "已整个假期",
+        "一整个架起",
+        "一整个假起",
+        "一整个假气",
+        "一整个假齐",
+        "一整个假器",
+        "一整个假弃",
+        "一整"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yizhenggelibai",
+      "expected": "一整个礼拜",
+      "source": "5500",
+      "lookup_us": 3787,
+      "candidates": [
+        "一整个李白",
+        "一整个例白",
+        "一整个例败",
+        "一整个礼拜",
+        "一整个离白",
+        "一整个理白",
+        "已整个李白",
+        "一整个利白",
+        "一整"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "yizhenggeshangwu",
+      "expected": "一整个上午",
+      "source": "5500",
+      "lookup_us": 5023,
+      "candidates": [
+        "一整个上午",
+        "已整个上午",
+        "一整格上午",
+        "一整个商务",
+        "一整各上午",
+        "一整歌上午",
+        "一整哥上午",
+        "一整隔上午",
+        "一整"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yizhenggewanshang",
+      "expected": "一整个晚上",
+      "source": "5500",
+      "lookup_us": 5238,
+      "candidates": [
+        "一整个晚上",
+        "已整个晚上",
+        "一整各晚上",
+        "一整格晚上",
+        "一整歌晚上",
+        "一整哥晚上",
+        "一整隔晚上",
+        "一整阁晚上",
+        "一整"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yizhenggexiawu",
+      "expected": "一整个下午",
+      "source": "5500",
+      "lookup_us": 4183,
+      "candidates": [
+        "一整个下午",
+        "已整个下午",
+        "一整格下午",
+        "一整阁下午",
+        "一整各下午",
+        "一整歌下午",
+        "一整哥下午",
+        "一整隔下午",
+        "一整"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yizhenggexingqi",
+      "expected": "一整个星期",
+      "source": "5500",
+      "lookup_us": 4944,
+      "candidates": [
+        "一整个星期",
+        "已整个星期",
+        "一整歌星期",
+        "一整个兴起",
+        "一整各星期",
+        "一整格星期",
+        "一整哥星期",
+        "一整个性器",
+        "一整"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yizhenggeyewan",
+      "expected": "一整个夜晚",
+      "source": "5500",
+      "lookup_us": 3353,
+      "candidates": [
+        "一整个夜晚",
+        "已整个夜晚",
+        "一整个页完",
+        "一整个页晚",
+        "一整个页碗",
+        "一整个也完",
+        "一整个页玩",
+        "一整个也晚",
+        "一整"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yizhenggezaoshang",
+      "expected": "一整个早上",
+      "source": "5500",
+      "lookup_us": 3446,
+      "candidates": [
+        "一整个早上",
+        "已整个早上",
+        "一整各早上",
+        "一整格早上",
+        "一整歌早上",
+        "一整哥早上",
+        "一整隔早上",
+        "一整阁早上",
+        "一整"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yizhenggezhoumo",
+      "expected": "一整个周末",
+      "source": "5500",
+      "lookup_us": 2695,
+      "candidates": [
+        "一整个周末",
+        "已整个周末",
+        "一整隔周末",
+        "一整各周末",
+        "一整个粥么",
+        "一整格周末",
+        "一整歌周末",
+        "一整哥周末",
+        "一整"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yizhengshangwu",
+      "expected": "一整上午",
+      "source": "5500",
+      "lookup_us": 3021,
+      "candidates": [
+        "一整上午",
+        "一怔上午",
+        "已整上午",
+        "一证上午",
+        "一争上午",
+        "一蒸上午",
+        "一睁上午",
+        "一正上午",
+        "一整"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yizhengwanshang",
+      "expected": "一整晚上",
+      "source": "5500",
+      "lookup_us": 3908,
+      "candidates": [
+        "一整晚上",
+        "一怔晚上",
+        "已整晚上",
+        "一睁晚上",
+        "一正晚上",
+        "一证晚上",
+        "一郑晚上",
+        "一争晚上",
+        "一整晚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yizhengxiawu",
+      "expected": "一整下午",
+      "source": "5500",
+      "lookup_us": 3210,
+      "candidates": [
+        "一整下午",
+        "一怔下午",
+        "已整下午",
+        "一症下午",
+        "一睁下午",
+        "一正下午",
+        "一证下午",
+        "一郑下午",
+        "一整"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhedabannian",
+      "expected": "这大半年",
+      "source": "5500",
+      "lookup_us": 3565,
+      "candidates": [
+        "这大半年",
+        "浙大半年",
+        "这大半念",
+        "这大半粘",
+        "这大班年",
+        "这打半年",
+        "这大阪年",
+        "这打扮年",
+        "浙大"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zheliangsantian",
+      "expected": "这两三天",
+      "source": "5500",
+      "lookup_us": 4196,
+      "candidates": [
+        "这两三天",
+        "着两三天",
+        "这两三田",
+        "这两三添",
+        "这两三填",
+        "这辆三天",
+        "这两三甜",
+        "这两三舔",
+        "这两"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhenggeyeli",
+      "expected": "整个夜里",
+      "source": "5500",
+      "lookup_us": 2254,
+      "candidates": [
+        "整个夜里",
+        "正个夜里",
+        "正隔夜里",
+        "整隔夜里",
+        "整个页里",
+        "整个页力",
+        "整个页理",
+        "整个页利",
+        "整个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhesanwutian",
+      "expected": "这三五天",
+      "source": "5500",
+      "lookup_us": 3694,
+      "candidates": [
+        "这三五天",
+        "着三五天",
+        "这散五天",
+        "这伞五天",
+        "这三五添",
+        "这三五填",
+        "这叁五天",
+        "这三无天",
+        "这三"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zheshilaitian",
+      "expected": "这十来天",
+      "source": "5500",
+      "lookup_us": 3061,
+      "candidates": [
+        "这十来天",
+        "这是来天",
+        "这时来天",
+        "这是来添",
+        "这是来填",
+        "这是赖天",
+        "这时来添",
+        "这是来田",
+        "这是"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhexiaobannian",
+      "expected": "这小半年",
+      "source": "5500",
+      "lookup_us": 5446,
+      "candidates": [
+        "这小半年",
+        "这笑半年",
+        "这小半念",
+        "这小班年",
+        "着小半年",
+        "这小班念",
+        "这小半粘",
+        "这小版年",
+        "这下"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zheyiliangnian",
+      "expected": "这一两年",
+      "source": "5500",
+      "lookup_us": 5926,
+      "candidates": [
+        "这一两年",
+        "这一两念",
+        "这一量年",
+        "这一亮年",
+        "这一辆年",
+        "这一良年",
+        "这一凉年",
+        "这一两粘",
+        "这一"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caigejinian",
+      "expected": "才隔几年",
+      "source": "5500",
+      "lookup_us": 3303,
+      "candidates": [
+        "才隔几年",
+        "才个纪念",
+        "菜个纪念",
+        "菜隔几年",
+        "才隔纪念",
+        "才个几年",
+        "才各纪念",
+        "才格纪念",
+        "才"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caigejitian",
+      "expected": "才隔几天",
+      "source": "5500",
+      "lookup_us": 2448,
+      "candidates": [
+        "才隔几天",
+        "菜隔几天",
+        "才个几天",
+        "才各几天",
+        "菜个几天",
+        "才格几天",
+        "才歌几天",
+        "才哥几天",
+        "才"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caigejiyue",
+      "expected": "才隔几月",
+      "source": "5500",
+      "lookup_us": 3075,
+      "candidates": [
+        "才隔几月",
+        "菜隔几月",
+        "才各级月",
+        "才个机说",
+        "菜各级月",
+        "才个几月",
+        "才个鸡月",
+        "才个机月",
+        "才"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caigejizhou",
+      "expected": "才隔几周",
+      "source": "5500",
+      "lookup_us": 1175,
+      "candidates": [
+        "才隔几周",
+        "才隔几粥",
+        "菜隔几周",
+        "才各级粥",
+        "才隔几舟",
+        "才隔几咒",
+        "才各级舟",
+        "才各级咒",
+        "才"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caigeyihui",
+      "expected": "才隔一会",
+      "source": "5500",
+      "lookup_us": 2574,
+      "candidates": [
+        "才隔一会",
+        "才个一会",
+        "菜个一会",
+        "菜隔一会",
+        "才隔一回",
+        "才个一回",
+        "才各一会",
+        "才格一会",
+        "才"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caiguojinian",
+      "expected": "才过几年",
+      "source": "5500",
+      "lookup_us": 4836,
+      "candidates": [
+        "才过几年",
+        "菜过几年",
+        "才过纪念",
+        "才国纪念",
+        "菜过纪念",
+        "才果纪念",
+        "才国几年",
+        "才郭纪念",
+        "才"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caiguojitian",
+      "expected": "才过几天",
+      "source": "5500",
+      "lookup_us": 2986,
+      "candidates": [
+        "才过几天",
+        "菜过几天",
+        "才国几天",
+        "才果几天",
+        "才郭几天",
+        "才锅几天",
+        "菜国几天",
+        "才裹几天",
+        "才"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caiguojiyue",
+      "expected": "才过几月",
+      "source": "5500",
+      "lookup_us": 3400,
+      "candidates": [
+        "才过几月",
+        "菜过几月",
+        "才国际月",
+        "才过激月",
+        "菜国际月",
+        "才国籍月",
+        "才国际说",
+        "才国际约",
+        "才"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caiguojizhou",
+      "expected": "才过几周",
+      "source": "5500",
+      "lookup_us": 1403,
+      "candidates": [
+        "才过几周",
+        "才国际粥",
+        "菜过几周",
+        "才过几粥",
+        "才过激粥",
+        "菜国际粥",
+        "才国际舟",
+        "才国际咒",
+        "才"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caiguoyihui",
+      "expected": "才过一会",
+      "source": "5500",
+      "lookup_us": 3130,
+      "candidates": [
+        "才过一会",
+        "菜过一会",
+        "才过一回",
+        "菜过一回",
+        "才国一会",
+        "才果一会",
+        "才郭一会",
+        "才锅一会",
+        "才"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengledabannian",
+      "expected": "等了大半年",
+      "source": "5500",
+      "lookup_us": 4071,
+      "candidates": [
+        "等了大半年",
+        "瞪了大半年",
+        "等了大半念",
+        "等了大半粘",
+        "等了大班年",
+        "等了大阪年",
+        "等了打半年",
+        "瞪了大半念",
+        "瞪了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengledabantian",
+      "expected": "等了大半天",
+      "source": "5500",
+      "lookup_us": 3909,
+      "candidates": [
+        "等了大半天",
+        "瞪了大半天",
+        "等了打半天",
+        "等了达半天",
+        "等了答半天",
+        "等了搭半天",
+        "等了哒半天",
+        "等了嗒半天",
+        "瞪了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "denglehaojinian",
+      "expected": "等了好几年",
+      "source": "5500",
+      "lookup_us": 5732,
+      "candidates": [
+        "等了好几年",
+        "瞪了好几年",
+        "等了好纪念",
+        "等了号纪念",
+        "等了号几年",
+        "等了浩纪念",
+        "瞪了好纪念",
+        "等了豪纪念",
+        "瞪了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "denglehaojitian",
+      "expected": "等了好几天",
+      "source": "5500",
+      "lookup_us": 4414,
+      "candidates": [
+        "等了好几天",
+        "瞪了好几天",
+        "等了号几天",
+        "等了好几添",
+        "等了好几填",
+        "等了好几田",
+        "等了豪几天",
+        "等了浩几天",
+        "瞪了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "denglehaojiyue",
+      "expected": "等了好几月",
+      "source": "5500",
+      "lookup_us": 5289,
+      "candidates": [
+        "等了好几月",
+        "等了好几说",
+        "等了好几约",
+        "瞪了好几月",
+        "等了好几曰",
+        "等了好几乐",
+        "等了好几跃",
+        "等了好几越",
+        "瞪了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "denglehaojizhou",
+      "expected": "等了好几周",
+      "source": "5500",
+      "lookup_us": 3384,
+      "candidates": [
+        "等了好几周",
+        "等了好几粥",
+        "等了好几舟",
+        "等了好几咒",
+        "等了好几州",
+        "等了好几洲",
+        "等了好几轴",
+        "等了好几皱",
+        "瞪了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "denglehaoyihui",
+      "expected": "等了好一会",
+      "source": "5500",
+      "lookup_us": 3804,
+      "candidates": [
+        "等了好一会",
+        "瞪了好一会",
+        "等了好一回",
+        "等了号一会",
+        "瞪了好一回",
+        "等了好意回",
+        "等了皓一会",
+        "等了号一回",
+        "瞪了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "denglelaobantian",
+      "expected": "等了老半天",
+      "source": "5500",
+      "lookup_us": 5748,
+      "candidates": [
+        "等了老半天",
+        "瞪了老半天",
+        "等了牢半天",
+        "等了捞半天",
+        "等了劳半天",
+        "等了铹半天",
+        "等了佬半天",
+        "等了烙半天",
+        "瞪了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengleliangsannian",
+      "expected": "等了两三年",
+      "source": "5500",
+      "lookup_us": 5036,
+      "candidates": [
+        "等了两三年",
+        "等了两三念",
+        "瞪了两三年",
+        "等了两三粘",
+        "瞪了两三念",
+        "等了两三捻",
+        "等了两三廿",
+        "等了两三黏",
+        "瞪了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengleliangsantian",
+      "expected": "等了两三天",
+      "source": "5500",
+      "lookup_us": 5195,
+      "candidates": [
+        "等了两三天",
+        "瞪了两三天",
+        "等了两三田",
+        "等了两三添",
+        "等了两三填",
+        "等了两三甜",
+        "等了量三天",
+        "等了亮三天",
+        "瞪了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "denglesanwunian",
+      "expected": "等了三五年",
+      "source": "5500",
+      "lookup_us": 4221,
+      "candidates": [
+        "等了三五年",
+        "瞪了三五年",
+        "等了散五年",
+        "等了三五念",
+        "等了伞五年",
+        "等了叁五年",
+        "等了三五粘",
+        "等了彡五年",
+        "瞪了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "denglesanwutian",
+      "expected": "等了三五天",
+      "source": "5500",
+      "lookup_us": 3395,
+      "candidates": [
+        "等了三五天",
+        "瞪了三五天",
+        "等了散五天",
+        "等了伞五天",
+        "等了三五添",
+        "等了三五填",
+        "等了叁五天",
+        "等了三五田",
+        "瞪了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengleshilaitian",
+      "expected": "等了十来天",
+      "source": "5500",
+      "lookup_us": 3664,
+      "candidates": [
+        "等了十来天",
+        "瞪了十来天",
+        "等了事来天",
+        "等了十来添",
+        "等了十来填",
+        "等了十来田",
+        "等乐事来天",
+        "等了是来天",
+        "瞪了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "denglexiaobannian",
+      "expected": "等了小半年",
+      "source": "5500",
+      "lookup_us": 8727,
+      "candidates": [
+        "等了小半年",
+        "瞪了小半年",
+        "等了消半年",
+        "等了笑半年",
+        "等了小班年",
+        "等了小半念",
+        "等了小班念",
+        "等了小版年",
+        "瞪了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengleyiliangtian",
+      "expected": "等了一两天",
+      "source": "5500",
+      "lookup_us": 7158,
+      "candidates": [
+        "等了一两天",
+        "瞪了一两天",
+        "等了以两天",
+        "等了意两天",
+        "等了一辆天",
+        "等了已两天",
+        "等乐意两天",
+        "等了一亮天",
+        "瞪了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengleyixiaohui",
+      "expected": "等了一小会",
+      "source": "5500",
+      "lookup_us": 7291,
+      "candidates": [
+        "等了一小会",
+        "瞪了一小会",
+        "等了一笑会",
+        "等了一小回",
+        "等了一笑回",
+        "等了一小灰",
+        "等了一小慧",
+        "等了一笑灰",
+        "瞪了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengleyizhenzi",
+      "expected": "等了一阵子",
+      "source": "5500",
+      "lookup_us": 3541,
+      "candidates": [
+        "等了一阵子",
+        "等了一阵字",
+        "瞪了一阵子",
+        "等了一阵自",
+        "等了一阵紫",
+        "等了一阵资",
+        "等了一阵仔",
+        "等了一阵兹",
+        "瞪了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "geledabannian",
+      "expected": "隔了大半年",
+      "source": "5500",
+      "lookup_us": 3211,
+      "candidates": [
+        "各了大半年",
+        "隔了大半年",
+        "各了大半念",
+        "隔了大半念",
+        "各了大半粘",
+        "隔了大半粘",
+        "各了大半捻",
+        "隔了大半捻",
+        "个"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "geledabantian",
+      "expected": "隔了大半天",
+      "source": "5500",
+      "lookup_us": 3575,
+      "candidates": [
+        "各了大半天",
+        "隔了大半天",
+        "各了打半天",
+        "隔了打半天",
+        "各了达半天",
+        "隔了达半天",
+        "各了答半天",
+        "隔了答半天",
+        "个"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "gelehaojinian",
+      "expected": "隔了好几年",
+      "source": "5500",
+      "lookup_us": 4197,
+      "candidates": [
+        "各了好几年",
+        "隔了好几年",
+        "各了好纪念",
+        "隔了好纪念",
+        "各了号纪念",
+        "隔了号纪念",
+        "各了号几年",
+        "隔了号几年",
+        "个"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "gelehaojitian",
+      "expected": "隔了好几天",
+      "source": "5500",
+      "lookup_us": 3313,
+      "candidates": [
+        "各了好几天",
+        "隔了好几天",
+        "各了好几添",
+        "隔了好几添",
+        "各了好几填",
+        "隔了好几填",
+        "各了好几田",
+        "隔了好几田",
+        "个"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "gelehaojiyue",
+      "expected": "隔了好几月",
+      "source": "5500",
+      "lookup_us": 3506,
+      "candidates": [
+        "隔了好几月",
+        "各了好几月",
+        "各了好几说",
+        "隔了好几说",
+        "各了好几约",
+        "隔了好几约",
+        "各了好几曰",
+        "隔了好几曰",
+        "个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gelehaojizhou",
+      "expected": "隔了好几周",
+      "source": "5500",
+      "lookup_us": 2034,
+      "candidates": [
+        "各了好几周",
+        "隔了好几周",
+        "各了好几粥",
+        "隔了好几粥",
+        "各了好几舟",
+        "隔了好几舟",
+        "各了好几咒",
+        "隔了好几咒",
+        "个"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "gelehaoyihui",
+      "expected": "隔了好一会",
+      "source": "5500",
+      "lookup_us": 2668,
+      "candidates": [
+        "各了好一会",
+        "隔了好一会",
+        "各了好一回",
+        "隔了好一回",
+        "各了号一会",
+        "隔了号一会",
+        "各了好意回",
+        "隔了好意回",
+        "个"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "gelelaobantian",
+      "expected": "隔了老半天",
+      "source": "5500",
+      "lookup_us": 3773,
+      "candidates": [
+        "各了老半天",
+        "隔了老半天",
+        "各了牢半天",
+        "各了捞半天",
+        "隔了牢半天",
+        "隔了捞半天",
+        "各了劳半天",
+        "隔了劳半天",
+        "个"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "geleliangsannian",
+      "expected": "隔了两三年",
+      "source": "5500",
+      "lookup_us": 4339,
+      "candidates": [
+        "各了两三年",
+        "隔了两三年",
+        "各了两三念",
+        "隔了两三念",
+        "各了两三粘",
+        "隔了两三粘",
+        "各了两三捻",
+        "隔了两三捻",
+        "个"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "geleliangsantian",
+      "expected": "隔了两三天",
+      "source": "5500",
+      "lookup_us": 4009,
+      "candidates": [
+        "各了两三天",
+        "隔了两三天",
+        "各了两三田",
+        "隔了两三田",
+        "各了两三添",
+        "隔了两三添",
+        "各了两三填",
+        "隔了两三填",
+        "个"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "gelesanwunian",
+      "expected": "隔了三五年",
+      "source": "5500",
+      "lookup_us": 2871,
+      "candidates": [
+        "各了三五年",
+        "隔了三五年",
+        "各了散五年",
+        "隔了散五年",
+        "各了三五念",
+        "隔了三五念",
+        "各了伞五年",
+        "隔了伞五年",
+        "个"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "gelesanwutian",
+      "expected": "隔了三五天",
+      "source": "5500",
+      "lookup_us": 3129,
+      "candidates": [
+        "各了三五天",
+        "隔了三五天",
+        "各了散五天",
+        "隔了散五天",
+        "各了伞五天",
+        "隔了伞五天",
+        "各了三五添",
+        "隔了三五添",
+        "个"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "geleshilaitian",
+      "expected": "隔了十来天",
+      "source": "5500",
+      "lookup_us": 2774,
+      "candidates": [
+        "各了十来天",
+        "隔了十来天",
+        "各乐事来天",
+        "个乐事来天",
+        "各了十来添",
+        "隔了十来添",
+        "各了十来填",
+        "隔了十来填",
+        "个"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "gelexiaobannian",
+      "expected": "隔了小半年",
+      "source": "5500",
+      "lookup_us": 5548,
+      "candidates": [
+        "各了小半年",
+        "隔了小半年",
+        "各了消半年",
+        "隔了消半年",
+        "各了笑半年",
+        "隔了笑半年",
+        "各了小班年",
+        "隔了小班年",
+        "个"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "geleyiliangtian",
+      "expected": "隔了一两天",
+      "source": "5500",
+      "lookup_us": 4852,
+      "candidates": [
+        "各了一两天",
+        "隔了一两天",
+        "各了以两天",
+        "隔了以两天",
+        "各乐意两天",
+        "个乐意两天",
+        "各了一辆天",
+        "隔了一辆天",
+        "个"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "geleyixiaohui",
+      "expected": "隔了一小会",
+      "source": "5500",
+      "lookup_us": 5648,
+      "candidates": [
+        "各了一小会",
+        "隔了一小会",
+        "各了一笑会",
+        "隔了一笑会",
+        "各了一小回",
+        "隔了一小回",
+        "各了一笑回",
+        "隔了一笑回",
+        "个"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "geleyizhenzi",
+      "expected": "隔了一阵子",
+      "source": "5500",
+      "lookup_us": 2612,
+      "candidates": [
+        "各了一阵子",
+        "隔了一阵子",
+        "各了一阵字",
+        "隔了一阵字",
+        "各了一阵自",
+        "隔了一阵自",
+        "各了一阵紫",
+        "隔了一阵紫",
+        "个"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "guoledabannian",
+      "expected": "过了大半年",
+      "source": "5500",
+      "lookup_us": 4645,
+      "candidates": [
+        "过了大半年",
+        "过了大半念",
+        "过了大半粘",
+        "过了大班年",
+        "过了大阪年",
+        "过了大板年",
+        "过了大班念",
+        "过了大半捻",
+        "过了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guoledabantian",
+      "expected": "过了大半天",
+      "source": "5500",
+      "lookup_us": 4982,
+      "candidates": [
+        "过了大半天",
+        "锅了大半天",
+        "过了打半天",
+        "过了达半天",
+        "过了答半天",
+        "过了搭半天",
+        "过了哒半天",
+        "过了大半田",
+        "过了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guolehaojinian",
+      "expected": "过了好几年",
+      "source": "5500",
+      "lookup_us": 5057,
+      "candidates": [
+        "过了好几年",
+        "锅了好几年",
+        "过了好纪念",
+        "过了号纪念",
+        "过了号几年",
+        "过了浩纪念",
+        "过了豪纪念",
+        "过了郝纪念",
+        "过了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guolehaojitian",
+      "expected": "过了好几天",
+      "source": "5500",
+      "lookup_us": 4415,
+      "candidates": [
+        "过了好几天",
+        "锅了好几天",
+        "过了号几天",
+        "过了好几添",
+        "过了好几填",
+        "过了好几田",
+        "过了豪几天",
+        "过了浩几天",
+        "过了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guolehaojiyue",
+      "expected": "过了好几月",
+      "source": "5500",
+      "lookup_us": 4305,
+      "candidates": [
+        "过了好几月",
+        "过了好几说",
+        "过了好几约",
+        "过了好几曰",
+        "过了好几乐",
+        "过了好几跃",
+        "过了好几越",
+        "过了好几粤",
+        "过了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guolehaojizhou",
+      "expected": "过了好几周",
+      "source": "5500",
+      "lookup_us": 2445,
+      "candidates": [
+        "过了好几周",
+        "过了好几粥",
+        "过了好几舟",
+        "过了好几咒",
+        "过了好几州",
+        "过了好几洲",
+        "过了好几轴",
+        "过了好几皱",
+        "过了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guolehaoyihui",
+      "expected": "过了好一会",
+      "source": "5500",
+      "lookup_us": 4135,
+      "candidates": [
+        "过了好一会",
+        "过了好一回",
+        "过了号一会",
+        "锅了好一会",
+        "过了好意回",
+        "过了皓一会",
+        "过了号一回",
+        "过了豪一会",
+        "过了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guolelaobantian",
+      "expected": "过了老半天",
+      "source": "5500",
+      "lookup_us": 5033,
+      "candidates": [
+        "过了老半天",
+        "过了牢半天",
+        "过了捞半天",
+        "过了劳半天",
+        "过了铹半天",
+        "过了佬半天",
+        "过了烙半天",
+        "过了唠半天",
+        "过了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guoleliangsannian",
+      "expected": "过了两三年",
+      "source": "5500",
+      "lookup_us": 4975,
+      "candidates": [
+        "过了两三年",
+        "过了两三念",
+        "过了两三粘",
+        "过了两三捻",
+        "过了两三廿",
+        "过了两三黏",
+        "过了两三碾",
+        "过了两三蔫",
+        "过了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guoleliangsantian",
+      "expected": "过了两三天",
+      "source": "5500",
+      "lookup_us": 5622,
+      "candidates": [
+        "过了两三天",
+        "锅了两三天",
+        "过了两三田",
+        "过了两三添",
+        "过了两三填",
+        "过了两三甜",
+        "过了量三天",
+        "过了亮三天",
+        "过了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guolesanwunian",
+      "expected": "过了三五年",
+      "source": "5500",
+      "lookup_us": 3480,
+      "candidates": [
+        "过了三五年",
+        "过了三五念",
+        "过了散五年",
+        "过了伞五年",
+        "过了三五粘",
+        "过了叁五年",
+        "过了三屋年",
+        "过了彡五年",
+        "过了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guolesanwutian",
+      "expected": "过了三五天",
+      "source": "5500",
+      "lookup_us": 3197,
+      "candidates": [
+        "过了三五天",
+        "过了三五添",
+        "过了三五填",
+        "过了散五天",
+        "过了伞五天",
+        "过了三五田",
+        "过了三无天",
+        "过了叁五天",
+        "过了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guoleshilaitian",
+      "expected": "过了十来天",
+      "source": "5500",
+      "lookup_us": 3692,
+      "candidates": [
+        "过了十来天",
+        "过了十来添",
+        "过了十来填",
+        "过了十来田",
+        "过了事来天",
+        "过了十来甜",
+        "过了十来提案",
+        "过了是来天",
+        "过了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guolexiaobannian",
+      "expected": "过了小半年",
+      "source": "5500",
+      "lookup_us": 7047,
+      "candidates": [
+        "过了小半年",
+        "过了消半年",
+        "过了笑半年",
+        "过了小班年",
+        "过了小半念",
+        "过了小班念",
+        "过了小版年",
+        "过了校半年",
+        "过了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guoleyiliangtian",
+      "expected": "过了一两天",
+      "source": "5500",
+      "lookup_us": 7270,
+      "candidates": [
+        "过了一两天",
+        "过了以两天",
+        "过了一辆天",
+        "过了一亮天",
+        "过了一两添",
+        "过了一辆添",
+        "过了一两填",
+        "过了一辆填",
+        "过了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guoleyixiaohui",
+      "expected": "过了一小会",
+      "source": "5500",
+      "lookup_us": 8201,
+      "candidates": [
+        "过了一小会",
+        "过了一笑会",
+        "过了一小回",
+        "过了一笑回",
+        "过了一小灰",
+        "过了一笑灰",
+        "过了一小辉",
+        "过了一小慧",
+        "过了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guoleyizhenzi",
+      "expected": "过了一阵子",
+      "source": "5500",
+      "lookup_us": 4475,
+      "candidates": [
+        "过了一阵子",
+        "过了一阵字",
+        "过了一阵自",
+        "过了一阵紫",
+        "过了一阵资",
+        "过了一阵仔",
+        "过了一阵兹",
+        "过了一阵姿",
+        "过了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meigejinian",
+      "expected": "没隔几年",
+      "source": "5500",
+      "lookup_us": 4186,
+      "candidates": [
+        "没隔几年",
+        "每个纪念",
+        "每个几年",
+        "每隔几年",
+        "没个纪念",
+        "每隔纪念",
+        "没个几年",
+        "没隔纪念",
+        "每个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meigejitian",
+      "expected": "没隔几天",
+      "source": "5500",
+      "lookup_us": 3935,
+      "candidates": [
+        "没隔几天",
+        "每个几天",
+        "每隔几天",
+        "每个鸡天",
+        "每个机天",
+        "每个计天",
+        "每个吉田",
+        "每个记天",
+        "每个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meigejiyue",
+      "expected": "没隔几月",
+      "source": "5500",
+      "lookup_us": 4069,
+      "candidates": [
+        "没隔几月",
+        "每个机说",
+        "每个几月",
+        "每个鸡月",
+        "每个机月",
+        "每个计月",
+        "每个记月",
+        "每个计说",
+        "每个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meigejizhou",
+      "expected": "没隔几周",
+      "source": "5500",
+      "lookup_us": 1541,
+      "candidates": [
+        "没隔几周",
+        "每个鸡粥",
+        "每个机粥",
+        "每个计粥",
+        "每个计周",
+        "每个几周",
+        "每个鸡舟",
+        "每个鸡咒",
+        "每个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meigeyihui",
+      "expected": "没隔一会",
+      "source": "5500",
+      "lookup_us": 3292,
+      "candidates": [
+        "没隔一会",
+        "每个一会",
+        "每个一回",
+        "每隔一会",
+        "每隔一回",
+        "每个意回",
+        "没个一会",
+        "每个议会",
+        "每个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meiguojinian",
+      "expected": "没过几年",
+      "source": "5500",
+      "lookup_us": 4689,
+      "candidates": [
+        "没过几年",
+        "每过几年",
+        "美国纪念",
+        "美国几年",
+        "没过纪念",
+        "每过纪念",
+        "没国纪念",
+        "没果纪念",
+        "美国"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meiguojiyue",
+      "expected": "没过几月",
+      "source": "5500",
+      "lookup_us": 5021,
+      "candidates": [
+        "没过几月",
+        "每过几月",
+        "美国几月",
+        "没国际月",
+        "每国际月",
+        "美国集约",
+        "没过激月",
+        "美国计月",
+        "美国"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meiguojizhou",
+      "expected": "没过几周",
+      "source": "5500",
+      "lookup_us": 2293,
+      "candidates": [
+        "没过几周",
+        "没过几粥",
+        "每过几周",
+        "美国几周",
+        "没国际粥",
+        "每国际粥",
+        "没过几舟",
+        "没过几咒",
+        "美国"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meiguoyihui",
+      "expected": "没过一会",
+      "source": "5500",
+      "lookup_us": 3476,
+      "candidates": [
+        "没过一会",
+        "每过一会",
+        "没过一回",
+        "美国一会",
+        "美国一回",
+        "每过一回",
+        "没国一会",
+        "没果一会",
+        "美国"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaidenggebaxiaoshi",
+      "expected": "再等个把小时",
+      "source": "5500",
+      "lookup_us": 6240,
+      "candidates": [
+        "再等个把小时",
+        "再等个八小时",
+        "再等个把小事",
+        "再等各把小时",
+        "再等个把消失",
+        "再等个八消失",
+        "再等各八小时",
+        "再等个八小事",
+        "再等"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaidengliangfenzhong",
+      "expected": "再等两分钟",
+      "source": "5500",
+      "lookup_us": 3969,
+      "candidates": [
+        "再等两分钟",
+        "再等量分钟",
+        "再等辆分钟",
+        "在灯亮分钟",
+        "再等亮分钟",
+        "再等梁分钟",
+        "再等凉分钟",
+        "再等良分钟",
+        "再等"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaidengliangsantian",
+      "expected": "再等两三天",
+      "source": "5500",
+      "lookup_us": 5888,
+      "candidates": [
+        "再等两三天",
+        "在等两三天",
+        "再等量三天",
+        "在灯亮三天",
+        "再等亮三天",
+        "再等梁三天",
+        "再等凉三天",
+        "再等良三天",
+        "再等"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaidengsanfenzhong",
+      "expected": "再等三分钟",
+      "source": "5500",
+      "lookup_us": 1886,
+      "candidates": [
+        "再等三分钟",
+        "在等三分钟",
+        "再等散分钟",
+        "再等伞分钟",
+        "再等叁分钟",
+        "再等彡分钟",
+        "再等氵分钟",
+        "再等三分中",
+        "再等"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaidengsanwutian",
+      "expected": "再等三五天",
+      "source": "5500",
+      "lookup_us": 4399,
+      "candidates": [
+        "再等三五天",
+        "再等散五天",
+        "在等三五天",
+        "再等伞五天",
+        "再等叁五天",
+        "再等彡五天",
+        "再等氵五天",
+        "再等三五添",
+        "再等"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaidengshilaitian",
+      "expected": "再等十来天",
+      "source": "5500",
+      "lookup_us": 3916,
+      "candidates": [
+        "再等事来天",
+        "再等十来天",
+        "再等事来添",
+        "再等事来填",
+        "再等事来田",
+        "在等事来天",
+        "再等事来甜",
+        "再等是来天",
+        "再等"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zaidengwufenzhong",
+      "expected": "再等五分钟",
+      "source": "5500",
+      "lookup_us": 2171,
+      "candidates": [
+        "再等五分钟",
+        "再等物分钟",
+        "再等务分钟",
+        "再等无分钟",
+        "再等唔分钟",
+        "再等吴分钟",
+        "再等舞分钟",
+        "再等屋分钟",
+        "再等"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaidengyikezhong",
+      "expected": "再等一刻钟",
+      "source": "5500",
+      "lookup_us": 2701,
+      "candidates": [
+        "再等一刻中",
+        "再等一刻钟",
+        "再等一颗中",
+        "再等一棵中",
+        "再等一颗重",
+        "再等一刻重",
+        "再等一颗种",
+        "再等一刻种",
+        "再等"
+      ],
+      "expected_rank": 2
+    }
+  ],
+  "previous_pass": {
+    "sha256": "a07eebdfd39654137e6f160849323aa10ff589d2d8ad7efd8b6b0f92dce30189",
+    "summary": {
+      "cases": 305,
+      "top1_correct": 256,
+      "top9_present": 305,
+      "top1_percent": 83.93,
+      "top9_percent": 100.0,
+      "character_error_rate": 0.0381,
+      "p50_lookup_ms": 4.228,
+      "p95_lookup_ms": 7.608,
+      "max_lookup_ms": 10.004,
+      "missing_from_top9_count": 0,
+      "missing_from_top9": [],
+      "max_returned_candidate_count": 9
+    }
+  }
+}

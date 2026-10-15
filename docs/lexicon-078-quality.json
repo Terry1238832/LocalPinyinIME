@@ -1,0 +1,726 @@
+{
+  "version": "0.7.8",
+  "baseline_version": "0.7.7",
+  "evaluated_at_utc": "2026-10-15T05:08:44.062830+00:00",
+  "method": {
+    "personal_data_isolated": true,
+    "expected_answers_learned": false,
+    "blind_evaluation": false,
+    "weights_not_adjusted_from_public_sentence_answers": true,
+    "runtime_frozen_during_evaluation": true,
+    "keystroke_benchmark_run": false,
+    "baseline_method": "Same final evaluator replaying byte-exact prior-release data, not an unavailable old binary.",
+    "raw_reports_retained_after_delivery": false
+  },
+  "engine_sha256": "6ff136157953783aceead540e32080c9b9b8dbb409ad5c6f659b2532c64d02cc",
+  "runtime_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "efdee973d19f691d9ea5978bd2b091a441ac0d4e0c683d6e166e5253aa25cf7e",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+    "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+    "continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e"
+  },
+  "baseline_runtime_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "de221b61942688029d646532548456643929bc7a42fe5225c45f1cded08ef1b5",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+    "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+    "continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e"
+  },
+  "data_changes": {
+    "baseline_unique_key_display_pairs": 185127,
+    "current_unique_key_display_pairs": 196902,
+    "added_key_display_pairs": 11775,
+    "removed_key_display_pairs": 0,
+    "baseline_local_core_entries": 138236,
+    "current_local_core_entries": 150011,
+    "added_local_core_rows": 11775,
+    "existing_local_core_weight_changes": [],
+    "effective_max_layer_weight_changes": [],
+    "new_full_fixture_answers": [],
+    "new_full_fixture_answer_count": 0
+  },
+  "fixtures": {
+    "fixed": {
+      "fixture": "tests/data/typing_holdout.tsv",
+      "fixture_sha256": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+      "baseline_summary": {
+        "cases": 138,
+        "top1_correct": 91,
+        "top9_present": 119,
+        "top1_percent": 65.94,
+        "top9_percent": 86.23,
+        "character_error_rate": 0.0469,
+        "p50_lookup_ms": 13.159,
+        "p95_lookup_ms": 19.575,
+        "max_lookup_ms": 29.488
+      },
+      "current_summary": {
+        "cases": 138,
+        "top1_correct": 92,
+        "top9_present": 119,
+        "top1_percent": 66.67,
+        "top9_percent": 86.23,
+        "character_error_rate": 0.0456,
+        "p50_lookup_ms": 13.716,
+        "p95_lookup_ms": 25.51,
+        "max_lookup_ms": 32.989
+      },
+      "comparison": {
+        "top1_changes": 2,
+        "top1_improvements": 1,
+        "top1_regressions": 0,
+        "top9_improvements": 0,
+        "top9_regressions": 0
+      },
+      "candidate_array_changes": [
+        {
+          "source": "article:yijian:03",
+          "pinyin": "jiangwoconghuaipiqilituokai",
+          "expected": "将我从坏脾气里拖开",
+          "before": [
+            "将我从坏脾气里拖开",
+            "将我从坏脾气里托开",
+            "将我从坏脾气力拖开",
+            "将我从坏脾气里脱开",
+            "将我从坏脾气李拖开",
+            "将我从坏脾气李托开",
+            "将我从坏脾气力托开",
+            "将我从坏脾气里拓开",
+            "降"
+          ],
+          "current": [
+            "将我从坏脾气里拖开",
+            "将我从坏脾气里托开",
+            "将我从坏脾气力拖开",
+            "将我从坏脾气李拖开",
+            "将我从坏脾气里脱开",
+            "将我从坏脾气李托开",
+            "将我从坏脾气力托开",
+            "将我从坏脾气里拓开",
+            "降"
+          ],
+          "before_rank": 1,
+          "current_rank": 1
+        },
+        {
+          "source": "article:yijian:09",
+          "pinyin": "woxiangwoyanjiannimanmandaodizenmehuishuaihuaine",
+          "expected": "我想我眼见你慢慢倒地怎么会摔坏呢",
+          "before": [
+            "我想我眼见你慢慢到底怎么回率坏呢",
+            "我想我眼见你慢慢到第怎么回率坏呢",
+            "我想我眼见你慢慢到底怎么回率怀呢",
+            "我想我眼见你慢慢到第怎么回率怀呢",
+            "我想我眼见你慢慢到底怎么回帅坏呢",
+            "我想我眼见你慢慢到第怎么回帅坏呢",
+            "我想我眼见你慢慢到底怎么回率淮呢",
+            "我想我眼见你慢慢到底怎么回甩坏呢",
+            "我想我"
+          ],
+          "current": [
+            "我想我眼见你慢慢到底怎么回摔坏呢",
+            "我想我眼见你慢慢到第怎么回摔坏呢",
+            "我想我眼见你慢慢到底怎么回率坏呢",
+            "我想我眼见你慢慢到第怎么回率坏呢",
+            "我想我眼见你慢慢到底怎么回率怀呢",
+            "我想我眼见你慢慢到第怎么回率怀呢",
+            "我想我眼见你慢慢到底怎么回帅坏呢",
+            "我想我眼见你慢慢到第怎么回帅坏呢",
+            "我想我"
+          ],
+          "before_rank": 0,
+          "current_rank": 0
+        },
+        {
+          "source": "daily:031",
+          "pinyin": "jintianzhongwushitangdefancaihenhaochi",
+          "expected": "今天中午食堂的饭菜很好吃",
+          "before": [
+            "今天中午食堂的饭菜很好吃",
+            "今天中午十汤的饭菜很好吃",
+            "今天中午食堂的饭菜很好迟",
+            "今天中午食堂的饭菜很好尺",
+            "今天中午十汤的饭菜很好迟",
+            "今天中午食堂的饭菜很好池",
+            "今天中午食堂的饭菜很好匙",
+            "今天中午十汤的饭菜很好尺",
+            "今天"
+          ],
+          "current": [
+            "今天中午食堂的饭菜很好吃",
+            "今天中午十汤的饭菜很好吃",
+            "今天中午食堂的饭菜很好迟",
+            "今天中午食堂的饭菜很好尺",
+            "今天中午食堂的饭菜很好池",
+            "今天中午食堂的饭菜很好匙",
+            "今天中午十汤的饭菜很好迟",
+            "今天中午食堂的饭菜很好翅",
+            "今天"
+          ],
+          "before_rank": 1,
+          "current_rank": 1
+        },
+        {
+          "source": "daily:049",
+          "pinyin": "wodasuancongmingtiankaishizaodianqichuang",
+          "expected": "我打算从明天开始早点起床",
+          "before": [
+            "我打算聪明天开始早点起床",
+            "我打算从明天开始早点起床",
+            "我打算聪明天开始早点气床",
+            "我打算聪明天开始早点期床",
+            "我打算聪明天开始早点骑床",
+            "我打算聪明天开始早点企床",
+            "我打算聪明天开始早点其床",
+            "我打算聪明天开始早点气窗",
+            "我打"
+          ],
+          "current": [
+            "我打算聪明天开始早点起床",
+            "我打算从明天开始早点起床",
+            "我打算聪明天开始早点气床",
+            "我打算聪明天开始早点期床",
+            "我打算聪明天开始早点骑床",
+            "我打算聪明天开始早点气窗",
+            "我打算聪明天开始早点企床",
+            "我打算聪明天开始早点其床",
+            "我打"
+          ],
+          "before_rank": 2,
+          "current_rank": 2
+        },
+        {
+          "source": "daily:050",
+          "pinyin": "ruguoxiayudehuawomenjiudaizaijiali",
+          "expected": "如果下雨的话我们就待在家里",
+          "before": [
+            "如果下雨的话我们就呆在家里",
+            "如果下雨的话我们就待在家里",
+            "如果下雨的话我们就带再家里",
+            "如果下雨的话我们就带载家里",
+            "如果下雨的话我们就带仔家里",
+            "如果下雨的话我们就带哉家里",
+            "如果下雨的话我们就带灾家里",
+            "如果下雨的话我们就带宰家里",
+            "如果"
+          ],
+          "current": [
+            "如果下雨的话我们就待在家里",
+            "如果下雨的话我们就呆在家里",
+            "如果下雨的话我们就带再家里",
+            "如果下雨的话我们就待再家里",
+            "如果下雨的话我们就带载家里",
+            "如果下雨的话我们就带仔家里",
+            "如果下雨的话我们就带哉家里",
+            "如果下雨的话我们就带灾家里",
+            "如果"
+          ],
+          "before_rank": 2,
+          "current_rank": 1
+        },
+        {
+          "source": "daily:061",
+          "pinyin": "ninengbunengyonggengrongyilijiedehuajieshi",
+          "expected": "你能不能用更容易理解的话解释",
+          "before": [
+            "你能不能用更容易理解的话解释",
+            "你能不能用更容易理解的花解释",
+            "你能不能用更容易理解的画解释",
+            "你能不能用更容易理解的化解释",
+            "你能不能用更容易理解的话结识",
+            "你能不能用更容易理解得花解释",
+            "你能不能用更容易理解地化解释",
+            "你能不能用更容易理解的话结实",
+            "你能"
+          ],
+          "current": [
+            "你能不能用更容易理解的话解释",
+            "你能不能用更容易理解的花解释",
+            "你能不能用更容易理解的画解释",
+            "你能不能用更容易理解得花解释",
+            "你能不能用更容易理解的化解释",
+            "你能不能用更容易理解的话结识",
+            "你能不能用更容易理解地化解释",
+            "你能不能用更容易理解的话结实",
+            "你能"
+          ],
+          "before_rank": 1,
+          "current_rank": 1
+        },
+        {
+          "source": "daily:062",
+          "pinyin": "womenxianbazuizhongyaodebufenwancheng",
+          "expected": "我们先把最重要的部分完成",
+          "before": [
+            "我们先把最重要的部分完成",
+            "我们先把最重要的部份完成",
+            "我们先把最终要的部分完成",
+            "我们先把最重要的不份完成",
+            "我们先把最重要的部分万成",
+            "我们先把最重要的部分晚成",
+            "我们先把最重要的部分弯成",
+            "我们先把最重要的部分玩成",
+            "我们"
+          ],
+          "current": [
+            "我们先把最重要的部分完成",
+            "我们先把最重要的部份完成",
+            "我们先把最终要的部分完成",
+            "我们先把最重要的不份完成",
+            "我们先把最重要的部分万成",
+            "我们先把最重要的部分晚成",
+            "我们先把最重要的部分完称",
+            "我们先把最重要的部分弯成",
+            "我们"
+          ],
+          "before_rank": 1,
+          "current_rank": 1
+        },
+        {
+          "source": "daily:070",
+          "pinyin": "zhegeyemiankanqilaiyinggaigengjiaxiandai",
+          "expected": "这个页面看起来应该更加现代",
+          "before": [
+            "这个页面看起来应该更加现代",
+            "这个页面看起来应该更加线带",
+            "这个页面看起来应该更佳现代",
+            "这个页面看起来应该更加先带",
+            "这个页面看起来应该更加先待",
+            "这个页面看起来应该更加鲜袋",
+            "这个页面看起来应该更加先袋",
+            "这个页面看起来应该更加先呆",
+            "这个"
+          ],
+          "current": [
+            "这个页面看起来应该更加现代",
+            "这个页面看起来应该更加线带",
+            "这个页面看起来应该更加线袋",
+            "这个页面看起来应该更佳现代",
+            "这个页面看起来应该更加先带",
+            "这个页面看起来应该更加先待",
+            "这个页面看起来应该更加鲜袋",
+            "这个页面看起来应该更加先袋",
+            "这个"
+          ],
+          "before_rank": 1,
+          "current_rank": 1
+        },
+        {
+          "source": "daily:073",
+          "pinyin": "woxianzaideiquyitangyinhang",
+          "expected": "我现在得去一趟银行",
+          "before": [
+            "我现在得去一趟银行",
+            "我现在得去一堂银行",
+            "我现在得去一躺银行",
+            "我现在得去以倘银行",
+            "我现在得屈一趟银行",
+            "我现在得去一汤银行",
+            "我现在得去一唐银行",
+            "我现在得去一糖银行",
+            "我现在"
+          ],
+          "current": [
+            "我现在得去一趟银行",
+            "我现在得去一堂银行",
+            "我现在得去一躺银行",
+            "我现在得去一汤银行",
+            "我现在得去以倘银行",
+            "我现在得屈一趟银行",
+            "我现在得去一唐银行",
+            "我现在得去一糖银行",
+            "我现在"
+          ],
+          "before_rank": 1,
+          "current_rank": 1
+        },
+        {
+          "source": "daily:082",
+          "pinyin": "qingwenzhefujinnaliyouxishoujian",
+          "expected": "请问这附近哪里有洗手间",
+          "before": [
+            "请问这附近哪里有洗手间",
+            "请问者附近哪里有洗手间",
+            "请问这附近哪里有吸收件",
+            "请问这附近哪里有戏收件",
+            "请问者附近哪里有吸收件",
+            "请问者附近哪里有戏收件",
+            "请问这附近哪里有西收件",
+            "请问这附近哪里有洗手见",
+            "请问"
+          ],
+          "current": [
+            "请问这附近哪里有洗手间",
+            "请问者附近哪里有洗手间",
+            "请问这附近哪里有吸收件",
+            "请问这附近哪里有戏收件",
+            "请问这附近哪里有洗收件",
+            "请问者附近哪里有吸收件",
+            "请问者附近哪里有戏收件",
+            "请问这附近哪里有西收件",
+            "请问"
+          ],
+          "before_rank": 1,
+          "current_rank": 1
+        }
+      ]
+    },
+    "fresh": {
+      "fixture": "tests/data/typing_fresh.tsv",
+      "fixture_sha256": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+      "baseline_summary": {
+        "cases": 67,
+        "top1_correct": 38,
+        "top9_present": 52,
+        "top1_percent": 56.72,
+        "top9_percent": 77.61,
+        "character_error_rate": 0.088,
+        "p50_lookup_ms": 9.664,
+        "p95_lookup_ms": 16.136,
+        "max_lookup_ms": 21.25
+      },
+      "current_summary": {
+        "cases": 67,
+        "top1_correct": 38,
+        "top9_present": 52,
+        "top1_percent": 56.72,
+        "top9_percent": 77.61,
+        "character_error_rate": 0.088,
+        "p50_lookup_ms": 9.058,
+        "p95_lookup_ms": 15.303,
+        "max_lookup_ms": 19.692
+      },
+      "comparison": {
+        "top1_changes": 0,
+        "top1_improvements": 0,
+        "top1_regressions": 0,
+        "top9_improvements": 0,
+        "top9_regressions": 0
+      },
+      "candidate_array_changes": [
+        {
+          "source": "article:hetang:41",
+          "pinyin": "shenmedoukeyibuxiang",
+          "expected": "什么都可以不想",
+          "before": [
+            "什么都可以不想",
+            "什么都可以不像",
+            "什么都可以不相",
+            "什么都可以不象",
+            "什么都可以不响",
+            "什么都可以不向",
+            "什么都可以不详",
+            "什么都可以不香",
+            "什么都"
+          ],
+          "current": [
+            "什么都可以不想",
+            "什么都可以不像",
+            "什么都可以不相",
+            "什么都可以不象",
+            "什么都可以不香",
+            "什么都可以不响",
+            "什么都可以不向",
+            "什么都可以不详",
+            "什么都"
+          ],
+          "before_rank": 1,
+          "current_rank": 1
+        },
+        {
+          "source": "daily:fresh:07",
+          "pinyin": "chumendeshihoubiewangledaiyaoshi",
+          "expected": "出门的时候别忘了带钥匙",
+          "before": [
+            "出门的时候别忘了带钥匙",
+            "出门的时候别望了带钥匙",
+            "出门的时候别忘了大钥匙",
+            "出门的时候别忘了待钥匙",
+            "出门的时候别忘了代钥匙",
+            "出门的时候别忘了呆钥匙",
+            "出门的时候别忘了戴钥匙",
+            "出门的时候别忘了袋钥匙",
+            "出门"
+          ],
+          "current": [
+            "出门的时候别忘了带钥匙",
+            "出门的时候别望了带钥匙",
+            "出门的时候别忘了大钥匙",
+            "出门的时候别忘了待钥匙",
+            "出门的时候别忘了代钥匙",
+            "出门的时候别忘了带要是",
+            "出门的时候别忘了呆钥匙",
+            "出门的时候别忘了戴钥匙",
+            "出门"
+          ],
+          "before_rank": 1,
+          "current_rank": 1
+        }
+      ]
+    },
+    "independent": {
+      "fixture": "tests/data/typing_independent.tsv",
+      "fixture_sha256": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98",
+      "baseline_summary": {
+        "cases": 62,
+        "top1_correct": 25,
+        "top9_present": 33,
+        "top1_percent": 40.32,
+        "top9_percent": 53.23,
+        "character_error_rate": 0.1329,
+        "p50_lookup_ms": 10.804,
+        "p95_lookup_ms": 25.862,
+        "max_lookup_ms": 30.57
+      },
+      "current_summary": {
+        "cases": 62,
+        "top1_correct": 24,
+        "top9_present": 32,
+        "top1_percent": 38.71,
+        "top9_percent": 51.61,
+        "character_error_rate": 0.136,
+        "p50_lookup_ms": 11.148,
+        "p95_lookup_ms": 26.175,
+        "max_lookup_ms": 29.822
+      },
+      "comparison": {
+        "top1_changes": 1,
+        "top1_improvements": 0,
+        "top1_regressions": 1,
+        "top9_improvements": 0,
+        "top9_regressions": 1
+      },
+      "candidate_array_changes": [
+        {
+          "source": "article:fengzheng:14",
+          "pinyin": "dancishidishangdeyangliuyijingfaya",
+          "expected": "但此时地上的杨柳已经发芽",
+          "before": [
+            "但此时地上的杨柳已经发芽",
+            "单词实地上的杨柳已经发芽",
+            "但此时地上的样留一惊发芽",
+            "单词实地上的样留一惊发芽",
+            "但此时地上的杨柳已经发呀",
+            "单词实地上的杨柳已经发呀",
+            "但此时地上的杨柳已经发鸭",
+            "单词实地上的杨柳已经发鸭",
+            "单词"
+          ],
+          "current": [
+            "但此时地上的样留已经发芽",
+            "但此时地上的杨柳已经发芽",
+            "但此时地上的样留一惊发芽",
+            "单词实地上的样留一惊发芽",
+            "但此时地上的样留意境发芽",
+            "但此时地上的样留已经发呀",
+            "但此时地上的杨柳已经发呀",
+            "但此时地上的样留已经发鸭",
+            "单词"
+          ],
+          "before_rank": 1,
+          "current_rank": 2
+        },
+        {
+          "source": "article:fengzheng:25",
+          "pinyin": "yinweiwoyiweizheshimeichuxihaizisuozuodewanyi",
+          "expected": "因为我以为这是没出息孩子所做的玩艺",
+          "before": [
+            "因为我以为这是没出息孩子所做的玩意",
+            "因为我以为这是没出席孩子所做的玩意",
+            "因为我以为这是没出息孩子所做得完以",
+            "因为我以为这是没出息孩子所做的完以",
+            "因为我以为这是没出席孩子所做得完以",
+            "因为我以为这是没出席孩子所做的完以",
+            "因为我以为这是没出息孩子所做得玩意",
+            "因为我以为这是没出席孩子所做得玩意",
+            "因为"
+          ],
+          "current": [
+            "因为我以为这是没出息孩子所做的玩意",
+            "因为我以为这是没出息孩子所做得完以",
+            "因为我以为这是没出席孩子所做的玩意",
+            "因为我以为这是没出席孩子所做得完以",
+            "因为我以为这是没出息孩子所做的完以",
+            "因为我以为这是没出席孩子所做的完以",
+            "因为我以为这是没出息孩子所做得玩意",
+            "因为我以为这是没出席孩子所做得玩意",
+            "因为"
+          ],
+          "before_rank": 0,
+          "current_rank": 0
+        },
+        {
+          "source": "article:fengzheng:31",
+          "pinyin": "zijimaibuqi",
+          "expected": "自己买不起",
+          "before": [
+            "自己买不起",
+            "自己卖不起",
+            "自己买不齐",
+            "自己卖不齐",
+            "自己麦不起",
+            "自己埋不起",
+            "自己迈不起",
+            "自己脉不起",
+            "自己"
+          ],
+          "current": [
+            "自己买不起",
+            "自己卖不起",
+            "自己买不齐",
+            "自己迈不起",
+            "自己卖不齐",
+            "自己麦不起",
+            "自己埋不起",
+            "自己脉不起",
+            "自己"
+          ],
+          "before_rank": 1,
+          "current_rank": 1
+        },
+        {
+          "source": "article:fengzheng:35",
+          "pinyin": "youshizhiyuxiaobanri",
+          "expected": "有时至于小半日",
+          "before": [
+            "有时至于小半日",
+            "有时至于小班日",
+            "有时至于晓半日",
+            "有时至于小办日",
+            "有时至于笑半日",
+            "有时置于小半日",
+            "有时至于小板日",
+            "有时至于校半日",
+            "优势"
+          ],
+          "current": [
+            "有时至于小半日",
+            "有时至于小班日",
+            "有时至于晓半日",
+            "有时至于小办日",
+            "有时至于笑半日",
+            "有时至于小板日",
+            "有时置于小半日",
+            "有时至于校半日",
+            "优势"
+          ],
+          "before_rank": 1,
+          "current_rank": 1
+        },
+        {
+          "source": "daily:independent:01",
+          "pinyin": "zhebayizizuojiulehuiyouyidianhuangdong",
+          "expected": "这把椅子坐久了会有一点晃动",
+          "before": [
+            "这把椅子坐久了会有一点晃动",
+            "这把椅子坐久了会有一点黄洞",
+            "这把椅子坐久了会有一点黄动",
+            "这把椅子坐久了会有一点黄东",
+            "这把椅子坐久了会有一点黄懂",
+            "这把椅子坐久了会有一点黄冻",
+            "这把椅子坐久了会有一点黄冬",
+            "这把椅子坐久了会有一点皇动",
+            "这把"
+          ],
+          "current": [
+            "这把椅子坐久了会有一点晃动",
+            "这把椅子坐久了回有一点晃动",
+            "这把椅子坐久了会有一点黄洞",
+            "这把椅子坐久了会有一点黄动",
+            "这把椅子坐久了会有一点黄东",
+            "这把椅子坐久了会有一点黄懂",
+            "这把椅子坐久了会有一点黄冻",
+            "这把椅子坐久了会有一点晃懂",
+            "这把"
+          ],
+          "before_rank": 1,
+          "current_rank": 1
+        },
+        {
+          "source": "daily:independent:09",
+          "pinyin": "zhefenhetongdeidengzhuguanhuilaiyihouzaiqian",
+          "expected": "这份合同得等主管回来以后再签",
+          "before": [
+            "这份合同得等主管回来以后再钱",
+            "这份合同得等主管回来以后再前",
+            "这份合同得灯主管回来以后再钱",
+            "这份合同得灯主管回来以后再前",
+            "这份合同得等主管回来以后再浅",
+            "这份合同得灯主管回来以后再浅",
+            "这份合同得等主管回来以后再欠",
+            "这份合同得灯主管回来以后再欠",
+            "这份"
+          ],
+          "current": [
+            "这份合同得等主管回来以后再钱",
+            "这份合同得等主管回来以后再前",
+            "这份合同得等主观回来以后再钱",
+            "这份合同得等主观回来以后再前",
+            "这份合同得等主管回来以后再浅",
+            "这份合同得等主观回来以后再浅",
+            "这份合同得等主管回来以后再欠",
+            "这份合同得等主观回来以后再欠",
+            "这份"
+          ],
+          "before_rank": 0,
+          "current_rank": 0
+        },
+        {
+          "source": "daily:independent:11",
+          "pinyin": "nibashiyifuguadetaijinleburongyigan",
+          "expected": "你把湿衣服挂得太近了不容易干",
+          "before": [
+            "你把湿衣服挂得太紧了不容易干",
+            "你把湿衣服挂得太近了不容易干",
+            "你把湿衣服挂得太紧了不容易感",
+            "你把湿衣服挂得太近了不容易感",
+            "你把湿衣服挂得太紧了不容易赶",
+            "你把湿衣服挂得太紧了不容易杆",
+            "你把湿衣服挂得太近了不容易赶",
+            "你把湿衣服挂得太紧了不容易敢",
+            "泥巴"
+          ],
+          "current": [
+            "你把湿衣服挂得太紧了不容易干",
+            "你把湿衣服挂得太紧了不容易感",
+            "你把事衣服挂得太紧了不容易干",
+            "你把湿衣服挂得太紧了不容易赶",
+            "你把事衣服挂得太紧了不容易感",
+            "你把湿衣服挂得太紧了不容易杆",
+            "你把事衣服挂得太紧了不容易赶",
+            "你把湿衣服挂得太紧了不容易敢",
+            "泥巴"
+          ],
+          "before_rank": 2,
+          "current_rank": 0
+        }
+      ]
+    }
+  },
+  "overall": {
+    "baseline_summary": {
+      "cases": 267,
+      "top1_correct": 154,
+      "top9_present": 204,
+      "top1_percent": 57.68,
+      "top9_percent": 76.4,
+      "character_error_rate": 0.0759,
+      "p50_lookup_ms": 11.537,
+      "p95_lookup_ms": 20.843,
+      "max_lookup_ms": 30.57
+    },
+    "current_summary": {
+      "cases": 267,
+      "top1_correct": 154,
+      "top9_present": 203,
+      "top1_percent": 57.68,
+      "top9_percent": 76.03,
+      "character_error_rate": 0.0759,
+      "p50_lookup_ms": 11.689,
+      "p95_lookup_ms": 23.028,
+      "max_lookup_ms": 32.989
+    }
+  },
+  "scope": "Public sentence regressions evaluated through the actual native engine. No OS keyboard dispatch, installed-profile compatibility or blind general-language accuracy claim."
+}

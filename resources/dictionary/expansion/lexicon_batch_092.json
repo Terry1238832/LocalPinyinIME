@@ -1,0 +1,115 @@
+{
+  "batch": "lexicon_batch_092",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "Individually authored natural recent actions, not-yet-complete states, arrivals and departures, ongoing tasks and short progress replies.",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 325,
+  "sha256": "51df9125c82e81e66feafa6590551c405e43242318412bc9f8a9e92037e66fc0",
+  "authoring_files_sha256": {
+    "lexicon_batch_092.authoring.json": "161298dfe7265655b284f5bad62a1552ded46ea1c639ef471a0766084387e409",
+    "batch092_authored_daily_draft.txt": "b50dbfe10eaa8a54baa9fdcd8447cad359ad7bde8eec330dcaa16ad58e35365c",
+    "batch092_pronunciation_review.tsv": "b24669281bda47bdc5e2d60636bbea0898c4b73cb64bb4de35608eb8289598ef"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "e093be8bd4599f5ab47b27241daa0540a454b35ab6c2eba6c162e627bb5fd327",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "just_finished_or_just_started": 5500,
+    "not_yet_finished_or_not_received": 5500,
+    "leaving_arriving_and_getting_started": 5500,
+    "ongoing_work_and_small_delays": 5500
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "just_finished_or_just_started": 93,
+    "leaving_arriving_and_getting_started": 75,
+    "not_yet_finished_or_not_received": 85,
+    "ongoing_work_and_small_delays": 72
+  },
+  "length_distribution": {
+    "3": 61,
+    "4": 118,
+    "5": 137,
+    "6": 9
+  },
+  "authoring_rejections": [
+    {
+      "word": "还没改好",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "还没修好",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "还没选好",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "刚到路口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "刚到学校",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "刚到公司",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "刚才没注意",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "刚才没留意",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "还在路上呢",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "稍微慢一点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我再发一遍",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 286,
+  "manual_pronunciation_overrides": {
+    "刚还完": "ganghuanwan",
+    "刚刚还完": "gangganghuanwan",
+    "还没收好": "haimeishouhao",
+    "还没扎好": "haimeizahao",
+    "还没收回来": "haimeishouhuilai",
+    "刚才去还了": "gangcaiquhuanle",
+    "还在找着呢": "haizaizhaozhene",
+    "再让我查查": "zairangwochacha",
+    "我再去查查": "wozaiquchacha"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 9,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

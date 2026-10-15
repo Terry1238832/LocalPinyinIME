@@ -1,0 +1,5377 @@
+{
+  "batch": "lexicon_batch_082",
+  "evaluation": "native_engine_candidate_coverage",
+  "evaluated_at_utc": "2026-10-15T05:07:42.487681+00:00",
+  "engine_sha256": "6ff136157953783aceead540e32080c9b9b8dbb409ad5c6f659b2532c64d02cc",
+  "resource_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "efdee973d19f691d9ea5978bd2b091a441ac0d4e0c683d6e166e5253aa25cf7e",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+    "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+    "continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e"
+  },
+  "frozen_batch_sha256": "6edb86046f1b9401d60817df51b7c48d74ad801e44c5b0f91516721607be64a2",
+  "personal_data_isolated": true,
+  "expected_answers_learned": false,
+  "summary": {
+    "cases": 296,
+    "top1_correct": 224,
+    "top9_present": 296,
+    "top1_percent": 75.68,
+    "top9_percent": 100.0,
+    "character_error_rate": 0.0761,
+    "p50_lookup_ms": 5.149,
+    "p95_lookup_ms": 8.835,
+    "max_lookup_ms": 12.551,
+    "missing_from_top9_count": 0,
+    "missing_from_top9": [],
+    "max_returned_candidate_count": 9
+  },
+  "rows": [
+    {
+      "pinyin": "daodianhaimeizuohao",
+      "expected": "到店还没做好",
+      "source": "5500",
+      "lookup_us": 6223,
+      "candidates": [
+        "到店还没做好",
+        "导电还没做好",
+        "到店还没做号",
+        "到店还没作好",
+        "导电还没做号",
+        "到店还没坐好",
+        "到店还没做豪",
+        "到店还没做浩",
+        "导电"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "daodianqucanma",
+      "expected": "到店取餐码",
+      "source": "5500",
+      "lookup_us": 3673,
+      "candidates": [
+        "到店取餐码",
+        "到点去参吗",
+        "到点去参码",
+        "导电去参吗",
+        "到点去参妈",
+        "到点去参骂",
+        "到点去餐吗",
+        "到点去残吗",
+        "导电"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "daodianyijingzuohao",
+      "expected": "到店已经做好",
+      "source": "5500",
+      "lookup_us": 7682,
+      "candidates": [
+        "导电已经做好",
+        "到店已经做好",
+        "到点一惊做好",
+        "导电一惊做好",
+        "导电已经做号",
+        "到店已经做号",
+        "导电已经做豪",
+        "导电已经做浩",
+        "导电"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "daodianzaihexiao",
+      "expected": "到店再核销",
+      "source": "5500",
+      "lookup_us": 6013,
+      "candidates": [
+        "到点在何小",
+        "导电在何小",
+        "到点再何小",
+        "到点再喝小",
+        "到点再喝笑",
+        "到点再喝效",
+        "到点再和小",
+        "到店再核销",
+        "导电"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "qucanguidabukai",
+      "expected": "取餐柜打不开",
+      "source": "5500",
+      "lookup_us": 3070,
+      "candidates": [
+        "取餐柜打不开",
+        "去参贵打不开",
+        "去参贵大不开",
+        "去参鬼大不开",
+        "去参贵达不开",
+        "去参鬼达不开",
+        "去参贵答不开",
+        "去参鬼答不开",
+        "去"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qucanguimeikaimen",
+      "expected": "取餐柜没开门",
+      "source": "5500",
+      "lookup_us": 5724,
+      "candidates": [
+        "取餐柜没开门",
+        "去参贵没开门",
+        "去参鬼魅开门",
+        "取餐鬼魅开门",
+        "去参贵美开门",
+        "去参贵每开门",
+        "去参鬼每开门",
+        "取餐贵美开门",
+        "去"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qucanhaofawo",
+      "expected": "取餐号发我",
+      "source": "5500",
+      "lookup_us": 1851,
+      "candidates": [
+        "取餐号发我",
+        "去参好发我",
+        "去参毫发我",
+        "去参号发我",
+        "取餐好发我",
+        "取餐毫发我",
+        "去参好法我",
+        "取餐号法我",
+        "去"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qucanhaomeixianshi",
+      "expected": "取餐号没显示",
+      "source": "5500",
+      "lookup_us": 6858,
+      "candidates": [
+        "去参好没显示",
+        "去参好美显示",
+        "取餐号没显示",
+        "取餐好美显示",
+        "去参好每显示",
+        "去参好没现实",
+        "取餐号每显示",
+        "去参好没现时",
+        "去"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "qucanjianayiceng",
+      "expected": "取餐架哪一层",
+      "source": "5500",
+      "lookup_us": 5517,
+      "candidates": [
+        "去参加纳一层",
+        "去参加那一层",
+        "去参加拿一层",
+        "去参加哪一层",
+        "取参加纳一层",
+        "取餐架哪一层",
+        "取参加拿一层",
+        "去参加娜一层",
+        "去"
+      ],
+      "expected_rank": 6
+    },
+    {
+      "pinyin": "qucanjianayige",
+      "expected": "取餐架哪一格",
+      "source": "5500",
+      "lookup_us": 5577,
+      "candidates": [
+        "去参加那一个",
+        "去参加纳一个",
+        "去参加拿一个",
+        "去参加哪一个",
+        "取参加纳一个",
+        "取参加那一个",
+        "去参加纳一格",
+        "取餐架哪一格",
+        "去"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "qucanmafawo",
+      "expected": "取餐码发我",
+      "source": "5500",
+      "lookup_us": 1995,
+      "candidates": [
+        "取餐码发我",
+        "去参吗发我",
+        "去参么发我",
+        "去参嘛发我",
+        "去参马发我",
+        "去参妈发我",
+        "去参骂发我",
+        "去参码发我",
+        "去"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qucanmameishoudao",
+      "expected": "取餐码没收到",
+      "source": "5500",
+      "lookup_us": 4531,
+      "candidates": [
+        "去参吗没收到",
+        "去参嘛没收到",
+        "去参吗每收到",
+        "去参吗美收到",
+        "去参麻美收到",
+        "去参嘛每收到",
+        "去参吗梅收到",
+        "取餐码没收到",
+        "去"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "qucannacuole",
+      "expected": "取餐拿错了",
+      "source": "5500",
+      "lookup_us": 2382,
+      "candidates": [
+        "取餐拿错了",
+        "去参拿错了",
+        "去参那错了",
+        "去参哪错了",
+        "去参纳错了",
+        "取餐那错了",
+        "去参娜错了",
+        "去参呐错了",
+        "去"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qucanpaicuodui",
+      "expected": "取餐排错队",
+      "source": "5500",
+      "lookup_us": 2641,
+      "candidates": [
+        "取餐排错队",
+        "去参拍错对",
+        "去参排错对",
+        "去参牌错对",
+        "去参拍错队",
+        "取餐拍错对",
+        "去参派错对",
+        "去参拍撮对",
+        "去"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimaibaozhuangpole",
+      "expected": "外卖包装破了",
+      "source": "5500",
+      "lookup_us": 6125,
+      "candidates": [
+        "外卖包装破了",
+        "外买包装破了",
+        "外卖包装破乐",
+        "外卖包装颇了",
+        "外卖包装婆了",
+        "外卖包装坡了",
+        "外卖包装泼了",
+        "外卖包装钷了",
+        "外卖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimaibeigaisongle",
+      "expected": "外卖杯盖松了",
+      "source": "5500",
+      "lookup_us": 2628,
+      "candidates": [
+        "外卖杯盖松了",
+        "外卖被盖松了",
+        "外卖北丐松了",
+        "外卖备该松了",
+        "外卖备改松了",
+        "外卖被该松了",
+        "外卖被改松了",
+        "外卖被盖送了",
+        "外卖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimaibeizhuloule",
+      "expected": "外卖备注漏了",
+      "source": "5500",
+      "lookup_us": 3055,
+      "candidates": [
+        "外卖备注漏了",
+        "外卖备注楼了",
+        "外卖备注喽了",
+        "外卖备注露了",
+        "外卖备注搂了",
+        "外卖备注娄了",
+        "外卖备注陋了",
+        "外卖备注瘘了",
+        "外卖备注"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimaibeizhumeikan",
+      "expected": "外卖备注没看",
+      "source": "5500",
+      "lookup_us": 4371,
+      "candidates": [
+        "外卖备注没看",
+        "外卖备注每看",
+        "外卖备注美看",
+        "外卖备注梅看",
+        "外卖备注妹看",
+        "外卖备注眉看",
+        "外卖备注镅看",
+        "外卖备注煤看",
+        "外卖备注"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimaibeizhuxiecuo",
+      "expected": "外卖备注写错",
+      "source": "5500",
+      "lookup_us": 6280,
+      "candidates": [
+        "外卖备注写错",
+        "外卖备注些错",
+        "外卖备注谢错",
+        "外卖备注鞋错",
+        "外卖备煮写错",
+        "外卖备注斜错",
+        "外卖备注歇错",
+        "外卖备注协错",
+        "外卖备注"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimaibeizipole",
+      "expected": "外卖杯子破了",
+      "source": "5500",
+      "lookup_us": 3253,
+      "candidates": [
+        "外卖杯子破了",
+        "外卖被子破了",
+        "外卖备自破了",
+        "外卖被自破了",
+        "外卖备字破了",
+        "外卖被字破了",
+        "外卖备紫破了",
+        "外卖备资破了",
+        "外卖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimaibiedadianhua",
+      "expected": "外卖别打电话",
+      "source": "5500",
+      "lookup_us": 7668,
+      "candidates": [
+        "外卖别打电话",
+        "外卖憋打电话",
+        "外卖别大电话",
+        "外卖别搭电话",
+        "外卖别达电话",
+        "外卖别答电话",
+        "外卖憋大电话",
+        "外卖憋搭电话",
+        "外卖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimaicailiangle",
+      "expected": "外卖菜凉了",
+      "source": "5500",
+      "lookup_us": 4842,
+      "candidates": [
+        "外卖菜凉了",
+        "外卖菜亮了",
+        "外买菜凉了",
+        "外买菜亮了",
+        "外卖才亮了",
+        "外卖猜亮了",
+        "外卖踩亮了",
+        "外卖彩亮了",
+        "外卖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimaicanjumeigei",
+      "expected": "外卖餐具没给",
+      "source": "5500",
+      "lookup_us": 5317,
+      "candidates": [
+        "外卖餐具没给",
+        "外卖餐具没給",
+        "外卖餐具每给",
+        "外卖餐具美给",
+        "外卖餐具梅给",
+        "外卖餐具妹给",
+        "外卖餐具眉给",
+        "外卖餐具镅给",
+        "外卖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimaicanjushaole",
+      "expected": "外卖餐具少了",
+      "source": "5500",
+      "lookup_us": 3260,
+      "candidates": [
+        "外卖餐具少了",
+        "外卖惨剧少了",
+        "外卖餐具烧了",
+        "外卖残局少了",
+        "外卖餐具稍了",
+        "外卖餐具绍了",
+        "外卖餐具邵了",
+        "外卖餐具勺了",
+        "外卖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimaidaizipole",
+      "expected": "外卖袋子破了",
+      "source": "5500",
+      "lookup_us": 3041,
+      "candidates": [
+        "外卖袋子破了",
+        "外卖呆子破了",
+        "外卖袋子颇了",
+        "外卖袋子婆了",
+        "外卖袋子坡了",
+        "外卖袋子泼了",
+        "外卖袋子钷了",
+        "外卖袋子迫了",
+        "外卖袋子"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimaidaizishile",
+      "expected": "外卖袋子湿了",
+      "source": "5500",
+      "lookup_us": 3240,
+      "candidates": [
+        "外卖袋子湿了",
+        "外卖袋子是了",
+        "外卖袋子拾了",
+        "外卖袋子实了",
+        "外卖袋子失了",
+        "外卖袋子始了",
+        "外卖袋子时了",
+        "外卖袋子事了",
+        "外卖袋子"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimaidianhuacuole",
+      "expected": "外卖电话错了",
+      "source": "5500",
+      "lookup_us": 5192,
+      "candidates": [
+        "外卖电话错了",
+        "外买电话错了",
+        "外卖点花错了",
+        "外卖点画错了",
+        "外卖电话搓了",
+        "外卖点划错了",
+        "外卖电话撮了",
+        "外卖电话挫了",
+        "外卖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimaidianhuameijie",
+      "expected": "外卖电话没接",
+      "source": "5500",
+      "lookup_us": 9684,
+      "candidates": [
+        "外卖电话没结",
+        "外卖电话没接",
+        "外卖电话没解",
+        "外卖电话没节",
+        "外卖电话没街",
+        "外买电话没结",
+        "外卖电话没界",
+        "外卖电话媒介",
+        "外卖"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "waimaidianhuazhanxian",
+      "expected": "外卖电话占线",
+      "source": "5500",
+      "lookup_us": 10494,
+      "candidates": [
+        "外卖电话占线",
+        "外卖电话展现",
+        "外卖电话战线",
+        "外买电话占线",
+        "外卖电话占现",
+        "外卖电话占先",
+        "外卖电话占显",
+        "外卖电话占限",
+        "外卖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimaidizhicuole",
+      "expected": "外卖地址错了",
+      "source": "5500",
+      "lookup_us": 3549,
+      "candidates": [
+        "外卖地址错了",
+        "外卖地知错了",
+        "外卖地质错了",
+        "外卖的知错了",
+        "外卖地址搓了",
+        "外卖地址撮了",
+        "外卖地址挫了",
+        "外卖地址措了",
+        "外卖地址"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimaifangcuomenkou",
+      "expected": "外卖放错门口",
+      "source": "5500",
+      "lookup_us": 4038,
+      "candidates": [
+        "外卖放错门口",
+        "外卖方错门口",
+        "外卖方撮门口",
+        "外卖房撮门口",
+        "外卖方搓门口",
+        "外卖方挫门口",
+        "外卖方措门口",
+        "外卖房搓门口",
+        "外卖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimaifangzailouxia",
+      "expected": "外卖放在楼下",
+      "source": "5500",
+      "lookup_us": 4383,
+      "candidates": [
+        "外卖放在楼下",
+        "外买放在楼下",
+        "外卖放在楼夏",
+        "外卖放在楼霞",
+        "外卖放在楼虾",
+        "外卖放在楼吓",
+        "外卖防灾楼下",
+        "外卖放在漏下",
+        "外卖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimaifangzaimenkou",
+      "expected": "外卖放在门口",
+      "source": "5500",
+      "lookup_us": 3733,
+      "candidates": [
+        "外卖放在门口",
+        "外买放在门口",
+        "外卖放在门扣",
+        "外卖防灾门口",
+        "外卖方再门口",
+        "外卖房再门口",
+        "外卖方载门口",
+        "外卖房载门口",
+        "外卖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimaifangzaiqiantai",
+      "expected": "外卖放在前台",
+      "source": "5500",
+      "lookup_us": 5940,
+      "candidates": [
+        "外卖放在前台",
+        "外买放在前台",
+        "外卖防灾前台",
+        "外卖放在前太",
+        "外卖放在前态",
+        "外卖放在千台",
+        "外卖放在前抬",
+        "外卖放在千太",
+        "外卖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimaifanliangle",
+      "expected": "外卖饭凉了",
+      "source": "5500",
+      "lookup_us": 6355,
+      "candidates": [
+        "外卖饭量了",
+        "外卖饭亮了",
+        "外卖反亮了",
+        "外卖烦亮了",
+        "外卖翻亮了",
+        "外卖凡亮了",
+        "外卖范亮了",
+        "外卖饭凉了",
+        "外卖"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "waimaifengkouloule",
+      "expected": "外卖封口漏了",
+      "source": "5500",
+      "lookup_us": 2327,
+      "candidates": [
+        "外卖封口漏了",
+        "外卖风口漏了",
+        "外卖封口楼了",
+        "外卖封口喽了",
+        "外卖封口露了",
+        "外卖封口搂了",
+        "外卖封口娄了",
+        "外卖封口陋了",
+        "外卖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimaifengqianpole",
+      "expected": "外卖封签破了",
+      "source": "5500",
+      "lookup_us": 4725,
+      "candidates": [
+        "外卖封签破了",
+        "外卖风钱破了",
+        "外卖风前破了",
+        "外卖封钱破了",
+        "外卖封前破了",
+        "外卖风签破了",
+        "外卖风千破了",
+        "外卖风欠破了",
+        "外卖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimaihaimeichucan",
+      "expected": "外卖还没出餐",
+      "source": "5500",
+      "lookup_us": 3718,
+      "candidates": [
+        "外卖还没出餐",
+        "外卖还没处餐",
+        "外卖还没除餐",
+        "外卖还没初餐",
+        "外卖还没出惨",
+        "外卖还没出参",
+        "外卖还没出残",
+        "外卖还没处惨",
+        "外卖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimaihaimeijiedan",
+      "expected": "外卖还没接单",
+      "source": "5500",
+      "lookup_us": 7397,
+      "candidates": [
+        "外卖还没结单",
+        "外卖还没结蛋",
+        "外卖还没结淡",
+        "外卖还没结担",
+        "外卖还没接单",
+        "外卖还没结但",
+        "外卖还没结胆",
+        "外卖还没结弹",
+        "外卖"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "waimaihaimeipeisong",
+      "expected": "外卖还没配送",
+      "source": "5500",
+      "lookup_us": 3184,
+      "candidates": [
+        "外卖还没配送",
+        "外卖还没配松",
+        "外卖还没配诵",
+        "外卖还没配宋",
+        "外买还没配送",
+        "外卖还没配颂",
+        "外卖还没配耸",
+        "外卖还没配嵩",
+        "外卖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimaijiangbaopole",
+      "expected": "外卖酱包破了",
+      "source": "5500",
+      "lookup_us": 6978,
+      "candidates": [
+        "外卖将爆破了",
+        "外卖酱爆破了",
+        "外卖将包破了",
+        "外卖酱包破了",
+        "外卖将报破了",
+        "外卖将宝破了",
+        "外卖将保破了",
+        "外卖将抱破了",
+        "外卖"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "waimaijinbulai",
+      "expected": "外卖进不来",
+      "source": "5500",
+      "lookup_us": 3340,
+      "candidates": [
+        "外卖进步来",
+        "外卖进不来",
+        "外卖金不来",
+        "外卖进补来",
+        "外卖禁不来",
+        "外卖进步赖",
+        "外卖进步莱",
+        "外卖近不来",
+        "外卖"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "waimailaidianle",
+      "expected": "外卖来电了",
+      "source": "5500",
+      "lookup_us": 3799,
+      "candidates": [
+        "外卖来电了",
+        "外卖来点了",
+        "外买来点了",
+        "外买来电了",
+        "外卖来电乐",
+        "外卖赖点了",
+        "外卖莱点了",
+        "外卖來点了",
+        "外卖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimailousongle",
+      "expected": "外卖漏送了",
+      "source": "5500",
+      "lookup_us": 1447,
+      "candidates": [
+        "外卖漏松了",
+        "外卖楼松了",
+        "外卖喽松了",
+        "外卖露松了",
+        "外卖漏送了",
+        "外卖楼送了",
+        "外卖漏宋了",
+        "外卖喽送了",
+        "外卖"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "waimaimeifangwen",
+      "expected": "外卖没放稳",
+      "source": "5500",
+      "lookup_us": 4688,
+      "candidates": [
+        "外卖没访问",
+        "外卖每访问",
+        "外卖美访问",
+        "外卖梅访问",
+        "外卖妹访问",
+        "外卖眉访问",
+        "外卖镅访问",
+        "外卖没放稳",
+        "外卖"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "waimaimeigeijiangbao",
+      "expected": "外卖没给酱包",
+      "source": "5500",
+      "lookup_us": 8992,
+      "candidates": [
+        "外卖没给酱包",
+        "外卖没给将包",
+        "外卖没给讲包",
+        "外卖没给将报",
+        "外卖没给将宝",
+        "外卖没给江包",
+        "外卖没给奖包",
+        "外卖没给降包",
+        "外卖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimaimeigeikuaizi",
+      "expected": "外卖没给筷子",
+      "source": "5500",
+      "lookup_us": 5435,
+      "candidates": [
+        "外卖没给筷子",
+        "外卖每给筷子",
+        "外卖没给快子",
+        "外卖没给快字",
+        "外卖没给块子",
+        "外卖没给块字",
+        "外卖没給筷子",
+        "外卖每給筷子",
+        "外卖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimaimeigeishaozi",
+      "expected": "外卖没给勺子",
+      "source": "5500",
+      "lookup_us": 5495,
+      "candidates": [
+        "外卖没给勺子",
+        "外卖没给哨子",
+        "外卖每给勺子",
+        "外卖没给少子",
+        "外卖没给少字",
+        "外卖没给梢子",
+        "外卖没给烧子",
+        "外卖没给烧字",
+        "外卖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimaimeigeixiguan",
+      "expected": "外卖没给吸管",
+      "source": "5500",
+      "lookup_us": 7102,
+      "candidates": [
+        "外卖没给习惯",
+        "外卖每给习惯",
+        "外卖没給习惯",
+        "外卖每給习惯",
+        "外卖没给西关",
+        "外卖没给吸管",
+        "外卖每给西关",
+        "外卖没给系管",
+        "外卖"
+      ],
+      "expected_rank": 6
+    },
+    {
+      "pinyin": "waimaisachulaile",
+      "expected": "外卖洒出来了",
+      "source": "5500",
+      "lookup_us": 2657,
+      "candidates": [
+        "外卖撒出来了",
+        "外卖萨出来了",
+        "外卖撒楚来了",
+        "外卖撒初来了",
+        "外卖萨楚来了",
+        "外卖萨初来了",
+        "外卖洒除来了",
+        "外卖洒出来了",
+        "外卖"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "waimaishaosongle",
+      "expected": "外卖少送了",
+      "source": "5500",
+      "lookup_us": 2027,
+      "candidates": [
+        "外卖少松了",
+        "外卖烧松了",
+        "外卖稍松了",
+        "外卖绍松了",
+        "外卖邵松了",
+        "外卖勺松了",
+        "外卖梢松了",
+        "外卖少送了",
+        "外卖"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "waimaishaoyibeishui",
+      "expected": "外卖少一杯水",
+      "source": "5500",
+      "lookup_us": 4273,
+      "candidates": [
+        "外卖少一杯水",
+        "外卖绍一杯水",
+        "外卖少一杯谁",
+        "外卖少一倍谁",
+        "外卖少一倍水",
+        "外卖少一杯睡",
+        "外卖少一倍睡",
+        "外卖绍一杯谁",
+        "外卖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimaishaoyifencai",
+      "expected": "外卖少一份菜",
+      "source": "5500",
+      "lookup_us": 2918,
+      "candidates": [
+        "外卖少一份菜",
+        "外卖绍一份菜",
+        "外卖少一份材",
+        "外卖绍一份材",
+        "外卖少一份彩",
+        "外卖绍一份彩",
+        "外卖少一份才",
+        "外卖绍一份才",
+        "外卖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimaishaoyifenfan",
+      "expected": "外卖少一份饭",
+      "source": "5500",
+      "lookup_us": 3212,
+      "candidates": [
+        "外卖少一份饭",
+        "外卖绍一份饭",
+        "外卖少一份烦",
+        "外卖少一份翻",
+        "外卖绍一份烦",
+        "外卖绍一份翻",
+        "外卖少一份反",
+        "外卖绍一份反",
+        "外卖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimaisongbushanglou",
+      "expected": "外卖送不上楼",
+      "source": "5500",
+      "lookup_us": 3748,
+      "candidates": [
+        "外卖送不上楼",
+        "外卖松不上楼",
+        "外卖送补上楼",
+        "外卖松补上楼",
+        "外卖送部上楼",
+        "外卖送不上漏",
+        "外卖送布上楼",
+        "外卖送补上漏",
+        "外卖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimaisongcuole",
+      "expected": "外卖送错了",
+      "source": "5500",
+      "lookup_us": 1848,
+      "candidates": [
+        "外卖送错了",
+        "外卖松错了",
+        "外卖宋错了",
+        "外卖颂错了",
+        "外卖诵错了",
+        "外卖耸错了",
+        "外卖嵩错了",
+        "外卖怂错了",
+        "外卖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimaisongdaolouxia",
+      "expected": "外卖送到楼下",
+      "source": "5500",
+      "lookup_us": 4192,
+      "candidates": [
+        "外卖送到楼下",
+        "外买送到楼下",
+        "外卖送到漏下",
+        "外卖松岛楼下",
+        "外卖送道楼下",
+        "外卖送到楼夏",
+        "外卖送倒楼下",
+        "外卖送到楼霞",
+        "外卖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimaisongdaoqiantai",
+      "expected": "外卖送到前台",
+      "source": "5500",
+      "lookup_us": 5712,
+      "candidates": [
+        "外卖送到前台",
+        "外买送到前台",
+        "外卖送到前太",
+        "外卖送到前态",
+        "外卖送到前抬",
+        "外卖送到前泰",
+        "外卖送到钱台",
+        "外卖送到前胎",
+        "外卖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimaisongwanle",
+      "expected": "外卖送晚了",
+      "source": "5500",
+      "lookup_us": 2311,
+      "candidates": [
+        "外卖送完了",
+        "外卖松完了",
+        "外卖宋完了",
+        "外卖颂完了",
+        "外卖诵完了",
+        "外卖耸完了",
+        "外卖嵩完了",
+        "外卖送晚了",
+        "外卖"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "waimaitangloule",
+      "expected": "外卖汤漏了",
+      "source": "5500",
+      "lookup_us": 2977,
+      "candidates": [
+        "外卖汤漏了",
+        "外卖唐漏了",
+        "外卖糖漏了",
+        "外卖堂漏了",
+        "外卖趟漏了",
+        "外卖烫漏了",
+        "外卖躺漏了",
+        "外卖汤楼了",
+        "外卖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimaiyijingchucan",
+      "expected": "外卖已经出餐",
+      "source": "5500",
+      "lookup_us": 6193,
+      "candidates": [
+        "外卖已经出餐",
+        "外卖已经出惨",
+        "外卖已经出参",
+        "外卖已经出残",
+        "外卖已经出灿",
+        "外卖已经出蚕",
+        "外卖已经出惭",
+        "外卖已经出璨",
+        "外卖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimaiyijingjiedan",
+      "expected": "外卖已经接单",
+      "source": "5500",
+      "lookup_us": 8929,
+      "candidates": [
+        "外卖已经接单",
+        "外卖已经解单",
+        "外卖已经解蛋",
+        "外卖已经解淡",
+        "外卖已经解担",
+        "外卖已经接蛋",
+        "外卖已经解但",
+        "外卖已经解胆",
+        "外卖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimaiyijingsongda",
+      "expected": "外卖已经送达",
+      "source": "5500",
+      "lookup_us": 5100,
+      "candidates": [
+        "外卖已经送达",
+        "外卖已经送大",
+        "外卖已经送打",
+        "外卖已经松大",
+        "外卖已经宋大",
+        "外卖已经松打",
+        "外卖已经宋打",
+        "外卖已经送答",
+        "外卖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimaiyinliaoloule",
+      "expected": "外卖饮料漏了",
+      "source": "5500",
+      "lookup_us": 5625,
+      "candidates": [
+        "外卖饮料漏了",
+        "外卖淫了漏了",
+        "外卖淫聊漏了",
+        "外卖音了漏了",
+        "外卖淫料漏了",
+        "外卖饮料楼了",
+        "外卖饮料喽了",
+        "外卖饮料露了",
+        "外卖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimaizhaobudaolou",
+      "expected": "外卖找不到楼",
+      "source": "5500",
+      "lookup_us": 3772,
+      "candidates": [
+        "外卖找不到楼",
+        "外卖找不到漏",
+        "外卖找不到陋",
+        "外卖找不到喽",
+        "外卖找不到露",
+        "外卖找不到搂",
+        "外买找不到楼",
+        "外卖找不到娄",
+        "外卖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimaizhaobudaomen",
+      "expected": "外卖找不到门",
+      "source": "5500",
+      "lookup_us": 3878,
+      "candidates": [
+        "外卖找不到门",
+        "外买找不到门",
+        "外卖找不到们",
+        "外卖找不到闷",
+        "外卖找不到钔",
+        "外卖找不到焖",
+        "外卖找不到們",
+        "外买找不到们",
+        "外卖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ziqudingdangaile",
+      "expected": "自取订单改了",
+      "source": "5500",
+      "lookup_us": 4713,
+      "candidates": [
+        "自取订单改了",
+        "自取定但该了",
+        "自取顶但该了",
+        "自去订单改了",
+        "自取订单盖了",
+        "自取定但该乐",
+        "自取顶但该乐",
+        "自取订单该了",
+        "自取"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ziqudingdanhao",
+      "expected": "自取订单号",
+      "source": "5500",
+      "lookup_us": 3621,
+      "candidates": [
+        "自取订单号",
+        "自去订单号",
+        "自取订单好",
+        "自去订单好",
+        "自取定单号",
+        "自取定单好",
+        "自去定单号",
+        "自取订单豪",
+        "自取"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ziqudingdanjietu",
+      "expected": "自取订单截图",
+      "source": "5500",
+      "lookup_us": 4783,
+      "candidates": [
+        "自取订单截图",
+        "自去订单截图",
+        "自取订单结图",
+        "自取订单介图",
+        "自去订单结图",
+        "自取订单捷途",
+        "自取订单介兔",
+        "自去订单介图",
+        "自取"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ziqudingdanma",
+      "expected": "自取订单码",
+      "source": "5500",
+      "lookup_us": 2588,
+      "candidates": [
+        "自取订单吗",
+        "自取订单码",
+        "自取订单妈",
+        "自取订单骂",
+        "自去订单吗",
+        "自去订单码",
+        "自去订单妈",
+        "自取订单么",
+        "自取"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "ziqudizhicuole",
+      "expected": "自取地址错了",
+      "source": "5500",
+      "lookup_us": 2370,
+      "candidates": [
+        "自取地址错了",
+        "自去地址错了",
+        "自去的知错了",
+        "自取地知错了",
+        "自取地质错了",
+        "自取地址搓了",
+        "自取地址撮了",
+        "自取地址挫了",
+        "自取"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ziququcanshijian",
+      "expected": "自取取餐时间",
+      "source": "5500",
+      "lookup_us": 5917,
+      "candidates": [
+        "自去取餐时间",
+        "字去取餐时间",
+        "自取去参时间",
+        "自去去参时间",
+        "自取去残时间",
+        "自去取惨时间",
+        "自去取残时间",
+        "自取取餐时间",
+        "自取"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "ziqushijiancuole",
+      "expected": "自取时间错了",
+      "source": "5500",
+      "lookup_us": 6244,
+      "candidates": [
+        "自取时间错了",
+        "自去时间错了",
+        "自取时间搓了",
+        "自取事件错了",
+        "自去时间搓了",
+        "自取时间撮了",
+        "自取时间挫了",
+        "自取时间措了",
+        "自取"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ziqushijiangaile",
+      "expected": "自取时间改了",
+      "source": "5500",
+      "lookup_us": 6570,
+      "candidates": [
+        "自取时间改了",
+        "自去时间改了",
+        "自取时间盖了",
+        "自去时间盖了",
+        "自取时间该了",
+        "自取时间概了",
+        "自去时间该了",
+        "自去时间概了",
+        "自取"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "baoxiaobeizhutiancuo",
+      "expected": "报销备注填错",
+      "source": "5500",
+      "lookup_us": 6851,
+      "candidates": [
+        "报销备注填错",
+        "报销备注天错",
+        "报销备注田错",
+        "报销备注添错",
+        "报销备注甜错",
+        "报销备注舔错",
+        "包小备注填错",
+        "报销备注鿬错",
+        "爆笑"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "baoxiaodanhaofawo",
+      "expected": "报销单号发我",
+      "source": "5500",
+      "lookup_us": 5419,
+      "candidates": [
+        "报销单号发我",
+        "报销单好发我",
+        "报销单毫发我",
+        "报销但好发我",
+        "报销单号法我",
+        "报销单号阀我",
+        "报销单号伐我",
+        "报销但毫发我",
+        "报销单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "baoxiaodanmeijiaoshang",
+      "expected": "报销单没交上",
+      "source": "5500",
+      "lookup_us": 10562,
+      "candidates": [
+        "报销但没脚上",
+        "报销耽美脚上",
+        "报销单没脚上",
+        "报销但没交上",
+        "报销单每脚上",
+        "报销单美脚上",
+        "报销单没交上",
+        "报销但没角上",
+        "报销单"
+      ],
+      "expected_rank": 7
+    },
+    {
+      "pinyin": "baoxiaodanmeiqianzi",
+      "expected": "报销单没签字",
+      "source": "5500",
+      "lookup_us": 8835,
+      "candidates": [
+        "报销但没签字",
+        "报销单没签字",
+        "报销耽美签字",
+        "报销单每签字",
+        "报销单美签字",
+        "报销单梅签字",
+        "报销单妹签字",
+        "报销单眉签字",
+        "报销单"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "baoxiaodantuihuile",
+      "expected": "报销单退回了",
+      "source": "5500",
+      "lookup_us": 7128,
+      "candidates": [
+        "报销单退回了",
+        "报销但退回了",
+        "报销单推回了",
+        "报销单退会了",
+        "报销单推会了",
+        "报销单腿会了",
+        "报销单腿回了",
+        "报销单退回乐",
+        "报销单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "baoxiaojinebudui",
+      "expected": "报销金额不对",
+      "source": "5500",
+      "lookup_us": 6110,
+      "candidates": [
+        "报销金额不对",
+        "包小金额不对",
+        "报销金额部队",
+        "包小金额部队",
+        "报销金鹗不对",
+        "报销金额不队",
+        "报销金额部对",
+        "报销金额布对",
+        "爆笑"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "baoxiaojinetiancuo",
+      "expected": "报销金额填错",
+      "source": "5500",
+      "lookup_us": 6563,
+      "candidates": [
+        "报销金额填错",
+        "包小金额填错",
+        "报销金额天错",
+        "包小金额天错",
+        "报销金额田错",
+        "报销金额添错",
+        "报销金额甜错",
+        "报销金额舔错",
+        "爆笑"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "baoxiaopingzhengbuchong",
+      "expected": "报销凭证补充",
+      "source": "5500",
+      "lookup_us": 8373,
+      "candidates": [
+        "报销凭证补充",
+        "包小凭证补充",
+        "报销平整补充",
+        "包小平整补充",
+        "报销凭政补充",
+        "包小平正补充",
+        "报销凭正补充",
+        "报销凭证不重",
+        "爆笑"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "baoxiaopingzhengbuqi",
+      "expected": "报销凭证不齐",
+      "source": "5500",
+      "lookup_us": 6975,
+      "candidates": [
+        "报销凭证不起",
+        "报销凭证不齐",
+        "报销凭证补齐",
+        "报销凭证补气",
+        "报销平整不起",
+        "报销凭证不期",
+        "包小平整不起",
+        "报销凭证不弃",
+        "爆笑"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "baoxiaopingzhengqueshi",
+      "expected": "报销凭证缺失",
+      "source": "5500",
+      "lookup_us": 8291,
+      "candidates": [
+        "报销凭证确实",
+        "报销凭证却是",
+        "包小平正确实",
+        "报销凭证缺失",
+        "报销凭证确是",
+        "报销凭正确实",
+        "包小平正确是",
+        "报销凭正确是",
+        "爆笑"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "baoxiaoriqitiancuo",
+      "expected": "报销日期填错",
+      "source": "5500",
+      "lookup_us": 4876,
+      "candidates": [
+        "报销日期填错",
+        "包小日期填错",
+        "报销日期天错",
+        "包小日期天错",
+        "报销日期田错",
+        "报销日期添错",
+        "报销日期天撮",
+        "报销日期填撮",
+        "爆笑"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dianzishoujudiule",
+      "expected": "电子收据丢了",
+      "source": "5500",
+      "lookup_us": 4082,
+      "candidates": [
+        "电子收据丢了",
+        "点子收据丢了",
+        "电子手锯丢了",
+        "电子收局丢了",
+        "电子收句丢了",
+        "电子收距丢了",
+        "电子收居丢了",
+        "电子收具丢了",
+        "点子"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "feiyongbaoxiaojilu",
+      "expected": "费用报销记录",
+      "source": "5500",
+      "lookup_us": 8237,
+      "candidates": [
+        "费用报销记录",
+        "费用保小记录",
+        "费用报小记录",
+        "费用爆笑记录",
+        "费用保校记录",
+        "费用报校记录",
+        "费用保笑记录",
+        "费用保晓记录",
+        "费用"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "feiyongmingxifawo",
+      "expected": "费用明细发我",
+      "source": "5500",
+      "lookup_us": 4352,
+      "candidates": [
+        "费用明细发我",
+        "费用明细法我",
+        "费用明细伐我",
+        "费用明晰发我",
+        "费用明细罚我",
+        "费用明细阀我",
+        "费用明细乏我",
+        "费用明洗发我",
+        "费用"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "feiyongqingdanfawo",
+      "expected": "费用清单发我",
+      "source": "5500",
+      "lookup_us": 5115,
+      "candidates": [
+        "费用清单发我",
+        "费用清淡发我",
+        "费用清单法我",
+        "费用清单伐我",
+        "费用清淡法我",
+        "费用清单罚我",
+        "费用清淡伐我",
+        "费用清单阀我",
+        "费用"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "feiyongxiandianyixia",
+      "expected": "费用先垫一下",
+      "source": "5500",
+      "lookup_us": 8686,
+      "candidates": [
+        "费用先垫一下",
+        "费用现点一下",
+        "费用现垫一下",
+        "费用显点一下",
+        "费用线电一下",
+        "费用现店一下",
+        "费用鲜店一下",
+        "费用现电一下",
+        "费用"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "feiyongxianduiyixia",
+      "expected": "费用先对一下",
+      "source": "5500",
+      "lookup_us": 7314,
+      "candidates": [
+        "费用仙对一下",
+        "费用线对一下",
+        "费用先队一下",
+        "费用现队一下",
+        "费用现堆一下",
+        "费用先堆一下",
+        "费用现對一下",
+        "费用先对一下",
+        "费用"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "feiyongxianjixialai",
+      "expected": "费用先记下来",
+      "source": "5500",
+      "lookup_us": 6801,
+      "candidates": [
+        "费用先记下来",
+        "费用现记下来",
+        "费用先级下来",
+        "费用县级下来",
+        "费用先机下来",
+        "费用先继下来",
+        "费用见几下来",
+        "费用现几下来",
+        "费用"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "feiyongxiansuanyixia",
+      "expected": "费用先算一下",
+      "source": "5500",
+      "lookup_us": 6864,
+      "candidates": [
+        "费用先算一下",
+        "费用现算一下",
+        "费用现酸一下",
+        "费用先酸一下",
+        "费用现蒜一下",
+        "费用先蒜一下",
+        "费用先算以下",
+        "费用现算以下",
+        "费用"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fukuanbeizhubushang",
+      "expected": "付款备注补上",
+      "source": "5500",
+      "lookup_us": 4937,
+      "candidates": [
+        "付款备注不上",
+        "付款备注补上",
+        "付款备煮不上",
+        "付款备注不伤",
+        "付款备注部上",
+        "付款备注步上",
+        "付款被逐步上",
+        "付款备注布上",
+        "付款备注"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "fukuanbeizhucuole",
+      "expected": "付款备注错了",
+      "source": "5500",
+      "lookup_us": 3283,
+      "candidates": [
+        "付款备注错了",
+        "付款备煮错了",
+        "付款备注搓了",
+        "付款被注错了",
+        "付款备注撮了",
+        "付款备注挫了",
+        "付款备注措了",
+        "付款备注厝了",
+        "付款备注"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fukuanbeizhumeixie",
+      "expected": "付款备注没写",
+      "source": "5500",
+      "lookup_us": 6875,
+      "candidates": [
+        "付款备注没写",
+        "付款备注没些",
+        "付款备注没谢",
+        "付款备注没鞋",
+        "付款备注每写",
+        "付款备注美写",
+        "付款备注每些",
+        "付款备注美些",
+        "付款备注"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fukuanjietufawo",
+      "expected": "付款截图发我",
+      "source": "5500",
+      "lookup_us": 4854,
+      "candidates": [
+        "付款截图发我",
+        "付款截图法我",
+        "付款截图伐我",
+        "付款截图罚我",
+        "付款节突发我",
+        "付款截图发握",
+        "付款截图阀我",
+        "付款节图发我",
+        "付款截图"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fukuanjilufawo",
+      "expected": "付款记录发我",
+      "source": "5500",
+      "lookup_us": 3441,
+      "candidates": [
+        "付款记录发我",
+        "付款记录法我",
+        "付款记录伐我",
+        "付款记录罚我",
+        "付款记录阀我",
+        "付款记录乏我",
+        "付款记录發我",
+        "付款记录筏我",
+        "付款记录"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fukuanjiluqueshi",
+      "expected": "付款记录缺失",
+      "source": "5500",
+      "lookup_us": 5826,
+      "candidates": [
+        "付款记录确实",
+        "付款记录却是",
+        "付款记录缺失",
+        "付款记录确是",
+        "付款记录却使",
+        "付款记录却实",
+        "付款记录确时",
+        "付款记录却时",
+        "付款记录"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "fukuanjinecuole",
+      "expected": "付款金额错了",
+      "source": "5500",
+      "lookup_us": 4683,
+      "candidates": [
+        "付款金额错了",
+        "付款金鹗错了",
+        "付款金额搓了",
+        "付款金额撮了",
+        "付款金额挫了",
+        "付款金额措了",
+        "付款金额厝了",
+        "付款金额錯了",
+        "付款金额"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fukuanjineduole",
+      "expected": "付款金额多了",
+      "source": "5500",
+      "lookup_us": 4393,
+      "candidates": [
+        "付款金额多了",
+        "付款金鹗多了",
+        "附款金额多了",
+        "付款金额躲了",
+        "付款金额朵了",
+        "付款金额夺了",
+        "付款金额踱了",
+        "付款金额堕了",
+        "付款金额"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fukuanjineshaole",
+      "expected": "付款金额少了",
+      "source": "5500",
+      "lookup_us": 3436,
+      "candidates": [
+        "付款金额少了",
+        "付款金额烧了",
+        "付款金鹗少了",
+        "付款金额稍了",
+        "付款金额绍了",
+        "付款金额邵了",
+        "付款金额勺了",
+        "付款金额梢了",
+        "付款金额"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fukuanmadabukai",
+      "expected": "付款码打不开",
+      "source": "5500",
+      "lookup_us": 2593,
+      "candidates": [
+        "付款码打不开",
+        "付款吗打不开",
+        "付款马达不开",
+        "付款码大不开",
+        "付款么大不开",
+        "付款码达不开",
+        "付款码答不开",
+        "付款码搭不开",
+        "付款码"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fukuanmameishuaxin",
+      "expected": "付款码没刷新",
+      "source": "5500",
+      "lookup_us": 5734,
+      "candidates": [
+        "付款码没刷新",
+        "付款吗没刷新",
+        "付款码每刷新",
+        "付款码美刷新",
+        "付款吗每刷新",
+        "付款码梅刷新",
+        "付款吗美刷新",
+        "付款码妹刷新",
+        "付款码"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fukuanmameixianshi",
+      "expected": "付款码没显示",
+      "source": "5500",
+      "lookup_us": 7698,
+      "candidates": [
+        "付款码没显示",
+        "付款吗没显示",
+        "付款码每显示",
+        "付款码美显示",
+        "付款吗每显示",
+        "付款码梅显示",
+        "付款吗美显示",
+        "付款码妹显示",
+        "付款码"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fukuanmasaobuchu",
+      "expected": "付款码扫不出",
+      "source": "5500",
+      "lookup_us": 3974,
+      "candidates": [
+        "付款码扫不出",
+        "付款码搔不出",
+        "付款吗扫不出",
+        "付款吗搔不出",
+        "付款码嫂不出",
+        "付款码骚不出",
+        "付款吗嫂不出",
+        "付款吗骚不出",
+        "付款码"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fukuanmeichenggong",
+      "expected": "付款没成功",
+      "source": "5500",
+      "lookup_us": 4798,
+      "candidates": [
+        "付款没成功",
+        "付款梅成功",
+        "付款每成功",
+        "付款美成功",
+        "付款妹成功",
+        "付款眉成功",
+        "付款镅成功",
+        "付款煤成功",
+        "付款"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fukuanyichenggong",
+      "expected": "付款已成功",
+      "source": "5500",
+      "lookup_us": 4018,
+      "candidates": [
+        "付款已成功",
+        "付款一成功",
+        "付款以成功",
+        "付款易成功",
+        "付款译成功",
+        "付款异成功",
+        "付款益成功",
+        "付款壹成功",
+        "付款"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fukuanzhuangtaibuming",
+      "expected": "付款状态不明",
+      "source": "5500",
+      "lookup_us": 6541,
+      "candidates": [
+        "付款状态不明",
+        "付款状态不名",
+        "付款状态不命",
+        "付款状态不鸣",
+        "付款状态不铭",
+        "付款状态不冥",
+        "附款状态不明",
+        "付款状态不茗",
+        "付款"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shoujubianhaocuole",
+      "expected": "收据编号错了",
+      "source": "5500",
+      "lookup_us": 5237,
+      "candidates": [
+        "收据编号错了",
+        "收据变好错了",
+        "收据编好错了",
+        "收据便号错了",
+        "收据编号搓了",
+        "收据编号撮了",
+        "收据编号错乐",
+        "收据编号挫了",
+        "手锯"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shoujudayinbuqing",
+      "expected": "收据打印不清",
+      "source": "5500",
+      "lookup_us": 6102,
+      "candidates": [
+        "收据打印不清",
+        "收据打音不清",
+        "收据打印不轻",
+        "收据打印部清",
+        "收据打印不情",
+        "收据打印布清",
+        "收据打印步情",
+        "收据打印步轻",
+        "收据打印"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shoujudianziban",
+      "expected": "收据电子版",
+      "source": "5500",
+      "lookup_us": 5221,
+      "candidates": [
+        "收据点子搬",
+        "收据电子搬",
+        "收据电子版",
+        "收据垫子搬",
+        "收据点子办",
+        "收据电子办",
+        "收据点子半",
+        "收据点子版",
+        "手锯"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "shoujujinecuole",
+      "expected": "收据金额错了",
+      "source": "5500",
+      "lookup_us": 3757,
+      "candidates": [
+        "收据金额错了",
+        "收据金鹗错了",
+        "收据金额搓了",
+        "收据金额撮了",
+        "收据金额挫了",
+        "收据金额措了",
+        "收据金额厝了",
+        "收据金额錯了",
+        "收据金额"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shoujuneirongcuole",
+      "expected": "收据内容错了",
+      "source": "5500",
+      "lookup_us": 2441,
+      "candidates": [
+        "收据内容错了",
+        "收据内容搓了",
+        "收据内容错乐",
+        "收据内容撮了",
+        "收据内容挫了",
+        "收据内容措了",
+        "收据内容厝了",
+        "收据内容錯了",
+        "守军"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shoujuriqicuole",
+      "expected": "收据日期错了",
+      "source": "5500",
+      "lookup_us": 2457,
+      "candidates": [
+        "收据日期错了",
+        "收据日起错了",
+        "收据日期搓了",
+        "收据日期撮了",
+        "收据日期挫了",
+        "收据日期措了",
+        "收据日期厝了",
+        "收据日期錯了",
+        "收据日期"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shoujutaitoucuole",
+      "expected": "收据抬头错了",
+      "source": "5500",
+      "lookup_us": 2700,
+      "candidates": [
+        "收据抬头错了",
+        "收据抬头搓了",
+        "收据抬头撮了",
+        "收据抬头挫了",
+        "收据抬头措了",
+        "收据抬头厝了",
+        "收据抬头錯了",
+        "收据抬头锉了",
+        "收据抬头"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shoujuzhizhiban",
+      "expected": "收据纸质版",
+      "source": "5500",
+      "lookup_us": 4726,
+      "candidates": [
+        "收据支纸板",
+        "收据指值班",
+        "收据支直板",
+        "收据指指板",
+        "收据支值班",
+        "收据置值班",
+        "收据质值班",
+        "收据纸质版",
+        "手锯"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "shoukuanmafacuole",
+      "expected": "收款码发错了",
+      "source": "5500",
+      "lookup_us": 2562,
+      "candidates": [
+        "收款码发错了",
+        "收款吗发错了",
+        "收款码法错了",
+        "收款吗法错了",
+        "收款码发错乐",
+        "收款吗发错乐",
+        "收款码发错勒",
+        "收款码发错叻",
+        "收款码"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shoukuanmameixianshi",
+      "expected": "收款码没显示",
+      "source": "5500",
+      "lookup_us": 7717,
+      "candidates": [
+        "收款码没显示",
+        "收款吗没显示",
+        "收款码每显示",
+        "收款码美显示",
+        "收款码梅显示",
+        "收款吗每显示",
+        "收款吗美显示",
+        "收款码妹显示",
+        "收款码"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shoukuanmasaobuchu",
+      "expected": "收款码扫不出",
+      "source": "5500",
+      "lookup_us": 4002,
+      "candidates": [
+        "收款码扫不出",
+        "收款码搔不出",
+        "收款吗扫不出",
+        "收款吗搔不出",
+        "收款码嫂不出",
+        "收款码骚不出",
+        "收款吗嫂不出",
+        "收款吗骚不出",
+        "收款码"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shoukuanmashixiaole",
+      "expected": "收款码失效了",
+      "source": "5500",
+      "lookup_us": 6041,
+      "candidates": [
+        "收款码失效了",
+        "收款吗失效了",
+        "收款码实效了",
+        "收款码时效了",
+        "收款么时效了",
+        "收款吗实效了",
+        "收款码是笑了",
+        "收款码是小了",
+        "收款码"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tuikuandaozhangyanchi",
+      "expected": "退款到账延迟",
+      "source": "5500",
+      "lookup_us": 7220,
+      "candidates": [
+        "退款到账延迟",
+        "退款到帐延迟",
+        "退款到账延吃",
+        "退款道长延迟",
+        "退款到张延迟",
+        "退款到长延迟",
+        "退款到账眼吃",
+        "退款到账烟吃",
+        "退款"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tuikuanhaimeidaozhang",
+      "expected": "退款还没到账",
+      "source": "5500",
+      "lookup_us": 6412,
+      "candidates": [
+        "退款还没到帐",
+        "退款还没到账",
+        "退款还没道长",
+        "退款还没到长",
+        "退款还没到张",
+        "退款还没到章",
+        "退款还没到掌",
+        "退款还没道帐",
+        "退款"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "tuikuanjietufawo",
+      "expected": "退款截图发我",
+      "source": "5500",
+      "lookup_us": 4162,
+      "candidates": [
+        "退款截图发我",
+        "退款截图法我",
+        "退款截图伐我",
+        "退款节突发我",
+        "退款解突发我",
+        "退款节图发我",
+        "退款截图罚我",
+        "退款截图发握",
+        "退款"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tuikuanjilufawo",
+      "expected": "退款记录发我",
+      "source": "5500",
+      "lookup_us": 2969,
+      "candidates": [
+        "退款记录发我",
+        "退款记录法我",
+        "退款记录伐我",
+        "退款记录罚我",
+        "退款记录阀我",
+        "退款记录乏我",
+        "退款记录發我",
+        "退款记录筏我",
+        "退款记录"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tuikuanjinebudui",
+      "expected": "退款金额不对",
+      "source": "5500",
+      "lookup_us": 4993,
+      "candidates": [
+        "退款金额不对",
+        "退款金额部队",
+        "退款金额不队",
+        "退款金额部对",
+        "退款金鹗不对",
+        "退款金额布对",
+        "退款金额不堆",
+        "退款金额补对",
+        "退款金额"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tuikuanjineshaole",
+      "expected": "退款金额少了",
+      "source": "5500",
+      "lookup_us": 5966,
+      "candidates": [
+        "退款金额少了",
+        "退款金额烧了",
+        "退款金鹗少了",
+        "退款金额稍了",
+        "退款金额绍了",
+        "退款金额邵了",
+        "退款金额勺了",
+        "退款金额梢了",
+        "退款金额"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tuikuanshijianbudui",
+      "expected": "退款时间不对",
+      "source": "5500",
+      "lookup_us": 7438,
+      "candidates": [
+        "退款时间不对",
+        "退款时间部队",
+        "推款时间不对",
+        "退款时间不队",
+        "退款事件不对",
+        "退款时间布对",
+        "退款时间不堆",
+        "退款时间部对",
+        "退款"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tuikuantuicuozhanghu",
+      "expected": "退款退错账户",
+      "source": "5500",
+      "lookup_us": 4974,
+      "candidates": [
+        "退款退错账户",
+        "退款退错帐户",
+        "退款推错账户",
+        "退款退撮账户",
+        "退款退搓账户",
+        "退款退挫账户",
+        "退款退措账户",
+        "退款退撮帐户",
+        "退款"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tuikuantuidaonale",
+      "expected": "退款退到哪了",
+      "source": "5500",
+      "lookup_us": 2748,
+      "candidates": [
+        "退款退到哪了",
+        "退款退到那了",
+        "退款推到哪了",
+        "退款推到那了",
+        "退款退到那乐",
+        "退款退到哪乐",
+        "退款退到拿了",
+        "退款退道哪了",
+        "退款"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tuikuanyijingdaozhang",
+      "expected": "退款已经到账",
+      "source": "5500",
+      "lookup_us": 7712,
+      "candidates": [
+        "退款已经到帐",
+        "退款已经到账",
+        "退款已经道长",
+        "退款已经到长",
+        "退款已经到张",
+        "退款已经到章",
+        "退款已经到掌",
+        "退款已经到仗",
+        "退款"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "tuikuanyuanlutuihui",
+      "expected": "退款原路退回",
+      "source": "5500",
+      "lookup_us": 6659,
+      "candidates": [
+        "退款原路退回",
+        "退款远路退回",
+        "退款原路退会",
+        "退款原路退灰",
+        "退款原路推回",
+        "退款原路退辉",
+        "退款原路推会",
+        "退款原路腿会",
+        "退款"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tuikuanzhuangtaiweizhi",
+      "expected": "退款状态未知",
+      "source": "5500",
+      "lookup_us": 5470,
+      "candidates": [
+        "退款状态位置",
+        "推款状态位置",
+        "退款状态为之",
+        "退款状态为止",
+        "退款状态谓之",
+        "退款状态为只",
+        "退款状态未知",
+        "退款状态位之",
+        "退款"
+      ],
+      "expected_rank": 7
+    },
+    {
+      "pinyin": "tuikuanzhuangtaiyichang",
+      "expected": "退款状态异常",
+      "source": "5500",
+      "lookup_us": 7585,
+      "candidates": [
+        "退款状态异常",
+        "退款状态一场",
+        "退款状态一长",
+        "推款状态异常",
+        "退款状态异长",
+        "退款状态衣长",
+        "退款状态一唱",
+        "退款状态异唱",
+        "退款"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhangdanchongfukoufei",
+      "expected": "账单重复扣费",
+      "source": "5500",
+      "lookup_us": 3111,
+      "candidates": [
+        "账单重复扣费",
+        "账单重复扣肥",
+        "账单重复扣飞",
+        "账单重复口费",
+        "长单重复扣费",
+        "账单重复口肥",
+        "账单重复扣非",
+        "账单重复扣沸",
+        "账单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhangdanduoleyibi",
+      "expected": "账单多了一笔",
+      "source": "5500",
+      "lookup_us": 3810,
+      "candidates": [
+        "账单多了一笔",
+        "账单多了一比",
+        "长单多了一笔",
+        "长单多了一比",
+        "账单多了一闭",
+        "账单多了一臂",
+        "账单多了一必",
+        "账单多了一逼",
+        "账单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhangdanfawokankan",
+      "expected": "账单发我看看",
+      "source": "5500",
+      "lookup_us": 2942,
+      "candidates": [
+        "账单发我看看",
+        "长单发我看看",
+        "账单发喔看看",
+        "账单发握看看",
+        "账单发窝看看",
+        "账单发卧看看",
+        "账单发沃看看",
+        "账单发硪看看",
+        "账单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhangdanheduiyixia",
+      "expected": "账单核对一下",
+      "source": "5500",
+      "lookup_us": 6444,
+      "candidates": [
+        "账单核对一下",
+        "长单核对一下",
+        "账单核对以下",
+        "账单核对一吓",
+        "账单核对一夏",
+        "账单核对一霞",
+        "账单核对一虾",
+        "长单核对以下",
+        "账单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhangdanjietufawo",
+      "expected": "账单截图发我",
+      "source": "5500",
+      "lookup_us": 4185,
+      "candidates": [
+        "账单截图发我",
+        "账单介突发我",
+        "长单截图发我",
+        "账单结突发我",
+        "账单介土发我",
+        "账单截图法我",
+        "账单截图伐我",
+        "账单截图罚我",
+        "账单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhangdanjinebudui",
+      "expected": "账单金额不对",
+      "source": "5500",
+      "lookup_us": 4387,
+      "candidates": [
+        "账单金额不对",
+        "长单金额不对",
+        "账单金额部队",
+        "账单金额不队",
+        "账单金额部对",
+        "账单金鹗不对",
+        "账单金额布对",
+        "账单金额不堆",
+        "账单金额"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhangdanlouleyibi",
+      "expected": "账单漏了一笔",
+      "source": "5500",
+      "lookup_us": 2684,
+      "candidates": [
+        "账单漏了一笔",
+        "账单漏了一比",
+        "长单漏了一笔",
+        "长单漏了一比",
+        "账单漏了一闭",
+        "账单漏了一臂",
+        "账单漏了一必",
+        "账单漏了一逼",
+        "账单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhangdanmingxibudui",
+      "expected": "账单明细不对",
+      "source": "5500",
+      "lookup_us": 5051,
+      "candidates": [
+        "账单明细不对",
+        "账单明晰不对",
+        "账单明西不对",
+        "账单名西不对",
+        "账单明洗不对",
+        "账单明细部队",
+        "长单明细不对",
+        "账单名洗不对",
+        "账单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhangdanmingxifawo",
+      "expected": "账单明细发我",
+      "source": "5500",
+      "lookup_us": 4107,
+      "candidates": [
+        "账单明细发我",
+        "账单明细法我",
+        "账单明晰发我",
+        "账单明细伐我",
+        "账单明细罚我",
+        "账单明洗发我",
+        "账单明细阀我",
+        "账单明细乏我",
+        "账单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhangdanriqicuole",
+      "expected": "账单日期错了",
+      "source": "5500",
+      "lookup_us": 2590,
+      "candidates": [
+        "账单日期错了",
+        "长单日期错了",
+        "账单日起错了",
+        "账单日期搓了",
+        "账单日期撮了",
+        "账单日期挫了",
+        "账单日期措了",
+        "账单日期厝了",
+        "账单日期"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhangdanshaoleyibi",
+      "expected": "账单少了一笔",
+      "source": "5500",
+      "lookup_us": 3371,
+      "candidates": [
+        "账单少了一笔",
+        "账单少了一比",
+        "长单少了一笔",
+        "长单少了一比",
+        "账单少了一闭",
+        "账单少了一臂",
+        "账单少了一必",
+        "账单少了一逼",
+        "账单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhifucishutaiduo",
+      "expected": "支付次数太多",
+      "source": "5500",
+      "lookup_us": 4537,
+      "candidates": [
+        "支付次数太多",
+        "支付此书太多",
+        "之父次数太多",
+        "之父此书太多",
+        "只副词树太多",
+        "只副词输太多",
+        "只副词属太多",
+        "只副词熟太多",
+        "致富"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhifumimacuole",
+      "expected": "支付密码错了",
+      "source": "5500",
+      "lookup_us": 2788,
+      "candidates": [
+        "支付密码错了",
+        "只付密码错了",
+        "支付密码错乐",
+        "支付密码错勒",
+        "支付密码错叻",
+        "支付密码搓了",
+        "支付密码错仂",
+        "支付密码错肋",
+        "支付密码"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhifumimawangle",
+      "expected": "支付密码忘了",
+      "source": "5500",
+      "lookup_us": 3083,
+      "candidates": [
+        "支付密码忘了",
+        "只付密码忘了",
+        "支付密码往了",
+        "支付密码惘了",
+        "支付密码望了",
+        "支付密码网了",
+        "支付密码王了",
+        "支付密码枉了",
+        "支付密码"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhifutongzhimeilai",
+      "expected": "支付通知没来",
+      "source": "5500",
+      "lookup_us": 3820,
+      "candidates": [
+        "支付通知没来",
+        "支付通知美来",
+        "支付同志没来",
+        "支付统治没来",
+        "支付同志美来",
+        "支付通之美来",
+        "只付通知没来",
+        "支付通知每来",
+        "致富"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhifutongzhiyanchi",
+      "expected": "支付通知延迟",
+      "source": "5500",
+      "lookup_us": 4636,
+      "candidates": [
+        "支付通知延迟",
+        "支付同志延迟",
+        "支付通知研吃",
+        "支付统治延迟",
+        "只付通知延迟",
+        "支付通知眼吃",
+        "支付通知烟吃",
+        "之父同志延迟",
+        "致富"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhifuyemianchaoshi",
+      "expected": "支付页面超时",
+      "source": "5500",
+      "lookup_us": 4417,
+      "candidates": [
+        "支付页面超时",
+        "支付页面炒时",
+        "支付页面潮湿",
+        "支付页面朝是",
+        "支付页面炒是",
+        "支付页面超市",
+        "支付页面朝时",
+        "支付页面朝事",
+        "支付页面"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhifuyemianguanle",
+      "expected": "支付页面关了",
+      "source": "5500",
+      "lookup_us": 5092,
+      "candidates": [
+        "支付页面馆了",
+        "支付页面关了",
+        "支付页面馆乐",
+        "支付页面惯了",
+        "支付页面管了",
+        "只付页面馆了",
+        "支付页面馆勒",
+        "支付页面馆叻",
+        "支付页面"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zhifuyemiankazhu",
+      "expected": "支付页面卡住",
+      "source": "5500",
+      "lookup_us": 3256,
+      "candidates": [
+        "支付页面卡住",
+        "只付页面卡住",
+        "支付页面卡著",
+        "支付页面卡注",
+        "支付页面卡煮",
+        "支付页面卡助",
+        "支付页面卡珠",
+        "支付页面卡猪",
+        "支付页面"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhifuzhuangtaiweiming",
+      "expected": "支付状态未明",
+      "source": "5500",
+      "lookup_us": 7324,
+      "candidates": [
+        "支付状态为名",
+        "支付状态位名",
+        "支付状态微明",
+        "支付状态为明",
+        "之父状态为名",
+        "支付状态为命",
+        "支付状态未名",
+        "支付状态未明",
+        "致富"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zhifuzhuangtaiweizhi",
+      "expected": "支付状态未知",
+      "source": "5500",
+      "lookup_us": 5230,
+      "candidates": [
+        "支付状态位置",
+        "之父状态位置",
+        "支付状态为之",
+        "支付状态为止",
+        "支付状态谓之",
+        "支付状态为只",
+        "支付状态未知",
+        "之父状态为之",
+        "致富"
+      ],
+      "expected_rank": 7
+    },
+    {
+      "pinyin": "zhifuzhuangtaiyichang",
+      "expected": "支付状态异常",
+      "source": "5500",
+      "lookup_us": 7218,
+      "candidates": [
+        "支付状态异常",
+        "之父状态异常",
+        "支付状态一场",
+        "之父状态一场",
+        "支付状态一长",
+        "支付状态异长",
+        "支付状态衣长",
+        "支付状态一唱",
+        "致富"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhizhishoujudiule",
+      "expected": "纸质收据丢了",
+      "source": "5500",
+      "lookup_us": 3223,
+      "candidates": [
+        "直指收据丢了",
+        "只知收据丢了",
+        "直指手锯丢了",
+        "指指手锯丢了",
+        "直指收据丢乐",
+        "只知收据丢乐",
+        "直指收据丟了",
+        "纸质收据丢了",
+        "直至"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "caizhiduibitu",
+      "expected": "材质对比图",
+      "source": "5500",
+      "lookup_us": 2829,
+      "candidates": [
+        "材质对比图",
+        "才知对比图",
+        "材质对比兔",
+        "才知对比兔",
+        "材质对比土",
+        "才知对比土",
+        "材质对比突",
+        "才知对比突",
+        "材质对比"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chimaduizhaobiao",
+      "expected": "尺码对照表",
+      "source": "5500",
+      "lookup_us": 4854,
+      "candidates": [
+        "尺码对着表",
+        "尺码对照表",
+        "尺码对招标",
+        "吃吗对着表",
+        "尺码对照标",
+        "吃吗对招标",
+        "吃码对照表",
+        "尺码队招标",
+        "尺码对照"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "dianpubuhuogonggao",
+      "expected": "店铺补货公告",
+      "source": "5500",
+      "lookup_us": 4735,
+      "candidates": [
+        "店铺补货公告",
+        "店铺捕获公告",
+        "店铺不活公告",
+        "店铺不货公告",
+        "店铺步或公告",
+        "店铺不或公告",
+        "店铺不火公告",
+        "店铺不和公告",
+        "店铺"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dianpuchimabiao",
+      "expected": "店铺尺码表",
+      "source": "5500",
+      "lookup_us": 4323,
+      "candidates": [
+        "店铺尺码表",
+        "店铺尺码标",
+        "店铺吃吗表",
+        "店铺吃码表",
+        "店铺吃嘛表",
+        "店铺吃码标",
+        "店铺吃吗标",
+        "店铺吃马表",
+        "店铺"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dianpufahuogonggao",
+      "expected": "店铺发货公告",
+      "source": "5500",
+      "lookup_us": 3794,
+      "candidates": [
+        "店铺发货公告",
+        "店铺发火公告",
+        "店铺发货公高",
+        "店铺法货公告",
+        "店铺发货功高",
+        "店铺发货供稿",
+        "店铺发或公告",
+        "店铺法或公告",
+        "店铺"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dianpuguigebiao",
+      "expected": "店铺规格表",
+      "source": "5500",
+      "lookup_us": 5175,
+      "candidates": [
+        "店铺规格表",
+        "店铺规格标",
+        "店铺贵个表",
+        "店铺鬼个表",
+        "店铺归个表",
+        "店铺桂个表",
+        "店铺柜个表",
+        "店铺贵个标",
+        "店铺"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dianpukefuhuifu",
+      "expected": "店铺客服回复",
+      "source": "5500",
+      "lookup_us": 5615,
+      "candidates": [
+        "店铺客服回复",
+        "店铺客服恢复",
+        "店铺克服回复",
+        "店铺克服恢复",
+        "店铺科夫回复",
+        "店铺科夫恢复",
+        "店铺客付回复",
+        "店铺客复回复",
+        "店铺客服"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dianpukefujilu",
+      "expected": "店铺客服记录",
+      "source": "5500",
+      "lookup_us": 4181,
+      "candidates": [
+        "店铺客服记录",
+        "店铺克服记录",
+        "店铺科夫记录",
+        "店铺客付记录",
+        "店铺客复记录",
+        "店铺客扶记录",
+        "店铺可复记录",
+        "店铺客福记录",
+        "店铺客服"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dianpukefurukou",
+      "expected": "店铺客服入口",
+      "source": "5500",
+      "lookup_us": 2764,
+      "candidates": [
+        "店铺客服入口",
+        "店铺客服如口",
+        "店铺克服入口",
+        "店铺科夫入口",
+        "店铺客服乳口",
+        "店铺客服儒口",
+        "店铺客服汝口",
+        "店铺客服茹口",
+        "店铺客服"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dianpushipaitu",
+      "expected": "店铺实拍图",
+      "source": "5500",
+      "lookup_us": 3185,
+      "candidates": [
+        "店铺实拍图",
+        "店铺时拍图",
+        "店铺是拍图",
+        "店铺实拍兔",
+        "店铺实拍土",
+        "店铺视拍图",
+        "店铺实拍突",
+        "店铺实拍途",
+        "店铺"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dianpushouhourukou",
+      "expected": "店铺售后入口",
+      "source": "5500",
+      "lookup_us": 1962,
+      "candidates": [
+        "店铺守候入口",
+        "店铺售后入口",
+        "店铺收后入口",
+        "店铺守候如口",
+        "店铺收候入口",
+        "店铺收厚入口",
+        "店铺首厚入口",
+        "店铺收後入口",
+        "店铺"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "dianpuxiuxigonggao",
+      "expected": "店铺休息公告",
+      "source": "5500",
+      "lookup_us": 4057,
+      "candidates": [
+        "店铺休息公告",
+        "店铺休息功高",
+        "店铺休息共高",
+        "店铺休息工高",
+        "店铺休息功告",
+        "店铺休息攻高",
+        "店铺休息供稿",
+        "店铺修习公告",
+        "店铺"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dianpuyingyegonggao",
+      "expected": "店铺营业公告",
+      "source": "5500",
+      "lookup_us": 5154,
+      "candidates": [
+        "店铺营业公告",
+        "店铺影也公告",
+        "店铺应业公告",
+        "店铺营业公高",
+        "店铺营业工高",
+        "店铺应也公告",
+        "店铺应叶公告",
+        "店铺营业功高",
+        "店铺"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangpinanzhuangshipin",
+      "expected": "商品安装视频",
+      "source": "5500",
+      "lookup_us": 7460,
+      "candidates": [
+        "商品安装视频",
+        "商品安装食品",
+        "商品安装饰品",
+        "上品安装食品",
+        "商品安装是品",
+        "商品安装诗品",
+        "商品安装失品",
+        "商品安装师品",
+        "商品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangpinanzhuangtu",
+      "expected": "商品安装图",
+      "source": "5500",
+      "lookup_us": 4855,
+      "candidates": [
+        "商品安装图",
+        "商品安装兔",
+        "商品安装土",
+        "商品安装突",
+        "商品安装途",
+        "商品安装徒",
+        "商品安装吐",
+        "商品安装涂",
+        "商品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangpinbaoxiushuoming",
+      "expected": "商品保修说明",
+      "source": "5500",
+      "lookup_us": 8012,
+      "candidates": [
+        "商品保修说明",
+        "商品报修说明",
+        "商品包秀说明",
+        "商品包休说明",
+        "商品保秀说明",
+        "商品保休说明",
+        "商品包绣说明",
+        "商品包羞说明",
+        "商品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangpinbaozhuangqingdan",
+      "expected": "商品包装清单",
+      "source": "5500",
+      "lookup_us": 9825,
+      "candidates": [
+        "商品包装清单",
+        "商品包装清淡",
+        "上品包装清单",
+        "商品包装请单",
+        "上品包装清淡",
+        "商品包装清蛋",
+        "商品包装请蛋",
+        "商品包装情淡",
+        "商品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangpinbuhuotixing",
+      "expected": "商品补货提醒",
+      "source": "5500",
+      "lookup_us": 6936,
+      "candidates": [
+        "商品补货提醒",
+        "商品不活提醒",
+        "商品不货提醒",
+        "商品捕获提醒",
+        "商品不或提醒",
+        "商品补活提醒",
+        "商品步或提醒",
+        "商品不火提醒",
+        "商品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangpincaizhishuoming",
+      "expected": "商品材质说明",
+      "source": "5500",
+      "lookup_us": 5629,
+      "candidates": [
+        "商品材质说明",
+        "商品才知说明",
+        "商品才智说明",
+        "上品材质说明",
+        "商品材只说明",
+        "商品才只说明",
+        "商品材直说明",
+        "商品材之说明",
+        "商品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangpinchicunshuoming",
+      "expected": "商品尺寸说明",
+      "source": "5500",
+      "lookup_us": 4618,
+      "candidates": [
+        "商品尺寸说明",
+        "上品尺寸说明",
+        "商品吃村说明",
+        "商品尺村说明",
+        "商品吃存说明",
+        "商品尺存说明",
+        "商品尺寸说名",
+        "商品吃吋说明",
+        "商品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangpinchicuntu",
+      "expected": "商品尺寸图",
+      "source": "5500",
+      "lookup_us": 1951,
+      "candidates": [
+        "商品尺寸图",
+        "商品尺寸兔",
+        "商品尺寸土",
+        "商品尺寸突",
+        "商品尺寸途",
+        "商品尺寸吐",
+        "商品尺寸涂",
+        "商品尺寸凸",
+        "商品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangpinchimabiao",
+      "expected": "商品尺码表",
+      "source": "5500",
+      "lookup_us": 5565,
+      "candidates": [
+        "商品尺码表",
+        "商品尺码标",
+        "商品尺码彪",
+        "商品吃吗表",
+        "商品吃码表",
+        "商品尺码飙",
+        "商品尺吗表",
+        "商品尺码飚",
+        "商品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangpinchimashuoming",
+      "expected": "商品尺码说明",
+      "source": "5500",
+      "lookup_us": 4795,
+      "candidates": [
+        "商品尺码说明",
+        "商品吃码说明",
+        "商品吃吗说明",
+        "商品尺吗说明",
+        "商品吃嘛说明",
+        "商品尺嘛说明",
+        "商品吃马说明",
+        "商品吃妈说明",
+        "商品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangpindaohuoshijian",
+      "expected": "商品到货时间",
+      "source": "5500",
+      "lookup_us": 9115,
+      "candidates": [
+        "商品到货时间",
+        "商品到活时间",
+        "商品到火时间",
+        "上品到货时间",
+        "商品到或时间",
+        "商品导活时间",
+        "商品导火时间",
+        "商品到获时间",
+        "商品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangpindaohuotixing",
+      "expected": "商品到货提醒",
+      "source": "5500",
+      "lookup_us": 6488,
+      "candidates": [
+        "商品到货提醒",
+        "上品到货提醒",
+        "商品到活提醒",
+        "商品到火提醒",
+        "商品到或提醒",
+        "商品导活提醒",
+        "商品导火提醒",
+        "商品到获提醒",
+        "商品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangpindingdanjietu",
+      "expected": "商品订单截图",
+      "source": "5500",
+      "lookup_us": 6836,
+      "candidates": [
+        "商品订单截图",
+        "商品定单截图",
+        "商品订单结图",
+        "商品订单介图",
+        "商品订单捷途",
+        "商品订单介兔",
+        "商品订单节图",
+        "商品订单介土",
+        "商品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangpinfahuojietu",
+      "expected": "商品发货截图",
+      "source": "5500",
+      "lookup_us": 6000,
+      "candidates": [
+        "商品发货截图",
+        "商品发火截图",
+        "商品发货捷途",
+        "商品发货节图",
+        "商品发货结图",
+        "商品发货捷图",
+        "商品发货接图",
+        "商品发货借图",
+        "商品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangpinfahuoshijian",
+      "expected": "商品发货时间",
+      "source": "5500",
+      "lookup_us": 8307,
+      "candidates": [
+        "商品发货时间",
+        "商品发火时间",
+        "上品发货时间",
+        "商品发活时间",
+        "商品法活时间",
+        "商品发或时间",
+        "商品法或时间",
+        "商品发获时间",
+        "商品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangpinfukuanjietu",
+      "expected": "商品付款截图",
+      "source": "5500",
+      "lookup_us": 7648,
+      "candidates": [
+        "商品付款截图",
+        "商品付款节图",
+        "商品付款结图",
+        "上品付款截图",
+        "商品付款捷途",
+        "商品付款解图",
+        "商品付款节兔",
+        "商品付款捷图",
+        "商品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangpingaijiajilu",
+      "expected": "商品改价记录",
+      "source": "5500",
+      "lookup_us": 7007,
+      "candidates": [
+        "商品改价记录",
+        "商品该家记录",
+        "商品改家记录",
+        "商品该价记录",
+        "商品盖架记录",
+        "商品该加记录",
+        "商品改加记录",
+        "商品该假记录",
+        "上屏"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangpinguigebiao",
+      "expected": "商品规格表",
+      "source": "5500",
+      "lookup_us": 6743,
+      "candidates": [
+        "商品规格表",
+        "商品规格标",
+        "商品规格彪",
+        "商品规格飙",
+        "商品规格飚",
+        "商品规格镖",
+        "商品规格膘",
+        "商品规格裱",
+        "上屏"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangpinguigeshuoming",
+      "expected": "商品规格说明",
+      "source": "5500",
+      "lookup_us": 7466,
+      "candidates": [
+        "商品规格说明",
+        "商品规个说明",
+        "商品归个说明",
+        "上品规格说明",
+        "商品规格说名",
+        "商品规格说鸣",
+        "商品规格说命",
+        "商品规格数名",
+        "上屏"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangpinjiangjiatixing",
+      "expected": "商品降价提醒",
+      "source": "5500",
+      "lookup_us": 11026,
+      "candidates": [
+        "商品降价提醒",
+        "商品讲价提醒",
+        "商品降家提醒",
+        "商品讲家提醒",
+        "商品降价体型",
+        "商品降价体形",
+        "商品降驾提醒",
+        "商品降加提醒",
+        "商品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangpinkucunzhuangtai",
+      "expected": "商品库存状态",
+      "source": "5500",
+      "lookup_us": 6092,
+      "candidates": [
+        "商品库存状态",
+        "上品库存状态",
+        "商品库村状态",
+        "商品库寸状态",
+        "商品库吋状态",
+        "商品库忖状态",
+        "商品哭村状态",
+        "商品库皴状态",
+        "商品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangpinpeijianqingdan",
+      "expected": "商品配件清单",
+      "source": "5500",
+      "lookup_us": 10030,
+      "candidates": [
+        "商品配件清单",
+        "商品配件清淡",
+        "上品配件清单",
+        "商品配间清单",
+        "商品配检清单",
+        "商品配渐清单",
+        "商品配见清单",
+        "商品配建清单",
+        "商品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangpinpingjiajietu",
+      "expected": "商品评价截图",
+      "source": "5500",
+      "lookup_us": 8634,
+      "candidates": [
+        "商品评价截图",
+        "商品评价捷途",
+        "商品评价节图",
+        "商品评价结图",
+        "商品评价捷图",
+        "商品评价接图",
+        "商品评价借图",
+        "商品评价解图",
+        "商品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangpinqianshoujietu",
+      "expected": "商品签收截图",
+      "source": "5500",
+      "lookup_us": 7479,
+      "candidates": [
+        "商品签收截图",
+        "商品签售截图",
+        "商品牵手截图",
+        "商品签收结图",
+        "商品签收捷途",
+        "商品签收节图",
+        "商品签收捷图",
+        "商品前收截图",
+        "商品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangpinquehuotixing",
+      "expected": "商品缺货提醒",
+      "source": "5500",
+      "lookup_us": 8527,
+      "candidates": [
+        "商品缺货提醒",
+        "商品缺活提醒",
+        "商品缺或提醒",
+        "商品确货提醒",
+        "商品确活提醒",
+        "商品缺火提醒",
+        "商品缺获提醒",
+        "商品确或提醒",
+        "商品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangpinshiyongshuoming",
+      "expected": "商品使用说明",
+      "source": "5500",
+      "lookup_us": 5917,
+      "candidates": [
+        "商品使用说明",
+        "上品使用说明",
+        "商品是永说明",
+        "商品市永说明",
+        "商品市勇说明",
+        "商品市拥说明",
+        "商品市涌说明",
+        "商品市泳说明",
+        "商品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangpinshouhoushuoming",
+      "expected": "商品售后说明",
+      "source": "5500",
+      "lookup_us": 4667,
+      "candidates": [
+        "商品售后说明",
+        "商品守候说明",
+        "商品收后说明",
+        "商品收候说明",
+        "商品收厚说明",
+        "商品收後说明",
+        "商品收侯说明",
+        "商品收吼说明",
+        "商品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangpinshuomingshipin",
+      "expected": "商品说明视频",
+      "source": "5500",
+      "lookup_us": 7322,
+      "candidates": [
+        "商品说明视频",
+        "商品说明食品",
+        "商品说明饰品",
+        "商品说明诗品",
+        "商品说明是品",
+        "商品说明市品",
+        "商品说明时品",
+        "商品说明石品",
+        "商品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangpintuihuanshuoming",
+      "expected": "商品退换说明",
+      "source": "5500",
+      "lookup_us": 7720,
+      "candidates": [
+        "商品退换说明",
+        "商品退还说明",
+        "商品推换说明",
+        "商品推还说明",
+        "商品推缓说明",
+        "商品推环说明",
+        "商品推欢说明",
+        "商品退缓说明",
+        "商品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangpinyanseshuoming",
+      "expected": "商品颜色说明",
+      "source": "5500",
+      "lookup_us": 5691,
+      "candidates": [
+        "商品颜色说明",
+        "上品颜色说明",
+        "商品研涩说明",
+        "商品研瑟说明",
+        "商品颜色说名",
+        "商品颜色说鸣",
+        "商品颜色说命",
+        "商品颜色数名",
+        "商品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangpinzhuangxiangqingdan",
+      "expected": "商品装箱清单",
+      "source": "5500",
+      "lookup_us": 12551,
+      "candidates": [
+        "商品装箱清单",
+        "商品装向清单",
+        "商品装想清单",
+        "商品装箱清淡",
+        "商品状想清单",
+        "商品装向清淡",
+        "商品装想清淡",
+        "商品装项清单",
+        "商品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangpinzixunjilu",
+      "expected": "商品咨询记录",
+      "source": "5500",
+      "lookup_us": 6921,
+      "candidates": [
+        "商品咨询记录",
+        "商品资讯记录",
+        "上品咨询记录",
+        "商品子寻记录",
+        "商品字寻记录",
+        "商品子训记录",
+        "商品字训记录",
+        "商品子讯记录",
+        "商品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shiwubutaiyiyang",
+      "expected": "实物不太一样",
+      "source": "5500",
+      "lookup_us": 6113,
+      "candidates": [
+        "事物不太一样",
+        "实物不太一样",
+        "事物不太异样",
+        "实物不太异样",
+        "事物不太一仰",
+        "实物不太一仰",
+        "事物不太一扬",
+        "实物不太一扬",
+        "十五"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "shiwuchicunpiancha",
+      "expected": "实物尺寸偏差",
+      "source": "5500",
+      "lookup_us": 4704,
+      "candidates": [
+        "实物尺寸偏差",
+        "事物尺寸偏差",
+        "实物尺寸便查",
+        "实物尺寸片查",
+        "实物尺寸篇查",
+        "事物尺寸便查",
+        "实物尺寸偏查",
+        "实物尺寸骗查",
+        "实物尺寸"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shiwuhetubufu",
+      "expected": "实物和图不符",
+      "source": "5500",
+      "lookup_us": 3239,
+      "candidates": [
+        "事物合图不复",
+        "事物合图不服",
+        "是五盒土不服",
+        "事物和土不服",
+        "实物合图不复",
+        "实物合图不服",
+        "是五盒土不复",
+        "实物和图不符",
+        "十五"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "shiwuyansepiancha",
+      "expected": "实物颜色偏差",
+      "source": "5500",
+      "lookup_us": 4234,
+      "candidates": [
+        "实物颜色偏差",
+        "事物颜色偏差",
+        "实物颜色便查",
+        "实物颜色偏查",
+        "事物颜色便查",
+        "事物颜色偏查",
+        "实物颜色偏茶",
+        "实物颜色片查",
+        "实物颜色"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shiwuyouhuahen",
+      "expected": "实物有划痕",
+      "source": "5500",
+      "lookup_us": 3803,
+      "candidates": [
+        "事物优化很",
+        "实物优化很",
+        "事物有化很",
+        "事务有化很",
+        "事物有划痕",
+        "事务有划痕",
+        "事物油化很",
+        "实物有划痕",
+        "十五"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "shiwuyoukepeng",
+      "expected": "实物有磕碰",
+      "source": "5500",
+      "lookup_us": 2750,
+      "candidates": [
+        "事物游客捧",
+        "实物游客捧",
+        "事物游客棚",
+        "事物游客篷",
+        "实物游客棚",
+        "事物游客碰",
+        "实物游客篷",
+        "实物有磕碰",
+        "十五"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "shiwuyouwuzi",
+      "expected": "实物有污渍",
+      "source": "5500",
+      "lookup_us": 3073,
+      "candidates": [
+        "事物有屋子",
+        "事务有屋子",
+        "事物油屋子",
+        "十五又屋子",
+        "事物友屋子",
+        "事物又屋子",
+        "实物油屋子",
+        "实物有污渍",
+        "十五"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "shiwuyouxiaci",
+      "expected": "实物有瑕疵",
+      "source": "5500",
+      "lookup_us": 3834,
+      "candidates": [
+        "事物有下次",
+        "事物油下次",
+        "事务有下次",
+        "十五又下次",
+        "事物又下次",
+        "实物油下次",
+        "事物右下次",
+        "实物有瑕疵",
+        "十五"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "shiwuyouyiwei",
+      "expected": "实物有异味",
+      "source": "5500",
+      "lookup_us": 3549,
+      "candidates": [
+        "事物有一位",
+        "事务有一位",
+        "十五又一位",
+        "事物有意味",
+        "事物友一位",
+        "事物又一位",
+        "事务有意味",
+        "实物有异味",
+        "十五"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "shiwuzhigancha",
+      "expected": "实物质感差",
+      "source": "5500",
+      "lookup_us": 2951,
+      "candidates": [
+        "事物之感查",
+        "事物之感差",
+        "实物之感查",
+        "实物之感差",
+        "事物之感茶",
+        "事物质感查",
+        "事物之感察",
+        "实物质感差",
+        "十五"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "yanseduizhaotu",
+      "expected": "颜色对照图",
+      "source": "5500",
+      "lookup_us": 3329,
+      "candidates": [
+        "颜色对照图",
+        "颜色对着图",
+        "颜色对照兔",
+        "颜色对照土",
+        "颜色对照突",
+        "颜色对照途",
+        "颜色对着兔",
+        "颜色对着土",
+        "眼色"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yumiaoshubufu",
+      "expected": "与描述不符",
+      "source": "5500",
+      "lookup_us": 4325,
+      "candidates": [
+        "于描述不复",
+        "与描述不复",
+        "于描述不服",
+        "与描述不服",
+        "于描述不符",
+        "与描述不符",
+        "于描述不负",
+        "与描述不负",
+        "育苗"
+      ],
+      "expected_rank": 6
+    },
+    {
+      "pinyin": "buchajiadingdan",
+      "expected": "补差价订单",
+      "source": "5500",
+      "lookup_us": 5454,
+      "candidates": [
+        "不差价订单",
+        "不差家订单",
+        "不差加订单",
+        "不差价定单",
+        "不差假订单",
+        "不差架订单",
+        "不差甲订单",
+        "补差价订单",
+        "补差价"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "buchajiajietu",
+      "expected": "补差价截图",
+      "source": "5500",
+      "lookup_us": 6547,
+      "candidates": [
+        "不差价截图",
+        "不差家截图",
+        "不差加截图",
+        "不差佳节图",
+        "不差假截图",
+        "不差价捷途",
+        "不差架截图",
+        "补差价截图",
+        "补差价"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "buchajialianjie",
+      "expected": "补差价链接",
+      "source": "5500",
+      "lookup_us": 8461,
+      "candidates": [
+        "不差价链接",
+        "不差价连接",
+        "不差家链接",
+        "不差加链接",
+        "不差家连接",
+        "不差假链接",
+        "不差加连接",
+        "补差价链接",
+        "补差价"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "bufapeijianbao",
+      "expected": "补发配件包",
+      "source": "5500",
+      "lookup_us": 7324,
+      "candidates": [
+        "不发配件保",
+        "不发配件包",
+        "不发配件报",
+        "不发配件宝",
+        "不发配件煲",
+        "不发配简报",
+        "不发配见报",
+        "补发配件包",
+        "补发配件"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "bufapeijiandan",
+      "expected": "补发配件单",
+      "source": "5500",
+      "lookup_us": 6197,
+      "candidates": [
+        "不发配简单",
+        "不发陪简单",
+        "不发赔简单",
+        "不发佩简单",
+        "不发培简单",
+        "不发锫简单",
+        "不发裴简单",
+        "补发配件单",
+        "补发配件"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "bufaxiaolingjian",
+      "expected": "补发小零件",
+      "source": "5500",
+      "lookup_us": 11153,
+      "candidates": [
+        "不发消零件",
+        "不发笑零件",
+        "不发小零件",
+        "不发小玲见",
+        "不发小玲间",
+        "不发小玲件",
+        "不发消铃见",
+        "补发小零件",
+        "不乏"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "buyoufeidingdan",
+      "expected": "补邮费订单",
+      "source": "5500",
+      "lookup_us": 4724,
+      "candidates": [
+        "不邮费订单",
+        "不由费订单",
+        "不由非订单",
+        "不由飞订单",
+        "不由肥订单",
+        "不由废订单",
+        "不由菲订单",
+        "补邮费订单",
+        "不由"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "buyoufeijietu",
+      "expected": "补邮费截图",
+      "source": "5500",
+      "lookup_us": 5091,
+      "candidates": [
+        "不邮费截图",
+        "不由非截图",
+        "不由飞截图",
+        "不由费截图",
+        "不由肥截图",
+        "不由废截图",
+        "不由菲截图",
+        "补邮费截图",
+        "不由"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "buyoufeilianjie",
+      "expected": "补邮费链接",
+      "source": "5500",
+      "lookup_us": 7878,
+      "candidates": [
+        "不邮费链接",
+        "不由非链接",
+        "不由飞链接",
+        "不由费链接",
+        "不邮费连接",
+        "不由非连接",
+        "不由肥链接",
+        "补邮费链接",
+        "不由"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "coudanchayidian",
+      "expected": "凑单差一点",
+      "source": "5500",
+      "lookup_us": 4545,
+      "candidates": [
+        "凑单查一点",
+        "凑单差一点",
+        "凑但差一点",
+        "凑但查一点",
+        "凑单察一点",
+        "凑单茶一点",
+        "凑单插一点",
+        "凑单叉一点",
+        "凑单"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "coudanmeicougou",
+      "expected": "凑单没凑够",
+      "source": "5500",
+      "lookup_us": 2922,
+      "candidates": [
+        "凑单没凑够",
+        "凑但没凑够",
+        "凑单每凑够",
+        "凑单美凑够",
+        "凑耽美凑够",
+        "凑单梅凑够",
+        "凑单妹凑够",
+        "凑单眉凑够",
+        "凑单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "coudanshangpinmeihuo",
+      "expected": "凑单商品没货",
+      "source": "5500",
+      "lookup_us": 7050,
+      "candidates": [
+        "凑单商品没货",
+        "凑单商品魅惑",
+        "凑单商品没火",
+        "凑单商品没活",
+        "凑单商品没和",
+        "凑单商品没获",
+        "凑单商品每火",
+        "凑单商品没或",
+        "凑单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "coudanshangpintuile",
+      "expected": "凑单商品退了",
+      "source": "5500",
+      "lookup_us": 4144,
+      "candidates": [
+        "凑单商品腿了",
+        "凑单商品退了",
+        "凑单商品推了",
+        "凑单商品褪了",
+        "凑单商品颓了",
+        "凑单商品推乐",
+        "凑单商品忒了",
+        "凑单商品蜕了",
+        "凑单"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "dingdanbeizhubuchong",
+      "expected": "订单备注补充",
+      "source": "5500",
+      "lookup_us": 4273,
+      "candidates": [
+        "订单备注补充",
+        "订单备煮补充",
+        "订单备注不重",
+        "定单备注补充",
+        "订单备住补充",
+        "订单贝柱补充",
+        "订单备注部重",
+        "订单备注部充",
+        "定单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dingdanbeizhuloule",
+      "expected": "订单备注漏了",
+      "source": "5500",
+      "lookup_us": 4150,
+      "candidates": [
+        "订单备注漏了",
+        "订单备注楼了",
+        "订单备注喽了",
+        "订单备注露了",
+        "订单备注搂了",
+        "订单备注娄了",
+        "订单备注陋了",
+        "订单备注瘘了",
+        "定单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dingdanbeizhumeikan",
+      "expected": "订单备注没看",
+      "source": "5500",
+      "lookup_us": 5741,
+      "candidates": [
+        "订单备注没看",
+        "订单备注每看",
+        "订单备注美看",
+        "订单备注梅看",
+        "订单备注妹看",
+        "订单备注眉看",
+        "订单备注镅看",
+        "订单备注煤看",
+        "定单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dingdanbeizhuxiecuo",
+      "expected": "订单备注写错",
+      "source": "5500",
+      "lookup_us": 6864,
+      "candidates": [
+        "订单备注写错",
+        "订单备注些错",
+        "订单备注谢错",
+        "订单备注鞋错",
+        "订单备注斜错",
+        "订单备注歇错",
+        "订单备注协错",
+        "订单备煮写错",
+        "定单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dingdanbeizhuxiugai",
+      "expected": "订单备注修改",
+      "source": "5500",
+      "lookup_us": 4571,
+      "candidates": [
+        "订单备注修改",
+        "订单备煮修改",
+        "定单备注修改",
+        "订单备主修改",
+        "订单被主修改",
+        "订单备住修改",
+        "订单贝柱修改",
+        "订单备猪修改",
+        "定单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dingdanbianhaofawo",
+      "expected": "订单编号发我",
+      "source": "5500",
+      "lookup_us": 5149,
+      "candidates": [
+        "订单编号发我",
+        "订单编号法我",
+        "订单编号阀我",
+        "订单编号伐我",
+        "订单编号罚我",
+        "订单编号乏我",
+        "订单编号發我",
+        "订单编号发握",
+        "定单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dingdanbufenfahuo",
+      "expected": "订单部分发货",
+      "source": "5500",
+      "lookup_us": 3613,
+      "candidates": [
+        "订单部分发货",
+        "订单不分发货",
+        "订单部分发火",
+        "订单部份发货",
+        "订单部分法火",
+        "订单部分法货",
+        "订单部分发活",
+        "订单部分法活",
+        "定单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dingdanbufenquehuo",
+      "expected": "订单部分缺货",
+      "source": "5500",
+      "lookup_us": 6205,
+      "candidates": [
+        "订单部分缺货",
+        "订单部分却和",
+        "订单部分却火",
+        "订单部分确火",
+        "订单部分却货",
+        "订单部分确货",
+        "订单部分却活",
+        "订单部分确活",
+        "定单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dingdanbufentuikuan",
+      "expected": "订单部分退款",
+      "source": "5500",
+      "lookup_us": 4151,
+      "candidates": [
+        "订单部分退款",
+        "定单部分退款",
+        "订单部份退款",
+        "订单补份退款",
+        "订单补粉退款",
+        "订单部分腿款",
+        "订单不粉退款",
+        "订单补芬退款",
+        "定单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dingdanchaifenfahuo",
+      "expected": "订单拆分发货",
+      "source": "5500",
+      "lookup_us": 4089,
+      "candidates": [
+        "订单拆分发货",
+        "订单差分发货",
+        "订单拆分发火",
+        "订单拆奋发货",
+        "订单拆份发货",
+        "订单拆粉发货",
+        "订单柴奋发货",
+        "订单柴份发货",
+        "定单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dingdanchongfutijiao",
+      "expected": "订单重复提交",
+      "source": "5500",
+      "lookup_us": 8364,
+      "candidates": [
+        "订单重复提交",
+        "定单重复提交",
+        "订单重复提叫",
+        "订单重复提脚",
+        "订单重复提教",
+        "订单重复提觉",
+        "订单重复提角",
+        "订单重复提椒",
+        "定单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dingdanchongfuzhifu",
+      "expected": "订单重复支付",
+      "source": "5500",
+      "lookup_us": 4801,
+      "candidates": [
+        "订单重复制服",
+        "订单重复支付",
+        "订单重复之父",
+        "订单重复值服",
+        "订单重复制复",
+        "订单重复制夫",
+        "订单重复制傅",
+        "订单重复制福",
+        "定单"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "dingdandizhigaile",
+      "expected": "订单地址改了",
+      "source": "5500",
+      "lookup_us": 4224,
+      "candidates": [
+        "订单地址改了",
+        "订单地址盖了",
+        "订单地址该了",
+        "订单地址概了",
+        "订单的只改了",
+        "订单地只改了",
+        "订单地址钙了",
+        "订单地质改了",
+        "订单地址"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dingdanfenpifahuo",
+      "expected": "订单分批发货",
+      "source": "5500",
+      "lookup_us": 5195,
+      "candidates": [
+        "订单分批发货",
+        "定单分批发货",
+        "订单分皮发货",
+        "订单分批发火",
+        "订单份皮发货",
+        "订单分屁发货",
+        "订单分匹发货",
+        "订单分脾发货",
+        "定单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dingdanhebingfahuo",
+      "expected": "订单合并发货",
+      "source": "5500",
+      "lookup_us": 7035,
+      "candidates": [
+        "订单合并发货",
+        "定单合并发货",
+        "订单合并发火",
+        "订单喝冰发货",
+        "订单核病发货",
+        "订单何冰发货",
+        "订单和柄发货",
+        "订单和病发货",
+        "定单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dingdanhebingshibai",
+      "expected": "订单合并失败",
+      "source": "5500",
+      "lookup_us": 8039,
+      "candidates": [
+        "订单合并失败",
+        "订单合并时白",
+        "订单喝冰失败",
+        "订单核病失败",
+        "订单合并时败",
+        "订单何冰失败",
+        "订单和并失败",
+        "订单和病失败",
+        "定单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dingdanjietufawo",
+      "expected": "订单截图发我",
+      "source": "5500",
+      "lookup_us": 5707,
+      "candidates": [
+        "订单截图发我",
+        "订单介突发我",
+        "订单结突发我",
+        "订单结图发我",
+        "订单介土发我",
+        "订单截图法我",
+        "订单截图伐我",
+        "订单结土发我",
+        "定单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dingdanquanbutuikuan",
+      "expected": "订单全部退款",
+      "source": "5500",
+      "lookup_us": 5825,
+      "candidates": [
+        "订单全部退款",
+        "订单全不退款",
+        "定单全部退款",
+        "订单全补退款",
+        "订单圈不退款",
+        "订单权补退款",
+        "订单圈布退款",
+        "订单全布退款",
+        "定单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dingdanquxiaoshibai",
+      "expected": "订单取消失败",
+      "source": "5500",
+      "lookup_us": 9436,
+      "candidates": [
+        "订单取消失败",
+        "定单取消失败",
+        "订单取笑失败",
+        "订单取消失白",
+        "订单取消时白",
+        "订单取消是白",
+        "订单取消失伯",
+        "订单取消时败",
+        "定单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dingdantuikuanshibai",
+      "expected": "订单退款失败",
+      "source": "5500",
+      "lookup_us": 4917,
+      "candidates": [
+        "订单退款失败",
+        "定单退款失败",
+        "订单退款式白",
+        "订单退款时白",
+        "订单退款式败",
+        "订单退款失白",
+        "订单退款是白",
+        "订单退款时败",
+        "定单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dingdanxinxicuole",
+      "expected": "订单信息错了",
+      "source": "5500",
+      "lookup_us": 4150,
+      "candidates": [
+        "订单信息错了",
+        "定单信息错了",
+        "订单信息搓了",
+        "订单欣喜错了",
+        "订单信息撮了",
+        "订单信息挫了",
+        "订单信息措了",
+        "订单信息厝了",
+        "定单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dingdanxinxigaile",
+      "expected": "订单信息改了",
+      "source": "5500",
+      "lookup_us": 3417,
+      "candidates": [
+        "订单信息改了",
+        "订单信息盖了",
+        "订单信息该了",
+        "订单信息概了",
+        "订单信息钙了",
+        "订单信息丐了",
+        "订单信息乢了",
+        "订单信息該了",
+        "定单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dingdanxiugaishibai",
+      "expected": "订单修改失败",
+      "source": "5500",
+      "lookup_us": 4331,
+      "candidates": [
+        "订单修改失败",
+        "定单修改失败",
+        "订单修改时白",
+        "订单修改时败",
+        "订单修改时伯",
+        "订单修改时百",
+        "订单修改时摆",
+        "订单修改时拜",
+        "定单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dingdanxuancuochima",
+      "expected": "订单选错尺码",
+      "source": "5500",
+      "lookup_us": 5447,
+      "candidates": [
+        "订单选错尺码",
+        "订单选错吃吗",
+        "订单选错持吗",
+        "订单选错池吗",
+        "订单选错吃码",
+        "订单选错迟吗",
+        "订单选错吃妈",
+        "订单选错吃骂",
+        "定单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dingdanxuancuodianhua",
+      "expected": "订单选错电话",
+      "source": "5500",
+      "lookup_us": 7653,
+      "candidates": [
+        "订单选错电话",
+        "订单选撮电话",
+        "订单选搓电话",
+        "订单选挫电话",
+        "订单选措电话",
+        "订单选厝电话",
+        "订单选錯电话",
+        "订单选锉电话",
+        "定单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dingdanxuancuodizhi",
+      "expected": "订单选错地址",
+      "source": "5500",
+      "lookup_us": 5722,
+      "candidates": [
+        "订单选错地址",
+        "订单玄错地址",
+        "订单选撮地址",
+        "订单选搓地址",
+        "订单选挫地址",
+        "订单选措地址",
+        "订单选厝地址",
+        "订单选錯地址",
+        "定单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dingdanxuancuoguige",
+      "expected": "订单选错规格",
+      "source": "5500",
+      "lookup_us": 6423,
+      "candidates": [
+        "订单选错规格",
+        "订单选错规个",
+        "订单玄错规格",
+        "订单选错贵个",
+        "订单选错鬼个",
+        "订单选错归个",
+        "订单选撮规格",
+        "订单选错桂个",
+        "定单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dingdanxuancuoshuliang",
+      "expected": "订单选错数量",
+      "source": "5500",
+      "lookup_us": 8269,
+      "candidates": [
+        "订单选错数量",
+        "订单玄错数量",
+        "订单选撮数量",
+        "订单选搓数量",
+        "订单选挫数量",
+        "订单选措数量",
+        "订单选厝数量",
+        "订单选錯数量",
+        "定单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dingdanxuancuoxinghao",
+      "expected": "订单选错型号",
+      "source": "5500",
+      "lookup_us": 7329,
+      "candidates": [
+        "订单选错型号",
+        "订单选错醒好",
+        "订单选错幸好",
+        "订单选错行号",
+        "订单选错行好",
+        "订单选错型好",
+        "订单选错性好",
+        "订单选撮幸好",
+        "定单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dingdanxuancuoyanse",
+      "expected": "订单选错颜色",
+      "source": "5500",
+      "lookup_us": 5751,
+      "candidates": [
+        "订单选错颜色",
+        "订单选撮颜色",
+        "订单选搓颜色",
+        "订单选挫颜色",
+        "订单选措颜色",
+        "订单选厝颜色",
+        "订单选錯颜色",
+        "订单选锉颜色",
+        "定单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dingdanzhifuchaoshi",
+      "expected": "订单支付超时",
+      "source": "5500",
+      "lookup_us": 5641,
+      "candidates": [
+        "订单支付超时",
+        "订单支付超市",
+        "订单支付超是",
+        "订单支付潮湿",
+        "订单支付超事",
+        "订单支付超式",
+        "订单支付炒时",
+        "订单支付超试",
+        "订单支付"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dingdanzhifuzhongduan",
+      "expected": "订单支付中断",
+      "source": "5500",
+      "lookup_us": 5860,
+      "candidates": [
+        "订单支付中断",
+        "订单支付中段",
+        "订单支付中端",
+        "订单支付中短",
+        "订单支付终端",
+        "订单支付种段",
+        "订单支付种断",
+        "订单支付种短",
+        "订单支付"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gouwuchejiacuole",
+      "expected": "购物车加错了",
+      "source": "5500",
+      "lookup_us": 3999,
+      "candidates": [
+        "购物车价错了",
+        "购物车架错了",
+        "购物车夹错了",
+        "购物车加错了",
+        "购物车家错了",
+        "购物车假错了",
+        "购物车价搓了",
+        "购物车架搓了",
+        "购物车"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "gouwuchelihaiyou",
+      "expected": "购物车里还有",
+      "source": "5500",
+      "lookup_us": 3139,
+      "candidates": [
+        "购物车里还有",
+        "狗物车里还有",
+        "购物撤离还有",
+        "购物车理还有",
+        "购物车李还有",
+        "购物车离还有",
+        "购物车力还有",
+        "购物车利还有",
+        "购物车"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gouwuchelimeile",
+      "expected": "购物车里没了",
+      "source": "5500",
+      "lookup_us": 3953,
+      "candidates": [
+        "购物车里没了",
+        "购物车里美了",
+        "购物车里没乐",
+        "狗物车里没了",
+        "购物车里每了",
+        "购物车里美乐",
+        "购物车里梅了",
+        "购物撤离没了",
+        "购物车"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gouwuchemeitongbu",
+      "expected": "购物车没同步",
+      "source": "5500",
+      "lookup_us": 3932,
+      "candidates": [
+        "购物车美同步",
+        "购物车没同步",
+        "购物车每同步",
+        "购物车梅同步",
+        "购物车妹同步",
+        "购物车眉同步",
+        "购物车镅同步",
+        "购物车煤同步",
+        "购物车"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "gouwucheqingkongle",
+      "expected": "购物车清空了",
+      "source": "5500",
+      "lookup_us": 3737,
+      "candidates": [
+        "购物车清空了",
+        "购物车晴空了",
+        "购物车请空了",
+        "购物车青空了",
+        "购物扯清空了",
+        "购物扯晴空了",
+        "购物车情空了",
+        "购物车轻空了",
+        "购物车"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gouwucheshancuole",
+      "expected": "购物车删错了",
+      "source": "5500",
+      "lookup_us": 3219,
+      "candidates": [
+        "购物车删错了",
+        "购物车山错了",
+        "购物车闪错了",
+        "购物车单错了",
+        "购物车善错了",
+        "购物车扇错了",
+        "购物车衫错了",
+        "购物车钐错了",
+        "购物车"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gouwucheshangpinduo",
+      "expected": "购物车商品多",
+      "source": "5500",
+      "lookup_us": 5025,
+      "candidates": [
+        "购物车商品多",
+        "购物车上品多",
+        "购物车上拼多",
+        "购物车商品朵",
+        "购物扯商品多",
+        "购物车上频多",
+        "购物车上聘多",
+        "购物车上贫多",
+        "购物车"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gouwucheshangpinshao",
+      "expected": "购物车商品少",
+      "source": "5500",
+      "lookup_us": 4411,
+      "candidates": [
+        "购物车商品少",
+        "购物车上品少",
+        "购物车上拼少",
+        "购物车商品烧",
+        "购物扯商品少",
+        "购物车上频少",
+        "购物车商品稍",
+        "购物车上聘少",
+        "购物车"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lianxirentiancuole",
+      "expected": "联系人填错了",
+      "source": "5500",
+      "lookup_us": 5287,
+      "candidates": [
+        "练习任天错了",
+        "练习任填错了",
+        "练习人填错了",
+        "练习人天错了",
+        "练习任田错了",
+        "练习人田错了",
+        "练习任添错了",
+        "联系人填错了",
+        "联系人"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "manjianchayidian",
+      "expected": "满减差一点",
+      "source": "5500",
+      "lookup_us": 6496,
+      "candidates": [
+        "慢检查一点",
+        "满检查一点",
+        "慢监察一点",
+        "慢检察一点",
+        "慢间差一点",
+        "慢件差一点",
+        "慢检查一店",
+        "满减差一点",
+        "满减"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "manjianmeishengxiao",
+      "expected": "满减没生效",
+      "source": "5500",
+      "lookup_us": 9161,
+      "candidates": [
+        "慢健美生效",
+        "慢箭没生效",
+        "慢煎没生效",
+        "满健美生效",
+        "慢剪梅生效",
+        "慢箭每生效",
+        "慢煎每生效",
+        "满减没生效",
+        "满减"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "manjianmeiyongshang",
+      "expected": "满减没用上",
+      "source": "5500",
+      "lookup_us": 6535,
+      "candidates": [
+        "慢箭没用上",
+        "慢煎没用上",
+        "慢健美用上",
+        "满健美用上",
+        "慢箭每用上",
+        "慢煎每用上",
+        "慢剪梅用上",
+        "满减没用上",
+        "满减"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "manjiantiaojianbufu",
+      "expected": "满减条件不符",
+      "source": "5500",
+      "lookup_us": 8660,
+      "candidates": [
+        "满减条件不复",
+        "满减条件不服",
+        "慢减条件不复",
+        "慢减条件不服",
+        "满减条件不符",
+        "满减条件不负",
+        "满减条件不夫",
+        "满减条件不傅",
+        "满减"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "pindanchaoshiquxiao",
+      "expected": "拼单超时取消",
+      "source": "5500",
+      "lookup_us": 8249,
+      "candidates": [
+        "拼单超时取笑",
+        "拼单超时取消",
+        "拼单超市取笑",
+        "拼但超时取笑",
+        "拼单潮湿取笑",
+        "拼单超市取消",
+        "拼单超时区小",
+        "拼但超时取消",
+        "拼单"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "pindanhaichayiren",
+      "expected": "拼单还差一人",
+      "source": "5500",
+      "lookup_us": 3536,
+      "candidates": [
+        "拼但还差一人",
+        "拼单还差一人",
+        "拼但还差一任",
+        "拼单还差一任",
+        "拼但还差异人",
+        "拼单还差异人",
+        "拼但还差一认",
+        "拼单还差一认",
+        "拼单"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "pindanhaimeichengtuan",
+      "expected": "拼单还没成团",
+      "source": "5500",
+      "lookup_us": 5361,
+      "candidates": [
+        "拼单还没成团",
+        "拼但还没成团",
+        "拼但还没称团",
+        "拼单还没称团",
+        "拼但还没城团",
+        "拼单还没城团",
+        "拼但还没程团",
+        "拼单还没程团",
+        "拼单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "pindanlinshiquxiao",
+      "expected": "拼单临时取消",
+      "source": "5500",
+      "lookup_us": 8502,
+      "candidates": [
+        "拼单临时取笑",
+        "拼单临时取消",
+        "拼但临时取笑",
+        "拼但临时取消",
+        "拼单临时取小",
+        "拼单临时区小",
+        "拼单临时去小",
+        "拼单临时区笑",
+        "拼单"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "pindanmeipincheng",
+      "expected": "拼单没拼成",
+      "source": "5500",
+      "lookup_us": 5537,
+      "candidates": [
+        "拼单没拼成",
+        "拼但没拼成",
+        "拼单每拼成",
+        "拼单美拼成",
+        "拼耽美拼成",
+        "拼单梅拼成",
+        "拼单没品成",
+        "拼单没品称",
+        "拼单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "pindantuikuandaole",
+      "expected": "拼单退款到了",
+      "source": "5500",
+      "lookup_us": 4229,
+      "candidates": [
+        "拼单退款到了",
+        "拼但退款到了",
+        "拼单退款倒了",
+        "拼单退款道了",
+        "拼单退宽到了",
+        "拼单推宽到了",
+        "拼但退款倒了",
+        "拼单退款到乐",
+        "拼单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "pindanyijingchengtuan",
+      "expected": "拼单已经成团",
+      "source": "5500",
+      "lookup_us": 8397,
+      "candidates": [
+        "拼单已经成团",
+        "拼单已经称团",
+        "拼单已经城团",
+        "拼单已经程团",
+        "拼单已经乘团",
+        "拼单已经呈团",
+        "拼单已经撑团",
+        "拼单已经诚团",
+        "拼单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangpinjiabujinqu",
+      "expected": "商品加不进去",
+      "source": "5500",
+      "lookup_us": 6957,
+      "candidates": [
+        "商品加不进去",
+        "商品夹不进去",
+        "商品价补进去",
+        "商品家布进去",
+        "商品价部进去",
+        "商品加部进去",
+        "商品价步进去",
+        "商品加补进去",
+        "商品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangpinshanbudiao",
+      "expected": "商品删不掉",
+      "source": "5500",
+      "lookup_us": 4871,
+      "candidates": [
+        "商品闪不掉",
+        "商品扇不掉",
+        "商品山不掉",
+        "商品删不掉",
+        "商品山步调",
+        "商品善不掉",
+        "商品衫不掉",
+        "商品钐不掉",
+        "商品"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "shangpinxuancuochima",
+      "expected": "商品选错尺码",
+      "source": "5500",
+      "lookup_us": 5745,
+      "candidates": [
+        "商品选错尺码",
+        "商品选错吃吗",
+        "商品选错持吗",
+        "商品选错池吗",
+        "商品选错吃码",
+        "商品选错迟吗",
+        "商品选错吃妈",
+        "商品选错吃骂",
+        "商品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangpinxuancuoguige",
+      "expected": "商品选错规格",
+      "source": "5500",
+      "lookup_us": 7020,
+      "candidates": [
+        "商品选错规格",
+        "商品选错规个",
+        "商品选错贵个",
+        "商品选错鬼个",
+        "商品选错归个",
+        "商品玄错规格",
+        "商品选撮规格",
+        "商品选错桂个",
+        "商品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangpinxuancuoxinghao",
+      "expected": "商品选错型号",
+      "source": "5500",
+      "lookup_us": 7444,
+      "candidates": [
+        "商品选错型号",
+        "商品选错醒好",
+        "商品选错幸好",
+        "商品选错行号",
+        "商品选错行好",
+        "商品选错型好",
+        "商品选错性好",
+        "商品选撮幸好",
+        "商品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangpinxuancuoyanse",
+      "expected": "商品选错颜色",
+      "source": "5500",
+      "lookup_us": 6297,
+      "candidates": [
+        "商品选错颜色",
+        "商品选撮颜色",
+        "商品选搓颜色",
+        "商品选挫颜色",
+        "商品选措颜色",
+        "商品选厝颜色",
+        "商品选錯颜色",
+        "商品选锉颜色",
+        "商品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youhuibunengdiejia",
+      "expected": "优惠不能叠加",
+      "source": "5500",
+      "lookup_us": 5692,
+      "candidates": [
+        "又会不能叠加",
+        "又回不能叠加",
+        "又会不能跌价",
+        "又回不能跌价",
+        "又会不能跌家",
+        "又会不能跌加",
+        "又会不能碟家",
+        "优惠不能叠加",
+        "又会"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "youhuiquanbutongyong",
+      "expected": "优惠券不通用",
+      "source": "5500",
+      "lookup_us": 4406,
+      "candidates": [
+        "优惠券不同用",
+        "又回全不同用",
+        "优惠券不通用",
+        "优惠券不同泳",
+        "又回全部通用",
+        "又会全部通用",
+        "优惠券不同勇",
+        "优惠券不同永",
+        "优惠券"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "youhuiquanguoqile",
+      "expected": "优惠券过期了",
+      "source": "5500",
+      "lookup_us": 5547,
+      "candidates": [
+        "优惠券过期了",
+        "又回全国齐了",
+        "又会全国齐了",
+        "又回全国起了",
+        "又会全国起了",
+        "又会券过期了",
+        "又回全国气了",
+        "又会全国气了",
+        "优惠券"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youhuiquankuaidaoqi",
+      "expected": "优惠券快到期",
+      "source": "5500",
+      "lookup_us": 6659,
+      "candidates": [
+        "优惠券快到期",
+        "优惠券快到齐",
+        "优惠券快到起",
+        "又回全快到期",
+        "优惠券块到期",
+        "又回全快到齐",
+        "优惠券块到齐",
+        "优惠券快到气",
+        "优惠券"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youhuiquanlingcuole",
+      "expected": "优惠券领错了",
+      "source": "5500",
+      "lookup_us": 6857,
+      "candidates": [
+        "优惠券领错了",
+        "优惠券另错了",
+        "优惠券令错了",
+        "优惠券灵错了",
+        "优惠券零错了",
+        "优惠券凌错了",
+        "优惠券玲错了",
+        "优惠券铃错了",
+        "优惠券"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youhuiquanmeilingdao",
+      "expected": "优惠券没领到",
+      "source": "5500",
+      "lookup_us": 8210,
+      "candidates": [
+        "优惠券没领导",
+        "优惠券没领到",
+        "优惠券每领导",
+        "优惠券美领导",
+        "又回全美领导",
+        "优惠券梅领导",
+        "优惠券每领到",
+        "优惠券美领到",
+        "优惠券"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "youhuiquanmeishengxiao",
+      "expected": "优惠券没生效",
+      "source": "5500",
+      "lookup_us": 9848,
+      "candidates": [
+        "优惠券没生效",
+        "优惠券梅生效",
+        "优惠券每生效",
+        "优惠券美生效",
+        "又回全没生效",
+        "又回全美生效",
+        "优惠券妹生效",
+        "优惠券眉生效",
+        "优惠券"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youhuiquanmeiyongshang",
+      "expected": "优惠券没用上",
+      "source": "5500",
+      "lookup_us": 6996,
+      "candidates": [
+        "优惠券没用上",
+        "又回全没用上",
+        "优惠券每用上",
+        "优惠券美用上",
+        "优惠券霉用上",
+        "又回全美用上",
+        "优惠券梅用上",
+        "优惠券妹用上",
+        "优惠券"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youhuiquanmenkangao",
+      "expected": "优惠券门槛高",
+      "source": "5500",
+      "lookup_us": 6390,
+      "candidates": [
+        "优惠券门槛高",
+        "优惠券门槛告",
+        "优惠券们看高",
+        "优惠券门槛篙",
+        "优惠券门槛搞",
+        "优惠券门槛稿",
+        "又会权门槛高",
+        "优惠券门看高",
+        "优惠券"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youhuiquanyongcuole",
+      "expected": "优惠券用错了",
+      "source": "5500",
+      "lookup_us": 4499,
+      "candidates": [
+        "优惠券用错了",
+        "优惠券雍错了",
+        "优惠券永错了",
+        "优惠券勇错了",
+        "优惠券拥错了",
+        "优惠券涌错了",
+        "优惠券泳错了",
+        "又回全用错了",
+        "优惠券"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youhuiquanzhaobudao",
+      "expected": "优惠券找不到",
+      "source": "5500",
+      "lookup_us": 5041,
+      "candidates": [
+        "优惠券找不到",
+        "又会权找不到",
+        "优惠券着不到",
+        "优惠券照不到",
+        "优惠券招不到",
+        "优惠券赵不到",
+        "优惠券朝不到",
+        "优惠券罩不到",
+        "优惠券"
+      ],
+      "expected_rank": 1
+    }
+  ],
+  "previous_pass": {
+    "sha256": "395d1be61c3e0d25de09985343c6fcf4bcb83b07823f8bed3d6915f066518fc4",
+    "summary": {
+      "cases": 296,
+      "top1_correct": 224,
+      "top9_present": 296,
+      "top1_percent": 75.68,
+      "top9_percent": 100.0,
+      "character_error_rate": 0.0761,
+      "p50_lookup_ms": 6.154,
+      "p95_lookup_ms": 11.011,
+      "max_lookup_ms": 15.999,
+      "missing_from_top9_count": 0,
+      "missing_from_top9": [],
+      "max_returned_candidate_count": 9
+    }
+  }
+}

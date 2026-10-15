@@ -1,0 +1,97 @@
+{
+  "batch": "lexicon_batch_082",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "Individually authored ordinary online shopping, order changes, takeaway, receipt and expense-record vocabulary; no financial guidance.",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 296,
+  "sha256": "6edb86046f1b9401d60817df51b7c48d74ad801e44c5b0f91516721607be64a2",
+  "authoring_files_sha256": {
+    "lexicon_batch_082.authoring.json": "1f5987a45dcea3f14ef3b54d068ede2623e8e83545084b4e2ca6c301f767a244",
+    "batch082_authored_daily_draft.txt": "af04d0dbdc243fffd648925d59fbf51969fdd14582396900e5709857a4594391",
+    "batch082_pronunciation_review.tsv": "a1d084c2f44de73473b8d2d6a4e0859ca679d4c78432c3beb07268e0607ac6da"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "3d11a25c743dff842ba06e90a0373a26901c76060ed9ba2697922792b539cea7",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "product_information_and_order_options": 5500,
+    "shopping_basket_orders_and_deals": 5500,
+    "delivery_and_takeaway_ordering": 5500,
+    "ordinary_payments_bills_and_receipts": 5500
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "delivery_and_takeaway_ordering": 74,
+    "ordinary_payments_bills_and_receipts": 83,
+    "product_information_and_order_options": 57,
+    "shopping_basket_orders_and_deals": 82
+  },
+  "length_distribution": {
+    "6": 241,
+    "5": 55
+  },
+  "authoring_rejections": [
+    {
+      "word": "商品实拍图",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "商品细节图",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "商品颜色图",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "商品对比图",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "商品展示图",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "商品包装图",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "实物有色差",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "订单地址错了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "订单电话错了",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 273,
+  "manual_pronunciation_overrides": {
+    "取餐码没收到": "qucanmameishoudao"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 1,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

@@ -1,0 +1,181 @@
+{
+  "batch": "lexicon_batch_077",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "Individually authored everyday appointments, availability, counter services, errands, shopping issues and returns vocabulary.",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 258,
+  "sha256": "2cef74cc312cd7f4251859e723b5a82c57680bfa0ee4dd88cbcece09f011a5d9",
+  "authoring_files_sha256": {
+    "lexicon_batch_077.authoring.json": "4e1bf3a64dcfcaf6391f2d5d31c2432b9418741a11e397ee6ea96788b9f4f34a",
+    "batch077_authored_daily_draft.txt": "e858f7ecfa7ebfb4508d73f279d9f1c82292d44489d31f232659925d1a5f5540",
+    "batch077_pronunciation_review.tsv": "7a27c3932fbd948398ad5c9f3fab3fdc89b2c4ddb5081199eb14b631dbb554bd"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "ccef9d2fccf70997211ad4c9f7ff9d71c2872f5eb89e3cc8bceeab30146105a6",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "appointments_and_small_schedule_changes": 5500,
+    "being_early_late_or_available": 5500,
+    "waiting_turns_and_service_counters": 5500,
+    "ordinary_shopping_and_returns": 5500
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "appointments_and_small_schedule_changes": 58,
+    "being_early_late_or_available": 71,
+    "ordinary_shopping_and_returns": 68,
+    "waiting_turns_and_service_counters": 61
+  },
+  "length_distribution": {
+    "6": 70,
+    "5": 174,
+    "4": 14
+  },
+  "authoring_rejections": [
+    {
+      "word": "约在晚上",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "提前说一声",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "提前约个时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "提前打个招呼",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "临时改时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "临时有点事",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "临时来不了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "取号机坏了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "取号机没纸",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帮我问一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帮我看一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帮我查一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帮我核对下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帮我确认下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帮我登记下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帮我填一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帮我打印下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帮我复印下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帮我扫描下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "表格填错了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "材料没带齐",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "包装拆开了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "配件不齐全",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "说明书丢了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "保修卡丢了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发票没收到",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发票还没开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "退货单号发我",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 247,
+  "manual_pronunciation_overrides": {
+    "我得早点走": "wodeizaodianzou",
+    "我得晚点走": "wodeiwandianzou",
+    "我得早点去": "wodeizaodianqu",
+    "我得晚点去": "wodeiwandianqu",
+    "我得晚点回": "wodeiwandianhui",
+    "我得先走了": "wodeixianzoule",
+    "退货申请没过": "tuihuoshenqingmeiguo",
+    "换货还没收到": "huanhuohaimeishoudao"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 8,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

@@ -1,0 +1,266 @@
+{
+  "batch": "lexicon_batch_067",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "Individually authored everyday adaptation, sleep and attention, feelings, getting along and practical help expressions",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 407,
+  "sha256": "a058c177f7d9d47471f698fd03e9419027927263bf61af4b1795da5cc0459e93",
+  "authoring_files_sha256": {
+    "lexicon_batch_067.authoring.json": "5484c0d44ce318d8ae688bda91495412fce7569a8b48ba0e72b856ba7fa0c82b",
+    "batch067_authored_daily_draft.txt": "95911107c6bfe86609d7cb9514fb7f8866c35f08aca2001b51dbb5e0d282aaff",
+    "batch067_pronunciation_review.tsv": "e42706fb80de15ba7a0da4e9a4931ac1a8b2e0cf06007990d92a3777bd2eaa6c"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "cb4af0904f6a3c1589ea5411fb1cf6507b5d424469160ef060fef0b115bcf42f",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "getting_used_to_things": 5500,
+    "sleep_and_attention": 5500,
+    "feelings_in_everyday_situations": 5500,
+    "getting_along_and_communicating": 5500,
+    "small_efforts_and_help": 5500
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "feelings_in_everyday_situations": 81,
+    "getting_along_and_communicating": 87,
+    "getting_used_to_things": 70,
+    "sleep_and_attention": 81,
+    "small_efforts_and_help": 88
+  },
+  "length_distribution": {
+    "5": 229,
+    "6": 14,
+    "4": 117,
+    "3": 47
+  },
+  "authoring_rejections": [
+    {
+      "word": "吃得惯",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吃不惯",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "喝得惯",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "喝不惯",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "穿得惯",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "穿不惯",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "看不惯",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "用着挺顺手",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "用着不顺手",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "穿着挺舒服",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "住着挺舒服",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "这样挺舒服",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "这样挺方便",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "这样挺合适",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "这样挺顺手",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "睡得着",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "睡不着",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "睡得好",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "睡不好",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "睡得香",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "睡得沉",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "睡得晚",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "睡得早",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "睡不踏实",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "睡得安稳",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "睡醒再说",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "认真一点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "仔细一点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "坐得住",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "坐不住",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "看不下去",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "有点不好意思",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "有点舍不得",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "有点不放心",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "有点不习惯",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "摸不着头脑",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "不好意思打扰",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "真不好意思",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "总算放心了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "对不上",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "跟不上",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "合得上",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "合不上",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "配不上",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我们商量下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我们聊聊吧",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "忍不住笑",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "忍不住说",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "忍不住问",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帮我扶一下",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 368,
+  "manual_pronunciation_overrides": {
+    "适应得了": "shiyingdeliao",
+    "习惯得了": "xiguandeliao"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 2,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

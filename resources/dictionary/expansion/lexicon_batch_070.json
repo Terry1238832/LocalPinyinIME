@@ -1,0 +1,575 @@
+{
+  "batch": "lexicon_batch_070",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "Individually authored short natural expressions of handling, cleaning, fitting, movement, distinction and memory abilities.",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 294,
+  "sha256": "9c5721d35924a14931fd99a7a8dadbf436cdfccac18ca7d5ea57c80d12fe0a98",
+  "authoring_files_sha256": {
+    "lexicon_batch_070.authoring.json": "58c9779a299d4cc639ebcd113659de0e534baf295f967605734dbbbc302d1cfc",
+    "batch070_authored_daily_draft.txt": "19c92e36f8d68fe3a006d397c869442445c4e9c85cbb822012112348710599ca",
+    "batch070_pronunciation_review.tsv": "2878fd443bb4e11c35bd6757a702e80a0c0b91fd2835efc69480d8044375ba52"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "67cd3d5c82f6bcf67c55bec85800584afa73f625379b89398a75a7e4287a9416",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "carrying_and_handling_abilities": 5500,
+    "cleaning_and_restoring_abilities": 5500,
+    "fitting_and_containment_abilities": 5500,
+    "reaching_and_controlling_abilities": 5500,
+    "distinguishing_and_remembering_abilities": 5500
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "carrying_and_handling_abilities": 41,
+    "cleaning_and_restoring_abilities": 59,
+    "distinguishing_and_remembering_abilities": 62,
+    "fitting_and_containment_abilities": 73,
+    "reaching_and_controlling_abilities": 59
+  },
+  "length_distribution": {
+    "3": 265,
+    "4": 29
+  },
+  "authoring_rejections": [
+    {
+      "word": "托得住",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "托不住",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "举得起",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "举不起",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "抬得起",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "抬不起",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "抬得动",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "抬不动",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "搬得动",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "搬不动",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "抱得动",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "抱不动",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "背得动",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "背不动",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "扛得动",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "扛不动",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "提得动",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "提不动",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "拉得动",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "拉不动",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "拖得动",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "拖不动",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "推得动",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "推不动",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "挪得动",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "挪不动",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "掰得开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "掰不开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "拧得开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "拧不开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "扭得开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "扭不开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "撬得开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "撬不开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "洗得掉",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "洗不掉",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "擦不掉",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "盖得住",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "盖不住",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "挡得住",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "挡不住",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "堵得住",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "堵不住",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "压得住",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "压不住",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "压得平",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "压不平",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "铺得平",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "铺不平",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "摊得平",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "摊不平",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "熨得平",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "熨不平",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "晾得干",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "晾不干",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "晒得干",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "晒不干",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "烘得干",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "烘不干",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "套得进",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "套不进",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "穿得上",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "穿不上",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "穿得进",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "穿不进",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "脱得下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "脱不下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "扣得上",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "扣不上",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "拧得紧",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "拧不紧",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "扣得紧",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "扣不紧",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "拉得住",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "拉不住",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "夹得住",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "夹不住",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "卡得住",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "卡不住",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "顶得住",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "顶不住",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "撑得住",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "撑不住",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "接得住",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "接不住",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "容不下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "装得进",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "装不进",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "分不开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "跨得过",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "跨不过",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "跳得过",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "跳不过",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "跑得动",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "跑不动",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "走得动",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "走不动",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "站得稳",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "站不稳",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "站得住",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "站不住",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "坐得稳",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "坐不稳",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "下得去",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "下不去",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "上得去",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "上不去",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "回得去",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "回不去",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "回得来",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "回不来",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "绕得开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "绕不开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "追不上",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "认不出",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "分不清",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "算得过来",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "算不过来",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "数得过来",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "数不过来",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "理不清",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "记得住",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "记不住",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "说不出口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "想得起来",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "想不起来",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 294,
+  "manual_pronunciation_overrides": {
+    "剥得掉": "baodediao",
+    "剥不掉": "baobudiao",
+    "系得住": "jidezhu",
+    "系不住": "jibuzhu",
+    "扎得住": "zadezhu",
+    "扎不住": "zabuzhu"
+  },
+  "reading_variant_choices": {
+    "剥得掉": "baodediao",
+    "剥不掉": "baobudiao"
+  },
+  "semantic_pronunciation_corrections": 4,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

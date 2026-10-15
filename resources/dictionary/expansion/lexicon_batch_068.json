@@ -1,0 +1,390 @@
+{
+  "batch": "lexicon_batch_068",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "Individually authored everyday walking, transit, bicycle care, parking, neighbourhood services and parcel vocabulary.",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 261,
+  "sha256": "4c632db79a7ac2cb7bb2b1fa1326b2c528da21b4fd5409960159ed1e41b85fb9",
+  "authoring_files_sha256": {
+    "lexicon_batch_068.authoring.json": "8b78b549450f8b8b208ef0d3d5ed00e19e8be6d51ccb309ed3854910a7d14a16",
+    "batch068_authored_daily_draft.txt": "10b8cd326615c815982a1dfab2db5343838150c712b5a7c09ce6e42b6a57a879",
+    "batch068_pronunciation_review.tsv": "5f6419211a40c0cf162c0f2a19bd922edaa5c873da3d53d436f340b84fccabc1"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "b3a47dc3df5793108466be7154875a5cbe58a60668cae48a5d18eaf699fe8729",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "walking_and_finding_places": 5500,
+    "riding_and_public_transport": 5500,
+    "cycling_and_small_vehicle_upkeep": 5500,
+    "driving_and_parking_daily": 5500,
+    "neighbourhood_and_local_services": 5500,
+    "mailing_and_collecting_parcels": 5500
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "cycling_and_small_vehicle_upkeep": 45,
+    "driving_and_parking_daily": 39,
+    "mailing_and_collecting_parcels": 42,
+    "neighbourhood_and_local_services": 44,
+    "riding_and_public_transport": 44,
+    "walking_and_finding_places": 47
+  },
+  "length_distribution": {
+    "5": 177,
+    "3": 2,
+    "4": 76,
+    "6": 6
+  },
+  "authoring_rejections": [
+    {
+      "word": "河边步道",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "林荫步道",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "小区步道",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "路面不平",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "路面结冰",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "路灯不亮",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "沿路直走",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "顺路过去",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "地址写错了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "到了再联系",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "公交站牌",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "站台屏幕",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "公交专用道",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "接驳站点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "区间列车",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "乘车记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "乘车码失效",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "乘车码刷新",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "到站提醒我",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "自行车铃",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车座高度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车胎太软",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车胎扎破了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "内胎漏气",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "链条太松",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "链条太紧",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "刹车线断了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "刹车片磨损",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车钥匙丢了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "共享车锁",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车库坡道",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "地库入口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "地库出口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "停车优惠券",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "停车位编号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "找不到出口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "往前挪一点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "往后挪一点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "往边上挪点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车门打不开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车窗起雾了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "雨刷刮不净",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "雨刷胶条",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "后视镜折叠",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "后视镜加热",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车内阅读灯",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "安全带卡扣",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "自助洗衣房",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门禁卡补办",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门禁卡失效",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门禁刷不开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "物业值班室",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "小区公告栏",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "小区快递点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "社区服务点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "社区活动室",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "社区图书角",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "小区平面图",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "小区南门",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "小区北门",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "小区东门",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "小区西门",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "包裹称重",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "包裹尺寸",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "快递底单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "包裹拆开了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "快递送上楼",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "快递柜满了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "柜门打不开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "柜门关不上",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "取件码失效",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "取件码发我",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "包裹没找到",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "包裹到站了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "收件人电话",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "寄件人电话",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "寄件人姓名",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "收件人姓名",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "收到了没有",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 229,
+  "manual_pronunciation_overrides": {
+    "候车长椅": "houchechangyi",
+    "换乘通道长": "huanchengtongdaochang",
+    "还车没成功": "huanchemeichenggong",
+    "还车成功了": "huanchechenggongle",
+    "找不到还车点": "zhaobudaohuanchedian",
+    "车座调低点": "chezuotiaodidian",
+    "车座调高点": "chezuotiaogaodian",
+    "裤脚放长点": "kujiaofangchangdian"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 8,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

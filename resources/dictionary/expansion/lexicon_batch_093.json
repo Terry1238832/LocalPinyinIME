@@ -1,0 +1,114 @@
+{
+  "batch": "lexicon_batch_093",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "Individually authored ordinary periods and durations, elapsed time, small delays, availability, busy periods and later follow-up expressions.",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 305,
+  "sha256": "08dafdb1be51ef5789fcec1458cf5094b6b086905421661989281ad14a505411",
+  "authoring_files_sha256": {
+    "lexicon_batch_093.authoring.json": "34f86cb283ef3befe2d296e22a1e707875a752da9276100321b51fd12b7b67ce",
+    "batch093_authored_daily_draft.txt": "8445746af77b4768c84d227fbbcea622cf6cac7871adee56e8b2bb3822a588e5",
+    "batch093_pronunciation_review.tsv": "b35f77fcbe57ec53c564673c991256b470551f924b6f1ad6d61876349a5558c0"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "08ce4a98733f580f6853cceea20a7d1418fcc388d8b84f7c7c07e7bdef4d5f61",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "ordinary_periods_and_approximate_durations": 5500,
+    "passing_time_and_small_delays": 5500,
+    "availability_and_busy_periods": 5500,
+    "following_up_later_and_not_rushing": 5500
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "availability_and_busy_periods": 80,
+    "following_up_later_and_not_rushing": 69,
+    "ordinary_periods_and_approximate_durations": 78,
+    "passing_time_and_small_delays": 78
+  },
+  "length_distribution": {
+    "6": 51,
+    "5": 202,
+    "4": 52
+  },
+  "authoring_rejections": [
+    {
+      "word": "后三五天",
+      "reason": "duplicate_draft"
+    },
+    {
+      "word": "没隔多久",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "没过多久",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "没过几天",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "再等十分钟",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "再等一两天",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "这会儿没空",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "这会儿有空",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "这会儿不方便",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "忙完这两天",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "过会儿再说",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "等周末再说",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 275,
+  "manual_pronunciation_overrides": {
+    "没过一会": "meiguoyihui",
+    "没过几周": "meiguojizhou",
+    "没过几月": "meiguojiyue",
+    "没过几年": "meiguojinian",
+    "回头再查查": "huitouzaichacha"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 5,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

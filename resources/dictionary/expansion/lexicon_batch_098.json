@@ -1,0 +1,170 @@
+{
+  "batch": "lexicon_batch_098",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "常见缝纫工具、布料辅料、服装纸样与衣物修补用语；独立撰写短词，固定 5500 频段，不以整句测评答案补词。",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 277,
+  "sha256": "b5b84ddccd1b18e6576e6b9763894d894e3642fa2712de0f6d604a2b8bc3f1cf",
+  "authoring_files_sha256": {
+    "lexicon_batch_098.authoring.json": "c336a4dc4301299eff2e07bb3bae9111aee468c1b77104381998dc7a147c2a5c",
+    "batch098_authored_daily_draft.txt": "3b26451c0c71ccd8c88d23787567b58f9c6439fd56320c9df04e00e663fb6ec9",
+    "batch098_pronunciation_review.tsv": "6ab26f2a22a833eee2299aaf57d968645fb83463d7ac604b2b1c80901905fe96"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "df5e67a32615f90a18c43997f598f1a7a23a30c50706ea0bc28b9fd22e066362",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "sewing_tools_and_machine_parts": 5500,
+    "cloth_and_sewing_materials": 5500,
+    "garment_pattern_and_finishing": 5500,
+    "clothing_repairs_and_fitting": 5500
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "cloth_and_sewing_materials": 64,
+    "clothing_repairs_and_fitting": 56,
+    "garment_pattern_and_finishing": 97,
+    "sewing_tools_and_machine_parts": 60
+  },
+  "length_distribution": {
+    "3": 98,
+    "2": 76,
+    "5": 6,
+    "4": 97
+  },
+  "authoring_rejections": [
+    {
+      "word": "穿线器",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "切割垫",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "棉麻布",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "羊毛混纺",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "毛呢面料",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "灯芯绒布",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "摇粒绒布",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "珊瑚绒布",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "罗纹布",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "胸垫",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "贴袋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "拉链袋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "省道",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "顺毛裁剪",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "行距",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "夹缝",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "包边",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "裤脚改短",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "裤腰改小",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "裙摆改短",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "针脚均匀",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "裤腰偏紧",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "裤腰偏松",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "裙长合适",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 158,
+  "manual_pronunciation_overrides": {
+    "粗纺呢料": "cufangniliao",
+    "精纺呢料": "jingfangniliao",
+    "织唛": "zhimai",
+    "洗唛": "ximai",
+    "尺码唛": "chimamai",
+    "裤脚放长": "kujiaofangchang",
+    "衣长偏短": "yichangpianduan",
+    "裤长偏长": "kuchangpianchang"
+  },
+  "reading_variant_choices": {
+    "织唛": "zhimai",
+    "洗唛": "ximai",
+    "尺码唛": "chimamai"
+  },
+  "semantic_pronunciation_corrections": 5,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

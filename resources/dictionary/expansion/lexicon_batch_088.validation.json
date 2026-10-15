@@ -1,0 +1,5773 @@
+{
+  "batch": "lexicon_batch_088",
+  "evaluation": "native_engine_candidate_coverage",
+  "evaluated_at_utc": "2026-10-15T05:08:00.266732+00:00",
+  "engine_sha256": "6ff136157953783aceead540e32080c9b9b8dbb409ad5c6f659b2532c64d02cc",
+  "resource_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "efdee973d19f691d9ea5978bd2b091a441ac0d4e0c683d6e166e5253aa25cf7e",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+    "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+    "continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e"
+  },
+  "frozen_batch_sha256": "647cf2766ceb9164bfb11f142b44acfe43090426dd890288f914a18a25b82a84",
+  "personal_data_isolated": true,
+  "expected_answers_learned": false,
+  "summary": {
+    "cases": 318,
+    "top1_correct": 257,
+    "top9_present": 318,
+    "top1_percent": 80.82,
+    "top9_percent": 100.0,
+    "character_error_rate": 0.0589,
+    "p50_lookup_ms": 3.484,
+    "p95_lookup_ms": 6.03,
+    "max_lookup_ms": 10.839,
+    "missing_from_top9_count": 0,
+    "missing_from_top9": [],
+    "max_returned_candidate_count": 9
+  },
+  "rows": [
+    {
+      "pinyin": "baidetaikaoli",
+      "expected": "摆得太靠里",
+      "source": "5500",
+      "lookup_us": 2817,
+      "candidates": [
+        "摆得太靠里",
+        "白得太靠里",
+        "白的台靠里",
+        "白得太考里",
+        "白的泰靠里",
+        "白的抬靠里",
+        "摆得太考里",
+        "白的态靠里",
+        "败德"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "baidetaikaowai",
+      "expected": "摆得太靠外",
+      "source": "5500",
+      "lookup_us": 1560,
+      "candidates": [
+        "摆得太靠外",
+        "白得太靠外",
+        "白的台靠外",
+        "白得太考外",
+        "摆得太考外",
+        "白得太烤外",
+        "白的台考外",
+        "摆得太烤外",
+        "败德"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "baidetaimile",
+      "expected": "摆得太密了",
+      "source": "5500",
+      "lookup_us": 1853,
+      "candidates": [
+        "摆得太密了",
+        "白得太密了",
+        "白的台密了",
+        "白得太密乐",
+        "摆得太密乐",
+        "白得太密勒",
+        "白得太米了",
+        "摆得太密勒",
+        "败德"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "baidetaiwai",
+      "expected": "摆得太歪",
+      "source": "5500",
+      "lookup_us": 955,
+      "candidates": [
+        "摆得太歪",
+        "白得太外",
+        "摆得太外",
+        "白的台外",
+        "白的太外",
+        "白得太歪",
+        "白的泰外",
+        "白的抬外",
+        "败德"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangdetaijinle",
+      "expected": "绑得太紧了",
+      "source": "5500",
+      "lookup_us": 3137,
+      "candidates": [
+        "帮得太近了",
+        "帮得太紧了",
+        "绑得太紧了",
+        "棒得太近了",
+        "帮得太尽了",
+        "帮得太进了",
+        "帮得太紧乐",
+        "棒得太尽了",
+        "邦德"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "conghoushuqi",
+      "expected": "从后数起",
+      "source": "5500",
+      "lookup_us": 1947,
+      "candidates": [
+        "从后数起",
+        "从后竖起",
+        "从后暑期",
+        "从后输起",
+        "从后数器",
+        "从厚竖起",
+        "从后数期",
+        "从后数气",
+        "从"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "congqianshuqi",
+      "expected": "从前数起",
+      "source": "5500",
+      "lookup_us": 3062,
+      "candidates": [
+        "从前数起",
+        "从前竖起",
+        "从前暑期",
+        "从前输起",
+        "从前数器",
+        "从前数期",
+        "从前数气",
+        "从前数齐",
+        "从前"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "congshangshuqi",
+      "expected": "从上数起",
+      "source": "5500",
+      "lookup_us": 2308,
+      "candidates": [
+        "从上数起",
+        "从上竖起",
+        "从上述起",
+        "从上暑期",
+        "从上述期",
+        "从上述气",
+        "从上述齐",
+        "从上述器",
+        "丛珊"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "congxiashuqi",
+      "expected": "从下数起",
+      "source": "5500",
+      "lookup_us": 2477,
+      "candidates": [
+        "从下数起",
+        "从下竖起",
+        "从下暑期",
+        "从夏竖起",
+        "从下属起",
+        "从下属期",
+        "从夏暑期",
+        "从下属气",
+        "从"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "congyoushuqi",
+      "expected": "从右数起",
+      "source": "5500",
+      "lookup_us": 2052,
+      "candidates": [
+        "从右数起",
+        "从有竖起",
+        "从右竖起",
+        "从有暑期",
+        "从又竖起",
+        "从有数起",
+        "从右暑期",
+        "从由竖起",
+        "葱油"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "congzuoshuqi",
+      "expected": "从左数起",
+      "source": "5500",
+      "lookup_us": 2118,
+      "candidates": [
+        "从左数起",
+        "从左竖起",
+        "从左暑期",
+        "从左输起",
+        "从左数器",
+        "从做竖起",
+        "从做输起",
+        "从做暑期",
+        "从左"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "daikoutaijinle",
+      "expected": "袋口太紧了",
+      "source": "5500",
+      "lookup_us": 3289,
+      "candidates": [
+        "袋口太近了",
+        "袋口太紧了",
+        "袋口太尽了",
+        "袋口台尽了",
+        "袋口太进了",
+        "袋口抬尽了",
+        "袋口台进了",
+        "袋口抬进了",
+        "袋口"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "daikoutaisongle",
+      "expected": "袋口太松了",
+      "source": "5500",
+      "lookup_us": 1797,
+      "candidates": [
+        "袋口太松了",
+        "袋口台松了",
+        "袋口抬松了",
+        "袋口太送了",
+        "袋口台送了",
+        "袋口抬送了",
+        "袋口太宋了",
+        "袋口泰送了",
+        "袋口"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "duidetaigaole",
+      "expected": "堆得太高了",
+      "source": "5500",
+      "lookup_us": 2742,
+      "candidates": [
+        "对得太高了",
+        "对的太高了",
+        "对的抬高了",
+        "对的台高了",
+        "对得抬高了",
+        "对得太高乐",
+        "对的太高乐",
+        "堆得太高了",
+        "对"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "fangdetaidi",
+      "expected": "放得太低",
+      "source": "5500",
+      "lookup_us": 2043,
+      "candidates": [
+        "放得太低",
+        "放得太地",
+        "房得太低",
+        "房的太低",
+        "放得太的",
+        "放得太底",
+        "放得太第",
+        "放得太滴",
+        "放"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangdetaigao",
+      "expected": "放得太高",
+      "source": "5500",
+      "lookup_us": 1637,
+      "candidates": [
+        "放得太高",
+        "房得太高",
+        "房的太高",
+        "放得太告",
+        "方的太高",
+        "放得太篙",
+        "放得太搞",
+        "放得太稿",
+        "放"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangdetaijin",
+      "expected": "放得太近",
+      "source": "5500",
+      "lookup_us": 2696,
+      "candidates": [
+        "放得太近",
+        "放得太紧",
+        "房得太紧",
+        "放得太进",
+        "放得太劲",
+        "放得太谨",
+        "放得太巾",
+        "放得太锦",
+        "放"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangdetaikaohou",
+      "expected": "放得太靠后",
+      "source": "5500",
+      "lookup_us": 1376,
+      "candidates": [
+        "放得太靠后",
+        "放得太考后",
+        "放得太烤后",
+        "放得太拷后",
+        "放得太靠候",
+        "放得太考候",
+        "放得太尻后",
+        "放得太铐后",
+        "放"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangdetaikaoli",
+      "expected": "放得太靠里",
+      "source": "5500",
+      "lookup_us": 1509,
+      "candidates": [
+        "放得太靠里",
+        "放得太考里",
+        "放得太靠力",
+        "放得太靠理",
+        "放得太靠利",
+        "放得太考力",
+        "放得太烤里",
+        "放得太考理",
+        "放"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangdetaikaoqian",
+      "expected": "放得太靠前",
+      "source": "5500",
+      "lookup_us": 3204,
+      "candidates": [
+        "放得太靠前",
+        "放得太考前",
+        "放得太靠钱",
+        "放得太考钱",
+        "放得太烤钱",
+        "放得太烤前",
+        "放得太拷钱",
+        "放得太拷前",
+        "放"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangdetaikaowai",
+      "expected": "放得太靠外",
+      "source": "5500",
+      "lookup_us": 1310,
+      "candidates": [
+        "放得太靠外",
+        "放得太考外",
+        "放得太烤外",
+        "放得太拷外",
+        "放得太尻外",
+        "放得太铐外",
+        "放得太栲外",
+        "放得太靠歪",
+        "放"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangdetaikaoyou",
+      "expected": "放得太靠右",
+      "source": "5500",
+      "lookup_us": 1572,
+      "candidates": [
+        "放得太靠右",
+        "放得太靠有",
+        "放得太考有",
+        "放得太烤有",
+        "放得太靠由",
+        "放得太拷有",
+        "放得太考由",
+        "放得太靠友",
+        "放"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangdetaikaozuo",
+      "expected": "放得太靠左",
+      "source": "5500",
+      "lookup_us": 1644,
+      "candidates": [
+        "放得太靠左",
+        "放得太靠做",
+        "放得太考做",
+        "放得太靠作",
+        "放得太考作",
+        "放得太烤做",
+        "放得太靠座",
+        "放得太拷做",
+        "放"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangdetaiwai",
+      "expected": "放得太歪",
+      "source": "5500",
+      "lookup_us": 967,
+      "candidates": [
+        "放得太歪",
+        "放得太外",
+        "放得太崴",
+        "放得太喎",
+        "房得太外",
+        "房的台外",
+        "放得台外",
+        "房的太外",
+        "放"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangdetaiyuan",
+      "expected": "放得太远",
+      "source": "5500",
+      "lookup_us": 3273,
+      "candidates": [
+        "放得太远",
+        "放得太原",
+        "放得太元",
+        "放得太园",
+        "放得太源",
+        "放得太圆",
+        "房得太远",
+        "放得太员",
+        "放"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gaizitaijinle",
+      "expected": "盖子太紧了",
+      "source": "5500",
+      "lookup_us": 3553,
+      "candidates": [
+        "盖子太近了",
+        "改子太近了",
+        "盖子太紧了",
+        "盖子太尽了",
+        "改子太紧了",
+        "盖子太进了",
+        "改姿态尽了",
+        "改子太尽了",
+        "盖子"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "gaizitaisongle",
+      "expected": "盖子太松了",
+      "source": "5500",
+      "lookup_us": 2019,
+      "candidates": [
+        "盖子太松了",
+        "改子太松了",
+        "改姿态松了",
+        "盖子太送了",
+        "改姿态送了",
+        "改子太送了",
+        "盖子太宋了",
+        "该姿态送了",
+        "盖子"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guadetaidile",
+      "expected": "挂得太低了",
+      "source": "5500",
+      "lookup_us": 2367,
+      "candidates": [
+        "挂得太低了",
+        "刮得太低了",
+        "挂得太的了",
+        "刮得太的了",
+        "挂得太低乐",
+        "挂得太地了",
+        "刮得太低乐",
+        "挂得太底了",
+        "刮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guadetaigaole",
+      "expected": "挂得太高了",
+      "source": "5500",
+      "lookup_us": 2193,
+      "candidates": [
+        "挂得太高了",
+        "刮得太高了",
+        "挂的抬高了",
+        "挂的台高了",
+        "寡的抬高了",
+        "挂得太高乐",
+        "刮得太高乐",
+        "挂得太高勒",
+        "刮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guadetaikaobian",
+      "expected": "挂得太靠边",
+      "source": "5500",
+      "lookup_us": 3203,
+      "candidates": [
+        "挂得太靠边",
+        "刮得太靠边",
+        "挂得太拷边",
+        "刮得太拷边",
+        "挂的台靠边",
+        "挂得太靠便",
+        "挂得太考便",
+        "挂得太考边",
+        "刮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guadetaimile",
+      "expected": "挂得太密了",
+      "source": "5500",
+      "lookup_us": 2013,
+      "candidates": [
+        "挂得太密了",
+        "刮得太密了",
+        "挂得太密乐",
+        "刮得太密乐",
+        "挂得太密勒",
+        "挂得太米了",
+        "挂得太密叻",
+        "刮得太密勒",
+        "刮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "houpaidierge",
+      "expected": "后排第二个",
+      "source": "5500",
+      "lookup_us": 3556,
+      "candidates": [
+        "后排第二个",
+        "后派第二个",
+        "后排第二格",
+        "后排第二歌",
+        "后排第二哥",
+        "后排第二阁",
+        "后排第二葛",
+        "后派第二格",
+        "后排"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "houpaidisange",
+      "expected": "后排第三个",
+      "source": "5500",
+      "lookup_us": 3043,
+      "candidates": [
+        "后排第三个",
+        "后排地三个",
+        "后排的三个",
+        "后派第三个",
+        "后派地三个",
+        "候拍的三个",
+        "后排低三个",
+        "后排滴三个",
+        "后排"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiadetaijinle",
+      "expected": "夹得太紧了",
+      "source": "5500",
+      "lookup_us": 3195,
+      "candidates": [
+        "家的太近了",
+        "假的太近了",
+        "家得太紧了",
+        "夹得太紧了",
+        "家的台尽了",
+        "家的太尽了",
+        "家的台进了",
+        "家的太进了",
+        "假的"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "jidetaijinle",
+      "expected": "系得太紧了",
+      "source": "5500",
+      "lookup_us": 3205,
+      "candidates": [
+        "记得太近了",
+        "记得太紧了",
+        "记得太尽了",
+        "记得太进了",
+        "记得太紧乐",
+        "记得太紧勒",
+        "记得太紧叻",
+        "系得太紧了",
+        "级的"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "kaodetaijin",
+      "expected": "靠得太近",
+      "source": "5500",
+      "lookup_us": 2566,
+      "candidates": [
+        "靠得太近",
+        "烤得太紧",
+        "考得太紧",
+        "靠的太紧",
+        "烤得太近",
+        "烤的太紧",
+        "烤得太进",
+        "考得太进",
+        "考得"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "koudetaijinle",
+      "expected": "扣得太紧了",
+      "source": "5500",
+      "lookup_us": 3073,
+      "candidates": [
+        "口得太近了",
+        "口的太近了",
+        "口得太紧了",
+        "扣得太紧了",
+        "口的台尽了",
+        "口的太尽了",
+        "口的台进了",
+        "口得太尽了",
+        "口"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "ladetaijinle",
+      "expected": "拉得太紧了",
+      "source": "5500",
+      "lookup_us": 2932,
+      "candidates": [
+        "拉得太近了",
+        "拉得太紧了",
+        "垃得太近了",
+        "垃得太紧了",
+        "拉得太尽了",
+        "拉得太进了",
+        "拉得太紧乐",
+        "垃得太尽了",
+        "拉得"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "lidetaiyuan",
+      "expected": "离得太远",
+      "source": "5500",
+      "lookup_us": 3541,
+      "candidates": [
+        "离得太远",
+        "里的太远",
+        "里得太远",
+        "离得太原",
+        "里的太原",
+        "里的台远",
+        "里的台园",
+        "里的台元",
+        "离得"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "limiandierge",
+      "expected": "里面第二个",
+      "source": "5500",
+      "lookup_us": 4760,
+      "candidates": [
+        "里面第二个",
+        "里面第二格",
+        "里面第二歌",
+        "里面第二哥",
+        "里面第二阁",
+        "里面的二个",
+        "里面第二葛",
+        "里面第二各",
+        "立面"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "limiannayige",
+      "expected": "里面那一格",
+      "source": "5500",
+      "lookup_us": 3628,
+      "candidates": [
+        "里面那一个",
+        "里面拿一个",
+        "里面哪一个",
+        "里面纳一个",
+        "里面拿一格",
+        "里面娜一个",
+        "里面呐一个",
+        "里面那一格",
+        "立面"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "luodetaigaole",
+      "expected": "摞得太高了",
+      "source": "5500",
+      "lookup_us": 2272,
+      "candidates": [
+        "落得太高了",
+        "罗得太高了",
+        "落得抬高了",
+        "落的抬高了",
+        "落得太高乐",
+        "落的台高了",
+        "落得台高了",
+        "摞得太高了",
+        "落得"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "luositaijinle",
+      "expected": "螺丝太紧了",
+      "source": "5500",
+      "lookup_us": 3799,
+      "candidates": [
+        "螺丝太近了",
+        "罗斯太近了",
+        "螺丝太紧了",
+        "罗斯泰尽了",
+        "螺丝太尽了",
+        "罗斯太紧了",
+        "罗斯泰进了",
+        "螺丝太进了",
+        "螺丝"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "luositaisongle",
+      "expected": "螺丝太松了",
+      "source": "5500",
+      "lookup_us": 2296,
+      "candidates": [
+        "螺丝太松了",
+        "罗斯太松了",
+        "罗斯泰松了",
+        "罗斯台松了",
+        "螺丝台松了",
+        "罗斯泰送了",
+        "螺丝太送了",
+        "罗斯太送了",
+        "螺丝"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "madetaigaole",
+      "expected": "码得太高了",
+      "source": "5500",
+      "lookup_us": 2053,
+      "candidates": [
+        "骂得太高了",
+        "马得太高了",
+        "妈的抬高了",
+        "骂的抬高了",
+        "妈的台高了",
+        "骂得太高乐",
+        "骂的台高了",
+        "码得太高了",
+        "骂得"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "ningdetaijinle",
+      "expected": "拧得太紧了",
+      "source": "5500",
+      "lookup_us": 3179,
+      "candidates": [
+        "拧得太紧了",
+        "拧得太近了",
+        "柠得太近了",
+        "柠得太紧了",
+        "拧得太尽了",
+        "拧得太进了",
+        "柠得太尽了",
+        "拧得太紧乐",
+        "宁德"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "paidetaimile",
+      "expected": "排得太密了",
+      "source": "5500",
+      "lookup_us": 2214,
+      "candidates": [
+        "排得太密了",
+        "拍得太密了",
+        "排得太密乐",
+        "排得太密勒",
+        "排得太米了",
+        "拍得太密乐",
+        "排得太密叻",
+        "排得太迷了",
+        "拍的"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "pangbiannayige",
+      "expected": "旁边那一格",
+      "source": "5500",
+      "lookup_us": 4316,
+      "candidates": [
+        "旁边那一个",
+        "旁边那一格",
+        "旁边哪一个",
+        "旁边拿一个",
+        "旁边纳一个",
+        "旁边那一阁",
+        "旁边那一歌",
+        "旁边那一葛",
+        "旁边"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "qianpaidierge",
+      "expected": "前排第二个",
+      "source": "5500",
+      "lookup_us": 3867,
+      "candidates": [
+        "前排第二个",
+        "前拍第二个",
+        "前排第二格",
+        "前排第二歌",
+        "前排第二哥",
+        "前排第二阁",
+        "前拍第二格",
+        "前排第二葛",
+        "前排"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qianpaidisange",
+      "expected": "前排第三个",
+      "source": "5500",
+      "lookup_us": 3419,
+      "candidates": [
+        "前排第三个",
+        "前排地三个",
+        "前排的三个",
+        "前拍第三个",
+        "前拍的三个",
+        "前排低三个",
+        "前排滴三个",
+        "前拍地三个",
+        "前排"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "saidetaimanle",
+      "expected": "塞得太满了",
+      "source": "5500",
+      "lookup_us": 2635,
+      "candidates": [
+        "塞得太满了",
+        "赛得太满了",
+        "塞得太慢了",
+        "赛得太慢了",
+        "塞得太满乐",
+        "赛得太满乐",
+        "塞得太满勒",
+        "塞得太满叻",
+        "赛"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangmiandierceng",
+      "expected": "上面第二层",
+      "source": "5500",
+      "lookup_us": 4498,
+      "candidates": [
+        "上面第二层",
+        "上面第二曾",
+        "上面第二蹭",
+        "上面地儿层",
+        "上棉第二层",
+        "上面第二噌",
+        "上面的二层",
+        "上面第二層",
+        "上面"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangmiandisanceng",
+      "expected": "上面第三层",
+      "source": "5500",
+      "lookup_us": 3028,
+      "candidates": [
+        "上面的三层",
+        "上面第三层",
+        "上面地三层",
+        "上面的散层",
+        "上面的三曾",
+        "上面的伞层",
+        "上面第三曾",
+        "上面的叁层",
+        "上面"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "shangmiannayige",
+      "expected": "上面那一格",
+      "source": "5500",
+      "lookup_us": 3702,
+      "candidates": [
+        "上面那一个",
+        "上面拿一个",
+        "上面哪一个",
+        "上棉那一个",
+        "上面纳一个",
+        "上面娜一个",
+        "上面呐一个",
+        "上面那一格",
+        "上面"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "tiedetaikaobian",
+      "expected": "贴得太靠边",
+      "source": "5500",
+      "lookup_us": 4065,
+      "candidates": [
+        "贴得太靠边",
+        "贴得太拷边",
+        "铁得太靠边",
+        "铁的台靠边",
+        "贴得太靠便",
+        "贴得太考便",
+        "贴得太考边",
+        "贴得太靠变",
+        "帖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimiandierge",
+      "expected": "外面第二个",
+      "source": "5500",
+      "lookup_us": 4391,
+      "candidates": [
+        "外面第二个",
+        "外面第二格",
+        "外面第二歌",
+        "外面第二哥",
+        "外面第二阁",
+        "外面第二葛",
+        "外面第二各",
+        "外面的二个",
+        "外面"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimiannayige",
+      "expected": "外面那一格",
+      "source": "5500",
+      "lookup_us": 3273,
+      "candidates": [
+        "外面那一个",
+        "外面拿一个",
+        "外面哪一个",
+        "外面纳一个",
+        "外面娜一个",
+        "外面呐一个",
+        "外面镎一个",
+        "外面那一格",
+        "外面"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "xiamiandierceng",
+      "expected": "下面第二层",
+      "source": "5500",
+      "lookup_us": 5053,
+      "candidates": [
+        "下面第二层",
+        "下面第二曾",
+        "下面第二蹭",
+        "下面地儿层",
+        "下面第二噌",
+        "下面第二層",
+        "下面的二层",
+        "下面地儿曾",
+        "下面"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiamiandisanceng",
+      "expected": "下面第三层",
+      "source": "5500",
+      "lookup_us": 3253,
+      "candidates": [
+        "下面的三层",
+        "下面第三层",
+        "下面地三层",
+        "下面的散层",
+        "下面第三曾",
+        "下面的三曾",
+        "下面低三层",
+        "下面滴三层",
+        "下面"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "xiamiannayige",
+      "expected": "下面那一格",
+      "source": "5500",
+      "lookup_us": 3709,
+      "candidates": [
+        "下面那一个",
+        "下面拿一个",
+        "下面哪一个",
+        "下面纳一个",
+        "下免那一个",
+        "下面娜一个",
+        "下面呐一个",
+        "下面那一格",
+        "下面"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "yadetaijinle",
+      "expected": "压得太紧了",
+      "source": "5500",
+      "lookup_us": 3407,
+      "candidates": [
+        "压得太近了",
+        "压得太紧了",
+        "压得太尽了",
+        "压得太进了",
+        "压得太紧乐",
+        "鸭得太近了",
+        "鸭得太紧了",
+        "压得太紧勒",
+        "压得"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "youbiandierge",
+      "expected": "右边第二个",
+      "source": "5500",
+      "lookup_us": 4337,
+      "candidates": [
+        "有变第二个",
+        "右边第二个",
+        "有变第二格",
+        "有变第二歌",
+        "右边第二格",
+        "有变第二哥",
+        "有变第二阁",
+        "有变第二葛",
+        "右边"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "youcenayige",
+      "expected": "右侧那一格",
+      "source": "5500",
+      "lookup_us": 1988,
+      "candidates": [
+        "右侧那一个",
+        "有测那一个",
+        "右侧哪一个",
+        "右侧那一格",
+        "右侧拿一个",
+        "有测哪一个",
+        "有测拿一个",
+        "右侧纳一个",
+        "右侧"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "youqidierge",
+      "expected": "右起第二个",
+      "source": "5500",
+      "lookup_us": 3483,
+      "candidates": [
+        "尤其第二个",
+        "有起第二个",
+        "尤其第二格",
+        "尤其第二歌",
+        "尤其第二哥",
+        "尤其第二阁",
+        "尤其第二葛",
+        "右起第二个",
+        "尤其"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "youqidisange",
+      "expected": "右起第三个",
+      "source": "5500",
+      "lookup_us": 3288,
+      "candidates": [
+        "尤其第三个",
+        "尤其地三个",
+        "由器的三个",
+        "尤其的三个",
+        "尤其低三个",
+        "尤其滴三个",
+        "尤其底三个",
+        "右起第三个",
+        "尤其"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zadetaijinle",
+      "expected": "扎得太紧了",
+      "source": "5500",
+      "lookup_us": 2905,
+      "candidates": [
+        "扎得太紧了",
+        "咋得太近了",
+        "砸得太近了",
+        "咋得太紧了",
+        "咋得太尽了",
+        "砸得太尽了",
+        "杂的台尽了",
+        "咋得太进了",
+        "咋"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhandetaikaohou",
+      "expected": "站得太靠后",
+      "source": "5500",
+      "lookup_us": 1529,
+      "candidates": [
+        "占得太靠后",
+        "站得太靠后",
+        "占得太考后",
+        "站得太考后",
+        "占得太烤后",
+        "站得太烤后",
+        "占得太拷后",
+        "站得太拷后",
+        "站得"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zhandetaikaoqian",
+      "expected": "站得太靠前",
+      "source": "5500",
+      "lookup_us": 2946,
+      "candidates": [
+        "占得太考前",
+        "占得太靠前",
+        "站得太考前",
+        "站得太靠前",
+        "占得太靠钱",
+        "站得太靠钱",
+        "占得太考钱",
+        "站得太考钱",
+        "站得"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "zhongjiannayige",
+      "expected": "中间那一格",
+      "source": "5500",
+      "lookup_us": 4612,
+      "candidates": [
+        "中间那一个",
+        "中间哪一个",
+        "中见那一个",
+        "中间拿一个",
+        "中间纳一个",
+        "中间娜一个",
+        "中间呐一个",
+        "中间那一格",
+        "中间"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zhuaidetaijinle",
+      "expected": "拽得太紧了",
+      "source": "5500",
+      "lookup_us": 4148,
+      "candidates": [
+        "拽得太紧了",
+        "拽得太近了",
+        "跩得太近了",
+        "拽得太尽了",
+        "跩得太紧了",
+        "拽得太进了",
+        "拽得太紧乐",
+        "跩得太尽了",
+        "拽"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuangdetaimanle",
+      "expected": "装得太满了",
+      "source": "5500",
+      "lookup_us": 3462,
+      "candidates": [
+        "装得太满了",
+        "撞得太满了",
+        "装得太慢了",
+        "撞得太慢了",
+        "装的台满了",
+        "装得太满乐",
+        "装得太满勒",
+        "撞得太满乐",
+        "装得"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zuobiandierge",
+      "expected": "左边第二个",
+      "source": "5500",
+      "lookup_us": 5040,
+      "candidates": [
+        "左边第二个",
+        "左边第二格",
+        "做便第二个",
+        "左边第二歌",
+        "左边第二哥",
+        "左边第二阁",
+        "左边第二葛",
+        "左边的耳个",
+        "左边"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zuocenayige",
+      "expected": "左侧那一格",
+      "source": "5500",
+      "lookup_us": 2240,
+      "candidates": [
+        "左侧那一个",
+        "坐测那一个",
+        "左侧哪一个",
+        "左侧那一格",
+        "左侧拿一个",
+        "左侧纳一个",
+        "坐测哪一个",
+        "左侧娜一个",
+        "左侧"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "zuodetaikaohou",
+      "expected": "坐得太靠后",
+      "source": "5500",
+      "lookup_us": 3276,
+      "candidates": [
+        "做得太靠后",
+        "做得太考后",
+        "做得太烤后",
+        "坐得太靠后",
+        "做得太拷后",
+        "做得太靠候",
+        "做得太考候",
+        "做得太尻后",
+        "做的"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "zuodetaikaoqian",
+      "expected": "坐得太靠前",
+      "source": "5500",
+      "lookup_us": 7525,
+      "candidates": [
+        "做得太考前",
+        "做得太靠前",
+        "做得太靠钱",
+        "做得太考钱",
+        "坐得太靠前",
+        "做得太烤钱",
+        "做得太烤前",
+        "做得太拷钱",
+        "做的"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "zuoqidierge",
+      "expected": "左起第二个",
+      "source": "5500",
+      "lookup_us": 6783,
+      "candidates": [
+        "做起第二个",
+        "坐起第二个",
+        "做起第二格",
+        "做起第二歌",
+        "做起第二哥",
+        "做起第二阁",
+        "做起第二葛",
+        "左起第二个",
+        "做起"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zuoqidisange",
+      "expected": "左起第三个",
+      "source": "5500",
+      "lookup_us": 5920,
+      "candidates": [
+        "做起第三个",
+        "做起地三个",
+        "做起的三个",
+        "坐骑第三个",
+        "做起低三个",
+        "做起滴三个",
+        "做起底三个",
+        "左起第三个",
+        "做起"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "bandaonabianqu",
+      "expected": "搬到那边去",
+      "source": "5500",
+      "lookup_us": 8524,
+      "candidates": [
+        "搬到那边去",
+        "办到那边去",
+        "搬到哪边去",
+        "办到哪边去",
+        "搬到那边取",
+        "搬到那边区",
+        "搬到那边趣",
+        "搬到那边屈",
+        "搬到"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bandaozhebianlai",
+      "expected": "搬到这边来",
+      "source": "5500",
+      "lookup_us": 6796,
+      "candidates": [
+        "搬到这边来",
+        "办到这边来",
+        "搬到这边赖",
+        "搬到这边莱",
+        "搬到这边來",
+        "搬到这便来",
+        "搬到这边濑",
+        "搬到这边癞",
+        "搬到"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chuanguonagemen",
+      "expected": "穿过那个门",
+      "source": "5500",
+      "lookup_us": 7924,
+      "candidates": [
+        "穿过那个门",
+        "穿过那个们",
+        "穿过那个闷",
+        "穿过那个钔",
+        "穿过哪个门",
+        "穿过那哥们",
+        "穿过那个焖",
+        "穿过那个們",
+        "穿过"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chuanguonatiaojie",
+      "expected": "穿过那条街",
+      "source": "5500",
+      "lookup_us": 10839,
+      "candidates": [
+        "穿过那条街",
+        "穿过那条节",
+        "穿过那条解",
+        "穿过那条接",
+        "穿过那条结",
+        "穿过那条饥饿",
+        "穿过那条界",
+        "穿过那条戒",
+        "穿过"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chuanguonatiaoxiangzi",
+      "expected": "穿过那条巷子",
+      "source": "5500",
+      "lookup_us": 9315,
+      "candidates": [
+        "穿过那条箱子",
+        "穿过那条巷子",
+        "穿过那条祥子",
+        "穿过那条香子",
+        "穿过那条想子",
+        "穿过那条想字",
+        "穿过那条响子",
+        "穿过那条向子",
+        "穿过"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "chuanguozhegemen",
+      "expected": "穿过这个门",
+      "source": "5500",
+      "lookup_us": 4329,
+      "candidates": [
+        "穿过这个门",
+        "穿过这个们",
+        "穿过这个闷",
+        "穿过这个钔",
+        "穿过这个焖",
+        "穿过这个們",
+        "穿过这个門",
+        "穿过这个扪",
+        "穿过"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chuanguozhetiaojie",
+      "expected": "穿过这条街",
+      "source": "5500",
+      "lookup_us": 7108,
+      "candidates": [
+        "穿过这条街",
+        "穿过这条节",
+        "穿过这条解",
+        "穿过这条接",
+        "穿过这条结",
+        "穿过这条界",
+        "穿过这条戒",
+        "穿过这条洁",
+        "穿过"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chuanguozhetiaoxiangzi",
+      "expected": "穿过这条巷子",
+      "source": "5500",
+      "lookup_us": 9201,
+      "candidates": [
+        "穿过这条箱子",
+        "穿过这条巷子",
+        "穿过这条祥子",
+        "穿过这条香子",
+        "穿过这条想子",
+        "穿过这条想字",
+        "穿过这条响子",
+        "穿过这条向子",
+        "穿过"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "conglimianzhaoqi",
+      "expected": "从里面找起",
+      "source": "5500",
+      "lookup_us": 4228,
+      "candidates": [
+        "从里面找起",
+        "从里面朝气",
+        "从里面沼气",
+        "从里面照起",
+        "从里面朝起",
+        "从里面罩起",
+        "从里面朝期",
+        "从里面着奇",
+        "从"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "congshangmianzhaoqi",
+      "expected": "从上面找起",
+      "source": "5500",
+      "lookup_us": 4316,
+      "candidates": [
+        "从上面朝气",
+        "从上面找起",
+        "从上面沼气",
+        "从上面照起",
+        "从上面朝起",
+        "从上面罩起",
+        "从上面朝期",
+        "从上面着奇",
+        "丛珊"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "congwaimianzhaoqi",
+      "expected": "从外面找起",
+      "source": "5500",
+      "lookup_us": 3389,
+      "candidates": [
+        "从外面朝气",
+        "从外面找起",
+        "从外面沼气",
+        "聪外面朝气",
+        "聪外面找起",
+        "从外面照起",
+        "从外面朝起",
+        "聪外面沼气",
+        "从"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "congxiamianzhaoqi",
+      "expected": "从下面找起",
+      "source": "5500",
+      "lookup_us": 4125,
+      "candidates": [
+        "从下面朝气",
+        "从下面找起",
+        "从下面沼气",
+        "从下面照起",
+        "聪下面朝气",
+        "聪下面找起",
+        "从下面朝起",
+        "从下面罩起",
+        "从"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "congyoubianzhaoqi",
+      "expected": "从右边找起",
+      "source": "5500",
+      "lookup_us": 4388,
+      "candidates": [
+        "从右边找起",
+        "从右边沼气",
+        "从有变找起",
+        "从右边朝气",
+        "从右边照起",
+        "从有变沼气",
+        "从有变朝气",
+        "从邮编找起",
+        "葱油"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "congzuobianzhaoqi",
+      "expected": "从左边找起",
+      "source": "5500",
+      "lookup_us": 4222,
+      "candidates": [
+        "从左边找起",
+        "从左边沼气",
+        "从左边朝气",
+        "从左边照起",
+        "从左边照期",
+        "从左边照气",
+        "从左边照齐",
+        "从左边照器",
+        "从左"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "daidaonabianqu",
+      "expected": "带到那边去",
+      "source": "5500",
+      "lookup_us": 3922,
+      "candidates": [
+        "待到那边去",
+        "待到哪边去",
+        "带到那边去",
+        "待到那边取",
+        "待到那边区",
+        "待到那边趣",
+        "待到那边屈",
+        "待到那边曲",
+        "带到"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "daidaozhebianlai",
+      "expected": "带到这边来",
+      "source": "5500",
+      "lookup_us": 4216,
+      "candidates": [
+        "待到这边来",
+        "带到这边来",
+        "待到这边赖",
+        "待到这边莱",
+        "待到这边來",
+        "待到这便来",
+        "待到这边濑",
+        "待到这边癞",
+        "带到"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "fangdaonabianqu",
+      "expected": "放到那边去",
+      "source": "5500",
+      "lookup_us": 4242,
+      "candidates": [
+        "放到那边去",
+        "放到哪边去",
+        "放到那边取",
+        "放到那边区",
+        "放到那边趣",
+        "放到那边屈",
+        "放到那边曲",
+        "放到那边佢",
+        "放到"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangdaozhebianlai",
+      "expected": "放到这边来",
+      "source": "5500",
+      "lookup_us": 4383,
+      "candidates": [
+        "放到这边来",
+        "放到这边赖",
+        "放到这边莱",
+        "放到这边來",
+        "放到这便来",
+        "放到这边濑",
+        "放到这边癞",
+        "放到这边睐",
+        "放到"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kaodaonabianqu",
+      "expected": "靠到那边去",
+      "source": "5500",
+      "lookup_us": 3522,
+      "candidates": [
+        "烤到那边去",
+        "考到那边去",
+        "烤到哪边去",
+        "考到哪边去",
+        "烤到那边取",
+        "烤到那边区",
+        "考到那边取",
+        "靠到那边去",
+        "考"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "kaodaozhebianlai",
+      "expected": "靠到这边来",
+      "source": "5500",
+      "lookup_us": 3424,
+      "candidates": [
+        "烤到这边来",
+        "考到这边来",
+        "烤到这边赖",
+        "烤到这便来",
+        "烤到这边莱",
+        "考到这边赖",
+        "烤到这边來",
+        "靠到这边来",
+        "考"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "nadaonabianqu",
+      "expected": "拿到那边去",
+      "source": "5500",
+      "lookup_us": 3959,
+      "candidates": [
+        "拿到那边去",
+        "那到那边去",
+        "拿到哪边去",
+        "那道哪边去",
+        "拿到那边取",
+        "拿到那边区",
+        "拿到那边趣",
+        "拿到那边屈",
+        "拿到"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nadaozhebianlai",
+      "expected": "拿到这边来",
+      "source": "5500",
+      "lookup_us": 3806,
+      "candidates": [
+        "拿到这边来",
+        "那到这边来",
+        "拿到这边赖",
+        "拿到这边莱",
+        "拿到这边來",
+        "拿到这便来",
+        "拿到这边濑",
+        "拿到这边癞",
+        "拿到"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nuodaonabianqu",
+      "expected": "挪到那边去",
+      "source": "5500",
+      "lookup_us": 3669,
+      "candidates": [
+        "挪到那边去",
+        "诺到那边去",
+        "挪到哪边去",
+        "诺到哪边去",
+        "挪到那边取",
+        "挪到那边区",
+        "挪到那边趣",
+        "挪到那边屈",
+        "诺"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nuodaozhebianlai",
+      "expected": "挪到这边来",
+      "source": "5500",
+      "lookup_us": 3901,
+      "candidates": [
+        "挪到这边来",
+        "诺到这边来",
+        "挪到这边赖",
+        "挪到这便来",
+        "挪到这边莱",
+        "挪到这边來",
+        "挪到这边濑",
+        "挪到这边癞",
+        "诺"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "raodaoduimianqu",
+      "expected": "绕到对面去",
+      "source": "5500",
+      "lookup_us": 3492,
+      "candidates": [
+        "绕到对面去",
+        "绕道对面去",
+        "绕到对面取",
+        "绕到对面趣",
+        "绕到对面区",
+        "绕到对面屈",
+        "绕到对面曲",
+        "绕道对面取",
+        "绕道"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "raodaohoumianqu",
+      "expected": "绕到后面去",
+      "source": "5500",
+      "lookup_us": 2954,
+      "candidates": [
+        "绕到后面去",
+        "绕到后面取",
+        "绕到后面趣",
+        "绕到后面区",
+        "绕到后面屈",
+        "绕道后面去",
+        "绕到后面曲",
+        "绕到后面佢",
+        "绕道"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "raodaolingyibian",
+      "expected": "绕到另一边",
+      "source": "5500",
+      "lookup_us": 4852,
+      "candidates": [
+        "绕到另一边",
+        "扰到另一边",
+        "绕到另一遍",
+        "扰到另一遍",
+        "绕到另一变",
+        "绕到另一便",
+        "绕道令一遍",
+        "绕到另一辩",
+        "绕道"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "raodaoqianmianqu",
+      "expected": "绕到前面去",
+      "source": "5500",
+      "lookup_us": 4759,
+      "candidates": [
+        "绕到前面去",
+        "绕到前面取",
+        "绕到前面趣",
+        "绕到前面区",
+        "绕到前面屈",
+        "绕到前面曲",
+        "绕到前面佢",
+        "绕到前面娶",
+        "绕道"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "raoguonadonglou",
+      "expected": "绕过那栋楼",
+      "source": "5500",
+      "lookup_us": 1589,
+      "candidates": [
+        "绕过那栋楼",
+        "绕过那动楼",
+        "绕过那懂楼",
+        "绕过那东楼",
+        "绕过哪栋楼",
+        "绕过那洞楼",
+        "绕过那冬楼",
+        "绕过那董楼",
+        "绕过"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "raoguonamianqiang",
+      "expected": "绕过那面墙",
+      "source": "5500",
+      "lookup_us": 5586,
+      "candidates": [
+        "绕过那勉强",
+        "绕过拿勉强",
+        "绕过哪勉强",
+        "绕过纳勉强",
+        "绕过娜勉强",
+        "绕过呐勉强",
+        "绕过镎勉强",
+        "绕过那面墙",
+        "绕过"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "raoguozhedonglou",
+      "expected": "绕过这栋楼",
+      "source": "5500",
+      "lookup_us": 1603,
+      "candidates": [
+        "绕过这栋楼",
+        "绕过这栋漏",
+        "绕过这东楼",
+        "绕过这冬楼",
+        "绕过这东漏",
+        "绕过这冬漏",
+        "绕过这动楼",
+        "绕过这懂楼",
+        "绕过"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "raoguozhemianqiang",
+      "expected": "绕过这面墙",
+      "source": "5500",
+      "lookup_us": 5855,
+      "candidates": [
+        "绕过这勉强",
+        "绕过这面墙",
+        "绕过着勉强",
+        "绕过者勉强",
+        "绕过折勉强",
+        "绕裹着勉强",
+        "扰过这勉强",
+        "绕过遮勉强",
+        "绕过"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "raozheguangchangzou",
+      "expected": "绕着广场走",
+      "source": "5500",
+      "lookup_us": 4216,
+      "candidates": [
+        "绕着广场走",
+        "扰着广场走",
+        "绕着广场奏",
+        "绕着光长走",
+        "绕着光场走",
+        "扰着广场奏",
+        "扰着光长走",
+        "扰着光场走",
+        "绕着"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "raozhehuatanzou",
+      "expected": "绕着花坛走",
+      "source": "5500",
+      "lookup_us": 2767,
+      "candidates": [
+        "绕着花坛走",
+        "扰着花坛走",
+        "绕着花坛奏",
+        "绕着话弹奏",
+        "绕这话弹奏",
+        "绕着花弹奏",
+        "扰着花坛奏",
+        "扰着花弹奏",
+        "绕着"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shunzhedaluzou",
+      "expected": "顺着大路走",
+      "source": "5500",
+      "lookup_us": 2013,
+      "candidates": [
+        "顺着大路走",
+        "顺着大陆走",
+        "顺这大路走",
+        "顺着大陆奏",
+        "顺着大路奏",
+        "顺着打路走",
+        "顺这大陆走",
+        "顺着大陆邹",
+        "顺着"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shunzhehewangqianzou",
+      "expected": "顺着河往前走",
+      "source": "5500",
+      "lookup_us": 5811,
+      "candidates": [
+        "顺着河往前走",
+        "顺着喝往前走",
+        "顺着和网前走",
+        "顺着河网前走",
+        "顺着河往前奏",
+        "顺着喝往前奏",
+        "顺着和网前奏",
+        "顺着和网签走",
+        "顺着"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shunzhelanganzou",
+      "expected": "顺着栏杆走",
+      "source": "5500",
+      "lookup_us": 3725,
+      "candidates": [
+        "顺着栏杆走",
+        "顺着栏杆奏",
+        "顺着栏杆邹",
+        "顺着栏杆揍",
+        "顺这栏杆走",
+        "顺着栏杆诹",
+        "顺着栏杆驺",
+        "顺着栏杆赱",
+        "顺着"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shunzheluwangqianzou",
+      "expected": "顺着路往前走",
+      "source": "5500",
+      "lookup_us": 6260,
+      "candidates": [
+        "顺着路往前走",
+        "顺着陆往前走",
+        "顺着路网前走",
+        "顺着路网前奏",
+        "顺着路往前奏",
+        "顺着陆往前奏",
+        "顺着路网签走",
+        "顺着路网钱走",
+        "顺着"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shunzhepodaoshangqu",
+      "expected": "顺着坡道上去",
+      "source": "5500",
+      "lookup_us": 5150,
+      "candidates": [
+        "顺着坡道上去",
+        "顺着破道上去",
+        "顺着破到上去",
+        "顺着颇到上去",
+        "顺着破岛上去",
+        "顺着颇岛上去",
+        "顺着破倒上去",
+        "顺着破刀上去",
+        "顺着"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shunzhepodaoxiaqu",
+      "expected": "顺着坡道下去",
+      "source": "5500",
+      "lookup_us": 5130,
+      "candidates": [
+        "顺着破到下去",
+        "顺着颇到下去",
+        "顺着破倒下去",
+        "顺着坡道下去",
+        "顺着颇倒下去",
+        "顺着破道下去",
+        "顺着破刀下去",
+        "顺着破导下去",
+        "顺着"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "shunzheqiangwangqianzou",
+      "expected": "顺着墙往前走",
+      "source": "5500",
+      "lookup_us": 8283,
+      "candidates": [
+        "顺着墙往前走",
+        "顺着强往前走",
+        "顺着墙网前走",
+        "顺着墙往前奏",
+        "顺着强往前奏",
+        "顺着墙网前奏",
+        "顺着墙网签走",
+        "顺着墙王前奏",
+        "顺着"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shunzhetaijieshangqu",
+      "expected": "顺着台阶上去",
+      "source": "5500",
+      "lookup_us": 7177,
+      "candidates": [
+        "顺着太街上去",
+        "顺着台阶上去",
+        "顺这台街上去",
+        "顺这台阶上去",
+        "顺这台接上去",
+        "顺着太接上去",
+        "顺着太界上去",
+        "顺着太洁上去",
+        "顺着"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "shunzhetaijiexiaqu",
+      "expected": "顺着台阶下去",
+      "source": "5500",
+      "lookup_us": 6053,
+      "candidates": [
+        "顺着台阶下去",
+        "顺这台阶下去",
+        "顺这台接下去",
+        "顺着太接下去",
+        "顺着太解下去",
+        "顺着太结下去",
+        "顺着太揭下去",
+        "顺这台解下去",
+        "顺着"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shunzheweiqiangzou",
+      "expected": "顺着围墙走",
+      "source": "5500",
+      "lookup_us": 5173,
+      "candidates": [
+        "顺着围墙走",
+        "顺这位抢走",
+        "顺着围墙奏",
+        "顺着围抢走",
+        "顺着为抢走",
+        "顺着微抢走",
+        "顺着尾抢走",
+        "顺着未抢走",
+        "顺着"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shunzhexiaoluzou",
+      "expected": "顺着小路走",
+      "source": "5500",
+      "lookup_us": 6265,
+      "candidates": [
+        "顺着小路走",
+        "顺这小路走",
+        "顺着小路奏",
+        "顺着销路走",
+        "顺着小鹿走",
+        "顺着笑路走",
+        "顺着小路邹",
+        "顺着小路揍",
+        "顺着"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shunzhezoulangzou",
+      "expected": "顺着走廊走",
+      "source": "5500",
+      "lookup_us": 2319,
+      "candidates": [
+        "顺着走廊走",
+        "顺着走廊奏",
+        "顺着走廊邹",
+        "顺着走廊揍",
+        "顺着走廊诹",
+        "顺着走廊驺",
+        "顺着走廊赱",
+        "顺着走廊陬",
+        "顺着"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "songdaonabianqu",
+      "expected": "送到那边去",
+      "source": "5500",
+      "lookup_us": 4032,
+      "candidates": [
+        "送到那边去",
+        "送到哪边去",
+        "送到那边取",
+        "送到那边区",
+        "送到那边趣",
+        "送到那边屈",
+        "送到那边曲",
+        "送到那边佢",
+        "送到"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "songdaozhebianlai",
+      "expected": "送到这边来",
+      "source": "5500",
+      "lookup_us": 4419,
+      "candidates": [
+        "送到这边来",
+        "送到这边赖",
+        "送到这边莱",
+        "送到这边來",
+        "送到这便来",
+        "送到这边濑",
+        "送到这边癞",
+        "送到这边睐",
+        "送到"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wanglimiankankan",
+      "expected": "往里面看看",
+      "source": "5500",
+      "lookup_us": 3360,
+      "candidates": [
+        "网里面看看",
+        "王里面看看",
+        "王李葂看看",
+        "王丽免看看",
+        "王立免看看",
+        "王丽棉看看",
+        "网李葂看看",
+        "往里面看看",
+        "往里"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "wangnabiankankan",
+      "expected": "往那边看看",
+      "source": "5500",
+      "lookup_us": 3123,
+      "candidates": [
+        "网那边看看",
+        "王那边看看",
+        "网那便看看",
+        "网拿便看看",
+        "网那扁看看",
+        "王那扁看看",
+        "网那变看看",
+        "往那边看看",
+        "网"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "wangshangmiankankan",
+      "expected": "往上面看看",
+      "source": "5500",
+      "lookup_us": 3797,
+      "candidates": [
+        "网上面看看",
+        "往上面看看",
+        "网上棉看看",
+        "网上勉看看",
+        "网上免看看",
+        "网上眠看看",
+        "网上绵看看",
+        "网上缅看看",
+        "网上"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "wangwaimiankankan",
+      "expected": "往外面看看",
+      "source": "5500",
+      "lookup_us": 2634,
+      "candidates": [
+        "往外面看看",
+        "网外面看看",
+        "往外免看看",
+        "往外棉看看",
+        "往外眠看看",
+        "往外绵看看",
+        "往外勉看看",
+        "往外缅看看",
+        "往外"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangxiamiankankan",
+      "expected": "往下面看看",
+      "source": "5500",
+      "lookup_us": 3835,
+      "candidates": [
+        "往下面看看",
+        "网下面看看",
+        "往下免看看",
+        "往下棉看看",
+        "往下眠看看",
+        "往下绵看看",
+        "往下勉看看",
+        "往下缅看看",
+        "往下"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangyoubiankankan",
+      "expected": "往右边看看",
+      "source": "5500",
+      "lookup_us": 3435,
+      "candidates": [
+        "网友便看看",
+        "网游便看看",
+        "网右边看看",
+        "往右边看看",
+        "王有变看看",
+        "望有变看看",
+        "网友遍看看",
+        "网友编看看",
+        "网游"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "wangzhebiankankan",
+      "expected": "往这边看看",
+      "source": "5500",
+      "lookup_us": 3326,
+      "candidates": [
+        "望着便看看",
+        "网这边看看",
+        "望着边看看",
+        "望着变看看",
+        "望着遍看看",
+        "望着编看看",
+        "望着扁看看",
+        "往这边看看",
+        "王者"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "wangzuobiankankan",
+      "expected": "往左边看看",
+      "source": "5500",
+      "lookup_us": 3073,
+      "candidates": [
+        "往左边看看",
+        "网做便看看",
+        "王做便看看",
+        "网左边看看",
+        "网作变看看",
+        "往左变看看",
+        "王座编看看",
+        "往左遍看看",
+        "王佐"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "weizhelouzou",
+      "expected": "围着楼走",
+      "source": "5500",
+      "lookup_us": 956,
+      "candidates": [
+        "围着楼走",
+        "围着楼奏",
+        "围着漏走",
+        "味着楼走",
+        "围着喽走",
+        "围着露走",
+        "为这楼走",
+        "围着搂走",
+        "围着"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yanzhedaluzou",
+      "expected": "沿着大路走",
+      "source": "5500",
+      "lookup_us": 1840,
+      "candidates": [
+        "沿着大路走",
+        "沿着大陆走",
+        "沿着大陆奏",
+        "沿着大路奏",
+        "沿着打路走",
+        "眼这大路走",
+        "沿着大陆邹",
+        "沿着打卤走",
+        "沿着"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yanzhehubianzou",
+      "expected": "沿着湖边走",
+      "source": "5500",
+      "lookup_us": 4044,
+      "candidates": [
+        "沿着湖边走",
+        "眼着湖边走",
+        "沿着湖边奏",
+        "沿着湖边邹",
+        "沿着湖边揍",
+        "沿着湖边诹",
+        "沿着湖边驺",
+        "沿着湖边赱",
+        "沿着"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yanzhelanganzou",
+      "expected": "沿着栏杆走",
+      "source": "5500",
+      "lookup_us": 3024,
+      "candidates": [
+        "沿着栏杆走",
+        "沿着栏杆奏",
+        "沿着栏杆邹",
+        "沿着栏杆揍",
+        "沿着栏杆诹",
+        "沿着栏杆驺",
+        "沿着栏杆赱",
+        "沿着栏杆陬",
+        "沿着栏杆"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yanzheqianggenzou",
+      "expected": "沿着墙根走",
+      "source": "5500",
+      "lookup_us": 3950,
+      "candidates": [
+        "沿着墙根走",
+        "沿着墙跟走",
+        "沿着墙根奏",
+        "沿着墙跟奏",
+        "沿着墙艮走",
+        "沿着强跟走",
+        "沿着墙哏走",
+        "沿着墙亘走",
+        "沿着"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yanzheshuyinzou",
+      "expected": "沿着树荫走",
+      "source": "5500",
+      "lookup_us": 3155,
+      "candidates": [
+        "沿着舒因走",
+        "沿着树荫走",
+        "沿着输因走",
+        "沿着舒引走",
+        "沿着舒银走",
+        "沿着舒音走",
+        "沿着舒印走",
+        "沿着舒阴走",
+        "沿着"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "yanzheweiqiangzou",
+      "expected": "沿着围墙走",
+      "source": "5500",
+      "lookup_us": 5504,
+      "candidates": [
+        "沿着围墙走",
+        "沿着围墙奏",
+        "沿着围抢走",
+        "沿着为抢走",
+        "沿着微抢走",
+        "眼这位抢走",
+        "沿着尾抢走",
+        "颜这位抢走",
+        "沿着"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yanzhexiaoluzou",
+      "expected": "沿着小路走",
+      "source": "5500",
+      "lookup_us": 4268,
+      "candidates": [
+        "沿着小路走",
+        "沿着小路奏",
+        "沿着销路走",
+        "沿着小鹿走",
+        "眼这小路走",
+        "沿着笑路走",
+        "沿着小路邹",
+        "沿着小路揍",
+        "沿着"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yanzhezoulangzou",
+      "expected": "沿着走廊走",
+      "source": "5500",
+      "lookup_us": 1834,
+      "candidates": [
+        "沿着走廊走",
+        "沿着走廊奏",
+        "沿着走廊邹",
+        "沿着走廊揍",
+        "沿着走廊诹",
+        "沿着走廊驺",
+        "沿着走廊赱",
+        "沿着走廊陬",
+        "沿着"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaifujinzhaozhao",
+      "expected": "在附近找找",
+      "source": "5500",
+      "lookup_us": 4198,
+      "candidates": [
+        "在附近找找",
+        "在附近照照",
+        "在附近找着",
+        "在附近照着",
+        "在附近朝着",
+        "在附近照找",
+        "在附近招招",
+        "在附近罩着",
+        "在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zailimianzhaozhao",
+      "expected": "在里面找找",
+      "source": "5500",
+      "lookup_us": 4492,
+      "candidates": [
+        "在里面找找",
+        "在里面朝着",
+        "在里面找着",
+        "在里面照照",
+        "在里面罩着",
+        "在里面照着",
+        "在里面招招",
+        "在里面朝找",
+        "在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaipangbianzhaozhao",
+      "expected": "在旁边找找",
+      "source": "5500",
+      "lookup_us": 4414,
+      "candidates": [
+        "在旁边找找",
+        "在旁边照照",
+        "在旁边找着",
+        "在旁边照着",
+        "在旁边朝着",
+        "再旁边找找",
+        "在旁边照找",
+        "再旁边照照",
+        "在旁"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaishangmianzhaozhao",
+      "expected": "在上面找找",
+      "source": "5500",
+      "lookup_us": 3952,
+      "candidates": [
+        "在上面找找",
+        "在上面朝着",
+        "再上面找找",
+        "在上面找着",
+        "再上面朝着",
+        "在上面照照",
+        "在上面罩着",
+        "再上面找着",
+        "再上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaiwaimianzhaozhao",
+      "expected": "在外面找找",
+      "source": "5500",
+      "lookup_us": 3456,
+      "candidates": [
+        "在外面找找",
+        "在外面朝着",
+        "在外面罩着",
+        "在外面找着",
+        "在外面照照",
+        "在外面罩找",
+        "在外面照着",
+        "在外面招招",
+        "在外"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaixiamianzhaozhao",
+      "expected": "在下面找找",
+      "source": "5500",
+      "lookup_us": 4072,
+      "candidates": [
+        "在下面找找",
+        "在下面朝着",
+        "再下面找找",
+        "在下面找着",
+        "再下面朝着",
+        "在下面照照",
+        "再下面找着",
+        "在下面罩着",
+        "在下"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaiyoubianzhaozhao",
+      "expected": "在右边找找",
+      "source": "5500",
+      "lookup_us": 4069,
+      "candidates": [
+        "在右边找找",
+        "在右边照照",
+        "在右边找着",
+        "在右边照着",
+        "在有变找找",
+        "再有变找找",
+        "在右边朝着",
+        "在右边照找",
+        "再有"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaizuobianzhaozhao",
+      "expected": "在左边找找",
+      "source": "5500",
+      "lookup_us": 4427,
+      "candidates": [
+        "在左边找找",
+        "在左边照照",
+        "在左边找着",
+        "在左边照着",
+        "在左边朝着",
+        "再左边找找",
+        "再左边照照",
+        "在左边照找",
+        "在做"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhandaonabianqu",
+      "expected": "站到那边去",
+      "source": "5500",
+      "lookup_us": 3297,
+      "candidates": [
+        "占到那边去",
+        "站到那边去",
+        "占到哪边去",
+        "站到哪边去",
+        "占到那边取",
+        "站到那边取",
+        "占到那边区",
+        "站到那边区",
+        "占道"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zhandaozhebianlai",
+      "expected": "站到这边来",
+      "source": "5500",
+      "lookup_us": 3809,
+      "candidates": [
+        "占到这边来",
+        "站到这边来",
+        "占到这边赖",
+        "站到这边赖",
+        "占到这边莱",
+        "站到这边莱",
+        "占到这边來",
+        "站到这边來",
+        "占道"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zoudaonabianqu",
+      "expected": "走到那边去",
+      "source": "5500",
+      "lookup_us": 3624,
+      "candidates": [
+        "走到那边去",
+        "走到哪边去",
+        "走到那边取",
+        "走到那边区",
+        "走到那边趣",
+        "走到那边屈",
+        "走到那边曲",
+        "走到那边佢",
+        "走到"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zoudaozhebianlai",
+      "expected": "走到这边来",
+      "source": "5500",
+      "lookup_us": 4569,
+      "candidates": [
+        "走到这边来",
+        "走到这边赖",
+        "走到这边莱",
+        "走到这边來",
+        "走到这便来",
+        "走到这边濑",
+        "走到这边癞",
+        "走到这边睐",
+        "走到"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zuodaonabianqu",
+      "expected": "坐到那边去",
+      "source": "5500",
+      "lookup_us": 3965,
+      "candidates": [
+        "做到那边去",
+        "坐到那边去",
+        "做到哪边去",
+        "坐到哪边去",
+        "做到那边取",
+        "做到那边区",
+        "做到那边趣",
+        "做到那边屈",
+        "做到"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zuodaozhebianlai",
+      "expected": "坐到这边来",
+      "source": "5500",
+      "lookup_us": 5110,
+      "candidates": [
+        "做到这边来",
+        "坐到这边来",
+        "做到这边赖",
+        "做到这边莱",
+        "做到这边來",
+        "做到这便来",
+        "做到这边濑",
+        "做到这边癞",
+        "做到"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "biebaitaiman",
+      "expected": "别摆太满",
+      "source": "5500",
+      "lookup_us": 4600,
+      "candidates": [
+        "别摆太满",
+        "别白太满",
+        "别百太满",
+        "别拜太满",
+        "别败太满",
+        "别摆太慢",
+        "别柏太满",
+        "别掰太满",
+        "别把"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biebaitaimi",
+      "expected": "别摆太密",
+      "source": "5500",
+      "lookup_us": 2614,
+      "candidates": [
+        "别摆太密",
+        "别白太密",
+        "别百太密",
+        "别拜太密",
+        "别败太密",
+        "别柏太密",
+        "别掰太密",
+        "别呗太密",
+        "别把"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bieduitaigao",
+      "expected": "别堆太高",
+      "source": "5500",
+      "lookup_us": 3682,
+      "candidates": [
+        "别堆太高",
+        "别对太高",
+        "别队太高",
+        "别對太高",
+        "别兑太高",
+        "别对台高",
+        "别碓太高",
+        "别隊太高",
+        "憋"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biefangtaijin",
+      "expected": "别放太近",
+      "source": "5500",
+      "lookup_us": 4796,
+      "candidates": [
+        "别放太近",
+        "别放太紧",
+        "别放太进",
+        "别放太劲",
+        "别放太谨",
+        "别放太巾",
+        "别放太锦",
+        "别放太金",
+        "憋"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biefangtaiman",
+      "expected": "别放太满",
+      "source": "5500",
+      "lookup_us": 3897,
+      "candidates": [
+        "别放太满",
+        "别放太慢",
+        "别方太满",
+        "别房太满",
+        "别放太蛮",
+        "别防太满",
+        "别仿太满",
+        "别放太曼",
+        "憋"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biejitaijin",
+      "expected": "别挤太紧",
+      "source": "5500",
+      "lookup_us": 4209,
+      "candidates": [
+        "别挤太紧",
+        "别急太紧",
+        "别急太近",
+        "别级太紧",
+        "别急太进",
+        "别急台近",
+        "别急台紧",
+        "别急台进",
+        "别急"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biekaotaijin",
+      "expected": "别靠太近",
+      "source": "5500",
+      "lookup_us": 3422,
+      "candidates": [
+        "别靠太近",
+        "别靠太紧",
+        "别考太紧",
+        "别烤太紧",
+        "别拷太紧",
+        "别尻太紧",
+        "别铐太紧",
+        "别栲太紧",
+        "憋"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bieleitaigao",
+      "expected": "别垒太高",
+      "source": "5500",
+      "lookup_us": 3015,
+      "candidates": [
+        "别垒太高",
+        "别类太高",
+        "别累太高",
+        "别泪太高",
+        "别雷太高",
+        "别磊太高",
+        "别嘞太高",
+        "别蕾太高",
+        "憋"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bieluotaigao",
+      "expected": "别摞太高",
+      "source": "5500",
+      "lookup_us": 3646,
+      "candidates": [
+        "别摞太高",
+        "别罗太高",
+        "别落太高",
+        "别络太高",
+        "别洛太高",
+        "别裸太高",
+        "别咯太高",
+        "别骆太高",
+        "憋"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biemataigao",
+      "expected": "别码太高",
+      "source": "5500",
+      "lookup_us": 3082,
+      "candidates": [
+        "别码太高",
+        "别马太高",
+        "别吗太高",
+        "别嘛太高",
+        "别妈太高",
+        "别骂太高",
+        "别马抬高",
+        "别麻太高",
+        "憋"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biepaitaimi",
+      "expected": "别排太密",
+      "source": "5500",
+      "lookup_us": 2318,
+      "candidates": [
+        "别排太密",
+        "别拍太密",
+        "别牌太密",
+        "别派太密",
+        "别哌太密",
+        "别排太米",
+        "别拍太米",
+        "别排太迷",
+        "别怕"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biesaitaiman",
+      "expected": "别塞太满",
+      "source": "5500",
+      "lookup_us": 3270,
+      "candidates": [
+        "别塞太满",
+        "别赛太满",
+        "别塞太慢",
+        "别噻太满",
+        "别腮太满",
+        "别鳃太满",
+        "别赛太慢",
+        "别噻太慢",
+        "憋"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bietietaijin",
+      "expected": "别贴太近",
+      "source": "5500",
+      "lookup_us": 4424,
+      "candidates": [
+        "别贴太近",
+        "别贴太紧",
+        "别铁太紧",
+        "别帖太紧",
+        "别貼太紧",
+        "别萜太紧",
+        "别鐵太紧",
+        "别餮太紧",
+        "别提"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biezhantaimi",
+      "expected": "别站太密",
+      "source": "5500",
+      "lookup_us": 3288,
+      "candidates": [
+        "别站太密",
+        "别站台密",
+        "别站台米",
+        "别站太米",
+        "别站台迷",
+        "别站台汩",
+        "别站台咪",
+        "别站台蜜",
+        "憋"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biezhuangtaiman",
+      "expected": "别装太满",
+      "source": "5500",
+      "lookup_us": 4840,
+      "candidates": [
+        "别装太满",
+        "别状态慢",
+        "别状态满",
+        "别装太慢",
+        "别状太满",
+        "别庄太满",
+        "别撞太满",
+        "别壮太满",
+        "憋"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biezuotaiji",
+      "expected": "别坐太挤",
+      "source": "5500",
+      "lookup_us": 3138,
+      "candidates": [
+        "别坐太挤",
+        "别做太急",
+        "别坐太急",
+        "别做太挤",
+        "别坐台机",
+        "别做太记",
+        "别坐太记",
+        "别作台机",
+        "憋"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "coujinyixie",
+      "expected": "凑近一些",
+      "source": "5500",
+      "lookup_us": 4355,
+      "candidates": [
+        "凑近一些",
+        "腠近一些",
+        "凑进一些",
+        "腠进一些",
+        "凑金一些",
+        "凑紧一些",
+        "凑今一些",
+        "凑晋一些",
+        "凑近"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kaohouyixie",
+      "expected": "靠后一些",
+      "source": "5500",
+      "lookup_us": 3702,
+      "candidates": [
+        "靠后一些",
+        "考后一些",
+        "烤厚一些",
+        "考厚一些",
+        "烤候一些",
+        "烤侯一些",
+        "考候一些",
+        "考侯一些",
+        "靠后"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kaojinyixie",
+      "expected": "靠近一些",
+      "source": "5500",
+      "lookup_us": 5117,
+      "candidates": [
+        "靠近一些",
+        "烤近一些",
+        "烤进一些",
+        "考进一些",
+        "烤金一些",
+        "烤紧一些",
+        "烤今一些",
+        "考金一些",
+        "靠近"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kaoliyixie",
+      "expected": "靠里一些",
+      "source": "5500",
+      "lookup_us": 4292,
+      "candidates": [
+        "靠里一些",
+        "烤理一些",
+        "考理一些",
+        "烤里一些",
+        "烤李一些",
+        "烤利一些",
+        "烤丽一些",
+        "烤粒一些",
+        "考"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kaoqianyixie",
+      "expected": "靠前一些",
+      "source": "5500",
+      "lookup_us": 4988,
+      "candidates": [
+        "靠前一些",
+        "考前一些",
+        "烤千一些",
+        "烤钱一些",
+        "烤浅一些",
+        "考千一些",
+        "烤谦一些",
+        "考钱一些",
+        "考前"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kaowaiyixie",
+      "expected": "靠外一些",
+      "source": "5500",
+      "lookup_us": 3343,
+      "candidates": [
+        "靠外一些",
+        "烤外一些",
+        "烤歪一些",
+        "考歪一些",
+        "烤崴一些",
+        "烤喎一些",
+        "考崴一些",
+        "考喎一些",
+        "考"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kaoyouyixie",
+      "expected": "靠右一些",
+      "source": "5500",
+      "lookup_us": 3873,
+      "candidates": [
+        "靠右一些",
+        "烤有一些",
+        "考有一些",
+        "烤又一些",
+        "烤由一些",
+        "烤右一些",
+        "考又一些",
+        "烤友一些",
+        "考"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kaozuoyixie",
+      "expected": "靠左一些",
+      "source": "5500",
+      "lookup_us": 3766,
+      "candidates": [
+        "靠左一些",
+        "烤做一些",
+        "考做一些",
+        "烤坐一些",
+        "烤左一些",
+        "烤作一些",
+        "考坐一些",
+        "考作一些",
+        "考"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "liudianjuli",
+      "expected": "留点距离",
+      "source": "5500",
+      "lookup_us": 3200,
+      "candidates": [
+        "留点距离",
+        "留点举例",
+        "留点局里",
+        "留点据里",
+        "留点距里",
+        "留点剧里",
+        "留点句里",
+        "留点距力",
+        "六点"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "liudiankongxi",
+      "expected": "留点空隙",
+      "source": "5500",
+      "lookup_us": 2061,
+      "candidates": [
+        "留点空隙",
+        "六点空隙",
+        "留点空席",
+        "留点空细",
+        "留点空袭",
+        "留点空系",
+        "留点空西",
+        "留点空洗",
+        "六点"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "liudianweizhi",
+      "expected": "留点位置",
+      "source": "5500",
+      "lookup_us": 2980,
+      "candidates": [
+        "留点位置",
+        "六点位置",
+        "留电位置",
+        "浏店位置",
+        "留店位置",
+        "浏电位置",
+        "留点为之",
+        "留点为止",
+        "六点"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "liudianyudi",
+      "expected": "留点余地",
+      "source": "5500",
+      "lookup_us": 2850,
+      "candidates": [
+        "留点余地",
+        "留点语的",
+        "留点雨滴",
+        "留点雨的",
+        "留点鱼地",
+        "留点与地",
+        "六点余地",
+        "留点余低",
+        "六点"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "liugechukou",
+      "expected": "留个出口",
+      "source": "5500",
+      "lookup_us": 1317,
+      "candidates": [
+        "留个出口",
+        "六个出口",
+        "留格出口",
+        "浏各出口",
+        "留各出口",
+        "浏格出口",
+        "浏歌出口",
+        "留歌出口",
+        "留个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "liugefengxi",
+      "expected": "留个缝隙",
+      "source": "5500",
+      "lookup_us": 2198,
+      "candidates": [
+        "留个缝隙",
+        "六个缝隙",
+        "留个缝系",
+        "留个缝西",
+        "留个缝洗",
+        "六个缝系",
+        "留个缝戏",
+        "留格缝隙",
+        "留个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "liugekaikou",
+      "expected": "留个开口",
+      "source": "5500",
+      "lookup_us": 969,
+      "candidates": [
+        "留个开口",
+        "六个开口",
+        "浏隔开口",
+        "留隔开口",
+        "留格开口",
+        "浏革开口",
+        "留革开口",
+        "浏各开口",
+        "留个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "liugerukou",
+      "expected": "留个入口",
+      "source": "5500",
+      "lookup_us": 899,
+      "candidates": [
+        "留个入口",
+        "六个入口",
+        "留格入口",
+        "浏各入口",
+        "留各入口",
+        "六个如口",
+        "浏格入口",
+        "浏歌入口",
+        "留个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "liutiaoluba",
+      "expected": "留条路吧",
+      "source": "5500",
+      "lookup_us": 2765,
+      "candidates": [
+        "留条路吧",
+        "六条路吧",
+        "留条路把",
+        "六条路把",
+        "留条路罢",
+        "六条路罢",
+        "留条路拔",
+        "六条路拔",
+        "六条"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "liutiaotongdao",
+      "expected": "留条通道",
+      "source": "5500",
+      "lookup_us": 3432,
+      "candidates": [
+        "留条通道",
+        "六条通道",
+        "六条同道",
+        "六条同到",
+        "六条通到",
+        "留条同道",
+        "浏跳通道",
+        "留跳通道",
+        "六条"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "liyuanyixie",
+      "expected": "离远一些",
+      "source": "5500",
+      "lookup_us": 4978,
+      "candidates": [
+        "离远一些",
+        "里远一些",
+        "里原一些",
+        "立原一些",
+        "李元一些",
+        "梨园一些",
+        "里元一些",
+        "离园一些",
+        "梨园"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shaoweiwanghou",
+      "expected": "稍微往后",
+      "source": "5500",
+      "lookup_us": 2625,
+      "candidates": [
+        "稍微往后",
+        "稍微往候",
+        "稍微王后",
+        "稍微网后",
+        "稍微忘后",
+        "稍微望后",
+        "稍微旺后",
+        "稍微往厚",
+        "稍微"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shaoweiwangli",
+      "expected": "稍微往里",
+      "source": "5500",
+      "lookup_us": 2839,
+      "candidates": [
+        "稍微往里",
+        "稍微王力",
+        "稍微王丽",
+        "稍微王立",
+        "稍微往力",
+        "稍微往理",
+        "稍微往利",
+        "稍微往李",
+        "稍微"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shaoweiwangqian",
+      "expected": "稍微往前",
+      "source": "5500",
+      "lookup_us": 3947,
+      "candidates": [
+        "稍微往前",
+        "稍微网签",
+        "稍微往钱",
+        "稍微网前",
+        "稍微网钱",
+        "稍微王钱",
+        "稍微往浅",
+        "稍微王前",
+        "稍微"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shaoweiwangwai",
+      "expected": "稍微往外",
+      "source": "5500",
+      "lookup_us": 1605,
+      "candidates": [
+        "稍微往外",
+        "稍微望外",
+        "稍微网外",
+        "稍微王外",
+        "稍微忘外",
+        "稍微旺外",
+        "稍微汪外",
+        "稍微亡外",
+        "稍微"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shaoweiwangyou",
+      "expected": "稍微往右",
+      "source": "5500",
+      "lookup_us": 2126,
+      "candidates": [
+        "稍微往右",
+        "稍微网友",
+        "稍微往有",
+        "稍微望有",
+        "稍微王有",
+        "稍微往由",
+        "稍微网游",
+        "稍微往友",
+        "稍微"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shaoweiwangzuo",
+      "expected": "稍微往左",
+      "source": "5500",
+      "lookup_us": 2304,
+      "candidates": [
+        "稍微往左",
+        "稍微往做",
+        "稍微往作",
+        "稍微往座",
+        "稍微王座",
+        "稍微网做",
+        "稍微王做",
+        "稍微忘做",
+        "稍微"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangbianshangfang",
+      "expected": "往边上放",
+      "source": "5500",
+      "lookup_us": 4522,
+      "candidates": [
+        "往边上放",
+        "网边上放",
+        "网边上方",
+        "往边上方",
+        "网边上房",
+        "王抃上方",
+        "往边上房",
+        "网便上方",
+        "王抃"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangbianshangkao",
+      "expected": "往边上靠",
+      "source": "5500",
+      "lookup_us": 3307,
+      "candidates": [
+        "往边上靠",
+        "网边上靠",
+        "网边上考",
+        "往边上考",
+        "王抃上靠",
+        "王抃上考",
+        "网便上靠",
+        "网匾上靠",
+        "王抃"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangbianshangnuo",
+      "expected": "往边上挪",
+      "source": "5500",
+      "lookup_us": 3114,
+      "candidates": [
+        "往边上挪",
+        "网边上挪",
+        "网边上诺",
+        "王抃上挪",
+        "往边上诺",
+        "网边上喏",
+        "网便上挪",
+        "网匾上挪",
+        "王抃"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangbianshangyi",
+      "expected": "往边上移",
+      "source": "5500",
+      "lookup_us": 3361,
+      "candidates": [
+        "往边上移",
+        "网边上以",
+        "往边上以",
+        "网边上一",
+        "往边上一",
+        "网边上移",
+        "网边上衣",
+        "网边商议",
+        "王抃"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangbianshangzhan",
+      "expected": "往边上站",
+      "source": "5500",
+      "lookup_us": 3890,
+      "candidates": [
+        "往边上站",
+        "网边上站",
+        "网边上沾",
+        "往边上沾",
+        "王抃上站",
+        "网便上站",
+        "网匾上站",
+        "网变上站",
+        "王抃"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangbianshangzuo",
+      "expected": "往边上坐",
+      "source": "5500",
+      "lookup_us": 2914,
+      "candidates": [
+        "往边上坐",
+        "网边上做",
+        "往边上做",
+        "网边上作",
+        "往边上作",
+        "网边上坐",
+        "王抃上做",
+        "网边上座",
+        "王抃"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wanghoukaokao",
+      "expected": "往后靠靠",
+      "source": "5500",
+      "lookup_us": 1019,
+      "candidates": [
+        "往后靠靠",
+        "王后靠靠",
+        "往后考考",
+        "王后考考",
+        "往后靠考",
+        "往后考靠",
+        "王后靠考",
+        "往候靠靠",
+        "王后"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wanghounuonuo",
+      "expected": "往后挪挪",
+      "source": "5500",
+      "lookup_us": 1068,
+      "candidates": [
+        "往后挪挪",
+        "王后挪挪",
+        "往后挪诺",
+        "往后挪喏",
+        "往后挪糯",
+        "往后挪傩",
+        "往后挪懦",
+        "往后挪諾",
+        "王后"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wanghoupiandian",
+      "expected": "往后偏点",
+      "source": "5500",
+      "lookup_us": 3713,
+      "candidates": [
+        "往后偏点",
+        "王后偏点",
+        "往后便点",
+        "往后篇点",
+        "往后偏店",
+        "往后偏电",
+        "王后便点",
+        "往后片点",
+        "王后"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wanghouyiyi",
+      "expected": "往后移移",
+      "source": "5500",
+      "lookup_us": 1943,
+      "candidates": [
+        "往后移移",
+        "往后意义",
+        "王后意义",
+        "往候意义",
+        "王侯意义",
+        "往后一一",
+        "网厚意义",
+        "往后一移",
+        "王后"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangkongdifangfang",
+      "expected": "往空地方放",
+      "source": "5500",
+      "lookup_us": 3810,
+      "candidates": [
+        "网空地方方",
+        "王空地方方",
+        "网空地方放",
+        "网空地方房",
+        "王空地方放",
+        "王空地方房",
+        "网空地方仿",
+        "往空地方放",
+        "网"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "wangkongdifangnuo",
+      "expected": "往空地方挪",
+      "source": "5500",
+      "lookup_us": 2673,
+      "candidates": [
+        "网空地方挪",
+        "王空地方挪",
+        "网空地方诺",
+        "网空地方喏",
+        "王空地方诺",
+        "网空地方糯",
+        "网空地方傩",
+        "往空地方挪",
+        "网"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "wangkongdifangzhan",
+      "expected": "往空地方站",
+      "source": "5500",
+      "lookup_us": 2800,
+      "candidates": [
+        "网空地方站",
+        "王空地方站",
+        "网空地方展",
+        "网空地方粘",
+        "王空地方展",
+        "网空地方战",
+        "网空地方盏",
+        "往空地方站",
+        "网"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "wangkongdifangzuo",
+      "expected": "往空地方坐",
+      "source": "5500",
+      "lookup_us": 2414,
+      "candidates": [
+        "网空地方坐",
+        "王空地方坐",
+        "网空地方做",
+        "网空地方作",
+        "王空地方做",
+        "网空地方座",
+        "王空地方作",
+        "往空地方坐",
+        "网"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "wanglikaokao",
+      "expected": "往里靠靠",
+      "source": "5500",
+      "lookup_us": 1333,
+      "candidates": [
+        "往里靠靠",
+        "王丽靠靠",
+        "王立靠靠",
+        "网里靠靠",
+        "王力靠靠",
+        "王丽考考",
+        "王立考考",
+        "王力考考",
+        "往里"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wanglinuonuo",
+      "expected": "往里挪挪",
+      "source": "5500",
+      "lookup_us": 1741,
+      "candidates": [
+        "往里挪挪",
+        "网里挪挪",
+        "王丽挪挪",
+        "王力诺挪",
+        "王立挪挪",
+        "王力挪挪",
+        "往里诺挪",
+        "王丽诺挪",
+        "汪琳"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wanglipiandian",
+      "expected": "往里偏点",
+      "source": "5500",
+      "lookup_us": 3980,
+      "candidates": [
+        "往里偏点",
+        "王立片点",
+        "王丽篇点",
+        "王立篇点",
+        "王力篇点",
+        "王丽偏点",
+        "王立偏点",
+        "网里偏点",
+        "往里"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangliyiyi",
+      "expected": "往里移移",
+      "source": "5500",
+      "lookup_us": 2224,
+      "candidates": [
+        "往里移移",
+        "王立意义",
+        "王丽意义",
+        "王力意义",
+        "往里意义",
+        "网理意义",
+        "网立意义",
+        "王礼意义",
+        "往里"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangqiankaokao",
+      "expected": "往前靠靠",
+      "source": "5500",
+      "lookup_us": 2376,
+      "candidates": [
+        "往前靠靠",
+        "往前考考",
+        "网签靠靠",
+        "网前靠靠",
+        "网签考考",
+        "往前靠考",
+        "往前考靠",
+        "网前考考",
+        "往前"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangqiannuonuo",
+      "expected": "往前挪挪",
+      "source": "5500",
+      "lookup_us": 2349,
+      "candidates": [
+        "往前挪挪",
+        "网签挪挪",
+        "网前挪挪",
+        "往前诺挪",
+        "往前挪诺",
+        "往前喏挪",
+        "往前糯挪",
+        "网签诺挪",
+        "往前"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangqianpiandian",
+      "expected": "往前偏点",
+      "source": "5500",
+      "lookup_us": 6293,
+      "candidates": [
+        "往前偏点",
+        "往前篇点",
+        "往前偏店",
+        "往前偏电",
+        "网签篇点",
+        "往前片点",
+        "往前便点",
+        "网签偏点",
+        "往前"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangqianyiyi",
+      "expected": "往前移移",
+      "source": "5500",
+      "lookup_us": 4022,
+      "candidates": [
+        "往前移移",
+        "网签意义",
+        "往前意义",
+        "网前意义",
+        "王茜意义",
+        "网钱意义",
+        "网潜意义",
+        "王千意义",
+        "往前"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangwaikaokao",
+      "expected": "往外靠靠",
+      "source": "5500",
+      "lookup_us": 1060,
+      "candidates": [
+        "往外靠靠",
+        "网外靠靠",
+        "往外考考",
+        "往外靠考",
+        "往外烤靠",
+        "网外考考",
+        "往外烤考",
+        "往外考靠",
+        "往外"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangwainuonuo",
+      "expected": "往外挪挪",
+      "source": "5500",
+      "lookup_us": 1112,
+      "candidates": [
+        "往外挪挪",
+        "网外挪挪",
+        "往外挪诺",
+        "往外诺挪",
+        "往外挪喏",
+        "往外挪糯",
+        "往外喏挪",
+        "往外糯挪",
+        "往外"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangwaipiandian",
+      "expected": "往外偏点",
+      "source": "5500",
+      "lookup_us": 3926,
+      "candidates": [
+        "往外偏点",
+        "往外篇点",
+        "往外偏店",
+        "往外偏电",
+        "网外偏点",
+        "往外片点",
+        "往外便点",
+        "往外骗点",
+        "往外"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangwaiyiyi",
+      "expected": "往外移移",
+      "source": "5500",
+      "lookup_us": 1948,
+      "candidates": [
+        "往外移移",
+        "往外意义",
+        "网外意义",
+        "网歪意义",
+        "王歪意义",
+        "网崴意义",
+        "网喎意义",
+        "王崴意义",
+        "往外"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangyoukaokao",
+      "expected": "往右靠靠",
+      "source": "5500",
+      "lookup_us": 1592,
+      "candidates": [
+        "往右靠靠",
+        "网友靠靠",
+        "网友考考",
+        "网游靠靠",
+        "网游考考",
+        "王有考考",
+        "望有考考",
+        "网友考靠",
+        "网游"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangyounuonuo",
+      "expected": "往右挪挪",
+      "source": "5500",
+      "lookup_us": 1885,
+      "candidates": [
+        "往右挪挪",
+        "网友挪挪",
+        "网游挪挪",
+        "网友诺挪",
+        "网友喏挪",
+        "网游诺挪",
+        "网友糯挪",
+        "网友傩挪",
+        "网游"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangyoupiandian",
+      "expected": "往右偏点",
+      "source": "5500",
+      "lookup_us": 5075,
+      "candidates": [
+        "往右偏点",
+        "网友篇点",
+        "网友偏点",
+        "王有偏点",
+        "网游篇点",
+        "望有偏点",
+        "网友片点",
+        "网游偏点",
+        "网游"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangyouyiyi",
+      "expected": "往右移移",
+      "source": "5500",
+      "lookup_us": 2658,
+      "candidates": [
+        "往右移移",
+        "王有意义",
+        "望有意义",
+        "网友意义",
+        "网游意义",
+        "王又意义",
+        "网友一一",
+        "王有意一",
+        "网游"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangzhongjiankao",
+      "expected": "往中间靠",
+      "source": "5500",
+      "lookup_us": 3620,
+      "candidates": [
+        "往中间靠",
+        "网中间考",
+        "王中间考",
+        "网中间靠",
+        "望重监考",
+        "网中间烤",
+        "网中间拷",
+        "网中监考",
+        "汪中"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangzhongjiannuo",
+      "expected": "往中间挪",
+      "source": "5500",
+      "lookup_us": 3575,
+      "candidates": [
+        "往中间挪",
+        "网中间挪",
+        "网中间诺",
+        "网中间喏",
+        "王中间诺",
+        "网中间糯",
+        "网中间傩",
+        "网中间懦",
+        "汪中"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangzhongjianyi",
+      "expected": "往中间移",
+      "source": "5500",
+      "lookup_us": 3847,
+      "candidates": [
+        "往中间移",
+        "网中间以",
+        "网中建议",
+        "王中间以",
+        "王中建议",
+        "望重建议",
+        "网重建议",
+        "王钟建议",
+        "汪中"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangzhongjianzhan",
+      "expected": "往中间站",
+      "source": "5500",
+      "lookup_us": 3704,
+      "candidates": [
+        "往中间站",
+        "网中间站",
+        "网中间展",
+        "网中间占",
+        "网中间粘",
+        "王中间展",
+        "网中建站",
+        "网中间盏",
+        "汪中"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangzhongjianzuo",
+      "expected": "往中间坐",
+      "source": "5500",
+      "lookup_us": 3189,
+      "candidates": [
+        "往中间坐",
+        "网中间座",
+        "网中间做",
+        "王中间座",
+        "网中间坐",
+        "网中间作",
+        "王中间做",
+        "王中间作",
+        "汪中"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangzuokaokao",
+      "expected": "往左靠靠",
+      "source": "5500",
+      "lookup_us": 1372,
+      "candidates": [
+        "往左靠靠",
+        "网左靠靠",
+        "网作考考",
+        "往左考考",
+        "网做靠靠",
+        "王佐靠靠",
+        "网做考考",
+        "王佐考考",
+        "王佐"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangzuonuonuo",
+      "expected": "往左挪挪",
+      "source": "5500",
+      "lookup_us": 1363,
+      "candidates": [
+        "往左挪挪",
+        "网左挪挪",
+        "网做挪挪",
+        "王佐挪挪",
+        "王座挪挪",
+        "网作挪挪",
+        "王做挪挪",
+        "网坐挪挪",
+        "王佐"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangzuopiandian",
+      "expected": "往左偏点",
+      "source": "5500",
+      "lookup_us": 4150,
+      "candidates": [
+        "往左偏点",
+        "网左偏点",
+        "往左篇点",
+        "往左偏店",
+        "网做篇点",
+        "网做便点",
+        "王佐篇点",
+        "往左偏电",
+        "王佐"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangzuoyiyi",
+      "expected": "往左移移",
+      "source": "5500",
+      "lookup_us": 2243,
+      "candidates": [
+        "往左移移",
+        "往左意义",
+        "网做意义",
+        "王佐意义",
+        "王座意义",
+        "网作意义",
+        "王做意义",
+        "网坐意义",
+        "王佐"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaikaohoudian",
+      "expected": "再靠后点",
+      "source": "5500",
+      "lookup_us": 2615,
+      "candidates": [
+        "再靠后点",
+        "在靠后点",
+        "在靠后店",
+        "在靠后电",
+        "再考后点",
+        "再靠后店",
+        "再靠后电",
+        "在靠后垫",
+        "在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaikaolidian",
+      "expected": "再靠里点",
+      "source": "5500",
+      "lookup_us": 3298,
+      "candidates": [
+        "再靠里点",
+        "在靠里点",
+        "在靠里店",
+        "在靠里垫",
+        "在靠里电",
+        "再靠里店",
+        "再靠里垫",
+        "再靠里电",
+        "在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaikaoqiandian",
+      "expected": "再靠前点",
+      "source": "5500",
+      "lookup_us": 4557,
+      "candidates": [
+        "再靠前点",
+        "在靠前点",
+        "再考前点",
+        "在靠前店",
+        "在靠前电",
+        "在考前点",
+        "再靠前店",
+        "再靠前电",
+        "在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaikaowaidian",
+      "expected": "再靠外点",
+      "source": "5500",
+      "lookup_us": 2339,
+      "candidates": [
+        "再靠外点",
+        "在靠外电",
+        "在靠外点",
+        "再靠外电",
+        "再考外电",
+        "在靠外店",
+        "在烤外电",
+        "再靠外店",
+        "在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaikaoyoudian",
+      "expected": "再靠右点",
+      "source": "5500",
+      "lookup_us": 3137,
+      "candidates": [
+        "再靠右点",
+        "在靠有点",
+        "再靠有点",
+        "再考有点",
+        "在烤有点",
+        "在考有点",
+        "再烤有点",
+        "在靠有电",
+        "在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaikaozuodian",
+      "expected": "再靠左点",
+      "source": "5500",
+      "lookup_us": 2961,
+      "candidates": [
+        "再靠左点",
+        "在靠做点",
+        "在靠左点",
+        "在靠坐垫",
+        "再靠做点",
+        "再考做点",
+        "在靠作点",
+        "在烤做点",
+        "在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "anjinyidian",
+      "expected": "按紧一点",
+      "source": "5500",
+      "lookup_us": 3769,
+      "candidates": [
+        "按紧一点",
+        "按近一点",
+        "安近一点",
+        "按进一点",
+        "安进一点",
+        "按金一点",
+        "安紧一点",
+        "安金一点",
+        "安吉"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "baipingyidian",
+      "expected": "摆平一点",
+      "source": "5500",
+      "lookup_us": 3683,
+      "candidates": [
+        "摆平一点",
+        "白平一点",
+        "白屏一点",
+        "白评一点",
+        "白瓶一点",
+        "白凭一点",
+        "白萍一点",
+        "白坪一点",
+        "摆平"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "baiqiyidian",
+      "expected": "摆齐一点",
+      "source": "5500",
+      "lookup_us": 3397,
+      "candidates": [
+        "摆齐一点",
+        "白气一点",
+        "摆气一点",
+        "白其一点",
+        "白棋一点",
+        "白起一点",
+        "白期一点",
+        "摆其一点",
+        "白棋"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "baiwaiyidian",
+      "expected": "摆歪一点",
+      "source": "5500",
+      "lookup_us": 2794,
+      "candidates": [
+        "摆歪一点",
+        "白外一点",
+        "白歪一点",
+        "摆外一点",
+        "白崴一点",
+        "白喎一点",
+        "摆崴一点",
+        "摆喎一点",
+        "拜"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "baiwenyidian",
+      "expected": "摆稳一点",
+      "source": "5500",
+      "lookup_us": 3401,
+      "candidates": [
+        "摆稳一点",
+        "白文一点",
+        "白问一点",
+        "摆问一点",
+        "白稳一点",
+        "白温一点",
+        "百闻一点",
+        "摆温一点",
+        "白文"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "baizhengyidian",
+      "expected": "掰正一点",
+      "source": "5500",
+      "lookup_us": 3824,
+      "candidates": [
+        "摆正一点",
+        "掰正一点",
+        "摆整一点",
+        "白正一点",
+        "白整一点",
+        "白证一点",
+        "白蒸一点",
+        "摆证一点",
+        "摆正"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "baizhiyidian",
+      "expected": "摆直一点",
+      "source": "5500",
+      "lookup_us": 3786,
+      "candidates": [
+        "摆直一点",
+        "白纸一点",
+        "白之一点",
+        "白指一点",
+        "白值一点",
+        "白智一点",
+        "摆指一点",
+        "白直一点",
+        "白纸"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangjinyidian",
+      "expected": "绑紧一点",
+      "source": "5500",
+      "lookup_us": 4184,
+      "candidates": [
+        "绑紧一点",
+        "帮近一点",
+        "帮进一点",
+        "棒近一点",
+        "棒进一点",
+        "帮紧一点",
+        "帮金一点",
+        "帮今一点",
+        "榜"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "banzhengyidian",
+      "expected": "扳正一点",
+      "source": "5500",
+      "lookup_us": 4363,
+      "candidates": [
+        "扳正一点",
+        "办证一点",
+        "办正一点",
+        "办整一点",
+        "半整一点",
+        "办蒸一点",
+        "半证一点",
+        "半蒸一点",
+        "办证"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "baojinyidian",
+      "expected": "抱紧一点",
+      "source": "5500",
+      "lookup_us": 3769,
+      "candidates": [
+        "抱紧一点",
+        "宝近一点",
+        "包近一点",
+        "报进一点",
+        "宝进一点",
+        "报金一点",
+        "宝紧一点",
+        "宝金一点",
+        "抱紧"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "baowenyidian",
+      "expected": "抱稳一点",
+      "source": "5500",
+      "lookup_us": 3480,
+      "candidates": [
+        "抱稳一点",
+        "保温一点",
+        "包问一点",
+        "报文一点",
+        "宝问一点",
+        "宝稳一点",
+        "包文一点",
+        "宝温一点",
+        "保温"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "beiwenyidian",
+      "expected": "背稳一点",
+      "source": "5500",
+      "lookup_us": 3793,
+      "candidates": [
+        "背稳一点",
+        "被问一点",
+        "背问一点",
+        "背温一点",
+        "被稳一点",
+        "被温一点",
+        "背文一点",
+        "被文一点",
+        "被问"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bengjinyidian",
+      "expected": "绷紧一点",
+      "source": "5500",
+      "lookup_us": 3648,
+      "candidates": [
+        "绷紧一点",
+        "迸近一点",
+        "泵近一点",
+        "迸进一点",
+        "泵进一点",
+        "迸紧一点",
+        "迸金一点",
+        "迸今一点",
+        "绷紧"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chaqianyidian",
+      "expected": "插浅一点",
+      "source": "5500",
+      "lookup_us": 4099,
+      "candidates": [
+        "插浅一点",
+        "差前一点",
+        "查前一点",
+        "差浅一点",
+        "差千一点",
+        "差钱一点",
+        "查千一点",
+        "差谦一点",
+        "插"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chashenyidian",
+      "expected": "插深一点",
+      "source": "5500",
+      "lookup_us": 3519,
+      "candidates": [
+        "插深一点",
+        "差神一点",
+        "差深一点",
+        "差申一点",
+        "差身一点",
+        "差沈一点",
+        "查神一点",
+        "差审一点",
+        "插"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chawenyidian",
+      "expected": "插稳一点",
+      "source": "5500",
+      "lookup_us": 2919,
+      "candidates": [
+        "插稳一点",
+        "查问一点",
+        "差问一点",
+        "差稳一点",
+        "差温一点",
+        "查温一点",
+        "茶文一点",
+        "差文一点",
+        "插"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chejinyidian",
+      "expected": "扯紧一点",
+      "source": "5500",
+      "lookup_us": 3330,
+      "candidates": [
+        "扯紧一点",
+        "车进一点",
+        "车近一点",
+        "车紧一点",
+        "车金一点",
+        "车今一点",
+        "车晋一点",
+        "车津一点",
+        "车"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chengkaiyidian",
+      "expected": "撑开一点",
+      "source": "5500",
+      "lookup_us": 2800,
+      "candidates": [
+        "撑开一点",
+        "程开一点",
+        "程凯一点",
+        "乘凯一点",
+        "程锎一点",
+        "乘锎一点",
+        "程楷一点",
+        "乘楷一点",
+        "撑开"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chengwenyidian",
+      "expected": "撑稳一点",
+      "source": "5500",
+      "lookup_us": 3412,
+      "candidates": [
+        "撑稳一点",
+        "成文一点",
+        "程问一点",
+        "成问一点",
+        "程稳一点",
+        "程文一点",
+        "程温一点",
+        "乘温一点",
+        "成文"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "diandiyidian",
+      "expected": "垫低一点",
+      "source": "5500",
+      "lookup_us": 3208,
+      "candidates": [
+        "垫低一点",
+        "电第一点",
+        "店第一点",
+        "点低一点",
+        "店的一点",
+        "点的一点",
+        "电低一点",
+        "店地一点",
+        "点滴"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "diangaoyidian",
+      "expected": "垫高一点",
+      "source": "5500",
+      "lookup_us": 4608,
+      "candidates": [
+        "垫高一点",
+        "电镐一点",
+        "点高一点",
+        "点告一点",
+        "电告一点",
+        "电搞一点",
+        "店搞一点",
+        "电镐疑点",
+        "电镐"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dianpingyidian",
+      "expected": "垫平一点",
+      "source": "5500",
+      "lookup_us": 3958,
+      "candidates": [
+        "垫平一点",
+        "电平一点",
+        "电瓶一点",
+        "点评一点",
+        "点平一点",
+        "电评一点",
+        "电凭一点",
+        "电屏一点",
+        "点评"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dianwenyidian",
+      "expected": "垫稳一点",
+      "source": "5500",
+      "lookup_us": 3207,
+      "candidates": [
+        "垫稳一点",
+        "点温一点",
+        "点问一点",
+        "电问一点",
+        "电温一点",
+        "电稳一点",
+        "电蚊一点",
+        "电文一点",
+        "电"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dijinyidian",
+      "expected": "抵紧一点",
+      "source": "5500",
+      "lookup_us": 3369,
+      "candidates": [
+        "抵紧一点",
+        "第近一点",
+        "地进一点",
+        "地近一点",
+        "第进一点",
+        "第紧一点",
+        "第金一点",
+        "地紧一点",
+        "第几"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dingwenyidian",
+      "expected": "顶稳一点",
+      "source": "5500",
+      "lookup_us": 3335,
+      "candidates": [
+        "顶稳一点",
+        "定问一点",
+        "订问一点",
+        "订稳一点",
+        "订温一点",
+        "定文一点",
+        "定温一点",
+        "订文一点",
+        "丁"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "duanpingyidian",
+      "expected": "端平一点",
+      "source": "5500",
+      "lookup_us": 4041,
+      "candidates": [
+        "端平一点",
+        "断平一点",
+        "断评一点",
+        "断瓶一点",
+        "断凭一点",
+        "断屏一点",
+        "段评一点",
+        "断萍一点",
+        "端"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "duanwenyidian",
+      "expected": "端稳一点",
+      "source": "5500",
+      "lookup_us": 3647,
+      "candidates": [
+        "端稳一点",
+        "断问一点",
+        "短文一点",
+        "端问一点",
+        "段文一点",
+        "断稳一点",
+        "断温一点",
+        "端温一点",
+        "短文"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "duiqiyixia",
+      "expected": "对齐一下",
+      "source": "5500",
+      "lookup_us": 3484,
+      "candidates": [
+        "对齐一下",
+        "对其一下",
+        "对气一下",
+        "对期一下",
+        "对起一下",
+        "对启一下",
+        "对器一下",
+        "对七一下",
+        "对其"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "duizhengyixia",
+      "expected": "对正一下",
+      "source": "5500",
+      "lookup_us": 3892,
+      "candidates": [
+        "对正一下",
+        "对整一下",
+        "对症一下",
+        "对证一下",
+        "对蒸一下",
+        "队整一下",
+        "对郑一下",
+        "对争一下",
+        "对症"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "duizhunyixia",
+      "expected": "对准一下",
+      "source": "5500",
+      "lookup_us": 3325,
+      "candidates": [
+        "对准一下",
+        "对肫一下",
+        "对準一下",
+        "对谆一下",
+        "队准一下",
+        "对准以下",
+        "对准一吓",
+        "对准一夏",
+        "对准"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangpingyidian",
+      "expected": "放平一点",
+      "source": "5500",
+      "lookup_us": 3832,
+      "candidates": [
+        "放平一点",
+        "房平一点",
+        "放评一点",
+        "放瓶一点",
+        "放凭一点",
+        "放屏一点",
+        "放萍一点",
+        "房评一点",
+        "放屁"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangqiyidian",
+      "expected": "放齐一点",
+      "source": "5500",
+      "lookup_us": 4105,
+      "candidates": [
+        "放齐一点",
+        "放气一点",
+        "放弃一点",
+        "房气一点",
+        "放其一点",
+        "房其一点",
+        "放起一点",
+        "放期一点",
+        "放弃"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangwaiyidian",
+      "expected": "放歪一点",
+      "source": "5500",
+      "lookup_us": 2902,
+      "candidates": [
+        "放歪一点",
+        "放外一点",
+        "房外一点",
+        "房歪一点",
+        "放崴一点",
+        "放喎一点",
+        "房崴一点",
+        "房喎一点",
+        "放"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangwenyidian",
+      "expected": "放稳一点",
+      "source": "5500",
+      "lookup_us": 4102,
+      "candidates": [
+        "放稳一点",
+        "访问一点",
+        "放问一点",
+        "放温一点",
+        "房稳一点",
+        "房温一点",
+        "方文一点",
+        "放文一点",
+        "访问"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangzhengyidian",
+      "expected": "放正一点",
+      "source": "5500",
+      "lookup_us": 4292,
+      "candidates": [
+        "放正一点",
+        "方正一点",
+        "放整一点",
+        "房整一点",
+        "放证一点",
+        "房证一点",
+        "放蒸一点",
+        "房蒸一点",
+        "方正"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangzhiyidian",
+      "expected": "放直一点",
+      "source": "5500",
+      "lookup_us": 3564,
+      "candidates": [
+        "放直一点",
+        "放置一点",
+        "仿制一点",
+        "纺织一点",
+        "房纸一点",
+        "防止一点",
+        "放之一点",
+        "放指一点",
+        "防治"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fuwenyidian",
+      "expected": "扶稳一点",
+      "source": "5500",
+      "lookup_us": 2857,
+      "candidates": [
+        "扶稳一点",
+        "附问一点",
+        "服问一点",
+        "附稳一点",
+        "附温一点",
+        "符文一点",
+        "付文一点",
+        "父温一点",
+        "符文"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fuzhengyidian",
+      "expected": "扶正一点",
+      "source": "5500",
+      "lookup_us": 4155,
+      "candidates": [
+        "扶正一点",
+        "复正一点",
+        "服整一点",
+        "附整一点",
+        "付证一点",
+        "附证一点",
+        "附蒸一点",
+        "父蒸一点",
+        "扶正"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fuzhiyidian",
+      "expected": "扶直一点",
+      "source": "5500",
+      "lookup_us": 3907,
+      "candidates": [
+        "扶直一点",
+        "复制一点",
+        "付之一点",
+        "附指一点",
+        "父之一点",
+        "赋值一点",
+        "父指一点",
+        "福祉一点",
+        "福祉"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiajinyidian",
+      "expected": "夹紧一点",
+      "source": "5500",
+      "lookup_us": 4057,
+      "candidates": [
+        "夹紧一点",
+        "家近一点",
+        "加进一点",
+        "家进一点",
+        "假近一点",
+        "加紧一点",
+        "价金一点",
+        "家金一点",
+        "加紧"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiaozhengyixia",
+      "expected": "校正一下",
+      "source": "5500",
+      "lookup_us": 4167,
+      "candidates": [
+        "校正一下",
+        "叫整一下",
+        "饺整一下",
+        "矫正一下",
+        "交证一下",
+        "叫证一下",
+        "叫蒸一下",
+        "胶蒸一下",
+        "矫正"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jijinyidian",
+      "expected": "系紧一点",
+      "source": "5500",
+      "lookup_us": 3776,
+      "candidates": [
+        "系紧一点",
+        "几近一点",
+        "既近一点",
+        "挤进一点",
+        "既进一点",
+        "基金一点",
+        "几斤一点",
+        "既紧一点",
+        "基金"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "judiyidian",
+      "expected": "举低一点",
+      "source": "5500",
+      "lookup_us": 2844,
+      "candidates": [
+        "举低一点",
+        "据第一点",
+        "聚第一点",
+        "据低一点",
+        "据地一点",
+        "居的一点",
+        "据的一点",
+        "句地一点",
+        "据"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jugaoyidian",
+      "expected": "举高一点",
+      "source": "5500",
+      "lookup_us": 2860,
+      "candidates": [
+        "举高一点",
+        "据高一点",
+        "拒稿一点",
+        "据告一点",
+        "聚告一点",
+        "据搞一点",
+        "聚搞一点",
+        "据稿一点",
+        "拒稿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "juwenyidian",
+      "expected": "举稳一点",
+      "source": "5500",
+      "lookup_us": 2971,
+      "candidates": [
+        "举稳一点",
+        "据问一点",
+        "聚问一点",
+        "据文一点",
+        "据稳一点",
+        "据温一点",
+        "聚温一点",
+        "居文一点",
+        "据"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kajinyidian",
+      "expected": "卡紧一点",
+      "source": "5500",
+      "lookup_us": 3192,
+      "candidates": [
+        "卡紧一点",
+        "卡进一点",
+        "咖近一点",
+        "卡近一点",
+        "咖进一点",
+        "咖紧一点",
+        "咖金一点",
+        "卡金一点",
+        "卡"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kalaoyidian",
+      "expected": "卡牢一点",
+      "source": "5500",
+      "lookup_us": 3147,
+      "candidates": [
+        "卡牢一点",
+        "咖牢一点",
+        "咖老一点",
+        "卡老一点",
+        "咖捞一点",
+        "咖劳一点",
+        "咖铹一点",
+        "咖佬一点",
+        "卡拉"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kangwenyidian",
+      "expected": "扛稳一点",
+      "source": "5500",
+      "lookup_us": 3521,
+      "candidates": [
+        "扛稳一点",
+        "康问一点",
+        "康文一点",
+        "康稳一点",
+        "康温一点",
+        "抗问一点",
+        "康闻一点",
+        "康纹一点",
+        "抗"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kaowenyidian",
+      "expected": "靠稳一点",
+      "source": "5500",
+      "lookup_us": 3187,
+      "candidates": [
+        "靠稳一点",
+        "拷问一点",
+        "烤问一点",
+        "烤稳一点",
+        "烤温一点",
+        "考文一点",
+        "考温一点",
+        "烤文一点",
+        "拷问"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "koujinyidian",
+      "expected": "扣紧一点",
+      "source": "5500",
+      "lookup_us": 3440,
+      "candidates": [
+        "扣紧一点",
+        "口进一点",
+        "口近一点",
+        "扣近一点",
+        "扣进一点",
+        "口紧一点",
+        "口金一点",
+        "扣金一点",
+        "口"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lajinyidian",
+      "expected": "拉紧一点",
+      "source": "5500",
+      "lookup_us": 3645,
+      "candidates": [
+        "拉近一点",
+        "拉紧一点",
+        "拉进一点",
+        "垃近一点",
+        "垃进一点",
+        "垃紧一点",
+        "拉金一点",
+        "垃金一点",
+        "拉近"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "linwenyidian",
+      "expected": "拎稳一点",
+      "source": "5500",
+      "lookup_us": 3058,
+      "candidates": [
+        "拎稳一点",
+        "淋问一点",
+        "邻问一点",
+        "淋稳一点",
+        "淋温一点",
+        "邻温一点",
+        "淋文一点",
+        "邻文一点",
+        "临"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "miaozhunyidian",
+      "expected": "瞄准一点",
+      "source": "5500",
+      "lookup_us": 4798,
+      "candidates": [
+        "瞄准一点",
+        "秒准一点",
+        "秒肫一点",
+        "秒準一点",
+        "秒谆一点",
+        "苗肫一点",
+        "苗準一点",
+        "苗谆一点",
+        "瞄准"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "miaozhunyixia",
+      "expected": "瞄准一下",
+      "source": "5500",
+      "lookup_us": 4153,
+      "candidates": [
+        "瞄准一下",
+        "秒准一下",
+        "瞄准以下",
+        "秒肫一下",
+        "秒準一下",
+        "秒谆一下",
+        "苗肫一下",
+        "苗準一下",
+        "瞄准"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nawenyidian",
+      "expected": "拿稳一点",
+      "source": "5500",
+      "lookup_us": 3718,
+      "candidates": [
+        "拿稳一点",
+        "那问一点",
+        "那稳一点",
+        "那温一点",
+        "拿问一点",
+        "那文一点",
+        "那闻一点",
+        "那纹一点",
+        "拿稳"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niejinyidian",
+      "expected": "捏紧一点",
+      "source": "5500",
+      "lookup_us": 5608,
+      "candidates": [
+        "捏紧一点",
+        "捏近一点",
+        "捏进一点",
+        "捏金一点",
+        "捏今一点",
+        "捏晋一点",
+        "捏津一点",
+        "捏仅一点",
+        "捏紧"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niewenyidian",
+      "expected": "捏稳一点",
+      "source": "5500",
+      "lookup_us": 4242,
+      "candidates": [
+        "捏稳一点",
+        "捏问一点",
+        "捏温一点",
+        "聂问一点",
+        "捏文一点",
+        "捏闻一点",
+        "捏纹一点",
+        "捏吻一点",
+        "捏"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ningzhengyidian",
+      "expected": "拧正一点",
+      "source": "5500",
+      "lookup_us": 4638,
+      "candidates": [
+        "拧正一点",
+        "柠正一点",
+        "柠整一点",
+        "柠证一点",
+        "柠蒸一点",
+        "宁整一点",
+        "柠郑一点",
+        "柠争一点",
+        "凝"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niuzhengyidian",
+      "expected": "扭正一点",
+      "source": "5500",
+      "lookup_us": 3185,
+      "candidates": [
+        "扭正一点",
+        "牛正一点",
+        "牛整一点",
+        "拗整一点",
+        "牛证一点",
+        "牛蒸一点",
+        "拗证一点",
+        "拗蒸一点",
+        "妞"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "saijinyidian",
+      "expected": "塞紧一点",
+      "source": "5500",
+      "lookup_us": 3731,
+      "candidates": [
+        "塞紧一点",
+        "塞进一点",
+        "塞近一点",
+        "赛近一点",
+        "赛进一点",
+        "塞金一点",
+        "赛紧一点",
+        "赛金一点",
+        "塞进"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "saiqianyidian",
+      "expected": "塞浅一点",
+      "source": "5500",
+      "lookup_us": 3930,
+      "candidates": [
+        "塞浅一点",
+        "赛前一点",
+        "塞前一点",
+        "塞千一点",
+        "赛浅一点",
+        "塞钱一点",
+        "赛千一点",
+        "赛钱一点",
+        "赛前"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "saishenyidian",
+      "expected": "塞深一点",
+      "source": "5500",
+      "lookup_us": 2898,
+      "candidates": [
+        "塞深一点",
+        "塞神一点",
+        "赛神一点",
+        "赛深一点",
+        "塞身一点",
+        "塞沈一点",
+        "赛身一点",
+        "赛沈一点",
+        "赛"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taixialaiyidian",
+      "expected": "抬下来一点",
+      "source": "5500",
+      "lookup_us": 4837,
+      "candidates": [
+        "台下来一点",
+        "太下来一点",
+        "台下赖一点",
+        "台下莱一点",
+        "台下來一点",
+        "台下来意点",
+        "台下来疑点",
+        "抬下来一点",
+        "台下"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "tiaozhengyidian",
+      "expected": "调正一点",
+      "source": "5500",
+      "lookup_us": 6030,
+      "candidates": [
+        "调正一点",
+        "调整一点",
+        "调整一店",
+        "调整一电",
+        "调整疑点",
+        "调整一垫",
+        "调整意点",
+        "调整一掂",
+        "调整"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tiwenyidian",
+      "expected": "提稳一点",
+      "source": "5500",
+      "lookup_us": 3755,
+      "candidates": [
+        "提稳一点",
+        "提问一点",
+        "体温一点",
+        "体问一点",
+        "提温一点",
+        "提文一点",
+        "提闻一点",
+        "提纹一点",
+        "提问"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tuogaoyidian",
+      "expected": "托高一点",
+      "source": "5500",
+      "lookup_us": 4255,
+      "candidates": [
+        "托高一点",
+        "拖高一点",
+        "拖告一点",
+        "拖搞一点",
+        "托告一点",
+        "托搞一点",
+        "拖稿一点",
+        "拖膏一点",
+        "托"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tuowenyidian",
+      "expected": "托稳一点",
+      "source": "5500",
+      "lookup_us": 3879,
+      "candidates": [
+        "托稳一点",
+        "拖问一点",
+        "托问一点",
+        "拖稳一点",
+        "拖温一点",
+        "托温一点",
+        "拖文一点",
+        "拖闻一点",
+        "托"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wojinyidian",
+      "expected": "握紧一点",
+      "source": "5500",
+      "lookup_us": 4268,
+      "candidates": [
+        "握紧一点",
+        "我近一点",
+        "我进一点",
+        "我今一点",
+        "我紧一点",
+        "我金一点",
+        "我晋一点",
+        "我津一点",
+        "握紧"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yadiyidian",
+      "expected": "压低一点",
+      "source": "5500",
+      "lookup_us": 3216,
+      "candidates": [
+        "压低一点",
+        "压第一点",
+        "鸭第一点",
+        "鸭低一点",
+        "压的一点",
+        "压地一点",
+        "呀的一点",
+        "鸭地一点",
+        "压低"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yajinyidian",
+      "expected": "压紧一点",
+      "source": "5500",
+      "lookup_us": 4190,
+      "candidates": [
+        "压紧一点",
+        "压进一点",
+        "压近一点",
+        "鸭近一点",
+        "鸭进一点",
+        "押金一点",
+        "压金一点",
+        "压今一点",
+        "押金"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yapingyidian",
+      "expected": "压平一点",
+      "source": "5500",
+      "lookup_us": 4545,
+      "candidates": [
+        "压平一点",
+        "鸭平一点",
+        "压评一点",
+        "压瓶一点",
+        "压凭一点",
+        "压屏一点",
+        "压萍一点",
+        "压坪一点",
+        "压平"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yonglidizhu",
+      "expected": "用力抵住",
+      "source": "5500",
+      "lookup_us": 2460,
+      "candidates": [
+        "用力抵住",
+        "用力地主",
+        "用力的主",
+        "用力的住",
+        "用力的著",
+        "用力的煮",
+        "用力地住",
+        "用力抵著",
+        "用力"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zajinyidian",
+      "expected": "扎紧一点",
+      "source": "5500",
+      "lookup_us": 2735,
+      "candidates": [
+        "扎紧一点",
+        "咋近一点",
+        "砸近一点",
+        "扎进一点",
+        "咋进一点",
+        "咋紧一点",
+        "咋金一点",
+        "砸金一点",
+        "杂技"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuaijinyidian",
+      "expected": "拽紧一点",
+      "source": "5500",
+      "lookup_us": 5050,
+      "candidates": [
+        "拽紧一点",
+        "拽近一点",
+        "拽进一点",
+        "跩近一点",
+        "跩进一点",
+        "拽金一点",
+        "拽今一点",
+        "拽晋一点",
+        "拽"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuanzhengyidian",
+      "expected": "转正一点",
+      "source": "5500",
+      "lookup_us": 5649,
+      "candidates": [
+        "转正一点",
+        "转整一点",
+        "专政一点",
+        "转证一点",
+        "转蒸一点",
+        "转郑一点",
+        "传正一点",
+        "转争一点",
+        "专政"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zuozhengyidian",
+      "expected": "坐正一点",
+      "source": "5500",
+      "lookup_us": 4009,
+      "candidates": [
+        "坐正一点",
+        "作证一点",
+        "做正一点",
+        "坐整一点",
+        "做整一点",
+        "佐证一点",
+        "坐蒸一点",
+        "做蒸一点",
+        "作证"
+      ],
+      "expected_rank": 1
+    }
+  ],
+  "previous_pass": {
+    "sha256": "b7deb1ba9850cc48ba0f1e08b46de6684c25b97a3e8adf2802524a6fcd26ac54",
+    "summary": {
+      "cases": 318,
+      "top1_correct": 255,
+      "top9_present": 318,
+      "top1_percent": 80.19,
+      "top9_percent": 100.0,
+      "character_error_rate": 0.061,
+      "p50_lookup_ms": 4.568,
+      "p95_lookup_ms": 7.754,
+      "max_lookup_ms": 12.154,
+      "missing_from_top9_count": 0,
+      "missing_from_top9": [],
+      "max_returned_candidate_count": 9
+    }
+  }
+}

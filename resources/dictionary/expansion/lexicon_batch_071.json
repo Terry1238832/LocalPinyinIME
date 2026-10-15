@@ -1,0 +1,215 @@
+{
+  "batch": "lexicon_batch_071",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "Individually authored daily computer controls, file handling, document layout, sharing, calls and meeting vocabulary.",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 289,
+  "sha256": "bf1d350d02a9707049538e4dccde441e82f7ebd07bed63e9954f972ab365fc39",
+  "authoring_files_sha256": {
+    "lexicon_batch_071.authoring.json": "27d0733795870d2e81235aed89210262becfd0d987f9232dfb3d793f8e8256fb",
+    "batch071_authored_daily_draft.txt": "79e356f8427e642a805d837f8002ec71f657ea84b28208d353d526e15ddd64a3",
+    "batch071_pronunciation_review.tsv": "94ff9480bcaed2b5edfdbe7ac14560db7282f6df027c7d8d9f8fc17c7e538a5d"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "8a53fa57c87cb2062736d18fbcb1def87589e0ca0ba8d471d8c03a027722febd",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "everyday_computer_controls": 5500,
+    "files_and_folders_daily": 5500,
+    "document_editing_and_layout": 5500,
+    "sharing_and_collaboration_daily": 5500,
+    "calls_recording_and_meetings": 5500
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "calls_recording_and_meetings": 46,
+    "document_editing_and_layout": 65,
+    "everyday_computer_controls": 57,
+    "files_and_folders_daily": 59,
+    "sharing_and_collaboration_daily": 62
+  },
+  "length_distribution": {
+    "6": 149,
+    "5": 138,
+    "4": 2
+  },
+  "authoring_rejections": [
+    {
+      "word": "按了没反应",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "按键没反应",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "鼠标没反应",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "键盘没反应",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "窗口打不开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "窗口关不掉",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "字体太小了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "字体太大了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "文件名重复",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "文件损坏了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "文件发错了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "文件没保存",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "文件没同步",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "文件扩展名",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "解压到文件夹",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "单元格底色",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "单元格合并",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "单元格拆分",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "链接发错了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "链接失效了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "页面找不到",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "麦克风没声",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "麦克风太近",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "麦克风太远",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "麦克风爆音",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "麦克风杂音",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "声音断断续续",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "声音忽大忽小",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "声音听不清",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "声音有延迟",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "画面卡住了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "画面很模糊",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "共享整个屏幕",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "录音有杂音",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "会议链接失效",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "会议密码错了",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 268,
+  "manual_pronunciation_overrides": {
+    "字号调大点": "zihaotiaodadian",
+    "字号调小点": "zihaotiaoxiaodian",
+    "文件名太长": "wenjianmingtaichang",
+    "首行空两格": "shouhangkongliangge",
+    "标题空一行": "biaotikongyihang",
+    "表格行太高": "biaogehangtaigao",
+    "重登了也没用": "chongdengleyemeiyong",
+    "我这边没收到": "wozhebianmeishoudao"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 8,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}
