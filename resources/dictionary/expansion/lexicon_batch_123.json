@@ -1,0 +1,203 @@
+{
+  "batch": "lexicon_batch_123",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "日常网络讨论、购物反馈、分享资料与评论沟通",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 357,
+  "sha256": "921129b57da0fb28be2b6a70f523f797ece75be565468f6e7a55505f9b6c95f1",
+  "authoring_files_sha256": {
+    "lexicon_batch_123.authoring.json": "f2d5702266924336749c1d6d8c8e3d14177935991fbd3de88c13dda93b35343d",
+    "batch123_authored_daily_draft.txt": "ca78dc6948eccb1be9c8f2950c91c42a02f650416eafdc5fd1360f4119de329e",
+    "batch123_pronunciation_review.tsv": "42948da5a49205dea272c7a5a792f41d54d19483d88f14de1cceabc3cf0d173f"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "f1294ee02422665ee39959f2a349fc9f7634b944a3a948783080d3480746ae87",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "everyday_online_discussion_and_reactions": 6000,
+    "recommendations_and_consumer_feedback": 6000,
+    "online_posts_and_shared_materials": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "everyday_online_discussion_and_reactions": 112,
+    "online_posts_and_shared_materials": 131,
+    "recommendations_and_consumer_feedback": 114
+  },
+  "length_distribution": {
+    "6": 144,
+    "5": 204,
+    "4": 9
+  },
+  "authoring_rejections": [
+    {
+      "word": "这谁受得了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "谁懂这感觉",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我真的栓扣",
+      "reason": "premeasurement_naturalness: unestablished forced transliteration or incomplete meme fragment"
+    },
+    {
+      "word": "真的栓扣了",
+      "reason": "premeasurement_naturalness: unestablished forced transliteration or incomplete meme fragment"
+    },
+    {
+      "word": "离谱他妈开门",
+      "reason": "premeasurement_naturalness: unestablished forced transliteration or incomplete meme fragment"
+    },
+    {
+      "word": "实物对比图",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "自然光实拍",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "室内光实拍",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "色差有点大",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "穿着有点扎",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "穿着有点勒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "穿着有点闷",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "穿着有点紧",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "穿着有点松",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "穿着有点透",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "领口有点大",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "领口有点小",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "袖口有点紧",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "袖口有点松",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "裤腿有点窄",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "裤腿有点宽",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "鞋底有点硬",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "鞋底有点滑",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "包带有点短",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "包带有点长",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "素材出处",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "链接已失效",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "链接已过期",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我解释一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我再解释一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我换个说法",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我换个例子",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我打个比方",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我理解错了",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 306,
+  "manual_pronunciation_overrides": {
+    "穿着不勒人": "chuanzhebuleren",
+    "上身有点长": "shangshenyoudianchang",
+    "裤长有点短": "kuchangyoudianduan",
+    "裤长有点长": "kuchangyoudianchang",
+    "洗后有点褪色": "xihouyoudiantuise",
+    "别传错信息": "biechuancuoxinxi"
+  },
+  "reading_variant_choices": {
+    "穿着不勒人": "chuanzhebuleren"
+  },
+  "semantic_pronunciation_corrections": 5,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

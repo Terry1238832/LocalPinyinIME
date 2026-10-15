@@ -1,0 +1,134 @@
+{
+  "batch": "lexicon_batch_103",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "买菜称重、店内询问、结账退换货和社区跑腿常用表达；固定 6000 类别档。",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 386,
+  "sha256": "d6e55ad317ff28997a97c7afddf5e1a1146a6c3837b5e9914482d36bc1f0138c",
+  "authoring_files_sha256": {
+    "lexicon_batch_103.authoring.json": "69efcf7ec98549115c01d6b696cb89a1bf1461496f762a16c8ca8d62e23375db",
+    "batch103_authored_daily_draft.txt": "f5f74d57e51d5b392eb0591ac0a1400b25938ff282f9fddfce96bcf9469c8848",
+    "batch103_pronunciation_review.tsv": "2a2810c4a4f7e619395c794ca5d83cb5f81f9fda6d40fd147eb6798f3d78467f"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "e54e6b325dadbc35f5587e4f34ef1a52f33e2340bcf8394ebc2bdb9927ad8750",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "buying_groceries_and_packing": 6000,
+    "everyday_shop_questions": 6000,
+    "checkout_and_returns": 6000,
+    "nearby_errands_and_collecting_items": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "buying_groceries_and_packing": 107,
+    "checkout_and_returns": 105,
+    "everyday_shop_questions": 90,
+    "nearby_errands_and_collecting_items": 84
+  },
+  "length_distribution": {
+    "6": 167,
+    "5": 219
+  },
+  "authoring_rejections": [
+    {
+      "word": "重的放下面",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "轻的放上面",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "这款还有吗",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "那款还有吗",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "这个有现货",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "那个有现货",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帮我核对下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "这个买错了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "这个拿错了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "尺码买错了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "型号买错了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "退款到账了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "退款还没到",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "下次再买吧",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "下次再拿吧",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 360,
+  "manual_pronunciation_overrides": {
+    "袋子扎紧点": "daizizajindian",
+    "豆角择一下": "doujiaozhaiyixia",
+    "有长一点的吗": "youchangyidiandema",
+    "这个扫重了": "zhegesaochongle",
+    "那个扫重了": "nagesaochongle",
+    "帮我重算下": "bangwochongsuanxia",
+    "帮我查查单": "bangwochachadan",
+    "这个买重了": "zhegemaichongle",
+    "还得再买点": "haideizaimaidian",
+    "还得再补点": "haideizaibudian",
+    "还得再拿点": "haideizainadian",
+    "还得再取点": "haideizaiqudian"
+  },
+  "reading_variant_choices": {
+    "豆角择一下": "doujiaozhaiyixia"
+  },
+  "semantic_pronunciation_corrections": 11,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

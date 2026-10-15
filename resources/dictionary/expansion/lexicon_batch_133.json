@@ -1,0 +1,261 @@
+{
+  "batch": "lexicon_batch_133",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "绘画材料、照片装裱、相册和日常乐器练习用品",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 348,
+  "sha256": "96d0509e7a28571d9ac8ef93867f73c8e1229937a61cf3e13934db54d0fd611c",
+  "authoring_files_sha256": {
+    "lexicon_batch_133.authoring.json": "b073428e164e57d2196c15d91ca371201e5731b428737e8db75adf37077133be",
+    "batch133_authored_daily_draft.txt": "b84b25af6422d028177ba8d6c4dc1935f535f08e67ca651c6c40a3371af5956f",
+    "batch133_pronunciation_review.tsv": "9ad0269e89c3b29d85b627ce906e1bb7605bad8c1e7a69a093069d96757deebd"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "5e799faff612533934a2268181dbd07d4b14d1af5f37732cb46ba9462f26e738",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "painting_and_drawing_materials": 6000,
+    "framing_photo_paper_and_desktop_art": 6000,
+    "familiar_music_practice_supplies": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "familiar_music_practice_supplies": 68,
+    "framing_photo_paper_and_desktop_art": 95,
+    "painting_and_drawing_materials": 185
+  },
+  "length_distribution": {
+    "5": 196,
+    "3": 4,
+    "4": 129,
+    "6": 19
+  },
+  "authoring_rejections": [
+    {
+      "word": "水彩纸胶带",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水彩勾线笔",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水彩留白液",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "油画修补油",
+      "reason": "premeasurement_naturalness: uncertain retouching-medium label excluded"
+    },
+    {
+      "word": "油画调色板",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "素描定画液",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吉他变调夹",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吉他调音器",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吉他拾音器",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吉他背带扣",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吉他背带锁",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吉他弦枕",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吉他上弦枕",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吉他下弦枕",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吉他弦钉",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吉他卷弦器",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吉他剪弦钳",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吉他指板油",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吉他清洁布",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吉他防潮袋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吉他琴包",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吉他琴盒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吉他折叠架",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吉他护板",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吉他品丝",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吉他琴桥",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吉他拨片盒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吉他拨片袋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吉他拨片夹",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吉他拨片套",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吉他音孔盖",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "贝斯背带",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "贝斯拨片",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "贝斯音箱",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "乐谱夹子",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "乐谱收纳册",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "乐谱灯",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "钢琴键盘罩",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "钢琴琴键贴",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "钢琴防尘罩",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "钢琴琴凳套",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "钢琴踏板垫",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电子琴谱架",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电子琴琴罩",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "延音踏板",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电钢琴琴罩",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电钢琴琴凳",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电钢琴踏板",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电钢琴耳机",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电钢琴支架",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 245,
+  "manual_pronunciation_overrides": {
+    "彩铅削笔器": "caiqianxiaobiqi"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 1,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

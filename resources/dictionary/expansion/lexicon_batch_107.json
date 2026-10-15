@@ -1,0 +1,136 @@
+{
+  "batch": "lexicon_batch_107",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "语音视频通话、远程会议、网络协作和日常游戏联络短语；固定 6000 类别档。",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 328,
+  "sha256": "2eb9264bac42749ef8a55da9555d91c6d08d6f922740325fe9405f76ebbd4608",
+  "authoring_files_sha256": {
+    "lexicon_batch_107.authoring.json": "07079986b4ea86dcd61c025399b3ddff26fd6232a8e61cf040572a30f3775811",
+    "batch107_authored_daily_draft.txt": "64015f2570950f3cb4dcd9ba02a6119b2dd1a100d3ff62f7b01b04213850ed0d",
+    "batch107_pronunciation_review.tsv": "17511d2ffb0dd236df43af174d2b420f4275010be41f6fc6ccb970ea677db9f2"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "c3e52d65e1da9a5e9c380dc059d7391f7b32313841fbeb532d4301f03797f92b",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "voice_video_and_meeting_chat": 6000,
+    "everyday_online_collaboration": 6000,
+    "casual_gaming_and_party_chat": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "casual_gaming_and_party_chat": 116,
+    "everyday_online_collaboration": 106,
+    "voice_video_and_meeting_chat": 106
+  },
+  "length_distribution": {
+    "5": 118,
+    "6": 210
+  },
+  "authoring_rejections": [
+    {
+      "word": "我这边看不到",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我这边没声音",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "这边听不清",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "那边听不清",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "声音断断续续",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "画面卡住了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "画面一直闪",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "画面有点糊",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "相机权限关了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "共享画面卡顿",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "会议链接过期",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "会议链接失效",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "会议室进不去",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我先回个消息",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我先喝口水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我先换个耳机",
+      "reason": "duplicate_draft"
+    }
+  ],
+  "mandatory_polyphone_reviews": 284,
+  "manual_pronunciation_overrides": {
+    "我先调下音量": "woxiantiaoxiayinliang",
+    "我先调下设备": "woxiantiaoxiashebei",
+    "我先重开软件": "woxianchongkairuanjian",
+    "我先退出重进": "woxiantuichuchongjin",
+    "我先重连一下": "woxianchonglianyixia",
+    "我没收到邀请": "womeishoudaoyaoqing",
+    "我关不了弹窗": "woguanbuliaotanchuang",
+    "我重命名不了": "wochongmingmingbuliao",
+    "消息太长了": "xiaoxitaichangle",
+    "我调下灵敏度": "wotiaoxialingmindu",
+    "我调下鼠标": "wotiaoxiashubiao",
+    "我调下键盘": "wotiaoxiajianpan",
+    "我调下按键": "wotiaoxiaanjian",
+    "我先调个设置": "woxiantiaogeshezhi"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 14,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

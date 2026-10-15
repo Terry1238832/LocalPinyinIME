@@ -1,0 +1,136 @@
+{
+  "batch": "lexicon_batch_122",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "厨房操作、口味备注、家常吃饭与家务协调短语",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 364,
+  "sha256": "2ea807416808220dbdb548ba1ba17c07d4cf89aa3d835544bfcc51d8a8ad39e1",
+  "authoring_files_sha256": {
+    "lexicon_batch_122.authoring.json": "0daa737338620714e3539b7dc285dfad4afe6fea82b8ed14bda11e969d066b4b",
+    "batch122_authored_daily_draft.txt": "1d215bb9f3d1419f4c3422bb041eea61470a0468cce87e1538c75e41715f1358",
+    "batch122_pronunciation_review.tsv": "b2e41e42e64ab63eee4154736d37b5711f943994422b0539dd171e3cf0e9df1f"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "a6e609453f45866924035e641229edb40713251a932beeed38ad4b56e375e1c5",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "cooking_steps_and_short_instructions": 6000,
+    "food_texture_and_order_preferences": 6000,
+    "household_meals_and_small_chores": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "cooking_steps_and_short_instructions": 121,
+    "food_texture_and_order_preferences": 119,
+    "household_meals_and_small_chores": 124
+  },
+  "length_distribution": {
+    "5": 257,
+    "4": 64,
+    "6": 43
+  },
+  "authoring_rejections": [
+    {
+      "word": "先把米淘了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "先把火关了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "别泡太久了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "少放点酱油",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "少放点辣椒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "多放点葱花",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "多放点香菜",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "盖上焖一会",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "尝尝咸淡",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "尝尝味道",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "捞出来沥水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "汤汁多一点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "汤汁少一点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "生熟分开放",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "菜先放冰箱",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水果先洗好",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 279,
+  "manual_pronunciation_overrides": {
+    "先把皮削了": "xianbapixiaole",
+    "先把壳剥了": "xianbakebaole",
+    "先把火调小": "xianbahuotiaoxiao",
+    "先把火调大": "xianbahuotiaoda",
+    "盛出来晾凉": "chengchulailiangliang",
+    "盛出来吃": "chengchulaichi",
+    "汤和面分开": "tanghemianfenkai",
+    "饭先盛出来": "fanxianchengchulai",
+    "汤先盛出来": "tangxianchengchulai",
+    "把米袋扎好": "bamidaizahao",
+    "把面袋扎好": "bamiandaizahao"
+  },
+  "reading_variant_choices": {
+    "先把壳剥了": "xianbakebaole"
+  },
+  "semantic_pronunciation_corrections": 10,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

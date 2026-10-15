@@ -1,0 +1,581 @@
+{
+  "batch": "lexicon_batch_116",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "视频制作、直播社区、网络交流与休闲游戏用语",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 416,
+  "sha256": "db076ff96e2c82b8612f26e9e90c3794c43727f33b5b97c1a0e0388c8e1d0d92",
+  "authoring_files_sha256": {
+    "lexicon_batch_116.authoring.json": "55f810a169666fcc3dee7dc331627c8cc7be82612729a23e6b656f83e7e51542",
+    "batch116_authored_daily_draft.txt": "1807a6d1bcd7089f6399625ae6e1845fea581a4ad62c27bcdacea775e3d99009",
+    "batch116_pronunciation_review.tsv": "dfcd1805e4056844121cd5ab26b8caab64f3bf1c56069326d2f18c769b00f37a"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "fbfec376561c02aca643bbcfb026736b24dad2b206a5419d102ced30a28bb64f",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "content_creation_and_video_editing": 6000,
+    "publishing_and_live_community": 6000,
+    "everyday_platform_and_fandom_slang": 6000,
+    "casual_gaming_and_voice_chat": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "casual_gaming_and_voice_chat": 118,
+    "content_creation_and_video_editing": 87,
+    "everyday_platform_and_fandom_slang": 111,
+    "publishing_and_live_community": 100
+  },
+  "length_distribution": {
+    "4": 348,
+    "5": 54,
+    "3": 13,
+    "6": 1
+  },
+  "authoring_rejections": [
+    {
+      "word": "画幅比例",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "分镜脚本",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "分镜草图",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "运镜轨迹",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "手持运镜",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "推拉镜头",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "环绕镜头",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "固定机位",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "手机稳定器",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "背景支架",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "枪式麦克风",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "防风毛套",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "收音设备",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "收音距离",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "音轨分离",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "人声增强",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "人声分离",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "音频降噪",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "音量归一化",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "音频淡入",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "音频淡出",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "淡入时长",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "淡出时长",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "转场时长",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "变速曲线",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "位置关键帧",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "缩放关键帧",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "旋转关键帧",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "蒙版羽化",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "蒙版反转",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "画面裁切",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "画面防抖",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "光流补帧",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "运动模糊",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "镜头畸变",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "广角畸变",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "畸变校正",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "字幕样式",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "字幕轨道",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "字幕校对",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "字幕断句",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "字幕描边",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "字幕阴影",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "双语字幕",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "字幕识别",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "字幕导入",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "字幕导出",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "字幕烧录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "字幕时间轴",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "字幕特效",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "封面模板",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "代理剪辑",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "代理文件",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "素材重连",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "素材打包",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "工程归档",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "工程备份",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "导出队列",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "渲染队列",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "渲染缓存",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "导出帧率",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "恒定码率",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "可变码率",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "合集封面",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "合集标题",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "合集排序",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "更新提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "断更说明",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "图文封面",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "图片水印",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "转载授权",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "素材授权",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "授权范围",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "署名要求",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "转载说明",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "勘误说明",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "补充说明",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "开播提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "推流地址",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "推流密钥",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "直播回放页",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "直播切片",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "直播场控",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "直播控场",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "直播间公告",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "直播间封面",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "直播间置顶",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "连麦申请",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "连麦排队",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "弹幕透明度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "弹幕字号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "弹幕密度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "弹幕显示区",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "彩色弹幕",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "滚动弹幕",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "底部弹幕",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "顶部弹幕",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "弹幕轨道",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "评论区置顶",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "展开评论",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "楼中楼回复",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "仅自己可见",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "追剧搭子",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "游戏搭子",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "运动搭子",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "逛街搭子",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "散步搭子",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "跑步搭子",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "骑行搭子",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "球搭子",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "通勤搭子",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "云逛街",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "云看展",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "云旅游",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "云养娃",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "云撸猫",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "蹲个完整版",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "蹲一个后续",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "蹲一个链接",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "蹲一个教程",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "合影留念",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "队伍语音",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "房间口令",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "房间密码",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "临时组队",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "打完这把",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "对局复盘",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "地图报点",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 299,
+  "manual_pronunciation_overrides": {
+    "媒体重连": "meitichonglian",
+    "推流重连": "tuiliuchonglian",
+    "断流重连": "duanliuchonglian",
+    "留个爪印": "liugezhuayin",
+    "输了重来": "shulechonglai"
+  },
+  "reading_variant_choices": {
+    "留个爪印": "liugezhuayin"
+  },
+  "semantic_pronunciation_corrections": 4,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

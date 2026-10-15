@@ -1,0 +1,172 @@
+{
+  "batch": "lexicon_batch_117",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "早餐面点、烘焙零食、菜场食材与日常分装保鲜",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 423,
+  "sha256": "138bdae3a237a0083faa4375a8c773cd9ad2d5773bd151fe985bbaee58d5c361",
+  "authoring_files_sha256": {
+    "lexicon_batch_117.authoring.json": "f112d0d5943de8dfb50fdebbe546521f35e700b2a50213514b1321190fe5f6fe",
+    "batch117_authored_daily_draft.txt": "e9211c023b7246ca98f2115a78364f1de9701fd4d557e88b1dd330e47c643a08",
+    "batch117_pronunciation_review.tsv": "a6baeae94cfda4ae69f712932cf8170b36f0d18258b5ebd2cc9559cdee5b5eb7"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "b2decf6901073a164fd435e29db20eb0e2fb68f1fdb967b5d03f517b4fc18fbf",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "breakfast_and_everyday_street_food": 6000,
+    "bakery_and_snack_shopping": 6000,
+    "fresh_market_and_seasonal_foods": 6000,
+    "kitchen_portioning_and_food_storage": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "bakery_and_snack_shopping": 117,
+    "breakfast_and_everyday_street_food": 116,
+    "fresh_market_and_seasonal_foods": 111,
+    "kitchen_portioning_and_food_storage": 79
+  },
+  "length_distribution": {
+    "4": 195,
+    "5": 126,
+    "3": 82,
+    "6": 16,
+    "2": 4
+  },
+  "authoring_rejections": [
+    {
+      "word": "鸡蛋灌饼",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "内酯豆腐",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "咸豆腐脑",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "甜豆腐脑",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "红糖发糕",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "糯米烧卖",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "虾仁烧卖",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "驴肉火烧",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "白吉馍",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "手撕包菜",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "白玉菇",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "海鲜菇",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "蟹味菇",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "干莲子米",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "莲蓬头",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "粘米粉",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "酱料分装",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "调料分装",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "熟食分装",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "蔬菜保鲜袋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水果保鲜袋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "冰箱鸡蛋盒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "烘焙油纸",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "烘焙隔热手套",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "食品封口夹",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "硅胶保鲜盖",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 311,
+  "manual_pronunciation_overrides": {
+    "煎饼薄脆": "jianbingbocui",
+    "薄脆饼片": "bocuibingpian",
+    "佛卡夏面包": "fokaxiamianbao",
+    "澄粉": "dengfen",
+    "澄面粉": "dengmianfen"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 5,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

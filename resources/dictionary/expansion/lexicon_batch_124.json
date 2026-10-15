@@ -1,0 +1,242 @@
+{
+  "batch": "lexicon_batch_124",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "日常洗护、衣物洗涤护理、家庭纺织用品与收纳",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 328,
+  "sha256": "5ef27e0c3019a5d2804c5f74f3a026c02da62e0d630a2d6b99553671dbbb9a61",
+  "authoring_files_sha256": {
+    "lexicon_batch_124.authoring.json": "1cf502556e530a1dee71e540a931ccfac5b98ea2407224a536ab1632c4e70121",
+    "batch124_authored_daily_draft.txt": "ca702a8e7e88e98d3542c37d3d36a4ba68c95a436d81fa05153ab5aac462e68a",
+    "batch124_pronunciation_review.tsv": "eb766dc26b6aee891cd3d9e2e6e127c2647d9a3abcfe8a0018635d72a857d439"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "973936d2a9c0138227679f7962e70cc23e69ca40071c3391d5c997119d4323ea",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "bath_and_personal_grooming_supplies": 6000,
+    "laundry_and_clothing_care_tools": 6000,
+    "household_textiles_and_personal_organizers": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "bath_and_personal_grooming_supplies": 130,
+    "household_textiles_and_personal_organizers": 74,
+    "laundry_and_clothing_care_tools": 124
+  },
+  "length_distribution": {
+    "6": 95,
+    "5": 177,
+    "3": 9,
+    "4": 47
+  },
+  "authoring_rejections": [
+    {
+      "word": "眼镜防雾布",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发圈收纳盒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发夹收纳盒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发箍收纳架",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发绳收纳盒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "梳子清洁刷",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "梳子收纳筒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "梳子收纳架",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吹风机风嘴",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吹风机滤网",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "理发围布",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "剃须刀清洁刷",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "剃须刀刀网",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "洗衣机排水管",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "洗衣机进水管",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "洗衣机接头",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "细网洗衣袋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "鞋底清洁刷",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "鞋边清洁刷",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "麂皮清洁刷",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "皮鞋保养油",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "长靴支撑架",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "洗衣液量杯",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "衣物除味喷雾",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "衣领清洁剂",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "袖口清洁剂",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "衣物除菌液",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "衣物防潮袋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "晾衣架滑轮",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "晾衣架钢丝绳",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "袜子晾晒夹",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "毛衣晾晒网",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "浴巾收纳架",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "毛巾收纳筐",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "腰带收纳架",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "皮带收纳架",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "领带收纳架",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "围巾收纳架",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "围巾收纳环",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "袜子分隔盒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "内衣分隔盒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "衣架连接扣",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "衣架防滑套",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "衣架收纳架",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "衣架延长钩",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 268,
+  "manual_pronunciation_overrides": {
+    "长柄沐浴刷": "changbingmuyushua",
+    "长柄搓澡刷": "changbingcuozaoshua"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 2,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

@@ -1,0 +1,327 @@
+{
+  "batch": "lexicon_batch_128",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "家常菜、外卖菜单、粉面浇头与熟食小吃名称",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 329,
+  "sha256": "8e98dc6533696e97523c7f9536ca41d332c00bc19db5f4fbaaaef977a04362dc",
+  "authoring_files_sha256": {
+    "lexicon_batch_128.authoring.json": "24c32d89a0d45333773f849ac8cbd5674372e972eebee633d9b6db5e0f5dbcd0",
+    "batch128_authored_daily_draft.txt": "598f97e6540e2a00fe714d5883e8fa8bbb9219006b2b318499eb9eca0067b654",
+    "batch128_pronunciation_review.tsv": "7d887c62cdd2182e715ebe6a097878e849c291b425a0992613c0193ddfaf6a88"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "667d13a1b1a8606e30e194d341df2e25f626a3f75b73edfa19749927f960da49",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "everyday_home_dishes_and_takeout_menus": 6000,
+    "noodles_rice_toppings_and_local_snacks": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "everyday_home_dishes_and_takeout_menus": 188,
+    "noodles_rice_toppings_and_local_snacks": 141
+  },
+  "length_distribution": {
+    "5": 117,
+    "4": 188,
+    "6": 6,
+    "3": 17,
+    "2": 1
+  },
+  "authoring_rejections": [
+    {
+      "word": "青椒肉丝",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "京酱肉丝",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "鱼香肉丝",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "青椒肉片",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "蒜苔炒肉",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "梅干菜烧肉",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "白菜炖粉条",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "番茄炖牛腩",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "土豆烧鸡块",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "黄瓜炒鸡蛋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "丝瓜炒鸡蛋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "韭菜炒鸡蛋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "莴笋炒鸡蛋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "苦瓜炒鸡蛋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "洋葱炒鸡蛋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "青椒炒鸡蛋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "虾仁炒鸡蛋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "西葫芦炒蛋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "紫菜虾皮汤",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "番茄蛋花汤",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "冬瓜虾皮汤",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "冬瓜肉丸汤",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "海带排骨汤",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "玉米排骨汤",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "莲藕排骨汤",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "菌菇鸡汤",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "椰子鸡汤",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "白菜豆腐汤",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "番茄豆腐汤",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "鲫鱼豆腐汤",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "蛤蜊蒸蛋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "虾仁蒸蛋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "肉末蒸蛋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "香菇蒸蛋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "肉末茄子",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "肉末蒸蛋羹",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "豆豉蒸排骨",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "豆豉蒸鲈鱼",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "蒜蓉蒸茄子",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "蒜蓉蒸丝瓜",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "蒜蓉蒸娃娃菜",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "蒜蓉蒸金针菇",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "蒜蓉蒸扇贝",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "蒜蓉蒸龙虾",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "粉丝蒸扇贝",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "清蒸黄花鱼",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "清蒸多宝鱼",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "清蒸武昌鱼",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "糖醋鲤鱼",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "香煎带鱼",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "椒盐皮皮虾",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "葱油拌面",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "麻酱凉面",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "麻酱凉皮",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "红油抄手",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "红油水饺",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "番茄鸡蛋面",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "雪菜肉丝面",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "榨菜肉丝面",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "香菇肉丝面",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "青椒肉丝面",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "羊肉烩面",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "鸡丝凉面",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "猪肝粉",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "叉烧炒饭",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "泡菜炒饭",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 268,
+  "manual_pronunciation_overrides": {
+    "豆豉蒸凤爪": "douchizhengfengzhua",
+    "豉油鸡饭": "chiyoujifan"
+  },
+  "reading_variant_choices": {
+    "豆豉蒸凤爪": "douchizhengfengzhua"
+  },
+  "semantic_pronunciation_corrections": 1,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

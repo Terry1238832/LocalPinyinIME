@@ -1,0 +1,252 @@
+{
+  "batch": "lexicon_batch_110",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "网购优惠、支付状态、会员订阅和客服沟通常用词；仅词语和界面状态，不涉及金融建议，预设 6000 类别档。",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 335,
+  "sha256": "84e058fdbe67337b98b754e76aa40b9d8ff206d887242b0ca7cc50cddd8c98e1",
+  "authoring_files_sha256": {
+    "lexicon_batch_110.authoring.json": "a04370e48c7dcadafd00f6506e7d8e3c80abdcac9fada3e90732db55c31debc9",
+    "batch110_authored_daily_draft.txt": "9c0baf927b8d353dc95db907ef1b288b9ade16c232f2f09cdfcdbc359c07150f",
+    "batch110_pronunciation_review.tsv": "f5190bd86f35f49ed920e2f5db1e331f568157347e4255ccc4ea00a1885a7fff"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "4dc8f964567ce2054199fee23d904048a663483e8a5466ba7f4dd99e0a4facd9",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "coupons_group_orders_and_checkout_labels": 6000,
+    "common_payment_and_order_statuses": 6000,
+    "subscriptions_and_membership_controls": 6000,
+    "everyday_online_shopping_messages": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "common_payment_and_order_statuses": 74,
+    "coupons_group_orders_and_checkout_labels": 99,
+    "everyday_online_shopping_messages": 82,
+    "subscriptions_and_membership_controls": 80
+  },
+  "length_distribution": {
+    "4": 104,
+    "6": 147,
+    "5": 77,
+    "3": 7
+  },
+  "authoring_rejections": [
+    {
+      "word": "运费券",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "满减券",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "折扣券",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "新人券",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "会员券",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "凑单金额",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "凑单商品",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "凑单清单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "凑单提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "满减门槛",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "满减条件",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "满减规则",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "临期折扣",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "购物车失效",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "购物车降价",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "商品降价提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "商品补货提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "商品到货提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "购物车清空",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "加购记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "移出购物车",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "下单备注",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "订单备注修改",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "付款码打不开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "支付密码忘了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "身份核验",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "转账备注",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "重复扣款",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "重复支付",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "重复订单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "收款通知",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "到账通知",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "退款通知",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "钱包余额",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "余额退款",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "余额明细",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "余额支付",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "日期筛选",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "会员续费",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "会员到期",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "会员过期",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "会员有效期",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "优惠券过期了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "优惠券没生效",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "优惠券找不到",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "优惠券没领到",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 307,
+  "manual_pronunciation_overrides": {
+    "支付密码重置": "zhifumimachongzhi",
+    "我没收到退款": "womeishoudaotuikuan",
+    "我没收到扣款": "womeishoudaokoukuan",
+    "我没收到通知": "womeishoudaotongzhi",
+    "我没收到提醒": "womeishoudaotixing",
+    "没收到验证码": "meishoudaoyanzhengma"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 6,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

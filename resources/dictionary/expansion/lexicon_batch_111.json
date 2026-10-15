@@ -1,0 +1,203 @@
+{
+  "batch": "lexicon_batch_111",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "公交地铁、步行换乘、导航定位和雨天出门生活词语；预设 6000 类别档，仅词语不提供实时交通规则或时刻。",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 362,
+  "sha256": "6950aa7e36f2116343ee813e8902d105f30691dd3bc12fa5d8db9bc53f71eaee",
+  "authoring_files_sha256": {
+    "lexicon_batch_111.authoring.json": "8c2ccf3498a069154a8d0d42bff2945f1251397441a2a0540b0b8e623fda5a8c",
+    "batch111_authored_daily_draft.txt": "436db226f2abdd82e7d5d0c937d032197e1b469fe212a88826825d681f239923",
+    "batch111_pronunciation_review.tsv": "ea20df6fd162e75b4139227ca5b4dfa5b75023b3cf69eb51699bbfbc0534c3b9"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "41084929800aeff25a323cbc9f9357f98ca44f15a9c36cb3ed1c7c6d6c3dfb67",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "transit_entries_platforms_and_transfers": 6000,
+    "everyday_commute_and_meeting_messages": 6000,
+    "maps_navigation_and_location_labels": 6000,
+    "rainy_day_commute_and_small_items": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "everyday_commute_and_meeting_messages": 93,
+    "maps_navigation_and_location_labels": 91,
+    "rainy_day_commute_and_small_items": 81,
+    "transit_entries_platforms_and_transfers": 97
+  },
+  "length_distribution": {
+    "6": 158,
+    "5": 117,
+    "4": 87
+  },
+  "authoring_rejections": [
+    {
+      "word": "闸机打不开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "进站闸机",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "出站闸机",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "进站扫码",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "出站扫码",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "乘车码刷新",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "乘车码失效",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "乘车码过期",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "乘车码错误",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "无障碍通道口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "安检口在哪",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "站台候车区",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "站台排队线",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "站台屏蔽门",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "站台指示牌",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "末班车时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "首班车时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "赶不上末班",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电梯停靠",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电梯维修中",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我到公交站了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "路况播报",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "定位偏了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "定位权限没开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "雨伞翻了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "雨伞骨断了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "伞面漏水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "鞋底湿了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "鞋袜湿了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "裤脚湿了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "衣角湿了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "雨伞收纳桶",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "雨伞收纳架",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "防水文件袋",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 281,
+  "manual_pronunciation_overrides": {
+    "乘车码重试": "chengchemachongshi",
+    "站台临时调整": "zhantailinshitiaozheng",
+    "扶梯上行": "futishangxing",
+    "导航重算": "daohangchongsuan",
+    "导航重连": "daohangchonglian",
+    "路线重规划": "luxianchongguihua"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 6,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

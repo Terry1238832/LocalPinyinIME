@@ -1,0 +1,392 @@
+{
+  "batch": "lexicon_batch_118",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "宠物日用品、阳台园艺与日常运动用品和邀约",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 354,
+  "sha256": "bf83b6949dfaf6e03880cab87e2feb80606ed2ec41e4b6d66cd54f331a1afdba",
+  "authoring_files_sha256": {
+    "lexicon_batch_118.authoring.json": "73b2a512c3ff9ded922240f5f7c08359f0ef19ade31b519e54593fcf535fa279",
+    "batch118_authored_daily_draft.txt": "c02717a3ed6ea3ae07013083d5f6c2c72299658f0f63a004af2573d68be23027",
+    "batch118_pronunciation_review.tsv": "762c99a309747e56b21f263951d2e6feb2d349f010ad6b2d2d80a5f490a3f878"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "dd3236d3687a42895f9cbe594df3d7e4f69039f493b2a9701ec723ead8d2a76d",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "pet_life_and_supplies": 6000,
+    "balcony_plants_and_garden_tools": 6000,
+    "everyday_exercise_gear_and_arrangements": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "balcony_plants_and_garden_tools": 120,
+    "everyday_exercise_gear_and_arrangements": 101,
+    "pet_life_and_supplies": 133
+  },
+  "length_distribution": {
+    "6": 18,
+    "5": 186,
+    "4": 97,
+    "3": 53
+  },
+  "authoring_rejections": [
+    {
+      "word": "猫抓板",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "猫抓柱",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "猫隧道",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "猫砂盆垫",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "猫砂铲架",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "猫砂收纳桶",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "猫砂盆踏板",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "封闭猫砂盆",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "逗猫羽毛",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "逗猫球",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "漏食玩具",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "慢食碗",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "嗅闻玩具",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "宠物食盆",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "宠物水盆",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "宠物饮水机",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "饮水机滤芯",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "宠物粮桶",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "主食罐头",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "遛狗拾便器",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "伸缩牵引绳",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "宠物名牌",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "宠物吹水机",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "粘毛滚筒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "宠物擦脚巾",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "宠物浴巾",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "宠物指甲剪",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "宠物航空箱",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "宠物外出包",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "宠物隔离门",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "育苗穴盘",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "育苗盒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "育苗盆",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "塑料花盆",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "陶土花盆",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "陶瓷花盆",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水泥花盆",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "自吸水花盆",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "壁挂花盆",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "花盆托盘",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "花盆移动架",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "花盆沥水垫",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "遮阳网",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "遮阴网",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "防虫网",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "爬藤架",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "植物支撑杆",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "园艺扎带",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "浇花喷壶",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "雾化喷头",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "园艺小铲",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "松土叉",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "园艺剪刀",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "修枝剪",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "高枝剪",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "椰糠砖",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "赤玉土",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "火山石",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "珍珠岩颗粒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "蛭石颗粒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "陶粒铺面",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "叶面喷水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "盆土结块",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "盆土板结",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "盆底积水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "花盆积水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "叶片打蔫",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "枝条徒长",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "根系腐烂",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "扦插生根",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水插生根",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "分株繁殖",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "跑步腰包",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "骑行锁鞋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "便携打气筒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "运动毛巾夹",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "运动护膝套",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "运动护踝套",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "跳绳收纳袋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "公园走一圈",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "河边走一圈",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 281,
+  "manual_pronunciation_overrides": {
+    "宠物洗爪杯": "chongwuxizhuabei",
+    "植物绑扎带": "zhiwubangzadai",
+    "长嘴浇水壶": "changzuijiaoshuihu",
+    "松土耙": "songtupa",
+    "长柄修枝剪": "changbingxiuzhijian"
+  },
+  "reading_variant_choices": {
+    "宠物洗爪杯": "chongwuxizhuabei",
+    "松土耙": "songtupa"
+  },
+  "semantic_pronunciation_corrections": 3,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

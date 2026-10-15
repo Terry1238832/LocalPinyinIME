@@ -1,0 +1,172 @@
+{
+  "batch": "lexicon_batch_101",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "做饭留饭、餐具打包、家务协作和洗晒衣物日常口语；预设 6000 粗档。",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 351,
+  "sha256": "5d33bf102f19fe49b7ed89daed30a6a6cd627074cb114e7ccceede4825abb3d5",
+  "authoring_files_sha256": {
+    "lexicon_batch_101.authoring.json": "fbce97c38c08ce7213220ae51533d7ffb1ba9262ed0c002cbf94f61ab9b4d8c9",
+    "batch101_authored_daily_draft.txt": "dd7caf22d01915c38b32517e127dfbfc94bf629c7175fd978a730ddb9bfdf5b1",
+    "batch101_pronunciation_review.tsv": "b3b416d1ff2cb062b60633defcc91f2bf6a05d95245467004a95dbd76e5542e3"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "d3b218095ae28b685e74153e9dfa0e14ef8a8618347c72ba98cfea0775772f43",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "practical_cooking_and_meal_messages": 6000,
+    "eating_and_packing_leftovers": 6000,
+    "chores_and_cleaning_messages": 6000,
+    "laundry_and_wardrobe_coordination": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "chores_and_cleaning_messages": 88,
+    "eating_and_packing_leftovers": 90,
+    "laundry_and_wardrobe_coordination": 74,
+    "practical_cooking_and_meal_messages": 99
+  },
+  "length_distribution": {
+    "5": 300,
+    "6": 51
+  },
+  "authoring_rejections": [
+    {
+      "word": "饭有点夹生",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "锅盖留条缝",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "趁热吃一点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "放凉再冷藏",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "放凉再冷冻",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "洗手液没了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "先把水接好",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "先把床铺好",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "衣服还没洗",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "衣服还没干",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "衣服已经干了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "衣服分开洗",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "深色分开洗",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "浅色分开洗",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "鞋垫拿出来",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "鞋带拆下来",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "袜子少了一只",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "衣服掉地上了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "裤脚卷起来",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "袖子卷起来",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 319,
+  "manual_pronunciation_overrides": {
+    "饭还得再热热": "fanhaideizairere",
+    "菜还得再炒炒": "caihaideizaichaochao",
+    "汤还得再煮煮": "tanghaideizaizhuzhu",
+    "水还得再烧烧": "shuihaideizaishaoshao",
+    "先把菜盛了": "xianbacaichengle",
+    "先把饭盛了": "xianbafanchengle",
+    "先把汤盛了": "xianbatangchengle",
+    "先把菜择了": "xianbacaizhaile",
+    "先把豆子择了": "xianbadouzizhaile",
+    "先把土豆削了": "xianbatudouxiaole",
+    "趁热盛出来": "chenrechengchulai",
+    "先把口扎上": "xianbakouzashang",
+    "先给你盛点": "xiangeinichengdian",
+    "你先盛着吃": "nixianchengzhechi",
+    "我来盛汤吧": "wolaichengtangba",
+    "这菜得先吃": "zhecaideixianchi",
+    "这汤得先喝": "zhetangdeixianhe",
+    "这饭得先热": "zhefandeixianre",
+    "这菜得先热": "zhecaideixianre",
+    "这肉得先切": "zheroudeixianqie",
+    "这个得先剥": "zhegedeixianbao",
+    "那个得先洗": "nagedeixianxi",
+    "汤也盛一点": "tangyechengyidian",
+    "饭也盛一点": "fanyechengyidian",
+    "给我盛少点": "geiwochengshaodian",
+    "先别给我盛": "xianbiegeiwocheng",
+    "我自己来盛": "wozijilaicheng",
+    "衣服别暴晒": "yifubiebaoshai"
+  },
+  "reading_variant_choices": {
+    "先把菜择了": "xianbacaizhaile",
+    "先把豆子择了": "xianbadouzizhaile",
+    "衣服别暴晒": "yifubiebaoshai"
+  },
+  "semantic_pronunciation_corrections": 25,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

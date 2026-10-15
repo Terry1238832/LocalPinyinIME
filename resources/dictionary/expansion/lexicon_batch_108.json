@@ -1,0 +1,599 @@
+{
+  "batch": "lexicon_batch_108",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "居住维护状态、清洁收纳用品及家居日用小物常用短词；固定 6000 类别档。",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 313,
+  "sha256": "0e08ebfc02975b344cd788dabfae6d920962583e491340ddff5705d95fce6ce9",
+  "authoring_files_sha256": {
+    "lexicon_batch_108.authoring.json": "ac8412a6023597a3c051c2d0c60628b0c1872aa8a0fc3477ba724e44d6db6b71",
+    "batch108_authored_daily_draft.txt": "4021720afdc031bb8d53c9310d4a86ff4179b13349fdd3eede99224d75274285",
+    "batch108_pronunciation_review.tsv": "aae19f3deb9a3ee59875f03a17a66c73c54e2c45e6d88840e89872586201169d"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "09f75517958c2d61b3baf715330d88b29145c78f805e277bb55c30ab91859bf3",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "common_home_condition_words": 6000,
+    "everyday_lighting_and_small_appliances": 6000,
+    "household_storage_and_small_objects": 6000,
+    "practical_cleaning_and_fabric_terms": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "common_home_condition_words": 115,
+    "everyday_lighting_and_small_appliances": 56,
+    "household_storage_and_small_objects": 82,
+    "practical_cleaning_and_fabric_terms": 60
+  },
+  "length_distribution": {
+    "4": 155,
+    "5": 149,
+    "6": 9
+  },
+  "authoring_rejections": [
+    {
+      "word": "地漏返味",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "地漏堵塞",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "地漏盖板",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水管渗水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水管漏水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "龙头滴水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "软管漏水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "花洒堵塞",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "花洒漏水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "花洒支架",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "花洒软管",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "喷头堵塞",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "马桶漏水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "马桶堵塞",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水箱漏水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "进水阀门",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "进水软管",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "排水软管",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "防臭地漏",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水槽提篮",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水槽滤篮",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水槽沥水架",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "龙头起泡器",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "龙头转接头",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "墙面起皮",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "墙面渗水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "墙皮脱落",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "墙角渗水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "地砖空鼓",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "地砖松动",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "窗缝漏风",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "阳台漏水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门框变形",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门框松动",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门缝太大",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门缝漏风",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门缝透光",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门锁松动",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门把手松了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门吸脱落",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "合页松动",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "合页生锈",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "柜门下垂",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "柜门合不拢",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "柜门关不严",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "灯泡闪烁",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "灯泡不亮",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "灯座松动",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "灯罩积灰",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "灯罩破损",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "灯带脱胶",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "灯带闪烁",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "台灯不亮",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "台灯底座",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "台灯灯罩",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "床头开关",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "感应开关",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "触摸开关",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "按键失灵",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "插座松动",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "插头松动",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "插头发热",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "插座面板",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "插座盖板",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "排插开关",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "充电口松动",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "充电口进灰",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电池仓盖",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电池触点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电池漏液",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电池鼓包",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "风扇异响",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "风扇网罩",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "风扇底座",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "风扇扇叶",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "风扇轴承",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "加湿器水垢",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吸尘器滤芯",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吸尘器滤网",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吸尘器尘盒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吸尘器尘袋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吸尘器吸头",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吸尘器软管",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "扫地机尘盒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "扫地机拖布",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "扫地机边刷",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "扫地机滚刷",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "扫地机滤网",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "扫地机水箱",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "扫地机卡住",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门后挂袋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "桌下理线盒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "床边收纳袋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "床头收纳架",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "床底收纳箱",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "衣柜分隔板",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "衣柜分层架",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "衣柜挂衣杆",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "衣柜收纳盒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "抽屉分隔盒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "抽屉分隔板",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "抽屉防滑垫",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "防尘衣罩",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "压缩收纳袋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "衣物压缩袋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "换季收纳箱",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "厨房吊柜",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "锅盖收纳架",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "砧板收纳架",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "刀具收纳架",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "冰箱收纳盒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "冰箱防尘罩",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "冰箱除味盒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "冰箱密封条",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "浴室置物架",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "浴室收纳篮",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "浴室挂钩",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "浴室防滑垫",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "浴室清洁刷",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "牙膏挤压器",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "漱口杯架",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "浴巾收纳架",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "缝隙清洁刷",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "窗槽清洁刷",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "键盘清洁刷",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吸管清洁刷",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "旋转拖把头",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "拖把替换布",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "拖把替换头",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "拖把桶盖",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "垃圾袋封口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帽子收纳架",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发夹收纳盒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发箍收纳架",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 228,
+  "manual_pronunciation_overrides": {
+    "龙头加长器": "longtoujiachangqi",
+    "垃圾袋扎带": "lajidaizadai"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 2,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

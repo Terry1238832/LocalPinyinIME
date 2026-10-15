@@ -1,0 +1,129 @@
+{
+  "batch": "lexicon_batch_102",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "常见网络口语、表情反应、搭子社交、围观追更和视频互动短词；固定 6000 类别档。",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 293,
+  "sha256": "f56ea484e6eb553cd8078115a06a614389dd59492de3dee78a481d6b0cf538ca",
+  "authoring_files_sha256": {
+    "lexicon_batch_102.authoring.json": "8abb60bfe292136d50b9d6e8bd11ef5d4f27b756400b7d3652fca1397be6c46f",
+    "batch102_authored_daily_draft.txt": "b49e4ecd9ae6c251d49abd6ca2e4cf896550431841f6b729d3ad1a580c6c8409",
+    "batch102_pronunciation_review.tsv": "dc511259b8fa289d6544167cc940ec38a9f14db665996249f5083d1d6301e113"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "5519ec5b4694f905c2a4f87efbb015e14f687d028ca4f79de744d0cfa9b69d72",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "internet_colloquialisms_and_social_life": 6000,
+    "online_reactions_and_exclamations": 6000,
+    "browsing_streaming_and_community_phrases": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "browsing_streaming_and_community_phrases": 101,
+    "internet_colloquialisms_and_social_life": 102,
+    "online_reactions_and_exclamations": 90
+  },
+  "length_distribution": {
+    "4": 73,
+    "5": 165,
+    "6": 32,
+    "3": 23
+  },
+  "authoring_rejections": [
+    {
+      "word": "追剧搭子",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "游戏搭子",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电子饭桌",
+      "reason": "author_language_review: too speculative or weakly established as a useful common expression; excluded before any native ranking measurement"
+    },
+    {
+      "word": "电子书桌",
+      "reason": "author_language_review: too speculative or weakly established as a useful common expression; excluded before any native ranking measurement"
+    },
+    {
+      "word": "电子便当",
+      "reason": "author_language_review: too speculative or weakly established as a useful common expression; excluded before any native ranking measurement"
+    },
+    {
+      "word": "电子咸菜",
+      "reason": "author_language_review: too speculative or weakly established as a useful common expression; excluded before any native ranking measurement"
+    },
+    {
+      "word": "电子甜点",
+      "reason": "author_language_review: too speculative or weakly established as a useful common expression; excluded before any native ranking measurement"
+    },
+    {
+      "word": "电子奶茶",
+      "reason": "author_language_review: too speculative or weakly established as a useful common expression; excluded before any native ranking measurement"
+    },
+    {
+      "word": "云端木鱼",
+      "reason": "author_language_review: too speculative or weakly established as a useful common expression; excluded before any native ranking measurement"
+    },
+    {
+      "word": "赛博菜场",
+      "reason": "author_language_review: too speculative or weakly established as a useful common expression; excluded before any native ranking measurement"
+    },
+    {
+      "word": "先让我缓缓",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "给我整不会了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "这下有意思了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "这下明白了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "这下懂了吧",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "别急着下结论",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 248,
+  "manual_pronunciation_overrides": {
+    "我得缓缓了": "wodeihuanhuanle",
+    "这谁受得了": "zheshuishoudeliao",
+    "这波长见识": "zhebozhangjianshi",
+    "调回原速看": "tiaohuiyuansukan",
+    "铺垫有点长": "pudianyoudianchang"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 5,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

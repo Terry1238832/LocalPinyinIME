@@ -1,0 +1,2563 @@
+{
+  "version": "0.7.9",
+  "measured_at_utc": "2026-10-15T14:58:35.747767+00:00",
+  "scope": "Replay visible common-word requirements, with isolated personal data.\n\nCompare old data, the finite priority changes alone, and final priorities plus\nnew vocabulary using the same final evaluator. These cases are public author\nchecks, not a blind or representative test of everyday typing accuracy.",
+  "engine_sha256": "a0f614aec8044ed9a2aeb56225c0775e7f80d660a0ae295bc4c5b23405f36da0",
+  "cases_sha256": "b24e87ade369d70065bdd2cdace1626dd67238c15f90eae9e2eb7f491510aab9",
+  "priority_manifest_sha256": "518126bf2beba46e4b6011a7882af184f774754b654be840794ed38007df1ebb",
+  "runtime_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "bc4d33cac36f590bec181bfd86bdb54583c9a3c1ef5cf3542c0f2feedc1c3130",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+    "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+    "continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e"
+  },
+  "personal_data_isolated": true,
+  "expected_answers_learned": false,
+  "not_blind_or_representative": true,
+  "priority_entries": 118,
+  "baseline": {
+    "summary": {
+      "cases": 45,
+      "top1_correct": 26,
+      "top9_present": 44,
+      "top1_percent": 57.78,
+      "top9_percent": 97.78,
+      "character_error_rate": 0.2689,
+      "p50_lookup_ms": 0.598,
+      "p95_lookup_ms": 7.328,
+      "max_lookup_ms": 18.642
+    },
+    "standalone36": {
+      "cases": 36,
+      "top1_correct": 21,
+      "top9_present": 36,
+      "top1_percent": 58.33,
+      "top9_percent": 100.0,
+      "character_error_rate": 0.4107,
+      "p50_lookup_ms": 0.538,
+      "p95_lookup_ms": 1.74,
+      "max_lookup_ms": 3.239
+    },
+    "context9": {
+      "cases": 9,
+      "top1_correct": 5,
+      "top9_present": 8,
+      "top1_percent": 55.56,
+      "top9_percent": 88.89,
+      "character_error_rate": 0.1429,
+      "p50_lookup_ms": 6.593,
+      "p95_lookup_ms": 18.642,
+      "max_lookup_ms": 18.642
+    },
+    "full_output_sha256": "5b781a4173c05db43a9c1578508599db813e7b69874bea3a1e03cdc2f49b0399",
+    "rows": [
+      {
+        "pinyin": "he",
+        "expected": "和",
+        "source": "priority:visible:001",
+        "lookup_us": 225,
+        "candidates": [
+          "喝",
+          "和",
+          "何",
+          "合",
+          "呵",
+          "核",
+          "贺",
+          "鹤",
+          "盒"
+        ],
+        "expected_rank": 2
+      },
+      {
+        "pinyin": "tianjia",
+        "expected": "添加",
+        "source": "priority:visible:002",
+        "lookup_us": 3239,
+        "candidates": [
+          "天价",
+          "添加",
+          "天家",
+          "天加",
+          "天假",
+          "填家",
+          "填加",
+          "填假",
+          "天际"
+        ],
+        "expected_rank": 2
+      },
+      {
+        "pinyin": "de",
+        "expected": "的",
+        "source": "priority:visible:003",
+        "lookup_us": 186,
+        "candidates": [
+          "的",
+          "得",
+          "地",
+          "德",
+          "锝",
+          "底",
+          "徳",
+          "悳",
+          "淂"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "shi",
+        "expected": "是",
+        "source": "priority:visible:004",
+        "lookup_us": 213,
+        "candidates": [
+          "是",
+          "试",
+          "时",
+          "使",
+          "十",
+          "室",
+          "师",
+          "诗",
+          "食"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "le",
+        "expected": "了",
+        "source": "priority:visible:005",
+        "lookup_us": 137,
+        "candidates": [
+          "了",
+          "乐",
+          "勒",
+          "叻",
+          "仂",
+          "肋",
+          "樂",
+          "楽",
+          "泐"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "zai",
+        "expected": "在",
+        "source": "priority:visible:006",
+        "lookup_us": 95,
+        "candidates": [
+          "在",
+          "再",
+          "载",
+          "仔",
+          "栽",
+          "宰",
+          "哉",
+          "灾",
+          "咋"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "you",
+        "expected": "有",
+        "source": "priority:visible:007",
+        "lookup_us": 96,
+        "candidates": [
+          "有",
+          "友",
+          "右",
+          "又",
+          "由",
+          "幽",
+          "尤",
+          "油",
+          "唷"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "bu",
+        "expected": "不",
+        "source": "priority:visible:008",
+        "lookup_us": 60,
+        "candidates": [
+          "不",
+          "步",
+          "补",
+          "布",
+          "部",
+          "卜",
+          "捕",
+          "簿",
+          "埠"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "ye",
+        "expected": "也",
+        "source": "priority:visible:009",
+        "lookup_us": 69,
+        "candidates": [
+          "业",
+          "叶",
+          "夜",
+          "耶",
+          "液",
+          "也",
+          "爷",
+          "页",
+          "野"
+        ],
+        "expected_rank": 6
+      },
+      {
+        "pinyin": "hai",
+        "expected": "还",
+        "source": "priority:visible:010",
+        "lookup_us": 59,
+        "candidates": [
+          "孩",
+          "还",
+          "咳",
+          "海",
+          "害",
+          "還",
+          "亥",
+          "骇",
+          "蛤"
+        ],
+        "expected_rank": 2
+      },
+      {
+        "pinyin": "zhe",
+        "expected": "这",
+        "source": "priority:visible:011",
+        "lookup_us": 332,
+        "candidates": [
+          "这",
+          "着",
+          "者",
+          "折",
+          "哲",
+          "遮",
+          "這",
+          "浙",
+          "喆"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "na",
+        "expected": "那",
+        "source": "priority:visible:012",
+        "lookup_us": 80,
+        "candidates": [
+          "那",
+          "哪",
+          "拿",
+          "纳",
+          "娜",
+          "呐",
+          "镎",
+          "钠",
+          "嗯"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "kan",
+        "expected": "看",
+        "source": "priority:visible:013",
+        "lookup_us": 66,
+        "candidates": [
+          "看",
+          "砍",
+          "坎",
+          "侃",
+          "刊",
+          "堪",
+          "勘",
+          "阚",
+          "卡"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "xiang",
+        "expected": "想",
+        "source": "priority:visible:014",
+        "lookup_us": 643,
+        "candidates": [
+          "想",
+          "像",
+          "向",
+          "相",
+          "乡",
+          "祥",
+          "翔",
+          "箱",
+          "先"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "gei",
+        "expected": "给",
+        "source": "priority:visible:015",
+        "lookup_us": 75,
+        "candidates": [
+          "给",
+          "給",
+          "个",
+          "各",
+          "歌",
+          "哥",
+          "隔",
+          "鿔",
+          "割"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "hen",
+        "expected": "很",
+        "source": "priority:visible:016",
+        "lookup_us": 106,
+        "candidates": [
+          "很",
+          "恨",
+          "狠",
+          "痕",
+          "和嗯",
+          "喝嗯",
+          "河嗯",
+          "何嗯",
+          "喝"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "deng",
+        "expected": "等",
+        "source": "priority:visible:017",
+        "lookup_us": 80,
+        "candidates": [
+          "等",
+          "登",
+          "邓",
+          "灯",
+          "瞪",
+          "蹬",
+          "凳",
+          "噔",
+          "扽"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "shezhi",
+        "expected": "设置",
+        "source": "priority:visible:018",
+        "lookup_us": 426,
+        "candidates": [
+          "摄制",
+          "设置",
+          "设之",
+          "设只",
+          "设纸",
+          "设志",
+          "设至",
+          "蛇之",
+          "社"
+        ],
+        "expected_rank": 2
+      },
+      {
+        "pinyin": "shanchu",
+        "expected": "删除",
+        "source": "priority:visible:019",
+        "lookup_us": 616,
+        "candidates": [
+          "闪出",
+          "删除",
+          "山出",
+          "删出",
+          "山处",
+          "删处",
+          "单处",
+          "山楚",
+          "闪"
+        ],
+        "expected_rank": 2
+      },
+      {
+        "pinyin": "fuzhi",
+        "expected": "复制",
+        "source": "priority:visible:020",
+        "lookup_us": 598,
+        "candidates": [
+          "福祉",
+          "肤质",
+          "副职",
+          "扶植",
+          "复制",
+          "赋值",
+          "父之",
+          "付之",
+          "父"
+        ],
+        "expected_rank": 5
+      },
+      {
+        "pinyin": "zhantie",
+        "expected": "粘贴",
+        "source": "priority:visible:021",
+        "lookup_us": 1254,
+        "candidates": [
+          "粘贴",
+          "站贴",
+          "站铁",
+          "站帖",
+          "占贴",
+          "占铁",
+          "占帖",
+          "粘帖",
+          "斩"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "sousuo",
+        "expected": "搜索",
+        "source": "priority:visible:022",
+        "lookup_us": 389,
+        "candidates": [
+          "搜索",
+          "搜锁",
+          "搜缩",
+          "搜所",
+          "搜嗦",
+          "搜唆",
+          "搜莎",
+          "搜梭",
+          "搜"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "denglu",
+        "expected": "登录",
+        "source": "priority:visible:023",
+        "lookup_us": 581,
+        "candidates": [
+          "登录",
+          "登陆",
+          "等路",
+          "等录",
+          "等炉",
+          "等橹",
+          "等掳",
+          "等陆",
+          "等"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "xiazai",
+        "expected": "下载",
+        "source": "priority:visible:024",
+        "lookup_us": 550,
+        "candidates": [
+          "下载",
+          "下在",
+          "夏在",
+          "下再",
+          "虾在",
+          "夏载",
+          "下哉",
+          "下灾",
+          "下"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "xiaoxi",
+        "expected": "消息",
+        "source": "priority:visible:025",
+        "lookup_us": 1025,
+        "candidates": [
+          "小溪",
+          "小西",
+          "消息",
+          "小系",
+          "小洗",
+          "小戏",
+          "小细",
+          "小息",
+          "小"
+        ],
+        "expected_rank": 3
+      },
+      {
+        "pinyin": "pinglun",
+        "expected": "评论",
+        "source": "priority:visible:026",
+        "lookup_us": 915,
+        "candidates": [
+          "评论",
+          "平论",
+          "屏论",
+          "苹论",
+          "平轮",
+          "屏轮",
+          "平伦",
+          "屏伦",
+          "凭"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "huifu",
+        "expected": "回复",
+        "source": "priority:visible:027",
+        "lookup_us": 594,
+        "candidates": [
+          "回覆",
+          "恢复",
+          "回复",
+          "会服",
+          "会福",
+          "会复",
+          "回服",
+          "会夫",
+          "会"
+        ],
+        "expected_rank": 3
+      },
+      {
+        "pinyin": "zhuanfa",
+        "expected": "转发",
+        "source": "priority:visible:028",
+        "lookup_us": 980,
+        "candidates": [
+          "转发",
+          "转法",
+          "传发",
+          "专发",
+          "转罚",
+          "传法",
+          "专法",
+          "转乏",
+          "转"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "dianzan",
+        "expected": "点赞",
+        "source": "priority:visible:029",
+        "lookup_us": 1073,
+        "candidates": [
+          "点赞",
+          "电赞",
+          "店赞",
+          "电簪",
+          "电咱",
+          "店簪",
+          "店咱",
+          "点簪",
+          "电"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "fenxiang",
+        "expected": "分享",
+        "source": "priority:visible:030",
+        "lookup_us": 1740,
+        "candidates": [
+          "分项",
+          "分享",
+          "分想",
+          "分箱",
+          "分向",
+          "分香",
+          "分响",
+          "分象",
+          "分线"
+        ],
+        "expected_rank": 2
+      },
+      {
+        "pinyin": "zhifu",
+        "expected": "支付",
+        "source": "priority:visible:031",
+        "lookup_us": 674,
+        "candidates": [
+          "致富",
+          "之父",
+          "支付",
+          "知府",
+          "制服",
+          "只服",
+          "只复",
+          "只夫",
+          "知"
+        ],
+        "expected_rank": 3
+      },
+      {
+        "pinyin": "dingdan",
+        "expected": "订单",
+        "source": "priority:visible:032",
+        "lookup_us": 933,
+        "candidates": [
+          "定单",
+          "订单",
+          "订担",
+          "订蛋",
+          "顶单",
+          "订淡",
+          "定蛋",
+          "顶蛋",
+          "丁"
+        ],
+        "expected_rank": 2
+      },
+      {
+        "pinyin": "dizhi",
+        "expected": "地址",
+        "source": "priority:visible:033",
+        "lookup_us": 538,
+        "candidates": [
+          "抵制",
+          "地质",
+          "低脂",
+          "迪之",
+          "地址",
+          "地之",
+          "第之",
+          "第只",
+          "低"
+        ],
+        "expected_rank": 5
+      },
+      {
+        "pinyin": "mima",
+        "expected": "密码",
+        "source": "priority:visible:034",
+        "lookup_us": 525,
+        "candidates": [
+          "密码",
+          "密吗",
+          "米吗",
+          "米码",
+          "密妈",
+          "米妈",
+          "蜜吗",
+          "密骂",
+          "迷"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "zhanghao",
+        "expected": "账号",
+        "source": "priority:visible:035",
+        "lookup_us": 659,
+        "candidates": [
+          "帐号",
+          "章昊",
+          "账号",
+          "长号",
+          "长好",
+          "掌好",
+          "掌号",
+          "账好",
+          "张"
+        ],
+        "expected_rank": 3
+      },
+      {
+        "pinyin": "yanzheng",
+        "expected": "验证",
+        "source": "priority:visible:036",
+        "lookup_us": 1427,
+        "candidates": [
+          "炎症",
+          "严正",
+          "验证",
+          "颜正",
+          "眼整",
+          "颜整",
+          "眼正",
+          "演整",
+          "严阵"
+        ],
+        "expected_rank": 3
+      },
+      {
+        "pinyin": "wohepengyouyiqichifan",
+        "expected": "我和朋友一起吃饭",
+        "source": "priority:context:001",
+        "lookup_us": 7328,
+        "candidates": [
+          "我和朋友一起吃饭",
+          "我和朋有一起吃饭",
+          "我和朋友一齐吃饭",
+          "我和朋友一起吃烦",
+          "我和朋友一起吃翻",
+          "我和朋友一期吃饭",
+          "我和朋友一起吃反",
+          "我和朋友一起吃番",
+          "我和"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "woxianghebeishui",
+        "expected": "我想喝杯水",
+        "source": "priority:context:002",
+        "lookup_us": 5139,
+        "candidates": [
+          "我想喝杯水",
+          "我想喝杯谁",
+          "我想喝杯睡",
+          "我想河北水",
+          "我想喝杯说",
+          "我想喝北水",
+          "我想喝背水",
+          "我想喝被谁",
+          "我想"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "qingzailiebiaolitianjiayixiang",
+        "expected": "请在列表里添加一项",
+        "source": "priority:context:003",
+        "lookup_us": 18642,
+        "candidates": [
+          "请在列表里添加一想",
+          "请在列表里添加一向",
+          "请在列表里添加一箱",
+          "请在列表里添加一项",
+          "青在列表里添加一想",
+          "请在列表里添加一响",
+          "请在列表里天价一想",
+          "请在列表里添加一象",
+          "请在"
+        ],
+        "expected_rank": 4
+      },
+      {
+        "pinyin": "tianjiademenqianyoukehuai",
+        "expected": "田家的门前有棵槐",
+        "source": "priority:context:004",
+        "lookup_us": 9168,
+        "candidates": [
+          "天家的门前游客坏",
+          "天家的门前又可坏",
+          "天家的门前又渴坏",
+          "天价的门前游客坏",
+          "天价的门前又可坏",
+          "天价的门前又渴坏",
+          "天家的门前有客坏",
+          "天家的门前有课坏",
+          "天价"
+        ],
+        "expected_rank": 0
+      },
+      {
+        "pinyin": "tianjiafujian",
+        "expected": "添加附件",
+        "source": "priority:context:005",
+        "lookup_us": 6266,
+        "candidates": [
+          "天价附件",
+          "添加附件",
+          "天家附件",
+          "天加附件",
+          "填价附件",
+          "天假附件",
+          "天架附件",
+          "天甲附件",
+          "天价"
+        ],
+        "expected_rank": 2
+      },
+      {
+        "pinyin": "wobaneirongfuzhiyixia",
+        "expected": "我把内容复制一下",
+        "source": "priority:context:006",
+        "lookup_us": 7003,
+        "candidates": [
+          "我把内容副指一下",
+          "我把内容复制一下",
+          "我把内容赋值一下",
+          "我把内容付之一下",
+          "我把内容副职一下",
+          "我把内容福祉一下",
+          "我把内容扶植一下",
+          "我把内容肤质一下",
+          "我把"
+        ],
+        "expected_rank": 2
+      },
+      {
+        "pinyin": "qingbaocunxiugaideshezhi",
+        "expected": "请保存修改的设置",
+        "source": "priority:context:007",
+        "lookup_us": 4884,
+        "candidates": [
+          "请保存修改的设置",
+          "请保存修改地设置",
+          "清保存修改的设置",
+          "请保存修改得设置",
+          "请保存修改德设置",
+          "请保存修改底设置",
+          "清保存修改地设置",
+          "清保存修改得设置",
+          "情报"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "shanchubuyongdewenjian",
+        "expected": "删除不用的文件",
+        "source": "priority:context:008",
+        "lookup_us": 6593,
+        "candidates": [
+          "删除不用的文件",
+          "闪出不用的文件",
+          "删除不用得文件",
+          "删除不用地文件",
+          "删除不用的问见",
+          "删除不用的问键",
+          "删除不用的文见",
+          "删除不用的问间",
+          "闪出"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "dakaixiaoxitongzhi",
+        "expected": "打开消息通知",
+        "source": "priority:context:009",
+        "lookup_us": 6235,
+        "candidates": [
+          "打开消息通知",
+          "打开消息同志",
+          "打开消息通之",
+          "打开消息同之",
+          "打开消息统治",
+          "打开消息通只",
+          "打开消息同只",
+          "打开消息通纸",
+          "大开"
+        ],
+        "expected_rank": 1
+      }
+    ]
+  },
+  "priority_only": {
+    "summary": {
+      "cases": 45,
+      "top1_correct": 41,
+      "top9_present": 44,
+      "top1_percent": 91.11,
+      "top9_percent": 97.78,
+      "character_error_rate": 0.0756,
+      "p50_lookup_ms": 0.652,
+      "p95_lookup_ms": 8.379,
+      "max_lookup_ms": 17.072
+    },
+    "standalone36": {
+      "cases": 36,
+      "top1_correct": 36,
+      "top9_present": 36,
+      "top1_percent": 100.0,
+      "top9_percent": 100.0,
+      "character_error_rate": 0.0,
+      "p50_lookup_ms": 0.553,
+      "p95_lookup_ms": 1.846,
+      "max_lookup_ms": 2.288
+    },
+    "context9": {
+      "cases": 9,
+      "top1_correct": 5,
+      "top9_present": 8,
+      "top1_percent": 55.56,
+      "top9_percent": 88.89,
+      "character_error_rate": 0.1429,
+      "p50_lookup_ms": 6.987,
+      "p95_lookup_ms": 17.072,
+      "max_lookup_ms": 17.072
+    },
+    "full_output_sha256": "16051870d8a5c5ca388efd567b0f543acb84a88f56963de0bd2251413d46a17b",
+    "rows": [
+      {
+        "pinyin": "he",
+        "expected": "和",
+        "source": "priority:visible:001",
+        "lookup_us": 234,
+        "candidates": [
+          "和",
+          "喝",
+          "何",
+          "合",
+          "呵",
+          "核",
+          "贺",
+          "鹤",
+          "盒"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "tianjia",
+        "expected": "添加",
+        "source": "priority:visible:002",
+        "lookup_us": 2288,
+        "candidates": [
+          "添加",
+          "天价",
+          "天家",
+          "天加",
+          "天假",
+          "填家",
+          "填加",
+          "填假",
+          "天际"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "de",
+        "expected": "的",
+        "source": "priority:visible:003",
+        "lookup_us": 94,
+        "candidates": [
+          "的",
+          "得",
+          "地",
+          "德",
+          "锝",
+          "底",
+          "徳",
+          "悳",
+          "淂"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "shi",
+        "expected": "是",
+        "source": "priority:visible:004",
+        "lookup_us": 115,
+        "candidates": [
+          "是",
+          "试",
+          "时",
+          "使",
+          "十",
+          "室",
+          "师",
+          "诗",
+          "食"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "le",
+        "expected": "了",
+        "source": "priority:visible:005",
+        "lookup_us": 53,
+        "candidates": [
+          "了",
+          "乐",
+          "勒",
+          "叻",
+          "仂",
+          "肋",
+          "樂",
+          "楽",
+          "泐"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "zai",
+        "expected": "在",
+        "source": "priority:visible:006",
+        "lookup_us": 66,
+        "candidates": [
+          "在",
+          "再",
+          "载",
+          "仔",
+          "栽",
+          "宰",
+          "哉",
+          "灾",
+          "咋"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "you",
+        "expected": "有",
+        "source": "priority:visible:007",
+        "lookup_us": 99,
+        "candidates": [
+          "有",
+          "友",
+          "右",
+          "又",
+          "由",
+          "幽",
+          "尤",
+          "油",
+          "唷"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "bu",
+        "expected": "不",
+        "source": "priority:visible:008",
+        "lookup_us": 63,
+        "candidates": [
+          "不",
+          "步",
+          "补",
+          "布",
+          "部",
+          "卜",
+          "捕",
+          "簿",
+          "埠"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "ye",
+        "expected": "也",
+        "source": "priority:visible:009",
+        "lookup_us": 75,
+        "candidates": [
+          "也",
+          "业",
+          "叶",
+          "夜",
+          "耶",
+          "液",
+          "爷",
+          "页",
+          "野"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "hai",
+        "expected": "还",
+        "source": "priority:visible:010",
+        "lookup_us": 62,
+        "candidates": [
+          "还",
+          "孩",
+          "咳",
+          "海",
+          "害",
+          "還",
+          "亥",
+          "骇",
+          "蛤"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "zhe",
+        "expected": "这",
+        "source": "priority:visible:011",
+        "lookup_us": 71,
+        "candidates": [
+          "这",
+          "着",
+          "者",
+          "折",
+          "哲",
+          "遮",
+          "這",
+          "浙",
+          "喆"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "na",
+        "expected": "那",
+        "source": "priority:visible:012",
+        "lookup_us": 79,
+        "candidates": [
+          "那",
+          "哪",
+          "拿",
+          "纳",
+          "娜",
+          "呐",
+          "镎",
+          "钠",
+          "嗯"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "kan",
+        "expected": "看",
+        "source": "priority:visible:013",
+        "lookup_us": 67,
+        "candidates": [
+          "看",
+          "砍",
+          "坎",
+          "侃",
+          "刊",
+          "堪",
+          "勘",
+          "阚",
+          "卡"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "xiang",
+        "expected": "想",
+        "source": "priority:visible:014",
+        "lookup_us": 706,
+        "candidates": [
+          "想",
+          "像",
+          "向",
+          "相",
+          "乡",
+          "祥",
+          "翔",
+          "箱",
+          "先"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "gei",
+        "expected": "给",
+        "source": "priority:visible:015",
+        "lookup_us": 89,
+        "candidates": [
+          "给",
+          "給",
+          "个",
+          "各",
+          "歌",
+          "哥",
+          "隔",
+          "鿔",
+          "割"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "hen",
+        "expected": "很",
+        "source": "priority:visible:016",
+        "lookup_us": 116,
+        "candidates": [
+          "很",
+          "恨",
+          "狠",
+          "痕",
+          "和嗯",
+          "喝嗯",
+          "河嗯",
+          "何嗯",
+          "和"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "deng",
+        "expected": "等",
+        "source": "priority:visible:017",
+        "lookup_us": 88,
+        "candidates": [
+          "等",
+          "登",
+          "邓",
+          "灯",
+          "瞪",
+          "蹬",
+          "凳",
+          "噔",
+          "扽"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "shezhi",
+        "expected": "设置",
+        "source": "priority:visible:018",
+        "lookup_us": 416,
+        "candidates": [
+          "设置",
+          "摄制",
+          "设之",
+          "设只",
+          "设纸",
+          "设志",
+          "设至",
+          "蛇之",
+          "社"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "shanchu",
+        "expected": "删除",
+        "source": "priority:visible:019",
+        "lookup_us": 652,
+        "candidates": [
+          "删除",
+          "闪出",
+          "山出",
+          "删出",
+          "山处",
+          "删处",
+          "单处",
+          "山楚",
+          "闪"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "fuzhi",
+        "expected": "复制",
+        "source": "priority:visible:020",
+        "lookup_us": 652,
+        "candidates": [
+          "复制",
+          "福祉",
+          "肤质",
+          "副职",
+          "扶植",
+          "赋值",
+          "父之",
+          "付之",
+          "父"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "zhantie",
+        "expected": "粘贴",
+        "source": "priority:visible:021",
+        "lookup_us": 1399,
+        "candidates": [
+          "粘贴",
+          "站贴",
+          "站铁",
+          "站帖",
+          "占贴",
+          "占铁",
+          "占帖",
+          "粘帖",
+          "斩"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "sousuo",
+        "expected": "搜索",
+        "source": "priority:visible:022",
+        "lookup_us": 427,
+        "candidates": [
+          "搜索",
+          "搜锁",
+          "搜缩",
+          "搜所",
+          "搜嗦",
+          "搜唆",
+          "搜莎",
+          "搜梭",
+          "搜"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "denglu",
+        "expected": "登录",
+        "source": "priority:visible:023",
+        "lookup_us": 834,
+        "candidates": [
+          "登录",
+          "登陆",
+          "等路",
+          "等录",
+          "等炉",
+          "等橹",
+          "等掳",
+          "等陆",
+          "等"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "xiazai",
+        "expected": "下载",
+        "source": "priority:visible:024",
+        "lookup_us": 617,
+        "candidates": [
+          "下载",
+          "下在",
+          "夏在",
+          "下再",
+          "虾在",
+          "夏载",
+          "下哉",
+          "下灾",
+          "下"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "xiaoxi",
+        "expected": "消息",
+        "source": "priority:visible:025",
+        "lookup_us": 1093,
+        "candidates": [
+          "消息",
+          "小溪",
+          "小西",
+          "小系",
+          "小洗",
+          "小戏",
+          "小细",
+          "小息",
+          "小"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "pinglun",
+        "expected": "评论",
+        "source": "priority:visible:026",
+        "lookup_us": 967,
+        "candidates": [
+          "评论",
+          "平论",
+          "屏论",
+          "苹论",
+          "平轮",
+          "屏轮",
+          "平伦",
+          "屏伦",
+          "凭"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "huifu",
+        "expected": "回复",
+        "source": "priority:visible:027",
+        "lookup_us": 700,
+        "candidates": [
+          "回复",
+          "回覆",
+          "恢复",
+          "会服",
+          "会福",
+          "会复",
+          "回服",
+          "会夫",
+          "会"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "zhuanfa",
+        "expected": "转发",
+        "source": "priority:visible:028",
+        "lookup_us": 894,
+        "candidates": [
+          "转发",
+          "转法",
+          "传发",
+          "专发",
+          "转罚",
+          "传法",
+          "专法",
+          "转乏",
+          "转"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "dianzan",
+        "expected": "点赞",
+        "source": "priority:visible:029",
+        "lookup_us": 967,
+        "candidates": [
+          "点赞",
+          "电赞",
+          "店赞",
+          "电簪",
+          "电咱",
+          "店簪",
+          "店咱",
+          "点簪",
+          "电"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "fenxiang",
+        "expected": "分享",
+        "source": "priority:visible:030",
+        "lookup_us": 1846,
+        "candidates": [
+          "分享",
+          "分项",
+          "分想",
+          "分箱",
+          "分向",
+          "分香",
+          "分响",
+          "分象",
+          "分线"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "zhifu",
+        "expected": "支付",
+        "source": "priority:visible:031",
+        "lookup_us": 608,
+        "candidates": [
+          "支付",
+          "致富",
+          "之父",
+          "知府",
+          "制服",
+          "只服",
+          "只复",
+          "只夫",
+          "知"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "dingdan",
+        "expected": "订单",
+        "source": "priority:visible:032",
+        "lookup_us": 975,
+        "candidates": [
+          "订单",
+          "定单",
+          "订担",
+          "订蛋",
+          "顶单",
+          "订淡",
+          "定蛋",
+          "顶蛋",
+          "丁"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "dizhi",
+        "expected": "地址",
+        "source": "priority:visible:033",
+        "lookup_us": 521,
+        "candidates": [
+          "地址",
+          "抵制",
+          "地质",
+          "低脂",
+          "迪之",
+          "地之",
+          "第之",
+          "第只",
+          "地"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "mima",
+        "expected": "密码",
+        "source": "priority:visible:034",
+        "lookup_us": 553,
+        "candidates": [
+          "密码",
+          "密吗",
+          "米吗",
+          "米码",
+          "密妈",
+          "米妈",
+          "蜜吗",
+          "密骂",
+          "迷"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "zhanghao",
+        "expected": "账号",
+        "source": "priority:visible:035",
+        "lookup_us": 698,
+        "candidates": [
+          "账号",
+          "帐号",
+          "章昊",
+          "长号",
+          "长好",
+          "掌好",
+          "掌号",
+          "账好",
+          "张"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "yanzheng",
+        "expected": "验证",
+        "source": "priority:visible:036",
+        "lookup_us": 1452,
+        "candidates": [
+          "验证",
+          "炎症",
+          "严正",
+          "颜正",
+          "眼整",
+          "颜整",
+          "眼正",
+          "演整",
+          "严阵"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "wohepengyouyiqichifan",
+        "expected": "我和朋友一起吃饭",
+        "source": "priority:context:001",
+        "lookup_us": 8014,
+        "candidates": [
+          "我和朋友一起吃饭",
+          "我和朋有一起吃饭",
+          "我和朋友一齐吃饭",
+          "我和朋友一起吃烦",
+          "我和朋友一起吃翻",
+          "我和朋友一期吃饭",
+          "我和朋友一起吃反",
+          "我和朋友一起吃番",
+          "我和"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "woxianghebeishui",
+        "expected": "我想喝杯水",
+        "source": "priority:context:002",
+        "lookup_us": 5057,
+        "candidates": [
+          "我想喝杯水",
+          "我想喝杯谁",
+          "我想喝杯睡",
+          "我想河北水",
+          "我想喝杯说",
+          "我想喝北水",
+          "我想喝背水",
+          "我想喝被谁",
+          "我想"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "qingzailiebiaolitianjiayixiang",
+        "expected": "请在列表里添加一项",
+        "source": "priority:context:003",
+        "lookup_us": 17072,
+        "candidates": [
+          "请在列表里添加一想",
+          "请在列表里添加一向",
+          "请在列表里添加一箱",
+          "请在列表里添加一项",
+          "青在列表里添加一想",
+          "请在列表里添加一响",
+          "请在列表里天价一想",
+          "请在列表里添加一象",
+          "请在"
+        ],
+        "expected_rank": 4
+      },
+      {
+        "pinyin": "tianjiademenqianyoukehuai",
+        "expected": "田家的门前有棵槐",
+        "source": "priority:context:004",
+        "lookup_us": 10452,
+        "candidates": [
+          "天家的门前游客坏",
+          "天家的门前又可坏",
+          "天家的门前又渴坏",
+          "天价的门前游客坏",
+          "天价的门前又可坏",
+          "天价的门前又渴坏",
+          "天家的门前有客坏",
+          "天家的门前有课坏",
+          "添加"
+        ],
+        "expected_rank": 0
+      },
+      {
+        "pinyin": "tianjiafujian",
+        "expected": "添加附件",
+        "source": "priority:context:005",
+        "lookup_us": 6763,
+        "candidates": [
+          "天价附件",
+          "添加附件",
+          "天家附件",
+          "天加附件",
+          "填价附件",
+          "天假附件",
+          "天架附件",
+          "天甲附件",
+          "添加"
+        ],
+        "expected_rank": 2
+      },
+      {
+        "pinyin": "wobaneirongfuzhiyixia",
+        "expected": "我把内容复制一下",
+        "source": "priority:context:006",
+        "lookup_us": 8379,
+        "candidates": [
+          "我把内容副指一下",
+          "我把内容复制一下",
+          "我把内容赋值一下",
+          "我把内容付之一下",
+          "我把内容副职一下",
+          "我把内容福祉一下",
+          "我把内容扶植一下",
+          "我把内容肤质一下",
+          "我把"
+        ],
+        "expected_rank": 2
+      },
+      {
+        "pinyin": "qingbaocunxiugaideshezhi",
+        "expected": "请保存修改的设置",
+        "source": "priority:context:007",
+        "lookup_us": 4942,
+        "candidates": [
+          "请保存修改的设置",
+          "请保存修改地设置",
+          "清保存修改的设置",
+          "请保存修改得设置",
+          "请保存修改德设置",
+          "请保存修改底设置",
+          "清保存修改地设置",
+          "清保存修改得设置",
+          "情报"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "shanchubuyongdewenjian",
+        "expected": "删除不用的文件",
+        "source": "priority:context:008",
+        "lookup_us": 6987,
+        "candidates": [
+          "删除不用的文件",
+          "闪出不用的文件",
+          "删除不用得文件",
+          "删除不用地文件",
+          "删除不用的问见",
+          "删除不用的问键",
+          "删除不用的文见",
+          "删除不用的问间",
+          "删除"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "dakaixiaoxitongzhi",
+        "expected": "打开消息通知",
+        "source": "priority:context:009",
+        "lookup_us": 6265,
+        "candidates": [
+          "打开消息通知",
+          "打开消息同志",
+          "打开消息通之",
+          "打开消息同之",
+          "打开消息统治",
+          "打开消息通只",
+          "打开消息同只",
+          "打开消息通纸",
+          "打开"
+        ],
+        "expected_rank": 1
+      }
+    ]
+  },
+  "current": {
+    "summary": {
+      "cases": 45,
+      "top1_correct": 41,
+      "top9_present": 44,
+      "top1_percent": 91.11,
+      "top9_percent": 97.78,
+      "character_error_rate": 0.0756,
+      "p50_lookup_ms": 0.601,
+      "p95_lookup_ms": 8.477,
+      "max_lookup_ms": 16.969
+    },
+    "standalone36": {
+      "cases": 36,
+      "top1_correct": 36,
+      "top9_present": 36,
+      "top1_percent": 100.0,
+      "top9_percent": 100.0,
+      "character_error_rate": 0.0,
+      "p50_lookup_ms": 0.543,
+      "p95_lookup_ms": 1.774,
+      "max_lookup_ms": 2.405
+    },
+    "context9": {
+      "cases": 9,
+      "top1_correct": 5,
+      "top9_present": 8,
+      "top1_percent": 55.56,
+      "top9_percent": 88.89,
+      "character_error_rate": 0.1429,
+      "p50_lookup_ms": 7.503,
+      "p95_lookup_ms": 16.969,
+      "max_lookup_ms": 16.969
+    },
+    "full_output_sha256": "c233a609280e4f3d377474df42c789eb5c59421cceab48212a15fc027429ad55",
+    "rows": [
+      {
+        "pinyin": "he",
+        "expected": "和",
+        "source": "priority:visible:001",
+        "lookup_us": 277,
+        "candidates": [
+          "和",
+          "喝",
+          "何",
+          "合",
+          "呵",
+          "核",
+          "贺",
+          "鹤",
+          "盒"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "tianjia",
+        "expected": "添加",
+        "source": "priority:visible:002",
+        "lookup_us": 2405,
+        "candidates": [
+          "添加",
+          "天价",
+          "天家",
+          "天加",
+          "天假",
+          "填家",
+          "填加",
+          "填假",
+          "天际"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "de",
+        "expected": "的",
+        "source": "priority:visible:003",
+        "lookup_us": 189,
+        "candidates": [
+          "的",
+          "得",
+          "地",
+          "德",
+          "锝",
+          "底",
+          "徳",
+          "悳",
+          "淂"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "shi",
+        "expected": "是",
+        "source": "priority:visible:004",
+        "lookup_us": 220,
+        "candidates": [
+          "是",
+          "试",
+          "时",
+          "使",
+          "十",
+          "室",
+          "师",
+          "诗",
+          "食"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "le",
+        "expected": "了",
+        "source": "priority:visible:005",
+        "lookup_us": 107,
+        "candidates": [
+          "了",
+          "乐",
+          "勒",
+          "叻",
+          "仂",
+          "肋",
+          "樂",
+          "楽",
+          "泐"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "zai",
+        "expected": "在",
+        "source": "priority:visible:006",
+        "lookup_us": 131,
+        "candidates": [
+          "在",
+          "再",
+          "载",
+          "仔",
+          "栽",
+          "宰",
+          "哉",
+          "灾",
+          "咋"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "you",
+        "expected": "有",
+        "source": "priority:visible:007",
+        "lookup_us": 274,
+        "candidates": [
+          "有",
+          "友",
+          "右",
+          "又",
+          "由",
+          "幽",
+          "尤",
+          "油",
+          "唷"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "bu",
+        "expected": "不",
+        "source": "priority:visible:008",
+        "lookup_us": 115,
+        "candidates": [
+          "不",
+          "步",
+          "补",
+          "布",
+          "部",
+          "卜",
+          "捕",
+          "簿",
+          "埠"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "ye",
+        "expected": "也",
+        "source": "priority:visible:009",
+        "lookup_us": 133,
+        "candidates": [
+          "也",
+          "业",
+          "叶",
+          "夜",
+          "耶",
+          "液",
+          "爷",
+          "页",
+          "野"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "hai",
+        "expected": "还",
+        "source": "priority:visible:010",
+        "lookup_us": 138,
+        "candidates": [
+          "还",
+          "孩",
+          "咳",
+          "海",
+          "害",
+          "還",
+          "亥",
+          "骇",
+          "蛤"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "zhe",
+        "expected": "这",
+        "source": "priority:visible:011",
+        "lookup_us": 78,
+        "candidates": [
+          "这",
+          "着",
+          "者",
+          "折",
+          "哲",
+          "遮",
+          "這",
+          "浙",
+          "喆"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "na",
+        "expected": "那",
+        "source": "priority:visible:012",
+        "lookup_us": 72,
+        "candidates": [
+          "那",
+          "哪",
+          "拿",
+          "纳",
+          "娜",
+          "呐",
+          "镎",
+          "钠",
+          "嗯"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "kan",
+        "expected": "看",
+        "source": "priority:visible:013",
+        "lookup_us": 67,
+        "candidates": [
+          "看",
+          "砍",
+          "坎",
+          "侃",
+          "刊",
+          "堪",
+          "勘",
+          "阚",
+          "卡"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "xiang",
+        "expected": "想",
+        "source": "priority:visible:014",
+        "lookup_us": 675,
+        "candidates": [
+          "想",
+          "像",
+          "向",
+          "相",
+          "乡",
+          "祥",
+          "翔",
+          "箱",
+          "先"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "gei",
+        "expected": "给",
+        "source": "priority:visible:015",
+        "lookup_us": 78,
+        "candidates": [
+          "给",
+          "給",
+          "个",
+          "各",
+          "歌",
+          "哥",
+          "隔",
+          "鿔",
+          "割"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "hen",
+        "expected": "很",
+        "source": "priority:visible:016",
+        "lookup_us": 108,
+        "candidates": [
+          "很",
+          "恨",
+          "狠",
+          "痕",
+          "和嗯",
+          "喝嗯",
+          "河嗯",
+          "何嗯",
+          "和"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "deng",
+        "expected": "等",
+        "source": "priority:visible:017",
+        "lookup_us": 82,
+        "candidates": [
+          "等",
+          "登",
+          "邓",
+          "灯",
+          "瞪",
+          "蹬",
+          "凳",
+          "噔",
+          "扽"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "shezhi",
+        "expected": "设置",
+        "source": "priority:visible:018",
+        "lookup_us": 405,
+        "candidates": [
+          "设置",
+          "摄制",
+          "设之",
+          "设只",
+          "设纸",
+          "设志",
+          "设至",
+          "蛇之",
+          "社"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "shanchu",
+        "expected": "删除",
+        "source": "priority:visible:019",
+        "lookup_us": 616,
+        "candidates": [
+          "删除",
+          "闪出",
+          "山出",
+          "删出",
+          "山处",
+          "删处",
+          "单处",
+          "山楚",
+          "闪"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "fuzhi",
+        "expected": "复制",
+        "source": "priority:visible:020",
+        "lookup_us": 601,
+        "candidates": [
+          "复制",
+          "福祉",
+          "肤质",
+          "副职",
+          "扶植",
+          "赋值",
+          "父之",
+          "付之",
+          "父"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "zhantie",
+        "expected": "粘贴",
+        "source": "priority:visible:021",
+        "lookup_us": 1340,
+        "candidates": [
+          "粘贴",
+          "站贴",
+          "站铁",
+          "站帖",
+          "占贴",
+          "占铁",
+          "占帖",
+          "粘帖",
+          "斩"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "sousuo",
+        "expected": "搜索",
+        "source": "priority:visible:022",
+        "lookup_us": 396,
+        "candidates": [
+          "搜索",
+          "搜锁",
+          "搜缩",
+          "搜所",
+          "搜嗦",
+          "搜唆",
+          "搜莎",
+          "搜梭",
+          "搜"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "denglu",
+        "expected": "登录",
+        "source": "priority:visible:023",
+        "lookup_us": 599,
+        "candidates": [
+          "登录",
+          "登陆",
+          "等路",
+          "等录",
+          "等炉",
+          "等橹",
+          "等掳",
+          "等陆",
+          "等"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "xiazai",
+        "expected": "下载",
+        "source": "priority:visible:024",
+        "lookup_us": 543,
+        "candidates": [
+          "下载",
+          "下在",
+          "夏在",
+          "下再",
+          "虾在",
+          "夏载",
+          "下哉",
+          "下灾",
+          "下"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "xiaoxi",
+        "expected": "消息",
+        "source": "priority:visible:025",
+        "lookup_us": 1035,
+        "candidates": [
+          "消息",
+          "小溪",
+          "小西",
+          "小系",
+          "小洗",
+          "小戏",
+          "小细",
+          "小息",
+          "小"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "pinglun",
+        "expected": "评论",
+        "source": "priority:visible:026",
+        "lookup_us": 908,
+        "candidates": [
+          "评论",
+          "平论",
+          "屏论",
+          "苹论",
+          "平轮",
+          "屏轮",
+          "平伦",
+          "屏伦",
+          "凭"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "huifu",
+        "expected": "回复",
+        "source": "priority:visible:027",
+        "lookup_us": 596,
+        "candidates": [
+          "回复",
+          "回覆",
+          "恢复",
+          "会服",
+          "会福",
+          "会复",
+          "回服",
+          "会夫",
+          "会"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "zhuanfa",
+        "expected": "转发",
+        "source": "priority:visible:028",
+        "lookup_us": 748,
+        "candidates": [
+          "转发",
+          "转法",
+          "传发",
+          "专发",
+          "转罚",
+          "传法",
+          "专法",
+          "转乏",
+          "转"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "dianzan",
+        "expected": "点赞",
+        "source": "priority:visible:029",
+        "lookup_us": 857,
+        "candidates": [
+          "点赞",
+          "电赞",
+          "店赞",
+          "电簪",
+          "电咱",
+          "店簪",
+          "店咱",
+          "点簪",
+          "电"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "fenxiang",
+        "expected": "分享",
+        "source": "priority:visible:030",
+        "lookup_us": 1774,
+        "candidates": [
+          "分享",
+          "分项",
+          "分想",
+          "分箱",
+          "分向",
+          "分香",
+          "分响",
+          "分象",
+          "分线"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "zhifu",
+        "expected": "支付",
+        "source": "priority:visible:031",
+        "lookup_us": 586,
+        "candidates": [
+          "支付",
+          "致富",
+          "之父",
+          "知府",
+          "制服",
+          "只服",
+          "只复",
+          "只夫",
+          "知"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "dingdan",
+        "expected": "订单",
+        "source": "priority:visible:032",
+        "lookup_us": 923,
+        "candidates": [
+          "订单",
+          "定单",
+          "订担",
+          "订蛋",
+          "顶单",
+          "订淡",
+          "定蛋",
+          "顶蛋",
+          "丁"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "dizhi",
+        "expected": "地址",
+        "source": "priority:visible:033",
+        "lookup_us": 532,
+        "candidates": [
+          "地址",
+          "抵制",
+          "地质",
+          "低脂",
+          "迪之",
+          "地之",
+          "第之",
+          "第只",
+          "地"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "mima",
+        "expected": "密码",
+        "source": "priority:visible:034",
+        "lookup_us": 747,
+        "candidates": [
+          "密码",
+          "密吗",
+          "米吗",
+          "米码",
+          "密妈",
+          "米妈",
+          "蜜吗",
+          "密骂",
+          "迷"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "zhanghao",
+        "expected": "账号",
+        "source": "priority:visible:035",
+        "lookup_us": 736,
+        "candidates": [
+          "账号",
+          "帐号",
+          "章昊",
+          "长号",
+          "长好",
+          "掌好",
+          "掌号",
+          "账好",
+          "张"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "yanzheng",
+        "expected": "验证",
+        "source": "priority:visible:036",
+        "lookup_us": 1430,
+        "candidates": [
+          "验证",
+          "炎症",
+          "严正",
+          "颜正",
+          "眼整",
+          "颜整",
+          "眼正",
+          "演整",
+          "严阵"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "wohepengyouyiqichifan",
+        "expected": "我和朋友一起吃饭",
+        "source": "priority:context:001",
+        "lookup_us": 7503,
+        "candidates": [
+          "我和朋友一起吃饭",
+          "我和朋有一起吃饭",
+          "我和朋友一齐吃饭",
+          "我和朋友一起吃烦",
+          "我和朋友一起吃翻",
+          "我和朋友一期吃饭",
+          "我和朋友一起吃反",
+          "我和朋友一起吃番",
+          "我和"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "woxianghebeishui",
+        "expected": "我想喝杯水",
+        "source": "priority:context:002",
+        "lookup_us": 4908,
+        "candidates": [
+          "我想喝杯水",
+          "我想喝杯谁",
+          "我想喝杯睡",
+          "我想河北水",
+          "我想喝杯说",
+          "我想喝北水",
+          "我想喝背水",
+          "我想喝被谁",
+          "我想"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "qingzailiebiaolitianjiayixiang",
+        "expected": "请在列表里添加一项",
+        "source": "priority:context:003",
+        "lookup_us": 16969,
+        "candidates": [
+          "请在列表里添加一想",
+          "请在列表里添加一向",
+          "请在列表里添加一箱",
+          "请在列表里添加一项",
+          "青在列表里添加一想",
+          "请在列表里添加一响",
+          "请在列表里天价一想",
+          "请在列表里添加一象",
+          "请在"
+        ],
+        "expected_rank": 4
+      },
+      {
+        "pinyin": "tianjiademenqianyoukehuai",
+        "expected": "田家的门前有棵槐",
+        "source": "priority:context:004",
+        "lookup_us": 9777,
+        "candidates": [
+          "天家的门前游客坏",
+          "天家的门前又可坏",
+          "天家的门前又渴坏",
+          "天价的门前游客坏",
+          "天价的门前又可坏",
+          "天价的门前又渴坏",
+          "天家的门前有客坏",
+          "天家的门前有课坏",
+          "添加"
+        ],
+        "expected_rank": 0
+      },
+      {
+        "pinyin": "tianjiafujian",
+        "expected": "添加附件",
+        "source": "priority:context:005",
+        "lookup_us": 6884,
+        "candidates": [
+          "天价附件",
+          "添加附件",
+          "天家附件",
+          "天加附件",
+          "填价附件",
+          "天假附件",
+          "天架附件",
+          "天甲附件",
+          "添加"
+        ],
+        "expected_rank": 2
+      },
+      {
+        "pinyin": "wobaneirongfuzhiyixia",
+        "expected": "我把内容复制一下",
+        "source": "priority:context:006",
+        "lookup_us": 8477,
+        "candidates": [
+          "我把内容副指一下",
+          "我把内容复制一下",
+          "我把内容赋值一下",
+          "我把内容付之一下",
+          "我把内容副职一下",
+          "我把内容福祉一下",
+          "我把内容扶植一下",
+          "我把内容肤质一下",
+          "我把"
+        ],
+        "expected_rank": 2
+      },
+      {
+        "pinyin": "qingbaocunxiugaideshezhi",
+        "expected": "请保存修改的设置",
+        "source": "priority:context:007",
+        "lookup_us": 4937,
+        "candidates": [
+          "请保存修改的设置",
+          "请保存修改地设置",
+          "清保存修改的设置",
+          "请保存修改得设置",
+          "请保存修改德设置",
+          "请保存修改底设置",
+          "清保存修改地设置",
+          "清保存修改得设置",
+          "情报"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "shanchubuyongdewenjian",
+        "expected": "删除不用的文件",
+        "source": "priority:context:008",
+        "lookup_us": 7668,
+        "candidates": [
+          "删除不用的文件",
+          "闪出不用的文件",
+          "删除不用得文件",
+          "删除不用地文件",
+          "删除不用的问见",
+          "删除不用的问键",
+          "删除不用的文见",
+          "删除不用的问间",
+          "删除"
+        ],
+        "expected_rank": 1
+      },
+      {
+        "pinyin": "dakaixiaoxitongzhi",
+        "expected": "打开消息通知",
+        "source": "priority:context:009",
+        "lookup_us": 6234,
+        "candidates": [
+          "打开消息通知",
+          "打开消息同志",
+          "打开消息通之",
+          "打开消息同之",
+          "打开消息统治",
+          "打开消息通只",
+          "打开消息同只",
+          "打开消息通纸",
+          "打开"
+        ],
+        "expected_rank": 1
+      }
+    ]
+  }
+}

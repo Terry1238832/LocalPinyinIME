@@ -1,0 +1,123 @@
+{
+  "batch": "lexicon_batch_106",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "日常作息、生活状态、家人联络、出门提醒与随身物品短语；固定 6000 类别档，不含健康诊疗建议。",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 343,
+  "sha256": "42814d26d4ee7469807363a067f9bf82bafd87ca6aa1e9a98a2ef56a98811048",
+  "authoring_files_sha256": {
+    "lexicon_batch_106.authoring.json": "c5614e1e849361e34d02d0e85a014ae664502c51ee7b602a3e2bb6be4803a082",
+    "batch106_authored_daily_draft.txt": "7ff3fb33275454f45145fe83b8a81335a5c76bd8adf39774ed6b1deedecb9377",
+    "batch106_pronunciation_review.tsv": "77d0d42c2a5e30ca85cd185dfded1bfbcd1e85ab77732be7d2ea067a3ff7680b"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "2c7f88b1668c843b9345bd7ae06fd18cab78d56c0603fd43e81642cefa6157da",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "waking_up_sleeping_and_resting": 6000,
+    "ordinary_daily_states_and_comfort": 6000,
+    "family_coordination_and_reminders": 6000,
+    "getting_ready_and_household_reminders": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "family_coordination_and_reminders": 81,
+    "getting_ready_and_household_reminders": 87,
+    "ordinary_daily_states_and_comfort": 93,
+    "waking_up_sleeping_and_resting": 82
+  },
+  "length_distribution": {
+    "6": 153,
+    "5": 189,
+    "4": 1
+  },
+  "authoring_rejections": [
+    {
+      "word": "脑子有点乱",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "思路有点乱",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "脑子转不动",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "让我缓一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "出去透透气",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "累得不想说话",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "热得直冒汗",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "热得满头汗",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "冷得缩脖子",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "先吃点东西",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "给家里打电话",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "鞋带先系好",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 289,
+  "manual_pronunciation_overrides": {
+    "这觉没睡够": "zhejiaomeishuigou",
+    "这觉睡得沉": "zhejiaoshuidechen",
+    "这觉睡得香": "zhejiaoshuidexiang",
+    "刚才眯着了": "gangcaimizhaole",
+    "我先补个觉": "woxianbugejiao",
+    "我先睡会觉": "woxianshuihuijiao",
+    "今天想补个觉": "jintianxiangbugejiao",
+    "热得睡不着": "redeshuibuzhao",
+    "冷得睡不着": "lengdeshuibuzhao",
+    "饿得睡不着": "edeshuibuzhao",
+    "渴得睡不着": "kedeshuibuzhao",
+    "包带调一下": "baodaitiaoyixia",
+    "肩带调一下": "jiandaitiaoyixia",
+    "背带调一下": "beidaitiaoyixia"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 14,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

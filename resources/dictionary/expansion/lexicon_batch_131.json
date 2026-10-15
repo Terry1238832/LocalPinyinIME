@@ -1,0 +1,176 @@
+{
+  "batch": "lexicon_batch_131",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "季节衣物、家用冷暖除湿、雨天和防晒用品",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 360,
+  "sha256": "e708ba7a8314b4e225e12393b8d0d4248e36b8408ed3dfa8dd55e572b0def684",
+  "authoring_files_sha256": {
+    "lexicon_batch_131.authoring.json": "67709880beaa00ffc4a33dee4a1c32c2e05054ca5df849a261dc17b3470be5f9",
+    "batch131_authored_daily_draft.txt": "8224d4af7ae30b30f22b985024ef2d722bd2b207f0019cc15538c106854080a0",
+    "batch131_pronunciation_review.tsv": "6d4ea567ded4e95f0615d2471cc8f1acddb065e58643ecebccf8b71a1d23af9a"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "0395b639e0ecb15934af01c44afeda5592a201c9c2e765dd3d60d9827fff4139",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "winter_clothing_and_household_warmth": 6000,
+    "household_heating_cooling_and_humidity": 6000,
+    "rainy_and_sunny_day_everyday_items": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "household_heating_cooling_and_humidity": 125,
+    "rainy_and_sunny_day_everyday_items": 89,
+    "winter_clothing_and_household_warmth": 146
+  },
+  "length_distribution": {
+    "6": 67,
+    "5": 165,
+    "4": 115,
+    "3": 13
+  },
+  "authoring_rejections": [
+    {
+      "word": "羽绒内胆",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "羽绒马甲",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "羽绒背心",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "羽绒睡袋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "半指手套",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "露指手套",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电暖器接水盒",
+      "reason": "premeasurement_naturalness: uncertain appliance part name omitted"
+    },
+    {
+      "word": "暖气温控器",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "空调出风口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "空调回风口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "风扇网罩",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "风扇扇叶",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "风扇底座",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "加湿器滤芯",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "加湿器水箱",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "除湿机水箱",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "衣柜防潮盒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "长柄雨伞",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "雨伞防水套",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "雨衣收纳袋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "雨披收纳袋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "一次性雨衣",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "一次性雨披",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "一次性鞋套",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "骑行雨披",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "背包防雨罩",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "书包防雨罩",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "防晒手套",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 264,
+  "manual_pronunciation_overrides": {
+    "长柄晴雨伞": "changbingqingyusan",
+    "透明长柄伞": "toumingchangbingsan",
+    "长柄伞收纳袋": "changbingsanshounadai",
+    "加长雨披": "jiachangyupi"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 4,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

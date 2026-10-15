@@ -1,0 +1,6475 @@
+{
+  "batch": "lexicon_batch_123",
+  "evaluation": "native_engine_candidate_coverage",
+  "evaluated_at_utc": "2026-10-15T14:57:45.789922+00:00",
+  "engine_sha256": "a0f614aec8044ed9a2aeb56225c0775e7f80d660a0ae295bc4c5b23405f36da0",
+  "resource_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "bc4d33cac36f590bec181bfd86bdb54583c9a3c1ef5cf3542c0f2feedc1c3130",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+    "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+    "continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e"
+  },
+  "frozen_batch_sha256": "921129b57da0fb28be2b6a70f523f797ece75be565468f6e7a55505f9b6c95f1",
+  "personal_data_isolated": true,
+  "expected_answers_learned": false,
+  "summary": {
+    "cases": 357,
+    "top1_correct": 171,
+    "top9_present": 357,
+    "top1_percent": 47.9,
+    "top9_percent": 100.0,
+    "character_error_rate": 0.1792,
+    "p50_lookup_ms": 4.257,
+    "p95_lookup_ms": 7.914,
+    "max_lookup_ms": 12.262,
+    "missing_from_top9_count": 0,
+    "missing_from_top9": [],
+    "max_returned_candidate_count": 9
+  },
+  "rows": [
+    {
+      "pinyin": "chuodaowoxinbale",
+      "expected": "戳到我心巴了",
+      "source": "6000",
+      "lookup_us": 3902,
+      "candidates": [
+        "戳到我心罢了",
+        "绰到我心罢了",
+        "戳到我新罢了",
+        "绰到我新罢了",
+        "戳到我信罢了",
+        "绰到我信罢了",
+        "戳到我欣罢了",
+        "戳到我心巴了",
+        "戳"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "chuodaoxinbashangle",
+      "expected": "戳到心巴上了",
+      "source": "6000",
+      "lookup_us": 4810,
+      "candidates": [
+        "戳到新坝上了",
+        "绰到新坝上了",
+        "戳到新吧上了",
+        "戳到新把上了",
+        "绰到新吧上了",
+        "绰到新把上了",
+        "戳到新八上了",
+        "戳到心巴上了",
+        "戳"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "dairugantaiqiangle",
+      "expected": "代入感太强了",
+      "source": "6000",
+      "lookup_us": 5603,
+      "candidates": [
+        "带入杆太强了",
+        "带入干太强了",
+        "带入干台抢了",
+        "带入杆太抢了",
+        "带入干太抢了",
+        "带入干台强了",
+        "带入感台抢了",
+        "代入感太强了",
+        "带入"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "gezhepingmudouji",
+      "expected": "隔着屏幕都急",
+      "source": "6000",
+      "lookup_us": 3361,
+      "candidates": [
+        "隔着屏幕都记",
+        "隔着屏幕都机",
+        "各着屏幕都记",
+        "隔着屏幕都挤",
+        "隔着屏幕都及",
+        "隔着屏幕都急",
+        "隔着屏幕斗机",
+        "隔着屏幕豆机",
+        "隔着"
+      ],
+      "expected_rank": 6
+    },
+    {
+      "pinyin": "gezhepingmudoulei",
+      "expected": "隔着屏幕都累",
+      "source": "6000",
+      "lookup_us": 4142,
+      "candidates": [
+        "隔着屏幕豆类",
+        "隔着屏幕都类",
+        "隔着屏幕都累",
+        "各着屏幕豆类",
+        "隔着屏幕斗类",
+        "隔着屏幕斗累",
+        "隔着屏幕豆累",
+        "隔着屏幕逗类",
+        "隔着"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "gezhepingmudouleng",
+      "expected": "隔着屏幕都冷",
+      "source": "6000",
+      "lookup_us": 2766,
+      "candidates": [
+        "隔着屏幕都冷",
+        "各着屏幕都冷",
+        "隔着屏幕斗冷",
+        "隔着屏幕豆冷",
+        "隔着屏幕逗冷",
+        "隔着屏幕抖冷",
+        "隔着屏幕兜冷",
+        "隔着屏幕陡冷",
+        "隔着"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gezhepingmudoure",
+      "expected": "隔着屏幕都热",
+      "source": "6000",
+      "lookup_us": 2161,
+      "candidates": [
+        "隔着屏幕都热",
+        "隔着屏幕斗热",
+        "隔着屏幕豆热",
+        "隔着屏幕逗热",
+        "隔着屏幕抖热",
+        "隔着屏幕兜热",
+        "隔着屏幕陡热",
+        "隔着屏幕窦热",
+        "隔着"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gezhepingmudouteng",
+      "expected": "隔着屏幕都疼",
+      "source": "6000",
+      "lookup_us": 2540,
+      "candidates": [
+        "隔着屏幕都疼",
+        "隔着屏幕斗疼",
+        "隔着屏幕豆疼",
+        "隔着屏幕逗疼",
+        "隔着屏幕抖疼",
+        "隔着屏幕兜疼",
+        "隔着屏幕陡疼",
+        "隔着屏幕窦疼",
+        "隔着"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gezhepingmudouxiang",
+      "expected": "隔着屏幕都香",
+      "source": "6000",
+      "lookup_us": 5815,
+      "candidates": [
+        "隔着屏幕都想",
+        "隔着屏幕都向",
+        "隔着屏幕都像",
+        "隔着屏幕都相",
+        "各着屏幕都想",
+        "隔着屏幕都香",
+        "隔着屏幕都箱",
+        "隔着屏幕都响",
+        "隔着"
+      ],
+      "expected_rank": 6
+    },
+    {
+      "pinyin": "guangkanjiuele",
+      "expected": "光看就饿了",
+      "source": "6000",
+      "lookup_us": 3347,
+      "candidates": [
+        "光看久饿了",
+        "光看就饿了",
+        "光看旧饿了",
+        "光看酒饿了",
+        "光看就额了",
+        "光看就俄了",
+        "光看旧额了",
+        "光看就恶了",
+        "光看"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "guangkanjiukunle",
+      "expected": "光看就困了",
+      "source": "6000",
+      "lookup_us": 3066,
+      "candidates": [
+        "光看就困了",
+        "光看旧困了",
+        "光看酒困了",
+        "光看久困了",
+        "光看九困了",
+        "光看救困了",
+        "光看揪困了",
+        "光看究困了",
+        "光看"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guangkanjiuleile",
+      "expected": "光看就累了",
+      "source": "6000",
+      "lookup_us": 3033,
+      "candidates": [
+        "光看就累了",
+        "光看旧累了",
+        "光看酒累了",
+        "光看久累了",
+        "光看九累了",
+        "光看救累了",
+        "光看揪累了",
+        "光看究累了",
+        "光看"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guangkanjiutengle",
+      "expected": "光看就疼了",
+      "source": "6000",
+      "lookup_us": 2364,
+      "candidates": [
+        "光看就疼了",
+        "广看就疼了",
+        "光看就疼乐",
+        "光看旧疼了",
+        "光看就藤了",
+        "光看就腾了",
+        "光看旧藤了",
+        "光看旧腾了",
+        "光看"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guoyuchouxiangle",
+      "expected": "过于抽象了",
+      "source": "6000",
+      "lookup_us": 6259,
+      "candidates": [
+        "过于抽象了",
+        "过雨抽象了",
+        "过于抽响了",
+        "过于丑响了",
+        "过于抽想了",
+        "过于臭响了",
+        "过于愁响了",
+        "过于仇响了",
+        "国语"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guoyuhaoxiaole",
+      "expected": "过于好笑了",
+      "source": "6000",
+      "lookup_us": 5259,
+      "candidates": [
+        "过于好笑了",
+        "过于好小了",
+        "过雨好笑了",
+        "过雨好小了",
+        "过于好消了",
+        "过于号笑了",
+        "过于号小了",
+        "过于豪笑了",
+        "国语"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guoyukeaile",
+      "expected": "过于可爱了",
+      "source": "6000",
+      "lookup_us": 2520,
+      "candidates": [
+        "过于可爱了",
+        "过雨可爱了",
+        "过于可爱乐",
+        "过于可挨了",
+        "过雨可爱乐",
+        "过预科挨了",
+        "锅预科挨了",
+        "过于课挨了",
+        "国语"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guoyulidapule",
+      "expected": "过于离大谱了",
+      "source": "6000",
+      "lookup_us": 2788,
+      "candidates": [
+        "过于离大谱了",
+        "过于立大谱了",
+        "过于里打普了",
+        "过于里打铺了",
+        "过于里打扑了",
+        "过于里打谱了",
+        "过于里打镤了",
+        "过于里打蒲了",
+        "国语"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guoyulipule",
+      "expected": "过于离谱了",
+      "source": "6000",
+      "lookup_us": 2749,
+      "candidates": [
+        "过于离谱了",
+        "过雨离谱了",
+        "过于荔浦了",
+        "过于离谱乐",
+        "过于李普了",
+        "过于利普了",
+        "过于立普了",
+        "过于立铺了",
+        "国语"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guoyuzhaxinle",
+      "expected": "过于扎心了",
+      "source": "6000",
+      "lookup_us": 2988,
+      "candidates": [
+        "过于扎心了",
+        "过于炸心了",
+        "过于渣心了",
+        "过于眨心了",
+        "过于闸心了",
+        "过于乍心了",
+        "过于札心了",
+        "过于榨心了",
+        "国语"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guoyuzhenshile",
+      "expected": "过于真实了",
+      "source": "6000",
+      "lookup_us": 3094,
+      "candidates": [
+        "过于真实了",
+        "过雨真实了",
+        "过于真是了",
+        "过雨真是了",
+        "过于震湿了",
+        "过于振湿了",
+        "过于真湿了",
+        "过于镇湿了",
+        "国语"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "henhenchuozhongwole",
+      "expected": "狠狠戳中我了",
+      "source": "6000",
+      "lookup_us": 2858,
+      "candidates": [
+        "狠狠戳中我了",
+        "狠狠绰中我了",
+        "狠狠戳种我了",
+        "狠狠戳重我了",
+        "狠狠戳钟我了",
+        "狠狠绰种我了",
+        "狠狠戳仲我了",
+        "狠狠戳众我了",
+        "狠狠"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huamiangantaiqiangle",
+      "expected": "画面感太强了",
+      "source": "6000",
+      "lookup_us": 8656,
+      "candidates": [
+        "画面感太强了",
+        "画面干太强了",
+        "画面干台抢了",
+        "画面干太抢了",
+        "画面干台强了",
+        "画面干泰抢了",
+        "画面干抬抢了",
+        "画面干太强乐",
+        "画面"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kanzhedoutinihuang",
+      "expected": "看着都替你慌",
+      "source": "6000",
+      "lookup_us": 5296,
+      "candidates": [
+        "看着都替你黄",
+        "看着豆替你黄",
+        "看着都提你黄",
+        "看着都替你荒",
+        "看着都替你慌",
+        "看着豆替你荒",
+        "看着豆替你慌",
+        "看着都替你晃",
+        "看这"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "kanzhedoutiniji",
+      "expected": "看着都替你急",
+      "source": "6000",
+      "lookup_us": 2891,
+      "candidates": [
+        "看着都替你记",
+        "看着豆替你记",
+        "看着都替你及",
+        "看着都替你急",
+        "看着都替你机",
+        "看着豆替你及",
+        "看着都提你记",
+        "看着豆替你急",
+        "看这"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "kanzhedoutinilei",
+      "expected": "看着都替你累",
+      "source": "6000",
+      "lookup_us": 2757,
+      "candidates": [
+        "看着都替你类",
+        "看着都替你累",
+        "看着豆替你类",
+        "看着豆替你累",
+        "看着都替你泪",
+        "看着都提你类",
+        "看着都提你累",
+        "看着豆替你泪",
+        "看这"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "kanzhedoutinipa",
+      "expected": "看着都替你怕",
+      "source": "6000",
+      "lookup_us": 2865,
+      "candidates": [
+        "看着都替你怕",
+        "看着豆替你怕",
+        "看着都提你怕",
+        "看着都替你爬",
+        "看着都体你怕",
+        "看着都题你怕",
+        "看着豆替你爬",
+        "看着豆提你怕",
+        "看这"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kanzhedoutiniteng",
+      "expected": "看着都替你疼",
+      "source": "6000",
+      "lookup_us": 2416,
+      "candidates": [
+        "看着都替你疼",
+        "看着豆替你疼",
+        "看着都提你疼",
+        "看着都替你藤",
+        "看着都替你腾",
+        "看着豆替你藤",
+        "看着豆替你腾",
+        "看着都替你滕",
+        "看这"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "leidianbeichuozhongle",
+      "expected": "泪点被戳中了",
+      "source": "6000",
+      "lookup_us": 3399,
+      "candidates": [
+        "类点被戳重了",
+        "雷电被戳重了",
+        "泪点被戳中了",
+        "类点被绰重了",
+        "类点被戳中了",
+        "类点被绰中了",
+        "雷电被绰中了",
+        "类点被啜中了",
+        "雷电"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "lipudaojiale",
+      "expected": "离谱到家了",
+      "source": "6000",
+      "lookup_us": 3726,
+      "candidates": [
+        "离谱到家了",
+        "里扑到家了",
+        "离谱道家了",
+        "离谱到家乐",
+        "离谱到加了",
+        "离谱到嫁了",
+        "里扑到家乐",
+        "离谱刀架了",
+        "荔浦"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "naoziyouhuamianle",
+      "expected": "脑子有画面了",
+      "source": "6000",
+      "lookup_us": 6227,
+      "candidates": [
+        "脑子有画面了",
+        "脑子油画面了",
+        "脑子有话面了",
+        "脑子有画面乐",
+        "脑子油花面了",
+        "脑子有花面了",
+        "脑子油画面乐",
+        "脑子有画面勒",
+        "脑子"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuidongwodekuaile",
+      "expected": "谁懂我的快乐",
+      "source": "6000",
+      "lookup_us": 2233,
+      "candidates": [
+        "水动我的快了",
+        "水洞我的快了",
+        "水动我得快了",
+        "水洞我得快了",
+        "水动我的快乐",
+        "水洞我的快乐",
+        "水动我的会了",
+        "谁懂我的快乐",
+        "谁"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "shuidongwodetong",
+      "expected": "谁懂我的痛",
+      "source": "6000",
+      "lookup_us": 1015,
+      "candidates": [
+        "水动我的桶",
+        "水洞我的桶",
+        "水动我的同",
+        "水洞我的同",
+        "水动我的通",
+        "水洞我的通",
+        "水动我的痛",
+        "谁懂我的痛",
+        "谁"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "shuidongwoyouduohuang",
+      "expected": "谁懂我有多慌",
+      "source": "6000",
+      "lookup_us": 4452,
+      "candidates": [
+        "谁懂我有多慌",
+        "水动我有多黄",
+        "水洞我有多黄",
+        "水动我又多黄",
+        "水洞我又多黄",
+        "水动我有多荒",
+        "水洞我有多荒",
+        "水动我有多慌",
+        "谁"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuidongwoyouduoji",
+      "expected": "谁懂我有多急",
+      "source": "6000",
+      "lookup_us": 2635,
+      "candidates": [
+        "水动我有多级",
+        "水洞我有多级",
+        "谁懂我有多急",
+        "水动我又多级",
+        "水洞我又多级",
+        "水动我有多及",
+        "水动我有多急",
+        "水动我有多机",
+        "谁"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "shuidongwoyouduokun",
+      "expected": "谁懂我有多困",
+      "source": "6000",
+      "lookup_us": 2437,
+      "candidates": [
+        "谁懂我有多困",
+        "水动我有多困",
+        "水动我又多困",
+        "水洞我又多困",
+        "水动我有多髡",
+        "水动我有多坤",
+        "水动我有多昆",
+        "水洞我有多坤",
+        "谁"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuidongwoyouduolei",
+      "expected": "谁懂我有多累",
+      "source": "6000",
+      "lookup_us": 3089,
+      "candidates": [
+        "谁懂我有多累",
+        "水动我有多累",
+        "水动我又多累",
+        "水洞我又多累",
+        "水动我有多类",
+        "水洞我有多类",
+        "水动我又多类",
+        "水洞我又多类",
+        "谁"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuidongzhezhongganjue",
+      "expected": "谁懂这种感觉",
+      "source": "6000",
+      "lookup_us": 4011,
+      "candidates": [
+        "谁懂这种感觉",
+        "水懂这种感觉",
+        "水动着重感觉",
+        "谁动着重感觉",
+        "水动辄中感觉",
+        "谁动辄中感觉",
+        "谁懂这种感决",
+        "水懂这种感决",
+        "谁"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuodaowoxinkanle",
+      "expected": "说到我心坎了",
+      "source": "6000",
+      "lookup_us": 3829,
+      "candidates": [
+        "说道我心看了",
+        "说道我新看了",
+        "说到我心看了",
+        "说道我信看了",
+        "说到我新看了",
+        "说道我欣看了",
+        "说道我辛看了",
+        "说到我心坎了",
+        "说道"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "shuodaowoxinlile",
+      "expected": "说到我心里了",
+      "source": "6000",
+      "lookup_us": 3938,
+      "candidates": [
+        "说道我心里了",
+        "说到我心里了",
+        "说道我心力了",
+        "说道我心里乐",
+        "说道我新里了",
+        "说道我心理了",
+        "说道我心里勒",
+        "说道我心李了",
+        "说道"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "shuodaoxinkanshangle",
+      "expected": "说到心坎上了",
+      "source": "6000",
+      "lookup_us": 6138,
+      "candidates": [
+        "说道心看上了",
+        "说道新看上了",
+        "说道新槛上了",
+        "说道新砍上了",
+        "说道心砍上了",
+        "说道新刊上了",
+        "说道新坎上了",
+        "说到心坎上了",
+        "说道"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "shuodebujiushiwo",
+      "expected": "说的不就是我",
+      "source": "6000",
+      "lookup_us": 4178,
+      "candidates": [
+        "说得不就是我",
+        "说的不就是我",
+        "说得不久使我",
+        "说得不久是我",
+        "说得不就使我",
+        "说的不久使我",
+        "说得不救使我",
+        "说的不久是我",
+        "说的"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "shuowoxinliqule",
+      "expected": "说我心里去了",
+      "source": "6000",
+      "lookup_us": 4331,
+      "candidates": [
+        "说我心里去了",
+        "数我心里去了",
+        "说我心理去了",
+        "说我心力去了",
+        "说我心里去乐",
+        "说我心里取了",
+        "说我心离去了",
+        "说我心里娶了",
+        "说"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shushiyoubeianwei",
+      "expected": "属实有被安慰",
+      "source": "6000",
+      "lookup_us": 3662,
+      "candidates": [
+        "数是有备案位",
+        "数是有备案为",
+        "数是有被安慰",
+        "树是有备案位",
+        "数是又被安慰",
+        "数是有备案味",
+        "树是有备案为",
+        "属实有被安慰",
+        "术士"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "shushiyoubeinanie",
+      "expected": "属实有被拿捏",
+      "source": "6000",
+      "lookup_us": 4182,
+      "candidates": [
+        "数是有杯拿捏",
+        "数是有被拿捏",
+        "数是有备拿捏",
+        "数是又被拿捏",
+        "数是有背拿捏",
+        "树是有备拿捏",
+        "数是有北拿捏",
+        "属实有被拿捏",
+        "术士"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "shushiyoubeinuandao",
+      "expected": "属实有被暖到",
+      "source": "6000",
+      "lookup_us": 3279,
+      "candidates": [
+        "数是有被暖到",
+        "数是有备暖到",
+        "数是又被暖到",
+        "数是有被暖道",
+        "数是有背暖到",
+        "数是有备暖道",
+        "数是又被暖道",
+        "属实有被暖到",
+        "术士"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "shushiyoubeixiadao",
+      "expected": "属实有被吓到",
+      "source": "6000",
+      "lookup_us": 4087,
+      "candidates": [
+        "数是有被吓到",
+        "数是又被吓到",
+        "数是有被吓倒",
+        "数是又被吓倒",
+        "数是有被下到",
+        "数是有备吓到",
+        "数是有备下到",
+        "属实有被吓到",
+        "术士"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "shushiyoubeixiaodao",
+      "expected": "属实有被笑到",
+      "source": "6000",
+      "lookup_us": 6691,
+      "candidates": [
+        "数是有被笑道",
+        "数是又被笑道",
+        "数是有备笑道",
+        "数是有背笑道",
+        "树是有备笑道",
+        "数是有北笑道",
+        "树是有背笑道",
+        "属实有被笑到",
+        "术士"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "shushiyoubeizhenhan",
+      "expected": "属实有被震撼",
+      "source": "6000",
+      "lookup_us": 3696,
+      "candidates": [
+        "数是有被震撼",
+        "数是有备震撼",
+        "数是又被震撼",
+        "数是有背震撼",
+        "树是有备震撼",
+        "数是有北震撼",
+        "树是有背震撼",
+        "属实有被震撼",
+        "术士"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "shushiyoubeizhiyu",
+      "expected": "属实有被治愈",
+      "source": "6000",
+      "lookup_us": 3082,
+      "candidates": [
+        "数是有备至于",
+        "数是有被至于",
+        "树是有备至于",
+        "数是又被至于",
+        "数是有背至于",
+        "数是有北至于",
+        "树是有背至于",
+        "属实有被治愈",
+        "术士"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "taiyouhuamianganle",
+      "expected": "太有画面感了",
+      "source": "6000",
+      "lookup_us": 5881,
+      "candidates": [
+        "太有画面干了",
+        "太油画面干了",
+        "太有画面感了",
+        "太优化棉干了",
+        "太有画面赶了",
+        "太有画面干乐",
+        "太油画面赶了",
+        "太有画面敢了",
+        "太有"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "tongdianbeichuozhongle",
+      "expected": "痛点被戳中了",
+      "source": "6000",
+      "lookup_us": 3821,
+      "candidates": [
+        "同点被戳重了",
+        "同点被绰重了",
+        "同点被啜重了",
+        "同点被辍重了",
+        "同点被戳中了",
+        "同点被戳终了",
+        "同点被绰中了",
+        "痛点被戳中了",
+        "通电"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "woshizhendefuqi",
+      "expected": "我是真的服气",
+      "source": "6000",
+      "lookup_us": 4095,
+      "candidates": [
+        "我是真的服气",
+        "我是真的福气",
+        "我是真的浮起",
+        "我是真的扶起",
+        "我是真的负起",
+        "我是真的父起",
+        "我是真的服起",
+        "我是真的父期",
+        "卧室"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woshizhendemeidong",
+      "expected": "我是真的没懂",
+      "source": "6000",
+      "lookup_us": 3833,
+      "candidates": [
+        "我是真的没动",
+        "我是真的没懂",
+        "我是真的美动",
+        "我是真的美懂",
+        "我是真的眉动",
+        "我是真的美洞",
+        "我是真的梅动",
+        "我是真的美冻",
+        "卧室"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "woshizhendenanbeng",
+      "expected": "我是真的难绷",
+      "source": "6000",
+      "lookup_us": 4288,
+      "candidates": [
+        "我是真的难绷",
+        "我是真的难泵",
+        "我是真的难蹦",
+        "我是真的男泵",
+        "我是真的难崩",
+        "我是真的男蹦",
+        "我是真的男崩",
+        "我是真的南泵",
+        "卧室"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woshizhendepeifu",
+      "expected": "我是真的佩服",
+      "source": "6000",
+      "lookup_us": 3104,
+      "candidates": [
+        "我是真的佩服",
+        "我是真的配服",
+        "我是真的配复",
+        "我是真的配夫",
+        "我是真的配傅",
+        "我是真的配福",
+        "我是真的赔付",
+        "我是真的配父",
+        "卧室"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woshizhendepofang",
+      "expected": "我是真的破防",
+      "source": "6000",
+      "lookup_us": 3938,
+      "candidates": [
+        "我是真的破放",
+        "我是真的破方",
+        "我是真的破房",
+        "我是真的破防",
+        "我是真的珀方",
+        "我是真的颇放",
+        "我是真的破仿",
+        "我是真的婆放",
+        "卧室"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "woshizhendeshangtou",
+      "expected": "我是真的上头",
+      "source": "6000",
+      "lookup_us": 3439,
+      "candidates": [
+        "我是真的上头",
+        "我是真的伤透",
+        "我是真的上投",
+        "我是真地上头",
+        "我是真的上透",
+        "我是真的上偷",
+        "我是真的商头",
+        "我是真的伤头",
+        "卧室"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woshizhendewuyu",
+      "expected": "我是真的无语",
+      "source": "6000",
+      "lookup_us": 3641,
+      "candidates": [
+        "我是真的无语",
+        "我是真的物语",
+        "我是真的无与",
+        "我是真的物雨",
+        "我是真的无于",
+        "我是真的无欲",
+        "我是真的物欲",
+        "我是真的物于",
+        "卧室"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woshizhendexianmu",
+      "expected": "我是真的羡慕",
+      "source": "6000",
+      "lookup_us": 5202,
+      "candidates": [
+        "我是真的羡慕",
+        "我是真的先目",
+        "我是真的闲目",
+        "我是真的先木",
+        "我是真的仙目",
+        "我是真的闲木",
+        "我是真的仙木",
+        "我是真的先幕",
+        "卧室"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woshizhendexindong",
+      "expected": "我是真的心动",
+      "source": "6000",
+      "lookup_us": 3421,
+      "candidates": [
+        "我是真的心动",
+        "我是真的新洞",
+        "我是真的信动",
+        "我是真的新动",
+        "我是真的信懂",
+        "我是真的心懂",
+        "我是真的信洞",
+        "我是真的心洞",
+        "卧室"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozhendehuixie",
+      "expected": "我真的会谢",
+      "source": "6000",
+      "lookup_us": 5614,
+      "candidates": [
+        "我真的回写",
+        "我真的回些",
+        "我真的回谢",
+        "我真的灰写",
+        "我真的灰些",
+        "我真的会写",
+        "我真的会些",
+        "我真的会谢",
+        "我真"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "xiaodianbeichuozhongle",
+      "expected": "笑点被戳中了",
+      "source": "6000",
+      "lookup_us": 4775,
+      "candidates": [
+        "小店被戳重了",
+        "小店备戳重了",
+        "小店被绰重了",
+        "小店被戳中了",
+        "小店备戳中了",
+        "小店被绰中了",
+        "小店备绰中了",
+        "笑点被戳中了",
+        "小店"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "xinbabeichuozhongle",
+      "expected": "心巴被戳中了",
+      "source": "6000",
+      "lookup_us": 2741,
+      "candidates": [
+        "新把被戳重了",
+        "新把被绰重了",
+        "新把被啜重了",
+        "新把被戳中了",
+        "新把被戳终了",
+        "新把被绰中了",
+        "新把被绰终了",
+        "心巴被戳中了",
+        "新"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "yijingdairule",
+      "expected": "已经代入了",
+      "source": "6000",
+      "lookup_us": 3407,
+      "candidates": [
+        "已经带入了",
+        "已经代入了",
+        "已经带入乐",
+        "已经待入了",
+        "已经大入了",
+        "已经代入乐",
+        "已经呆入了",
+        "已经带如了",
+        "已经"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "yijingkaishiele",
+      "expected": "已经开始饿了",
+      "source": "6000",
+      "lookup_us": 4128,
+      "candidates": [
+        "已经开始饿了",
+        "已经开始鹅了",
+        "已经开始额了",
+        "已经开始俄了",
+        "已经开始恶了",
+        "已经开始呃了",
+        "已经开始哦了",
+        "已经开始厄了",
+        "已经开始"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yijingkaishihuangle",
+      "expected": "已经开始慌了",
+      "source": "6000",
+      "lookup_us": 7816,
+      "candidates": [
+        "已经开始皇了",
+        "已经开始慌了",
+        "已经开始黄了",
+        "已经开始晃了",
+        "已经开始荒了",
+        "已经开始谎了",
+        "已经开始煌了",
+        "已经开始恍了",
+        "已经开始"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "yijingkaishikunle",
+      "expected": "已经开始困了",
+      "source": "6000",
+      "lookup_us": 4355,
+      "candidates": [
+        "已经开始困了",
+        "已经开始坤了",
+        "已经开始昆了",
+        "已经开始捆了",
+        "已经开始琨了",
+        "已经开始鲲了",
+        "已经开始锟了",
+        "已经开始醌了",
+        "已经开始"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yijingkaishileile",
+      "expected": "已经开始累了",
+      "source": "6000",
+      "lookup_us": 4086,
+      "candidates": [
+        "已经开始累了",
+        "已经开市累了",
+        "已经开时累了",
+        "已经开是累了",
+        "已经开始类了",
+        "已经开始泪了",
+        "已经开始雷了",
+        "已经开始磊了",
+        "已经开始"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yijingkaishixiaole",
+      "expected": "已经开始笑了",
+      "source": "6000",
+      "lookup_us": 7078,
+      "candidates": [
+        "已经开始笑了",
+        "已经开始效了",
+        "已经开始小了",
+        "已经开始消了",
+        "已经开始削了",
+        "已经开始校了",
+        "已经开始晓了",
+        "已经开始萧了",
+        "已经开始"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yijingnaobule",
+      "expected": "已经脑补了",
+      "source": "6000",
+      "lookup_us": 3550,
+      "candidates": [
+        "已经闹不了",
+        "已经脑不了",
+        "已经恼不了",
+        "已经挠不了",
+        "已经孬不了",
+        "已经瑙不了",
+        "已经呶不了",
+        "已经脑补了",
+        "已经"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "youbeihenhenchuozhong",
+      "expected": "有被狠狠戳中",
+      "source": "6000",
+      "lookup_us": 3233,
+      "candidates": [
+        "有被狠狠戳中",
+        "又被狠狠戳中",
+        "又被狠狠绰中",
+        "又被狠狠啜中",
+        "又被狠狠辍中",
+        "又被狠狠戳重",
+        "又被狠狠龊中",
+        "又被狠狠戳种",
+        "又被"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youbeihenhennanie",
+      "expected": "有被狠狠拿捏",
+      "source": "6000",
+      "lookup_us": 4792,
+      "candidates": [
+        "又被狠狠拿捏",
+        "又被恨恨拿捏",
+        "有被狠狠拿捏",
+        "有被恨恨拿捏",
+        "又被很很拿捏",
+        "又被恨很拿捏",
+        "又被狠狠那捏",
+        "又被狠狠哪捏",
+        "又被"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "youbeihenhennuandao",
+      "expected": "有被狠狠暖到",
+      "source": "6000",
+      "lookup_us": 3568,
+      "candidates": [
+        "又被狠狠暖到",
+        "有被狠狠暖到",
+        "又被狠狠暖道",
+        "又被恨恨暖到",
+        "又被狠狠暖倒",
+        "又被恨恨暖道",
+        "有被狠狠暖道",
+        "又被狠狠暖刀",
+        "又被"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "youbeihenhenxiaodao",
+      "expected": "有被狠狠笑到",
+      "source": "6000",
+      "lookup_us": 5354,
+      "candidates": [
+        "又被狠狠笑道",
+        "又被恨恨笑道",
+        "有被狠狠笑道",
+        "有被恨恨笑道",
+        "又被很很笑道",
+        "又被恨很笑道",
+        "又被狠狠孝道",
+        "有被狠狠笑到",
+        "又被"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "youbeihenhenzhiyu",
+      "expected": "有被狠狠治愈",
+      "source": "6000",
+      "lookup_us": 4095,
+      "candidates": [
+        "又被狠狠至于",
+        "又被恨恨至于",
+        "有被狠狠至于",
+        "有被恨恨至于",
+        "又被很很至于",
+        "又被狠狠置于",
+        "又被狠狠止于",
+        "有被狠狠治愈",
+        "又被"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zhebokandaile",
+      "expected": "这波看呆了",
+      "source": "6000",
+      "lookup_us": 2294,
+      "candidates": [
+        "这薄看待了",
+        "这波看待了",
+        "这薄看大了",
+        "这薄看带了",
+        "这波看呆了",
+        "这薄看待乐",
+        "这薄砍待了",
+        "这波看待乐",
+        "这"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "zhebonaniele",
+      "expected": "这波拿捏了",
+      "source": "6000",
+      "lookup_us": 3390,
+      "candidates": [
+        "这薄拿捏了",
+        "这波拿捏了",
+        "这薄拿捏乐",
+        "这波拿捏乐",
+        "这薄拿捏勒",
+        "这薄拿捏叻",
+        "这波拿捏勒",
+        "这薄拿捏仂",
+        "这"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zheboshushilipu",
+      "expected": "这波属实离谱",
+      "source": "6000",
+      "lookup_us": 3974,
+      "candidates": [
+        "这薄数是离谱",
+        "这波数是离谱",
+        "这薄舒适离谱",
+        "这薄熟识离谱",
+        "这薄术士离谱",
+        "这薄数十离谱",
+        "这勃舒适离谱",
+        "这波属实离谱",
+        "这"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zheboshushimeidong",
+      "expected": "这波属实没懂",
+      "source": "6000",
+      "lookup_us": 3655,
+      "candidates": [
+        "这薄数是没动",
+        "这波数是没动",
+        "这薄属实没动",
+        "这波属实没懂",
+        "这薄数是没懂",
+        "这波属实没动",
+        "这波数是没懂",
+        "这薄属实没懂",
+        "这"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "zheboshushinanping",
+      "expected": "这波属实难评",
+      "source": "6000",
+      "lookup_us": 5331,
+      "candidates": [
+        "这薄舒适南平",
+        "这薄熟识南平",
+        "这薄术士南平",
+        "这薄数十南平",
+        "这薄数是南平",
+        "这勃舒适南平",
+        "这薄属实南平",
+        "这波属实难评",
+        "这"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zhebowenwennaxia",
+      "expected": "这波稳稳拿下",
+      "source": "6000",
+      "lookup_us": 3624,
+      "candidates": [
+        "这薄问问拿下",
+        "这薄问问那下",
+        "这波问问拿下",
+        "这波问问那下",
+        "这薄问问哪下",
+        "这波问问哪下",
+        "这薄问问那夏",
+        "这波稳稳拿下",
+        "这"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zhebozhendewenle",
+      "expected": "这波真的稳了",
+      "source": "6000",
+      "lookup_us": 2810,
+      "candidates": [
+        "这薄真的问了",
+        "这波真的问了",
+        "这薄真的稳了",
+        "这波真的稳了",
+        "这薄真的文了",
+        "这波真的文了",
+        "这薄真的文乐",
+        "这薄真的吻了",
+        "这"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "zhebozhijiefengshen",
+      "expected": "这波直接封神",
+      "source": "6000",
+      "lookup_us": 6234,
+      "candidates": [
+        "这薄直接风神",
+        "这波直接风神",
+        "这波直接封神",
+        "这薄直接封神",
+        "这薄直接缝神",
+        "这薄直接缝身",
+        "这薄直接风身",
+        "这薄直接缝深",
+        "这"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "zhebozhijienaxia",
+      "expected": "这波直接拿下",
+      "source": "6000",
+      "lookup_us": 5543,
+      "candidates": [
+        "这波直接拿下",
+        "这薄直接纳下",
+        "这薄直接纳夏",
+        "这薄直接纳霞",
+        "这薄直接纳虾",
+        "这薄直接纳吓",
+        "这薄直接拿下",
+        "这薄直接纳暇",
+        "这"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhebozhijieqifei",
+      "expected": "这波直接起飞",
+      "source": "6000",
+      "lookup_us": 4786,
+      "candidates": [
+        "这薄直接起飞",
+        "这波直接起飞",
+        "这薄直接起费",
+        "这薄直接期费",
+        "这薄直接气费",
+        "这薄直接器费",
+        "这薄直接起肥",
+        "这波直接起费",
+        "这"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zhebujiushiwoma",
+      "expected": "这不就是我吗",
+      "source": "6000",
+      "lookup_us": 4482,
+      "candidates": [
+        "这部就是我妈",
+        "这部就是我吗",
+        "这部就是我么",
+        "这不就是我妈",
+        "这不就是我吗",
+        "这部就是我码",
+        "这部就是我骂",
+        "这不就是我么",
+        "这部"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "zhejianzhijiushiwo",
+      "expected": "这简直就是我",
+      "source": "6000",
+      "lookup_us": 6227,
+      "candidates": [
+        "这件之就是我",
+        "这件只就是我",
+        "这件之久使我",
+        "这件之久是我",
+        "这件之就使我",
+        "这件只就使我",
+        "这件之就是握",
+        "这简直就是我",
+        "这件"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zhendechuozhongwole",
+      "expected": "真的戳中我了",
+      "source": "6000",
+      "lookup_us": 2358,
+      "candidates": [
+        "真的戳中我了",
+        "真的绰中我了",
+        "真的戳种我了",
+        "真的戳重我了",
+        "真的戳钟我了",
+        "真的绰种我了",
+        "真的戳仲我了",
+        "真的戳众我了",
+        "真得"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhendehuixiea",
+      "expected": "真的会谢啊",
+      "source": "6000",
+      "lookup_us": 4470,
+      "candidates": [
+        "真的诙谐啊",
+        "真的回写啊",
+        "真的回血啊",
+        "真的回些啊",
+        "真的灰写啊",
+        "真的会写啊",
+        "真的回谢啊",
+        "真的会谢啊",
+        "真得"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zhendelidapu",
+      "expected": "真的离大谱",
+      "source": "6000",
+      "lookup_us": 2793,
+      "candidates": [
+        "真的理大谱",
+        "真的理大朴",
+        "真的理大普",
+        "真的理大铺",
+        "真的离大谱",
+        "真的理大扑",
+        "真的理大镤",
+        "真的理大蒲",
+        "真得"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "zhenshidaochenmo",
+      "expected": "真实到沉默",
+      "source": "6000",
+      "lookup_us": 3903,
+      "candidates": [
+        "真是倒沉没",
+        "真是到沉没",
+        "真是倒沉默",
+        "真是到沉默",
+        "真实倒沉没",
+        "真实到沉没",
+        "真实倒沉默",
+        "真实到沉默",
+        "真是"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zhenshidaopofang",
+      "expected": "真实到破防",
+      "source": "6000",
+      "lookup_us": 3877,
+      "candidates": [
+        "真是倒破放",
+        "真是到破放",
+        "真是倒破方",
+        "真是到破方",
+        "真是倒破房",
+        "真是倒珀方",
+        "真是到破房",
+        "真实到破防",
+        "真是"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zhenshidaozhaxin",
+      "expected": "真实到扎心",
+      "source": "6000",
+      "lookup_us": 3591,
+      "candidates": [
+        "真是倒炸新",
+        "真是到炸新",
+        "真是倒扎新",
+        "真是倒炸心",
+        "真是到扎新",
+        "真是到炸心",
+        "真是倒扎心",
+        "真实到扎心",
+        "真是"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zhenshidekepa",
+      "expected": "真实得可怕",
+      "source": "6000",
+      "lookup_us": 2598,
+      "candidates": [
+        "真实的可怕",
+        "真是的可怕",
+        "真实地可怕",
+        "真是得可怕",
+        "真实得可怕",
+        "真实的课怕",
+        "真实德可怕",
+        "真是地可怕",
+        "真是"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "zheshuicaidedao",
+      "expected": "这谁猜得到",
+      "source": "6000",
+      "lookup_us": 2703,
+      "candidates": [
+        "这水彩得到",
+        "这水才得到",
+        "这谁才得到",
+        "着水彩得到",
+        "这水猜得到",
+        "这水材得到",
+        "这谁猜得到",
+        "这水菜得到",
+        "这书"
+      ],
+      "expected_rank": 7
+    },
+    {
+      "pinyin": "zheshuidingdezhu",
+      "expected": "这谁顶得住",
+      "source": "6000",
+      "lookup_us": 2445,
+      "candidates": [
+        "这水定得住",
+        "这谁顶得住",
+        "这水顶得住",
+        "这谁定得住",
+        "这水叮得住",
+        "这水丁得住",
+        "这水订得住",
+        "这水定的主",
+        "这书"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zheshuikandedong",
+      "expected": "这谁看得懂",
+      "source": "6000",
+      "lookup_us": 1427,
+      "candidates": [
+        "这水看得懂",
+        "这谁看得懂",
+        "这水看得动",
+        "这水看的东",
+        "这谁看得动",
+        "这谁看的东",
+        "这水看的动",
+        "这水看的洞",
+        "这书"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zheshuinengrenzhu",
+      "expected": "这谁能忍住",
+      "source": "6000",
+      "lookup_us": 2750,
+      "candidates": [
+        "这谁能人住",
+        "这谁能忍住",
+        "这水能人住",
+        "这水能忍住",
+        "这谁能人注",
+        "这水能人注",
+        "这谁能人主",
+        "这谁能人著",
+        "这书"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zheshuitingdedong",
+      "expected": "这谁听得懂",
+      "source": "6000",
+      "lookup_us": 1966,
+      "candidates": [
+        "这水听的东",
+        "这谁听的东",
+        "这水挺的东",
+        "这水挺的动",
+        "这水挺的洞",
+        "这谁听得懂",
+        "这水听得懂",
+        "这水听得动",
+        "这书"
+      ],
+      "expected_rank": 6
+    },
+    {
+      "pinyin": "zheshuixiangdedao",
+      "expected": "这谁想得到",
+      "source": "6000",
+      "lookup_us": 5806,
+      "candidates": [
+        "这水想得到",
+        "这谁想得到",
+        "这水乡得到",
+        "这水箱得到",
+        "这睡相得到",
+        "这水像得到",
+        "这水向得到",
+        "这水相得到",
+        "这书"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zhewanquanjiushiwo",
+      "expected": "这完全就是我",
+      "source": "6000",
+      "lookup_us": 5791,
+      "candidates": [
+        "这完全就是我",
+        "着完全就是我",
+        "这完全就使我",
+        "这完全旧是我",
+        "这完全酒使我",
+        "这完全久使我",
+        "这完全旧使我",
+        "这完全九使我",
+        "这"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhexiabengbuzhule",
+      "expected": "这下蚌埠住了",
+      "source": "6000",
+      "lookup_us": 3056,
+      "candidates": [
+        "这下绷不住了",
+        "这下泵不住了",
+        "这下蚌埠住了",
+        "这虾蚌埠住了",
+        "这下蚌埠著了",
+        "这下蚌埠主了",
+        "这下蚌埠煮了",
+        "这下绷不住乐",
+        "这下"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "zhexiachedichenmo",
+      "expected": "这下彻底沉默",
+      "source": "6000",
+      "lookup_us": 3464,
+      "candidates": [
+        "这下车的沉没",
+        "着下车的沉没",
+        "这下车的沉默",
+        "着下车的沉默",
+        "这下车地沉没",
+        "着下车地沉没",
+        "这下车低沉没",
+        "这下彻底沉默",
+        "这下"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zhexiachedidongle",
+      "expected": "这下彻底懂了",
+      "source": "6000",
+      "lookup_us": 3268,
+      "candidates": [
+        "这下车的懂了",
+        "着下车的懂了",
+        "这下车地懂了",
+        "着下车地懂了",
+        "这下彻底懂了",
+        "这下车的动了",
+        "这下车第懂了",
+        "这下车地动了",
+        "这下"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "zhexiachedimengle",
+      "expected": "这下彻底懵了",
+      "source": "6000",
+      "lookup_us": 3443,
+      "candidates": [
+        "这下车的梦了",
+        "着下车的梦了",
+        "这下车地梦了",
+        "着下车地梦了",
+        "这下车的蒙了",
+        "这下彻底梦了",
+        "着下车的蒙了",
+        "这下彻底懵了",
+        "这下"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zhexiayoudianganga",
+      "expected": "这下有点尴尬",
+      "source": "6000",
+      "lookup_us": 6406,
+      "candidates": [
+        "这下有点尴尬",
+        "着下有点尴尬",
+        "这下有电尴尬",
+        "这下有点刚啊",
+        "这下有电感噶",
+        "这下有电感嘎",
+        "这下有电感咖",
+        "这下有点刚阿",
+        "这下"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhexiayoudiannanbeng",
+      "expected": "这下有点难绷",
+      "source": "6000",
+      "lookup_us": 5568,
+      "candidates": [
+        "这下有点难绷",
+        "这下有点难泵",
+        "这下有点难蹦",
+        "这下有点难崩",
+        "这下有点难甭",
+        "这下有点难迸",
+        "这下有点难嘣",
+        "这下有点难蚌",
+        "这下"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhexiazhenbengbuzhu",
+      "expected": "这下真绷不住",
+      "source": "6000",
+      "lookup_us": 4020,
+      "candidates": [
+        "这下真绷不住",
+        "这下真蚌埠住",
+        "这下真泵不住",
+        "这下枕绷不住",
+        "这下真蹦不住",
+        "这下真崩不住",
+        "这下真甭不住",
+        "这下真迸不住",
+        "这下"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhexiazhendenanbeng",
+      "expected": "这下真的难绷",
+      "source": "6000",
+      "lookup_us": 3531,
+      "candidates": [
+        "这下真的难绷",
+        "这下真的难泵",
+        "这下真的难蹦",
+        "这下真的男泵",
+        "这下真的难崩",
+        "这下真的男蹦",
+        "这下真的男崩",
+        "这下真的南泵",
+        "这下"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhexiazhijiefengshen",
+      "expected": "这下直接封神",
+      "source": "6000",
+      "lookup_us": 6993,
+      "candidates": [
+        "这下直接风神",
+        "这下直接封神",
+        "这虾直接风神",
+        "这下直接缝神",
+        "这下直接缝身",
+        "这下直接风身",
+        "这下直接缝深",
+        "这下直接封身",
+        "这下"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zhexiazhijieqifei",
+      "expected": "这下直接起飞",
+      "source": "6000",
+      "lookup_us": 5741,
+      "candidates": [
+        "这下直接起飞",
+        "这虾直接起飞",
+        "这下直接起费",
+        "这下直接期费",
+        "这下直接气费",
+        "这下直接器费",
+        "这下直接起肥",
+        "这下直接其费",
+        "这下"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zheyetaizhenshile",
+      "expected": "这也太真实了",
+      "source": "6000",
+      "lookup_us": 4087,
+      "candidates": [
+        "这也太真实了",
+        "这也太真是了",
+        "者也太真实了",
+        "这也台真是了",
+        "这也太真湿了",
+        "这也太真实乐",
+        "这也太真是乐",
+        "这也太真实勒",
+        "这也"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biechuancuoxinxi",
+      "expected": "别传错信息",
+      "source": "6000",
+      "lookup_us": 5231,
+      "candidates": [
+        "别传错信息",
+        "别穿错信息",
+        "别传撮信息",
+        "别穿撮信息",
+        "别传搓信息",
+        "别穿搓信息",
+        "别传挫信息",
+        "别穿挫信息",
+        "别处"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biedaicuojiezou",
+      "expected": "别带错节奏",
+      "source": "6000",
+      "lookup_us": 4851,
+      "candidates": [
+        "别带错节奏",
+        "别大错节奏",
+        "别带撮节奏",
+        "别带搓节奏",
+        "别带挫节奏",
+        "别带措节奏",
+        "别待撮节奏",
+        "别待搓节奏",
+        "别打"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bieduanzhangquyi",
+      "expected": "别断章取义",
+      "source": "6000",
+      "lookup_us": 4750,
+      "candidates": [
+        "别断章取义",
+        "蹩断章取义",
+        "别端张去以",
+        "别段长去以",
+        "别断章取意",
+        "别断章去以",
+        "别端涨去以",
+        "别端长去以",
+        "憋"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biekancuozhongdian",
+      "expected": "别看错重点",
+      "source": "6000",
+      "lookup_us": 4494,
+      "candidates": [
+        "别看错重点",
+        "别看撮重点",
+        "别看搓重点",
+        "别看挫重点",
+        "别看措重点",
+        "别看厝重点",
+        "别看錯重点",
+        "别看锉重点",
+        "别看错"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biewuhuiyisi",
+      "expected": "别误会意思",
+      "source": "6000",
+      "lookup_us": 5326,
+      "candidates": [
+        "别误会意思",
+        "别无悔意思",
+        "别无回意思",
+        "别无灰意思",
+        "别无会意思",
+        "别无毁意思",
+        "别污秽意思",
+        "别误会议思",
+        "别误会"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biezhaojixiajielun",
+      "expected": "别着急下结论",
+      "source": "6000",
+      "lookup_us": 8704,
+      "candidates": [
+        "别着急下结论",
+        "别着几下结论",
+        "别着急夏结论",
+        "别着急吓结论",
+        "别着急虾结论",
+        "别着急霞结论",
+        "别着急瞎结论",
+        "别着急侠结论",
+        "别着急"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biezhikanbiaoti",
+      "expected": "别只看标题",
+      "source": "6000",
+      "lookup_us": 5329,
+      "candidates": [
+        "别只看标题",
+        "别致看标题",
+        "别只砍标题",
+        "别只刊标题",
+        "别只坎标题",
+        "别只堪标题",
+        "别致砍标题",
+        "别只侃标题",
+        "别致"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biezhikanfengmian",
+      "expected": "别只看封面",
+      "source": "6000",
+      "lookup_us": 4703,
+      "candidates": [
+        "别只看封面",
+        "别只看风面",
+        "别只看疯面",
+        "别只看峰面",
+        "别只看丰面",
+        "别只看冯面",
+        "别只看缝面",
+        "别只看凤面",
+        "别致"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "cepingyigengxin",
+      "expected": "测评已更新",
+      "source": "6000",
+      "lookup_us": 4141,
+      "candidates": [
+        "测评已更新",
+        "测评一更新",
+        "测评议更新",
+        "测评以更新",
+        "侧平移更新",
+        "侧平抑更新",
+        "测评易更新",
+        "侧评议更新",
+        "测评"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "cepingyishangchuan",
+      "expected": "测评已上传",
+      "source": "6000",
+      "lookup_us": 5775,
+      "candidates": [
+        "测评一上传",
+        "测评义上传",
+        "测评以上传",
+        "测评衣上传",
+        "测评议上传",
+        "测评意上传",
+        "测评以上船",
+        "测评已上传",
+        "测评"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "fankuiyibuchong",
+      "expected": "反馈已补充",
+      "source": "6000",
+      "lookup_us": 2565,
+      "candidates": [
+        "反馈意补充",
+        "反馈一补充",
+        "反馈以补充",
+        "反馈已补充",
+        "反馈易补充",
+        "反馈伊补充",
+        "反馈亿补充",
+        "反馈依补充",
+        "反馈"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "fankuiyigengxin",
+      "expected": "反馈已更新",
+      "source": "6000",
+      "lookup_us": 4257,
+      "candidates": [
+        "反馈已更新",
+        "反馈一更新",
+        "反馈意更新",
+        "反馈以更新",
+        "反馈易更新",
+        "反馈伊更新",
+        "反馈亿更新",
+        "反馈依更新",
+        "反馈"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gaoqingyuantulianjie",
+      "expected": "高清原图链接",
+      "source": "6000",
+      "lookup_us": 9380,
+      "candidates": [
+        "高清原图链接",
+        "搞清原图链接",
+        "高清原图连接",
+        "搞清原图连接",
+        "高清原图联接",
+        "高清原图连结",
+        "高清原图联结",
+        "高清原图廉洁",
+        "高清"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gengxinhuizongye",
+      "expected": "更新汇总页",
+      "source": "6000",
+      "lookup_us": 3514,
+      "candidates": [
+        "更新汇总也",
+        "更新汇总页",
+        "更新回总也",
+        "更新汇总业",
+        "更新汇总夜",
+        "更新会总也",
+        "更新汇总叶",
+        "更新回总页",
+        "更新"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "gonglvehuizongye",
+      "expected": "攻略汇总页",
+      "source": "6000",
+      "lookup_us": 3907,
+      "candidates": [
+        "攻略汇总也",
+        "攻略汇总页",
+        "攻略汇总业",
+        "攻略汇总夜",
+        "攻略会总也",
+        "攻略汇总叶",
+        "攻略会总页",
+        "攻略回总也",
+        "攻略"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "hejibofangye",
+      "expected": "合集播放页",
+      "source": "6000",
+      "lookup_us": 3308,
+      "candidates": [
+        "和机播放页",
+        "和机播放也",
+        "和机播放业",
+        "和机播放夜",
+        "合集播放页",
+        "合集播放也",
+        "合集播放业",
+        "合集播放夜",
+        "合集播放"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "houxukanpinglun",
+      "expected": "后续看评论",
+      "source": "6000",
+      "lookup_us": 4035,
+      "candidates": [
+        "后续看评论",
+        "后许看评论",
+        "后续砍评论",
+        "后续刊评论",
+        "后续坎评论",
+        "后续堪评论",
+        "后续侃评论",
+        "后续槛评论",
+        "后续"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "houxukanzhiding",
+      "expected": "后续看置顶",
+      "source": "6000",
+      "lookup_us": 3333,
+      "candidates": [
+        "后续看置顶",
+        "后续看制定",
+        "后续看指定",
+        "后续砍置顶",
+        "后续刊置顶",
+        "后续坎置顶",
+        "后续堪置顶",
+        "后续侃置顶",
+        "后续"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "houxukanzhuye",
+      "expected": "后续看主页",
+      "source": "6000",
+      "lookup_us": 2230,
+      "candidates": [
+        "后续看主页",
+        "后续看主业",
+        "后许看主页",
+        "后许看主业",
+        "后续看逐页",
+        "后续砍主页",
+        "后续看主也",
+        "后续看主夜",
+        "后续"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "houxuyibushang",
+      "expected": "后续已补上",
+      "source": "6000",
+      "lookup_us": 3256,
+      "candidates": [
+        "后续以不上",
+        "后续一不上",
+        "后蓄意不上",
+        "后续已不上",
+        "后续意不上",
+        "后许以不上",
+        "后续亦不上",
+        "后续已补上",
+        "后续"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "houxuyigengxin",
+      "expected": "后续已更新",
+      "source": "6000",
+      "lookup_us": 3880,
+      "candidates": [
+        "后续已更新",
+        "后续一更新",
+        "后续以更新",
+        "后续易更新",
+        "后蓄意更新",
+        "后续伊更新",
+        "后续意更新",
+        "后续亿更新",
+        "后续"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huaxubofangye",
+      "expected": "花絮播放页",
+      "source": "6000",
+      "lookup_us": 4176,
+      "candidates": [
+        "花絮播放页",
+        "花序播放页",
+        "花絮播放也",
+        "花序播放也",
+        "花絮播放业",
+        "花絮播放夜",
+        "花序播放业",
+        "花序播放夜",
+        "花絮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jianjieyoubuchong",
+      "expected": "简介有补充",
+      "source": "6000",
+      "lookup_us": 3746,
+      "candidates": [
+        "见解有补充",
+        "简介有补充",
+        "键节油补充",
+        "见解又补充",
+        "简介又补充",
+        "见解由补充",
+        "剪节油补充",
+        "简介由补充",
+        "简介"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "jianjieyoushuoming",
+      "expected": "简介有说明",
+      "source": "6000",
+      "lookup_us": 5359,
+      "candidates": [
+        "见解有说明",
+        "简介有说明",
+        "见解又说明",
+        "见解由说明",
+        "简介又说明",
+        "简介由说明",
+        "键节油说明",
+        "见解游说明",
+        "简介"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "jiaochenghuizongye",
+      "expected": "教程汇总页",
+      "source": "6000",
+      "lookup_us": 4204,
+      "candidates": [
+        "教程汇总也",
+        "教程会总也",
+        "教程汇总页",
+        "教程汇总业",
+        "教程汇总夜",
+        "教程回总也",
+        "教程会总页",
+        "教程会总业",
+        "教程"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "jiaochengyibushang",
+      "expected": "教程已补上",
+      "source": "6000",
+      "lookup_us": 4011,
+      "candidates": [
+        "教程以不上",
+        "叫成以不上",
+        "叫诚意不上",
+        "觉诚意不上",
+        "叫成一不上",
+        "教程一不上",
+        "教程已不上",
+        "教程已补上",
+        "教程"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "jiaochengyigengxin",
+      "expected": "教程已更新",
+      "source": "6000",
+      "lookup_us": 4513,
+      "candidates": [
+        "教程已更新",
+        "叫成一更新",
+        "教程一更新",
+        "教程以更新",
+        "叫成以更新",
+        "叫诚意更新",
+        "教程怡更新",
+        "觉诚意更新",
+        "教程"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiaochengyishangchuan",
+      "expected": "教程已上传",
+      "source": "6000",
+      "lookup_us": 5556,
+      "candidates": [
+        "教程以上传",
+        "叫成以上传",
+        "叫成一上传",
+        "教程一上传",
+        "教程义上传",
+        "教程以上船",
+        "叫诚意上传",
+        "教程已上传",
+        "教程"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "jiaochengzaijianjie",
+      "expected": "教程在简介",
+      "source": "6000",
+      "lookup_us": 7402,
+      "candidates": [
+        "教程再见解",
+        "教程在见解",
+        "教程再见节",
+        "教程再见接",
+        "教程再见街",
+        "教程再见结",
+        "教程在间接",
+        "教程在简介",
+        "教程"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "jiaochengzaipinglun",
+      "expected": "教程在评论",
+      "source": "6000",
+      "lookup_us": 4281,
+      "candidates": [
+        "教程再评论",
+        "教程在评论",
+        "叫承载评论",
+        "教程载评论",
+        "教程仔评论",
+        "教程哉评论",
+        "教程灾评论",
+        "教程宰评论",
+        "教程"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "jiaochengzaizhiding",
+      "expected": "教程在置顶",
+      "source": "6000",
+      "lookup_us": 4503,
+      "candidates": [
+        "教程在指定",
+        "教程在置顶",
+        "教程在制定",
+        "教程再置顶",
+        "叫承载置顶",
+        "教程在纸锭",
+        "教程再制定",
+        "教程再指定",
+        "教程"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "jutikanjianjie",
+      "expected": "具体看简介",
+      "source": "6000",
+      "lookup_us": 7197,
+      "candidates": [
+        "具体看见解",
+        "具体看见节",
+        "具体看见接",
+        "具体看见街",
+        "具体看见结",
+        "具体看见界",
+        "具体看见洁",
+        "具体看简介",
+        "具体"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "jutikanpinglun",
+      "expected": "具体看评论",
+      "source": "6000",
+      "lookup_us": 3671,
+      "candidates": [
+        "具体看评论",
+        "具体砍评论",
+        "具体刊评论",
+        "具体坎评论",
+        "具体堪评论",
+        "具体侃评论",
+        "具体槛评论",
+        "具体勘评论",
+        "具体"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jutikanshuoming",
+      "expected": "具体看说明",
+      "source": "6000",
+      "lookup_us": 4170,
+      "candidates": [
+        "具体看说明",
+        "具体砍说明",
+        "具体刊说明",
+        "具体坎说明",
+        "具体堪说明",
+        "具体侃说明",
+        "具体槛说明",
+        "具体勘说明",
+        "具体"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jutikanyuanshipin",
+      "expected": "具体看原视频",
+      "source": "6000",
+      "lookup_us": 6114,
+      "candidates": [
+        "具体看原始品",
+        "具体看原视频",
+        "具体看原始拼",
+        "具体看源视频",
+        "具体看院视频",
+        "具体看原始频",
+        "具体看原始聘",
+        "具体看原始贫",
+        "具体"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "jutikanyuantie",
+      "expected": "具体看原帖",
+      "source": "6000",
+      "lookup_us": 4318,
+      "candidates": [
+        "具体看原帖",
+        "具体看院贴",
+        "具体看原贴",
+        "具体看院铁",
+        "具体看院帖",
+        "具体看原铁",
+        "具体砍原帖",
+        "具体看源贴",
+        "具体"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jutikanyuanwen",
+      "expected": "具体看原文",
+      "source": "6000",
+      "lookup_us": 3214,
+      "candidates": [
+        "具体看原文",
+        "具体看院问",
+        "具体看原问",
+        "具体砍原文",
+        "具体刊原文",
+        "具体坎原文",
+        "具体堪原文",
+        "具体看院文",
+        "具体"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jutikanzhiding",
+      "expected": "具体看置顶",
+      "source": "6000",
+      "lookup_us": 3717,
+      "candidates": [
+        "具体看置顶",
+        "具体看制定",
+        "具体看指定",
+        "具体砍置顶",
+        "具体看之定",
+        "具体刊置顶",
+        "具体坎置顶",
+        "具体堪置顶",
+        "具体"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kanqingchuzaihuifu",
+      "expected": "看清楚再回复",
+      "source": "6000",
+      "lookup_us": 4983,
+      "candidates": [
+        "看清楚再回复",
+        "看清除再回复",
+        "看清楚再恢复",
+        "看清楚在回复",
+        "看清楚在恢复",
+        "看清楚再回服",
+        "看清楚再回覆",
+        "看清楚再回夫",
+        "看清楚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kanqingchuzaipinglun",
+      "expected": "看清楚再评论",
+      "source": "6000",
+      "lookup_us": 4847,
+      "candidates": [
+        "看清楚再评论",
+        "看清楚在评论",
+        "看清楚载评论",
+        "看清楚仔评论",
+        "看清楚哉评论",
+        "看清楚灾评论",
+        "看清楚宰评论",
+        "看清楚栽评论",
+        "看清楚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kanwanzaihuifu",
+      "expected": "看完再回复",
+      "source": "6000",
+      "lookup_us": 4062,
+      "candidates": [
+        "看完再回复",
+        "看晚再回复",
+        "看完再恢复",
+        "看完在回复",
+        "看完在恢复",
+        "看玩在回复",
+        "看完载回复",
+        "看完仔回复",
+        "看完"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kanwanzaipinglun",
+      "expected": "看完再评论",
+      "source": "6000",
+      "lookup_us": 3953,
+      "candidates": [
+        "看完再评论",
+        "看完在评论",
+        "看晚再评论",
+        "看完载评论",
+        "看完仔评论",
+        "看完哉评论",
+        "看完灾评论",
+        "看完宰评论",
+        "看完"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kanyuantiezaipinglun",
+      "expected": "看原帖再评论",
+      "source": "6000",
+      "lookup_us": 5808,
+      "candidates": [
+        "看原帖再评论",
+        "看原帖在评论",
+        "看院贴在评论",
+        "看原帖载评论",
+        "看原帖仔评论",
+        "看原帖哉评论",
+        "看原帖灾评论",
+        "看原帖宰评论",
+        "看"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kanyuanwenzaipinglun",
+      "expected": "看原文再评论",
+      "source": "6000",
+      "lookup_us": 5395,
+      "candidates": [
+        "看原文在评论",
+        "看原文再评论",
+        "看原文哉评论",
+        "看原文载评论",
+        "看原文仔评论",
+        "看原文灾评论",
+        "看原文宰评论",
+        "看原文栽评论",
+        "看"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "lianjiefangjianjie",
+      "expected": "链接放简介",
+      "source": "6000",
+      "lookup_us": 9594,
+      "candidates": [
+        "连接房间节",
+        "连接房间接",
+        "连接房间解",
+        "连接房间街",
+        "连接房间结",
+        "连接房间界",
+        "链接房间节",
+        "链接放简介",
+        "连接"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "lianjiefangpinglun",
+      "expected": "链接放评论",
+      "source": "6000",
+      "lookup_us": 5714,
+      "candidates": [
+        "连接方评论",
+        "连接放评论",
+        "连接房评论",
+        "连接防评论",
+        "连接仿评论",
+        "连接芳评论",
+        "连接访评论",
+        "链接放评论",
+        "连接"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "lianjiefangzhiding",
+      "expected": "链接放置顶",
+      "source": "6000",
+      "lookup_us": 5661,
+      "candidates": [
+        "连接方置顶",
+        "连接放置顶",
+        "连接方制定",
+        "连接方指定",
+        "连接仿制定",
+        "连接房纸锭",
+        "连接房置顶",
+        "链接放置顶",
+        "连接"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "lianjiehuizongye",
+      "expected": "链接汇总页",
+      "source": "6000",
+      "lookup_us": 4076,
+      "candidates": [
+        "连接汇总也",
+        "连接汇总页",
+        "连接汇总业",
+        "连接汇总夜",
+        "连接会总也",
+        "连接回总也",
+        "链接汇总也",
+        "链接汇总页",
+        "连接"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "lianjiekanjianjie",
+      "expected": "链接看简介",
+      "source": "6000",
+      "lookup_us": 7914,
+      "candidates": [
+        "连接看见解",
+        "连接看见节",
+        "连接看见接",
+        "连接看见街",
+        "连接看见结",
+        "链接看见解",
+        "连接看见界",
+        "链接看简介",
+        "连接"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "lianjiekanpinglun",
+      "expected": "链接看评论",
+      "source": "6000",
+      "lookup_us": 5181,
+      "candidates": [
+        "连接看评论",
+        "链接看评论",
+        "连接砍评论",
+        "连接刊评论",
+        "连接坎评论",
+        "连接堪评论",
+        "连接侃评论",
+        "连接槛评论",
+        "连接"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "lianjiekanzhiding",
+      "expected": "链接看置顶",
+      "source": "6000",
+      "lookup_us": 4317,
+      "candidates": [
+        "连接看置顶",
+        "连接看制定",
+        "连接看指定",
+        "连接砍置顶",
+        "连接刊置顶",
+        "连接坎置顶",
+        "连接堪置顶",
+        "链接看置顶",
+        "连接"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "lianjieyibushang",
+      "expected": "链接已补上",
+      "source": "6000",
+      "lookup_us": 4963,
+      "candidates": [
+        "连接已不上",
+        "连接一不上",
+        "链接已不上",
+        "连接以不上",
+        "连接一部上",
+        "连接一步上",
+        "连接意不上",
+        "链接已补上",
+        "连接"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "lianjieyigengxin",
+      "expected": "链接已更新",
+      "source": "6000",
+      "lookup_us": 5424,
+      "candidates": [
+        "连接已更新",
+        "链接已更新",
+        "连接一更新",
+        "链接一更新",
+        "连接以更新",
+        "连接易更新",
+        "连接伊更新",
+        "连接意更新",
+        "连接"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "lianjieyitihuan",
+      "expected": "链接已替换",
+      "source": "6000",
+      "lookup_us": 5064,
+      "candidates": [
+        "连接已替换",
+        "链接已替换",
+        "连接一替换",
+        "连接一提还",
+        "连接一体还",
+        "连接一提换",
+        "连接一体换",
+        "连接一提欢",
+        "连接"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "pinglunyoubuchong",
+      "expected": "评论有补充",
+      "source": "6000",
+      "lookup_us": 2481,
+      "candidates": [
+        "评论有补充",
+        "评论又补充",
+        "评论由补充",
+        "评论油补充",
+        "评论游补充",
+        "评论友补充",
+        "评论右补充",
+        "评论优补充",
+        "评论"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "pinglunyoushuoming",
+      "expected": "评论有说明",
+      "source": "6000",
+      "lookup_us": 5482,
+      "candidates": [
+        "评论有说明",
+        "评论又说明",
+        "评论由说明",
+        "评论游说明",
+        "评论油说明",
+        "评论友说明",
+        "评论右说明",
+        "评论优说明",
+        "评论"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qingkanwanzhengshipin",
+      "expected": "请看完整视频",
+      "source": "6000",
+      "lookup_us": 6620,
+      "candidates": [
+        "请看完整视频",
+        "请看完整食品",
+        "请看完整饰品",
+        "请看完整时品",
+        "请看完整是品",
+        "请看完整诗品",
+        "请看完整式品",
+        "清看完整视频",
+        "请看"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "quanjibofangye",
+      "expected": "全集播放页",
+      "source": "6000",
+      "lookup_us": 4306,
+      "candidates": [
+        "全集播放页",
+        "全集播放也",
+        "全集播放业",
+        "全集播放夜",
+        "全集播放叶",
+        "全集播放野",
+        "全机播放页",
+        "全机播放也",
+        "全集"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "quanwenyueduye",
+      "expected": "全文阅读页",
+      "source": "6000",
+      "lookup_us": 5325,
+      "candidates": [
+        "全文月度也",
+        "全文阅读页",
+        "全文月度页",
+        "全文阅读也",
+        "全问阅读页",
+        "全文月度业",
+        "全文月度夜",
+        "全文阅读业",
+        "全文"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "shiceyigengxin",
+      "expected": "实测已更新",
+      "source": "6000",
+      "lookup_us": 3960,
+      "candidates": [
+        "实测已更新",
+        "实测一更新",
+        "实测以更新",
+        "是侧翼更新",
+        "实测易更新",
+        "实测伊更新",
+        "实测意更新",
+        "实测亿更新",
+        "实测"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shiceyishangchuan",
+      "expected": "实测已上传",
+      "source": "6000",
+      "lookup_us": 4613,
+      "candidates": [
+        "实测一上传",
+        "实测义上传",
+        "实测以上传",
+        "实测衣上传",
+        "实测意上传",
+        "实测以上船",
+        "实测椅上传",
+        "实测已上传",
+        "实测"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "sucailaiyuanye",
+      "expected": "素材来源页",
+      "source": "6000",
+      "lookup_us": 4603,
+      "candidates": [
+        "素材来源页",
+        "素材来源也",
+        "素材来源业",
+        "素材来源夜",
+        "素材来源叶",
+        "素菜来源页",
+        "素菜来源也",
+        "素菜来源业",
+        "素材来源"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "sucaixiazaiye",
+      "expected": "素材下载页",
+      "source": "6000",
+      "lookup_us": 3123,
+      "candidates": [
+        "素材下载页",
+        "素菜下载页",
+        "素材下载也",
+        "素材下载业",
+        "素材下载夜",
+        "素材下载叶",
+        "素菜下载也",
+        "素菜下载业",
+        "素材下载"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangpanfangwenma",
+      "expected": "网盘访问码",
+      "source": "6000",
+      "lookup_us": 3371,
+      "candidates": [
+        "网盘访问吗",
+        "网盘放问吗",
+        "网盘访问码",
+        "网盘访问妈",
+        "网盘访问骂",
+        "网盘放稳吗",
+        "网盘访问么",
+        "网盘放稳码",
+        "网盘"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "wangpanfangwenmima",
+      "expected": "网盘访问密码",
+      "source": "6000",
+      "lookup_us": 4187,
+      "candidates": [
+        "网盘访问密码",
+        "网盘放问密码",
+        "网盘放稳密码",
+        "网盘放文密码",
+        "网盘放温密码",
+        "网盘放闻密码",
+        "网盘放纹密码",
+        "网盘放吻密码",
+        "网盘"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangpanfenxiangkouling",
+      "expected": "网盘分享口令",
+      "source": "6000",
+      "lookup_us": 8162,
+      "candidates": [
+        "网盘分享口令",
+        "王盘分享口令",
+        "网盘分项口令",
+        "网盘分享口灵",
+        "网盘分享口铃",
+        "网盘分箱口令",
+        "网盘分享口另",
+        "网盘分想口令",
+        "网盘"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangpanfenxiangma",
+      "expected": "网盘分享码",
+      "source": "6000",
+      "lookup_us": 5347,
+      "candidates": [
+        "网盘分享吗",
+        "网盘分享码",
+        "网盘分享妈",
+        "网盘分享骂",
+        "网盘分项吗",
+        "网盘分享么",
+        "网盘分项码",
+        "网盘分项妈",
+        "网盘"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "wangpanlianjiebudang",
+      "expected": "网盘链接补档",
+      "source": "6000",
+      "lookup_us": 9163,
+      "candidates": [
+        "网盘链接不当",
+        "网盘链接补档",
+        "网盘链接不档",
+        "网盘链接不党",
+        "网盘连接不当",
+        "网盘链接不荡",
+        "网盘连接不档",
+        "网盘链接部档",
+        "网盘"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "wangpanshixiaolianjie",
+      "expected": "网盘失效链接",
+      "source": "6000",
+      "lookup_us": 10863,
+      "candidates": [
+        "网盘失效链接",
+        "网盘失效连接",
+        "王盘失效链接",
+        "网盘是小链接",
+        "网盘是小连接",
+        "网盘实效连接",
+        "网盘失效联接",
+        "网盘失效连结",
+        "网盘"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangpantiquma",
+      "expected": "网盘提取码",
+      "source": "6000",
+      "lookup_us": 3128,
+      "candidates": [
+        "网盘提取码",
+        "网盘提取吗",
+        "网盘提取妈",
+        "网盘提取骂",
+        "网盘提去吗",
+        "网盘体去吗",
+        "网盘题去吗",
+        "网盘剔去吗",
+        "网盘"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangpanzhuancunjilu",
+      "expected": "网盘转存记录",
+      "source": "6000",
+      "lookup_us": 4429,
+      "candidates": [
+        "网盘转存记录",
+        "网盘赚存记录",
+        "网盘转村记录",
+        "网盘赚村记录",
+        "网盘转寸记录",
+        "网盘赚寸记录",
+        "网盘转吋记录",
+        "网盘转忖记录",
+        "网盘"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangpanzhuancunlianjie",
+      "expected": "网盘转存链接",
+      "source": "6000",
+      "lookup_us": 6874,
+      "candidates": [
+        "网盘转存链接",
+        "网盘赚存链接",
+        "网盘转存连接",
+        "网盘转村链接",
+        "网盘赚村链接",
+        "网盘转寸链接",
+        "网盘转村连接",
+        "网盘赚寸链接",
+        "网盘"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangpanzhuancunmulu",
+      "expected": "网盘转存目录",
+      "source": "6000",
+      "lookup_us": 4162,
+      "candidates": [
+        "网盘转存目录",
+        "网盘赚存目录",
+        "网盘转村目录",
+        "网盘赚村目录",
+        "网盘转寸目录",
+        "网盘赚寸目录",
+        "网盘转吋目录",
+        "网盘转忖目录",
+        "网盘"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wanzhengbanyigengxin",
+      "expected": "完整版已更新",
+      "source": "6000",
+      "lookup_us": 7099,
+      "candidates": [
+        "完整版已更新",
+        "完整版一更新",
+        "完整版以更新",
+        "完整版易更新",
+        "完整版伊更新",
+        "完整版意更新",
+        "完整版亿更新",
+        "完整版依更新",
+        "完整版"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wanzhengbanyishangchuan",
+      "expected": "完整版已上传",
+      "source": "6000",
+      "lookup_us": 7463,
+      "candidates": [
+        "完整版一上传",
+        "完整版义上传",
+        "完整版以上传",
+        "完整版衣上传",
+        "完整版意上传",
+        "完整版以上船",
+        "完整版椅上传",
+        "完整版已上传",
+        "完整版"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "wanzhengbanzaijianjie",
+      "expected": "完整版在简介",
+      "source": "6000",
+      "lookup_us": 8792,
+      "candidates": [
+        "完整版再见解",
+        "完整版在见解",
+        "完整版再见节",
+        "完整版再见接",
+        "完整版再见街",
+        "完整版再见结",
+        "完整办再见解",
+        "完整版在简介",
+        "完整版"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "wanzhengbanzaizhiding",
+      "expected": "完整版在置顶",
+      "source": "6000",
+      "lookup_us": 5438,
+      "candidates": [
+        "完整版在指定",
+        "完整版在置顶",
+        "完整版在制定",
+        "完整半在指定",
+        "完整版再置顶",
+        "完整板载置顶",
+        "完整版在纸锭",
+        "完整半在置顶",
+        "完整版"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "wenmoyoubuchong",
+      "expected": "文末有补充",
+      "source": "6000",
+      "lookup_us": 2257,
+      "candidates": [
+        "文没有补充",
+        "文末有补充",
+        "文模又补充",
+        "文默又补充",
+        "文模由补充",
+        "文没有不重",
+        "文默由补充",
+        "文模油补充",
+        "问"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "wenzhongyoushuoming",
+      "expected": "文中有说明",
+      "source": "6000",
+      "lookup_us": 3577,
+      "candidates": [
+        "文中有说明",
+        "闻中有说明",
+        "文中由说明",
+        "文中又说明",
+        "闻中由说明",
+        "文中游说明",
+        "闻中游说明",
+        "闻中又说明",
+        "文中"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wobuchongyiju",
+      "expected": "我补充一句",
+      "source": "6000",
+      "lookup_us": 2559,
+      "candidates": [
+        "我不重一句",
+        "我不充一句",
+        "我补充一句",
+        "我不冲一句",
+        "我不虫一句",
+        "我不宠一句",
+        "我不崇一句",
+        "我不翀一句",
+        "我不"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "wochengqingyixia",
+      "expected": "我澄清一下",
+      "source": "6000",
+      "lookup_us": 6003,
+      "candidates": [
+        "我澄清一下",
+        "我承轻一下",
+        "我成情一下",
+        "我承请一下",
+        "我承情一下",
+        "我成轻一下",
+        "我成请一下",
+        "我承清一下",
+        "我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wochongxinshuoyixia",
+      "expected": "我重新说一下",
+      "source": "6000",
+      "lookup_us": 5738,
+      "candidates": [
+        "我重新说一下",
+        "我重新数一下",
+        "我重新說一下",
+        "我重新硕一下",
+        "我重新朔一下",
+        "我重新烁一下",
+        "我重心说一下",
+        "我重新铄一下",
+        "我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woganglijiecuole",
+      "expected": "我刚理解错了",
+      "source": "6000",
+      "lookup_us": 5461,
+      "candidates": [
+        "我刚理解错了",
+        "我刚礼节错了",
+        "我刚李解错了",
+        "我刚历届错了",
+        "我刚李杰错了",
+        "我刚里接错了",
+        "我刚里介错了",
+        "我刚理解搓了",
+        "我刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wogangmeikanqingchu",
+      "expected": "我刚没看清楚",
+      "source": "6000",
+      "lookup_us": 5924,
+      "candidates": [
+        "我刚没看清楚",
+        "我刚每看清楚",
+        "我刚没看清除",
+        "我刚没阚清楚",
+        "我刚没砍清楚",
+        "我刚没刊清楚",
+        "我刚没坎清楚",
+        "我刚没堪清楚",
+        "我刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wogengzhengyixia",
+      "expected": "我更正一下",
+      "source": "6000",
+      "lookup_us": 5484,
+      "candidates": [
+        "我更整一下",
+        "我更正一下",
+        "我更证一下",
+        "我更蒸一下",
+        "我更郑一下",
+        "我更争一下",
+        "我更挣一下",
+        "我更政一下",
+        "我更"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "wohuangejiaodu",
+      "expected": "我换个角度",
+      "source": "6000",
+      "lookup_us": 7233,
+      "candidates": [
+        "我换个角度",
+        "我换个教度",
+        "我换个教读",
+        "我换个角读",
+        "我换个教堵",
+        "我换个角堵",
+        "我换个脚度",
+        "我换个教都",
+        "我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wojugelizi",
+      "expected": "我举个例子",
+      "source": "6000",
+      "lookup_us": 3243,
+      "candidates": [
+        "我举个例子",
+        "我局个例子",
+        "我局各例子",
+        "我局格例子",
+        "我局歌例子",
+        "我局哥例子",
+        "我局隔例子",
+        "我局阁例子",
+        "我局"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wokancuozhongdianle",
+      "expected": "我看错重点了",
+      "source": "6000",
+      "lookup_us": 4380,
+      "candidates": [
+        "我看错重点了",
+        "我看错中点了",
+        "我看错终点了",
+        "我看撮重点了",
+        "我看错钟点了",
+        "我看错种点了",
+        "我看错重点乐",
+        "我看错众点了",
+        "我看"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wokanlouleyiduan",
+      "expected": "我看漏了一段",
+      "source": "6000",
+      "lookup_us": 3424,
+      "candidates": [
+        "我看漏了一段",
+        "我看楼了一段",
+        "我看楼乐一段",
+        "我看楼勒一段",
+        "我看楼叻一段",
+        "我看漏了一断",
+        "我看漏了一短",
+        "我看楼仂一段",
+        "我看"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wokanlouleyiju",
+      "expected": "我看漏了一句",
+      "source": "6000",
+      "lookup_us": 2502,
+      "candidates": [
+        "我看漏了一句",
+        "我看楼了一句",
+        "我看漏了一具",
+        "我看漏了一举",
+        "我看楼乐一句",
+        "我看漏了一局",
+        "我看楼了一具",
+        "我看楼勒一句",
+        "我看"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "womeibiaodaqingchu",
+      "expected": "我没表达清楚",
+      "source": "6000",
+      "lookup_us": 7391,
+      "candidates": [
+        "我没表达清楚",
+        "我没表达清除",
+        "我美表达清楚",
+        "我没表达清出",
+        "我没表达清处",
+        "我没表达清初",
+        "我没表达清躇",
+        "我没表达清触",
+        "我没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woshuodebuqingchu",
+      "expected": "我说得不清楚",
+      "source": "6000",
+      "lookup_us": 4765,
+      "candidates": [
+        "我说的不清楚",
+        "我说得不清楚",
+        "我说的部清楚",
+        "我说的不清除",
+        "我说得不清除",
+        "我说的布清楚",
+        "我说的部清除",
+        "我说的补清楚",
+        "我说"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "woxiugaiyixia",
+      "expected": "我修改一下",
+      "source": "6000",
+      "lookup_us": 4156,
+      "candidates": [
+        "我修改一下",
+        "喔修改一下",
+        "我修改以下",
+        "我修该一下",
+        "我秀该一下",
+        "我修改一吓",
+        "我修改衣下",
+        "我修改一夏",
+        "我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozaibuchongyidian",
+      "expected": "我再补充一点",
+      "source": "6000",
+      "lookup_us": 5219,
+      "candidates": [
+        "我再补充一点",
+        "我在补充一点",
+        "我在不重一点",
+        "我在不冲一点",
+        "我在不虫一点",
+        "我在不宠一点",
+        "我再不重一点",
+        "我再补充意点",
+        "我在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianheduichuchu",
+      "expected": "先核对出处",
+      "source": "6000",
+      "lookup_us": 3217,
+      "candidates": [
+        "先核对处处",
+        "先核对出处",
+        "先核对楚楚",
+        "现核对处处",
+        "现核对出处",
+        "现核对楚楚",
+        "先核对出出",
+        "先核对初出",
+        "先河"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "xiankankanyuanshipin",
+      "expected": "先看看原视频",
+      "source": "6000",
+      "lookup_us": 5968,
+      "candidates": [
+        "先看看原视频",
+        "先看看原始品",
+        "先看看原始拼",
+        "先看看源视频",
+        "先看看院视频",
+        "先看看原始频",
+        "先看看原始聘",
+        "先看看原始贫",
+        "先看"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiankankanyuantie",
+      "expected": "先看看原帖",
+      "source": "6000",
+      "lookup_us": 5791,
+      "candidates": [
+        "先看看原帖",
+        "先看看院贴",
+        "先看看原贴",
+        "先看看院铁",
+        "先看看院帖",
+        "先看看原铁",
+        "先看看源贴",
+        "先看看院貼",
+        "先看"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiankankanyuanwen",
+      "expected": "先看看原文",
+      "source": "6000",
+      "lookup_us": 4235,
+      "candidates": [
+        "先看看原文",
+        "先看看院问",
+        "先看看原问",
+        "先看看院文",
+        "先看看院稳",
+        "先看看原稳",
+        "先看看院纹",
+        "先看看源文",
+        "先看"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiankanwanzhengshipin",
+      "expected": "先看完整视频",
+      "source": "6000",
+      "lookup_us": 7321,
+      "candidates": [
+        "先看完整视频",
+        "先看完整食品",
+        "先看完整饰品",
+        "先看完整时品",
+        "先看完整是品",
+        "先看完整诗品",
+        "先看完整式品",
+        "先看完整事品",
+        "先看"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianquerenlaiyuan",
+      "expected": "先确认来源",
+      "source": "6000",
+      "lookup_us": 6720,
+      "candidates": [
+        "先确认来源",
+        "先确认来远",
+        "先确认来园",
+        "先确认来元",
+        "先确认来原",
+        "先确认赖远",
+        "先确认来圆",
+        "先确认赖园",
+        "先确认"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xijiekanshipin",
+      "expected": "细节看视频",
+      "source": "6000",
+      "lookup_us": 4608,
+      "candidates": [
+        "细节看视频",
+        "细节看食品",
+        "细节看是品",
+        "细节看饰品",
+        "细节砍视频",
+        "细节刊视频",
+        "细节砍食品",
+        "细节坎视频",
+        "细节"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xijiekantupian",
+      "expected": "细节看图片",
+      "source": "6000",
+      "lookup_us": 5097,
+      "candidates": [
+        "细节看图片",
+        "细节砍图片",
+        "细节刊图片",
+        "细节坎图片",
+        "细节堪图片",
+        "细节侃图片",
+        "细节槛图片",
+        "细节勘图片",
+        "细节"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xijiekanyuantu",
+      "expected": "细节看原图",
+      "source": "6000",
+      "lookup_us": 5297,
+      "candidates": [
+        "细节看原图",
+        "细节砍原图",
+        "细节刊原图",
+        "细节坎原图",
+        "细节堪原图",
+        "细节侃原图",
+        "细节槛原图",
+        "细节勘原图",
+        "细节"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuanbijilianjie",
+      "expected": "原笔记链接",
+      "source": "6000",
+      "lookup_us": 6209,
+      "candidates": [
+        "原笔记链接",
+        "远笔记链接",
+        "原笔记连接",
+        "远笔记连接",
+        "远比几链接",
+        "远比机连接",
+        "远比基链接",
+        "远比计链接",
+        "远比"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuanbolianjie",
+      "expected": "原博链接",
+      "source": "6000",
+      "lookup_us": 4666,
+      "candidates": [
+        "原博链接",
+        "渊博链接",
+        "渊博连接",
+        "原博连接",
+        "原播连接",
+        "远播连接",
+        "原伯连接",
+        "远伯连接",
+        "渊博"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuanchuangzuozheming",
+      "expected": "原创作者名",
+      "source": "6000",
+      "lookup_us": 6393,
+      "candidates": [
+        "原创作者名",
+        "原创作者明",
+        "原创作者命",
+        "原创作者鸣",
+        "原创作这名",
+        "原创作者铭",
+        "原创作者冥",
+        "原创作者茗",
+        "原创"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuandongtailianjie",
+      "expected": "原动态链接",
+      "source": "6000",
+      "lookup_us": 7507,
+      "candidates": [
+        "原动态链接",
+        "远动态链接",
+        "原动态连接",
+        "远东台链接",
+        "远东台连接",
+        "远东泰链接",
+        "远东太链接",
+        "远动态连接",
+        "远东"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuanfabuzhe",
+      "expected": "原发布者",
+      "source": "6000",
+      "lookup_us": 1623,
+      "candidates": [
+        "原发布者",
+        "原发不着",
+        "原法不着",
+        "远法不着",
+        "远发不着",
+        "原发布着",
+        "远发布者",
+        "原发布这",
+        "远"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuanloulianjie",
+      "expected": "原楼链接",
+      "source": "6000",
+      "lookup_us": 5501,
+      "candidates": [
+        "原楼链接",
+        "远楼链接",
+        "原楼连接",
+        "原漏链接",
+        "远楼连接",
+        "远漏链接",
+        "原喽链接",
+        "原露链接",
+        "远"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuanpaishezhe",
+      "expected": "原拍摄者",
+      "source": "6000",
+      "lookup_us": 1784,
+      "candidates": [
+        "原拍摄者",
+        "原拍摄着",
+        "远拍摄者",
+        "原拍摄这",
+        "原拍摄折",
+        "远拍摄着",
+        "远拍摄这",
+        "远拍摄折",
+        "远"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuanpinglunlianjie",
+      "expected": "原评论链接",
+      "source": "6000",
+      "lookup_us": 5852,
+      "candidates": [
+        "原评论链接",
+        "远评论链接",
+        "原评论连接",
+        "远评论连接",
+        "原评论联接",
+        "远评论联接",
+        "原评论连结",
+        "原评论联结",
+        "远"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuanshangchuanzhe",
+      "expected": "原上传者",
+      "source": "6000",
+      "lookup_us": 3785,
+      "candidates": [
+        "原上传者",
+        "原上传这",
+        "原上传着",
+        "原上穿着",
+        "远上传者",
+        "原上传折",
+        "远上穿着",
+        "远上传这",
+        "渊上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuanshipinchuchu",
+      "expected": "原视频出处",
+      "source": "6000",
+      "lookup_us": 3807,
+      "candidates": [
+        "原视频出处",
+        "远视频出处",
+        "原视频处处",
+        "远视频处处",
+        "原视频楚楚",
+        "原视频出出",
+        "远视频楚楚",
+        "远视频出出",
+        "原视频"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuanshipinlianjie",
+      "expected": "原视频链接",
+      "source": "6000",
+      "lookup_us": 5778,
+      "candidates": [
+        "原视频链接",
+        "远视频链接",
+        "原视频连接",
+        "远视频连接",
+        "原始品链接",
+        "原始拼链接",
+        "原始品连接",
+        "原始拼连接",
+        "原视频"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuantielianjie",
+      "expected": "原帖链接",
+      "source": "6000",
+      "lookup_us": 6787,
+      "candidates": [
+        "原帖链接",
+        "原帖连接",
+        "远帖链接",
+        "原铁链接",
+        "远铁链接",
+        "原贴链接",
+        "远贴链接",
+        "原贴连接",
+        "原帖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuantuchuchu",
+      "expected": "原图出处",
+      "source": "6000",
+      "lookup_us": 2303,
+      "candidates": [
+        "原图出处",
+        "原图处处",
+        "原图出出",
+        "原图楚楚",
+        "原图出楚",
+        "原图出除",
+        "原图初出",
+        "原图出初",
+        "原图"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuantulianjie",
+      "expected": "原图链接",
+      "source": "6000",
+      "lookup_us": 5581,
+      "candidates": [
+        "原图链接",
+        "原图连接",
+        "原图联接",
+        "原图连结",
+        "原图联结",
+        "原图廉洁",
+        "远图链接",
+        "原图链结",
+        "原图"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuantuyibushang",
+      "expected": "原图已补上",
+      "source": "6000",
+      "lookup_us": 4030,
+      "candidates": [
+        "原图以不上",
+        "原图一不上",
+        "原图意不上",
+        "原图一部上",
+        "原图已不上",
+        "原图一步上",
+        "原图亦不上",
+        "原图已补上",
+        "原图"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "yuantuyigengxin",
+      "expected": "原图已更新",
+      "source": "6000",
+      "lookup_us": 4704,
+      "candidates": [
+        "原图以更新",
+        "原图一更新",
+        "原图已更新",
+        "原图意更新",
+        "原图易更新",
+        "原图伊更新",
+        "原图亿更新",
+        "原图依更新",
+        "原图"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "yuantuyishangchuan",
+      "expected": "原图已上传",
+      "source": "6000",
+      "lookup_us": 5459,
+      "candidates": [
+        "原图以上传",
+        "原图一上传",
+        "原图以上船",
+        "原图以上穿",
+        "原图义上传",
+        "原图意上传",
+        "原图一上船",
+        "原图已上传",
+        "原图"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "yuantuzaijianjie",
+      "expected": "原图在简介",
+      "source": "6000",
+      "lookup_us": 7704,
+      "candidates": [
+        "原图再见解",
+        "原图在见解",
+        "原图再见节",
+        "原图再见接",
+        "原图再见街",
+        "原图再见结",
+        "原图在间接",
+        "原图在简介",
+        "原图"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "yuantuzaipinglun",
+      "expected": "原图在评论",
+      "source": "6000",
+      "lookup_us": 4063,
+      "candidates": [
+        "原图再评论",
+        "原图在评论",
+        "原图载评论",
+        "原图仔评论",
+        "原图哉评论",
+        "原图灾评论",
+        "原图宰评论",
+        "原图栽评论",
+        "原图"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "yuantuzaizhiding",
+      "expected": "原图在置顶",
+      "source": "6000",
+      "lookup_us": 3574,
+      "candidates": [
+        "原图在指定",
+        "原图在置顶",
+        "原图在制定",
+        "原图再置顶",
+        "原图在纸锭",
+        "原图再制定",
+        "原图再指定",
+        "原图载置顶",
+        "原图"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "yuanwenchuchu",
+      "expected": "原文出处",
+      "source": "6000",
+      "lookup_us": 2405,
+      "candidates": [
+        "原文出处",
+        "原文处处",
+        "原文出出",
+        "原文楚楚",
+        "原文初出",
+        "原文出楚",
+        "原文出除",
+        "原文初处",
+        "原文"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuanwenyueduye",
+      "expected": "原文阅读页",
+      "source": "6000",
+      "lookup_us": 4503,
+      "candidates": [
+        "原文月度也",
+        "原文阅读页",
+        "原文月度页",
+        "原文阅读也",
+        "原文月度业",
+        "原文月度夜",
+        "原文阅读业",
+        "原文阅读夜",
+        "原文"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "yuanzuozhezhuye",
+      "expected": "原作者主页",
+      "source": "6000",
+      "lookup_us": 4130,
+      "candidates": [
+        "原作者主页",
+        "原作者主业",
+        "原作者逐页",
+        "原坐着主页",
+        "原作者助页",
+        "远坐着主页",
+        "原作者竹叶",
+        "原坐着主业",
+        "原作者"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yugaobofangye",
+      "expected": "预告播放页",
+      "source": "6000",
+      "lookup_us": 3589,
+      "candidates": [
+        "预告播放页",
+        "预告播放也",
+        "预告播放业",
+        "预告播放夜",
+        "鱼糕播放页",
+        "鱼糕播放也",
+        "预告播放叶",
+        "鱼糕播放业",
+        "预告"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhengpianbofangye",
+      "expected": "正片播放页",
+      "source": "6000",
+      "lookup_us": 4283,
+      "candidates": [
+        "正片播放页",
+        "正片播放也",
+        "正片播放业",
+        "正片播放夜",
+        "整篇播放页",
+        "正片播放叶",
+        "整篇播放也",
+        "整篇播放业",
+        "正片"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhidingyoubuchong",
+      "expected": "置顶有补充",
+      "source": "6000",
+      "lookup_us": 2447,
+      "candidates": [
+        "指定有补充",
+        "制定有补充",
+        "指定又补充",
+        "指定由补充",
+        "指定邮补充",
+        "制定又补充",
+        "指定油补充",
+        "置顶有补充",
+        "制定"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zhidingyoushuoming",
+      "expected": "置顶有说明",
+      "source": "6000",
+      "lookup_us": 4603,
+      "candidates": [
+        "指定有说明",
+        "制定有说明",
+        "指定又说明",
+        "指定由说明",
+        "制定又说明",
+        "只盯由说明",
+        "指定游说明",
+        "置顶有说明",
+        "制定"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "ziliaohuizongye",
+      "expected": "资料汇总页",
+      "source": "6000",
+      "lookup_us": 4098,
+      "candidates": [
+        "资料汇总也",
+        "资料汇总页",
+        "资料汇总业",
+        "资料汇总夜",
+        "资料会总也",
+        "资料回总也",
+        "资料汇总叶",
+        "资料会总页",
+        "资料"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "banxinghenkuansong",
+      "expected": "版型很宽松",
+      "source": "6000",
+      "lookup_us": 3373,
+      "candidates": [
+        "版型很宽松",
+        "办行很宽松",
+        "版型恨宽松",
+        "版型狠宽松",
+        "版型痕宽松",
+        "办行恨宽松",
+        "办行狠宽松",
+        "版型很款松",
+        "版型"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "banxinghenxianshou",
+      "expected": "版型很显瘦",
+      "source": "6000",
+      "lookup_us": 5016,
+      "candidates": [
+        "版型很先手",
+        "版型很现手",
+        "版型恨先手",
+        "版型狠先手",
+        "版型很线手",
+        "版型很线受",
+        "版型痕先手",
+        "版型很显瘦",
+        "版型"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "banxinghenxiushen",
+      "expected": "版型很修身",
+      "source": "6000",
+      "lookup_us": 5508,
+      "candidates": [
+        "版型很修身",
+        "版型恨修身",
+        "版型狠修身",
+        "版型痕修身",
+        "办行很修身",
+        "版型很秀神",
+        "版型很秀身",
+        "版型很秀深",
+        "版型"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "banxingyoudianqiguai",
+      "expected": "版型有点奇怪",
+      "source": "6000",
+      "lookup_us": 8144,
+      "candidates": [
+        "版型有点奇怪",
+        "办行有点奇怪",
+        "版型邮电奇怪",
+        "版型有电奇怪",
+        "版型有点气怪",
+        "版型有点起怪",
+        "版型有点期怪",
+        "版型有电器怪",
+        "版型"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "baozhuangbiyuqihao",
+      "expected": "包装比预期好",
+      "source": "6000",
+      "lookup_us": 6104,
+      "candidates": [
+        "包装笔预期好",
+        "包装比与其好",
+        "包装比预期好",
+        "包装笔预期号",
+        "包装比与其号",
+        "包装比语气好",
+        "包装比喻旗号",
+        "包装比喻七号",
+        "包装"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "bitupianhaokan",
+      "expected": "比图片好看",
+      "source": "6000",
+      "lookup_us": 3105,
+      "candidates": [
+        "比图片好看",
+        "笔图片好看",
+        "比图片号看",
+        "比图片豪看",
+        "比图片浩看",
+        "比图片郝看",
+        "比图片耗看",
+        "比图片毫看",
+        "Bit"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bixiangxiangzhongbao",
+      "expected": "比想象中薄",
+      "source": "6000",
+      "lookup_us": 8437,
+      "candidates": [
+        "比想象中报",
+        "比想象中包",
+        "比想象中宝",
+        "比想象中煲",
+        "比想象中保",
+        "比想象中薄",
+        "比想象中抱",
+        "比想象中爆",
+        "避险"
+      ],
+      "expected_rank": 6
+    },
+    {
+      "pinyin": "bixiangxiangzhongda",
+      "expected": "比想象中大",
+      "source": "6000",
+      "lookup_us": 7030,
+      "candidates": [
+        "比想象中大",
+        "比想象中达",
+        "比想象中打",
+        "比想象中答",
+        "比想象中沓",
+        "比想象中搭",
+        "比想象中哒",
+        "比想象中嗒",
+        "避险"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bixiangxiangzhonghou",
+      "expected": "比想象中厚",
+      "source": "6000",
+      "lookup_us": 6326,
+      "candidates": [
+        "比想象中后",
+        "比想象中候",
+        "比想象中厚",
+        "比想象中後",
+        "比想象中侯",
+        "比想象中吼",
+        "比想象中喉",
+        "比想象中猴",
+        "避险"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "bixiangxiangzhongnuan",
+      "expected": "比想象中暖",
+      "source": "6000",
+      "lookup_us": 7150,
+      "candidates": [
+        "比想象中暖",
+        "比想象种暖",
+        "比想象重暖",
+        "比想象钟暖",
+        "比想象仲暖",
+        "比想象众暖",
+        "比想象终暖",
+        "比想象忠暖",
+        "避险"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bixiangxiangzhongqing",
+      "expected": "比想象中轻",
+      "source": "6000",
+      "lookup_us": 8285,
+      "candidates": [
+        "比想象中情",
+        "比想象中清",
+        "比想象中青",
+        "比想象中轻",
+        "比想象中请",
+        "比想象中亲",
+        "比想象中晴",
+        "比想象中庆",
+        "避险"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "bixiangxiangzhongruan",
+      "expected": "比想象中软",
+      "source": "6000",
+      "lookup_us": 8087,
+      "candidates": [
+        "比想象中软",
+        "比想象中阮",
+        "比想象中朊",
+        "比想象中軟",
+        "笔想象中软",
+        "比想象种软",
+        "比想象重软",
+        "比想象钟软",
+        "避险"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bixiangxiangzhongxiang",
+      "expected": "比想象中香",
+      "source": "6000",
+      "lookup_us": 12262,
+      "candidates": [
+        "比想象中想",
+        "比想象中向",
+        "比想象中香",
+        "比想象中箱",
+        "比想象中响",
+        "比想象中象",
+        "比想象中相",
+        "比想象中像",
+        "避险"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "bixiangxiangzhongxiao",
+      "expected": "比想象中小",
+      "source": "6000",
+      "lookup_us": 10975,
+      "candidates": [
+        "比想象中小",
+        "比想象中校",
+        "比想象中笑",
+        "比想象中效",
+        "比想象中宵",
+        "比想象中嚣",
+        "比想象中晓",
+        "比想象中萧",
+        "避险"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bixiangxiangzhongying",
+      "expected": "比想象中硬",
+      "source": "6000",
+      "lookup_us": 10278,
+      "candidates": [
+        "比想象中应",
+        "比想象中英",
+        "比想象中影",
+        "比想象中营",
+        "比想象中硬",
+        "比想象中赢",
+        "比想象中迎",
+        "比想象中映",
+        "避险"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "bixiangxiangzhongzhong",
+      "expected": "比想象中重",
+      "source": "6000",
+      "lookup_us": 6934,
+      "candidates": [
+        "比想象中中",
+        "比想象中重",
+        "比想象中种",
+        "比想象中钟",
+        "比想象中冢",
+        "比想象中仲",
+        "比想象中众",
+        "比想象中终",
+        "避险"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "bizhaopianhaokan",
+      "expected": "比照片好看",
+      "source": "6000",
+      "lookup_us": 3995,
+      "candidates": [
+        "比照片好看",
+        "笔照片好看",
+        "比照篇好看",
+        "比照偏好看",
+        "比照片号看",
+        "比照片豪看",
+        "比照片浩看",
+        "比照片郝看",
+        "比照"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chimabiyuqida",
+      "expected": "尺码比预期大",
+      "source": "6000",
+      "lookup_us": 3721,
+      "candidates": [
+        "吃麻痹与其大",
+        "吃吗比与其大",
+        "吃麻痹语气打",
+        "吃麻痹预期答",
+        "吃麻痹于其大",
+        "吃麻痹预期大",
+        "吃麻痹与其打",
+        "尺码比预期大",
+        "尺码"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "chimabiyuqixiao",
+      "expected": "尺码比预期小",
+      "source": "6000",
+      "lookup_us": 6063,
+      "candidates": [
+        "吃麻痹与其小",
+        "吃麻痹预期小",
+        "吃麻痹与其笑",
+        "吃麻痹语气小",
+        "吃麻痹预期笑",
+        "吃麻痹语气笑",
+        "吃麻痹与其效",
+        "尺码比预期小",
+        "尺码"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "chizhuangduceshi",
+      "expected": "持妆度测试",
+      "source": "6000",
+      "lookup_us": 3448,
+      "candidates": [
+        "吃装度测试",
+        "吃状度测试",
+        "吃装读测试",
+        "吃装都测试",
+        "吃装毒测试",
+        "吃装独测试",
+        "吃状读测试",
+        "持妆度测试",
+        "吃住"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "chuanzhebuleren",
+      "expected": "穿着不勒人",
+      "source": "6000",
+      "lookup_us": 2704,
+      "candidates": [
+        "穿着不勒人",
+        "穿着不了人",
+        "穿着不了认",
+        "穿着不了任",
+        "穿着不乐人",
+        "穿这不了人",
+        "穿这部了人",
+        "穿着不勒认",
+        "穿着"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chuanzhebumenre",
+      "expected": "穿着不闷热",
+      "source": "6000",
+      "lookup_us": 3203,
+      "candidates": [
+        "穿着不闷热",
+        "穿这部闷热",
+        "穿着部门热",
+        "穿这不闷热",
+        "穿着不们热",
+        "穿这部门热",
+        "传这部闷热",
+        "穿着不门热",
+        "穿着"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chuanzhebuxianpang",
+      "expected": "穿着不显胖",
+      "source": "6000",
+      "lookup_us": 6942,
+      "candidates": [
+        "穿着不限旁",
+        "穿着不见旁",
+        "穿着不限胖",
+        "穿着不见胖",
+        "穿着不嫌旁",
+        "穿着不嫌胖",
+        "穿着不显胖",
+        "穿着不先旁",
+        "穿着"
+      ],
+      "expected_rank": 7
+    },
+    {
+      "pinyin": "chuanzhebuzharen",
+      "expected": "穿着不扎人",
+      "source": "6000",
+      "lookup_us": 3274,
+      "candidates": [
+        "穿着不扎人",
+        "穿着不扎认",
+        "穿着不扎任",
+        "穿着不炸人",
+        "穿着不扎仁",
+        "穿着不渣人",
+        "穿着不扎忍",
+        "穿着不眨人",
+        "穿着"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chuanzhehenshufu",
+      "expected": "穿着很舒服",
+      "source": "6000",
+      "lookup_us": 3620,
+      "candidates": [
+        "穿着很舒服",
+        "喘着很舒服",
+        "穿着很舒复",
+        "穿着很舒夫",
+        "穿着很舒傅",
+        "穿着很舒肤",
+        "穿着很舒福",
+        "穿着很舒父",
+        "穿着"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chuanzheyoudianying",
+      "expected": "穿着有点硬",
+      "source": "6000",
+      "lookup_us": 7354,
+      "candidates": [
+        "穿着有点应",
+        "穿着有点影",
+        "穿着有点硬",
+        "穿着有点营",
+        "穿着有点英",
+        "穿着有点赢",
+        "穿着有点迎",
+        "穿着有点映",
+        "穿着"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "fanghanxingceshi",
+      "expected": "防汗性测试",
+      "source": "6000",
+      "lookup_us": 3700,
+      "candidates": [
+        "放寒星测试",
+        "放韩星测试",
+        "放汗行测试",
+        "放汗性测试",
+        "放汗型测试",
+        "放喊行测试",
+        "放喊性测试",
+        "防汗性测试",
+        "放"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "fangshuixingceshi",
+      "expected": "防水性测试",
+      "source": "6000",
+      "lookup_us": 3453,
+      "candidates": [
+        "放水性测试",
+        "房水性测试",
+        "放水行测试",
+        "放水星测试",
+        "放睡醒测试",
+        "房水星测试",
+        "放水形测试",
+        "防水性测试",
+        "防水"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "fengxianyoudianwai",
+      "expected": "缝线有点歪",
+      "source": "6000",
+      "lookup_us": 5599,
+      "candidates": [
+        "风线有点外",
+        "锋线有点外",
+        "风线有点歪",
+        "锋线有点歪",
+        "风险优点外",
+        "风线有点崴",
+        "锋线有点崴",
+        "缝线有点歪",
+        "风险"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "huitanxingceshi",
+      "expected": "回弹性测试",
+      "source": "6000",
+      "lookup_us": 3770,
+      "candidates": [
+        "回弹性测试",
+        "会弹性测试",
+        "会谈行测试",
+        "会谈型测试",
+        "会谈星测试",
+        "会谈醒测试",
+        "会谈兴测试",
+        "会谈姓测试",
+        "会谈"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiandaiyoudiankuan",
+      "expected": "肩带有点宽",
+      "source": "6000",
+      "lookup_us": 4812,
+      "candidates": [
+        "肩带有点款",
+        "剪带有点款",
+        "肩带有点宽",
+        "剪带有点宽",
+        "肩带有点髋",
+        "肩带有点寛",
+        "肩带有点寬",
+        "剪带有点髋",
+        "箭袋"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "jiandaiyoudianxi",
+      "expected": "肩带有点细",
+      "source": "6000",
+      "lookup_us": 4216,
+      "candidates": [
+        "肩带有点戏",
+        "剪带有点戏",
+        "肩带有点系",
+        "肩带有点西",
+        "肩带有点洗",
+        "剪带有点系",
+        "肩带有点细",
+        "剪带有点西",
+        "箭袋"
+      ],
+      "expected_rank": 7
+    },
+    {
+      "pinyin": "kangzhouxingceshi",
+      "expected": "抗皱性测试",
+      "source": "6000",
+      "lookup_us": 3192,
+      "candidates": [
+        "康周星测试",
+        "康州行测试",
+        "康周兴测试",
+        "康周行测试",
+        "康周性测试",
+        "康周型测试",
+        "康舟星测试",
+        "抗皱性测试",
+        "抗皱"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "kouziyoudiansong",
+      "expected": "扣子有点松",
+      "source": "6000",
+      "lookup_us": 3644,
+      "candidates": [
+        "口子有点松",
+        "扣子有点松",
+        "口子有点送",
+        "口子有点诵",
+        "口子有点宋",
+        "口子有点颂",
+        "扣子有点送",
+        "口子有点耸",
+        "口子"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "kuchangyoudianchang",
+      "expected": "裤长有点长",
+      "source": "6000",
+      "lookup_us": 5322,
+      "candidates": [
+        "裤长有点唱",
+        "裤长有点长",
+        "裤长有点常",
+        "裤常有点唱",
+        "裤长有点场",
+        "裤常有点长",
+        "裤常有点常",
+        "裤常有点场",
+        "裤长"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "kuchangyoudianduan",
+      "expected": "裤长有点短",
+      "source": "6000",
+      "lookup_us": 4747,
+      "candidates": [
+        "裤长有点短",
+        "裤常有点短",
+        "裤长有点段",
+        "裤长有点断",
+        "裤常有点段",
+        "裤长优点短",
+        "裤常有点断",
+        "裤长又点短",
+        "裤长"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kuyaoyoudianjin",
+      "expected": "裤腰有点紧",
+      "source": "6000",
+      "lookup_us": 5024,
+      "candidates": [
+        "裤腰有点紧",
+        "裤要有点紧",
+        "裤要有点近",
+        "裤腰有点近",
+        "裤要有点进",
+        "裤腰有点进",
+        "裤要有点劲",
+        "裤腰有点劲",
+        "裤腰"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kuyaoyoudiansong",
+      "expected": "裤腰有点松",
+      "source": "6000",
+      "lookup_us": 4593,
+      "candidates": [
+        "裤腰有点松",
+        "裤要有点松",
+        "裤腰优点松",
+        "裤要有点送",
+        "裤要有点诵",
+        "裤腰有点送",
+        "裤腰有点诵",
+        "裤要有点宋",
+        "裤腰"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lalianyoudianka",
+      "expected": "拉链有点卡",
+      "source": "6000",
+      "lookup_us": 4265,
+      "candidates": [
+        "拉链有点卡",
+        "拉练有点卡",
+        "拉链有点咖",
+        "拉练有点咖",
+        "拉链优点卡",
+        "拉链又点卡",
+        "拉链有点喀",
+        "拉链有点咔",
+        "拉链"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lashenxingceshi",
+      "expected": "拉伸性测试",
+      "source": "6000",
+      "lookup_us": 3150,
+      "candidates": [
+        "拉伸行测试",
+        "拉身形测试",
+        "拉伸性测试",
+        "垃身形测试",
+        "拉伸型测试",
+        "拉伸星测试",
+        "拉伸醒测试",
+        "拉伸兴测试",
+        "拉伸"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "maoweiyoudianjin",
+      "expected": "帽围有点紧",
+      "source": "6000",
+      "lookup_us": 5026,
+      "candidates": [
+        "毛微有点紧",
+        "猫微有点紧",
+        "毛微有点近",
+        "猫微有点近",
+        "毛微有点进",
+        "猫微有点进",
+        "毛微有点劲",
+        "帽围有点紧",
+        "帽围"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "maoweiyoudiansong",
+      "expected": "帽围有点松",
+      "source": "6000",
+      "lookup_us": 3699,
+      "candidates": [
+        "毛微有点松",
+        "猫微有点松",
+        "毛微有点送",
+        "毛微有点诵",
+        "猫微有点送",
+        "猫微有点诵",
+        "毛微有点宋",
+        "帽围有点松",
+        "帽围"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "mianliaobutaitou",
+      "expected": "面料不太透",
+      "source": "6000",
+      "lookup_us": 3962,
+      "candidates": [
+        "面料不太头",
+        "免了不太头",
+        "面料不抬头",
+        "面料不太透",
+        "免了不抬头",
+        "免了不太透",
+        "面料不太偷",
+        "面料补抬头",
+        "面料"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "mianliaobuyizhou",
+      "expected": "面料不易皱",
+      "source": "6000",
+      "lookup_us": 3860,
+      "candidates": [
+        "面料不一周",
+        "免了不一周",
+        "面料补一周",
+        "面料不一舟",
+        "面料不一粥",
+        "免了不一舟",
+        "免了不一粥",
+        "面料不易皱",
+        "面料"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "mianliaohenhoushi",
+      "expected": "面料很厚实",
+      "source": "6000",
+      "lookup_us": 3701,
+      "candidates": [
+        "免了很厚是",
+        "免了很厚实",
+        "面了很厚是",
+        "免了很厚时",
+        "面了很厚实",
+        "免了很厚事",
+        "面了很厚时",
+        "面料很厚实",
+        "面料"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "mianliaohenqinfu",
+      "expected": "面料很亲肤",
+      "source": "6000",
+      "lookup_us": 5592,
+      "candidates": [
+        "免了很亲服",
+        "免了很亲复",
+        "面了很亲服",
+        "免了很亲夫",
+        "免了很亲傅",
+        "免了很亲福",
+        "面料很亲肤",
+        "面了很亲夫",
+        "面料"
+      ],
+      "expected_rank": 7
+    },
+    {
+      "pinyin": "mianliaohenqingbo",
+      "expected": "面料很轻薄",
+      "source": "6000",
+      "lookup_us": 4871,
+      "candidates": [
+        "免了很清波",
+        "免了很清博",
+        "面了很清波",
+        "免了很轻薄",
+        "免了很清膊",
+        "面了很清博",
+        "免了很清伯",
+        "面料很轻薄",
+        "面料"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "mianliaohenrouruan",
+      "expected": "面料很柔软",
+      "source": "6000",
+      "lookup_us": 3424,
+      "candidates": [
+        "免了很柔软",
+        "面了很柔软",
+        "面料恨柔软",
+        "面料狠柔软",
+        "面料痕柔软",
+        "面聊恨柔软",
+        "面聊狠柔软",
+        "面料很柔软",
+        "面料"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "mianliaorongyiqiqiu",
+      "expected": "面料容易起球",
+      "source": "6000",
+      "lookup_us": 5657,
+      "candidates": [
+        "面料容易祈求",
+        "面料容易乞求",
+        "面聊容易祈求",
+        "面料容易气球",
+        "面聊容易乞求",
+        "面料容易起球",
+        "面聊容易气球",
+        "面聊容易起球",
+        "面料"
+      ],
+      "expected_rank": 6
+    },
+    {
+      "pinyin": "mianliaorongyizhanmao",
+      "expected": "面料容易粘毛",
+      "source": "6000",
+      "lookup_us": 5357,
+      "candidates": [
+        "面料容易粘毛",
+        "面聊容易粘毛",
+        "面料容易粘猫",
+        "面聊容易粘猫",
+        "面料容易粘貌",
+        "面料容易粘冒",
+        "面料容易粘冇",
+        "面聊容易粘貌",
+        "面料"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mianliaorongyizhou",
+      "expected": "面料容易皱",
+      "source": "6000",
+      "lookup_us": 2710,
+      "candidates": [
+        "面料容易粥",
+        "面聊容易粥",
+        "面料容易舟",
+        "面料容易咒",
+        "面料容易周",
+        "面聊容易舟",
+        "面料容易州",
+        "面料容易皱",
+        "面料"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "mianliaoyoudiandiaose",
+      "expected": "面料有点掉色",
+      "source": "6000",
+      "lookup_us": 7169,
+      "candidates": [
+        "面料有点掉色",
+        "面聊有点掉色",
+        "面料有点调色",
+        "面聊有点调色",
+        "面料有点吊色",
+        "面料有点叼色",
+        "面料有点钓色",
+        "面料有点雕色",
+        "面料"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mianliaoyoudiansuoshui",
+      "expected": "面料有点缩水",
+      "source": "6000",
+      "lookup_us": 6850,
+      "candidates": [
+        "面料有点缩水",
+        "面聊有点缩水",
+        "面料有点所谁",
+        "面料有点所水",
+        "面料有点所睡",
+        "面料有点所说",
+        "面料有点锁谁",
+        "面料有点索谁",
+        "面料"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mianliaoyoudiantou",
+      "expected": "面料有点透",
+      "source": "6000",
+      "lookup_us": 5160,
+      "candidates": [
+        "面料有点头",
+        "面聊有点头",
+        "面料有点透",
+        "面料又点头",
+        "面料优点头",
+        "面料油点头",
+        "面聊有点透",
+        "面聊又点头",
+        "面料"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "naimoxingceshi",
+      "expected": "耐磨性测试",
+      "source": "6000",
+      "lookup_us": 4701,
+      "candidates": [
+        "乃模型测试",
+        "奶模型测试",
+        "耐磨行测试",
+        "耐磨性测试",
+        "耐磨星测试",
+        "耐磨醒测试",
+        "耐磨兴测试",
+        "耐磨姓测试",
+        "耐磨"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "naizangxingceshi",
+      "expected": "耐脏性测试",
+      "source": "6000",
+      "lookup_us": 3035,
+      "candidates": [
+        "乃藏行测试",
+        "奶藏行测试",
+        "乃藏形测试",
+        "奶藏形测试",
+        "乃脏性测试",
+        "奶脏性测试",
+        "乃脏型测试",
+        "耐脏性测试",
+        "乃"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "sechabutaida",
+      "expected": "色差不太大",
+      "source": "6000",
+      "lookup_us": 2094,
+      "candidates": [
+        "色差不太大",
+        "塞差不太大",
+        "色差不太打",
+        "色差不太答",
+        "色差不太达",
+        "色差补太大",
+        "色差部太大",
+        "色差不太沓",
+        "色差"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shanglianshipaitu",
+      "expected": "上脸实拍图",
+      "source": "6000",
+      "lookup_us": 3441,
+      "candidates": [
+        "上联实拍图",
+        "上连实拍图",
+        "上联时拍图",
+        "上联是拍图",
+        "上联实拍兔",
+        "上联实拍土",
+        "上联视拍图",
+        "上脸实拍图",
+        "上联"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "shangshenyoudianchang",
+      "expected": "上身有点长",
+      "source": "6000",
+      "lookup_us": 5732,
+      "candidates": [
+        "上身有点唱",
+        "上身有点长",
+        "上身有点常",
+        "伤身有点唱",
+        "上身有点场",
+        "伤身有点长",
+        "伤身有点常",
+        "伤身有点场",
+        "上身"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "shangshenyoudianduan",
+      "expected": "上身有点短",
+      "source": "6000",
+      "lookup_us": 5420,
+      "candidates": [
+        "上身有点短",
+        "伤身有点短",
+        "上身有点段",
+        "上身有点断",
+        "伤身有点段",
+        "伤身有点断",
+        "上身有点端",
+        "上身有点锻",
+        "上身"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangshenyoudianjin",
+      "expected": "上身有点紧",
+      "source": "6000",
+      "lookup_us": 4915,
+      "candidates": [
+        "上身有点紧",
+        "伤身有点紧",
+        "上身有点近",
+        "伤身有点近",
+        "上身有点进",
+        "上身有点劲",
+        "伤身有点进",
+        "上身有点谨",
+        "上身"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangshenyoudiankuan",
+      "expected": "上身有点宽",
+      "source": "6000",
+      "lookup_us": 4813,
+      "candidates": [
+        "上身有点款",
+        "伤身有点款",
+        "上身有点宽",
+        "伤身有点宽",
+        "上身有点髋",
+        "上身有点寛",
+        "上身有点寬",
+        "伤身有点髋",
+        "上身"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "shangshenyoudiansong",
+      "expected": "上身有点松",
+      "source": "6000",
+      "lookup_us": 4171,
+      "candidates": [
+        "上身有点松",
+        "伤身有点松",
+        "上身有点送",
+        "上身有点诵",
+        "上身有点宋",
+        "伤身有点送",
+        "伤身有点诵",
+        "上身有点颂",
+        "上身"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangshoushipaitu",
+      "expected": "上手实拍图",
+      "source": "6000",
+      "lookup_us": 2194,
+      "candidates": [
+        "上收拾拍图",
+        "上手实拍图",
+        "上收拾排图",
+        "上收拾牌图",
+        "上收拾派图",
+        "商收拾拍图",
+        "上收拾拍兔",
+        "上收拾拍土",
+        "上手"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "shangyanshipaitu",
+      "expected": "上眼实拍图",
+      "source": "6000",
+      "lookup_us": 3199,
+      "candidates": [
+        "上眼实拍图",
+        "上演示拍图",
+        "上演实拍图",
+        "上演示牌图",
+        "上演示牌兔",
+        "上演示排图",
+        "上演示牌土",
+        "上演示派图",
+        "上演"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangzuishipaitu",
+      "expected": "上嘴实拍图",
+      "source": "6000",
+      "lookup_us": 1975,
+      "candidates": [
+        "上最实拍图",
+        "上嘴实拍图",
+        "上最时拍图",
+        "上最使拍图",
+        "上最是拍图",
+        "上最实拍兔",
+        "上最实拍土",
+        "上最视拍图",
+        "上"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "shiwugenghaokan",
+      "expected": "实物更好看",
+      "source": "6000",
+      "lookup_us": 3063,
+      "candidates": [
+        "事物更好看",
+        "实物更好看",
+        "事物庚好看",
+        "事物耿好看",
+        "事物梗好看",
+        "事物羹好看",
+        "事物耕好看",
+        "实物庚好看",
+        "十五"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "shiwugengyouzhigan",
+      "expected": "实物更有质感",
+      "source": "6000",
+      "lookup_us": 4140,
+      "candidates": [
+        "事物更有之感",
+        "实物更有之感",
+        "事物更友之感",
+        "事物更由之感",
+        "事物更游之感",
+        "实物更由之感",
+        "事物更有质感",
+        "实物更有质感",
+        "十五"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "shiwukaixiangshipin",
+      "expected": "实物开箱视频",
+      "source": "6000",
+      "lookup_us": 6302,
+      "candidates": [
+        "事务开箱视频",
+        "事物开箱视频",
+        "事务开箱食品",
+        "事物开箱食品",
+        "事务开相视频",
+        "事务开想食品",
+        "事务开像是品",
+        "实物开箱视频",
+        "十五"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "shiwukaixiangtu",
+      "expected": "实物开箱图",
+      "source": "6000",
+      "lookup_us": 4924,
+      "candidates": [
+        "事务开箱图",
+        "事务开乡土",
+        "事物开箱图",
+        "事物开乡土",
+        "事务开箱兔",
+        "事务开箱土",
+        "事务开箱突",
+        "实物开箱图",
+        "十五"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "shiwushangshentu",
+      "expected": "实物上身图",
+      "source": "6000",
+      "lookup_us": 4093,
+      "candidates": [
+        "事物上身图",
+        "失误伤身图",
+        "十五上身图",
+        "事物伤身图",
+        "事物上身兔",
+        "失误伤身兔",
+        "十五上身兔",
+        "实物上身图",
+        "十五"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "shiwuxijietu",
+      "expected": "实物细节图",
+      "source": "6000",
+      "lookup_us": 4000,
+      "candidates": [
+        "实物细节图",
+        "事物细节图",
+        "实物细节兔",
+        "实物细节土",
+        "实物细节突",
+        "实物细节途",
+        "事物细节兔",
+        "事物细节土",
+        "实物细节"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shiwuyansegengqian",
+      "expected": "实物颜色更浅",
+      "source": "6000",
+      "lookup_us": 4901,
+      "candidates": [
+        "实物颜色更钱",
+        "实物颜色更前",
+        "事物颜色更钱",
+        "事物颜色更前",
+        "实物颜色更浅",
+        "实物颜色更欠",
+        "实物颜色更签",
+        "事物颜色更浅",
+        "实物颜色"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "shiwuyansegengshen",
+      "expected": "实物颜色更深",
+      "source": "6000",
+      "lookup_us": 4301,
+      "candidates": [
+        "实物颜色更深",
+        "实物颜色更甚",
+        "事物颜色更深",
+        "事物颜色更甚",
+        "实物颜色更神",
+        "实物颜色更身",
+        "事物颜色更神",
+        "事物颜色更身",
+        "实物颜色"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shiwuyansepianhong",
+      "expected": "实物颜色偏红",
+      "source": "6000",
+      "lookup_us": 3660,
+      "candidates": [
+        "实物颜色偏红",
+        "事物颜色偏红",
+        "实物颜色便红",
+        "实物颜色片红",
+        "实物颜色篇红",
+        "实物颜色骗红",
+        "事物颜色便红",
+        "实物颜色偏宏",
+        "实物颜色"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shiwuyansepianhuang",
+      "expected": "实物颜色偏黄",
+      "source": "6000",
+      "lookup_us": 5643,
+      "candidates": [
+        "实物颜色偏黄",
+        "事物颜色偏黄",
+        "实物颜色便黄",
+        "实物颜色偏荒",
+        "实物颜色片黄",
+        "实物颜色偏慌",
+        "实物颜色篇黄",
+        "实物颜色片荒",
+        "实物颜色"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shiwuyansepianhui",
+      "expected": "实物颜色偏灰",
+      "source": "6000",
+      "lookup_us": 4030,
+      "candidates": [
+        "实物颜色偏灰",
+        "事物颜色偏灰",
+        "实物颜色偏回",
+        "实物颜色偏会",
+        "事物颜色偏回",
+        "实物颜色便会",
+        "事物颜色偏会",
+        "实物颜色便回",
+        "实物颜色"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shiwuyansepianlv",
+      "expected": "实物颜色偏绿",
+      "source": "6000",
+      "lookup_us": 3445,
+      "candidates": [
+        "实物颜色偏绿",
+        "实物颜色偏虑",
+        "实物颜色偏律",
+        "事物颜色偏绿",
+        "事物颜色偏虑",
+        "事物颜色偏律",
+        "实物颜色偏率",
+        "实物颜色偏旅",
+        "实物颜色"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shouganbiyuqihao",
+      "expected": "手感比预期好",
+      "source": "6000",
+      "lookup_us": 3761,
+      "candidates": [
+        "手感笔预期好",
+        "手感比与其好",
+        "手感比预期好",
+        "手感笔预期号",
+        "手感比与其号",
+        "手感比语气好",
+        "手感比喻旗号",
+        "手感比喻七号",
+        "手感"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "touqixingceshi",
+      "expected": "透气性测试",
+      "source": "6000",
+      "lookup_us": 3074,
+      "candidates": [
+        "透气行测试",
+        "透气性测试",
+        "透气型测试",
+        "透气星测试",
+        "透气醒测试",
+        "透气兴测试",
+        "透气姓测试",
+        "透气形测试",
+        "透气"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "tuanyoudianda",
+      "expected": "图案有点大",
+      "source": "6000",
+      "lookup_us": 3320,
+      "candidates": [
+        "团有点大",
+        "图案有点大",
+        "团有点打",
+        "图案有点打",
+        "团优点大",
+        "图案优点大",
+        "团有点答",
+        "团有点达",
+        "团"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "tuanyoudianxiao",
+      "expected": "图案有点小",
+      "source": "6000",
+      "lookup_us": 5481,
+      "candidates": [
+        "团有点小",
+        "图案有点小",
+        "团有点笑",
+        "图案有点笑",
+        "团有点效",
+        "图案有点效",
+        "团有点校",
+        "图案有点校",
+        "团"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "tupianjingongcankao",
+      "expected": "图片仅供参考",
+      "source": "6000",
+      "lookup_us": 4767,
+      "candidates": [
+        "图片仅供参考",
+        "图片进攻参考",
+        "图片进宫参考",
+        "图便仅供参考",
+        "图片仅供参靠",
+        "图片进攻惨靠",
+        "图片进攻餐靠",
+        "图片进攻参靠",
+        "图片"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "weidaobiyuqihao",
+      "expected": "味道比预期好",
+      "source": "6000",
+      "lookup_us": 4812,
+      "candidates": [
+        "味道比与其好",
+        "味道比预期好",
+        "味道比与其号",
+        "味道比语气好",
+        "味道比喻旗号",
+        "味道比喻七号",
+        "味道比预期号",
+        "味道比语气号",
+        "未到"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "wulvjingshipai",
+      "expected": "无滤镜实拍",
+      "source": "6000",
+      "lookup_us": 3935,
+      "candidates": [
+        "无虑竟是排",
+        "无虑竟是牌",
+        "屋吕竟是排",
+        "屋吕竟是牌",
+        "无虑警示牌",
+        "屋吕警示牌",
+        "无滤镜是排",
+        "无滤镜实拍",
+        "五"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "wumeiyanshipai",
+      "expected": "无美颜实拍",
+      "source": "6000",
+      "lookup_us": 4357,
+      "candidates": [
+        "物美演示牌",
+        "无没演示牌",
+        "物美演示排",
+        "无没演示排",
+        "物美岩石排",
+        "物美演示拍",
+        "物美岩石牌",
+        "无美颜实拍",
+        "妩媚"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "xianseduceshi",
+      "expected": "显色度测试",
+      "source": "6000",
+      "lookup_us": 2062,
+      "candidates": [
+        "先色都测试",
+        "显色都测试",
+        "先色度测试",
+        "显色度测试",
+        "先色读测试",
+        "显色读测试",
+        "先色毒测试",
+        "先色独测试",
+        "显色"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "xiantouyoudianduo",
+      "expected": "线头有点多",
+      "source": "6000",
+      "lookup_us": 4139,
+      "candidates": [
+        "先头有点多",
+        "先投有点多",
+        "先头优点多",
+        "先头有点朵",
+        "先投有点朵",
+        "先头有点躲",
+        "先头有点夺",
+        "线头有点多",
+        "线头"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "xiedianyoudianhou",
+      "expected": "鞋垫有点厚",
+      "source": "6000",
+      "lookup_us": 5373,
+      "candidates": [
+        "鞋垫有点后",
+        "写点有点后",
+        "鞋垫有点厚",
+        "鞋垫有点候",
+        "写点有点厚",
+        "写点有点候",
+        "鞋垫优点后",
+        "鞋垫有点後",
+        "写点"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "xiegenyoudianmojiao",
+      "expected": "鞋跟有点磨脚",
+      "source": "6000",
+      "lookup_us": 8260,
+      "candidates": [
+        "鞋跟有点模叫",
+        "鞋跟有点磨脚",
+        "鞋跟有点模脚",
+        "鞋跟有点模交",
+        "谢跟有点模叫",
+        "鞋跟有点模教",
+        "鞋跟有点模觉",
+        "鞋跟有点模角",
+        "鞋跟"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "xiemapiandale",
+      "expected": "鞋码偏大了",
+      "source": "6000",
+      "lookup_us": 3136,
+      "candidates": [
+        "鞋码偏大了",
+        "谢码偏大了",
+        "鞋码偏答了",
+        "鞋码偏大乐",
+        "鞋码篇大了",
+        "鞋码片大了",
+        "鞋码偏打了",
+        "谢妈便大了",
+        "鞋码偏大"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiemapianxiaole",
+      "expected": "鞋码偏小了",
+      "source": "6000",
+      "lookup_us": 6569,
+      "candidates": [
+        "鞋码偏小了",
+        "鞋码偏笑了",
+        "谢码偏小了",
+        "鞋码偏效了",
+        "鞋码偏消了",
+        "鞋码片消了",
+        "鞋码篇小了",
+        "鞋码片笑了",
+        "鞋码"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiemianyoudianbao",
+      "expected": "鞋面有点薄",
+      "source": "6000",
+      "lookup_us": 6028,
+      "candidates": [
+        "鞋面有点爆",
+        "写面有点爆",
+        "鞋面有点包",
+        "鞋面有点薄",
+        "鞋面有点保",
+        "鞋面有点报",
+        "鞋面有点宝",
+        "写面有点包",
+        "鞋面"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "xietouyoudianji",
+      "expected": "鞋头有点挤",
+      "source": "6000",
+      "lookup_us": 4189,
+      "candidates": [
+        "鞋头有点击",
+        "谢投有点击",
+        "鞋头有点挤",
+        "鞋头有点急",
+        "谢投有点急",
+        "鞋头有点记",
+        "谢投有点挤",
+        "鞋头有点及",
+        "鞋头"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "xihoumeiyoubianxing",
+      "expected": "洗后没有变形",
+      "source": "6000",
+      "lookup_us": 7411,
+      "candidates": [
+        "洗后没有变形",
+        "洗后没有变性",
+        "细后没有变形",
+        "洗后没有变行",
+        "洗后没有变型",
+        "细后没有变性",
+        "洗后没有变兴",
+        "洗后没有变星",
+        "喜"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xihoumeiyoudiaose",
+      "expected": "洗后没有掉色",
+      "source": "6000",
+      "lookup_us": 4892,
+      "candidates": [
+        "洗后没有掉色",
+        "洗后没有调色",
+        "细后没有掉色",
+        "洗后没有吊色",
+        "洗后没有叼色",
+        "洗后没有钓色",
+        "细后没有调色",
+        "洗后没有雕色",
+        "喜"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xihoushouganbianying",
+      "expected": "洗后手感变硬",
+      "source": "6000",
+      "lookup_us": 8180,
+      "candidates": [
+        "洗后手感变硬",
+        "洗后手感变应",
+        "洗后手感便影",
+        "洗后手感变影",
+        "洗后手感便应",
+        "洗后手感边应",
+        "洗后手感遍应",
+        "洗后手感编应",
+        "喜"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xihouyoudianbianxing",
+      "expected": "洗后有点变形",
+      "source": "6000",
+      "lookup_us": 7762,
+      "candidates": [
+        "洗后有点变形",
+        "洗厚有点变形",
+        "洗后有点变性",
+        "洗后有点边行",
+        "洗后有点变行",
+        "洗厚有点变性",
+        "洗后有点边形",
+        "洗后有点变型",
+        "喜"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xihouyoudiansuoshui",
+      "expected": "洗后有点缩水",
+      "source": "6000",
+      "lookup_us": 5210,
+      "candidates": [
+        "洗后有点缩水",
+        "洗厚有点缩水",
+        "洗后有点所谁",
+        "洗后有点所水",
+        "洗后有点所睡",
+        "洗后有点所说",
+        "洗后有点锁谁",
+        "洗后有点索谁",
+        "喜"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xihouyoudiantuise",
+      "expected": "洗后有点褪色",
+      "source": "6000",
+      "lookup_us": 3824,
+      "candidates": [
+        "洗后有点褪色",
+        "洗厚有点褪色",
+        "洗后有点退色",
+        "洗后有点推色",
+        "洗后有点腿色",
+        "洗厚有点退色",
+        "洗后有点颓色",
+        "洗后有点忒色",
+        "喜"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yansehenbaida",
+      "expected": "颜色很百搭",
+      "source": "6000",
+      "lookup_us": 2482,
+      "candidates": [
+        "颜色很百搭",
+        "颜色很白大",
+        "颜色很白搭",
+        "颜色很白打",
+        "颜色很百达",
+        "颜色很百大",
+        "颜色很摆大",
+        "颜色很百打",
+        "眼色"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yansehennaikan",
+      "expected": "颜色很耐看",
+      "source": "6000",
+      "lookup_us": 2610,
+      "candidates": [
+        "颜色很耐看",
+        "颜色很耐刊",
+        "颜色很奶看",
+        "颜色很乃看",
+        "颜色很奈看",
+        "颜色很耐砍",
+        "颜色很耐坎",
+        "颜色很耐堪",
+        "眼色"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yansehenxianbai",
+      "expected": "颜色很显白",
+      "source": "6000",
+      "lookup_us": 5525,
+      "candidates": [
+        "颜色很显白",
+        "颜色很线白",
+        "颜色很显摆",
+        "颜色很现白",
+        "颜色很先白",
+        "颜色很先摆",
+        "颜色很县白",
+        "颜色很闲白",
+        "眼色"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yanseyoudiantiaoren",
+      "expected": "颜色有点挑人",
+      "source": "6000",
+      "lookup_us": 6970,
+      "candidates": [
+        "颜色有点条人",
+        "颜色有点跳人",
+        "颜色有点调人",
+        "颜色有点调任",
+        "颜色有点挑人",
+        "颜色有点条认",
+        "颜色有点跳认",
+        "颜色有点条任",
+        "眼色"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "yinhuayoudianhu",
+      "expected": "印花有点糊",
+      "source": "6000",
+      "lookup_us": 4325,
+      "candidates": [
+        "印花有点戏",
+        "银华有点戏",
+        "印花有点胡",
+        "银华有点胡",
+        "印花有点户",
+        "印花有点糊",
+        "印花有点呼",
+        "银华有点户",
+        "银华"
+      ],
+      "expected_rank": 6
+    },
+    {
+      "pinyin": "yinhuayoudianwai",
+      "expected": "印花有点歪",
+      "source": "6000",
+      "lookup_us": 4621,
+      "candidates": [
+        "印花有点外",
+        "银华有点外",
+        "印花有点歪",
+        "印花优点外",
+        "银华有点歪",
+        "银华优点外",
+        "印花有点崴",
+        "印花有点喎",
+        "银华"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "zhenrenshangshentu",
+      "expected": "真人上身图",
+      "source": "6000",
+      "lookup_us": 3943,
+      "candidates": [
+        "真人上身图",
+        "真人上身兔",
+        "真人上身土",
+        "真人上身突",
+        "真人上身途",
+        "真人伤身图",
+        "真人上申图",
+        "真人上神图",
+        "真人"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhenrenshichuantu",
+      "expected": "真人试穿图",
+      "source": "6000",
+      "lookup_us": 3759,
+      "candidates": [
+        "真认识传图",
+        "真人失传图",
+        "真认识穿图",
+        "真认识船图",
+        "真认识川图",
+        "真认识串图",
+        "真认识喘图",
+        "真人试穿图",
+        "真人"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zhenshikaixiangshipin",
+      "expected": "真实开箱视频",
+      "source": "6000",
+      "lookup_us": 7670,
+      "candidates": [
+        "真是开箱视频",
+        "真实开箱视频",
+        "真是开箱食品",
+        "真是开相视频",
+        "真是开想食品",
+        "真是开像是品",
+        "真是开箱饰品",
+        "真是开想视频",
+        "真是"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zhenshimaijiaxiu",
+      "expected": "真实买家秀",
+      "source": "6000",
+      "lookup_us": 6500,
+      "candidates": [
+        "真是买家修",
+        "真是卖家修",
+        "真实卖家修",
+        "真实买家修",
+        "真是买家嗅",
+        "真是买加修",
+        "真是买家秀",
+        "真实买家秀",
+        "真是"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zhenshishangshentu",
+      "expected": "真实上身图",
+      "source": "6000",
+      "lookup_us": 4159,
+      "candidates": [
+        "真是上身图",
+        "真实上身图",
+        "真是上身兔",
+        "真是伤身图",
+        "真是上身土",
+        "真是上身突",
+        "真是上身途",
+        "真实上身兔",
+        "真是"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zhiganbiyuqihao",
+      "expected": "质感比预期好",
+      "source": "6000",
+      "lookup_us": 4332,
+      "candidates": [
+        "之感笔预期好",
+        "之感比与其好",
+        "之感比预期好",
+        "之感笔预期号",
+        "之感比与其号",
+        "之感比语气好",
+        "之感比喻旗号",
+        "质感比预期好",
+        "质感"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zhiliangbiyuqihao",
+      "expected": "质量比预期好",
+      "source": "6000",
+      "lookup_us": 5287,
+      "candidates": [
+        "只两笔预期好",
+        "只两笔预期号",
+        "只两笔与其好",
+        "只两笔与其号",
+        "只两笔语气好",
+        "质量比与其好",
+        "质量比预期好",
+        "只两笔语气号",
+        "质量"
+      ],
+      "expected_rank": 7
+    },
+    {
+      "pinyin": "zuogongbiyuqihao",
+      "expected": "做工比预期好",
+      "source": "6000",
+      "lookup_us": 3584,
+      "candidates": [
+        "做工笔预期好",
+        "做工比与其好",
+        "做工比预期好",
+        "做工笔预期号",
+        "做工比与其号",
+        "做工比语气好",
+        "做工比喻旗号",
+        "做工比喻七号",
+        "做工"
+      ],
+      "expected_rank": 3
+    }
+  ],
+  "previous_pass": {
+    "sha256": "12b0054db4ee74ab1631528e39a817d005b408f00beed40c1737dded9b1c58e3",
+    "summary": {
+      "cases": 357,
+      "top1_correct": 171,
+      "top9_present": 357,
+      "top1_percent": 47.9,
+      "top9_percent": 100.0,
+      "character_error_rate": 0.1792,
+      "p50_lookup_ms": 4.379,
+      "p95_lookup_ms": 7.89,
+      "max_lookup_ms": 11.675,
+      "missing_from_top9_count": 0,
+      "missing_from_top9": [],
+      "max_returned_candidate_count": 9
+    }
+  }
+}

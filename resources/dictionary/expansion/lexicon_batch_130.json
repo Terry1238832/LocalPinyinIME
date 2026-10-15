@@ -1,0 +1,343 @@
+{
+  "batch": "lexicon_batch_130",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "搬家打包、住房日常、邻里协调与小区取送物品",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 335,
+  "sha256": "f3d98fb15c0d4daec7d92084a8e38a85f152bf0a301ebf323f86c084bc6525b6",
+  "authoring_files_sha256": {
+    "lexicon_batch_130.authoring.json": "559871fefdd388e90ecf1cbe8339d0ce03d911f37bb3d64af39d79c0daafde57",
+    "batch130_authored_daily_draft.txt": "af978f762f011b35bcfc5c41b347aeb44daea658cba306e86312c61a40832636",
+    "batch130_pronunciation_review.tsv": "0e4773a60b7c040445bd46e587c262ab49de04707f73f8a5a73eedf111a1b45c"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "0a0d8258fe47b67faf27b58f63e22427c440ff66ca50345ef8221a461e5a4f20",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "moving_house_and_packing_materials": 6000,
+    "apartment_living_and_neighbor_coordination": 6000,
+    "practical_home_and_community_messages": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "apartment_living_and_neighbor_coordination": 115,
+    "moving_house_and_packing_materials": 117,
+    "practical_home_and_community_messages": 103
+  },
+  "length_distribution": {
+    "4": 65,
+    "5": 183,
+    "6": 79,
+    "3": 8
+  },
+  "authoring_rejections": [
+    {
+      "word": "搬家纸箱",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "搬家收纳箱",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "搬家师傅",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "易碎品标签",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "泡沫护角",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "房屋朝向",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "房屋采光",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "房屋通风",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "南北通透",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "明厨明卫",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "封闭阳台",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "开放阳台",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "生活阳台",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "景观阳台",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "入户花园",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "储物柜隔板",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "抽屉防滑垫",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "鞋柜除味包",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "楼上邻居",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "楼下邻居",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "隔壁邻居",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "对门邻居",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "同层邻居",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "邻居群",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "楼栋通知",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "住户通知",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "住户登记",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "住户信息表",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "访客登记码",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "访客通行码",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "临时通行码",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "访客预约码",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车牌登记表",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车牌识别失败",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门禁卡失效",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门禁卡挂失",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门禁卡补办",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门禁卡复制",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电梯卡失效",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电梯卡补办",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电梯维修通知",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电梯恢复通知",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水表读数",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电表读数",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "燃气表读数",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水表抄表",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电表抄表",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "抄表记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水费账单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电费账单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "燃气费账单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "物业缴费单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "停车缴费码",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "小区门口等",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "小区门口见",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "停车场入口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "停车场出口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "小区出入口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "单元楼入口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帮我开下门",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帮我放门口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帮我放前台",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帮我联系师傅",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帮我报修一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帮我登记一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帮我确认一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "快递拿错了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "包裹拿错了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "麻烦送上楼",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "麻烦联系一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "到楼下叫我",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 256,
+  "manual_pronunciation_overrides": {},
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 0,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

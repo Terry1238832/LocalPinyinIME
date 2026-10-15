@@ -1,0 +1,245 @@
+{
+  "batch": "lexicon_batch_112",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "家校群、在线作业、家人接送、学习记录和日常文具常用词；固定 6000 类别档。",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 355,
+  "sha256": "feacd5700deb8d3462fd163aa56a455ab1010c80ab5557757133d7112cc6f595",
+  "authoring_files_sha256": {
+    "lexicon_batch_112.authoring.json": "3ddf4f71adc8c82a0485c912bfba27564583fe07fae1129ccf3093f9fbb13cb2",
+    "batch112_authored_daily_draft.txt": "5386bb2f04427f23e1a01e3e5e06e331c6a9dc86613218c79fa98f180e573ff4",
+    "batch112_pronunciation_review.tsv": "ee86ab3906abd7ef00059bc880672b4fbd1d72d74cd94c8e63d11440e46ec898"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "889aa0766a1f6a13fbe5d8f872572690616cb02006ad6a75c4a8efd68abcad6e",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "school_community_and_online_homework": 6000,
+    "ordinary_parent_teacher_messages": 6000,
+    "pickup_and_schoolday_coordination": 6000,
+    "reading_and_stationery_words": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "ordinary_parent_teacher_messages": 73,
+    "pickup_and_schoolday_coordination": 72,
+    "reading_and_stationery_words": 97,
+    "school_community_and_online_homework": 113
+  },
+  "length_distribution": {
+    "6": 188,
+    "5": 95,
+    "4": 72
+  },
+  "authoring_rejections": [
+    {
+      "word": "班级活动报名",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "班级群公告",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "家长群公告",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "作业上传",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "作业补交",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "作业重交",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "作业重做",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "作业修改",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "作业拍照",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "课件下载",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "课件目录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "网课回放",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "网课录音",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "网课录屏",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "网课课件",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "网课签到",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "举手申请",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "课堂提问",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "课堂讨论区",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我跟孩子说下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "放学后发消息",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我到校门口了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我在校门口等",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "朗读录音",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "英语跟读",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "阅读时长",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "阅读记录卡",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "读书心得卡",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "错题整理本",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "错题归类",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "错题重做",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "错题回看",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "错题回顾",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "课本姓名贴",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水杯姓名贴",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "饭盒姓名贴",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "文具姓名贴",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "铅笔握笔器",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "按动中性笔",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "按动圆珠笔",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "圆珠笔笔芯",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "卷笔刀刀片",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "橡皮碎屑",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "书包姓名贴",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 262,
+  "manual_pronunciation_overrides": {
+    "作业上传记录": "zuoyeshangchuanjilu",
+    "作业重做提醒": "zuoyechongzuotixing",
+    "老师我没收到": "laoshiwomeishoudao",
+    "老师我重发下": "laoshiwochongfaxia",
+    "老师我重交下": "laoshiwochongjiaoxia",
+    "我让孩子重做": "woranghaizichongzuo",
+    "我让孩子重交": "woranghaizichongjiao",
+    "错题重抄": "cuotichongchao"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 8,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

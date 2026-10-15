@@ -1,0 +1,177 @@
+{
+  "batch": "lexicon_batch_113",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "排队用餐、点单备注、日常口味反馈和饮品点单词语；固定 6000 类别档。",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 400,
+  "sha256": "9398bccc3b5890e55a15ea71076e8fbb30764121a457049591535e3e53be7878",
+  "authoring_files_sha256": {
+    "lexicon_batch_113.authoring.json": "085b709741f45f8d19e70dac0c88fc7fbc5871920f15345172b9f3609dc53359",
+    "batch113_authored_daily_draft.txt": "f18c8b67c837a7ae613dfda831c35c5b0098925ac33ab75ff198b79a300c036b",
+    "batch113_pronunciation_review.tsv": "7780fe02b5bfc6ce326c644c1c84f147962cfcc82147061115014022a1b1312c"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "080bfc9b0680d8fe77f2f82652a3c08ef39ab5cf0ddfa895ab0118117ca64580",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "dining_waitlist_and_seating_words": 6000,
+    "practical_order_notes": 6000,
+    "taste_texture_and_common_food_feedback": 6000,
+    "everyday_drinks_and_meal_messages": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "dining_waitlist_and_seating_words": 97,
+    "everyday_drinks_and_meal_messages": 112,
+    "practical_order_notes": 105,
+    "taste_texture_and_common_food_feedback": 86
+  },
+  "length_distribution": {
+    "4": 162,
+    "5": 163,
+    "6": 75
+  },
+  "authoring_rejections": [
+    {
+      "word": "餐位确认",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "排队取号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "叫号提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "叫号记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "过号重排",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "排队进度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "儿童餐椅",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "儿童餐具",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "儿童围兜",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "用餐时段",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "用餐人数",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "辣椒另放",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "酱汁另放",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "盐少放点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "油少放点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "糖少放点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "酱油少倒点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "不加葱花",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "不放香菜",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "米饭另装",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "汤汁另装",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "口感偏硬",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "口感偏软",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "口感偏干",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "肉有点柴",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "饭有点夹生",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "菜有点老了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "咖啡加奶",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 332,
+  "manual_pronunciation_overrides": {
+    "我去剥个橘子": "woqubaogejuzi",
+    "我先去盛碗饭": "woxianquchengwanfan"
+  },
+  "reading_variant_choices": {
+    "我去剥个橘子": "woqubaogejuzi"
+  },
+  "semantic_pronunciation_corrections": 1,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

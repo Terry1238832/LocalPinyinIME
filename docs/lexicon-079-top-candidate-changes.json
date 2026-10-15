@@ -1,0 +1,126 @@
+{
+  "version": "0.7.9",
+  "quality_report_sha256": "82d68903a5b48cc0449194b0d40b0226053f46f9c6249605e32417e24e2e8a1a",
+  "scenario_report_sha256": "a93cf3b13e9e43b626af41fd744c8a1f9869b64714e949d7a8a5ee7b928f5b19",
+  "runtime_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "bc4d33cac36f590bec181bfd86bdb54583c9a3c1ef5cf3542c0f2feedc1c3130",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+    "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+    "continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e"
+  },
+  "engine_sha256": "a0f614aec8044ed9a2aeb56225c0775e7f80d660a0ae295bc4c5b23405f36da0",
+  "scope": "Changed top candidate text is reported even when top1/top9 hit counts remain unchanged. Existing incorrect sentences are not silently treated as unchanged; no frozen vocabulary edits or case-specific weight tuning follow these observations.",
+  "public_267": {
+    "summary": {
+      "baseline_summary": {
+        "cases": 267,
+        "top1_correct": 154,
+        "top9_present": 203,
+        "top1_percent": 57.68,
+        "top9_percent": 76.03,
+        "character_error_rate": 0.0759,
+        "p50_lookup_ms": 11.405,
+        "p95_lookup_ms": 19.723,
+        "max_lookup_ms": 29.624
+      },
+      "current_summary": {
+        "cases": 267,
+        "top1_correct": 154,
+        "top9_present": 203,
+        "top1_percent": 57.68,
+        "top9_percent": 76.03,
+        "character_error_rate": 0.0763,
+        "p50_lookup_ms": 11.253,
+        "p95_lookup_ms": 19.975,
+        "max_lookup_ms": 30.818
+      }
+    },
+    "changed_top_candidates": [
+      {
+        "source": "article:fengzheng:33",
+        "pinyin": "tazhidezhangzhexiaozui",
+        "expected": "他只得张着小嘴",
+        "baseline_rank": 0,
+        "current_rank": 0,
+        "baseline_candidates": [
+          "他值得长着小嘴",
+          "他指的长着小嘴",
+          "他值得长者小嘴",
+          "他指的长者小嘴",
+          "他值得长这小嘴",
+          "他指的长这小嘴",
+          "他值得长着笑嘴",
+          "他指的长着笑嘴",
+          "他只"
+        ],
+        "current_candidates": [
+          "他指的长着小嘴",
+          "他值得长着小嘴",
+          "他指的长者小嘴",
+          "他值得长者小嘴",
+          "他指的长这小嘴",
+          "他值得长这小嘴",
+          "他指的长着笑嘴",
+          "他值得长着笑嘴",
+          "他只"
+        ]
+      }
+    ]
+  },
+  "scenario_32": {
+    "baseline": {
+      "cases": 32,
+      "top1_correct": 15,
+      "top9_present": 25,
+      "top1_percent": 46.88,
+      "top9_percent": 78.12,
+      "character_error_rate": 0.0777,
+      "p50_lookup_ms": 14.453,
+      "p95_lookup_ms": 18.778,
+      "max_lookup_ms": 19.122
+    },
+    "current": {
+      "cases": 32,
+      "top1_correct": 15,
+      "top9_present": 25,
+      "top1_percent": 46.88,
+      "top9_percent": 78.12,
+      "character_error_rate": 0.0855,
+      "p50_lookup_ms": 14.19,
+      "p95_lookup_ms": 20.357,
+      "max_lookup_ms": 21.846
+    },
+    "changed_top_candidate_or_rank": [
+      {
+        "source": "authored_scenario:011",
+        "pinyin": "waimaibufangxiangcaijiangliaoqingfenzhuang",
+        "expected": "外卖不放香菜酱料请分装",
+        "baseline_rank": 7,
+        "current_rank": 8,
+        "baseline_candidates": [
+          "外卖不放香菜酱料清分装",
+          "外卖不方向才酱料清分装",
+          "外卖不放香菜酱料情分装",
+          "外卖不方向才酱料情分装",
+          "外卖不放香菜酱料清分庄",
+          "外卖不方向才酱料清分庄",
+          "外卖不放香菜酱料请分装",
+          "外卖不方向才讲了青分装",
+          "外卖"
+        ],
+        "current_candidates": [
+          "外卖不方向采酱料清分装",
+          "外卖不放香菜酱料清分装",
+          "外卖不方向采酱料情分装",
+          "外卖不放香菜酱料情分装",
+          "外卖不方向采酱料清分庄",
+          "外卖不放香菜酱料清分庄",
+          "外卖不方向采酱料请分装",
+          "外卖不放香菜酱料请分装",
+          "外卖"
+        ]
+      }
+    ]
+  }
+}

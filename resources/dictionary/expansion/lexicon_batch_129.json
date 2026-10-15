@@ -1,0 +1,220 @@
+{
+  "batch": "lexicon_batch_129",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "服装款式细节、面料标签、鞋包与日常穿搭名词",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 465,
+  "sha256": "a9476a3cfb2e6a4348e0a6f17242e07e629059f611f0c8482686d7f8a223aa51",
+  "authoring_files_sha256": {
+    "lexicon_batch_129.authoring.json": "d18131e331bd2ab90855cbb3357f737ba435741dded24b8efd7a90c5ca868411",
+    "batch129_authored_daily_draft.txt": "e42387de4e1433684845efeb0d4a39c4e07fe3f2a7d526b95e97103b807a20bd",
+    "batch129_pronunciation_review.tsv": "7d1fd98cfd7b2c01c7faef014acd008ed4a163dae554380d8e176ed3b4d7aaf2"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "f7ef37c866a5582ea4c9e92b0c477270a402407110b7ce403b78d3b57799273c",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "garment_shapes_and_clothing_details": 6000,
+    "clothing_fabrics_patterns_and_care_labels": 6000,
+    "footwear_bags_and_casual_outfit_words": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "clothing_fabrics_patterns_and_care_labels": 132,
+    "footwear_bags_and_casual_outfit_words": 142,
+    "garment_shapes_and_clothing_details": 191
+  },
+  "length_distribution": {
+    "3": 37,
+    "4": 215,
+    "5": 192,
+    "2": 3,
+    "6": 18
+  },
+  "authoring_rejections": [
+    {
+      "word": "落肩袖",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "插肩袖",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "连肩袖",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "泡泡袖",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "灯笼袖",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "喇叭袖",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吊带背心",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "背带裙",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "连体泳衣",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "分体泳衣",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "裤脚收口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "裤腰松紧",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "精梳棉",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "长绒棉",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "有机棉",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水洗棉",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "竹节棉",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "棉麻混纺",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "羊毛混纺",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "羊绒混纺",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "真丝混纺",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "醋酸纤维",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "聚酯纤维",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "罗纹面料",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "提花面料",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "印花面料",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "涂层面料",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "梭织面料",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "成分标",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "厚底鞋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "粗跟鞋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "细跟鞋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "低跟鞋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "中跟鞋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "涉水鞋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "德比鞋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "牛津鞋",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 348,
+  "manual_pronunciation_overrides": {
+    "吊带长裙": "diaodaichangqun",
+    "可调肩带": "ketiaojiandai",
+    "高弹面料": "gaotanmianliao",
+    "低弹面料": "ditanmianliao",
+    "无弹面料": "wutanmianliao",
+    "四面弹面料": "simiantanmianliao",
+    "双面弹面料": "shuangmiantanmianliao",
+    "雪地长靴": "xuedichangxue",
+    "弹力长靴": "tanlichangxue",
+    "骑士长靴": "qishichangxue",
+    "可调肩带包": "ketiaojiandaibao"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 11,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

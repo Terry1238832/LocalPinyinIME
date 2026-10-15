@@ -1,0 +1,191 @@
+{
+  "batch": "lexicon_batch_109",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "穿衣鞋包、面料洗护、网购返图和尺码反馈常用短词；固定 6000 类别档。",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 386,
+  "sha256": "a1172a123105c19a58f269786061fd7528f2caca2dfc9b3ed98396edb3a52015",
+  "authoring_files_sha256": {
+    "lexicon_batch_109.authoring.json": "4ade20857e5b4f5bd79e0fee5c1a95ca9e3d24360ffaaad9c64af637124de98f",
+    "batch109_authored_daily_draft.txt": "f3bf027c897eb0d9d69c736f4b4266b387295196eb5ba1b01b353cb5d8eb7237",
+    "batch109_pronunciation_review.tsv": "2079c5a1d2cd07acf7546d2bdd06a7b42951a3023d0786f3dcb21b4d6fa9596b"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "485bdace68f9a49c1d3f16d71bdcb66fa696d0e3a4e761a9003bbadd6e7af623",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "clothing_fit_and_condition": 6000,
+    "bags_fasteners_and_clothing_care": 6000,
+    "everyday_online_clothing_shopping": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "bags_fasteners_and_clothing_care": 119,
+    "clothing_fit_and_condition": 137,
+    "everyday_online_clothing_shopping": 130
+  },
+  "length_distribution": {
+    "5": 124,
+    "4": 254,
+    "6": 8
+  },
+  "authoring_rejections": [
+    {
+      "word": "袜口太紧",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "袜口太松",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "鞋垫移位",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "鞋口磨脚",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "鞋底开胶",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "鞋底太薄",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "衣领发黄",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "肩部偏窄",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "肩部偏宽",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "毛衣变形",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "裙腰偏紧",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "裙腰偏松",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "面料透光",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "线头外露",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "拉链卡布",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "拉链拉不拢",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "按扣脱落",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "粘毛滚筒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "鞋子防尘袋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "行李箱绑带",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "颜色偏暗",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "颜色偏亮",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "颜色偏浅",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "颜色偏深",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "尺码偏小",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "尺码偏大",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "裤长偏长",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "鞋码偏小",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "鞋码偏大",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "穿着挺舒服",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 325,
+  "manual_pronunciation_overrides": {
+    "呢料掉毛": "niliaodiaomao",
+    "内衬露出来": "neichenlouchulai",
+    "肩带太长": "jiandaitaichang",
+    "背带太长": "beidaitaichang",
+    "袖长偏短": "xiuchangpianduan",
+    "袖长偏长": "xiuchangpianchang",
+    "裤长偏短": "kuchangpianduan",
+    "裙长偏短": "qunchangpianduan",
+    "裙长偏长": "qunchangpianchang",
+    "穿着有点长": "chuanzheyoudianchang"
+  },
+  "reading_variant_choices": {
+    "内衬露出来": "neichenlouchulai"
+  },
+  "semantic_pronunciation_corrections": 9,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

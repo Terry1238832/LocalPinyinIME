@@ -1,0 +1,138 @@
+{
+  "batch": "lexicon_batch_104",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "外卖取餐、快递寄取、上门维修联络和家庭找物日常表达；固定 6000 类别档。",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 343,
+  "sha256": "7fc9b70d3d41c37776877e88cb9455220172122b9ea6c6bac912a083bdcc8aec",
+  "authoring_files_sha256": {
+    "lexicon_batch_104.authoring.json": "57ed3d04189388f22aa2a9b08d0964628094cd896f939a28769951db295fc57f",
+    "batch104_authored_daily_draft.txt": "569e00ab1f794d35a755f71888ee73120fea708eca435f9eb584747c7c5a85fe",
+    "batch104_pronunciation_review.tsv": "643cf24a18f385daec2af4286e63099b719861bb52a6693c335c84d170d6719a"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "d8d151f97a0a52ddcb027397e45d0686db732303192b21b3c4e854b61a651d39",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "takeout_delivery_and_order_details": 6000,
+    "meal_order_issues_and_pickup": 6000,
+    "parcels_and_pickup_stations": 6000,
+    "home_visits_and_finding_things": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "home_visits_and_finding_things": 92,
+    "meal_order_issues_and_pickup": 80,
+    "parcels_and_pickup_stations": 95,
+    "takeout_delivery_and_order_details": 76
+  },
+  "length_distribution": {
+    "6": 200,
+    "5": 143
+  },
+  "authoring_rejections": [
+    {
+      "word": "取餐码发我",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "取餐柜打不开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "到了发消息",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "叫到几号了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "排到几号了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "快递放柜里了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "快递放前台了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "快递放门口了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "包裹发错了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "快递拿错了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "快递送错了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "快递被拒收",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "柜门关不上",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "柜门打不开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "屏幕没反应",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "取件码没收到",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "师傅快到了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门锁没电了",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 296,
+  "manual_pronunciation_overrides": {
+    "我没收到餐": "womeishoudaocan",
+    "还得等几单": "haideidengjidan",
+    "餐还得等多久": "canhaideidengduojiu",
+    "柜门没弹开": "guimenmeitankai",
+    "短信还没收到": "duanxinhaimeishoudao",
+    "手机落哪儿了": "shoujilanaerle"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 6,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

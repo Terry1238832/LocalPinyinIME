@@ -1,0 +1,242 @@
+{
+  "batch": "lexicon_batch_105",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "直播互动、视频播放、收藏分享、内容分组与隐私界面常用短词；固定 6000 类别档。",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 380,
+  "sha256": "855fc567883a1fdf451fb470ecf1daa34b1bf3de9c43d73fd91da33792e9ef77",
+  "authoring_files_sha256": {
+    "lexicon_batch_105.authoring.json": "b4ddff0991cc0160758299bc5431eb0d151dc52e04dae6527b3fd63ab1430be1",
+    "batch105_authored_daily_draft.txt": "fbbc804ba9dbc9385b4122ebdc7ef62fee0fcbe5d104ebaa1a59a39fcb2121a7",
+    "batch105_pronunciation_review.tsv": "87182dbbee2f55bb7608ee15234fdb05036977a79a37dd0ca2c747d119f34d6d"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "37ccf8ae295cce87aae8e7130cadce0bf8cfc938fcd009beedd8bfdb7326c62b",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "live_streaming_and_community_labels": 6000,
+    "media_playback_controls": 6000,
+    "saving_sharing_and_content_organization": 6000,
+    "practical_feed_and_privacy_controls": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "live_streaming_and_community_labels": 137,
+    "media_playback_controls": 81,
+    "practical_feed_and_privacy_controls": 74,
+    "saving_sharing_and_content_organization": 88
+  },
+  "length_distribution": {
+    "4": 217,
+    "5": 71,
+    "2": 8,
+    "3": 24,
+    "6": 60
+  },
+  "authoring_rejections": [
+    {
+      "word": "互关",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "互访",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "直播切片",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "直播预约",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "弹幕密度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "弹幕颜色",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "弹幕字号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "弹幕速度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "语音房间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "房间密码",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "双指缩放",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "播放速度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "人声增强",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "背景降噪",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "音量均衡",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "左声道",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "右声道",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "双声道",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "单声道",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "自动静音",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "自动连播",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "跳过片头",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "跳过片尾",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "片段预览",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "字幕样式",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "字幕字号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "字幕颜色",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "字幕背景",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "字幕描边",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "字幕位置",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "双语字幕",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "字幕不同步",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "字幕提前",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "音画同步",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "阅读进度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "播放队列",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "待播列表",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "链接预览",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "公开链接",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "私密链接",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "失效链接",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "链接已失效",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "完播率",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 284,
+  "manual_pronunciation_overrides": {
+    "弹幕去重": "danmuquchong",
+    "滚动弹幕": "gundongdanmu",
+    "互动弹幕": "hudongdanmu",
+    "长按倍速": "changanbeisu",
+    "长按快进": "changankuaijin",
+    "手势调亮度": "shoushitiaoliangdu",
+    "减少相似推荐": "jianshaoxiangsituijian"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 7,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

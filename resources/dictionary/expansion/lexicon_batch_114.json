@@ -1,0 +1,195 @@
+{
+  "batch": "lexicon_batch_114",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "聊天短回复、日常语气、确认跟进与稍后回复常用口语；固定 6000 类别档。",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 374,
+  "sha256": "34fa73f1c552deae722b55ea5c551d39b3f64a701cfab9af3dbe1c851b79fc6d",
+  "authoring_files_sha256": {
+    "lexicon_batch_114.authoring.json": "00a63c9c1e7a7071f8d34e177ca59180b508bc3f74b1286ceaf2d624059dda7a",
+    "batch114_authored_daily_draft.txt": "106154d2c9321d426d84926c0c7fb269c29f4baf47d6d5f18eed008046d6e99d",
+    "batch114_pronunciation_review.tsv": "f615d5c0fc18d68271cb0fe323c7fdd1bf9fad554104569f47622480194afb4f"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "7ffb5c66bc1fba9755a5386908fed00c54bddeed314e664386247f07c80338af",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "familiar_chat_replies": 6000,
+    "familiar_online_reactions": 6000,
+    "confirming_plans_and_following_up": 6000,
+    "rescheduling_and_brief_away_messages": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "confirming_plans_and_following_up": 90,
+    "familiar_chat_replies": 99,
+    "familiar_online_reactions": 107,
+    "rescheduling_and_brief_away_messages": 78
+  },
+  "length_distribution": {
+    "5": 152,
+    "6": 124,
+    "3": 18,
+    "4": 80
+  },
+  "authoring_rejections": [
+    {
+      "word": "可以可以",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "没事没事",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "好好好",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "等等等",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "看看看",
+      "reason": "author_language_review: insufficiently useful or natural as a standalone common expression; excluded before native measurement"
+    },
+    {
+      "word": "试试试",
+      "reason": "author_language_review: insufficiently useful or natural as a standalone common expression; excluded before native measurement"
+    },
+    {
+      "word": "问问问",
+      "reason": "author_language_review: insufficiently useful or natural as a standalone common expression; excluded before native measurement"
+    },
+    {
+      "word": "找找找",
+      "reason": "author_language_review: insufficiently useful or natural as a standalone common expression; excluded before native measurement"
+    },
+    {
+      "word": "改改改",
+      "reason": "author_language_review: insufficiently useful or natural as a standalone common expression; excluded before native measurement"
+    },
+    {
+      "word": "想想想",
+      "reason": "author_language_review: insufficiently useful or natural as a standalone common expression; excluded before native measurement"
+    },
+    {
+      "word": "别客气呀",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "真是麻烦你",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "哈哈哈啊",
+      "reason": "author_language_review: insufficiently useful or natural as a standalone common expression; excluded before native measurement"
+    },
+    {
+      "word": "啊啊啊啊",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "好家伙啊",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "给我整不会了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "你这么一说",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "你这么一讲",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "你这么一问",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我这么一问",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "说起来也是",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "还真有可能",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "还真不一定",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "是这么回事",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我懂你意思",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我大概懂了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我大概明白了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "这事先别声张",
+      "reason": "duplicate_draft"
+    },
+    {
+      "word": "我再确认一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我再核对一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "有结果告诉我",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "有进展告诉我",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "有变化告诉我",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 299,
+  "manual_pronunciation_overrides": {
+    "我帮你查查看": "wobangnichachakan"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 1,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

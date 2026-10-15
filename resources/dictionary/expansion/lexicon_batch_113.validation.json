@@ -1,0 +1,7249 @@
+{
+  "batch": "lexicon_batch_113",
+  "evaluation": "native_engine_candidate_coverage",
+  "evaluated_at_utc": "2026-10-15T14:57:16.394376+00:00",
+  "engine_sha256": "a0f614aec8044ed9a2aeb56225c0775e7f80d660a0ae295bc4c5b23405f36da0",
+  "resource_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "bc4d33cac36f590bec181bfd86bdb54583c9a3c1ef5cf3542c0f2feedc1c3130",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+    "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+    "continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e"
+  },
+  "frozen_batch_sha256": "9398bccc3b5890e55a15ea71076e8fbb30764121a457049591535e3e53be7878",
+  "personal_data_isolated": true,
+  "expected_answers_learned": false,
+  "summary": {
+    "cases": 400,
+    "top1_correct": 282,
+    "top9_present": 400,
+    "top1_percent": 70.5,
+    "top9_percent": 100.0,
+    "character_error_rate": 0.1171,
+    "p50_lookup_ms": 4.114,
+    "p95_lookup_ms": 7.404,
+    "max_lookup_ms": 9.584,
+    "missing_from_top9_count": 0,
+    "missing_from_top9": [],
+    "max_returned_candidate_count": 9
+  },
+  "rows": [
+    {
+      "pinyin": "baobaocanju",
+      "expected": "宝宝餐具",
+      "source": "6000",
+      "lookup_us": 3312,
+      "candidates": [
+        "宝宝餐具",
+        "包包餐具",
+        "抱抱餐具",
+        "宝宝残局",
+        "包宝餐具",
+        "宝宝餐句",
+        "宝宝惨剧",
+        "宝包餐具",
+        "抱抱"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "baobaocanpan",
+      "expected": "宝宝餐盘",
+      "source": "6000",
+      "lookup_us": 2234,
+      "candidates": [
+        "宝宝餐盘",
+        "包包餐盘",
+        "宝宝餐番",
+        "抱抱餐盘",
+        "宝宝餐胖",
+        "宝宝惨盘",
+        "宝宝餐判",
+        "宝宝餐潘",
+        "抱抱"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "baobaocanyi",
+      "expected": "宝宝餐椅",
+      "source": "6000",
+      "lookup_us": 2043,
+      "candidates": [
+        "宝宝餐椅",
+        "宝宝餐以",
+        "宝宝餐易",
+        "宝宝餐意",
+        "宝宝餐义",
+        "宝宝餐一",
+        "宝宝餐宜",
+        "宝宝餐议",
+        "抱抱"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "baobaofushishao",
+      "expected": "宝宝辅食勺",
+      "source": "6000",
+      "lookup_us": 3861,
+      "candidates": [
+        "宝宝富士少",
+        "宝宝服饰少",
+        "宝宝复试少",
+        "宝宝腐蚀少",
+        "包包服饰少",
+        "宝宝复式少",
+        "宝宝服侍少",
+        "宝宝辅食勺",
+        "抱抱"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "baobaofushiwan",
+      "expected": "宝宝辅食碗",
+      "source": "6000",
+      "lookup_us": 4642,
+      "candidates": [
+        "宝宝复试完",
+        "宝宝富士完",
+        "宝宝富士晚",
+        "宝宝复试玩",
+        "宝宝服饰完",
+        "宝宝服饰晚",
+        "宝宝富士碗",
+        "宝宝辅食碗",
+        "抱抱"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "baobaoweidou",
+      "expected": "宝宝围兜",
+      "source": "6000",
+      "lookup_us": 2406,
+      "candidates": [
+        "宝宝围兜",
+        "宝宝围都",
+        "宝宝围豆",
+        "宝宝围斗",
+        "宝宝为都",
+        "宝宝味都",
+        "宝宝味豆",
+        "包包围都",
+        "抱抱"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "baojiancanwei",
+      "expected": "包间餐位",
+      "source": "6000",
+      "lookup_us": 3303,
+      "candidates": [
+        "包间餐位",
+        "包间餐味",
+        "包间餐为",
+        "保健餐位",
+        "宝剑餐位",
+        "保健惨为",
+        "保荐餐位",
+        "保健餐味",
+        "保健"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "baojiandingwei",
+      "expected": "包间订位",
+      "source": "6000",
+      "lookup_us": 4317,
+      "candidates": [
+        "包间订位",
+        "保健定位",
+        "报检定位",
+        "宝剑定位",
+        "保荐定位",
+        "包间定位",
+        "宝鉴定位",
+        "包鉴定位",
+        "保健"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "baojianrenshu",
+      "expected": "包间人数",
+      "source": "6000",
+      "lookup_us": 3260,
+      "candidates": [
+        "包间人数",
+        "保荐人数",
+        "保健人数",
+        "宝剑人数",
+        "保荐人书",
+        "保荐人树",
+        "保健人书",
+        "宝件人数",
+        "保荐人"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "baojianyuyue",
+      "expected": "包间预约",
+      "source": "6000",
+      "lookup_us": 5827,
+      "candidates": [
+        "包间预约",
+        "报检预约",
+        "保健与月",
+        "保监狱月",
+        "保健预约",
+        "宝剑与月",
+        "宝剑预约",
+        "保荐与月",
+        "保健"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "baojianzhuowei",
+      "expected": "包间桌位",
+      "source": "6000",
+      "lookup_us": 4136,
+      "candidates": [
+        "包间桌位",
+        "包间桌为",
+        "保健桌位",
+        "保健着围",
+        "宝剑桌位",
+        "包间桌味",
+        "保荐桌位",
+        "宝剑着围",
+        "保健"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "beiliyoushuizi",
+      "expected": "杯里有水渍",
+      "source": "6000",
+      "lookup_us": 2925,
+      "candidates": [
+        "杯里有水渍",
+        "背里有水子",
+        "杯里有水子",
+        "背里有水字",
+        "杯里有水字",
+        "背里有水渍",
+        "背里有水紫",
+        "杯里有水紫",
+        "背离"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "beizibuchong",
+      "expected": "杯子补充",
+      "source": "6000",
+      "lookup_us": 1277,
+      "candidates": [
+        "杯子补充",
+        "被子补充",
+        "背字补充",
+        "被字补充",
+        "杯子不重",
+        "背资补充",
+        "背滋补充",
+        "杯子不充",
+        "杯子"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "beizimeixijing",
+      "expected": "杯子没洗净",
+      "source": "6000",
+      "lookup_us": 6417,
+      "candidates": [
+        "杯子没洗净",
+        "杯子美洗净",
+        "杯子每洗净",
+        "被子没洗净",
+        "杯子玫洗净",
+        "杯子梅洗净",
+        "杯子楣洗净",
+        "杯子妹洗净",
+        "杯子"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canjinzhibuchong",
+      "expected": "餐巾纸补充",
+      "source": "6000",
+      "lookup_us": 2221,
+      "candidates": [
+        "惨禁止补充",
+        "餐禁止补充",
+        "惨进制补充",
+        "惨紧致补充",
+        "惨尽职补充",
+        "餐进制补充",
+        "餐巾纸补充",
+        "惨进之补充",
+        "残疾"
+      ],
+      "expected_rank": 7
+    },
+    {
+      "pinyin": "canjubuchong",
+      "expected": "餐具补充",
+      "source": "6000",
+      "lookup_us": 1193,
+      "candidates": [
+        "餐具补充",
+        "惨剧补充",
+        "残局补充",
+        "惨据补充",
+        "惨具补充",
+        "惨距补充",
+        "餐据补充",
+        "惨局补充",
+        "餐具"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canjulingququ",
+      "expected": "餐具领取区",
+      "source": "6000",
+      "lookup_us": 4033,
+      "candidates": [
+        "餐具领取去",
+        "餐具领取取",
+        "餐具领取趣",
+        "餐具领去取",
+        "惨剧领取去",
+        "餐具领取屈",
+        "餐具领取曲",
+        "餐具领取区",
+        "餐具"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "canjumeixijing",
+      "expected": "餐具没洗净",
+      "source": "6000",
+      "lookup_us": 6202,
+      "candidates": [
+        "餐具没洗净",
+        "惨剧没洗净",
+        "餐具每洗净",
+        "餐具美洗净",
+        "餐具梅洗净",
+        "餐具妹洗净",
+        "餐具眉洗净",
+        "餐具镅洗净",
+        "餐具"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canpanbuchong",
+      "expected": "餐盘补充",
+      "source": "6000",
+      "lookup_us": 1246,
+      "candidates": [
+        "餐盘补充",
+        "惨盘补充",
+        "惨判补充",
+        "惨潘补充",
+        "惨盼补充",
+        "惨攀补充",
+        "惨畔补充",
+        "惨番补充",
+        "餐盘"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canwanbuchong",
+      "expected": "餐碗补充",
+      "source": "6000",
+      "lookup_us": 1228,
+      "candidates": [
+        "餐碗补充",
+        "惨碗补充",
+        "惨玩补充",
+        "惨完补充",
+        "惨万补充",
+        "惨晚补充",
+        "惨弯补充",
+        "惨湾补充",
+        "惨"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canweiyuliu",
+      "expected": "餐位预留",
+      "source": "6000",
+      "lookup_us": 2226,
+      "candidates": [
+        "餐位预留",
+        "餐位于流",
+        "惨位于流",
+        "惨为预留",
+        "惨位预留",
+        "餐位于六",
+        "惨位于六",
+        "惨未予流",
+        "惨"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canweiyuyue",
+      "expected": "餐位预约",
+      "source": "6000",
+      "lookup_us": 2899,
+      "candidates": [
+        "餐位预约",
+        "惨为预约",
+        "餐位于月",
+        "惨位于月",
+        "惨位预约",
+        "惨未予月",
+        "惨卫浴月",
+        "餐为预约",
+        "惨"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyianquandai",
+      "expected": "餐椅安全带",
+      "source": "6000",
+      "lookup_us": 3258,
+      "candidates": [
+        "惨意安全带",
+        "惨意安全待",
+        "惨以安全带",
+        "惨意安全袋",
+        "惨意安全呆",
+        "惨意安全大",
+        "惨以安全待",
+        "餐椅安全带",
+        "惨"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "canyijiaotaban",
+      "expected": "餐椅脚踏板",
+      "source": "6000",
+      "lookup_us": 5448,
+      "candidates": [
+        "餐椅脚踏板",
+        "惨一脚踏板",
+        "惨移交踏板",
+        "餐移交踏板",
+        "惨一角踏板",
+        "惨一觉踏板",
+        "惨衣角踏板",
+        "惨一跤踏板",
+        "惨"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyituopan",
+      "expected": "餐椅托盘",
+      "source": "6000",
+      "lookup_us": 2174,
+      "candidates": [
+        "餐椅托盘",
+        "惨依托盘",
+        "惨一托盘",
+        "惨以托盘",
+        "餐依托盘",
+        "惨已托盘",
+        "惨易托盘",
+        "惨伊托盘",
+        "惨"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dazhuodengwei",
+      "expected": "大桌等位",
+      "source": "6000",
+      "lookup_us": 1891,
+      "candidates": [
+        "大桌等位",
+        "打着等位",
+        "大着等位",
+        "打着等为",
+        "大着等为",
+        "大桌等为",
+        "打着等味",
+        "打着等围",
+        "打住"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengweiduanxin",
+      "expected": "等位短信",
+      "source": "6000",
+      "lookup_us": 3614,
+      "candidates": [
+        "等位短信",
+        "等为短信",
+        "灯位短信",
+        "等未短信",
+        "等喂短信",
+        "等味短信",
+        "等微短信",
+        "等梶短信",
+        "等"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengweiquhaoji",
+      "expected": "等位取号机",
+      "source": "6000",
+      "lookup_us": 3174,
+      "candidates": [
+        "等委屈好几",
+        "等委屈好及",
+        "等委屈好记",
+        "等未取好几",
+        "等未取好及",
+        "等委屈好机",
+        "等位取好几",
+        "等位取号机",
+        "等"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "dengweiquzuowei",
+      "expected": "等位区座位",
+      "source": "6000",
+      "lookup_us": 3597,
+      "candidates": [
+        "等委屈座位",
+        "等位区座位",
+        "灯委屈座位",
+        "等为区座位",
+        "等位去座位",
+        "等为去座位",
+        "等未取座位",
+        "等委屈作为",
+        "等"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "dengweirenshu",
+      "expected": "等位人数",
+      "source": "6000",
+      "lookup_us": 2162,
+      "candidates": [
+        "等位人数",
+        "等为人数",
+        "等委任书",
+        "等伟人数",
+        "等威人数",
+        "灯位人数",
+        "等维人数",
+        "等卫人数",
+        "等"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengweishijian",
+      "expected": "等位时间",
+      "source": "6000",
+      "lookup_us": 5404,
+      "candidates": [
+        "等位时间",
+        "等为时间",
+        "等伟时间",
+        "灯位时间",
+        "等未时间",
+        "等喂时间",
+        "等味时间",
+        "等微时间",
+        "等"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengweitixing",
+      "expected": "等位提醒",
+      "source": "6000",
+      "lookup_us": 3390,
+      "candidates": [
+        "等位提醒",
+        "等未提醒",
+        "等为提醒",
+        "灯位提醒",
+        "等喂提醒",
+        "等味提醒",
+        "等微提醒",
+        "等梶提醒",
+        "等"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengweizhuoshu",
+      "expected": "等位桌数",
+      "source": "6000",
+      "lookup_us": 2637,
+      "candidates": [
+        "等位桌数",
+        "等位桌书",
+        "等围着舒",
+        "等位桌树",
+        "等围着书",
+        "等围着输",
+        "等围着树",
+        "等位桌束",
+        "等"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dimianyoudianhua",
+      "expected": "地面有点滑",
+      "source": "6000",
+      "lookup_us": 6743,
+      "candidates": [
+        "地面有电话",
+        "地面又电话",
+        "地面有点话",
+        "地面有点花",
+        "地面有点划",
+        "地面游电话",
+        "地面油电话",
+        "地面有点滑",
+        "地面"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "duorenzhuowei",
+      "expected": "多人桌位",
+      "source": "6000",
+      "lookup_us": 2631,
+      "candidates": [
+        "多人桌位",
+        "多人桌为",
+        "多人桌味",
+        "多人桌围",
+        "多人着围",
+        "多人桌喂",
+        "多人桌谓",
+        "多人着为",
+        "多人"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ertongcanpan",
+      "expected": "儿童餐盘",
+      "source": "6000",
+      "lookup_us": 1593,
+      "candidates": [
+        "儿童餐盘",
+        "而同餐盘",
+        "而童餐盘",
+        "而痛餐盘",
+        "而通餐盘",
+        "而铜餐盘",
+        "而桶餐盘",
+        "而统餐盘",
+        "儿童"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fenzhuoyongcan",
+      "expected": "分桌用餐",
+      "source": "6000",
+      "lookup_us": 1947,
+      "candidates": [
+        "分桌用餐",
+        "分着用餐",
+        "分捉用餐",
+        "分卓用餐",
+        "份桌用餐",
+        "分拙用餐",
+        "分浊用餐",
+        "分啄用餐",
+        "分株"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guodaozhuowei",
+      "expected": "过道桌位",
+      "source": "6000",
+      "lookup_us": 3081,
+      "candidates": [
+        "过道桌位",
+        "过道桌为",
+        "过到桌位",
+        "锅到桌位",
+        "过道桌味",
+        "国道桌位",
+        "过到桌为",
+        "过道桌围",
+        "过道"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guohaoshunyan",
+      "expected": "过号顺延",
+      "source": "6000",
+      "lookup_us": 3277,
+      "candidates": [
+        "过号顺延",
+        "过号顺眼",
+        "过好顺眼",
+        "锅号顺眼",
+        "锅好顺眼",
+        "过好顺延",
+        "锅号顺延",
+        "过号顺盐",
+        "过好"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbashaozi",
+      "expected": "换把勺子",
+      "source": "6000",
+      "lookup_us": 2496,
+      "candidates": [
+        "换把勺子",
+        "还把勺子",
+        "换吧勺子",
+        "换把哨子",
+        "还吧勺子",
+        "还把哨子",
+        "换八勺子",
+        "换把勺字",
+        "欢"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huangebeizi",
+      "expected": "换个杯子",
+      "source": "6000",
+      "lookup_us": 2983,
+      "candidates": [
+        "换个杯子",
+        "换个被子",
+        "换个辈子",
+        "换个杯字",
+        "换个被字",
+        "换个杯自",
+        "换个杯紫",
+        "换个杯资",
+        "换个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huangecanpan",
+      "expected": "换个餐盘",
+      "source": "6000",
+      "lookup_us": 2587,
+      "candidates": [
+        "换个餐盘",
+        "换个餐番",
+        "换个餐胖",
+        "换个惨盘",
+        "换个餐判",
+        "换个餐潘",
+        "换个餐盼",
+        "换个参盘",
+        "换个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huangecanwan",
+      "expected": "换个餐碗",
+      "source": "6000",
+      "lookup_us": 2772,
+      "candidates": [
+        "换个餐碗",
+        "换个餐完",
+        "换个餐晚",
+        "换个餐玩",
+        "换个惨完",
+        "换个惨晚",
+        "换个参完",
+        "换个餐弯",
+        "换个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanshuangkuaizi",
+      "expected": "换双筷子",
+      "source": "6000",
+      "lookup_us": 3897,
+      "candidates": [
+        "换双筷子",
+        "还双筷子",
+        "换爽快子",
+        "换爽快字",
+        "还爽快子",
+        "还爽快字",
+        "换爽筷子",
+        "还爽筷子",
+        "欢"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huantaocanju",
+      "expected": "换套餐具",
+      "source": "6000",
+      "lookup_us": 2280,
+      "candidates": [
+        "换套餐具",
+        "还套餐具",
+        "换套餐句",
+        "换套餐据",
+        "换套餐局",
+        "换套餐举",
+        "换套餐橘",
+        "换套餐矩",
+        "欢"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiabayizi",
+      "expected": "加把椅子",
+      "source": "6000",
+      "lookup_us": 2015,
+      "candidates": [
+        "加把椅子",
+        "家把椅子",
+        "家吧椅子",
+        "假吧椅子",
+        "家八椅子",
+        "家爸椅子",
+        "假八椅子",
+        "家巴椅子",
+        "家"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiadianliangshui",
+      "expected": "加点凉水",
+      "source": "6000",
+      "lookup_us": 5152,
+      "candidates": [
+        "加点凉水",
+        "家店凉水",
+        "家点凉水",
+        "家电凉水",
+        "假店凉水",
+        "加点凉谁",
+        "加点凉睡",
+        "家店两谁",
+        "家电"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiadianreshui",
+      "expected": "加点热水",
+      "source": "6000",
+      "lookup_us": 2285,
+      "candidates": [
+        "加点热水",
+        "家店热水",
+        "家电热水",
+        "家点热水",
+        "假电热水",
+        "家典热水",
+        "假典热水",
+        "假店热水",
+        "家电"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiagecanwei",
+      "expected": "加个餐位",
+      "source": "6000",
+      "lookup_us": 3241,
+      "candidates": [
+        "加个餐位",
+        "价格餐位",
+        "价格惨为",
+        "价格餐味",
+        "价格餐为",
+        "价格参为",
+        "价格惨位",
+        "价格残为",
+        "加个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiageshuibei",
+      "expected": "加个水杯",
+      "source": "6000",
+      "lookup_us": 2560,
+      "candidates": [
+        "加个水杯",
+        "价格水备",
+        "价格水杯",
+        "价格说被",
+        "价格说备",
+        "价格谁被",
+        "价格谁备",
+        "价格水被",
+        "加个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiagexiaopan",
+      "expected": "加个小盘",
+      "source": "6000",
+      "lookup_us": 4451,
+      "candidates": [
+        "加个小盘",
+        "价格小盘",
+        "嫁个小盘",
+        "加个小胖",
+        "加个小判",
+        "加个小番",
+        "价格校盘",
+        "价格小胖",
+        "加个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiagexiaoshao",
+      "expected": "加个小勺",
+      "source": "6000",
+      "lookup_us": 4114,
+      "candidates": [
+        "加个小勺",
+        "加个小少",
+        "价格校少",
+        "价格小少",
+        "价格笑少",
+        "嫁个小少",
+        "家各校少",
+        "价格晓少",
+        "加个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiagexiaowan",
+      "expected": "加个小碗",
+      "source": "6000",
+      "lookup_us": 4140,
+      "candidates": [
+        "加个小碗",
+        "价格小碗",
+        "嫁个小碗",
+        "加个小完",
+        "加个小晚",
+        "加个小丸",
+        "加个小玩",
+        "价格校完",
+        "加个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiagezhibei",
+      "expected": "加个纸杯",
+      "source": "6000",
+      "lookup_us": 1989,
+      "candidates": [
+        "加个纸杯",
+        "价格制备",
+        "价格植被",
+        "价格指被",
+        "价格指备",
+        "价格之辈",
+        "价格值被",
+        "价格指背",
+        "加个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiaoluozuowei",
+      "expected": "角落座位",
+      "source": "6000",
+      "lookup_us": 3090,
+      "candidates": [
+        "角落座位",
+        "叫落座位",
+        "叫罗座位",
+        "角落作为",
+        "觉罗座位",
+        "叫洛座位",
+        "叫裸座位",
+        "叫络座位",
+        "角落"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiashuangkuaizi",
+      "expected": "加双筷子",
+      "source": "6000",
+      "lookup_us": 3194,
+      "candidates": [
+        "加双筷子",
+        "家双筷子",
+        "家爽快子",
+        "家爽快字",
+        "假爽快子",
+        "假爽快字",
+        "家爽筷子",
+        "假爽筷子",
+        "家属"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kaochuangzhuowei",
+      "expected": "靠窗桌位",
+      "source": "6000",
+      "lookup_us": 3271,
+      "candidates": [
+        "靠窗桌位",
+        "靠窗桌为",
+        "靠窗桌味",
+        "靠窗桌围",
+        "靠窗桌喂",
+        "靠窗着围",
+        "靠窗桌谓",
+        "烤窗桌位",
+        "靠窗"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kaomenzhuowei",
+      "expected": "靠门桌位",
+      "source": "6000",
+      "lookup_us": 3345,
+      "candidates": [
+        "靠门桌位",
+        "靠门桌为",
+        "烤门桌位",
+        "靠门桌味",
+        "靠门桌围",
+        "靠门桌喂",
+        "靠门着围",
+        "靠门桌谓",
+        "考"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kaoqiangzhuowei",
+      "expected": "靠墙桌位",
+      "source": "6000",
+      "lookup_us": 4326,
+      "candidates": [
+        "靠墙桌位",
+        "靠墙桌为",
+        "靠墙桌味",
+        "靠墙桌围",
+        "靠墙桌喂",
+        "靠墙着围",
+        "靠墙桌谓",
+        "烤墙桌位",
+        "靠墙"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kuaizibuchong",
+      "expected": "筷子补充",
+      "source": "6000",
+      "lookup_us": 1761,
+      "candidates": [
+        "筷子补充",
+        "快字补充",
+        "会字补充",
+        "快子补充",
+        "会自补充",
+        "快资补充",
+        "快滋补充",
+        "快自补充",
+        "筷子"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kuaizishaoleyishuang",
+      "expected": "筷子少了一双",
+      "source": "6000",
+      "lookup_us": 4138,
+      "candidates": [
+        "筷子少了一双",
+        "会自少了一双",
+        "筷子少了一霜",
+        "会自少了一霜",
+        "筷子少了一爽",
+        "会自少了一爽",
+        "筷子少了一孀",
+        "会自少了一孀",
+        "筷子"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lutaizhuowei",
+      "expected": "露台桌位",
+      "source": "6000",
+      "lookup_us": 3500,
+      "candidates": [
+        "露台桌位",
+        "露台桌为",
+        "路太着围",
+        "路台桌位",
+        "露台桌味",
+        "路太着为",
+        "露台桌围",
+        "鲁太着围",
+        "露台"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "paiduizhuoshu",
+      "expected": "排队桌数",
+      "source": "6000",
+      "lookup_us": 2392,
+      "candidates": [
+        "排队桌数",
+        "排队桌书",
+        "排队桌树",
+        "排队桌束",
+        "排队桌熟",
+        "排队桌疏",
+        "排队着舒",
+        "排队桌术",
+        "派对"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "panzimeixijing",
+      "expected": "盘子没洗净",
+      "source": "6000",
+      "lookup_us": 6181,
+      "candidates": [
+        "盘子没洗净",
+        "盘子美洗净",
+        "盘子每洗净",
+        "盘子玫洗净",
+        "盘子梅洗净",
+        "盘子楣洗净",
+        "盘子妹洗净",
+        "盘子眉洗净",
+        "盘子"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "pinzhuoyongcan",
+      "expected": "拼桌用餐",
+      "source": "6000",
+      "lookup_us": 2332,
+      "candidates": [
+        "拼桌用餐",
+        "拼着用餐",
+        "品桌用餐",
+        "拼捉用餐",
+        "拼卓用餐",
+        "品着用餐",
+        "拼拙用餐",
+        "拼浊用餐",
+        "拼"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "pinzhuozuowei",
+      "expected": "拼桌座位",
+      "source": "6000",
+      "lookup_us": 2488,
+      "candidates": [
+        "拼桌座位",
+        "品桌座位",
+        "拼着座位",
+        "拼捉座位",
+        "拼卓座位",
+        "拼拙座位",
+        "拼浊座位",
+        "拼啄座位",
+        "拼"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "quhaodengwei",
+      "expected": "取号等位",
+      "source": "6000",
+      "lookup_us": 1928,
+      "candidates": [
+        "取号等位",
+        "取好等位",
+        "取号等为",
+        "区号等位",
+        "取好等为",
+        "取好灯位",
+        "取号等味",
+        "取好等味",
+        "区号"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shaoleyibashaozi",
+      "expected": "少了一把勺子",
+      "source": "6000",
+      "lookup_us": 4191,
+      "candidates": [
+        "少了一把勺子",
+        "少了一把哨子",
+        "稍了一把勺子",
+        "少了一把勺字",
+        "少了一拔勺子",
+        "少了一把少子",
+        "少了一把少字",
+        "少了一吧勺子",
+        "少"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shaoleyigexiaowan",
+      "expected": "少了一个小碗",
+      "source": "6000",
+      "lookup_us": 7475,
+      "candidates": [
+        "少了一个小碗",
+        "少了一个小完",
+        "少了一个小晚",
+        "稍了一个小碗",
+        "少了一个小丸",
+        "少了一个小玩",
+        "少了一个小婉",
+        "少了一个小弯",
+        "少"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shouyixiakongbei",
+      "expected": "收一下空杯",
+      "source": "6000",
+      "lookup_us": 2621,
+      "candidates": [
+        "收一下空被",
+        "收一下空备",
+        "收一下空背",
+        "手一下空被",
+        "收一下空倍",
+        "手一下空备",
+        "收一下孔被",
+        "收一下空杯",
+        "收一下"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "shouyixiakongpan",
+      "expected": "收一下空盘",
+      "source": "6000",
+      "lookup_us": 2342,
+      "candidates": [
+        "收一下空盘",
+        "手一下空盘",
+        "收一下控盘",
+        "手一下控盘",
+        "收一下空判",
+        "收一下空番",
+        "收一下孔盘",
+        "收一下空胖",
+        "收一下"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shouyixiakongwan",
+      "expected": "收一下空碗",
+      "source": "6000",
+      "lookup_us": 2753,
+      "candidates": [
+        "收一下空碗",
+        "收一下空完",
+        "收一下空晚",
+        "收一下空玩",
+        "收一下空万",
+        "手一下空完",
+        "收一下孔完",
+        "手一下空晚",
+        "收一下"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuangrenzhuowei",
+      "expected": "双人桌位",
+      "source": "6000",
+      "lookup_us": 3484,
+      "candidates": [
+        "双人桌位",
+        "双人桌为",
+        "双人桌味",
+        "双人桌围",
+        "双人着围",
+        "双人桌喂",
+        "双人桌谓",
+        "双人着为",
+        "双人"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "sirenzhuowei",
+      "expected": "四人桌位",
+      "source": "6000",
+      "lookup_us": 2477,
+      "candidates": [
+        "四人桌位",
+        "死人桌位",
+        "四人桌为",
+        "死人桌为",
+        "四人桌味",
+        "死人着围",
+        "死人桌味",
+        "四人桌围",
+        "私人"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tangshaobuchong",
+      "expected": "汤勺补充",
+      "source": "6000",
+      "lookup_us": 1680,
+      "candidates": [
+        "汤勺补充",
+        "倘勺补充",
+        "汤少补充",
+        "糖少补充",
+        "汤烧补充",
+        "汤稍补充",
+        "倘烧补充",
+        "汤绍补充",
+        "汤勺"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tiandianchashui",
+      "expected": "添点茶水",
+      "source": "6000",
+      "lookup_us": 3703,
+      "candidates": [
+        "添点茶水",
+        "天点茶水",
+        "天店茶水",
+        "天电茶水",
+        "天点差谁",
+        "天点差水",
+        "天点查谁",
+        "天点茶谁",
+        "甜点"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tiandianreshui",
+      "expected": "添点热水",
+      "source": "6000",
+      "lookup_us": 3153,
+      "candidates": [
+        "添点热水",
+        "天点热水",
+        "天电热水",
+        "天典热水",
+        "填电热水",
+        "天店热水",
+        "天垫热水",
+        "天殿热水",
+        "甜点"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tiaoliaolingququ",
+      "expected": "调料领取区",
+      "source": "6000",
+      "lookup_us": 6856,
+      "candidates": [
+        "调料领取去",
+        "调料领取取",
+        "调料领取趣",
+        "调料领取屈",
+        "调料另去取",
+        "调料领取曲",
+        "调料领去取",
+        "调料领取区",
+        "调料"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "tongzhuoyongcan",
+      "expected": "同桌用餐",
+      "source": "6000",
+      "lookup_us": 2536,
+      "candidates": [
+        "同桌用餐",
+        "同着用餐",
+        "同桌用惨",
+        "通桌用餐",
+        "同桌用参",
+        "同桌用残",
+        "同捉用餐",
+        "同桌用灿",
+        "同桌"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wanliyoushuizi",
+      "expected": "碗里有水渍",
+      "source": "6000",
+      "lookup_us": 3012,
+      "candidates": [
+        "碗里有水子",
+        "碗里有水字",
+        "万里有水子",
+        "万里有水字",
+        "碗里有水渍",
+        "碗里有水紫",
+        "碗里有水资",
+        "晚里有水渍",
+        "万里"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "xiaozhuodengwei",
+      "expected": "小桌等位",
+      "source": "6000",
+      "lookup_us": 3211,
+      "candidates": [
+        "小桌等位",
+        "笑着等位",
+        "笑着等为",
+        "笑着等味",
+        "笑着等围",
+        "笑着等喂",
+        "笑着等谓",
+        "小着等位",
+        "小猪"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yongcandifeng",
+      "expected": "用餐低峰",
+      "source": "6000",
+      "lookup_us": 2401,
+      "candidates": [
+        "用餐低峰",
+        "用餐的风",
+        "用餐地风",
+        "用餐低风",
+        "用餐地缝",
+        "用餐低缝",
+        "用餐地蜂",
+        "用餐低蜂",
+        "用餐"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yongcangaofeng",
+      "expected": "用餐高峰",
+      "source": "6000",
+      "lookup_us": 2992,
+      "candidates": [
+        "用餐高峰",
+        "用餐高风",
+        "用餐高缝",
+        "用餐高凤",
+        "用餐高蜂",
+        "用餐搞风",
+        "用餐高封",
+        "用餐高疯",
+        "用餐"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yongcanhouwei",
+      "expected": "用餐候位",
+      "source": "6000",
+      "lookup_us": 1427,
+      "candidates": [
+        "用餐候位",
+        "用餐后卫",
+        "用餐后为",
+        "用餐后位",
+        "用餐后维",
+        "用餐候为",
+        "用餐后味",
+        "用餐后围",
+        "用餐"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yongcanpaidui",
+      "expected": "用餐排队",
+      "source": "6000",
+      "lookup_us": 1723,
+      "candidates": [
+        "用餐排队",
+        "用餐派对",
+        "用餐排对",
+        "永餐排队",
+        "用惨排队",
+        "用参排队",
+        "用残排队",
+        "用灿排队",
+        "用餐"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yongcanyuding",
+      "expected": "用餐预订",
+      "source": "6000",
+      "lookup_us": 2716,
+      "candidates": [
+        "用餐预订",
+        "用餐预定",
+        "用参与定",
+        "用参与顶",
+        "用惨预定",
+        "用餐预顶",
+        "用参预定",
+        "永餐预定",
+        "用餐"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuomianyoudiannian",
+      "expected": "桌面有点黏",
+      "source": "6000",
+      "lookup_us": 7207,
+      "candidates": [
+        "桌面有点年",
+        "桌面有点粘",
+        "桌面有点念",
+        "桌面有点捻",
+        "桌面有点廿",
+        "桌面有点黏",
+        "桌面有点碾",
+        "桌面有点蔫",
+        "桌面"
+      ],
+      "expected_rank": 6
+    },
+    {
+      "pinyin": "zhuoshangyouyouzi",
+      "expected": "桌上有油渍",
+      "source": "6000",
+      "lookup_us": 4337,
+      "candidates": [
+        "桌上有游子",
+        "桌上又有子",
+        "桌上又有字",
+        "桌上有柚子",
+        "桌上有有子",
+        "桌上又有自",
+        "桌上有有字",
+        "桌上有油渍",
+        "桌上"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zhuoweiqueren",
+      "expected": "桌位确认",
+      "source": "6000",
+      "lookup_us": 4282,
+      "candidates": [
+        "桌位确认",
+        "桌未确认",
+        "着未确认",
+        "桌为确认",
+        "桌喂确认",
+        "桌味确认",
+        "桌微确认",
+        "桌梶确认",
+        "着"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuoweiyuliu",
+      "expected": "桌位预留",
+      "source": "6000",
+      "lookup_us": 3495,
+      "candidates": [
+        "桌位预留",
+        "桌位于流",
+        "桌位于六",
+        "桌为预留",
+        "桌位于留",
+        "桌未予流",
+        "桌位于刘",
+        "桌位于柳",
+        "着"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuozicaxia",
+      "expected": "桌子擦下",
+      "source": "6000",
+      "lookup_us": 2885,
+      "candidates": [
+        "桌子擦下",
+        "桌子擦夏",
+        "桌子擦霞",
+        "桌子擦虾",
+        "桌子擦吓",
+        "桌子擦暇",
+        "桌子擦瞎",
+        "桌子擦侠",
+        "桌子"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuozizaicaxia",
+      "expected": "桌子再擦下",
+      "source": "6000",
+      "lookup_us": 2686,
+      "candidates": [
+        "桌子再擦下",
+        "桌子在擦下",
+        "桌子在拆下",
+        "桌子载擦下",
+        "桌子再拆下",
+        "桌子载拆下",
+        "桌子仔擦下",
+        "桌子在礤下",
+        "桌子"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zizhucanjuqu",
+      "expected": "自助餐具区",
+      "source": "6000",
+      "lookup_us": 2602,
+      "candidates": [
+        "自助餐具去",
+        "资助餐具去",
+        "自助餐具取",
+        "自助残局去",
+        "资助残局去",
+        "自助餐具趣",
+        "资助餐具取",
+        "自助餐具区",
+        "自助餐"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zizhudabaoqu",
+      "expected": "自助打包区",
+      "source": "6000",
+      "lookup_us": 3129,
+      "candidates": [
+        "自主大包去",
+        "自主打包去",
+        "自主大宝去",
+        "自主大包取",
+        "自助大包去",
+        "自主大包趣",
+        "自主打包取",
+        "自助打包区",
+        "自主"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zizhuqucanqu",
+      "expected": "自助取餐区",
+      "source": "6000",
+      "lookup_us": 2133,
+      "candidates": [
+        "自主去参去",
+        "自助取餐去",
+        "自主去餐去",
+        "自助去参去",
+        "资助取餐去",
+        "自助去餐去",
+        "自主去参取",
+        "自助取餐区",
+        "自主"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zizhutiaoliaoqu",
+      "expected": "自助调料区",
+      "source": "6000",
+      "lookup_us": 5415,
+      "candidates": [
+        "自主调料去",
+        "自助调料去",
+        "自主调料取",
+        "自主调料趣",
+        "自助调料取",
+        "自主调料屈",
+        "自主调料曲",
+        "自助调料区",
+        "自主"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zizhuyinshuiqu",
+      "expected": "自助饮水区",
+      "source": "6000",
+      "lookup_us": 3776,
+      "candidates": [
+        "自主因睡去",
+        "自助引睡去",
+        "资助引睡去",
+        "自主银睡去",
+        "自主音睡去",
+        "自主印睡去",
+        "自主阴睡去",
+        "自助饮水区",
+        "自主"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "baishuijiukeyi",
+      "expected": "白水就可以",
+      "source": "6000",
+      "lookup_us": 3131,
+      "candidates": [
+        "白水就可以",
+        "白说就可以",
+        "白水酒可以",
+        "白水久可以",
+        "白水旧可以",
+        "白水九可以",
+        "白水救可以",
+        "白水揪可以",
+        "白水"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bantangqubing",
+      "expected": "半糖去冰",
+      "source": "6000",
+      "lookup_us": 3771,
+      "candidates": [
+        "半糖去冰",
+        "半糖去病",
+        "半糖去饼",
+        "办糖去病",
+        "半糖去兵",
+        "半糖去并",
+        "办糖去冰",
+        "办汤去病",
+        "版"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bantangshaobing",
+      "expected": "半糖少冰",
+      "source": "6000",
+      "lookup_us": 4024,
+      "candidates": [
+        "半糖少冰",
+        "半糖烧饼",
+        "办汤烧饼",
+        "办唐烧饼",
+        "办糖烧饼",
+        "办堂烧饼",
+        "办趟烧饼",
+        "办汤勺病",
+        "版"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "beigaikoujindian",
+      "expected": "杯盖扣紧点",
+      "source": "6000",
+      "lookup_us": 3896,
+      "candidates": [
+        "杯盖扣紧点",
+        "背改口进店",
+        "背改口进电",
+        "被改口进店",
+        "被改口进电",
+        "背改口进点",
+        "被改口进点",
+        "背改口禁点",
+        "北丐"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "beizibiezhuangtaiman",
+      "expected": "杯子别装太满",
+      "source": "6000",
+      "lookup_us": 7387,
+      "candidates": [
+        "杯子别装太满",
+        "被子别装太满",
+        "杯子别状态慢",
+        "杯子别状态满",
+        "杯子别装太慢",
+        "杯子别状太满",
+        "杯子别庄太满",
+        "杯子别撞太满",
+        "杯子"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bingkuaishaoyidian",
+      "expected": "冰块少一点",
+      "source": "6000",
+      "lookup_us": 5527,
+      "candidates": [
+        "冰块少一点",
+        "并会少一点",
+        "冰块绍一点",
+        "并快绍一点",
+        "冰块稍一点",
+        "冰块邵一点",
+        "冰块梢一点",
+        "冰块烧一点",
+        "冰块"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "budingshaoyidian",
+      "expected": "布丁少一点",
+      "source": "6000",
+      "lookup_us": 4441,
+      "candidates": [
+        "不定少一点",
+        "不顶少一点",
+        "不定绍一点",
+        "补丁绍一点",
+        "不定稍一点",
+        "不定邵一点",
+        "不定梢一点",
+        "布丁少一点",
+        "不定"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "buewaijiabing",
+      "expected": "不额外加冰",
+      "source": "6000",
+      "lookup_us": 4369,
+      "candidates": [
+        "不额外加冰",
+        "不额外加病",
+        "不额外加饼",
+        "不饿外加病",
+        "不饿外加饼",
+        "不额外加兵",
+        "不饿外加冰",
+        "不饿外加兵",
+        "不饿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "buewaijiatang",
+      "expected": "不额外加糖",
+      "source": "6000",
+      "lookup_us": 5127,
+      "candidates": [
+        "不额外加糖",
+        "不饿外加糖",
+        "不饿歪加糖",
+        "不饿崴加糖",
+        "不饿喎加糖",
+        "不额外加汤",
+        "不额外加堂",
+        "不饿外加汤",
+        "不饿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bujiaewainaigai",
+      "expected": "不加额外奶盖",
+      "source": "6000",
+      "lookup_us": 3178,
+      "candidates": [
+        "不加额外奶盖",
+        "不佳额外奶盖",
+        "不佳额外奶改",
+        "不佳额外耐改",
+        "不佳额外乃改",
+        "不加额外奶改",
+        "不加额外耐改",
+        "不加额外乃改",
+        "不佳"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bujiaewaitangjiang",
+      "expected": "不加额外糖浆",
+      "source": "6000",
+      "lookup_us": 6313,
+      "candidates": [
+        "不佳额外糖浆",
+        "不加额外糖浆",
+        "不佳额外汤讲",
+        "不加额外汤讲",
+        "不佳额外唐讲",
+        "不佳额外糖讲",
+        "不佳额外堂讲",
+        "不加额外唐讲",
+        "不佳"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "bujiaewaixiaoliao",
+      "expected": "不加额外小料",
+      "source": "6000",
+      "lookup_us": 7007,
+      "candidates": [
+        "不佳额外小了",
+        "不加额外小了",
+        "不佳额外效了",
+        "不佳额外消了",
+        "不加额外效了",
+        "不加额外消了",
+        "不佳额外笑了",
+        "不加额外小料",
+        "不佳"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "bulingwaijiabing",
+      "expected": "不另外加冰",
+      "source": "6000",
+      "lookup_us": 5164,
+      "candidates": [
+        "不另外加病",
+        "不另外加饼",
+        "不另外加冰",
+        "不另外加兵",
+        "不另外加并",
+        "不另外家病",
+        "不另外家饼",
+        "不另外贾冰",
+        "不灵"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "bulingwaijiatang",
+      "expected": "不另外加糖",
+      "source": "6000",
+      "lookup_us": 5116,
+      "candidates": [
+        "不另外加糖",
+        "步另外加糖",
+        "不灵歪加糖",
+        "不另外加汤",
+        "不另外加堂",
+        "不另外架汤",
+        "不另外加烫",
+        "不另外家汤",
+        "不灵"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "changwenbujiabing",
+      "expected": "常温不加冰",
+      "source": "6000",
+      "lookup_us": 4755,
+      "candidates": [
+        "常温不佳病",
+        "常温不加病",
+        "常温不佳饼",
+        "常温不加饼",
+        "常温不加冰",
+        "长文不佳病",
+        "长文不加病",
+        "常温不假病",
+        "常温"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "chashuijiukeyi",
+      "expected": "茶水就可以",
+      "source": "6000",
+      "lookup_us": 3243,
+      "candidates": [
+        "茶水就可以",
+        "差谁就可以",
+        "茶水酒可以",
+        "茶水久可以",
+        "茶水旧可以",
+        "茶水九可以",
+        "茶水救可以",
+        "茶水揪可以",
+        "茶水"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chashuixubei",
+      "expected": "茶水续杯",
+      "source": "6000",
+      "lookup_us": 1924,
+      "candidates": [
+        "茶水续杯",
+        "茶水续被",
+        "茶水续备",
+        "茶水续背",
+        "茶水续倍",
+        "茶水需被",
+        "茶水须被",
+        "茶水许被",
+        "茶水"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chayinqubing",
+      "expected": "茶饮去冰",
+      "source": "6000",
+      "lookup_us": 2910,
+      "candidates": [
+        "茶饮去冰",
+        "差隐去病",
+        "查隐去病",
+        "茶饮去病",
+        "差隐去饼",
+        "差隐去冰",
+        "查音去病",
+        "差隐去兵",
+        "差异"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chayinqutang",
+      "expected": "茶饮去糖",
+      "source": "6000",
+      "lookup_us": 2792,
+      "candidates": [
+        "茶饮去糖",
+        "差隐去糖",
+        "查隐去糖",
+        "差隐去汤",
+        "差饮去糖",
+        "查音去糖",
+        "查隐去汤",
+        "差隐去烫",
+        "差异"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "geiwogenxiguan",
+      "expected": "给我根吸管",
+      "source": "6000",
+      "lookup_us": 5030,
+      "candidates": [
+        "给我跟习惯",
+        "给我根习惯",
+        "给我艮习惯",
+        "给我哏习惯",
+        "给我亘习惯",
+        "给我跟西关",
+        "给我跟吸管",
+        "给我根吸管",
+        "给我"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "jianjiandandanchidian",
+      "expected": "简简单单吃点",
+      "source": "6000",
+      "lookup_us": 8046,
+      "candidates": [
+        "渐渐淡淡吃点",
+        "见见淡淡吃点",
+        "简简单单吃点",
+        "渐渐淡淡吃店",
+        "见见淡淡吃店",
+        "渐渐淡淡池电",
+        "渐渐淡淡持点",
+        "渐渐淡淡吃电",
+        "渐渐"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "jintianchiqingdandian",
+      "expected": "今天吃清淡点",
+      "source": "6000",
+      "lookup_us": 8598,
+      "candidates": [
+        "今天吃清淡点",
+        "今天吃清淡店",
+        "今天吃清淡电",
+        "今天吃清单点",
+        "今天吃清淡垫",
+        "今天吃清单店",
+        "今天吃清单电",
+        "今天池清淡点",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kafeijiabing",
+      "expected": "咖啡加冰",
+      "source": "6000",
+      "lookup_us": 4188,
+      "candidates": [
+        "咖啡加冰",
+        "咖啡加病",
+        "咖啡加饼",
+        "咖啡加兵",
+        "咖啡加并",
+        "咖啡价病",
+        "咖啡价饼",
+        "咖啡价兵",
+        "咖啡机"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kafeijiantang",
+      "expected": "咖啡减糖",
+      "source": "6000",
+      "lookup_us": 5741,
+      "candidates": [
+        "咖啡减糖",
+        "咖啡减汤",
+        "咖啡减烫",
+        "咖啡见汤",
+        "咖啡减堂",
+        "咖啡减趟",
+        "咖啡见糖",
+        "咖啡间汤",
+        "咖啡机"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kafeiqubing",
+      "expected": "咖啡去冰",
+      "source": "6000",
+      "lookup_us": 3229,
+      "candidates": [
+        "咖啡去冰",
+        "咖啡去病",
+        "咖啡去饼",
+        "咖啡去兵",
+        "咖啡去并",
+        "咖啡去丙",
+        "咖啡区病",
+        "咖啡去柄",
+        "咖啡"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kafeixubei",
+      "expected": "咖啡续杯",
+      "source": "6000",
+      "lookup_us": 1840,
+      "candidates": [
+        "咖啡续杯",
+        "咖啡续被",
+        "咖啡续备",
+        "咖啡续背",
+        "咖啡续倍",
+        "咖啡需被",
+        "咖啡须被",
+        "咖啡许被",
+        "咖啡"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "liangshuijiukeyi",
+      "expected": "凉水就可以",
+      "source": "6000",
+      "lookup_us": 4220,
+      "candidates": [
+        "凉水就可以",
+        "两谁就可以",
+        "凉水酒可以",
+        "凉水久可以",
+        "凉水旧可以",
+        "凉水九可以",
+        "凉水救可以",
+        "凉水揪可以",
+        "凉水"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meishixubei",
+      "expected": "美式续杯",
+      "source": "6000",
+      "lookup_us": 2242,
+      "candidates": [
+        "美式续杯",
+        "没事需被",
+        "没事须被",
+        "没事许被",
+        "没事徐被",
+        "没事虚被",
+        "每时序被",
+        "没事续被",
+        "美食"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "naichajialiao",
+      "expected": "奶茶加料",
+      "source": "6000",
+      "lookup_us": 6083,
+      "candidates": [
+        "奶茶加料",
+        "奶茶加了",
+        "奶茶家了",
+        "奶茶加聊",
+        "奶茶嫁了",
+        "奶茶家聊",
+        "奶茶假了",
+        "奶茶家料",
+        "奶茶"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "naigaidanduzhuang",
+      "expected": "奶盖单独装",
+      "source": "6000",
+      "lookup_us": 3989,
+      "candidates": [
+        "奶盖单独装",
+        "乃该单独装",
+        "奶盖单独庄",
+        "乃该单独庄",
+        "奶盖单独状",
+        "奶盖单独撞",
+        "乃该单独状",
+        "乃该单独撞",
+        "乃"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "naipaoshaoyidian",
+      "expected": "奶泡少一点",
+      "source": "6000",
+      "lookup_us": 4639,
+      "candidates": [
+        "奶泡少一点",
+        "乃跑少一点",
+        "奶泡绍一点",
+        "乃跑绍一点",
+        "奶泡烧一点",
+        "奶泡稍一点",
+        "奶泡邵一点",
+        "奶泡梢一点",
+        "乃"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niunaiduojiayidian",
+      "expected": "牛奶多加一点",
+      "source": "6000",
+      "lookup_us": 7810,
+      "candidates": [
+        "牛奶多加一点",
+        "牛奶多家一点",
+        "牛奶躲加一点",
+        "牛奶躲家一点",
+        "牛奶多假一点",
+        "牛奶多佳一点",
+        "牛奶多贾一点",
+        "牛奶多价一点",
+        "牛奶"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nixiangchidiansha",
+      "expected": "你想吃点啥",
+      "source": "6000",
+      "lookup_us": 6445,
+      "candidates": [
+        "你想吃点杀",
+        "你想吃点沙",
+        "你想吃点纱",
+        "你想吃点啥",
+        "你想吃点傻",
+        "你想吃点痧",
+        "你想吃点砂",
+        "你想吃点煞",
+        "你想"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "nixiangdiannage",
+      "expected": "你想点哪个",
+      "source": "6000",
+      "lookup_us": 6271,
+      "candidates": [
+        "你想点那个",
+        "你想店那个",
+        "你想电那个",
+        "你想垫那个",
+        "你想典那个",
+        "你想殿那个",
+        "你想颠那个",
+        "你想点哪个",
+        "你想"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "nixianghediansha",
+      "expected": "你想喝点啥",
+      "source": "6000",
+      "lookup_us": 6439,
+      "candidates": [
+        "你想喝点杀",
+        "你想喝点沙",
+        "你想喝点纱",
+        "你想喝点啥",
+        "你想喝点傻",
+        "你想喝点痧",
+        "你想喝点砂",
+        "你想喝点煞",
+        "你想"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "nongsuoshaojiayifen",
+      "expected": "浓缩少加一份",
+      "source": "6000",
+      "lookup_us": 5146,
+      "candidates": [
+        "浓缩稍加一份",
+        "弄所稍加一份",
+        "浓缩少家一份",
+        "浓缩邵佳一份",
+        "浓缩烧家一份",
+        "弄所邵佳一份",
+        "浓缩少假一份",
+        "浓缩少加一份",
+        "浓缩"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "qingshuijiukeyi",
+      "expected": "清水就可以",
+      "source": "6000",
+      "lookup_us": 4056,
+      "candidates": [
+        "请说就可以",
+        "请谁就可以",
+        "清水酒可以",
+        "清水久可以",
+        "清水旧可以",
+        "清水九可以",
+        "清水救可以",
+        "清水就可以",
+        "清水"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "reshuixubei",
+      "expected": "热水续杯",
+      "source": "6000",
+      "lookup_us": 1551,
+      "candidates": [
+        "热水续杯",
+        "热水续被",
+        "热水续备",
+        "热水续背",
+        "热水续倍",
+        "热水需被",
+        "热水须被",
+        "热水许被",
+        "热水"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "reyinshaojiatang",
+      "expected": "热饮少加糖",
+      "source": "6000",
+      "lookup_us": 4788,
+      "candidates": [
+        "热饮少加糖",
+        "热饮稍加糖",
+        "热尹少加糖",
+        "热殷绍加糖",
+        "热因稍加糖",
+        "热饮烧加糖",
+        "热因烧加糖",
+        "热饮绍加糖",
+        "热议"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shaotangqubing",
+      "expected": "少糖去冰",
+      "source": "6000",
+      "lookup_us": 3985,
+      "candidates": [
+        "少糖去冰",
+        "少糖去病",
+        "少糖去饼",
+        "稍糖去病",
+        "少糖去兵",
+        "少糖去并",
+        "稍糖去冰",
+        "稍汤去病",
+        "少糖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shaotangshaobing",
+      "expected": "少糖少冰",
+      "source": "6000",
+      "lookup_us": 4309,
+      "candidates": [
+        "少糖少冰",
+        "少糖烧饼",
+        "稍汤烧饼",
+        "稍唐烧饼",
+        "稍糖烧饼",
+        "稍堂烧饼",
+        "稍趟烧饼",
+        "稍汤勺病",
+        "少糖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "suibiancouheyidun",
+      "expected": "随便凑合一顿",
+      "source": "6000",
+      "lookup_us": 5051,
+      "candidates": [
+        "随便凑合一顿",
+        "随便凑和一顿",
+        "随便凑合一吨",
+        "随便凑喝一顿",
+        "随便腠和一顿",
+        "随便凑合一炖",
+        "随便凑合以炖",
+        "随便凑合亿吨",
+        "随便"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "suibianduifuyikou",
+      "expected": "随便对付一口",
+      "source": "6000",
+      "lookup_us": 4626,
+      "candidates": [
+        "随便对付一口",
+        "随便队服一口",
+        "随便对腐一口",
+        "随便对服一口",
+        "随便兑付一口",
+        "随便对负一口",
+        "随便对复一口",
+        "随便对附一口",
+        "随便"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tangjiangshaojiayidian",
+      "expected": "糖浆少加一点",
+      "source": "6000",
+      "lookup_us": 8871,
+      "candidates": [
+        "糖浆稍加一点",
+        "糖浆少加一点",
+        "糖浆少家一点",
+        "糖浆邵佳一点",
+        "糖浆少假一点",
+        "汤将邵佳一点",
+        "糖浆少贾一点",
+        "糖浆少价一点",
+        "糖浆"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "wanfanzajiejue",
+      "expected": "晚饭咋解决",
+      "source": "6000",
+      "lookup_us": 5699,
+      "candidates": [
+        "晚饭咋解决",
+        "晚饭砸解决",
+        "晚饭杂解决",
+        "晚饭扎解决",
+        "晚饭匝解决",
+        "晚饭咂解决",
+        "晚饭雜解决",
+        "晚饭拶解决",
+        "晚饭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "weirejiukeyi",
+      "expected": "微热就可以",
+      "source": "6000",
+      "lookup_us": 2388,
+      "candidates": [
+        "味热就可以",
+        "为热就可以",
+        "味热酒可以",
+        "味热久可以",
+        "为热酒可以",
+        "为热久可以",
+        "味热旧可以",
+        "微热就可以",
+        "为"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "wenrejiukeyi",
+      "expected": "温热就可以",
+      "source": "6000",
+      "lookup_us": 2835,
+      "candidates": [
+        "温热就可以",
+        "文热就可以",
+        "温热酒可以",
+        "温热久可以",
+        "温热旧可以",
+        "温热九可以",
+        "温热救可以",
+        "温热揪可以",
+        "温热"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wenshuijiukeyi",
+      "expected": "温水就可以",
+      "source": "6000",
+      "lookup_us": 3532,
+      "candidates": [
+        "温水就可以",
+        "文说就可以",
+        "温水酒可以",
+        "温水久可以",
+        "温水旧可以",
+        "温水九可以",
+        "温水救可以",
+        "温水揪可以",
+        "温水"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wenyixiafuwuyuan",
+      "expected": "问一下服务员",
+      "source": "6000",
+      "lookup_us": 6879,
+      "candidates": [
+        "问一下负婺源",
+        "问一下服务远",
+        "问一下服务员",
+        "问一下负五元",
+        "问一下服务园",
+        "问一下服务元",
+        "问一下服务源",
+        "问一下服务原",
+        "问一下"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "wobuyongbeitao",
+      "expected": "我不用杯套",
+      "source": "6000",
+      "lookup_us": 3360,
+      "candidates": [
+        "我不用被套",
+        "我不用杯套",
+        "我不用备套",
+        "我不用北套",
+        "我不用背套",
+        "我不用被逃",
+        "我不用被讨",
+        "我不用被陶",
+        "我不"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "wobuyongtidai",
+      "expected": "我不用提袋",
+      "source": "6000",
+      "lookup_us": 3468,
+      "candidates": [
+        "我不用提袋",
+        "我不用提带",
+        "我不用替代",
+        "我不用体大",
+        "我不用体带",
+        "我不用题带",
+        "我不用体待",
+        "我不用提待",
+        "我不"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wobuyongxiguan",
+      "expected": "我不用吸管",
+      "source": "6000",
+      "lookup_us": 5095,
+      "candidates": [
+        "我不用习惯",
+        "握不用习惯",
+        "我不永习惯",
+        "我不勇习惯",
+        "我不拥习惯",
+        "我不涌习惯",
+        "我不泳习惯",
+        "我不用吸管",
+        "我不"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "wodailebeizi",
+      "expected": "我带了杯子",
+      "source": "6000",
+      "lookup_us": 2359,
+      "candidates": [
+        "我带了杯子",
+        "我带了被子",
+        "我大了杯子",
+        "我带勒杯子",
+        "我大了被子",
+        "我带了辈子",
+        "我带乐杯子",
+        "我带勒被子",
+        "我带"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wojintianbuxiangzuo",
+      "expected": "我今天不想做",
+      "source": "6000",
+      "lookup_us": 9110,
+      "candidates": [
+        "我今天不想做",
+        "喔今天不想做",
+        "我今天不想作",
+        "我今天不想座",
+        "我今天不想坐",
+        "我今天不想左",
+        "我今天不想昨",
+        "我今天不想佐",
+        "握紧"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wojintianxiangchifan",
+      "expected": "我今天想吃饭",
+      "source": "6000",
+      "lookup_us": 8991,
+      "candidates": [
+        "我今天想吃饭",
+        "我今天想吃烦",
+        "我今天想吃翻",
+        "我今天想吃反",
+        "我今天想吃番",
+        "我今天想吃泛",
+        "我今天向吃饭",
+        "我今天想吃凡",
+        "握紧"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wojintianxiangchila",
+      "expected": "我今天想吃辣",
+      "source": "6000",
+      "lookup_us": 8116,
+      "candidates": [
+        "我今天想吃辣",
+        "我今天想吃拉",
+        "我今天想吃啦",
+        "我今天想吃落",
+        "我今天想吃喇",
+        "我今天想吃蜡",
+        "我今天想吃剌",
+        "我今天想吃腊",
+        "握紧"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wojintianxiangchimian",
+      "expected": "我今天想吃面",
+      "source": "6000",
+      "lookup_us": 8838,
+      "candidates": [
+        "我今天想吃面",
+        "我今天想吃免",
+        "我今天想吃棉",
+        "我今天想吃眠",
+        "我今天想吃绵",
+        "我今天想吃勉",
+        "我今天想吃缅",
+        "我今天想吃冕",
+        "握紧"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wojintianxiangchitian",
+      "expected": "我今天想吃甜",
+      "source": "6000",
+      "lookup_us": 9584,
+      "candidates": [
+        "我今天想吃甜",
+        "我今天想吃天",
+        "我今天想吃添",
+        "我今天想吃填",
+        "我今天想吃田",
+        "我今天想吃舔",
+        "我今天想吃提案",
+        "我今天想吃鿬",
+        "握紧"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wojintianxiangdiancan",
+      "expected": "我今天想点餐",
+      "source": "6000",
+      "lookup_us": 9367,
+      "candidates": [
+        "我今天想点餐",
+        "我今天想点惨",
+        "我今天想点参",
+        "我今天想点残",
+        "我今天想店餐",
+        "我今天想点灿",
+        "我今天想电餐",
+        "我今天想点蚕",
+        "握紧"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wojintianxianghezhou",
+      "expected": "我今天想喝粥",
+      "source": "6000",
+      "lookup_us": 8736,
+      "candidates": [
+        "我今天想喝粥",
+        "我今天想喝舟",
+        "我今天想喝咒",
+        "我今天想喝周",
+        "我今天想和粥",
+        "我今天想喝州",
+        "我今天想喝洲",
+        "我今天想喝轴",
+        "握紧"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wojintianxiangxiachu",
+      "expected": "我今天想下厨",
+      "source": "6000",
+      "lookup_us": 9267,
+      "candidates": [
+        "我今天想下厨",
+        "我今天想下出",
+        "我今天想下处",
+        "我今天想下楚",
+        "我今天想下除",
+        "我今天想夏初",
+        "我今天想下初",
+        "我今天想夏出",
+        "握紧"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wojintianxiangzuofan",
+      "expected": "我今天想做饭",
+      "source": "6000",
+      "lookup_us": 8309,
+      "candidates": [
+        "我今天想做饭",
+        "我今天向做饭",
+        "我今天想做烦",
+        "我今天想做翻",
+        "我今天香做饭",
+        "我今天想做反",
+        "我今天想做番",
+        "我今天想做泛",
+        "握紧"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wolaidiancaiba",
+      "expected": "我来点菜吧",
+      "source": "6000",
+      "lookup_us": 3850,
+      "candidates": [
+        "我来点菜吧",
+        "我来电才罢",
+        "我来电才把",
+        "我来点才罢",
+        "我来点菜把",
+        "我来点才把",
+        "我来电猜吧",
+        "我来店才把",
+        "我来"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wolaidianwaimai",
+      "expected": "我来点外卖",
+      "source": "6000",
+      "lookup_us": 4515,
+      "candidates": [
+        "我来点外卖",
+        "我来电外卖",
+        "我赖点外卖",
+        "我来店外卖",
+        "我来垫外卖",
+        "我来典外卖",
+        "我来殿外卖",
+        "我来颠外卖",
+        "我来"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wolaidianyinliao",
+      "expected": "我来点饮料",
+      "source": "6000",
+      "lookup_us": 6925,
+      "candidates": [
+        "我来电音了",
+        "我来点音了",
+        "我来电饮料",
+        "我来点饮料",
+        "我来电音聊",
+        "我来电音料",
+        "我来店饮料",
+        "我来电因了",
+        "我来"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "wolaidinggewei",
+      "expected": "我来订个位",
+      "source": "6000",
+      "lookup_us": 3173,
+      "candidates": [
+        "我来订各位",
+        "我来订个位",
+        "我来定各位",
+        "我来顶各位",
+        "我来定格位",
+        "我来丁各位",
+        "我来定个位",
+        "我来顶个位",
+        "我来"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "wolaipaigedui",
+      "expected": "我来排个队",
+      "source": "6000",
+      "lookup_us": 2760,
+      "candidates": [
+        "我来拍个对",
+        "我来拍各队",
+        "我来排各队",
+        "我来牌各队",
+        "我来派各队",
+        "我来拍格对",
+        "我来排格对",
+        "我来排个队",
+        "我来"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "wolaiqugehao",
+      "expected": "我来取个号",
+      "source": "6000",
+      "lookup_us": 2869,
+      "candidates": [
+        "我来取个号",
+        "我来娶个号",
+        "我来去个号",
+        "我来娶个好",
+        "我来去个好",
+        "我来取个好",
+        "我来区个号",
+        "我来去各好",
+        "我来"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wolaizhaogebaojian",
+      "expected": "我来找个包间",
+      "source": "6000",
+      "lookup_us": 7926,
+      "candidates": [
+        "我来找个包间",
+        "我来找个保健",
+        "我来找个保荐",
+        "我来找个包见",
+        "我来找个包件",
+        "我来找个包肩",
+        "我来找个包键",
+        "我来找个包煎",
+        "我来"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wolaizhaogewei",
+      "expected": "我来找个位",
+      "source": "6000",
+      "lookup_us": 2906,
+      "candidates": [
+        "我来找个位",
+        "我来找个为",
+        "我来找个味",
+        "我来找个尾",
+        "我来找个围",
+        "我来找个喂",
+        "我来找个谓",
+        "我来找各位",
+        "我来"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woqubaogejuzi",
+      "expected": "我去剥个橘子",
+      "source": "6000",
+      "lookup_us": 5195,
+      "candidates": [
+        "我去报个橘子",
+        "我去宝格橘子",
+        "我去包个橘子",
+        "我去包隔橘子",
+        "我去报个句子",
+        "我去包各橘子",
+        "我去报各橘子",
+        "我去剥个橘子",
+        "我区"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "woquchaogecai",
+      "expected": "我去炒个菜",
+      "source": "6000",
+      "lookup_us": 3085,
+      "candidates": [
+        "我去超个菜",
+        "我去炒个菜",
+        "我去朝个菜",
+        "我去吵个菜",
+        "我去抄个菜",
+        "我去潮个菜",
+        "我去巢个菜",
+        "我去超葛菜",
+        "我区"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "woquchongbeikafei",
+      "expected": "我去冲杯咖啡",
+      "source": "6000",
+      "lookup_us": 2770,
+      "candidates": [
+        "我去重杯咖啡",
+        "我去冲杯咖啡",
+        "我去重背咖啡",
+        "我去重被咖啡",
+        "我去冲被咖啡",
+        "我去重北咖啡",
+        "我去重呗咖啡",
+        "我去重倍咖啡",
+        "我区"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "woquchongbeinaifen",
+      "expected": "我去冲杯奶粉",
+      "source": "6000",
+      "lookup_us": 3844,
+      "candidates": [
+        "我去重背奶粉",
+        "我去重被奶粉",
+        "我去冲被奶粉",
+        "我去重北奶粉",
+        "我去重呗奶粉",
+        "我去重杯奶粉",
+        "我去冲杯奶粉",
+        "我去重倍奶粉",
+        "我区"
+      ],
+      "expected_rank": 7
+    },
+    {
+      "pinyin": "woqukaopianmianbao",
+      "expected": "我去烤片面包",
+      "source": "6000",
+      "lookup_us": 6211,
+      "candidates": [
+        "我去烤片面包",
+        "我去靠片面包",
+        "我去靠便面包",
+        "我去考便面包",
+        "我去靠篇面包",
+        "我去考篇面包",
+        "我去靠偏面包",
+        "我去靠骗面包",
+        "我区"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woqupaobeicha",
+      "expected": "我去泡杯茶",
+      "source": "6000",
+      "lookup_us": 2452,
+      "candidates": [
+        "我去泡杯茶",
+        "我去跑杯茶",
+        "我去抛杯茶",
+        "我去炮杯茶",
+        "我去袍杯茶",
+        "我去刨杯茶",
+        "我去疱杯茶",
+        "我去庖杯茶",
+        "我区"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woquqiedianshuiguo",
+      "expected": "我去切点水果",
+      "source": "6000",
+      "lookup_us": 7146,
+      "candidates": [
+        "我去切点水果",
+        "我去且点水果",
+        "我去切点睡过",
+        "我去且点睡过",
+        "我去且电水果",
+        "我去切电水果",
+        "我去切点说过",
+        "我去且店水果",
+        "我区"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woqurebeiniunai",
+      "expected": "我去热杯牛奶",
+      "source": "6000",
+      "lookup_us": 3710,
+      "candidates": [
+        "我去热背牛奶",
+        "我去热被牛奶",
+        "我去惹被牛奶",
+        "我去热杯牛奶",
+        "我去热北牛奶",
+        "我去热呗牛奶",
+        "我去热倍牛奶",
+        "我去热备牛奶",
+        "我区"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "woquregefan",
+      "expected": "我去热个饭",
+      "source": "6000",
+      "lookup_us": 2413,
+      "candidates": [
+        "我去热个饭",
+        "我去惹个饭",
+        "我去热格饭",
+        "我去热个烦",
+        "我去热个翻",
+        "我去惹格饭",
+        "我去热各饭",
+        "我去热各烦",
+        "我区"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woquxidianshuiguo",
+      "expected": "我去洗点水果",
+      "source": "6000",
+      "lookup_us": 6516,
+      "candidates": [
+        "我去洗点水果",
+        "我去西点水果",
+        "我去洗点睡过",
+        "我去洗店水果",
+        "我去洗电水果",
+        "我去西点睡过",
+        "我去洗垫水果",
+        "我去洗典水果",
+        "我区"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woquzhenggedan",
+      "expected": "我去蒸个蛋",
+      "source": "6000",
+      "lookup_us": 4525,
+      "candidates": [
+        "我去整个单",
+        "我去整个弹",
+        "我去整个蛋",
+        "我去整个淡",
+        "我去整个担",
+        "我去整个但",
+        "我去整个胆",
+        "我去蒸个蛋",
+        "我区"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "woquzhudianzhou",
+      "expected": "我去煮点粥",
+      "source": "6000",
+      "lookup_us": 5042,
+      "candidates": [
+        "我去煮点粥",
+        "我去住点粥",
+        "我去住店粥",
+        "我去驻点粥",
+        "我去注点粥",
+        "我去住店舟",
+        "我去住店咒",
+        "我去煮点舟",
+        "我区"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woquzhuwanmian",
+      "expected": "我去煮碗面",
+      "source": "6000",
+      "lookup_us": 4352,
+      "candidates": [
+        "我去煮碗面",
+        "我去住碗面",
+        "我去住玩面",
+        "我去住完面",
+        "我去住万面",
+        "我去住晚面",
+        "我去朱湾面",
+        "我去住弯面",
+        "我区"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woxiandiangeduzi",
+      "expected": "我先垫个肚子",
+      "source": "6000",
+      "lookup_us": 7404,
+      "candidates": [
+        "我先点歌肚子",
+        "我先垫个肚子",
+        "我先点歌独自",
+        "我现点歌肚子",
+        "我先点歌读字",
+        "我先点歌独资",
+        "我先点歌读子",
+        "我先点歌度子",
+        "我先"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "woxiankankanxiaopiao",
+      "expected": "我先看看小票",
+      "source": "6000",
+      "lookup_us": 8232,
+      "candidates": [
+        "我先看看小票",
+        "我先看看消票",
+        "我先看看笑票",
+        "我先看看销票",
+        "我先看看消朴",
+        "我先看看小朴",
+        "我先看看消飘",
+        "我先看看小飘",
+        "我先"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woxiankanxiacaidan",
+      "expected": "我先看下菜单",
+      "source": "6000",
+      "lookup_us": 5719,
+      "candidates": [
+        "我先看下菜单",
+        "我先看夏菜单",
+        "我先看吓菜单",
+        "我先看虾菜单",
+        "我先看霞菜单",
+        "我先看瞎菜单",
+        "我先看侠菜单",
+        "我先看峡菜单",
+        "我先"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woxianquchengwanfan",
+      "expected": "我先去盛碗饭",
+      "source": "6000",
+      "lookup_us": 6659,
+      "candidates": [
+        "我先去程晚饭",
+        "我先去成晚饭",
+        "我先去称晚饭",
+        "我先去城晚饭",
+        "我先去乘晚饭",
+        "我先去呈晚饭",
+        "我先去撑晚饭",
+        "我先去盛碗饭",
+        "我先去"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "woxianqudagetang",
+      "expected": "我先去打个汤",
+      "source": "6000",
+      "lookup_us": 5594,
+      "candidates": [
+        "我先去打个汤",
+        "我先去打个糖",
+        "我先去打个烫",
+        "我先去打个堂",
+        "我先去打个趟",
+        "我先去大哥汤",
+        "我先去大哥糖",
+        "我先去打个膛",
+        "我先去"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woxianqunawankuai",
+      "expected": "我先去拿碗筷",
+      "source": "6000",
+      "lookup_us": 5420,
+      "candidates": [
+        "我先去拿碗筷",
+        "我先去哪万块",
+        "我先去拿万块",
+        "我先去那万块",
+        "我先去哪碗筷",
+        "我先去拿碗块",
+        "我先去拿完快",
+        "我先去那晚快",
+        "我先去"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woxianqunazhijin",
+      "expected": "我先去拿纸巾",
+      "source": "6000",
+      "lookup_us": 5943,
+      "candidates": [
+        "我先去哪至今",
+        "我先去拿至今",
+        "我先去那至今",
+        "我先去哪纸巾",
+        "我先去拿纸巾",
+        "我先去那只近",
+        "我先去那只紧",
+        "我先去那只进",
+        "我先去"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "woxianququcanju",
+      "expected": "我先去取餐具",
+      "source": "6000",
+      "lookup_us": 4089,
+      "candidates": [
+        "我先去取餐具",
+        "我先去去餐具",
+        "我先去区餐具",
+        "我先去曲餐具",
+        "我先去取残局",
+        "我先去佢餐具",
+        "我先去屈餐具",
+        "我先去娶餐具",
+        "我先去"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woxianwenxiacaidan",
+      "expected": "我先问下菜单",
+      "source": "6000",
+      "lookup_us": 6711,
+      "candidates": [
+        "我先问下菜单",
+        "我先问夏菜单",
+        "我先问吓菜单",
+        "我先问虾菜单",
+        "我先问霞菜单",
+        "我先问瞎菜单",
+        "我先问侠菜单",
+        "我先问峡菜单",
+        "我先"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woyongzidaibeizhuang",
+      "expected": "我用自带杯装",
+      "source": "6000",
+      "lookup_us": 5886,
+      "candidates": [
+        "我用自带被撞",
+        "我用自带悲壮",
+        "我用自带背装",
+        "我用自带背庄",
+        "我用自带被装",
+        "我用自带被庄",
+        "我用自带杯装",
+        "我用自带北装",
+        "我用"
+      ],
+      "expected_rank": 7
+    },
+    {
+      "pinyin": "wozijidaibeizi",
+      "expected": "我自己带杯子",
+      "source": "6000",
+      "lookup_us": 4241,
+      "candidates": [
+        "我自己带杯子",
+        "我自己待杯子",
+        "我自己代杯子",
+        "我自己呆杯子",
+        "我自己戴杯子",
+        "我自己袋杯子",
+        "我自己贷杯子",
+        "我自己带被子",
+        "我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wufanzajiejue",
+      "expected": "午饭咋解决",
+      "source": "6000",
+      "lookup_us": 6130,
+      "candidates": [
+        "午饭咋解决",
+        "午饭砸解决",
+        "午饭杂解决",
+        "午饭扎解决",
+        "午饭匝解决",
+        "午饭咂解决",
+        "无繁杂解决",
+        "午饭雜解决",
+        "午饭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wutangqubing",
+      "expected": "无糖去冰",
+      "source": "6000",
+      "lookup_us": 3662,
+      "candidates": [
+        "无糖去冰",
+        "无糖去病",
+        "无糖去饼",
+        "无糖去兵",
+        "无糖去并",
+        "屋糖去病",
+        "无糖去丙",
+        "无糖区病",
+        "无糖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wutangreyin",
+      "expected": "无糖热饮",
+      "source": "6000",
+      "lookup_us": 2541,
+      "candidates": [
+        "无糖热饮",
+        "无糖热因",
+        "无汤热因",
+        "无糖热音",
+        "屋汤热因",
+        "无糖热印",
+        "无汤热音",
+        "无糖热阴",
+        "无糖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiaoliaolingzhuangba",
+      "expected": "小料另装吧",
+      "source": "6000",
+      "lookup_us": 7469,
+      "candidates": [
+        "小料另装吧",
+        "小了另装吧",
+        "小了另装把",
+        "笑料另装把",
+        "小了另装罢",
+        "小了另状吧",
+        "小了另庄吧",
+        "小了另撞吧",
+        "笑料"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiguanduonagen",
+      "expected": "吸管多拿根",
+      "source": "6000",
+      "lookup_us": 4509,
+      "candidates": [
+        "习惯多那根",
+        "习惯躲那根",
+        "习惯朵那根",
+        "习惯夺那根",
+        "习惯踱那根",
+        "习惯堕那根",
+        "习惯剁那根",
+        "吸管多拿根",
+        "西关"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "yeguoshaoyidian",
+      "expected": "椰果少一点",
+      "source": "6000",
+      "lookup_us": 4886,
+      "candidates": [
+        "也过少一点",
+        "页过少一点",
+        "也郭绍一点",
+        "也过绍一点",
+        "也锅烧一点",
+        "也过稍一点",
+        "也过邵一点",
+        "椰果少一点",
+        "也"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "yexiaochidiansha",
+      "expected": "夜宵吃点啥",
+      "source": "6000",
+      "lookup_us": 6261,
+      "candidates": [
+        "也小吃点杀",
+        "夜小吃点杀",
+        "也小吃点沙",
+        "也小吃点纱",
+        "也小吃店杀",
+        "夜小吃点沙",
+        "也小吃点啥",
+        "夜宵吃点啥",
+        "夜宵"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "yinliaoshaodaoyidian",
+      "expected": "饮料少倒一点",
+      "source": "6000",
+      "lookup_us": 6534,
+      "candidates": [
+        "因了少到一点",
+        "因了少倒一点",
+        "因了烧到一点",
+        "因聊少倒一点",
+        "因了少道一点",
+        "因了少刀一点",
+        "因了少导一点",
+        "饮料少倒一点",
+        "饮料"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "yunishaoyidian",
+      "expected": "芋泥少一点",
+      "source": "6000",
+      "lookup_us": 4526,
+      "candidates": [
+        "与你少一点",
+        "淤泥少一点",
+        "与你绍一点",
+        "与你稍一点",
+        "与你邵一点",
+        "与你梢一点",
+        "与你烧一点",
+        "芋泥少一点",
+        "与你"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zanquchidiansha",
+      "expected": "咱去吃点啥",
+      "source": "6000",
+      "lookup_us": 3627,
+      "candidates": [
+        "咱去吃点杀",
+        "暂去吃点杀",
+        "咱去吃点沙",
+        "咱去吃点啥",
+        "咱去吃点纱",
+        "暂去吃点沙",
+        "暂去吃点纱",
+        "咱去吃店杀",
+        "攒"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "zanqulouxiachi",
+      "expected": "咱去楼下吃",
+      "source": "6000",
+      "lookup_us": 3374,
+      "candidates": [
+        "咱区楼下吃",
+        "咱去楼下吃",
+        "咱区楼下迟",
+        "咱去楼下迟",
+        "咱区楼下尺",
+        "咱区楼下池",
+        "咱去楼下尺",
+        "咱区楼下匙",
+        "攒"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zanqunalichi",
+      "expected": "咱去哪里吃",
+      "source": "6000",
+      "lookup_us": 2510,
+      "candidates": [
+        "咱去哪里吃",
+        "咱去那里吃",
+        "暂去哪里吃",
+        "咱去哪里迟",
+        "暂去那里吃",
+        "咱去那里迟",
+        "咱去哪里尺",
+        "暂去哪里迟",
+        "攒"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zanqushitangchi",
+      "expected": "咱去食堂吃",
+      "source": "6000",
+      "lookup_us": 4030,
+      "candidates": [
+        "咱趋势汤匙",
+        "咱去世汤匙",
+        "咱去时汤匙",
+        "咱区食堂吃",
+        "咱去是汤匙",
+        "暂趋势汤匙",
+        "咱驱使汤匙",
+        "咱去食堂吃",
+        "攒"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zansuibianchidian",
+      "expected": "咱随便吃点",
+      "source": "6000",
+      "lookup_us": 5283,
+      "candidates": [
+        "咱随便吃点",
+        "暂随便吃点",
+        "咱随便吃店",
+        "暂随便吃店",
+        "咱随便池电",
+        "咱随便池点",
+        "咱随便吃电",
+        "暂随便池电",
+        "攒"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zanzaijiachidian",
+      "expected": "咱在家吃点",
+      "source": "6000",
+      "lookup_us": 5329,
+      "candidates": [
+        "咱在家吃点",
+        "暂在家吃点",
+        "咱再加吃点",
+        "暂再加吃点",
+        "咱在家吃店",
+        "暂在家吃店",
+        "咱再加持点",
+        "咱再加吃店",
+        "攒"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaodianchidiansha",
+      "expected": "早点吃点啥",
+      "source": "6000",
+      "lookup_us": 5078,
+      "candidates": [
+        "早点吃点杀",
+        "早点吃点沙",
+        "早点吃点纱",
+        "早点吃点啥",
+        "早点吃点傻",
+        "早点吃点痧",
+        "早点吃点砂",
+        "早点吃点煞",
+        "早点"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "zhenzhushaoyidian",
+      "expected": "珍珠少一点",
+      "source": "6000",
+      "lookup_us": 4470,
+      "candidates": [
+        "真主少一点",
+        "真朱少一点",
+        "真主绍一点",
+        "真朱绍一点",
+        "真主稍一点",
+        "真主邵一点",
+        "真主梢一点",
+        "珍珠少一点",
+        "珍珠"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zidaibeinengzhuangma",
+      "expected": "自带杯能装吗",
+      "source": "6000",
+      "lookup_us": 5852,
+      "candidates": [
+        "自带杯能装吗",
+        "自带背能装吗",
+        "自带背能装码",
+        "自带背能装妈",
+        "自带背能装骂",
+        "自带被能装码",
+        "自带被能装妈",
+        "自带被能装骂",
+        "自带"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "banfanshaojiang",
+      "expected": "拌饭少酱",
+      "source": "6000",
+      "lookup_us": 5221,
+      "candidates": [
+        "拌饭少酱",
+        "拌饭少将",
+        "拌饭少讲",
+        "办饭少将",
+        "办烦少将",
+        "半烦少将",
+        "拌饭少江",
+        "拌饭少僵",
+        "拌饭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "banmianshaojiang",
+      "expected": "拌面少酱",
+      "source": "6000",
+      "lookup_us": 5690,
+      "candidates": [
+        "拌面少酱",
+        "版面少将",
+        "拌面少将",
+        "版面少讲",
+        "版面少江",
+        "版面少酱",
+        "版面少僵",
+        "版面少降",
+        "版面"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bufangcongsuan",
+      "expected": "不放葱蒜",
+      "source": "6000",
+      "lookup_us": 2517,
+      "candidates": [
+        "不放葱蒜",
+        "不方从算",
+        "不放葱算",
+        "不妨从算",
+        "不放从算",
+        "不方从蒜",
+        "不妨葱算",
+        "不妨聪算",
+        "不妨"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bujiahuajiao",
+      "expected": "不加花椒",
+      "source": "6000",
+      "lookup_us": 5916,
+      "candidates": [
+        "不加花椒",
+        "不佳花椒",
+        "不假花椒",
+        "不嫁花椒",
+        "不加花叫",
+        "不假话叫",
+        "不佳话叫",
+        "不加画脚",
+        "不佳"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bujiahujiao",
+      "expected": "不加胡椒",
+      "source": "6000",
+      "lookup_us": 4995,
+      "candidates": [
+        "不加胡椒",
+        "不佳胡椒",
+        "不假胡椒",
+        "不嫁胡椒",
+        "不佳呼叫",
+        "不加呼叫",
+        "不假呼叫",
+        "不嫁呼叫",
+        "不佳"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bujialajiao",
+      "expected": "不加辣椒",
+      "source": "6000",
+      "lookup_us": 4201,
+      "candidates": [
+        "不加辣椒",
+        "不佳辣椒",
+        "不假辣椒",
+        "不嫁辣椒",
+        "不家辣椒",
+        "不价辣椒",
+        "不架辣椒",
+        "不甲辣椒",
+        "不佳"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bujialayou",
+      "expected": "不加辣油",
+      "source": "6000",
+      "lookup_us": 1857,
+      "candidates": [
+        "不加辣油",
+        "不加辣有",
+        "不加拉有",
+        "不佳落有",
+        "不加落有",
+        "不佳啦有",
+        "不加辣由",
+        "不加拉由",
+        "不佳"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bujiasuanni",
+      "expected": "不加蒜泥",
+      "source": "6000",
+      "lookup_us": 2550,
+      "candidates": [
+        "不加蒜泥",
+        "不佳算你",
+        "不加算你",
+        "不假算你",
+        "不嫁算你",
+        "不加蒜你",
+        "不家算你",
+        "不佳酸你",
+        "不佳"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bujiaweijing",
+      "expected": "不加味精",
+      "source": "6000",
+      "lookup_us": 4308,
+      "candidates": [
+        "不加味精",
+        "不佳未经",
+        "不加未经",
+        "不假未经",
+        "不嫁未经",
+        "不家未经",
+        "不佳味精",
+        "不假味精",
+        "不佳"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bujiaxiangcai",
+      "expected": "不加香菜",
+      "source": "6000",
+      "lookup_us": 4667,
+      "candidates": [
+        "不加香菜",
+        "不佳香菜",
+        "不假香菜",
+        "不嫁香菜",
+        "不家香菜",
+        "不价香菜",
+        "不架香菜",
+        "不甲香菜",
+        "不佳"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bujiazhima",
+      "expected": "不加芝麻",
+      "source": "6000",
+      "lookup_us": 2303,
+      "candidates": [
+        "不加芝麻",
+        "不价值吗",
+        "不加之吗",
+        "不价值码",
+        "不价值妈",
+        "不价值骂",
+        "不加之码",
+        "不加之妈",
+        "不佳"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bujiaziran",
+      "expected": "不加孜然",
+      "source": "6000",
+      "lookup_us": 1573,
+      "candidates": [
+        "不加孜然",
+        "不佳自然",
+        "不加自然",
+        "不假自然",
+        "不嫁自然",
+        "不家自然",
+        "不价自然",
+        "不架自然",
+        "不佳"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caibiechaotailao",
+      "expected": "菜别炒太老",
+      "source": "6000",
+      "lookup_us": 3303,
+      "candidates": [
+        "菜别炒太老",
+        "菜别吵太老",
+        "才别吵太老",
+        "菜别超太老",
+        "菜别朝太老",
+        "才别超太老",
+        "才别炒太老",
+        "菜别抄太老",
+        "彩笔"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caichaoruanyidian",
+      "expected": "菜炒软一点",
+      "source": "6000",
+      "lookup_us": 4522,
+      "candidates": [
+        "菜炒软一点",
+        "才炒软一点",
+        "菜炒阮一点",
+        "才超阮一点",
+        "菜炒朊一点",
+        "菜炒软疑点",
+        "菜炒软一店",
+        "菜炒软一电",
+        "才"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caiduogeiyidian",
+      "expected": "菜多给一点",
+      "source": "6000",
+      "lookup_us": 5276,
+      "candidates": [
+        "才多给一点",
+        "菜多给一点",
+        "才多給一点",
+        "菜多給一点",
+        "才多给疑点",
+        "才多给一店",
+        "菜多给疑点",
+        "才多给一电",
+        "才"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "caihaimeishangqi",
+      "expected": "菜还没上齐",
+      "source": "6000",
+      "lookup_us": 4226,
+      "candidates": [
+        "菜还没上齐",
+        "菜还没上起",
+        "菜还没上期",
+        "菜还没上器",
+        "菜还没上气",
+        "菜还没上弃",
+        "菜还没上汽",
+        "菜还没上旗",
+        "才"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caiqilejiaowo",
+      "expected": "菜齐了叫我",
+      "source": "6000",
+      "lookup_us": 4012,
+      "candidates": [
+        "才气了叫我",
+        "才起了叫我",
+        "才气了教我",
+        "才起了教我",
+        "才气了脚我",
+        "才起了脚我",
+        "才气乐叫我",
+        "菜齐了叫我",
+        "才气"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "caishibushiloule",
+      "expected": "菜是不是漏了",
+      "source": "6000",
+      "lookup_us": 2465,
+      "candidates": [
+        "才是不是漏了",
+        "菜是不是漏了",
+        "才是不是楼了",
+        "才是不是喽了",
+        "才是不是露了",
+        "才是不是搂了",
+        "才是不是娄了",
+        "才是不是陋了",
+        "才是"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "conghuadandufang",
+      "expected": "葱花单独放",
+      "source": "6000",
+      "lookup_us": 3961,
+      "candidates": [
+        "葱花单独放",
+        "葱花单独方",
+        "葱花单独房",
+        "从化单独放",
+        "葱花单独仿",
+        "从化单独方",
+        "葱花单独舫",
+        "从化单独房",
+        "葱花"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "conghualingfang",
+      "expected": "葱花另放",
+      "source": "6000",
+      "lookup_us": 4999,
+      "candidates": [
+        "葱花另放",
+        "葱花另方",
+        "葱花另房",
+        "葱花灵方",
+        "葱花菱放",
+        "葱花另仿",
+        "葱花令放",
+        "葱花菱方",
+        "葱花"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "conghuashaofang",
+      "expected": "葱花少放",
+      "source": "6000",
+      "lookup_us": 2988,
+      "candidates": [
+        "葱花少放",
+        "葱花少方",
+        "葱花少房",
+        "从话少放",
+        "从化少放",
+        "从花少放",
+        "葱花哨放",
+        "葱花少仿",
+        "葱花"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "congsuandandufang",
+      "expected": "葱蒜单独放",
+      "source": "6000",
+      "lookup_us": 4052,
+      "candidates": [
+        "从算单独放",
+        "从算单独方",
+        "从算单独房",
+        "葱蒜单独放",
+        "从酸单独方",
+        "从算单独仿",
+        "从酸单独房",
+        "从算单独舫",
+        "从"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "cubaoduogeige",
+      "expected": "醋包多给个",
+      "source": "6000",
+      "lookup_us": 2958,
+      "candidates": [
+        "粗暴多给个",
+        "醋包多给个",
+        "粗暴多给格",
+        "粗暴躲给个",
+        "粗暴朵给个",
+        "粗暴夺给个",
+        "粗暴多给歌",
+        "粗暴踱给个",
+        "粗暴"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "cubaolingfang",
+      "expected": "醋包另放",
+      "source": "6000",
+      "lookup_us": 4279,
+      "candidates": [
+        "醋包另放",
+        "粗暴另放",
+        "粗暴灵方",
+        "粗暴令放",
+        "粗暴另方",
+        "粗暴领放",
+        "粗暴灵放",
+        "粗暴令方",
+        "粗暴"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "cushaodaodian",
+      "expected": "醋少倒点",
+      "source": "6000",
+      "lookup_us": 2997,
+      "candidates": [
+        "醋少倒点",
+        "醋少到店",
+        "粗少到店",
+        "粗烧到店",
+        "粗稍到店",
+        "簇烧到店",
+        "粗少倒点",
+        "粗绍到店",
+        "促"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "danbiejiantailao",
+      "expected": "蛋别煎太老",
+      "source": "6000",
+      "lookup_us": 5546,
+      "candidates": [
+        "蛋别煎太老",
+        "但别煎太老",
+        "但别见太老",
+        "但别间太老",
+        "但别件太老",
+        "蛋别见太老",
+        "但别剪太老",
+        "但别健太老",
+        "但"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "danhuangbanshu",
+      "expected": "蛋黄半熟",
+      "source": "6000",
+      "lookup_us": 4712,
+      "candidates": [
+        "蛋黄半熟",
+        "但黄半熟",
+        "蛋黄半数",
+        "但黄板书",
+        "蛋黄板书",
+        "但黄半数",
+        "蛋黄半书",
+        "蛋黄半树",
+        "蛋黄"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "danhuangquanshu",
+      "expected": "蛋黄全熟",
+      "source": "6000",
+      "lookup_us": 5181,
+      "candidates": [
+        "蛋黄全熟",
+        "蛋黄全书",
+        "但黄全书",
+        "但皇权书",
+        "但黄全熟",
+        "蛋黄全数",
+        "但黄泉书",
+        "但皇权树",
+        "蛋黄"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "danmianjiandan",
+      "expected": "单面煎蛋",
+      "source": "6000",
+      "lookup_us": 5565,
+      "candidates": [
+        "单面煎蛋",
+        "单面简单",
+        "但面简单",
+        "但免简单",
+        "但棉简单",
+        "但眠简单",
+        "但绵简单",
+        "但勉简单",
+        "单面"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "duofangdouya",
+      "expected": "多放豆芽",
+      "source": "6000",
+      "lookup_us": 3013,
+      "candidates": [
+        "多放豆芽",
+        "多方豆芽",
+        "多方都呀",
+        "多放豆呀",
+        "多防抖呀",
+        "多放都呀",
+        "多方斗呀",
+        "多方都鸭",
+        "多方"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "duofangmifen",
+      "expected": "多放米粉",
+      "source": "6000",
+      "lookup_us": 2599,
+      "candidates": [
+        "多放米粉",
+        "多方米粉",
+        "多房米粉",
+        "多防米粉",
+        "多放米分",
+        "躲放米粉",
+        "多仿米粉",
+        "多方米分",
+        "多方"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "duofangqingcai",
+      "expected": "多放青菜",
+      "source": "6000",
+      "lookup_us": 3575,
+      "candidates": [
+        "多放青菜",
+        "多方青菜",
+        "多房青菜",
+        "多防青菜",
+        "躲放青菜",
+        "多仿青菜",
+        "多芳青菜",
+        "多访青菜",
+        "多方"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "duofangtangzhi",
+      "expected": "多放汤汁",
+      "source": "6000",
+      "lookup_us": 3011,
+      "candidates": [
+        "多放汤汁",
+        "多放糖之",
+        "多放糖只",
+        "多放糖纸",
+        "多放糖志",
+        "多方汤汁",
+        "多放糖至",
+        "多放糖置",
+        "多方"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fanbiezhutaiying",
+      "expected": "饭别煮太硬",
+      "source": "6000",
+      "lookup_us": 4889,
+      "candidates": [
+        "反别注太硬",
+        "饭别煮太硬",
+        "饭别注太硬",
+        "反别住太硬",
+        "反别猪太硬",
+        "反别主太硬",
+        "反别注太应",
+        "饭别住太硬",
+        "反"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "fanshaogeiyidian",
+      "expected": "饭少给一点",
+      "source": "6000",
+      "lookup_us": 5080,
+      "candidates": [
+        "饭少给一点",
+        "饭勺给一点",
+        "饭少給一点",
+        "饭勺給一点",
+        "饭少给疑点",
+        "饭少给一店",
+        "饭勺给疑点",
+        "饭少给一电",
+        "饭勺"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fanxianshangjiuxing",
+      "expected": "饭先上就行",
+      "source": "6000",
+      "lookup_us": 6200,
+      "candidates": [
+        "反线上就行",
+        "反献上就行",
+        "饭先商就行",
+        "饭先伤就行",
+        "饭先尚就行",
+        "反线上九行",
+        "反献上九行",
+        "饭先上就行",
+        "范县"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "fensizhuruan",
+      "expected": "粉丝煮软",
+      "source": "6000",
+      "lookup_us": 2283,
+      "candidates": [
+        "粉丝煮软",
+        "分丝煮软",
+        "分死猪软",
+        "分死煮软",
+        "分四煮软",
+        "分思煮软",
+        "分斯煮软",
+        "分似煮软",
+        "粉丝"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fentangfenkai",
+      "expected": "粉汤分开",
+      "source": "6000",
+      "lookup_us": 1477,
+      "candidates": [
+        "粉汤分开",
+        "分汤分开",
+        "分糖分开",
+        "分堂分开",
+        "分唐分开",
+        "分趟分开",
+        "分烫分开",
+        "分躺分开",
+        "分摊"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganbanbuyaotang",
+      "expected": "干拌不要汤",
+      "source": "6000",
+      "lookup_us": 4215,
+      "candidates": [
+        "感办不要糖",
+        "赶办不要糖",
+        "干拌不要汤",
+        "感办不要汤",
+        "感办不要烫",
+        "赶办不要烫",
+        "感办不要堂",
+        "感办不要趟",
+        "干"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "guotieshaojiandian",
+      "expected": "锅贴少煎点",
+      "source": "6000",
+      "lookup_us": 7810,
+      "candidates": [
+        "过铁少键点",
+        "过铁少见点",
+        "锅贴少见点",
+        "过铁少见店",
+        "过铁少见电",
+        "锅贴少见店",
+        "锅贴少见电",
+        "锅贴少煎点",
+        "锅贴"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "huajiaoshaofang",
+      "expected": "花椒少放",
+      "source": "6000",
+      "lookup_us": 4791,
+      "candidates": [
+        "花椒少放",
+        "花较少放",
+        "华较少放",
+        "花椒少方",
+        "花椒少房",
+        "华娇少放",
+        "画脚少放",
+        "花较少方",
+        "花椒"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "hujiaoshaosa",
+      "expected": "胡椒少撒",
+      "source": "6000",
+      "lookup_us": 3602,
+      "candidates": [
+        "胡椒少撒",
+        "胡椒少萨",
+        "胡椒少洒",
+        "忽较少撒",
+        "胡椒少仨",
+        "胡椒少卅",
+        "胡椒少飒",
+        "忽较少萨",
+        "呼叫"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiangliaodandufang",
+      "expected": "酱料单独放",
+      "source": "6000",
+      "lookup_us": 5382,
+      "candidates": [
+        "将料单独放",
+        "将料单独方",
+        "将料单独房",
+        "将了单独放",
+        "将了单独方",
+        "将了单独房",
+        "将料单独仿",
+        "酱料单独放",
+        "酱料"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "jiangzhishaofang",
+      "expected": "酱汁少放",
+      "source": "6000",
+      "lookup_us": 3282,
+      "candidates": [
+        "酱汁少放",
+        "将至少放",
+        "降至少放",
+        "将至少方",
+        "将至少房",
+        "将至少仿",
+        "将至少舫",
+        "将至少妨",
+        "降至"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiaozishaojiandian",
+      "expected": "饺子少煎点",
+      "source": "6000",
+      "lookup_us": 7608,
+      "candidates": [
+        "饺子烧键点",
+        "饺子少键点",
+        "饺子少见点",
+        "饺子少见店",
+        "饺子少见电",
+        "饺子烧检点",
+        "饺子少检点",
+        "饺子少煎点",
+        "饺子"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "jiaozizhutou",
+      "expected": "饺子煮透",
+      "source": "6000",
+      "lookup_us": 1851,
+      "candidates": [
+        "饺子煮透",
+        "饺子猪头",
+        "饺子著头",
+        "饺子煮头",
+        "饺子住头",
+        "饺子主头",
+        "饺子煮偷",
+        "饺子朱头",
+        "饺子"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lajiaodandufang",
+      "expected": "辣椒单独放",
+      "source": "6000",
+      "lookup_us": 3958,
+      "candidates": [
+        "辣椒单独放",
+        "辣椒单独方",
+        "辣椒单独房",
+        "辣椒单独仿",
+        "辣椒单独舫",
+        "辣椒单独妨",
+        "辣椒但都放",
+        "辣椒单独防",
+        "辣椒"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lajiaoshaofang",
+      "expected": "辣椒少放",
+      "source": "6000",
+      "lookup_us": 3211,
+      "candidates": [
+        "辣椒少放",
+        "辣椒少方",
+        "辣椒少房",
+        "拉较少放",
+        "垃较少放",
+        "辣椒少仿",
+        "辣椒少舫",
+        "辣椒烧放",
+        "辣椒"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lajiaoshaogeiyidian",
+      "expected": "辣椒少给一点",
+      "source": "6000",
+      "lookup_us": 6041,
+      "candidates": [
+        "辣椒少给一点",
+        "辣椒烧给一点",
+        "辣椒少給一点",
+        "辣椒烧給一点",
+        "辣椒少给疑点",
+        "辣椒少给一店",
+        "辣椒少给一电",
+        "辣椒少给伊点",
+        "辣椒"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "layoulingfang",
+      "expected": "辣油另放",
+      "source": "6000",
+      "lookup_us": 3491,
+      "candidates": [
+        "辣油另放",
+        "拉幽灵方",
+        "垃幽灵方",
+        "拉幽灵放",
+        "垃幽灵放",
+        "落有灵方",
+        "拉幽灵房",
+        "垃幽灵房",
+        "喇"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "layoushaofang",
+      "expected": "辣油少放",
+      "source": "6000",
+      "lookup_us": 2459,
+      "candidates": [
+        "辣油少放",
+        "落有少放",
+        "拉有少放",
+        "拉油少放",
+        "拉又少放",
+        "垃又少放",
+        "拉由少放",
+        "垃由少放",
+        "喇"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "liaobaodandufang",
+      "expected": "料包单独放",
+      "source": "6000",
+      "lookup_us": 4482,
+      "candidates": [
+        "料包单独放",
+        "料包单独方",
+        "料包单独房",
+        "聊保单独放",
+        "聊保单独方",
+        "聊保单独房",
+        "料包单独仿",
+        "料包单独舫",
+        "料包"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "liaobaolingfang",
+      "expected": "料包另放",
+      "source": "6000",
+      "lookup_us": 5284,
+      "candidates": [
+        "料包另放",
+        "料包另方",
+        "料包另房",
+        "聊包另放",
+        "料包灵方",
+        "料包另仿",
+        "料包令放",
+        "料包领放",
+        "料包"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mianbiezhutailan",
+      "expected": "面别煮太烂",
+      "source": "6000",
+      "lookup_us": 4490,
+      "candidates": [
+        "免别注太滥",
+        "免别注太烂",
+        "面别煮太烂",
+        "免别注太懒",
+        "免别住太烂",
+        "免别猪太烂",
+        "免别主太烂",
+        "免别住太懒",
+        "面壁"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "miantangfenkai",
+      "expected": "面汤分开",
+      "source": "6000",
+      "lookup_us": 2649,
+      "candidates": [
+        "面汤分开",
+        "免烫分开",
+        "免汤分开",
+        "免糖分开",
+        "免堂分开",
+        "面糖分开",
+        "免唐分开",
+        "免趟分开",
+        "免烫"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "miantanglingzhuang",
+      "expected": "面汤另装",
+      "source": "6000",
+      "lookup_us": 6082,
+      "candidates": [
+        "面汤另装",
+        "免烫另装",
+        "免汤另装",
+        "免烫另庄",
+        "免烫令装",
+        "免烫令庄",
+        "免烫领装",
+        "免烫灵装",
+        "免烫"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "miantiaolingzhuang",
+      "expected": "面条另装",
+      "source": "6000",
+      "lookup_us": 7282,
+      "candidates": [
+        "面条另装",
+        "面条另庄",
+        "面条另状",
+        "面条另撞",
+        "面条令装",
+        "面条令庄",
+        "面条领装",
+        "面条灵装",
+        "面条"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "miantiaozhuruan",
+      "expected": "面条煮软",
+      "source": "6000",
+      "lookup_us": 4238,
+      "candidates": [
+        "面条煮软",
+        "面条住软",
+        "面条猪软",
+        "面条主软",
+        "面条朱软",
+        "面条著软",
+        "面条注软",
+        "面条祝软",
+        "面条"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mifandanduzhuang",
+      "expected": "米饭单独装",
+      "source": "6000",
+      "lookup_us": 5973,
+      "candidates": [
+        "米饭单独装",
+        "米饭单独庄",
+        "米饭单独状",
+        "米饭单独撞",
+        "米饭单独壮",
+        "米饭单独妆",
+        "米饭单独桩",
+        "米饭单独幢",
+        "米饭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mifenlingzhuang",
+      "expected": "米粉另装",
+      "source": "6000",
+      "lookup_us": 4887,
+      "candidates": [
+        "米粉另装",
+        "米粉另庄",
+        "米粉另状",
+        "米粉另撞",
+        "米粉令装",
+        "米粉令庄",
+        "米粉领装",
+        "米粉灵装",
+        "米粉"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mifenzhuruan",
+      "expected": "米粉煮软",
+      "source": "6000",
+      "lookup_us": 2468,
+      "candidates": [
+        "米粉煮软",
+        "米粉住软",
+        "米粉猪软",
+        "米粉主软",
+        "米粉朱软",
+        "米粉著软",
+        "密粉煮软",
+        "米粉注软",
+        "米粉"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mixianlingzhuang",
+      "expected": "米线另装",
+      "source": "6000",
+      "lookup_us": 5994,
+      "candidates": [
+        "米线另装",
+        "米先另装",
+        "米线另庄",
+        "密先另装",
+        "米先另庄",
+        "米线另状",
+        "米线另撞",
+        "密线另装",
+        "米线"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mixianshaola",
+      "expected": "米线少辣",
+      "source": "6000",
+      "lookup_us": 3287,
+      "candidates": [
+        "米线少辣",
+        "米线少拉",
+        "米线少啦",
+        "密线少辣",
+        "米线少落",
+        "米先少辣",
+        "米线烧辣",
+        "米线烧腊",
+        "米线"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nagecaimeishang",
+      "expected": "那个菜没上",
+      "source": "6000",
+      "lookup_us": 4647,
+      "candidates": [
+        "那个才没上",
+        "那个菜没上",
+        "那个才没尚",
+        "那个才没伤",
+        "那个菜每上",
+        "那个菜美上",
+        "那个才没商",
+        "那个猜没上",
+        "哪个"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "nagecaituidiao",
+      "expected": "那个菜退掉",
+      "source": "6000",
+      "lookup_us": 3964,
+      "candidates": [
+        "那个菜退掉",
+        "那个菜推掉",
+        "那个才退掉",
+        "那个猜退掉",
+        "那个踩退掉",
+        "那个彩退掉",
+        "那个采退掉",
+        "那个蔡退掉",
+        "哪个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nagejiayifen",
+      "expected": "那个加一份",
+      "source": "6000",
+      "lookup_us": 4043,
+      "candidates": [
+        "那个家一份",
+        "那个假一份",
+        "那个加一份",
+        "那个价一份",
+        "那个佳一份",
+        "那个贾一份",
+        "那个架一份",
+        "那个甲一份",
+        "哪个"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "nagexianbushang",
+      "expected": "那个先不上",
+      "source": "6000",
+      "lookup_us": 5784,
+      "candidates": [
+        "那个显不上",
+        "那个先不上",
+        "那个线不上",
+        "那个现不上",
+        "那个鲜不上",
+        "那个见不上",
+        "那个限不上",
+        "那个显补上",
+        "哪个"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "nagexianshangba",
+      "expected": "那个先上吧",
+      "source": "6000",
+      "lookup_us": 5198,
+      "candidates": [
+        "那个显伤疤",
+        "那个显上吧",
+        "那个线上吧",
+        "那个献上吧",
+        "那个显上把",
+        "那个线上把",
+        "那个显商吧",
+        "那个先上吧",
+        "哪个"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "nengdabaodaizouma",
+      "expected": "能打包带走吗",
+      "source": "6000",
+      "lookup_us": 3662,
+      "candidates": [
+        "能打包带走吗",
+        "能大包带走吗",
+        "能打包带走码",
+        "能打包带走妈",
+        "能打包带走骂",
+        "能大包带走码",
+        "能大包带走妈",
+        "能打包带走马",
+        "能打"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nengduogeigewanma",
+      "expected": "能多给个碗吗",
+      "source": "6000",
+      "lookup_us": 5286,
+      "candidates": [
+        "能多给个玩吗",
+        "能多给个玩码",
+        "能多给个玩妈",
+        "能多给个玩骂",
+        "能多给个碗吗",
+        "能多给个玩么",
+        "能多给个玩嘛",
+        "能多给个完吗",
+        "能多"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "nengduonashuangkuaima",
+      "expected": "能多拿双筷吗",
+      "source": "6000",
+      "lookup_us": 5444,
+      "candidates": [
+        "能多那爽快吗",
+        "能多纳爽快吗",
+        "能多那爽快码",
+        "能多那爽快妈",
+        "能多拿双筷吗",
+        "能多纳爽快码",
+        "能多纳爽快妈",
+        "能多那爽快骂",
+        "能多"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "nenghuangepanzima",
+      "expected": "能换个盘子吗",
+      "source": "6000",
+      "lookup_us": 6950,
+      "candidates": [
+        "能换个盘子吗",
+        "能换个盘子么",
+        "能换个盘子码",
+        "能换个盘子妈",
+        "能换个盘子骂",
+        "能换个盘子马",
+        "能换个盘子嘛",
+        "能换个盘子麻",
+        "能"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nengjiadianchashuima",
+      "expected": "能加点茶水吗",
+      "source": "6000",
+      "lookup_us": 6363,
+      "candidates": [
+        "能加点茶水吗",
+        "能加点茶水码",
+        "能加点茶水妈",
+        "能加点茶水骂",
+        "能加点茶水马",
+        "能加点茶水么",
+        "能家店茶水吗",
+        "能加点茶水嘛",
+        "能"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nengjiadianreshuima",
+      "expected": "能加点热水吗",
+      "source": "6000",
+      "lookup_us": 4991,
+      "candidates": [
+        "能加点热水吗",
+        "能加点热水码",
+        "能加点热水妈",
+        "能加点热水骂",
+        "能加点热水马",
+        "能加点热水么",
+        "能加点热水嘛",
+        "能加点热水麻",
+        "能"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "paocailingzhuang",
+      "expected": "泡菜另装",
+      "source": "6000",
+      "lookup_us": 5965,
+      "candidates": [
+        "泡菜另装",
+        "泡菜另庄",
+        "泡菜另状",
+        "泡菜另撞",
+        "泡彩铃装",
+        "泡彩铃庄",
+        "跑彩铃装",
+        "跑彩铃庄",
+        "泡菜"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "roudunruanyidian",
+      "expected": "肉炖软一点",
+      "source": "6000",
+      "lookup_us": 5005,
+      "candidates": [
+        "肉炖软一点",
+        "柔炖软一点",
+        "肉炖阮一点",
+        "肉炖朊一点",
+        "肉炖軟一点",
+        "肉顿阮一点",
+        "肉炖软疑点",
+        "肉炖软一店",
+        "肉"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shaofangdouya",
+      "expected": "少放豆芽",
+      "source": "6000",
+      "lookup_us": 2505,
+      "candidates": [
+        "少放豆芽",
+        "稍放豆芽",
+        "稍防抖呀",
+        "少放豆呀",
+        "少放都呀",
+        "稍方豆芽",
+        "少防抖呀",
+        "稍房豆芽",
+        "烧饭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shaofangmiantiao",
+      "expected": "少放面条",
+      "source": "6000",
+      "lookup_us": 4491,
+      "candidates": [
+        "少放面条",
+        "稍放面条",
+        "稍方面条",
+        "少方面条",
+        "稍房面条",
+        "稍纺面条",
+        "少房面条",
+        "稍防面条",
+        "烧饭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shaofangmifen",
+      "expected": "少放米粉",
+      "source": "6000",
+      "lookup_us": 1893,
+      "candidates": [
+        "少放米粉",
+        "稍放米粉",
+        "稍方米粉",
+        "少方米粉",
+        "稍房米粉",
+        "稍防米粉",
+        "稍仿米粉",
+        "稍芳米粉",
+        "烧饭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shaofangpeicai",
+      "expected": "少放配菜",
+      "source": "6000",
+      "lookup_us": 1494,
+      "candidates": [
+        "少放配菜",
+        "稍放配菜",
+        "稍方配菜",
+        "稍房配菜",
+        "稍防配菜",
+        "稍仿配菜",
+        "稍芳配菜",
+        "稍访配菜",
+        "烧饭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shaofangtangzhi",
+      "expected": "少放汤汁",
+      "source": "6000",
+      "lookup_us": 2892,
+      "candidates": [
+        "少放汤汁",
+        "少放糖之",
+        "少放糖只",
+        "少放糖纸",
+        "少放糖志",
+        "少放糖至",
+        "稍放汤汁",
+        "少放糖置",
+        "烧饭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuangmianjiandan",
+      "expected": "双面煎蛋",
+      "source": "6000",
+      "lookup_us": 6856,
+      "candidates": [
+        "双面煎蛋",
+        "双面简单",
+        "双免简单",
+        "双棉简单",
+        "双眠简单",
+        "双绵简单",
+        "双勉简单",
+        "双缅简单",
+        "双面"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "suancailingzhuang",
+      "expected": "酸菜另装",
+      "source": "6000",
+      "lookup_us": 5362,
+      "candidates": [
+        "酸菜另装",
+        "酸菜另庄",
+        "算彩铃装",
+        "算彩铃庄",
+        "算菜另装",
+        "酸菜另状",
+        "酸菜另撞",
+        "算彩铃状",
+        "酸菜"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "suannilingfang",
+      "expected": "蒜泥另放",
+      "source": "6000",
+      "lookup_us": 4800,
+      "candidates": [
+        "蒜泥另放",
+        "算你另放",
+        "算你灵方",
+        "算泥另放",
+        "算你令放",
+        "算你另方",
+        "算你领放",
+        "算你灵放",
+        "算你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "suannishaofang",
+      "expected": "蒜泥少放",
+      "source": "6000",
+      "lookup_us": 3953,
+      "candidates": [
+        "蒜泥少放",
+        "算你少放",
+        "算泥少放",
+        "算你少方",
+        "算你少房",
+        "酸你少放",
+        "算你烧放",
+        "算呢少放",
+        "算你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "suanrongdandufang",
+      "expected": "蒜蓉单独放",
+      "source": "6000",
+      "lookup_us": 3169,
+      "candidates": [
+        "蒜蓉单独放",
+        "算容单独放",
+        "算容单独方",
+        "算荣单独方",
+        "算容单独房",
+        "算荣单独房",
+        "算容单独仿",
+        "算荣单独仿",
+        "酸"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tangbaolingfang",
+      "expected": "糖包另放",
+      "source": "6000",
+      "lookup_us": 4792,
+      "candidates": [
+        "糖包另放",
+        "汤包另放",
+        "汤包另方",
+        "汤包另房",
+        "汤宝另放",
+        "汤爆另放",
+        "汤包灵方",
+        "汤宝灵方",
+        "唐"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tangduogeiyidian",
+      "expected": "汤多给一点",
+      "source": "6000",
+      "lookup_us": 4560,
+      "candidates": [
+        "汤多给一点",
+        "倘多给一点",
+        "汤多給一点",
+        "汤多给疑点",
+        "倘多给疑点",
+        "汤多给一店",
+        "汤多给一电",
+        "倘多给一店",
+        "唐"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tangmianfenkai",
+      "expected": "汤面分开",
+      "source": "6000",
+      "lookup_us": 2194,
+      "candidates": [
+        "汤面分开",
+        "汤面粉开",
+        "烫面分开",
+        "汤免分开",
+        "倘面粉开",
+        "汤面粉慨",
+        "汤棉分开",
+        "汤面愤慨",
+        "烫面"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tangxianshangjiuxing",
+      "expected": "汤先上就行",
+      "source": "6000",
+      "lookup_us": 6652,
+      "candidates": [
+        "汤线上就行",
+        "汤先上就行",
+        "汤先商就行",
+        "汤先伤就行",
+        "汤先尚就行",
+        "汤先赏就行",
+        "汤显商就行",
+        "汤显伤就行",
+        "躺下"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "tangzhidanduzhuang",
+      "expected": "汤汁单独装",
+      "source": "6000",
+      "lookup_us": 4672,
+      "candidates": [
+        "汤汁单独装",
+        "汤汁单独庄",
+        "汤值单独装",
+        "汤汁单独状",
+        "汤汁单独撞",
+        "汤值单独庄",
+        "汤汁单独壮",
+        "汤汁单独妆",
+        "汤汁"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiangcaidandufang",
+      "expected": "香菜单独放",
+      "source": "6000",
+      "lookup_us": 4477,
+      "candidates": [
+        "香菜单独放",
+        "香菜单独方",
+        "香菜单独房",
+        "香菜单独仿",
+        "香菜单独舫",
+        "香菜单独妨",
+        "香菜单独防",
+        "香菜单独芳",
+        "香菜"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiangcailingfang",
+      "expected": "香菜另放",
+      "source": "6000",
+      "lookup_us": 4622,
+      "candidates": [
+        "香菜另放",
+        "香菜另方",
+        "香菜另房",
+        "香菜灵方",
+        "香菜另仿",
+        "香菜令放",
+        "香菜领放",
+        "香菜另舫",
+        "香菜"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiaocaidanduzhuang",
+      "expected": "小菜单独装",
+      "source": "6000",
+      "lookup_us": 5947,
+      "candidates": [
+        "小菜单独装",
+        "小菜单独庄",
+        "小菜单独状",
+        "小菜单独撞",
+        "小蔡单独装",
+        "小菜单独壮",
+        "小菜单独妆",
+        "小菜单独桩",
+        "小菜"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiaocailingzhuang",
+      "expected": "小菜另装",
+      "source": "6000",
+      "lookup_us": 4974,
+      "candidates": [
+        "小菜另装",
+        "小菜另庄",
+        "小蔡另装",
+        "小彩铃装",
+        "小彩铃庄",
+        "小菜另状",
+        "小菜另撞",
+        "小菜令装",
+        "小菜"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yinliaolingzhuang",
+      "expected": "饮料另装",
+      "source": "6000",
+      "lookup_us": 6451,
+      "candidates": [
+        "饮料另装",
+        "因了另装",
+        "因了另庄",
+        "引了另装",
+        "因料另装",
+        "因了另状",
+        "因了另撞",
+        "引了另庄",
+        "饮料"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yinliaoxianshangba",
+      "expected": "饮料先上吧",
+      "source": "6000",
+      "lookup_us": 6948,
+      "candidates": [
+        "因了线上吧",
+        "因了献上吧",
+        "因了咸伤疤",
+        "因了线上把",
+        "因聊线上吧",
+        "因了闲伤疤",
+        "因了先上吧",
+        "饮料先上吧",
+        "饮料"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zhecaihuangekouwei",
+      "expected": "这菜换个口味",
+      "source": "6000",
+      "lookup_us": 5781,
+      "candidates": [
+        "这才换个口味",
+        "这菜换个口味",
+        "这才欢歌口味",
+        "这才黄峨口味",
+        "这才换个口位",
+        "这才换个口为",
+        "这才换个口围",
+        "这才换个口喂",
+        "这才"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zhegecaimeishang",
+      "expected": "这个菜没上",
+      "source": "6000",
+      "lookup_us": 5061,
+      "candidates": [
+        "这个菜没上",
+        "这个才没上",
+        "这个菜每上",
+        "这个菜美上",
+        "这个菜梅上",
+        "这个菜妹上",
+        "这个菜眉上",
+        "这个菜镅上",
+        "这个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhegecaituidiao",
+      "expected": "这个菜退掉",
+      "source": "6000",
+      "lookup_us": 3561,
+      "candidates": [
+        "这个菜退掉",
+        "这个菜推掉",
+        "这个才退掉",
+        "这个猜退掉",
+        "这个踩退掉",
+        "这个彩退掉",
+        "这个采退掉",
+        "这个蔡退掉",
+        "这个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhegejiayifen",
+      "expected": "这个加一份",
+      "source": "6000",
+      "lookup_us": 3847,
+      "candidates": [
+        "这个家一份",
+        "这个假一份",
+        "这个加一份",
+        "这个价一份",
+        "这个佳一份",
+        "这个贾一份",
+        "这个架一份",
+        "这个甲一份",
+        "这个"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "zhegexianbushang",
+      "expected": "这个先不上",
+      "source": "6000",
+      "lookup_us": 6037,
+      "candidates": [
+        "这个显不上",
+        "这个先不上",
+        "这个线不上",
+        "这个现不上",
+        "这个鲜不上",
+        "这个见不上",
+        "这个限不上",
+        "这个显补上",
+        "这个"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zhegexianshangba",
+      "expected": "这个先上吧",
+      "source": "6000",
+      "lookup_us": 6195,
+      "candidates": [
+        "这个显伤疤",
+        "这个显上吧",
+        "这个线上吧",
+        "这个献上吧",
+        "这个显上把",
+        "这个线上把",
+        "这个显商吧",
+        "这个先上吧",
+        "这个"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zhimashaosa",
+      "expected": "芝麻少撒",
+      "source": "6000",
+      "lookup_us": 1653,
+      "candidates": [
+        "芝麻少撒",
+        "只码少撒",
+        "只码少萨",
+        "只麻少撒",
+        "只马少撒",
+        "只吗少撒",
+        "芝麻少萨",
+        "只马少萨",
+        "芝麻"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ziranshaosa",
+      "expected": "孜然少撒",
+      "source": "6000",
+      "lookup_us": 1161,
+      "candidates": [
+        "孜然少撒",
+        "自然少撒",
+        "自然少萨",
+        "自然少洒",
+        "自然烧萨",
+        "自然少仨",
+        "自然稍萨",
+        "自然少卅",
+        "自燃"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "butaihewokouwei",
+      "expected": "不太合我口味",
+      "source": "6000",
+      "lookup_us": 2601,
+      "candidates": [
+        "不太合我口味",
+        "不太和我口味",
+        "不太合喔口味",
+        "不太合握口味",
+        "不太合窝口味",
+        "不太合卧口味",
+        "不太合沃口味",
+        "不太合硪口味",
+        "补胎"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caigengyoudianying",
+      "expected": "菜梗有点硬",
+      "source": "6000",
+      "lookup_us": 5245,
+      "candidates": [
+        "才更有电影",
+        "菜更有电影",
+        "才更有点应",
+        "菜更有点应",
+        "才更有点影",
+        "才更有点硬",
+        "菜更有点影",
+        "菜梗有点硬",
+        "才"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "caiyeyoudianlao",
+      "expected": "菜叶有点老",
+      "source": "6000",
+      "lookup_us": 3868,
+      "candidates": [
+        "菜也有点老",
+        "才也有点老",
+        "菜也有点落",
+        "菜也有点牢",
+        "菜也有点捞",
+        "菜也有点劳",
+        "菜也有点铹",
+        "菜叶有点老",
+        "彩页"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "caiyeyoudiannian",
+      "expected": "菜叶有点蔫",
+      "source": "6000",
+      "lookup_us": 4609,
+      "candidates": [
+        "菜也有点年",
+        "菜也有点粘",
+        "菜也有点念",
+        "才也有点年",
+        "才也有点粘",
+        "才也有点念",
+        "菜也有点捻",
+        "菜叶有点蔫",
+        "彩页"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "caiyoudiandanle",
+      "expected": "菜有点淡了",
+      "source": "6000",
+      "lookup_us": 4497,
+      "candidates": [
+        "菜有点淡了",
+        "才有点淡了",
+        "才有点担了",
+        "菜有点担了",
+        "菜有点淡乐",
+        "才有点淡乐",
+        "才有点担乐",
+        "菜有点淡勒",
+        "才有"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caiyoudianlale",
+      "expected": "菜有点辣了",
+      "source": "6000",
+      "lookup_us": 2584,
+      "candidates": [
+        "菜有点辣了",
+        "才有点辣了",
+        "才有点拉了",
+        "才有点落了",
+        "菜有点拉了",
+        "才有点啦了",
+        "才有点辣乐",
+        "菜有点落了",
+        "才有"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caiyoudianliangle",
+      "expected": "菜有点凉了",
+      "source": "6000",
+      "lookup_us": 4461,
+      "candidates": [
+        "菜有点凉了",
+        "才有点凉了",
+        "才有点亮了",
+        "菜有点亮了",
+        "才有点量了",
+        "菜有点量了",
+        "才有电量了",
+        "才有点凉乐",
+        "才有"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caiyoudianshengle",
+      "expected": "菜有点生了",
+      "source": "6000",
+      "lookup_us": 3286,
+      "candidates": [
+        "菜有点生了",
+        "才有点生了",
+        "才有点省了",
+        "菜有点省了",
+        "才有点剩了",
+        "才有点胜了",
+        "菜有点生乐",
+        "菜有点剩了",
+        "才有"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caiyoudianxianle",
+      "expected": "菜有点咸了",
+      "source": "6000",
+      "lookup_us": 4725,
+      "candidates": [
+        "菜有点咸了",
+        "才有点线了",
+        "才有电线了",
+        "菜有点线了",
+        "才有点现了",
+        "才有点见了",
+        "菜有点现了",
+        "菜有点咸乐",
+        "才有"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caiyoudianyoule",
+      "expected": "菜有点油了",
+      "source": "6000",
+      "lookup_us": 4267,
+      "candidates": [
+        "才有点有了",
+        "菜有点有了",
+        "菜有点油了",
+        "才有点油了",
+        "才有点犹了",
+        "才有点游乐",
+        "才有点又了",
+        "才有点由了",
+        "才有"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "chiqilaiyoudianchai",
+      "expected": "吃起来有点柴",
+      "source": "6000",
+      "lookup_us": 4907,
+      "candidates": [
+        "吃起来有点柴",
+        "吃起来有点差",
+        "迟起来有点柴",
+        "吃起来有点拆",
+        "迟起来有点差",
+        "吃起来有点钗",
+        "吃起来有点豺",
+        "吃起来有点犲",
+        "吃"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chiqilaiyoudiangan",
+      "expected": "吃起来有点干",
+      "source": "6000",
+      "lookup_us": 5577,
+      "candidates": [
+        "吃起来有点干",
+        "吃起来有点感",
+        "吃起来有电感",
+        "迟起来有点干",
+        "吃起来有点赶",
+        "迟起来有点感",
+        "吃起来有点杆",
+        "吃起来有点尴",
+        "吃"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chiqilaiyoudianni",
+      "expected": "吃起来有点腻",
+      "source": "6000",
+      "lookup_us": 5937,
+      "candidates": [
+        "吃起来有点你",
+        "吃起来有点泥",
+        "吃起来有点腻",
+        "吃起来有点呢",
+        "迟起来有点你",
+        "迟起来有点泥",
+        "吃起来有点拟",
+        "迟起来有点腻",
+        "吃"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "chiqilaiyoudiannuo",
+      "expected": "吃起来有点糯",
+      "source": "6000",
+      "lookup_us": 4023,
+      "candidates": [
+        "吃起来有点挪",
+        "吃起来有点诺",
+        "吃起来有点喏",
+        "吃起来有点糯",
+        "吃起来有点傩",
+        "迟起来有点挪",
+        "吃起来有点懦",
+        "吃起来有点諾",
+        "吃"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "chiqilaiyoudianying",
+      "expected": "吃起来有点硬",
+      "source": "6000",
+      "lookup_us": 6455,
+      "candidates": [
+        "吃起来有点应",
+        "吃起来有点影",
+        "吃起来有点硬",
+        "吃起来有点营",
+        "吃起来有点英",
+        "吃起来有点赢",
+        "吃起来有点迎",
+        "吃起来有点映",
+        "吃"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "conghuayoudianduo",
+      "expected": "葱花有点多",
+      "source": "6000",
+      "lookup_us": 5422,
+      "candidates": [
+        "葱花有点多",
+        "从化有点多",
+        "葱花优点多",
+        "葱花又点多",
+        "葱花有点朵",
+        "葱花有点躲",
+        "葱花有点夺",
+        "从化有点朵",
+        "葱花"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "cufangdeyoudianduo",
+      "expected": "醋放得有点多",
+      "source": "6000",
+      "lookup_us": 5691,
+      "candidates": [
+        "粗放得有点多",
+        "醋放得有点多",
+        "粗放得有点朵",
+        "粗放得有点躲",
+        "粗放得有点夺",
+        "粗放得有点踱",
+        "粗放得有点堕",
+        "粗放得有点剁",
+        "粗放"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "fanyoudianfagan",
+      "expected": "饭有点发干",
+      "source": "6000",
+      "lookup_us": 3087,
+      "candidates": [
+        "饭有点发干",
+        "凡有点发干",
+        "饭有点发感",
+        "凡有点发感",
+        "饭有点发赶",
+        "饭有点发杆",
+        "凡有点发赶",
+        "饭有点发敢",
+        "反"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fanyoudianfaying",
+      "expected": "饭有点发硬",
+      "source": "6000",
+      "lookup_us": 4395,
+      "candidates": [
+        "饭有点发硬",
+        "饭有点发应",
+        "饭有点发影",
+        "凡有点发应",
+        "凡有点发硬",
+        "凡有点发影",
+        "饭有点法应",
+        "饭有点发英",
+        "反"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fanyoudianpianruan",
+      "expected": "饭有点偏软",
+      "source": "6000",
+      "lookup_us": 3907,
+      "candidates": [
+        "饭有点偏软",
+        "凡有点偏软",
+        "饭有点片软",
+        "饭有点篇软",
+        "饭有点骗软",
+        "凡有点片软",
+        "饭有点便软",
+        "凡有点篇软",
+        "反"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fanyoudianpianying",
+      "expected": "饭有点偏硬",
+      "source": "6000",
+      "lookup_us": 3665,
+      "candidates": [
+        "饭有点偏应",
+        "饭有点偏硬",
+        "饭有点偏影",
+        "凡有点偏应",
+        "凡有点偏影",
+        "饭有点片应",
+        "饭有点便影",
+        "凡有点偏硬",
+        "反"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "guoqihenzu",
+      "expected": "锅气很足",
+      "source": "6000",
+      "lookup_us": 1783,
+      "candidates": [
+        "锅气很足",
+        "过气很足",
+        "过期很足",
+        "过起很足",
+        "锅起很足",
+        "国企很足",
+        "国旗很足",
+        "过气很组",
+        "国企"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huajiaoyoudianduo",
+      "expected": "花椒有点多",
+      "source": "6000",
+      "lookup_us": 6718,
+      "candidates": [
+        "花椒有点多",
+        "画脚有点多",
+        "花椒优点多",
+        "花椒有点朵",
+        "画脚有点朵",
+        "花椒有点躲",
+        "花椒有点夺",
+        "花椒有点踱",
+        "花椒油"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huiweiyoudianku",
+      "expected": "回味有点苦",
+      "source": "6000",
+      "lookup_us": 3308,
+      "candidates": [
+        "会微有点苦",
+        "会为有点苦",
+        "会微有点哭",
+        "会为有点哭",
+        "会微有点库",
+        "会为有点库",
+        "会微有点酷",
+        "回味有点苦",
+        "回味"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "huiweiyoudiansuan",
+      "expected": "回味有点酸",
+      "source": "6000",
+      "lookup_us": 3575,
+      "candidates": [
+        "会微有点算",
+        "会微有点酸",
+        "会为有点算",
+        "会为有点酸",
+        "会微有点蒜",
+        "会为有点蒜",
+        "会微有点宿安",
+        "回味有点酸",
+        "回味"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "huiweiyoudiantian",
+      "expected": "回味有点甜",
+      "source": "6000",
+      "lookup_us": 4910,
+      "candidates": [
+        "会微有点天",
+        "会为有点天",
+        "会微有点甜",
+        "会为有点甜",
+        "会微有点添",
+        "会为有点添",
+        "会微有点填",
+        "回味有点甜",
+        "回味"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "hujiaoyoudianzhong",
+      "expected": "胡椒有点重",
+      "source": "6000",
+      "lookup_us": 6517,
+      "candidates": [
+        "胡椒有点中",
+        "胡椒有点钟",
+        "胡椒有点重",
+        "胡椒有点种",
+        "呼叫有点中",
+        "呼叫有点钟",
+        "呼叫有点重",
+        "胡椒有点冢",
+        "呼叫"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "huohouzhenghao",
+      "expected": "火候正好",
+      "source": "6000",
+      "lookup_us": 3149,
+      "candidates": [
+        "火候正好",
+        "或候正好",
+        "或后正好",
+        "或厚正好",
+        "或後正好",
+        "或侯正好",
+        "或吼正好",
+        "或喉正好",
+        "火候"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huweiyoudianzhong",
+      "expected": "糊味有点重",
+      "source": "6000",
+      "lookup_us": 3436,
+      "candidates": [
+        "忽微有点中",
+        "互为有点中",
+        "忽微有点钟",
+        "忽微有点重",
+        "互为有点钟",
+        "互为有点重",
+        "忽微有点种",
+        "糊味有点重",
+        "护卫"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "jiangyouyoudianduo",
+      "expected": "酱油有点多",
+      "source": "6000",
+      "lookup_us": 5137,
+      "candidates": [
+        "将有有点多",
+        "将又有点多",
+        "将有优点多",
+        "将有有点朵",
+        "将又有点朵",
+        "将有有点躲",
+        "将有有点夺",
+        "酱油有点多",
+        "酱油"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "jiaoweiyoudianzhong",
+      "expected": "焦味有点重",
+      "source": "6000",
+      "lookup_us": 3505,
+      "candidates": [
+        "较为有点中",
+        "叫微有点中",
+        "较为有点钟",
+        "叫微有点钟",
+        "较为有点重",
+        "叫微有点重",
+        "较为有点种",
+        "焦味有点重",
+        "较为"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "kouganpianchai",
+      "expected": "口感偏柴",
+      "source": "6000",
+      "lookup_us": 2615,
+      "candidates": [
+        "口感偏柴",
+        "口感偏差",
+        "口感片柴",
+        "口感篇柴",
+        "口感偏拆",
+        "口感骗柴",
+        "口感片差",
+        "口感篇差",
+        "口感"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kouganpiancui",
+      "expected": "口感偏脆",
+      "source": "6000",
+      "lookup_us": 2189,
+      "candidates": [
+        "口感偏脆",
+        "口感偏催",
+        "口感片脆",
+        "口感偏崔",
+        "口感偏翠",
+        "口感篇脆",
+        "口感骗脆",
+        "口感偏摧",
+        "口感"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kouganpiannuo",
+      "expected": "口感偏糯",
+      "source": "6000",
+      "lookup_us": 2010,
+      "candidates": [
+        "口感偏糯",
+        "口感偏挪",
+        "口感片挪",
+        "口感偏诺",
+        "口感篇挪",
+        "口感骗挪",
+        "口感偏喏",
+        "口感便挪",
+        "口感"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kouweipianla",
+      "expected": "口味偏辣",
+      "source": "6000",
+      "lookup_us": 2089,
+      "candidates": [
+        "口味偏辣",
+        "口味偏拉",
+        "口味片拉",
+        "口味片落",
+        "口味偏啦",
+        "口味片辣",
+        "口味篇辣",
+        "口味骗辣",
+        "口味"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kouweipianqingdan",
+      "expected": "口味偏清淡",
+      "source": "6000",
+      "lookup_us": 6516,
+      "candidates": [
+        "口味偏清单",
+        "口味片清单",
+        "口味篇清单",
+        "口味骗清单",
+        "口味偏清淡",
+        "口味便清单",
+        "口味片清淡",
+        "口味翩清单",
+        "口味"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "kouweipiansuan",
+      "expected": "口味偏酸",
+      "source": "6000",
+      "lookup_us": 3452,
+      "candidates": [
+        "口味偏酸",
+        "口味偏算",
+        "口味偏蒜",
+        "口味片算",
+        "口味篇算",
+        "口味骗算",
+        "口味便算",
+        "口味片蒜",
+        "口味"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kouweipiantian",
+      "expected": "口味偏甜",
+      "source": "6000",
+      "lookup_us": 2987,
+      "candidates": [
+        "口味偏甜",
+        "口味偏天",
+        "口味偏添",
+        "口味偏填",
+        "口味偏田",
+        "口味片天",
+        "口味篇天",
+        "口味骗天",
+        "口味"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kouweipianxian",
+      "expected": "口味偏咸",
+      "source": "6000",
+      "lookup_us": 4431,
+      "candidates": [
+        "口味偏咸",
+        "口味偏见",
+        "口味片先",
+        "口味偏线",
+        "口味偏现",
+        "口味偏先",
+        "口味偏显",
+        "口味偏限",
+        "口味"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kouweipianzhong",
+      "expected": "口味偏重",
+      "source": "6000",
+      "lookup_us": 1826,
+      "candidates": [
+        "口味偏重",
+        "口味片中",
+        "口味偏中",
+        "口味偏种",
+        "口味偏钟",
+        "口味片重",
+        "口味篇中",
+        "口味骗中",
+        "口味"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kuweiyoudianzhong",
+      "expected": "苦味有点重",
+      "source": "6000",
+      "lookup_us": 3543,
+      "candidates": [
+        "裤微有点中",
+        "枯萎有点中",
+        "裤微有点钟",
+        "裤微有点重",
+        "枯萎有点钟",
+        "枯萎有点重",
+        "裤微有点种",
+        "苦味有点重",
+        "枯萎"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "ladeqiangsang",
+      "expected": "辣得呛嗓",
+      "source": "6000",
+      "lookup_us": 2823,
+      "candidates": [
+        "辣得呛嗓",
+        "拉得呛嗓",
+        "落地强桑",
+        "拉地强桑",
+        "落的抢桑",
+        "落地强丧",
+        "辣的抢桑",
+        "拉得强桑",
+        "拉得"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lajiaoyoudianduo",
+      "expected": "辣椒有点多",
+      "source": "6000",
+      "lookup_us": 5592,
+      "candidates": [
+        "辣椒有点多",
+        "拉脚有点多",
+        "辣椒优点多",
+        "辣椒油点多",
+        "辣椒又点多",
+        "辣椒有点朵",
+        "辣椒有点躲",
+        "辣椒有点夺",
+        "辣椒油"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mianpaotuole",
+      "expected": "面泡坨了",
+      "source": "6000",
+      "lookup_us": 3218,
+      "candidates": [
+        "面泡坨了",
+        "免跑脱了",
+        "免跑拖了",
+        "免泡脱了",
+        "面泡脱了",
+        "免抛脱了",
+        "免泡拖了",
+        "面泡拖了",
+        "面"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mianyoudianjiasheng",
+      "expected": "面有点夹生",
+      "source": "6000",
+      "lookup_us": 6943,
+      "candidates": [
+        "面有点夹生",
+        "面有点家生",
+        "免有点夹生",
+        "面有点家声",
+        "免有点家生",
+        "面有点加生",
+        "免有点家声",
+        "面有点加声",
+        "免邮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mianyoudiantuole",
+      "expected": "面有点坨了",
+      "source": "6000",
+      "lookup_us": 4131,
+      "candidates": [
+        "面有点脱了",
+        "面有点坨了",
+        "免有点脱了",
+        "面有点拖了",
+        "免有点拖了",
+        "面有点托了",
+        "免有点坨了",
+        "免有点托了",
+        "免邮"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "mianzhudeyoudianlan",
+      "expected": "面煮得有点烂",
+      "source": "6000",
+      "lookup_us": 4837,
+      "candidates": [
+        "免住得有点蓝",
+        "免住得有点兰",
+        "免住得有点烂",
+        "免住得有点揽",
+        "免住得有点览",
+        "免住得有点栏",
+        "面住得有点蓝",
+        "面煮得有点烂",
+        "绵竹"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "rouchaodeyoudianlao",
+      "expected": "肉炒得有点老",
+      "source": "6000",
+      "lookup_us": 4504,
+      "candidates": [
+        "肉炒得有点老",
+        "柔炒得有点老",
+        "肉炒得有点落",
+        "肉炒得有点牢",
+        "肉炒得有点捞",
+        "肉炒得有点劳",
+        "肉炒得有点铹",
+        "肉炒得有点佬",
+        "肉"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "roudunlanle",
+      "expected": "肉炖烂了",
+      "source": "6000",
+      "lookup_us": 1378,
+      "candidates": [
+        "肉炖烂了",
+        "柔炖烂了",
+        "肉炖滥了",
+        "肉炖烂乐",
+        "肉炖蓝了",
+        "肉顿烂了",
+        "肉炖兰了",
+        "肉吨烂了",
+        "肉"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "rouhaiyoudianying",
+      "expected": "肉还有点硬",
+      "source": "6000",
+      "lookup_us": 4909,
+      "candidates": [
+        "肉还有电影",
+        "柔还有电影",
+        "肉还有点应",
+        "柔还有点应",
+        "肉还有点影",
+        "肉还有点硬",
+        "柔还有点影",
+        "柔还有点硬",
+        "肉"
+      ],
+      "expected_rank": 6
+    },
+    {
+      "pinyin": "roujiandeyoudianlao",
+      "expected": "肉煎得有点老",
+      "source": "6000",
+      "lookup_us": 4448,
+      "candidates": [
+        "肉煎得有点老",
+        "肉见得有点老",
+        "肉见得有点落",
+        "肉见得有点牢",
+        "肉见得有点捞",
+        "肉兼得有点落",
+        "肉见得有点劳",
+        "肉见得有点铹",
+        "肉鸡"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "rouyoudianpianfei",
+      "expected": "肉有点偏肥",
+      "source": "6000",
+      "lookup_us": 4383,
+      "candidates": [
+        "肉有点偏肥",
+        "肉有点偏费",
+        "肉有点偏飞",
+        "肉有点片飞",
+        "肉有点片费",
+        "肉有点篇费",
+        "肉有点偏非",
+        "肉有点偏沸",
+        "肉"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "rouyoudianpianshou",
+      "expected": "肉有点偏瘦",
+      "source": "6000",
+      "lookup_us": 3147,
+      "candidates": [
+        "肉有点偏手",
+        "肉有点偏瘦",
+        "肉有点偏受",
+        "肉有点偏兽",
+        "肉有点片手",
+        "肉有点偏熟",
+        "肉有点片受",
+        "肉有点篇手",
+        "肉"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "shanweiyoudianzhong",
+      "expected": "膻味有点重",
+      "source": "6000",
+      "lookup_us": 3559,
+      "candidates": [
+        "山微有点中",
+        "删微有点中",
+        "山微有点钟",
+        "删微有点钟",
+        "山微有点重",
+        "删微有点重",
+        "山微有点种",
+        "膻味有点重",
+        "汕尾"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "suandedaoya",
+      "expected": "酸得倒牙",
+      "source": "6000",
+      "lookup_us": 2438,
+      "candidates": [
+        "酸得倒牙",
+        "算得到呀",
+        "算得到压",
+        "酸得到呀",
+        "算得到鸭",
+        "算的刀呀",
+        "算得到芽",
+        "算得到雅",
+        "算得"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "suanweiyoudianzhong",
+      "expected": "蒜味有点重",
+      "source": "6000",
+      "lookup_us": 3805,
+      "candidates": [
+        "算微有点中",
+        "算微有点钟",
+        "算微有点重",
+        "酸味有点中",
+        "算惟有点钟",
+        "算微有点种",
+        "酸味有点重",
+        "蒜味有点重",
+        "酸味"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "tangfangdeyoudianduo",
+      "expected": "糖放得有点多",
+      "source": "6000",
+      "lookup_us": 5866,
+      "candidates": [
+        "糖放得有点多",
+        "汤放得有点多",
+        "糖放得有点朵",
+        "糖放得有点躲",
+        "糖放得有点夺",
+        "汤放得有点朵",
+        "糖放得有点踱",
+        "糖放得有点堕",
+        "烫发"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tangyoudiandanle",
+      "expected": "汤有点淡了",
+      "source": "6000",
+      "lookup_us": 3927,
+      "candidates": [
+        "汤有点淡了",
+        "倘有点淡了",
+        "汤有点担了",
+        "倘有点担了",
+        "汤有点淡乐",
+        "汤有点担乐",
+        "汤有点淡勒",
+        "倘有点淡乐",
+        "唐"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tangyoudianliangle",
+      "expected": "汤有点凉了",
+      "source": "6000",
+      "lookup_us": 6077,
+      "candidates": [
+        "汤有点凉了",
+        "倘有点凉了",
+        "汤有点亮了",
+        "倘有点亮了",
+        "汤有点量了",
+        "倘有点量了",
+        "汤有点凉乐",
+        "倘有点凉乐",
+        "唐"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tangyoudiannile",
+      "expected": "汤有点腻了",
+      "source": "6000",
+      "lookup_us": 3236,
+      "candidates": [
+        "汤有点你了",
+        "倘有点你了",
+        "汤有点腻了",
+        "汤有点泥了",
+        "倘有点腻了",
+        "倘有点泥了",
+        "汤有点呢了",
+        "汤有点拟了",
+        "唐"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "tangyoudiantangle",
+      "expected": "汤有点烫了",
+      "source": "6000",
+      "lookup_us": 3988,
+      "candidates": [
+        "汤有点趟了",
+        "倘有点趟了",
+        "汤有点汤了",
+        "汤有点烫了",
+        "倘有点汤了",
+        "倘有点烫了",
+        "汤有点糖了",
+        "汤有点汤乐",
+        "唐"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "tangyoudianxianle",
+      "expected": "汤有点咸了",
+      "source": "6000",
+      "lookup_us": 5425,
+      "candidates": [
+        "汤有点线了",
+        "倘有点线了",
+        "汤有点现了",
+        "汤有点见了",
+        "汤有电线了",
+        "倘有电线了",
+        "倘有点现了",
+        "汤有点咸了",
+        "唐"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "tangyoudianyoule",
+      "expected": "汤有点油了",
+      "source": "6000",
+      "lookup_us": 3396,
+      "candidates": [
+        "汤有点有了",
+        "倘有点有了",
+        "汤有点油了",
+        "汤有点犹了",
+        "倘有点油了",
+        "汤有点游乐",
+        "汤有点又了",
+        "汤有点油乐",
+        "唐"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "tiandefani",
+      "expected": "甜得发腻",
+      "source": "6000",
+      "lookup_us": 2190,
+      "candidates": [
+        "甜得发腻",
+        "天的发你",
+        "天的罚你",
+        "天的发呢",
+        "天的发腻",
+        "天的发泥",
+        "天的法你",
+        "天的伐你",
+        "天的"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tianweiyoudianzhong",
+      "expected": "甜味有点重",
+      "source": "6000",
+      "lookup_us": 4400,
+      "candidates": [
+        "天微有点中",
+        "天威有点中",
+        "天微有点钟",
+        "天未有点钟",
+        "天微有点重",
+        "天威有点重",
+        "天微有点种",
+        "甜味有点重",
+        "天威"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "tinghewodekouwei",
+      "expected": "挺合我的口味",
+      "source": "6000",
+      "lookup_us": 2066,
+      "candidates": [
+        "听和我的口味",
+        "停和我的口味",
+        "听和我得口味",
+        "停和我得口味",
+        "听和我地口味",
+        "听和我德口味",
+        "听和我的口位",
+        "挺合我的口味",
+        "听"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "wenqilaitingxiang",
+      "expected": "闻起来挺香",
+      "source": "6000",
+      "lookup_us": 6341,
+      "candidates": [
+        "闻起来挺香",
+        "闻起来挺想",
+        "闻起来挺向",
+        "闻起来挺箱",
+        "闻起来挺响",
+        "闻起来挺象",
+        "闻起来挺相",
+        "闻起来挺像",
+        "问起"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wenqilaiyoudianguai",
+      "expected": "闻起来有点怪",
+      "source": "6000",
+      "lookup_us": 7081,
+      "candidates": [
+        "闻起来有点怪",
+        "闻起来有点乖",
+        "问起来有点怪",
+        "闻起来有点拐",
+        "闻起来有点夬",
+        "问起来有点乖",
+        "问起来有点拐",
+        "问起来有点夬",
+        "问起"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wenqilaiyoudianku",
+      "expected": "闻起来有点苦",
+      "source": "6000",
+      "lookup_us": 4377,
+      "candidates": [
+        "闻起来有点苦",
+        "闻起来有点哭",
+        "闻起来有点库",
+        "闻起来有点酷",
+        "问起来有点苦",
+        "闻起来有点裤",
+        "闻起来有点枯",
+        "闻起来有点窟",
+        "问起"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wenqilaiyoudiansuan",
+      "expected": "闻起来有点酸",
+      "source": "6000",
+      "lookup_us": 6467,
+      "candidates": [
+        "闻起来有点酸",
+        "闻起来有点算",
+        "闻起来有点蒜",
+        "问起来有点算",
+        "问起来有点酸",
+        "问起来有点蒜",
+        "闻起来有电算",
+        "闻起来有店算",
+        "问起"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiandefaku",
+      "expected": "咸得发苦",
+      "source": "6000",
+      "lookup_us": 1537,
+      "candidates": [
+        "咸得发苦",
+        "显得发苦",
+        "先的发苦",
+        "现的发苦",
+        "先地发苦",
+        "显得发哭",
+        "显得法苦",
+        "先得发哭",
+        "显得"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiangcaiyoudianduo",
+      "expected": "香菜有点多",
+      "source": "6000",
+      "lookup_us": 5999,
+      "candidates": [
+        "香菜有点多",
+        "向才有点多",
+        "香菜有点朵",
+        "香菜有点躲",
+        "香菜优点多",
+        "香菜有点夺",
+        "香菜有点踱",
+        "香菜有点堕",
+        "香菜"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiangqitingzu",
+      "expected": "香气挺足",
+      "source": "6000",
+      "lookup_us": 2620,
+      "candidates": [
+        "香气挺足",
+        "想起挺足",
+        "香气挺组",
+        "想起庭组",
+        "想起听组",
+        "想起听足",
+        "想起挺组",
+        "想起停组",
+        "想起"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xingweiyoudianzhong",
+      "expected": "腥味有点重",
+      "source": "6000",
+      "lookup_us": 4396,
+      "candidates": [
+        "行为有点中",
+        "行为有点钟",
+        "行为有点重",
+        "星微有点中",
+        "行为有点种",
+        "星微有点钟",
+        "星微有点重",
+        "腥味有点重",
+        "行为"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "yanfangdeyoudianduo",
+      "expected": "盐放得有点多",
+      "source": "6000",
+      "lookup_us": 4713,
+      "candidates": [
+        "盐放得有点多",
+        "眼放得有点多",
+        "眼放得有点朵",
+        "盐放得有点朵",
+        "眼放得有点躲",
+        "盐放得有点躲",
+        "眼放得有点夺",
+        "盐放得有点夺",
+        "严防"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youdianhoutian",
+      "expected": "有点齁甜",
+      "source": "6000",
+      "lookup_us": 3239,
+      "candidates": [
+        "有点齁甜",
+        "有点后天",
+        "有点后添",
+        "有点后填",
+        "有点厚天",
+        "有点后提案",
+        "有点后田",
+        "有点厚添",
+        "有点"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youdianhouxian",
+      "expected": "有点齁咸",
+      "source": "6000",
+      "lookup_us": 4473,
+      "candidates": [
+        "有点齁咸",
+        "有点后先",
+        "有点后现",
+        "有点后线",
+        "有点后显",
+        "有点后限",
+        "有点后鲜",
+        "有点后见",
+        "有点"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youdiannikou",
+      "expected": "有点腻口",
+      "source": "6000",
+      "lookup_us": 2065,
+      "candidates": [
+        "有点腻口",
+        "有点你口",
+        "有点泥口",
+        "有点你扣",
+        "有点腻扣",
+        "有点呢口",
+        "有点拟口",
+        "有点尼口",
+        "有点"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youfangdeyoudianduo",
+      "expected": "油放得有点多",
+      "source": "6000",
+      "lookup_us": 4334,
+      "candidates": [
+        "有放得有点多",
+        "又放得有点多",
+        "有放得有点朵",
+        "又放得有点朵",
+        "有放得有点躲",
+        "又放得有点躲",
+        "有放得有点夺",
+        "油放得有点多",
+        "有房"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zhegekouganbucuo",
+      "expected": "这个口感不错",
+      "source": "6000",
+      "lookup_us": 2965,
+      "candidates": [
+        "这个口感不错",
+        "这个口干不错",
+        "这个口敢不错",
+        "这个口赶不错",
+        "这个扣感不错",
+        "这个扣干不错",
+        "这个口甘不错",
+        "这个扣敢不错",
+        "这个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhegekouweibucuo",
+      "expected": "这个口味不错",
+      "source": "6000",
+      "lookup_us": 2619,
+      "candidates": [
+        "这个口味不错",
+        "这个口位不错",
+        "这个口未不错",
+        "这个口为不错",
+        "这个口微不错",
+        "这个口胃不错",
+        "这个口围不错",
+        "这个口谓不错",
+        "这个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhegewochibuguan",
+      "expected": "这个我吃不惯",
+      "source": "6000",
+      "lookup_us": 5994,
+      "candidates": [
+        "这个我吃不惯",
+        "这个我吃不管",
+        "这个我吃不关",
+        "这个我吃不观",
+        "这个喔吃不惯",
+        "这个我吃不馆",
+        "这个我吃不官",
+        "这个我持不惯",
+        "这个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhegewohebuguan",
+      "expected": "这个我喝不惯",
+      "source": "6000",
+      "lookup_us": 5443,
+      "candidates": [
+        "这个我和不惯",
+        "这个我喝不惯",
+        "这个我何不惯",
+        "这个我和不管",
+        "这个我合不惯",
+        "这个我和不关",
+        "这个我赫不惯",
+        "这个喔喝不惯",
+        "这个"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zhouyoudianchoule",
+      "expected": "粥有点稠了",
+      "source": "6000",
+      "lookup_us": 3617,
+      "candidates": [
+        "周有点稠了",
+        "周有点抽了",
+        "周有点丑了",
+        "周有点臭了",
+        "周有点愁了",
+        "周有点仇了",
+        "周有点筹了",
+        "粥有点稠了",
+        "周游"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zhouyoudianliangle",
+      "expected": "粥有点凉了",
+      "source": "6000",
+      "lookup_us": 6092,
+      "candidates": [
+        "周有点凉了",
+        "周有点亮了",
+        "皱有点凉了",
+        "周有点量了",
+        "皱有点亮了",
+        "周游电量了",
+        "周有电量了",
+        "粥有点凉了",
+        "周游"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zhouyoudianxile",
+      "expected": "粥有点稀了",
+      "source": "6000",
+      "lookup_us": 3430,
+      "candidates": [
+        "周有点戏了",
+        "周有点息了",
+        "周有点西了",
+        "周有点熄了",
+        "周有点稀了",
+        "周有点夕了",
+        "周有点吸了",
+        "粥有点稀了",
+        "周游"
+      ],
+      "expected_rank": 8
+    }
+  ],
+  "previous_pass": {
+    "sha256": "80542344376ed243f820436e2414203082c269ddd4c206329ed2cf65b9fb3a4b",
+    "summary": {
+      "cases": 400,
+      "top1_correct": 280,
+      "top9_present": 400,
+      "top1_percent": 70.0,
+      "top9_percent": 100.0,
+      "character_error_rate": 0.1181,
+      "p50_lookup_ms": 3.927,
+      "p95_lookup_ms": 7.502,
+      "max_lookup_ms": 10.161,
+      "missing_from_top9_count": 0,
+      "missing_from_top9": [],
+      "max_returned_candidate_count": 9
+    }
+  }
+}

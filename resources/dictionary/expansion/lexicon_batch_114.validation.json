@@ -1,0 +1,6781 @@
+{
+  "batch": "lexicon_batch_114",
+  "evaluation": "native_engine_candidate_coverage",
+  "evaluated_at_utc": "2026-10-15T14:57:19.373322+00:00",
+  "engine_sha256": "a0f614aec8044ed9a2aeb56225c0775e7f80d660a0ae295bc4c5b23405f36da0",
+  "resource_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "bc4d33cac36f590bec181bfd86bdb54583c9a3c1ef5cf3542c0f2feedc1c3130",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+    "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+    "continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e"
+  },
+  "frozen_batch_sha256": "34fa73f1c552deae722b55ea5c551d39b3f64a701cfab9af3dbe1c851b79fc6d",
+  "personal_data_isolated": true,
+  "expected_answers_learned": false,
+  "summary": {
+    "cases": 374,
+    "top1_correct": 255,
+    "top9_present": 374,
+    "top1_percent": 68.18,
+    "top9_percent": 100.0,
+    "character_error_rate": 0.0942,
+    "p50_lookup_ms": 3.941,
+    "p95_lookup_ms": 8.26,
+    "max_lookup_ms": 11.383,
+    "missing_from_top9_count": 0,
+    "missing_from_top9": [],
+    "max_returned_candidate_count": 9
+  },
+  "rows": [
+    {
+      "pinyin": "nibanwanzhaowo",
+      "expected": "你办完找我",
+      "source": "6000",
+      "lookup_us": 3918,
+      "candidates": [
+        "你办完着我",
+        "你半碗着我",
+        "你办完找我",
+        "你半碗找我",
+        "你搬完找我",
+        "你办完照我",
+        "你班晚找我",
+        "你半碗照我",
+        "泥巴"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "nichiwanzhaowo",
+      "expected": "你吃完找我",
+      "source": "6000",
+      "lookup_us": 3941,
+      "candidates": [
+        "你吃完着我",
+        "你吃完找我",
+        "你吃完照我",
+        "你吃完招我",
+        "你吃完赵我",
+        "你吃完朝我",
+        "你吃完罩我",
+        "你吃完兆我",
+        "你"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "nichulaizhaowo",
+      "expected": "你出来找我",
+      "source": "6000",
+      "lookup_us": 2752,
+      "candidates": [
+        "你出来着我",
+        "你出来找我",
+        "你出来照我",
+        "你出来招我",
+        "你出来赵我",
+        "你出来朝我",
+        "你出来罩我",
+        "你出来兆我",
+        "你"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "nidaojiazhaowo",
+      "expected": "你到家找我",
+      "source": "6000",
+      "lookup_us": 4549,
+      "candidates": [
+        "你到家着我",
+        "你到家找我",
+        "你到家照我",
+        "你到夹着我",
+        "你到驾照我",
+        "你到加找我",
+        "你到家招我",
+        "你到家赵我",
+        "你到"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "niguolaizhaowo",
+      "expected": "你过来找我",
+      "source": "6000",
+      "lookup_us": 2908,
+      "candidates": [
+        "你过来着我",
+        "你过来找我",
+        "你过来照我",
+        "你过来招我",
+        "你过来赵我",
+        "你过来朝我",
+        "你过来罩我",
+        "你过来兆我",
+        "你过来"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "nihuilaizhaowo",
+      "expected": "你回来找我",
+      "source": "6000",
+      "lookup_us": 3260,
+      "candidates": [
+        "你回来着我",
+        "你回来找我",
+        "你回来照我",
+        "你回来招我",
+        "你回来赵我",
+        "你会来找我",
+        "你回来朝我",
+        "你回来罩我",
+        "你会"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "nikanwanzhaowo",
+      "expected": "你看完找我",
+      "source": "6000",
+      "lookup_us": 4120,
+      "candidates": [
+        "你看玩着我",
+        "你看完着我",
+        "你看挽着我",
+        "你看完找我",
+        "你看万着我",
+        "你看玩找我",
+        "你看万找我",
+        "你看晚找我",
+        "你看"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "nimangwanzhaowo",
+      "expected": "你忙完找我",
+      "source": "6000",
+      "lookup_us": 4081,
+      "candidates": [
+        "你忙完着我",
+        "你忙完找我",
+        "你忙玩着我",
+        "你忙完照我",
+        "你忙完招我",
+        "你忙完赵我",
+        "你忙玩找我",
+        "你忙完朝我",
+        "你妈"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "ninongwanzhaowo",
+      "expected": "你弄完找我",
+      "source": "6000",
+      "lookup_us": 3137,
+      "candidates": [
+        "你弄完找我",
+        "你弄玩着我",
+        "你弄完着我",
+        "你弄挽着我",
+        "你弄万着我",
+        "你弄玩找我",
+        "你弄万找我",
+        "你弄晚找我",
+        "您"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nishuixingzhaowo",
+      "expected": "你睡醒找我",
+      "source": "6000",
+      "lookup_us": 4124,
+      "candidates": [
+        "你睡醒着我",
+        "你睡醒找我",
+        "你水性着我",
+        "你睡醒照我",
+        "你水性找我",
+        "你水星找我",
+        "你睡行找我",
+        "你睡性找我",
+        "溺水"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "nixiabanzhaowo",
+      "expected": "你下班找我",
+      "source": "6000",
+      "lookup_us": 5101,
+      "candidates": [
+        "你下班着我",
+        "你下班找我",
+        "你下半着我",
+        "你下半找我",
+        "你下班照我",
+        "你下半照我",
+        "你下班昭我",
+        "你下班招我",
+        "你"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "nixiakezhaowo",
+      "expected": "你下课找我",
+      "source": "6000",
+      "lookup_us": 3719,
+      "candidates": [
+        "你下课着我",
+        "你下课找我",
+        "你下可着我",
+        "你侠客着我",
+        "你下可找我",
+        "你下课照我",
+        "你侠客找我",
+        "你下科找我",
+        "你"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "nixianchaqingchu",
+      "expected": "你先查清楚",
+      "source": "6000",
+      "lookup_us": 6303,
+      "candidates": [
+        "你先查清楚",
+        "你先差清楚",
+        "你先察清楚",
+        "你先查清除",
+        "你先茶清楚",
+        "你先插清楚",
+        "你先叉清楚",
+        "你线查清楚",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nixianheduiyixia",
+      "expected": "你先核对一下",
+      "source": "6000",
+      "lookup_us": 8171,
+      "candidates": [
+        "你先核对一下",
+        "你线核对一下",
+        "你先喝队一下",
+        "你先河队一下",
+        "你先喝堆一下",
+        "你先河堆一下",
+        "你先喝對一下",
+        "你先喝兑一下",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nixianjiqingchu",
+      "expected": "你先记清楚",
+      "source": "6000",
+      "lookup_us": 6612,
+      "candidates": [
+        "你先记清楚",
+        "你先级清楚",
+        "你先机清楚",
+        "你先继清楚",
+        "你先寄清楚",
+        "你先记清除",
+        "你先及清楚",
+        "你先即清楚",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nixiankanqingchu",
+      "expected": "你先看清楚",
+      "source": "6000",
+      "lookup_us": 5638,
+      "candidates": [
+        "你先看清楚",
+        "你先看清除",
+        "你线看清楚",
+        "你先阚清楚",
+        "你先砍清楚",
+        "你先刊清楚",
+        "你先坎清楚",
+        "你先堪清楚",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nixianquerenyixia",
+      "expected": "你先确认一下",
+      "source": "6000",
+      "lookup_us": 9994,
+      "candidates": [
+        "你先确认一下",
+        "昵先确认一下",
+        "你先确认一吓",
+        "你先确认一夏",
+        "你先确认一霞",
+        "你先确认一虾",
+        "你先确认以下",
+        "你先确认一暇",
+        "你先确认"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nixianshuoqingchu",
+      "expected": "你先说清楚",
+      "source": "6000",
+      "lookup_us": 6450,
+      "candidates": [
+        "你先说清楚",
+        "你仙说清楚",
+        "你先说清除",
+        "你先数清楚",
+        "你先說清楚",
+        "你先硕清楚",
+        "你先朔清楚",
+        "你先烁清楚",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nixianwenqingchu",
+      "expected": "你先问清楚",
+      "source": "6000",
+      "lookup_us": 5722,
+      "candidates": [
+        "你先问清楚",
+        "你先文清楚",
+        "你先问清除",
+        "你先温清楚",
+        "你先稳清楚",
+        "你先闻清楚",
+        "你先纹清楚",
+        "你先吻清楚",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nixianxiangqingchu",
+      "expected": "你先想清楚",
+      "source": "6000",
+      "lookup_us": 9612,
+      "candidates": [
+        "你先想清楚",
+        "昵先想清楚",
+        "你先想清除",
+        "你先向清楚",
+        "你先项清楚",
+        "你现象清楚",
+        "你先箱清楚",
+        "你先像清楚",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nixianxieqingchu",
+      "expected": "你先写清楚",
+      "source": "6000",
+      "lookup_us": 7967,
+      "candidates": [
+        "你先写清楚",
+        "你线写清楚",
+        "你先写清除",
+        "你先歇清楚",
+        "你先血清楚",
+        "你先些清楚",
+        "你先谢清楚",
+        "你先鞋清楚",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niyoukongzhaowo",
+      "expected": "你有空找我",
+      "source": "6000",
+      "lookup_us": 2622,
+      "candidates": [
+        "你有空着我",
+        "你有空找我",
+        "你有空照我",
+        "你有空招我",
+        "你有空赵我",
+        "你有空朝我",
+        "你有空罩我",
+        "你有空兆我",
+        "你有空"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "wobangnichachakan",
+      "expected": "我帮你查查看",
+      "source": "6000",
+      "lookup_us": 3639,
+      "candidates": [
+        "我帮你查查看",
+        "我帮你差查看",
+        "我帮你茶查看",
+        "我帮你插查看",
+        "我帮你叉查看",
+        "我帮你察查看",
+        "我帮你茬查看",
+        "我帮你搽查看",
+        "我帮你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wobangnigenjinxia",
+      "expected": "我帮你跟进下",
+      "source": "6000",
+      "lookup_us": 5991,
+      "candidates": [
+        "我帮你跟进下",
+        "我帮你跟进夏",
+        "我帮你跟进霞",
+        "我帮你跟进虾",
+        "我帮你跟进吓",
+        "我帮你跟进暇",
+        "我帮你跟今夏",
+        "我帮你跟进瞎",
+        "我帮你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wobangnikankanqu",
+      "expected": "我帮你看看去",
+      "source": "6000",
+      "lookup_us": 2864,
+      "candidates": [
+        "我帮你看看去",
+        "我帮你看看取",
+        "我帮你看看趣",
+        "我帮你看看屈",
+        "我帮你看看曲",
+        "我帮你看看区",
+        "我帮你看看佢",
+        "我帮你看看娶",
+        "我帮你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wobangniliuyixia",
+      "expected": "我帮你留意下",
+      "source": "6000",
+      "lookup_us": 6428,
+      "candidates": [
+        "我帮你留一下",
+        "我帮你六一下",
+        "我帮你刘一下",
+        "我帮你流一下",
+        "我帮你陆一下",
+        "我帮你柳一下",
+        "我帮你溜一下",
+        "我帮你留意下",
+        "我帮你"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "wobangnishishikan",
+      "expected": "我帮你试试看",
+      "source": "6000",
+      "lookup_us": 4460,
+      "candidates": [
+        "我帮你试试看",
+        "我帮你是试看",
+        "我帮你是是看",
+        "我帮你是使看",
+        "我帮你时时看",
+        "我帮你事实看",
+        "我帮你实时看",
+        "我帮你是时看",
+        "我帮你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wobangniwenwenkan",
+      "expected": "我帮你问问看",
+      "source": "6000",
+      "lookup_us": 3643,
+      "candidates": [
+        "我帮你问问看",
+        "我帮你问问刊",
+        "我帮你问问砍",
+        "我帮你问问坎",
+        "我帮你问问堪",
+        "我帮你问问侃",
+        "我帮你问问槛",
+        "我帮你问问勘",
+        "我帮你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wobangnixiangxiangkan",
+      "expected": "我帮你想想看",
+      "source": "6000",
+      "lookup_us": 11383,
+      "candidates": [
+        "我帮你想想看",
+        "我帮你想象看",
+        "我帮你想像看",
+        "我帮你想象刊",
+        "我帮你想象砍",
+        "我帮你想想刊",
+        "我帮你想象坎",
+        "我帮你想象堪",
+        "我帮你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wobangnizaichaxia",
+      "expected": "我帮你再查下",
+      "source": "6000",
+      "lookup_us": 4251,
+      "candidates": [
+        "我帮你再查下",
+        "我帮你在茶下",
+        "我帮你在查下",
+        "我帮你在叉下",
+        "我帮你在差下",
+        "我帮你在插下",
+        "我帮你在茶夏",
+        "我帮你在茶霞",
+        "我帮你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wobangnizaihedui",
+      "expected": "我帮你再核对",
+      "source": "6000",
+      "lookup_us": 3896,
+      "candidates": [
+        "我帮你在核对",
+        "我帮你再核对",
+        "我帮你载核对",
+        "我帮你仔核对",
+        "我帮你哉核对",
+        "我帮你灾核对",
+        "我帮你宰核对",
+        "我帮你栽核对",
+        "我帮你"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "wobangnizaikanxia",
+      "expected": "我帮你再看下",
+      "source": "6000",
+      "lookup_us": 4159,
+      "candidates": [
+        "我帮你再看下",
+        "我帮你在看下",
+        "我帮你再看夏",
+        "我帮你再看霞",
+        "我帮你再看虾",
+        "我帮你再看吓",
+        "我帮你在砍下",
+        "我帮你再看暇",
+        "我帮你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wobangnizaiqueren",
+      "expected": "我帮你再确认",
+      "source": "6000",
+      "lookup_us": 5691,
+      "candidates": [
+        "我帮你再确认",
+        "我帮你在确认",
+        "我帮你载确认",
+        "我帮你仔确认",
+        "我帮你哉确认",
+        "我帮你灾确认",
+        "我帮你宰确认",
+        "我帮你栽确认",
+        "我帮你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wobangnizaishixia",
+      "expected": "我帮你再试下",
+      "source": "6000",
+      "lookup_us": 4433,
+      "candidates": [
+        "我帮你再试下",
+        "我帮你再试夏",
+        "我帮你再试霞",
+        "我帮你再试虾",
+        "我帮你在试下",
+        "我帮你再试吓",
+        "我帮你在是下",
+        "我帮你再试暇",
+        "我帮你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wobangnizaiwenxia",
+      "expected": "我帮你再问下",
+      "source": "6000",
+      "lookup_us": 4475,
+      "candidates": [
+        "我帮你再问下",
+        "我帮你在问下",
+        "我帮你在文下",
+        "我帮你再问夏",
+        "我帮你再问霞",
+        "我帮你再问虾",
+        "我帮你再问吓",
+        "我帮你在问夏",
+        "我帮你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wobangnizaixiangxia",
+      "expected": "我帮你再想下",
+      "source": "6000",
+      "lookup_us": 8442,
+      "candidates": [
+        "我帮你在乡下",
+        "我帮你在想下",
+        "我帮你再向下",
+        "我帮你在向下",
+        "我帮你再想下",
+        "我帮你再乡下",
+        "我帮你在项下",
+        "我帮你在想夏",
+        "我帮你"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "wobangnizhaozhaokan",
+      "expected": "我帮你找找看",
+      "source": "6000",
+      "lookup_us": 4445,
+      "candidates": [
+        "我帮你找着看",
+        "我帮你找找看",
+        "我帮你找照看",
+        "我帮你找找刊",
+        "我帮你找招看",
+        "我帮你找赵看",
+        "我帮你照照看",
+        "我帮你找找砍",
+        "我帮你"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "wolaigentashuoxia",
+      "expected": "我来跟他说下",
+      "source": "6000",
+      "lookup_us": 4728,
+      "candidates": [
+        "我来跟他说下",
+        "我来跟他说夏",
+        "我来跟他说霞",
+        "我来跟他说虾",
+        "我来跟他说吓",
+        "我来跟她说下",
+        "我来跟他说暇",
+        "我来跟他说瞎",
+        "我来"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woqugentashuoxia",
+      "expected": "我去跟他说下",
+      "source": "6000",
+      "lookup_us": 4543,
+      "candidates": [
+        "我去跟他说下",
+        "我去跟他说夏",
+        "我去跟他说霞",
+        "我去跟他说虾",
+        "我去跟他说吓",
+        "我去跟她说下",
+        "我去跟他说暇",
+        "我去跟他说瞎",
+        "我区"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozaichaqingchu",
+      "expected": "我再查清楚",
+      "source": "6000",
+      "lookup_us": 4145,
+      "candidates": [
+        "我在查清楚",
+        "我在茶清楚",
+        "我在差清楚",
+        "我再查清楚",
+        "我在叉清楚",
+        "我在察清楚",
+        "我在插清楚",
+        "我再差清楚",
+        "我在"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "wozaigentashuoxia",
+      "expected": "我再跟他说下",
+      "source": "6000",
+      "lookup_us": 4941,
+      "candidates": [
+        "我再跟他说下",
+        "我在跟他说下",
+        "我在跟他说夏",
+        "我再跟他说夏",
+        "我在跟他说霞",
+        "我再跟他说霞",
+        "我在跟他说虾",
+        "我再跟他说虾",
+        "我在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozaijiqingchu",
+      "expected": "我再记清楚",
+      "source": "6000",
+      "lookup_us": 4530,
+      "candidates": [
+        "我在记清楚",
+        "我再记清楚",
+        "我再继清楚",
+        "我在即清楚",
+        "我在几清楚",
+        "我在寄清楚",
+        "我在及清楚",
+        "我在级清楚",
+        "我在"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "wozaikanqingchu",
+      "expected": "我再看清楚",
+      "source": "6000",
+      "lookup_us": 3831,
+      "candidates": [
+        "我再看清楚",
+        "我在看清楚",
+        "我再看清除",
+        "我在看清除",
+        "我在阚清楚",
+        "我在砍清楚",
+        "我在刊清楚",
+        "我在坎清楚",
+        "我在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozaishuoqingchu",
+      "expected": "我再说清楚",
+      "source": "6000",
+      "lookup_us": 5529,
+      "candidates": [
+        "我再说清楚",
+        "我在说清楚",
+        "我再说清除",
+        "我在说清除",
+        "我在数清楚",
+        "我再说清出",
+        "我再说清处",
+        "我再说情处",
+        "我在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozaiwenqingchu",
+      "expected": "我再问清楚",
+      "source": "6000",
+      "lookup_us": 4250,
+      "candidates": [
+        "我在问清楚",
+        "我再问清楚",
+        "我在文清楚",
+        "我在温清楚",
+        "我在稳清楚",
+        "我在闻清楚",
+        "我在纹清楚",
+        "我在吻清楚",
+        "我在"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "wozaixiangqingchu",
+      "expected": "我再想清楚",
+      "source": "6000",
+      "lookup_us": 7423,
+      "candidates": [
+        "我在想清楚",
+        "我再想清楚",
+        "我在想清除",
+        "我再想清除",
+        "我在向清楚",
+        "我在项清楚",
+        "我再向清楚",
+        "我在箱清楚",
+        "我再想"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "wozaixieqingchu",
+      "expected": "我再写清楚",
+      "source": "6000",
+      "lookup_us": 6104,
+      "candidates": [
+        "我在写清楚",
+        "我再写清楚",
+        "我在些清楚",
+        "我在写清除",
+        "我在血清楚",
+        "我在谢清楚",
+        "我在鞋清楚",
+        "我在燮清楚",
+        "我在"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "youbiandonggaosuwo",
+      "expected": "有变动告诉我",
+      "source": "6000",
+      "lookup_us": 3678,
+      "candidates": [
+        "有变动告诉我",
+        "由变动告诉我",
+        "有变动高诉我",
+        "有变动告诉握",
+        "有变动告诉卧",
+        "有变动高速我",
+        "有变动告诉喔",
+        "有变动告诉窝",
+        "右边"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youbianhuafawo",
+      "expected": "有变化发我",
+      "source": "6000",
+      "lookup_us": 3252,
+      "candidates": [
+        "有变化发我",
+        "有变化法我",
+        "有变化伐我",
+        "有变化罚我",
+        "有变化阀我",
+        "有变化乏我",
+        "有变化发握",
+        "有变化發我",
+        "右边"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youdongjinggaosuwo",
+      "expected": "有动静告诉我",
+      "source": "6000",
+      "lookup_us": 4267,
+      "candidates": [
+        "有东京告诉我",
+        "又东京告诉我",
+        "有东京高诉我",
+        "有东京高速我",
+        "有东京告诉握",
+        "有东京告诉卧",
+        "又东京高速我",
+        "有动静告诉我",
+        "游动"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "youhuifufawo",
+      "expected": "有回复发我",
+      "source": "6000",
+      "lookup_us": 2858,
+      "candidates": [
+        "又回复发我",
+        "有恢复发我",
+        "又回复法我",
+        "又回复伐我",
+        "又回复罚我",
+        "又回复阀我",
+        "有恢复法我",
+        "有回复发我",
+        "又会"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "youhuifugaosuwo",
+      "expected": "有回复告诉我",
+      "source": "6000",
+      "lookup_us": 3388,
+      "candidates": [
+        "又回复告诉我",
+        "有恢复告诉我",
+        "又回复高诉我",
+        "又回复告诉握",
+        "又回复告诉卧",
+        "又回复高速我",
+        "又回复告诉喔",
+        "有回复告诉我",
+        "又会"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "youhuifujiaowo",
+      "expected": "有回复叫我",
+      "source": "6000",
+      "lookup_us": 4865,
+      "candidates": [
+        "又回复叫我",
+        "有恢复叫我",
+        "又回复教我",
+        "有恢复教我",
+        "又回复交我",
+        "又回覆叫我",
+        "又回复较我",
+        "有回复叫我",
+        "又会"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "youjieguofawo",
+      "expected": "有结果发我",
+      "source": "6000",
+      "lookup_us": 3469,
+      "candidates": [
+        "由结果发我",
+        "有结果发我",
+        "由结果发握",
+        "有结果发握",
+        "由结果发卧",
+        "有结果发卧",
+        "由结果发喔",
+        "由结果发窝",
+        "悠姐"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "youjieguojiaowo",
+      "expected": "有结果叫我",
+      "source": "6000",
+      "lookup_us": 6835,
+      "candidates": [
+        "由结果叫我",
+        "有结果叫我",
+        "有接过叫我",
+        "由结果教我",
+        "有结果教我",
+        "又接过叫我",
+        "有接过教我",
+        "由结果角我",
+        "悠姐"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "youjinzhanfawo",
+      "expected": "有进展发我",
+      "source": "6000",
+      "lookup_us": 2954,
+      "candidates": [
+        "有进展发我",
+        "有进站发我",
+        "又进展发我",
+        "有进展法我",
+        "有进展伐我",
+        "又进站发我",
+        "有进展罚我",
+        "有进站法我",
+        "有劲"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youjinzhanjiaowo",
+      "expected": "有进展叫我",
+      "source": "6000",
+      "lookup_us": 5202,
+      "candidates": [
+        "有进站叫我",
+        "有进展叫我",
+        "又进站叫我",
+        "又进展叫我",
+        "有进展教我",
+        "有进站教我",
+        "又进展教我",
+        "有仅占叫我",
+        "有劲"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "youkonglefawo",
+      "expected": "有空了发我",
+      "source": "6000",
+      "lookup_us": 1277,
+      "candidates": [
+        "有空了发我",
+        "有空了法我",
+        "有空了伐我",
+        "有空了罚我",
+        "有空了阀我",
+        "有空了乏我",
+        "有空了發我",
+        "有空了筏我",
+        "有空"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youkonglegaosuwo",
+      "expected": "有空了告诉我",
+      "source": "6000",
+      "lookup_us": 2597,
+      "candidates": [
+        "有空了告诉我",
+        "有空乐告诉我",
+        "有空了高诉我",
+        "有空了篙诉我",
+        "有空了搞诉我",
+        "有空了告诉握",
+        "有空了告诉卧",
+        "有空了高速我",
+        "有空"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youkonglejiaowo",
+      "expected": "有空了叫我",
+      "source": "6000",
+      "lookup_us": 4343,
+      "candidates": [
+        "有空了叫我",
+        "有空了教我",
+        "有空了脚我",
+        "有空了浇我",
+        "有空了交我",
+        "有空了觉我",
+        "有空了较我",
+        "有空了角我",
+        "有空"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youqingkuanggaosuwo",
+      "expected": "有情况告诉我",
+      "source": "6000",
+      "lookup_us": 4261,
+      "candidates": [
+        "有情况告诉我",
+        "又情况告诉我",
+        "有情况告诉握",
+        "有情况告诉卧",
+        "有情况高速我",
+        "又情况告诉握",
+        "有情况告诉喔",
+        "又情况告诉卧",
+        "有情"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youxiaoxifawo",
+      "expected": "有消息发我",
+      "source": "6000",
+      "lookup_us": 3402,
+      "candidates": [
+        "有消息发我",
+        "又消息发我",
+        "有消息发握",
+        "有消息发卧",
+        "有消息发喔",
+        "有消息发窝",
+        "有消息法我",
+        "有消息发沃",
+        "有效"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youxiaoxigaosuwo",
+      "expected": "有消息告诉我",
+      "source": "6000",
+      "lookup_us": 4853,
+      "candidates": [
+        "有消息告诉我",
+        "又消息告诉我",
+        "有消息告诉握",
+        "有消息告诉卧",
+        "有消息告诉喔",
+        "有消息告诉窝",
+        "有消息告诉沃",
+        "又消息告诉握",
+        "有效"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youxiaoxijiaowo",
+      "expected": "有消息叫我",
+      "source": "6000",
+      "lookup_us": 6862,
+      "candidates": [
+        "有消息叫我",
+        "又消息叫我",
+        "有消息教我",
+        "有消息交我",
+        "又消息教我",
+        "有消息较我",
+        "有消息脚我",
+        "有效系叫我",
+        "有效"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youxuyaogaosuwo",
+      "expected": "有需要告诉我",
+      "source": "6000",
+      "lookup_us": 4406,
+      "candidates": [
+        "有需要告诉我",
+        "又需要告诉我",
+        "有需要搞诉我",
+        "有需要高诉我",
+        "有需要告诉握",
+        "有需要告诉卧",
+        "有需要高速我",
+        "有需要告诉喔",
+        "有序"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zheshiwohuiban",
+      "expected": "这事我会办",
+      "source": "6000",
+      "lookup_us": 5077,
+      "candidates": [
+        "这是我会办",
+        "这是我会半",
+        "这是我会班",
+        "这是我会般",
+        "这是我会板",
+        "这是我会搬",
+        "这是我会版",
+        "这事我会办",
+        "这是我"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zheshiwojixiale",
+      "expected": "这事我记下了",
+      "source": "6000",
+      "lookup_us": 4854,
+      "candidates": [
+        "这是我记下了",
+        "这时我记下了",
+        "这是我几下了",
+        "这是我记下乐",
+        "这是我即下了",
+        "这是我急下了",
+        "这是我及下了",
+        "这事我记下了",
+        "这是我"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zheshiwojizhe",
+      "expected": "这事我记着",
+      "source": "6000",
+      "lookup_us": 3368,
+      "candidates": [
+        "这是我记着",
+        "这是我记者",
+        "这是我急着",
+        "这时我记着",
+        "这时我记者",
+        "这时我急着",
+        "这是我记这",
+        "这事我记着",
+        "这是我"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zheshiwolaiban",
+      "expected": "这事我来办",
+      "source": "6000",
+      "lookup_us": 2857,
+      "candidates": [
+        "这是我来办",
+        "这是我来半",
+        "这是我来班",
+        "这是我来般",
+        "这是我来板",
+        "这是我来搬",
+        "这是我来版",
+        "这事我来办",
+        "这是我"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zheshiwolaicha",
+      "expected": "这事我来查",
+      "source": "6000",
+      "lookup_us": 2196,
+      "candidates": [
+        "这是我来查",
+        "这是我来差",
+        "这是我来茶",
+        "这是我来察",
+        "这时我来查",
+        "这时我来差",
+        "这是我来插",
+        "这事我来查",
+        "这是我"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zheshiwolaiding",
+      "expected": "这事我来盯",
+      "source": "6000",
+      "lookup_us": 2742,
+      "candidates": [
+        "这是我来定",
+        "这是我来顶",
+        "这是我来订",
+        "这是我来锭",
+        "这时我来定",
+        "这时我来顶",
+        "这是我来丁",
+        "这事我来盯",
+        "这是我"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zheshiwolaigenjin",
+      "expected": "这事我来跟进",
+      "source": "6000",
+      "lookup_us": 4056,
+      "candidates": [
+        "这是我来跟进",
+        "这时我来跟进",
+        "这是我赖跟进",
+        "这是我来跟紧",
+        "这是我莱跟进",
+        "这是我來跟进",
+        "这是我濑跟进",
+        "这事我来跟进",
+        "这是我"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zheshiwolaiwen",
+      "expected": "这事我来问",
+      "source": "6000",
+      "lookup_us": 2090,
+      "candidates": [
+        "这是我来问",
+        "这时我来问",
+        "这是我来文",
+        "这是我来稳",
+        "这是我来纹",
+        "这是我来闻",
+        "这时我来文",
+        "这事我来问",
+        "这是我"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zheshiwomeiwang",
+      "expected": "这事我没忘",
+      "source": "6000",
+      "lookup_us": 4366,
+      "candidates": [
+        "这是我没网",
+        "这时我没网",
+        "这是我没望",
+        "这是我美网",
+        "这是我没王",
+        "这是我没忘",
+        "这是我没往",
+        "这事我没忘",
+        "这是我"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zheshiwozaichaxia",
+      "expected": "这事我再查下",
+      "source": "6000",
+      "lookup_us": 4013,
+      "candidates": [
+        "这是我在茶下",
+        "这是我在查下",
+        "这是我在叉下",
+        "这是我在差下",
+        "这是我在插下",
+        "这是我在茶夏",
+        "这是我在茶霞",
+        "这事我再查下",
+        "这是我"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zheshiwozaikanxia",
+      "expected": "这事我再看下",
+      "source": "6000",
+      "lookup_us": 3618,
+      "candidates": [
+        "这是我再看下",
+        "这是我在看下",
+        "这时我再看下",
+        "这是我在砍下",
+        "这是我再看夏",
+        "这是我再看霞",
+        "这是我再看虾",
+        "这事我再看下",
+        "这是我"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zheshiwozaishixia",
+      "expected": "这事我再试下",
+      "source": "6000",
+      "lookup_us": 4108,
+      "candidates": [
+        "这是我在试下",
+        "这是我再试下",
+        "这是我在是下",
+        "这是我在是夏",
+        "这是我在时下",
+        "这是我在施下",
+        "这是我在使下",
+        "这事我再试下",
+        "这是我"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zheshiwozaiwenxia",
+      "expected": "这事我再问下",
+      "source": "6000",
+      "lookup_us": 5736,
+      "candidates": [
+        "这是我在问下",
+        "这是我再问下",
+        "这是我在文下",
+        "这是我在温下",
+        "这是我在稳下",
+        "这是我在问夏",
+        "这是我在闻下",
+        "这事我再问下",
+        "这是我"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zheshiwozaixiangxia",
+      "expected": "这事我再想下",
+      "source": "6000",
+      "lookup_us": 8135,
+      "candidates": [
+        "这是我在乡下",
+        "这是我在向下",
+        "这是我在想下",
+        "这是我再想下",
+        "这是我再向下",
+        "这是我在项下",
+        "这是我再乡下",
+        "这事我再想下",
+        "这是我"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zheshixianbiedingsi",
+      "expected": "这事先别定死",
+      "source": "6000",
+      "lookup_us": 8260,
+      "candidates": [
+        "这是先别定死",
+        "这事先别定死",
+        "这是先别定思",
+        "这是先别顶思",
+        "这是先别顶死",
+        "这是先别丁思",
+        "这是先别订思",
+        "这是先别丁死",
+        "这是"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zheshixianbieshengzhang",
+      "expected": "这事先别声张",
+      "source": "6000",
+      "lookup_us": 8845,
+      "candidates": [
+        "这是先别生长",
+        "这时先别生长",
+        "这是先别省长",
+        "这时先别省长",
+        "这是先别盛长",
+        "这时先别盛长",
+        "这是先别盛章",
+        "这事先别声张",
+        "这是"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zheshixianbiezhaoji",
+      "expected": "这事先别着急",
+      "source": "6000",
+      "lookup_us": 6940,
+      "candidates": [
+        "这是先别着急",
+        "这时先别着急",
+        "这是线憋着急",
+        "这是现憋着急",
+        "这是线鳖着急",
+        "这是现鳖着急",
+        "这是线瘪着急",
+        "这事先别着急",
+        "这是"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zheshixianbuzhaoji",
+      "expected": "这事先不着急",
+      "source": "6000",
+      "lookup_us": 5449,
+      "candidates": [
+        "这是先不着急",
+        "这是线不着急",
+        "这是线布着急",
+        "这是现步着急",
+        "这是线部着急",
+        "这是现部着急",
+        "这是线补着急",
+        "这事先不着急",
+        "这是"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zheshixiandengyixia",
+      "expected": "这事先等一下",
+      "source": "6000",
+      "lookup_us": 6316,
+      "candidates": [
+        "这是先等一下",
+        "这时先等一下",
+        "这是线邓一下",
+        "这是现邓一下",
+        "这是线噔一下",
+        "这是现噔一下",
+        "这是线灯一下",
+        "这事先等一下",
+        "这是"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zheshixianfangyixia",
+      "expected": "这事先放一下",
+      "source": "6000",
+      "lookup_us": 7989,
+      "candidates": [
+        "这是先放一下",
+        "这时先放一下",
+        "这是现房一下",
+        "这是线方一下",
+        "这是线防一下",
+        "这是现防一下",
+        "这是线房一下",
+        "这事先放一下",
+        "这是"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zheshixianhuanyixia",
+      "expected": "这事先缓一下",
+      "source": "6000",
+      "lookup_us": 8454,
+      "candidates": [
+        "这是线换一下",
+        "这是现换一下",
+        "这是现还一下",
+        "这是线欢一下",
+        "这是现欢一下",
+        "这是先缓一下",
+        "这是线缓一下",
+        "这事先缓一下",
+        "这是"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zheshixianliuyudi",
+      "expected": "这事先留余地",
+      "source": "6000",
+      "lookup_us": 6199,
+      "candidates": [
+        "这是线流域地",
+        "这是现流域地",
+        "这是线流于地",
+        "这是现流于地",
+        "这是线留余地",
+        "这是现留余地",
+        "这是线六余地",
+        "这事先留余地",
+        "这是"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zheshixianshishikan",
+      "expected": "这事先试试看",
+      "source": "6000",
+      "lookup_us": 5451,
+      "candidates": [
+        "这是先试试看",
+        "这时先试试看",
+        "这时显示试看",
+        "这是显示试看",
+        "这是现实试看",
+        "这时显示时看",
+        "这是显示时看",
+        "这事先试试看",
+        "这是"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zheshixiantingtingkan",
+      "expected": "这事先听听看",
+      "source": "6000",
+      "lookup_us": 6255,
+      "candidates": [
+        "这是先听听看",
+        "这时先听听看",
+        "这是先听听刊",
+        "这是线婷婷看",
+        "这是现婷婷看",
+        "这时先听听刊",
+        "这是线停停看",
+        "这事先听听看",
+        "这是"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zheshixianwenwenkan",
+      "expected": "这事先问问看",
+      "source": "6000",
+      "lookup_us": 4711,
+      "candidates": [
+        "这是先问问看",
+        "这时先问问看",
+        "这是先问问刊",
+        "这时先问问刊",
+        "这是先问问砍",
+        "这是先问问坎",
+        "这是先问问堪",
+        "这事先问问看",
+        "这是"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "biebiebie",
+      "expected": "别别别",
+      "source": "6000",
+      "lookup_us": 3951,
+      "candidates": [
+        "别别别",
+        "别憋别",
+        "别别憋",
+        "别鳖别",
+        "别瘪别",
+        "别別别",
+        "别蹩别",
+        "别别鳖",
+        "憋"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biekeqila",
+      "expected": "别客气啦",
+      "source": "6000",
+      "lookup_us": 2369,
+      "candidates": [
+        "别客气啦",
+        "别客气辣",
+        "别客气拉",
+        "别客气落",
+        "别客气喇",
+        "别客气蜡",
+        "别客气剌",
+        "别客气腊",
+        "别客气"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biekeqio",
+      "expected": "别客气哦",
+      "source": "6000",
+      "lookup_us": 2471,
+      "candidates": [
+        "别客气哦",
+        "别客气噢",
+        "别客气喔",
+        "别客气嚄",
+        "别客气筽",
+        "别克气哦",
+        "蹩客气哦",
+        "别可气哦",
+        "别客气"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bushibushi",
+      "expected": "不是不是",
+      "source": "6000",
+      "lookup_us": 1980,
+      "candidates": [
+        "不是不是",
+        "不是不适",
+        "不是不识",
+        "不是不时",
+        "不是不失",
+        "不是不试",
+        "不是不实",
+        "不是不事",
+        "不是不"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "buyongjila",
+      "expected": "不用急啦",
+      "source": "6000",
+      "lookup_us": 1699,
+      "candidates": [
+        "不用急啦",
+        "不用急辣",
+        "不用急拉",
+        "不用急落",
+        "不用记辣",
+        "不用记拉",
+        "不用急喇",
+        "不用急蜡",
+        "不用急"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "buyongjine",
+      "expected": "不用急呢",
+      "source": "6000",
+      "lookup_us": 2981,
+      "candidates": [
+        "不用急呢",
+        "不用金额",
+        "不用金鹗",
+        "不用记呢",
+        "不佣金额",
+        "不永金额",
+        "不勇金额",
+        "不拥金额",
+        "不用急"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "buyongjio",
+      "expected": "不用急哦",
+      "source": "6000",
+      "lookup_us": 1156,
+      "candidates": [
+        "不用急哦",
+        "不用急噢",
+        "不用急喔",
+        "不用急嚄",
+        "不用急筽",
+        "不用记哦",
+        "不用记噢",
+        "不用记喔",
+        "不用急"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "buyongjiya",
+      "expected": "不用急呀",
+      "source": "6000",
+      "lookup_us": 1861,
+      "candidates": [
+        "不用急呀",
+        "不用急鸭",
+        "不用急芽",
+        "不用急雅",
+        "不用急牙",
+        "不用记呀",
+        "不用急鸦",
+        "不用急压",
+        "不用急"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "buyongkeqila",
+      "expected": "不用客气啦",
+      "source": "6000",
+      "lookup_us": 2235,
+      "candidates": [
+        "不用客气啦",
+        "不用客气辣",
+        "不用客气拉",
+        "不用客气落",
+        "不用客气喇",
+        "不用客气蜡",
+        "不用客气剌",
+        "不用客气腊",
+        "不用客气"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "buyongkeqio",
+      "expected": "不用客气哦",
+      "source": "6000",
+      "lookup_us": 1848,
+      "candidates": [
+        "不用客气哦",
+        "不用客气噢",
+        "不用客气喔",
+        "不用客气嚄",
+        "不用客气筽",
+        "不用可气哦",
+        "不用可气噢",
+        "不用可气喔",
+        "不用客气"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "buyongkeqiya",
+      "expected": "不用客气呀",
+      "source": "6000",
+      "lookup_us": 3731,
+      "candidates": [
+        "不用客气呀",
+        "不用客气鸭",
+        "不用客气芽",
+        "不用客气雅",
+        "不用客气压",
+        "不用客气牙",
+        "不用客气鸦",
+        "不用客气亚",
+        "不用客气"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "buzhaojila",
+      "expected": "不着急啦",
+      "source": "6000",
+      "lookup_us": 1612,
+      "candidates": [
+        "不着急啦",
+        "不着急辣",
+        "不着急拉",
+        "不着急落",
+        "不着急喇",
+        "不着急蜡",
+        "不着急剌",
+        "不着急腊",
+        "不着急"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "buzhaojine",
+      "expected": "不着急呢",
+      "source": "6000",
+      "lookup_us": 2927,
+      "candidates": [
+        "不着急呢",
+        "不着金额",
+        "不找金额",
+        "不朝金额",
+        "不照金额",
+        "不招金额",
+        "不赵金额",
+        "不罩金额",
+        "不着急"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "buzhaojio",
+      "expected": "不着急哦",
+      "source": "6000",
+      "lookup_us": 1232,
+      "candidates": [
+        "不着急哦",
+        "不着急噢",
+        "不着急喔",
+        "不着急嚄",
+        "不着急筽",
+        "不着几哦",
+        "不着几噢",
+        "不着几喔",
+        "不着急"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "buzhaojiya",
+      "expected": "不着急呀",
+      "source": "6000",
+      "lookup_us": 2119,
+      "candidates": [
+        "不着急呀",
+        "不着急鸭",
+        "不着急芽",
+        "不着急雅",
+        "不着急牙",
+        "不着急鸦",
+        "不着急压",
+        "不着急亚",
+        "不着急"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chengchengcheng",
+      "expected": "成成成",
+      "source": "6000",
+      "lookup_us": 2642,
+      "candidates": [
+        "成成成",
+        "程成成",
+        "乘成成",
+        "成成城",
+        "成城成",
+        "成成称",
+        "称成成",
+        "城成成",
+        "澄澈"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chengdechengde",
+      "expected": "成的成的",
+      "source": "6000",
+      "lookup_us": 2872,
+      "candidates": [
+        "成的成的",
+        "程的成的",
+        "称得成的",
+        "成的程的",
+        "成的成得",
+        "程的程的",
+        "成的成地",
+        "成的程地",
+        "承德"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chichichi",
+      "expected": "吃吃吃",
+      "source": "6000",
+      "lookup_us": 1290,
+      "candidates": [
+        "吃吃吃",
+        "吃迟迟",
+        "吃吃迟",
+        "吃吃尺",
+        "吃吃池",
+        "吃吃匙",
+        "迟迟迟",
+        "吃吃翅",
+        "吃吃"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chongchongchong",
+      "expected": "冲冲冲",
+      "source": "6000",
+      "lookup_us": 535,
+      "candidates": [
+        "冲冲冲",
+        "重重重",
+        "充重重",
+        "重重充",
+        "重重虫",
+        "充虫虫",
+        "重虫虫",
+        "虫虫虫",
+        "重重"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dongledongle",
+      "expected": "懂了懂了",
+      "source": "6000",
+      "lookup_us": 920,
+      "candidates": [
+        "懂了懂了",
+        "冬了懂了",
+        "冬了动了",
+        "懂了动了",
+        "冬乐懂了",
+        "冬了洞了",
+        "东乐懂了",
+        "冬勒懂了",
+        "懂了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "duideduide",
+      "expected": "对的对的",
+      "source": "6000",
+      "lookup_us": 1418,
+      "candidates": [
+        "对的对的",
+        "对的队的",
+        "队的队的",
+        "对的对得",
+        "对得队的",
+        "对得对的",
+        "对的对地",
+        "队的对的",
+        "对"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "duiduidui",
+      "expected": "对对对",
+      "source": "6000",
+      "lookup_us": 961,
+      "candidates": [
+        "对对对",
+        "对对队",
+        "对队对",
+        "对队队",
+        "对对堆",
+        "对堆对",
+        "对對对",
+        "对兑对",
+        "对对"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "duoxienila",
+      "expected": "多谢你啦",
+      "source": "6000",
+      "lookup_us": 2957,
+      "candidates": [
+        "多谢你啦",
+        "多谢你辣",
+        "多谢你拉",
+        "多谢你落",
+        "多谢你喇",
+        "多谢你蜡",
+        "多谢你剌",
+        "多谢你腊",
+        "多谢"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "duoxienio",
+      "expected": "多谢你哦",
+      "source": "6000",
+      "lookup_us": 2858,
+      "candidates": [
+        "多谢你哦",
+        "多谢你噢",
+        "多谢你喔",
+        "多些你哦",
+        "多谢你嚄",
+        "多谢你筽",
+        "多写你哦",
+        "多些你噢",
+        "多谢"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "duoxieniya",
+      "expected": "多谢你呀",
+      "source": "6000",
+      "lookup_us": 3235,
+      "candidates": [
+        "多谢你呀",
+        "多谢你鸭",
+        "多谢你芽",
+        "多谢你雅",
+        "多谢你牙",
+        "多谢你吖",
+        "多谢你鸦",
+        "多谢你压",
+        "多谢"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haodahaoda",
+      "expected": "好哒好哒",
+      "source": "6000",
+      "lookup_us": 1772,
+      "candidates": [
+        "好哒好哒",
+        "好哒好大",
+        "好哒好打",
+        "好大好大",
+        "好打好大",
+        "好大号大",
+        "好哒浩大",
+        "好大好打",
+        "好大"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haodaya",
+      "expected": "好哒呀",
+      "source": "6000",
+      "lookup_us": 1233,
+      "candidates": [
+        "好哒呀",
+        "好大呀",
+        "好大牙",
+        "好大雅",
+        "好哒鸭",
+        "好打压",
+        "好打呀",
+        "好哒芽",
+        "好大"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haodihaodi",
+      "expected": "好滴好滴",
+      "source": "6000",
+      "lookup_us": 2656,
+      "candidates": [
+        "好滴好滴",
+        "好的好的",
+        "好滴好的",
+        "好的好地",
+        "好的好滴",
+        "好滴好地",
+        "好地好的",
+        "好的好底",
+        "好滴"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haodiya",
+      "expected": "好滴呀",
+      "source": "6000",
+      "lookup_us": 1329,
+      "candidates": [
+        "好滴呀",
+        "好的呀",
+        "好地呀",
+        "好的雅",
+        "好的鸭",
+        "好滴鸭",
+        "好的芽",
+        "好滴芽",
+        "好滴"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haoleihaolei",
+      "expected": "好嘞好嘞",
+      "source": "6000",
+      "lookup_us": 2230,
+      "candidates": [
+        "好嘞好嘞",
+        "好累好累",
+        "好嘞好累",
+        "好类好累",
+        "好累好类",
+        "号类好累",
+        "好嘞好类",
+        "好累号类",
+        "好累"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haoleiya",
+      "expected": "好嘞呀",
+      "source": "6000",
+      "lookup_us": 1121,
+      "candidates": [
+        "好嘞呀",
+        "好累呀",
+        "好累鸭",
+        "好累芽",
+        "好累雅",
+        "好累牙",
+        "好累鸦",
+        "好类呀",
+        "好累"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haonehaone",
+      "expected": "好呢好呢",
+      "source": "6000",
+      "lookup_us": 2338,
+      "candidates": [
+        "好呢好呢",
+        "号呢好呢",
+        "好哪好呢",
+        "好呐好呢",
+        "好讷好呢",
+        "好呢号呢",
+        "好吶好呢",
+        "号哪好呢",
+        "好呢"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haoohaoo",
+      "expected": "好哦好哦",
+      "source": "6000",
+      "lookup_us": 1192,
+      "candidates": [
+        "好哦好哦",
+        "好哦好噢",
+        "好哦好喔",
+        "号哦好哦",
+        "好哦好嚄",
+        "好哦好筽",
+        "好噢好哦",
+        "好哦号哦",
+        "好哦"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haooya",
+      "expected": "好哦呀",
+      "source": "6000",
+      "lookup_us": 707,
+      "candidates": [
+        "好哦呀",
+        "好哦鸭",
+        "好哦芽",
+        "好哦雅",
+        "好哦牙",
+        "号哦呀",
+        "好哦鸦",
+        "好哦压",
+        "好哦"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haoyahaoya",
+      "expected": "好吖好吖",
+      "source": "6000",
+      "lookup_us": 2764,
+      "candidates": [
+        "好吖好吖",
+        "好呀好呀",
+        "好吖好呀",
+        "号呀好呀",
+        "好呀好鸭",
+        "好压好呀",
+        "好呀好芽",
+        "好呀好雅",
+        "好呀"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haoyahaoya",
+      "expected": "好呀好呀",
+      "source": "6000",
+      "lookup_us": 2205,
+      "candidates": [
+        "好吖好吖",
+        "好呀好呀",
+        "好吖好呀",
+        "号呀好呀",
+        "好呀好鸭",
+        "好压好呀",
+        "好呀好芽",
+        "好呀好雅",
+        "好呀"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "haoyehaoye",
+      "expected": "好耶好耶",
+      "source": "6000",
+      "lookup_us": 1979,
+      "candidates": [
+        "好耶好耶",
+        "好耶好页",
+        "好也好页",
+        "好耶好也",
+        "好也好也",
+        "号也好页",
+        "好耶好业",
+        "好耶好夜",
+        "好耶"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haoyeya",
+      "expected": "好耶呀",
+      "source": "6000",
+      "lookup_us": 1168,
+      "candidates": [
+        "好耶呀",
+        "好页呀",
+        "好也呀",
+        "好叶芽",
+        "好耶鸭",
+        "好液压",
+        "好耶芽",
+        "好耶雅",
+        "好耶"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "hehehe",
+      "expected": "喝喝喝",
+      "source": "6000",
+      "lookup_us": 1161,
+      "candidates": [
+        "呵呵呵",
+        "喝喝喝",
+        "和呵呵",
+        "喝呵呵",
+        "河呵呵",
+        "和和和",
+        "和和河",
+        "何呵呵",
+        "赫赫"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "jizhujizhu",
+      "expected": "记住记住",
+      "source": "6000",
+      "lookup_us": 2628,
+      "candidates": [
+        "记住记住",
+        "记住记著",
+        "既住记住",
+        "记住几住",
+        "记住几著",
+        "记住几注",
+        "记住几煮",
+        "记住几助",
+        "记住"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "keyideya",
+      "expected": "可以的呀",
+      "source": "6000",
+      "lookup_us": 1667,
+      "candidates": [
+        "可以的呀",
+        "可以的雅",
+        "可以得呀",
+        "可以的鸭",
+        "可以的芽",
+        "可以的牙",
+        "可以的鸦",
+        "可以的压",
+        "可以的"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "keyiyakeyi",
+      "expected": "可以呀可以",
+      "source": "6000",
+      "lookup_us": 3274,
+      "candidates": [
+        "可以压可以",
+        "可以呀可以",
+        "可以雅可以",
+        "可以牙可以",
+        "可以亚可以",
+        "可以丫可以",
+        "可以鸭可以",
+        "可以押可以",
+        "可以呀"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "lailailai",
+      "expected": "来来来",
+      "source": "6000",
+      "lookup_us": 1021,
+      "candidates": [
+        "来来来",
+        "赖来来",
+        "来赖来",
+        "莱来来",
+        "来莱来",
+        "來来来",
+        "来來来",
+        "濑来来",
+        "来来"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meicuomeicuo",
+      "expected": "没错没错",
+      "source": "6000",
+      "lookup_us": 2883,
+      "candidates": [
+        "没错没错",
+        "每错没错",
+        "没错每错",
+        "没错美错",
+        "没撮没错",
+        "每撮没错",
+        "没搓没错",
+        "没挫没错",
+        "没错"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meiguanxida",
+      "expected": "没关系哒",
+      "source": "6000",
+      "lookup_us": 3534,
+      "candidates": [
+        "没关系哒",
+        "没关系大",
+        "没关系打",
+        "没关系答",
+        "没关系达",
+        "没关系沓",
+        "没关系搭",
+        "没关系嗒",
+        "没关系"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meiguanxila",
+      "expected": "没关系啦",
+      "source": "6000",
+      "lookup_us": 2587,
+      "candidates": [
+        "没关系啦",
+        "没关系辣",
+        "没关系拉",
+        "没关系落",
+        "没关系喇",
+        "没关系蜡",
+        "没关系剌",
+        "没关系腊",
+        "没关系"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meiguanxio",
+      "expected": "没关系哦",
+      "source": "6000",
+      "lookup_us": 2312,
+      "candidates": [
+        "没关系哦",
+        "没关系噢",
+        "没关系喔",
+        "没关系嚄",
+        "没关系筽",
+        "美关系哦",
+        "美关系噢",
+        "美关系喔",
+        "没关系"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meiguanxiya",
+      "expected": "没关系吖",
+      "source": "6000",
+      "lookup_us": 2958,
+      "candidates": [
+        "没关系吖",
+        "没关系呀",
+        "没关系鸭",
+        "没关系芽",
+        "没关系雅",
+        "没关系牙",
+        "没关系鸦",
+        "没关系压",
+        "没关系"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meiguanxiya",
+      "expected": "没关系呀",
+      "source": "6000",
+      "lookup_us": 3385,
+      "candidates": [
+        "没关系吖",
+        "没关系呀",
+        "没关系鸭",
+        "没关系芽",
+        "没关系雅",
+        "没关系牙",
+        "没关系鸦",
+        "没关系压",
+        "没关系"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "meimeimei",
+      "expected": "没没没",
+      "source": "6000",
+      "lookup_us": 2255,
+      "candidates": [
+        "没没没",
+        "每每每",
+        "每每没",
+        "每每美",
+        "没美美",
+        "每美美",
+        "没每每",
+        "每每梅",
+        "美眉"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meishidela",
+      "expected": "没事的啦",
+      "source": "6000",
+      "lookup_us": 1221,
+      "candidates": [
+        "没事的啦",
+        "没事的拉",
+        "没事的辣",
+        "没似的拉",
+        "每似的拉",
+        "没事的落",
+        "没似的辣",
+        "每似的辣",
+        "没事的"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meishidene",
+      "expected": "没事的呢",
+      "source": "6000",
+      "lookup_us": 1388,
+      "candidates": [
+        "没事的呢",
+        "没似的呢",
+        "每似的呢",
+        "美食的呢",
+        "没是的呢",
+        "每是的呢",
+        "每时的呢",
+        "没时的呢",
+        "没事的"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meishideo",
+      "expected": "没事的哦",
+      "source": "6000",
+      "lookup_us": 847,
+      "candidates": [
+        "没事的哦",
+        "没事的噢",
+        "没似的哦",
+        "每似的哦",
+        "没事的喔",
+        "没事的嚄",
+        "没事的筽",
+        "没似的噢",
+        "没事的"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meishideya",
+      "expected": "没事的呀",
+      "source": "6000",
+      "lookup_us": 1224,
+      "candidates": [
+        "没事的呀",
+        "没似的呀",
+        "每似的呀",
+        "没是的呀",
+        "每是的呀",
+        "没事的雅",
+        "美食的呀",
+        "没事的鸭",
+        "没事的"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meiwentida",
+      "expected": "没问题哒",
+      "source": "6000",
+      "lookup_us": 1360,
+      "candidates": [
+        "没问题哒",
+        "没问题答",
+        "没问题大",
+        "没问题打",
+        "没问题达",
+        "每问题答",
+        "每问题大",
+        "每问题打",
+        "没问题"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meiwentila",
+      "expected": "没问题啦",
+      "source": "6000",
+      "lookup_us": 902,
+      "candidates": [
+        "没问题啦",
+        "没问题辣",
+        "没问题拉",
+        "每问题啦",
+        "每问题辣",
+        "没问题落",
+        "每问题拉",
+        "没问题喇",
+        "没问题"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meiwentio",
+      "expected": "没问题哦",
+      "source": "6000",
+      "lookup_us": 720,
+      "candidates": [
+        "没问题哦",
+        "每问题哦",
+        "没问题噢",
+        "没问题喔",
+        "没问题嚄",
+        "没问题筽",
+        "每问题噢",
+        "每问题喔",
+        "没问题"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meiwentiya",
+      "expected": "没问题吖",
+      "source": "6000",
+      "lookup_us": 1165,
+      "candidates": [
+        "没问题吖",
+        "没问题呀",
+        "每问题呀",
+        "没问题鸭",
+        "没问题芽",
+        "没问题雅",
+        "没问题牙",
+        "没问题鸦",
+        "没问题"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meiwentiya",
+      "expected": "没问题呀",
+      "source": "6000",
+      "lookup_us": 1113,
+      "candidates": [
+        "没问题吖",
+        "没问题呀",
+        "每问题呀",
+        "没问题鸭",
+        "没问题芽",
+        "没问题雅",
+        "没问题牙",
+        "没问题鸦",
+        "没问题"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "meiyoumeiyou",
+      "expected": "没有没有",
+      "source": "6000",
+      "lookup_us": 3375,
+      "candidates": [
+        "没有没有",
+        "每有没有",
+        "没有没由",
+        "没有没友",
+        "没有没油",
+        "没有没右",
+        "没有没又",
+        "没有没柚",
+        "没有"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mingbaimingbai",
+      "expected": "明白明白",
+      "source": "6000",
+      "lookup_us": 3405,
+      "candidates": [
+        "明白明白",
+        "明摆明白",
+        "名白明白",
+        "明伯明白",
+        "明百明白",
+        "名摆明白",
+        "明白名白",
+        "明白明败",
+        "明白"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "queshiqueshi",
+      "expected": "确实确实",
+      "source": "6000",
+      "lookup_us": 4152,
+      "candidates": [
+        "确实确实",
+        "却是确实",
+        "确实确是",
+        "确实却是",
+        "却是却是",
+        "却事确实",
+        "却是确是",
+        "确实缺失",
+        "却是"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shideshide",
+      "expected": "是的是的",
+      "source": "6000",
+      "lookup_us": 1282,
+      "candidates": [
+        "是的是的",
+        "似的似的",
+        "似的是的",
+        "似的事的",
+        "是的似的",
+        "似的时的",
+        "是的事的",
+        "是的时的",
+        "是的"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shishishi",
+      "expected": "是是是",
+      "source": "6000",
+      "lookup_us": 1381,
+      "candidates": [
+        "是是是",
+        "石狮市",
+        "是试试",
+        "试试试",
+        "事试试",
+        "使试试",
+        "视试试",
+        "时试试",
+        "实施"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shoudaoshoudao",
+      "expected": "收到收到",
+      "source": "6000",
+      "lookup_us": 2249,
+      "candidates": [
+        "收到收到",
+        "收到受到",
+        "收到手道",
+        "收到手到",
+        "收到手倒",
+        "收到熟到",
+        "收到收道",
+        "受到收到",
+        "受到"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taiganxiela",
+      "expected": "太感谢啦",
+      "source": "6000",
+      "lookup_us": 3245,
+      "candidates": [
+        "太感谢啦",
+        "太感谢拉",
+        "太感谢辣",
+        "太感谢落",
+        "台感谢拉",
+        "太感谢喇",
+        "台感谢啦",
+        "太感谢蜡",
+        "太"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taiganxieo",
+      "expected": "太感谢哦",
+      "source": "6000",
+      "lookup_us": 2668,
+      "candidates": [
+        "太感谢哦",
+        "太感谢噢",
+        "太感谢喔",
+        "台感谢哦",
+        "太感谢嚄",
+        "太感谢筽",
+        "台感谢噢",
+        "台感谢喔",
+        "太"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taiganxieya",
+      "expected": "太感谢呀",
+      "source": "6000",
+      "lookup_us": 3053,
+      "candidates": [
+        "太感谢呀",
+        "台感谢呀",
+        "太感谢鸭",
+        "太感谢芽",
+        "太感谢雅",
+        "太感谢亚",
+        "太感谢牙",
+        "太感谢鸦",
+        "太"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woqingnichiya",
+      "expected": "我请你吃呀",
+      "source": "6000",
+      "lookup_us": 3437,
+      "candidates": [
+        "我请你吃呀",
+        "我请你吃鸭",
+        "我请你吃芽",
+        "我请你吃雅",
+        "我请你持呀",
+        "我请你池呀",
+        "我请你迟呀",
+        "我请你吃牙",
+        "我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woqingniheya",
+      "expected": "我请你喝呀",
+      "source": "6000",
+      "lookup_us": 3658,
+      "candidates": [
+        "我请你和呀",
+        "我请你喝呀",
+        "我请你和鸭",
+        "我请你和芽",
+        "我请你和雅",
+        "我请你和牙",
+        "我请你和鸦",
+        "我请你喝鸭",
+        "我"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "xiaciqingnichi",
+      "expected": "下次请你吃",
+      "source": "6000",
+      "lookup_us": 4158,
+      "candidates": [
+        "下次请你吃",
+        "下次请你迟",
+        "下次清你吃",
+        "下次请你尺",
+        "下次请你池",
+        "下次请你匙",
+        "下次情你吃",
+        "下次轻你吃",
+        "下次"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiaciqingnihe",
+      "expected": "下次请你喝",
+      "source": "6000",
+      "lookup_us": 4132,
+      "candidates": [
+        "下次请你和",
+        "下次请你喝",
+        "下次清你和",
+        "下次请你合",
+        "下次请你盒",
+        "下次请你河",
+        "下次清拟合",
+        "下次请拟合",
+        "下次"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "xiexienida",
+      "expected": "谢谢你哒",
+      "source": "6000",
+      "lookup_us": 3195,
+      "candidates": [
+        "谢谢你哒",
+        "谢谢你打",
+        "谢谢你大",
+        "谢谢你答",
+        "谢谢你达",
+        "谢谢你沓",
+        "谢谢你搭",
+        "谢谢你嗒",
+        "谢谢你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiexienila",
+      "expected": "谢谢你啦",
+      "source": "6000",
+      "lookup_us": 2966,
+      "candidates": [
+        "谢谢你啦",
+        "谢谢你辣",
+        "谢谢你拉",
+        "谢谢你落",
+        "谢谢你喇",
+        "谢谢你蜡",
+        "谢谢你剌",
+        "谢谢你腊",
+        "谢谢你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiexienio",
+      "expected": "谢谢你哦",
+      "source": "6000",
+      "lookup_us": 2662,
+      "candidates": [
+        "谢谢你哦",
+        "谢谢你噢",
+        "谢谢你喔",
+        "谢谢你嚄",
+        "谢谢你筽",
+        "谢谢呢哦",
+        "谢谢拟哦",
+        "谢谢泥哦",
+        "谢谢你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiexieniya",
+      "expected": "谢谢你吖",
+      "source": "6000",
+      "lookup_us": 3138,
+      "candidates": [
+        "谢谢你吖",
+        "谢谢你呀",
+        "谢谢你鸭",
+        "谢谢你芽",
+        "谢谢你雅",
+        "谢谢你牙",
+        "谢谢你鸦",
+        "谢谢你压",
+        "谢谢你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiexieniya",
+      "expected": "谢谢你呀",
+      "source": "6000",
+      "lookup_us": 3073,
+      "candidates": [
+        "谢谢你吖",
+        "谢谢你呀",
+        "谢谢你鸭",
+        "谢谢你芽",
+        "谢谢你雅",
+        "谢谢你牙",
+        "谢谢你鸦",
+        "谢谢你压",
+        "谢谢你"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "xingaxinga",
+      "expected": "行啊行啊",
+      "source": "6000",
+      "lookup_us": 2488,
+      "candidates": [
+        "行啊行啊",
+        "星啊行啊",
+        "行啊行阿",
+        "行啊行呵",
+        "新噶行啊",
+        "新嘎行啊",
+        "星阿行啊",
+        "新咖行啊",
+        "行啊"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xingbaxingba",
+      "expected": "行吧行吧",
+      "source": "6000",
+      "lookup_us": 2684,
+      "candidates": [
+        "行吧行吧",
+        "行吧行罢",
+        "星把行罢",
+        "星吧行吧",
+        "星把行吧",
+        "幸把行罢",
+        "幸把行吧",
+        "星吧行罢",
+        "行吧"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xingdexingde",
+      "expected": "行的行的",
+      "source": "6000",
+      "lookup_us": 2327,
+      "candidates": [
+        "行的行的",
+        "星的行的",
+        "星的形的",
+        "星的性的",
+        "行的形的",
+        "行的性的",
+        "星的星的",
+        "行的星的",
+        "行的"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xingxingxing",
+      "expected": "行行行",
+      "source": "6000",
+      "lookup_us": 2863,
+      "candidates": [
+        "行行行",
+        "星星星",
+        "行星星",
+        "幸星星",
+        "星星形",
+        "星星行",
+        "性星星",
+        "星星型",
+        "星星"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xingyaxingya",
+      "expected": "行呀行呀",
+      "source": "6000",
+      "lookup_us": 3017,
+      "candidates": [
+        "行呀行呀",
+        "星呀行呀",
+        "行呀行鸭",
+        "行呀行芽",
+        "行呀行雅",
+        "行呀性呀",
+        "行呀行牙",
+        "行呀型呀",
+        "行呀"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinkulaxinku",
+      "expected": "辛苦啦辛苦",
+      "source": "6000",
+      "lookup_us": 2350,
+      "candidates": [
+        "辛苦辣辛苦",
+        "辛苦啦辛苦",
+        "辛苦拉辛苦",
+        "新库拉辛苦",
+        "辛苦喇辛苦",
+        "辛苦蜡辛苦",
+        "新苦辣辛苦",
+        "辛苦剌辛苦",
+        "辛苦"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "xinkulela",
+      "expected": "辛苦了啦",
+      "source": "6000",
+      "lookup_us": 844,
+      "candidates": [
+        "辛苦了啦",
+        "辛苦了辣",
+        "辛苦了拉",
+        "新苦了啦",
+        "新哭了辣",
+        "新哭了啦",
+        "新苦了辣",
+        "辛苦了落",
+        "辛苦了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinkuleo",
+      "expected": "辛苦了哦",
+      "source": "6000",
+      "lookup_us": 467,
+      "candidates": [
+        "辛苦了哦",
+        "新苦了哦",
+        "辛苦了噢",
+        "新哭了哦",
+        "辛苦了喔",
+        "心哭了哦",
+        "心枯了哦",
+        "辛苦了嚄",
+        "辛苦了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinkuleya",
+      "expected": "辛苦了呀",
+      "source": "6000",
+      "lookup_us": 1105,
+      "candidates": [
+        "辛苦了呀",
+        "新苦了呀",
+        "新哭了呀",
+        "辛苦了鸭",
+        "辛苦了芽",
+        "辛苦了雅",
+        "心哭了呀",
+        "心枯了呀",
+        "辛苦了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinkunila",
+      "expected": "辛苦你啦",
+      "source": "6000",
+      "lookup_us": 1484,
+      "candidates": [
+        "辛苦你啦",
+        "辛苦你辣",
+        "辛苦你拉",
+        "辛苦你落",
+        "新苦你啦",
+        "辛苦你喇",
+        "新苦你辣",
+        "辛苦尼拉",
+        "辛苦"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinkunio",
+      "expected": "辛苦你哦",
+      "source": "6000",
+      "lookup_us": 1055,
+      "candidates": [
+        "辛苦你哦",
+        "新苦你哦",
+        "辛苦你噢",
+        "辛苦你喔",
+        "新哭你哦",
+        "新库你哦",
+        "辛苦你嚄",
+        "心枯你哦",
+        "辛苦"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinkuniya",
+      "expected": "辛苦你呀",
+      "source": "6000",
+      "lookup_us": 2244,
+      "candidates": [
+        "辛苦你呀",
+        "新苦你呀",
+        "辛苦你鸭",
+        "辛苦你芽",
+        "辛苦你雅",
+        "辛苦你牙",
+        "辛苦你鸦",
+        "新哭你呀",
+        "辛苦"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youdeyoude",
+      "expected": "有的有的",
+      "source": "6000",
+      "lookup_us": 1401,
+      "candidates": [
+        "有的有的",
+        "又得有的",
+        "有得有的",
+        "由的有的",
+        "有的有得",
+        "有的有地",
+        "有的游的",
+        "有的优的",
+        "有的"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youmafannila",
+      "expected": "又麻烦你啦",
+      "source": "6000",
+      "lookup_us": 2191,
+      "candidates": [
+        "有麻烦你辣",
+        "又麻烦你辣",
+        "有麻烦你啦",
+        "又麻烦你啦",
+        "有麻烦你拉",
+        "又麻烦你拉",
+        "有麻烦你落",
+        "又麻烦你落",
+        "邮码"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "youmafannio",
+      "expected": "又麻烦你哦",
+      "source": "6000",
+      "lookup_us": 1703,
+      "candidates": [
+        "有麻烦你哦",
+        "又麻烦你哦",
+        "有麻烦你噢",
+        "又麻烦你噢",
+        "有麻烦你喔",
+        "又麻烦你喔",
+        "有麻烦你嚄",
+        "又麻烦你嚄",
+        "邮码"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "youmafanniya",
+      "expected": "又麻烦你呀",
+      "source": "6000",
+      "lookup_us": 2146,
+      "candidates": [
+        "有麻烦你呀",
+        "又麻烦你呀",
+        "有麻烦你鸭",
+        "又麻烦你鸭",
+        "有麻烦你芽",
+        "又麻烦你芽",
+        "有麻烦你雅",
+        "又麻烦你雅",
+        "邮码"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "youyouyou",
+      "expected": "有有有",
+      "source": "6000",
+      "lookup_us": 1293,
+      "candidates": [
+        "有有有",
+        "又有有",
+        "又有由",
+        "又有友",
+        "又有油",
+        "有又有",
+        "又又有",
+        "又有右",
+        "又有"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhendezhende",
+      "expected": "真的真的",
+      "source": "6000",
+      "lookup_us": 1693,
+      "candidates": [
+        "真的真的",
+        "真得真的",
+        "真的真地",
+        "真的真得",
+        "真地真的",
+        "镇的真的",
+        "真的枕的",
+        "真的镇的",
+        "真得"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhidaozhidao",
+      "expected": "知道知道",
+      "source": "6000",
+      "lookup_us": 2952,
+      "candidates": [
+        "知道知道",
+        "直到知道",
+        "之道知道",
+        "指导知道",
+        "只到知道",
+        "知道直到",
+        "直到直到",
+        "执导知道",
+        "知道"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhongazhonga",
+      "expected": "中啊中啊",
+      "source": "6000",
+      "lookup_us": 909,
+      "candidates": [
+        "中啊中啊",
+        "中啊中阿",
+        "终啊中啊",
+        "中啊中呵",
+        "中阿中啊",
+        "中啊中吖",
+        "中啊种啊",
+        "中啊重啊",
+        "中"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zouzouzou",
+      "expected": "走走走",
+      "source": "6000",
+      "lookup_us": 264,
+      "candidates": [
+        "走走走",
+        "邹走走",
+        "奏走走",
+        "揍走走",
+        "走走奏",
+        "诹走走",
+        "驺走走",
+        "赱走走",
+        "走走"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zuozuozuo",
+      "expected": "坐坐坐",
+      "source": "6000",
+      "lookup_us": 1347,
+      "candidates": [
+        "坐坐坐",
+        "坐坐做",
+        "坐坐作",
+        "坐坐座",
+        "做做做",
+        "做做作",
+        "做坐坐",
+        "昨坐坐",
+        "做做"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "aaaaa",
+      "expected": "啊啊啊啊啊",
+      "source": "6000",
+      "lookup_us": 456,
+      "candidates": [
+        "啊啊啊啊啊",
+        "阿啊啊啊啊",
+        "阿阿阿阿阿",
+        "啊啊啊啊阿",
+        "阿阿阿啊啊",
+        "啊啊啊阿阿",
+        "啊啊啊啊呵",
+        "阿啊啊阿阿",
+        "啊啊啊啊"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gugugugu",
+      "expected": "咕咕咕咕",
+      "source": "6000",
+      "lookup_us": 1817,
+      "candidates": [
+        "咕咕咕咕",
+        "姑姑姑姑",
+        "姑姑鼓鼓",
+        "鼓鼓鼓鼓",
+        "故姑姑顾",
+        "姑姑咕咕",
+        "故姑姑古",
+        "咕咕鼓鼓",
+        "咕咕"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "hahahahaha",
+      "expected": "哈哈哈哈哈",
+      "source": "6000",
+      "lookup_us": 276,
+      "candidates": [
+        "哈哈哈哈哈",
+        "虾哈哈哈哈",
+        "哈哈哈哈虾",
+        "哈哈哈哈蛤",
+        "哈哈哈哈铪",
+        "虾哈哈哈虾",
+        "哈哈蛤哈哈",
+        "哈哈虾哈哈",
+        "哈哈哈哈"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haizhenbieshuoa",
+      "expected": "还真别说啊",
+      "source": "6000",
+      "lookup_us": 3693,
+      "candidates": [
+        "还真别说阿",
+        "还真别说啊",
+        "还真别说呵",
+        "还真别说吖",
+        "还甄别说阿",
+        "还真别说腌",
+        "还甄别说啊",
+        "还真别说嗄",
+        "还真"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "haizhenbuhaoshuo",
+      "expected": "还真不好说",
+      "source": "6000",
+      "lookup_us": 2892,
+      "candidates": [
+        "还真不好说",
+        "海真不好说",
+        "还真不好烁",
+        "还真不号说",
+        "还真不好說",
+        "还真不好硕",
+        "还真不好朔",
+        "还真不好数",
+        "还真"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haizhenshuobuding",
+      "expected": "还真说不定",
+      "source": "6000",
+      "lookup_us": 3177,
+      "candidates": [
+        "还真说不定",
+        "还镇说不定",
+        "还真说不顶",
+        "还真数不定",
+        "还真说不锭",
+        "还真說不定",
+        "还真硕不定",
+        "还真说补丁",
+        "还真"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haizhenyoudaoli",
+      "expected": "还真有道理",
+      "source": "6000",
+      "lookup_us": 5102,
+      "candidates": [
+        "还真有道理",
+        "海真有道理",
+        "还真由道理",
+        "还真又道理",
+        "还真悠道理",
+        "还真油道理",
+        "还真游道理",
+        "还真友道理",
+        "还真"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haojiahuoya",
+      "expected": "好家伙呀",
+      "source": "6000",
+      "lookup_us": 3350,
+      "candidates": [
+        "好家伙呀",
+        "号家伙呀",
+        "好家伙鸭",
+        "好家伙芽",
+        "好家伙雅",
+        "好家伙牙",
+        "好家伙鸦",
+        "好家伙压",
+        "好家伙"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "heiheiheihei",
+      "expected": "嘿嘿嘿嘿",
+      "source": "6000",
+      "lookup_us": 1144,
+      "candidates": [
+        "嘿嘿嘿嘿",
+        "黑黑黑黑",
+        "嘿嘿黑黑",
+        "黑黑嘿嘿",
+        "黑嘿嘿黑",
+        "嘿嘿嘿黑",
+        "黑嘿嘿嘿",
+        "嘿黑黑黑",
+        "黑黑"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "heiheiheiheihei",
+      "expected": "嘿嘿嘿嘿嘿",
+      "source": "6000",
+      "lookup_us": 1031,
+      "candidates": [
+        "黑黑黑黑黑",
+        "嘿嘿嘿嘿嘿",
+        "嘿嘿嘿嘿黑",
+        "黑嘿嘿嘿嘿",
+        "嘿嘿黑黑黑",
+        "黑黑黑嘿嘿",
+        "黑嘿嘿黑黑",
+        "黑黑嘿嘿黑",
+        "嘿嘿嘿嘿"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "huashuodaozhele",
+      "expected": "话说到这了",
+      "source": "6000",
+      "lookup_us": 2928,
+      "candidates": [
+        "话说到这了",
+        "话说道折了",
+        "话说道着了",
+        "话说到着了",
+        "话说到这乐",
+        "花说道折了",
+        "话说到折了",
+        "花说到这了",
+        "话说"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huayoushuohuilai",
+      "expected": "话又说回来",
+      "source": "6000",
+      "lookup_us": 3918,
+      "candidates": [
+        "花又说回来",
+        "华又说回来",
+        "花有数回来",
+        "华有数回来",
+        "花又说会来",
+        "华又说会来",
+        "花又说灰来",
+        "话又说回来",
+        "滑油"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "nihaibieshuoa",
+      "expected": "你还别说啊",
+      "source": "6000",
+      "lookup_us": 3481,
+      "candidates": [
+        "你还别说阿",
+        "你还别说啊",
+        "你还别说呵",
+        "你还别说吖",
+        "你还憋说阿",
+        "你还别说腌",
+        "你还鳖说阿",
+        "你还别说嗄",
+        "你还"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "nnnn",
+      "expected": "嗯嗯嗯嗯",
+      "source": "6000",
+      "lookup_us": 95,
+      "candidates": [
+        "嗯嗯嗯嗯",
+        "唔嗯嗯嗯",
+        "嗯嗯嗯唔",
+        "嗯唔嗯嗯",
+        "嗯嗯唔嗯",
+        "唔唔嗯嗯",
+        "唔嗯嗯唔",
+        "嗯嗯唔唔",
+        "嗯嗯"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nnnnn",
+      "expected": "嗯嗯嗯嗯嗯",
+      "source": "6000",
+      "lookup_us": 63,
+      "candidates": [
+        "嗯嗯嗯嗯嗯",
+        "唔嗯嗯嗯嗯",
+        "嗯嗯嗯嗯唔",
+        "嗯嗯唔嗯嗯",
+        "嗯嗯嗯唔嗯",
+        "唔嗯嗯嗯唔",
+        "嗯嗯嗯唔唔",
+        "嗯唔唔嗯嗯",
+        "嗯嗯嗯嗯"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "oooo",
+      "expected": "哦哦哦哦",
+      "source": "6000",
+      "lookup_us": 262,
+      "candidates": [
+        "哦哦哦哦",
+        "噢噢噢噢",
+        "哦哦噢噢",
+        "噢噢哦哦",
+        "噢哦哦哦",
+        "哦哦哦噢",
+        "哦哦哦喔",
+        "哦噢噢噢",
+        "哦哦哦"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "oooo",
+      "expected": "噢噢噢噢",
+      "source": "6000",
+      "lookup_us": 161,
+      "candidates": [
+        "哦哦哦哦",
+        "噢噢噢噢",
+        "哦哦噢噢",
+        "噢噢哦哦",
+        "噢哦哦哦",
+        "哦哦哦噢",
+        "哦哦哦喔",
+        "哦噢噢噢",
+        "哦哦哦"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "shiyoudiandaoli",
+      "expected": "是有点道理",
+      "source": "6000",
+      "lookup_us": 4590,
+      "candidates": [
+        "是有点道理",
+        "时有点道理",
+        "是有点到里",
+        "是有点到利",
+        "是有点到力",
+        "是有点到理",
+        "是有点道里",
+        "是有点到李",
+        "石油"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shizhegedaoli",
+      "expected": "是这个道理",
+      "source": "6000",
+      "lookup_us": 3090,
+      "candidates": [
+        "是这个道理",
+        "使这个道理",
+        "是这个到里",
+        "是这个到利",
+        "是这个道里",
+        "是这个倒立",
+        "是这个到力",
+        "是这个到理",
+        "试着"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuodaozhegeshi",
+      "expected": "说到这个事",
+      "source": "6000",
+      "lookup_us": 4450,
+      "candidates": [
+        "说到这个时",
+        "说道这个时",
+        "说到这个是",
+        "说道这个是",
+        "说到这个世",
+        "说到这个室",
+        "说到这个事",
+        "说到这个式",
+        "说到这个"
+      ],
+      "expected_rank": 7
+    },
+    {
+      "pinyin": "shuodaozhejianshi",
+      "expected": "说到这件事",
+      "source": "6000",
+      "lookup_us": 8146,
+      "candidates": [
+        "说到这件事",
+        "说道这件事",
+        "说到这件是",
+        "说到这件时",
+        "说到这件失",
+        "说道这件是",
+        "说到这件式",
+        "说到这件试",
+        "说道"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuoqilaihaizhenshi",
+      "expected": "说起来还真是",
+      "source": "6000",
+      "lookup_us": 4671,
+      "candidates": [
+        "说起来还真是",
+        "说起来还真实",
+        "说起来还真时",
+        "说起来还真事",
+        "说起来还真世",
+        "说起来还真式",
+        "说起来还真史",
+        "说起来还真试",
+        "说起来"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wawawawa",
+      "expected": "哇哇哇哇",
+      "source": "6000",
+      "lookup_us": 575,
+      "candidates": [
+        "哇哇哇哇",
+        "娃娃娃娃",
+        "袜哇哇哇",
+        "娃娃哇哇",
+        "哇哇娃娃",
+        "袜娃娃哇",
+        "哇娃娃哇",
+        "哇哇哇挖",
+        "娃娃"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wodagaizhidaole",
+      "expected": "我大概知道了",
+      "source": "6000",
+      "lookup_us": 4237,
+      "candidates": [
+        "我大概知道了",
+        "我打概知道了",
+        "我大概直到了",
+        "我打改制到了",
+        "我大概制到了",
+        "我大概知到了",
+        "我大概值到了",
+        "我打该直到了",
+        "我打"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wodongnishuode",
+      "expected": "我懂你说的",
+      "source": "6000",
+      "lookup_us": 2745,
+      "candidates": [
+        "我懂你说的",
+        "我动你说的",
+        "我懂你说得",
+        "我动你说得",
+        "我懂你说地",
+        "我动你说地",
+        "我东尼说得",
+        "我懂呢说得",
+        "我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woganggangcaifaxian",
+      "expected": "我刚刚才发现",
+      "source": "6000",
+      "lookup_us": 6217,
+      "candidates": [
+        "我刚刚才发现",
+        "我刚刚才发先",
+        "我刚刚才发线",
+        "我刚刚才发见",
+        "我刚刚才发显",
+        "我刚刚才发限",
+        "我刚刚才发鲜",
+        "我刚刚才发咸",
+        "我刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woganggangcaikandao",
+      "expected": "我刚刚才看到",
+      "source": "6000",
+      "lookup_us": 4435,
+      "candidates": [
+        "我刚刚才看到",
+        "我刚刚才看道",
+        "喔刚刚才看到",
+        "我刚刚才看倒",
+        "我刚刚才看刀",
+        "我刚刚才看导",
+        "我刚刚才看岛",
+        "我刚刚才看盗",
+        "我刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woganggangcaitingdao",
+      "expected": "我刚刚才听到",
+      "source": "6000",
+      "lookup_us": 4939,
+      "candidates": [
+        "我刚刚才听到",
+        "我刚刚才听道",
+        "我刚刚才听倒",
+        "我刚刚才听刀",
+        "我刚刚才停到",
+        "我刚刚才挺到",
+        "我刚刚才听导",
+        "我刚刚才听岛",
+        "我刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woganggangcaizhidao",
+      "expected": "我刚刚才知道",
+      "source": "6000",
+      "lookup_us": 4698,
+      "candidates": [
+        "我刚刚才知道",
+        "我刚刚才直到",
+        "我刚刚才知到",
+        "我刚刚才之道",
+        "我刚刚才制到",
+        "我刚刚才知倒",
+        "我刚刚才指导",
+        "我刚刚才知刀",
+        "我刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wohaizhenbuhaoshuo",
+      "expected": "我还真不好说",
+      "source": "6000",
+      "lookup_us": 4402,
+      "candidates": [
+        "我还真不好说",
+        "我还贞不好说",
+        "我还真不号说",
+        "我还真不好烁",
+        "我还真不好說",
+        "我还真不好硕",
+        "我还真不好朔",
+        "我还真不好数",
+        "我还"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wohaizhenbuzhidao",
+      "expected": "我还真不知道",
+      "source": "6000",
+      "lookup_us": 5052,
+      "candidates": [
+        "我还真不知道",
+        "我还贞不知道",
+        "我还真部知道",
+        "我还真补知道",
+        "我还诊部知道",
+        "我还真布知道",
+        "我还真步知道",
+        "我还真不知到",
+        "我还"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wohaizhenmeijianguo",
+      "expected": "我还真没见过",
+      "source": "6000",
+      "lookup_us": 10092,
+      "candidates": [
+        "我还真没见过",
+        "我还真美见过",
+        "我还镇没见过",
+        "我还真每见过",
+        "我还真美建国",
+        "我还真没建国",
+        "我还真美坚果",
+        "我还真梅见过",
+        "我还"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wohaizhenmeiquguo",
+      "expected": "我还真没去过",
+      "source": "6000",
+      "lookup_us": 6394,
+      "candidates": [
+        "我还真没去过",
+        "我还真美去过",
+        "我还镇没去过",
+        "我还真每去过",
+        "我还真没去果",
+        "我还真梅去过",
+        "我还真没去国",
+        "我还真莓去过",
+        "我还"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wohaizhenmeishiguo",
+      "expected": "我还真没试过",
+      "source": "6000",
+      "lookup_us": 5853,
+      "candidates": [
+        "我还真没试过",
+        "我还真美试过",
+        "我还真没事过",
+        "我还真美驶过",
+        "我还真没驶过",
+        "我还真没事果",
+        "我还真美十国",
+        "我还真没事国",
+        "我还"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wohaizhenmeitingguo",
+      "expected": "我还真没听过",
+      "source": "6000",
+      "lookup_us": 6231,
+      "candidates": [
+        "我还真没听过",
+        "我还镇没听过",
+        "我还真美听过",
+        "我还真每听过",
+        "我还真梅听过",
+        "我还真妹听过",
+        "我还真眉听过",
+        "我还真镅听过",
+        "我还"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wohaizhenmeixiangguo",
+      "expected": "我还真没想过",
+      "source": "6000",
+      "lookup_us": 9493,
+      "candidates": [
+        "我还真没想过",
+        "我还真美想过",
+        "我还镇没想过",
+        "我还真每想过",
+        "我还真梅想过",
+        "我还真妹想过",
+        "我还真眉想过",
+        "我还真镅想过",
+        "我还"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wohaojiahuo",
+      "expected": "我好家伙",
+      "source": "6000",
+      "lookup_us": 4045,
+      "candidates": [
+        "我好家伙",
+        "我好假货",
+        "我好家货",
+        "我毫家伙",
+        "我号家伙",
+        "我好家火",
+        "我好家活",
+        "握好家伙",
+        "我好"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "womingbainishuode",
+      "expected": "我明白你说的",
+      "source": "6000",
+      "lookup_us": 4066,
+      "candidates": [
+        "我明白你说的",
+        "我明白你说得",
+        "我明白你说地",
+        "我明摆你说的",
+        "我明白呢说得",
+        "我明白拟说得",
+        "我明白你说底",
+        "我明白泥说得",
+        "我明白"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "womingbainiyisi",
+      "expected": "我明白你意思",
+      "source": "6000",
+      "lookup_us": 4233,
+      "candidates": [
+        "我明白你意思",
+        "我明白呢意思",
+        "我明白拟意思",
+        "我明白泥意思",
+        "我明白尼意思",
+        "我明白腻意思",
+        "我明白鿭意思",
+        "我明白妳意思",
+        "我明白"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wonengdongniyisi",
+      "expected": "我能懂你意思",
+      "source": "6000",
+      "lookup_us": 3696,
+      "candidates": [
+        "我能动你意思",
+        "我能懂你意思",
+        "我能动呢意思",
+        "我能动拟意思",
+        "我能动泥意思",
+        "我能动尼意思",
+        "我能动腻意思",
+        "我能动鿭意思",
+        "我能"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "woxianzaidongle",
+      "expected": "我现在懂了",
+      "source": "6000",
+      "lookup_us": 3027,
+      "candidates": [
+        "我现在懂了",
+        "我现在动了",
+        "我现在洞了",
+        "我先在懂了",
+        "我现在冬了",
+        "我现在咚了",
+        "我现在东了",
+        "我现在董了",
+        "我现在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woxianzaimingbaile",
+      "expected": "我现在明白了",
+      "source": "6000",
+      "lookup_us": 5341,
+      "candidates": [
+        "我现在明白了",
+        "我先在明白了",
+        "我现在明白乐",
+        "我现在名白了",
+        "我现在命白了",
+        "我现在鸣白了",
+        "我现在铭白了",
+        "我现在冥白了",
+        "我现在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woxianzaizhidaole",
+      "expected": "我现在知道了",
+      "source": "6000",
+      "lookup_us": 5229,
+      "candidates": [
+        "我现在知道了",
+        "我先在知道了",
+        "我现在直到了",
+        "我现在只到了",
+        "我现在制到了",
+        "我现在纸到了",
+        "我现在知到了",
+        "我现在之到了",
+        "我现在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozhecaikandong",
+      "expected": "我这才看懂",
+      "source": "6000",
+      "lookup_us": 2147,
+      "candidates": [
+        "我这才看懂",
+        "我这才看动",
+        "我这才看洞",
+        "我这才看冻",
+        "我这才看东",
+        "我这菜看懂",
+        "我这才看冬",
+        "我这才看董",
+        "我这"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozhecaimingbai",
+      "expected": "我这才明白",
+      "source": "6000",
+      "lookup_us": 4149,
+      "candidates": [
+        "我这才明白",
+        "我这蔡明白",
+        "我这菜明白",
+        "我这猜明白",
+        "我这踩明白",
+        "我这彩明白",
+        "我这采明白",
+        "我这财明白",
+        "我这"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozhecaitingdong",
+      "expected": "我这才听懂",
+      "source": "6000",
+      "lookup_us": 2732,
+      "candidates": [
+        "我这才听懂",
+        "我这才听动",
+        "我这才听洞",
+        "我这才听冻",
+        "我这才听东",
+        "我这才听冬",
+        "我这才挺动",
+        "我这才听董",
+        "我这"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozhecaixiangmingbai",
+      "expected": "我这才想明白",
+      "source": "6000",
+      "lookup_us": 8629,
+      "candidates": [
+        "我这才想明白",
+        "我这猜想明白",
+        "我这才向明白",
+        "我这才像明白",
+        "我这才象明白",
+        "我这才相明白",
+        "我这才香明白",
+        "我这才项明白",
+        "我这"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozhecaizhidao",
+      "expected": "我这才知道",
+      "source": "6000",
+      "lookup_us": 3569,
+      "candidates": [
+        "我这才知道",
+        "我着才知道",
+        "我这菜知道",
+        "我这猜知道",
+        "我这踩知道",
+        "我这彩知道",
+        "我这采知道",
+        "我这蔡知道",
+        "我这"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozhemeyikan",
+      "expected": "我这么一看",
+      "source": "6000",
+      "lookup_us": 2625,
+      "candidates": [
+        "我这么一看",
+        "我这么以看",
+        "我这么义看",
+        "我这么异看",
+        "我这么意看",
+        "我这么已看",
+        "我这么一刊",
+        "我这么易看",
+        "我这"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozhemeyiting",
+      "expected": "我这么一听",
+      "source": "6000",
+      "lookup_us": 3701,
+      "candidates": [
+        "我这么一听",
+        "我这么一停",
+        "我这么一厅",
+        "我这么易听",
+        "我这么已听",
+        "我这么已停",
+        "我这么意听",
+        "我这么一挺",
+        "我这"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozhemeyixiang",
+      "expected": "我这么一想",
+      "source": "6000",
+      "lookup_us": 6919,
+      "candidates": [
+        "我这么一想",
+        "我这么一向",
+        "我这么一箱",
+        "我这么一项",
+        "我这么一响",
+        "我这么意向",
+        "我这么意象",
+        "我这么异响",
+        "我这"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozhenbuhaoshuo",
+      "expected": "我真不好说",
+      "source": "6000",
+      "lookup_us": 3402,
+      "candidates": [
+        "我真不好说",
+        "我贞不好说",
+        "我真不好烁",
+        "我真不号说",
+        "我真步好说",
+        "我真不好說",
+        "我真不好硕",
+        "我真不好朔",
+        "我真"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozhenmeikanchulai",
+      "expected": "我真没看出来",
+      "source": "6000",
+      "lookup_us": 4494,
+      "candidates": [
+        "我真没看出来",
+        "我真美看出来",
+        "我真没刊出来",
+        "我真美刊出来",
+        "我真没砍出来",
+        "我真没坎出来",
+        "我真没堪出来",
+        "我真美砍出来",
+        "我真"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozhenmeitingchulai",
+      "expected": "我真没听出来",
+      "source": "6000",
+      "lookup_us": 4876,
+      "candidates": [
+        "我真没听出来",
+        "我镇没听出来",
+        "我真没停出来",
+        "我真梅婷出来",
+        "我真没厅出来",
+        "我真美厅出来",
+        "我真没挺出来",
+        "我真美婷出来",
+        "我真"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozhenmeixiangdao",
+      "expected": "我真没想到",
+      "source": "6000",
+      "lookup_us": 8380,
+      "candidates": [
+        "我真没想到",
+        "我真美想到",
+        "我真没想道",
+        "我真每想到",
+        "我镇没想到",
+        "我真梅想到",
+        "我真妹想到",
+        "我真眉想到",
+        "我真"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozhidaoniyisi",
+      "expected": "我知道你意思",
+      "source": "6000",
+      "lookup_us": 5005,
+      "candidates": [
+        "我知道你意思",
+        "我知道你一丝",
+        "我知道你已死",
+        "我知道你一死",
+        "我知道你一思",
+        "我知道你已思",
+        "我知道你已丝",
+        "我知道你已食",
+        "我知道你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozhijieaile",
+      "expected": "我直接爱了",
+      "source": "6000",
+      "lookup_us": 4752,
+      "candidates": [
+        "我直接挨了",
+        "我直接爱了",
+        "我直接唉了",
+        "我直接哎了",
+        "我直接艾了",
+        "我直接矮了",
+        "我直接哀了",
+        "我直接砹了",
+        "我只"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "wozhijieaizhu",
+      "expected": "我直接爱住",
+      "source": "6000",
+      "lookup_us": 5328,
+      "candidates": [
+        "我直接爱住",
+        "我直接爱著",
+        "我直接唉住",
+        "我直接哎住",
+        "我直接爱注",
+        "我直接唉著",
+        "我直接爱煮",
+        "我直接爱助",
+        "我只"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozhijiechenmo",
+      "expected": "我直接沉默",
+      "source": "6000",
+      "lookup_us": 4995,
+      "candidates": [
+        "我直接沉没",
+        "我直接沉默",
+        "我直接陈谟",
+        "我直接陈膜",
+        "我直接陈摸",
+        "我直接趁没",
+        "我直接晨膜",
+        "我直接趁膜",
+        "我只"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "wozhijiehaojiahuo",
+      "expected": "我直接好家伙",
+      "source": "6000",
+      "lookup_us": 8348,
+      "candidates": [
+        "我直接好家伙",
+        "我直接号家伙",
+        "我直接好假货",
+        "我直接豪家伙",
+        "我直接浩家伙",
+        "我直接郝家伙",
+        "我直接耗家伙",
+        "我直接好家货",
+        "我只"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozhijielengzhu",
+      "expected": "我直接愣住",
+      "source": "6000",
+      "lookup_us": 4259,
+      "candidates": [
+        "我直接愣住",
+        "我直接冷住",
+        "我直接冷著",
+        "我直接冷注",
+        "我直接冷煮",
+        "我直接冷助",
+        "我直接楞住",
+        "我直接棱住",
+        "我只"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozhijiemengle",
+      "expected": "我直接懵了",
+      "source": "6000",
+      "lookup_us": 5673,
+      "candidates": [
+        "我直接梦了",
+        "我直接蒙了",
+        "我直接懵了",
+        "我直接猛了",
+        "我直接孟了",
+        "我直接盟了",
+        "我直接萌了",
+        "我直接锰了",
+        "我只"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "wozhijiewuyu",
+      "expected": "我直接无语",
+      "source": "6000",
+      "lookup_us": 5085,
+      "candidates": [
+        "我直接无语",
+        "我直接物语",
+        "我直接无与",
+        "我直接物雨",
+        "我直接无于",
+        "我直接吴雨",
+        "我直接五于",
+        "我直接无欲",
+        "我只"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozhijiexiaolie",
+      "expected": "我直接笑裂",
+      "source": "6000",
+      "lookup_us": 9137,
+      "candidates": [
+        "我直接笑列",
+        "我直接笑裂",
+        "我直接小列",
+        "我直接笑烈",
+        "我直接校列",
+        "我直接晓列",
+        "我直接萧列",
+        "我直接消列",
+        "我只"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "wozhijiexiaoma",
+      "expected": "我直接笑麻",
+      "source": "6000",
+      "lookup_us": 8626,
+      "candidates": [
+        "我直接笑骂",
+        "我直接笑吗",
+        "我直接笑麻",
+        "我直接笑码",
+        "我直接笑妈",
+        "我直接小吗",
+        "我直接小码",
+        "我直接小马",
+        "我只"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "wozhijiexiaopen",
+      "expected": "我直接笑喷",
+      "source": "6000",
+      "lookup_us": 6296,
+      "candidates": [
+        "我直接笑喷",
+        "我直接笑盆",
+        "我直接小盆",
+        "我直接小喷",
+        "我直接笑噴",
+        "我直接校喷",
+        "我直接晓喷",
+        "我直接校盆",
+        "我只"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozhijiezhenjing",
+      "expected": "我直接震惊",
+      "source": "6000",
+      "lookup_us": 8553,
+      "candidates": [
+        "我直接震惊",
+        "我直接镇静",
+        "我直接真静",
+        "我直接真经",
+        "我直接真景",
+        "我直接真净",
+        "我直接阵惊",
+        "我直接镇经",
+        "我只"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wuwuwuwu",
+      "expected": "呜呜呜呜",
+      "source": "6000",
+      "lookup_us": 1875,
+      "candidates": [
+        "呜呜呜呜",
+        "呜呜呜五",
+        "呜呜呜物",
+        "呜呜呜误",
+        "呜呜呜午",
+        "呜呜呜务",
+        "呜呜呜屋",
+        "无呜呜呜",
+        "呜呜呜"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wuwuwuwuwu",
+      "expected": "呜呜呜呜呜",
+      "source": "6000",
+      "lookup_us": 1955,
+      "candidates": [
+        "呜呜呜呜呜",
+        "呜呜呜呜五",
+        "呜呜呜呜物",
+        "呜呜呜呜误",
+        "呜呜呜呜午",
+        "呜呜呜呜务",
+        "呜呜呜呜屋",
+        "无呜呜呜呜",
+        "呜呜呜呜"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xixixixi",
+      "expected": "嘻嘻嘻嘻",
+      "source": "6000",
+      "lookup_us": 1867,
+      "candidates": [
+        "嘻嘻嘻嘻",
+        "洗洗洗洗",
+        "细细细细",
+        "细细洗洗",
+        "洗洗细细",
+        "嘻嘻洗洗",
+        "洗洗西西",
+        "洗洗嘻嘻",
+        "嘻嘻嘻"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xixixixixi",
+      "expected": "嘻嘻嘻嘻嘻",
+      "source": "6000",
+      "lookup_us": 1869,
+      "candidates": [
+        "洗洗洗洗洗",
+        "嘻嘻嘻嘻嘻",
+        "细细细细细",
+        "洗嘻嘻嘻嘻",
+        "洗细细细细",
+        "嘻嘻嘻嘻系",
+        "洗洗洗洗系",
+        "洗洗洗细细",
+        "嘻嘻嘻嘻"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "yeshizhegeyisi",
+      "expected": "也是这个意思",
+      "source": "6000",
+      "lookup_us": 3841,
+      "candidates": [
+        "也是这个意思",
+        "页是这个意思",
+        "也是这个一丝",
+        "也是这个已死",
+        "也是这个一死",
+        "也是这个一思",
+        "也是这个已思",
+        "也是这个意死",
+        "也是"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yeshizhemehuishi",
+      "expected": "也是这么回事",
+      "source": "6000",
+      "lookup_us": 5062,
+      "candidates": [
+        "也是这么回事",
+        "也使这么回事",
+        "也是这么回是",
+        "也是这么会是",
+        "也是这么回时",
+        "也是这么会时",
+        "也是这么会使",
+        "也是这么会师",
+        "也是"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yingyingyingying",
+      "expected": "嘤嘤嘤嘤",
+      "source": "6000",
+      "lookup_us": 6618,
+      "candidates": [
+        "嘤嘤嘤嘤",
+        "盈盈盈盈",
+        "盈盈莹莹",
+        "盈盈盈应",
+        "盈盈盈影",
+        "硬盈盈应",
+        "盈盈莹应",
+        "盈盈应应",
+        "盈盈"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhegewobudong",
+      "expected": "这个我不懂",
+      "source": "6000",
+      "lookup_us": 2418,
+      "candidates": [
+        "这个我不懂",
+        "这个我不动",
+        "这个握不懂",
+        "这个喔不懂",
+        "这个窝不懂",
+        "这个卧不懂",
+        "这个沃不懂",
+        "这个硪不懂",
+        "这个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhegewobuhui",
+      "expected": "这个我不会",
+      "source": "6000",
+      "lookup_us": 3277,
+      "candidates": [
+        "这个我不会",
+        "这个我不回",
+        "这个我不悔",
+        "这个握不会",
+        "这个喔不会",
+        "这个我不灰",
+        "这个窝不会",
+        "这个卧不会",
+        "这个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhegewobushu",
+      "expected": "这个我不熟",
+      "source": "6000",
+      "lookup_us": 2277,
+      "candidates": [
+        "这个我不熟",
+        "这个我不书",
+        "这个我不树",
+        "这个我不舒",
+        "这个我不束",
+        "这个我不疏",
+        "这个我不术",
+        "这个我不叔",
+        "这个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhegewobuzhidao",
+      "expected": "这个我不知道",
+      "source": "6000",
+      "lookup_us": 3756,
+      "candidates": [
+        "这个我不知道",
+        "这个握不知道",
+        "这个我部知道",
+        "这个我不知到",
+        "这个我不知倒",
+        "这个我不直到",
+        "这个我不知刀",
+        "这个我不知导",
+        "这个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhegewochiguo",
+      "expected": "这个我吃过",
+      "source": "6000",
+      "lookup_us": 3269,
+      "candidates": [
+        "这个我吃过",
+        "这个喔吃过",
+        "这个握吃过",
+        "这个窝吃过",
+        "这个我吃果",
+        "这个卧吃过",
+        "这个我吃国",
+        "这个沃吃过",
+        "这个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhegewodonga",
+      "expected": "这个我懂啊",
+      "source": "6000",
+      "lookup_us": 1327,
+      "candidates": [
+        "这个我懂啊",
+        "这个我懂阿",
+        "这个我东阿",
+        "这个我动啊",
+        "这个我东啊",
+        "这个我洞啊",
+        "这个我懂呵",
+        "这个我冬啊",
+        "这个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhegewohuia",
+      "expected": "这个我会啊",
+      "source": "6000",
+      "lookup_us": 2453,
+      "candidates": [
+        "这个我会啊",
+        "这个我会阿",
+        "这个我会呵",
+        "这个我回啊",
+        "这个我回阿",
+        "这个我会吖",
+        "这个我会腌",
+        "这个我回呵",
+        "这个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhegewojianguo",
+      "expected": "这个我见过",
+      "source": "6000",
+      "lookup_us": 7102,
+      "candidates": [
+        "这个我见过",
+        "这个喔见过",
+        "这个握见过",
+        "这个窝见过",
+        "这个我建国",
+        "这个卧见过",
+        "这个沃见过",
+        "这个我坚果",
+        "这个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhegewomaiguo",
+      "expected": "这个我买过",
+      "source": "6000",
+      "lookup_us": 4234,
+      "candidates": [
+        "这个我买过",
+        "这个我卖过",
+        "这个我卖国",
+        "这个我买果",
+        "这个我迈过",
+        "这个我买国",
+        "这个喔买过",
+        "这个握买过",
+        "这个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhegewomeichiguo",
+      "expected": "这个我没吃过",
+      "source": "6000",
+      "lookup_us": 5049,
+      "candidates": [
+        "这个我没吃过",
+        "这个我美吃过",
+        "这个我每吃过",
+        "这个我没吃果",
+        "这个我没吃国",
+        "这个我梅吃过",
+        "这个喔没吃过",
+        "这个我妹吃过",
+        "这个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhegewomeijianguo",
+      "expected": "这个我没见过",
+      "source": "6000",
+      "lookup_us": 10253,
+      "candidates": [
+        "这个我没见过",
+        "这个我没建国",
+        "这个喔没见过",
+        "这个我没坚果",
+        "这个我美见过",
+        "这个我每见过",
+        "这个我没煎锅",
+        "这个我梅见过",
+        "这个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhegewomeimaiguo",
+      "expected": "这个我没买过",
+      "source": "6000",
+      "lookup_us": 6421,
+      "candidates": [
+        "这个我没买过",
+        "这个我没卖过",
+        "这个我没买果",
+        "这个我没卖国",
+        "这个我没买国",
+        "这个我没买锅",
+        "这个我没买郭",
+        "这个我没迈过",
+        "这个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhegewomeiquguo",
+      "expected": "这个我没去过",
+      "source": "6000",
+      "lookup_us": 5315,
+      "candidates": [
+        "这个我没去过",
+        "这个我没去果",
+        "这个我没去国",
+        "这个我美去过",
+        "这个我每去过",
+        "这个我没去锅",
+        "这个我没区过",
+        "这个我没取过",
+        "这个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhegewomeishiguo",
+      "expected": "这个我没试过",
+      "source": "6000",
+      "lookup_us": 5152,
+      "candidates": [
+        "这个我没试过",
+        "这个我没事过",
+        "这个我没事果",
+        "这个我没驶过",
+        "这个我没事国",
+        "这个我没十国",
+        "这个我没时过",
+        "这个我没事锅",
+        "这个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhegewomeitingguo",
+      "expected": "这个我没听过",
+      "source": "6000",
+      "lookup_us": 5466,
+      "candidates": [
+        "这个我没听过",
+        "这个喔没听过",
+        "这个我没听果",
+        "这个我没听国",
+        "这个我没听锅",
+        "这个我美听过",
+        "这个我每听过",
+        "这个我没听郭",
+        "这个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhegewomeiyongguo",
+      "expected": "这个我没用过",
+      "source": "6000",
+      "lookup_us": 4984,
+      "candidates": [
+        "这个我没用过",
+        "这个我没用果",
+        "这个我没用国",
+        "这个我没用锅",
+        "这个我美用过",
+        "这个我每用过",
+        "这个我没用郭",
+        "这个我没拥过",
+        "这个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhegewoquguo",
+      "expected": "这个我去过",
+      "source": "6000",
+      "lookup_us": 3425,
+      "candidates": [
+        "这个我去过",
+        "这个我去果",
+        "这个我去国",
+        "这个我去锅",
+        "这个我去郭",
+        "这个我区过",
+        "这个喔去过",
+        "这个握去过",
+        "这个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhegewoshiguo",
+      "expected": "这个我试过",
+      "source": "6000",
+      "lookup_us": 3671,
+      "candidates": [
+        "这个我试过",
+        "这个我是过",
+        "这个我十国",
+        "这个卧室过",
+        "这个我是果",
+        "这个我驶过",
+        "这个我市过",
+        "这个我是国",
+        "这个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhegewoshua",
+      "expected": "这个我熟啊",
+      "source": "6000",
+      "lookup_us": 1789,
+      "candidates": [
+        "这个我刷",
+        "这个我耍",
+        "这个喔刷",
+        "这个握刷",
+        "这个窝刷",
+        "这个卧刷",
+        "这个沃刷",
+        "这个我熟啊",
+        "这个"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zhegewotingguo",
+      "expected": "这个我听过",
+      "source": "6000",
+      "lookup_us": 4098,
+      "candidates": [
+        "这个我听过",
+        "这个喔听过",
+        "这个握听过",
+        "这个窝听过",
+        "这个卧听过",
+        "这个沃听过",
+        "这个硪听过",
+        "这个涡听过",
+        "这个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhegewoyongguo",
+      "expected": "这个我用过",
+      "source": "6000",
+      "lookup_us": 3180,
+      "candidates": [
+        "这个我用过",
+        "这个喔用过",
+        "这个握用过",
+        "这个窝用过",
+        "这个卧用过",
+        "这个沃用过",
+        "这个我用果",
+        "这个硪用过",
+        "这个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhegewozhidao",
+      "expected": "这个我知道",
+      "source": "6000",
+      "lookup_us": 3420,
+      "candidates": [
+        "这个我知道",
+        "这个喔知道",
+        "这个握知道",
+        "这个窝知道",
+        "这个卧知道",
+        "这个沃知道",
+        "这个硪知道",
+        "这个涡知道",
+        "这个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhekenanzhuwole",
+      "expected": "这可难住我了",
+      "source": "6000",
+      "lookup_us": 3051,
+      "candidates": [
+        "这柯南著我了",
+        "这柯南住我了",
+        "这可难住我了",
+        "这柯南珠我了",
+        "这柯南柱我了",
+        "这柯南猪我了",
+        "这柯南主我了",
+        "这柯南嘱我了",
+        "这可"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "zhemeyishuoyeshi",
+      "expected": "这么一说也是",
+      "source": "6000",
+      "lookup_us": 4925,
+      "candidates": [
+        "这么一说也是",
+        "这么意说也是",
+        "这么一朔也是",
+        "这么一数也是",
+        "这么一说也适",
+        "这么一说也时",
+        "这么一说也使",
+        "这么一說也是",
+        "这么"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhendehennanping",
+      "expected": "真的很难评",
+      "source": "6000",
+      "lookup_us": 3456,
+      "candidates": [
+        "真的很难平",
+        "真得很难平",
+        "真的很难瓶",
+        "真得很难瓶",
+        "真的很难评",
+        "真的很难凭",
+        "真的很难屏",
+        "真的很南平",
+        "真的很"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "zhengeiwozhengmengle",
+      "expected": "真给我整懵了",
+      "source": "6000",
+      "lookup_us": 5360,
+      "candidates": [
+        "真给我整懵了",
+        "真给我正梦了",
+        "真给我正蒙了",
+        "真给我整梦了",
+        "真给我正猛了",
+        "真给我整蒙了",
+        "枕给我正梦了",
+        "真给我正懵了",
+        "真个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhengeiwozhengxiaole",
+      "expected": "真给我整笑了",
+      "source": "6000",
+      "lookup_us": 7439,
+      "candidates": [
+        "真给我整笑了",
+        "真给我正笑了",
+        "真给我正效了",
+        "真给我正小了",
+        "真给我正消了",
+        "枕给我正笑了",
+        "真给我整小了",
+        "真给我睁笑了",
+        "真个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhetiwodongle",
+      "expected": "这题我懂了",
+      "source": "6000",
+      "lookup_us": 1771,
+      "candidates": [
+        "这替我懂了",
+        "这题我懂了",
+        "这替我动了",
+        "着替我动了",
+        "这替我洞了",
+        "这题喔懂了",
+        "这题握懂了",
+        "这题窝懂了",
+        "这"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zhetiwohuia",
+      "expected": "这题我会啊",
+      "source": "6000",
+      "lookup_us": 2368,
+      "candidates": [
+        "这题我会啊",
+        "这题我会阿",
+        "这替我会啊",
+        "这题我会呵",
+        "这替我会阿",
+        "这替我会呵",
+        "这题我会吖",
+        "这替我回啊",
+        "这"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhetiwozhenbuhui",
+      "expected": "这题我真不会",
+      "source": "6000",
+      "lookup_us": 4056,
+      "candidates": [
+        "这替我真不会",
+        "这题我真不会",
+        "这替我贞不会",
+        "这替我镇不会",
+        "这替我阵不会",
+        "这替我针不会",
+        "这替我珍不会",
+        "这替我震不会",
+        "这"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zhetiwozhidao",
+      "expected": "这题我知道",
+      "source": "6000",
+      "lookup_us": 2650,
+      "candidates": [
+        "这替我知道",
+        "着替我知道",
+        "这替我直到",
+        "这题喔知道",
+        "着替我直到",
+        "这题握知道",
+        "这题窝知道",
+        "这题我知道",
+        "这"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zhexiananzhuwole",
+      "expected": "这下难住我了",
+      "source": "6000",
+      "lookup_us": 4590,
+      "candidates": [
+        "这下难住我了",
+        "这先按住我了",
+        "这下难煮我了",
+        "这下男主我了",
+        "这下男主卧了",
+        "这先按住我乐",
+        "这仙按住我乐",
+        "这先按住喔了",
+        "这下"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhexiazhengbuhuile",
+      "expected": "这下整不会了",
+      "source": "6000",
+      "lookup_us": 5084,
+      "candidates": [
+        "这下整不会了",
+        "这下正不会了",
+        "这下整不会乐",
+        "这下正不会乐",
+        "这下整不会勒",
+        "这下整不会叻",
+        "这下正不会勒",
+        "这下正不会叻",
+        "这下"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "daobangongshihuini",
+      "expected": "到办公室回你",
+      "source": "6000",
+      "lookup_us": 5639,
+      "candidates": [
+        "到办公室会你",
+        "到办公室回你",
+        "到办公室会呢",
+        "到办公室灰你",
+        "到办公室辉你",
+        "到办公室汇你",
+        "到办公室惠你",
+        "到办公室毁你",
+        "盗版"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "wobanwanhuini",
+      "expected": "我办完回你",
+      "source": "6000",
+      "lookup_us": 4323,
+      "candidates": [
+        "我半晚会你",
+        "我半挽回你",
+        "我半碗会你",
+        "我半晚会呢",
+        "我班晚会你",
+        "我半碗回你",
+        "我半碗会呢",
+        "我办完回你",
+        "我把"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "wochawanhuini",
+      "expected": "我查完回你",
+      "source": "6000",
+      "lookup_us": 3477,
+      "candidates": [
+        "我查完回你",
+        "我查晚会你",
+        "我查挽回你",
+        "我查晚会呢",
+        "我查完会你",
+        "我差晚会你",
+        "我差挽回你",
+        "我查完会呢",
+        "我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wochiwanhuini",
+      "expected": "我吃完回你",
+      "source": "6000",
+      "lookup_us": 4128,
+      "candidates": [
+        "我吃完回你",
+        "我吃完会你",
+        "我吃完会呢",
+        "我吃完回呢",
+        "我吃完灰你",
+        "我吃完辉你",
+        "我吃完汇你",
+        "我吃完惠你",
+        "我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wochuzhanhouhuini",
+      "expected": "我出站后回你",
+      "source": "6000",
+      "lookup_us": 4048,
+      "candidates": [
+        "我出站后悔你",
+        "我出战后悔你",
+        "我出站后回你",
+        "我出站后会你",
+        "我出站后悔呢",
+        "我出站后会呢",
+        "我出战后会你",
+        "我出站后悔泥",
+        "我"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "wodaodifanghuini",
+      "expected": "我到地方回你",
+      "source": "6000",
+      "lookup_us": 5764,
+      "candidates": [
+        "我倒地方会你",
+        "我倒地方会呢",
+        "我倒地方回你",
+        "我倒地方会泥",
+        "我倒地方灰你",
+        "我倒地方辉你",
+        "我倒地方汇你",
+        "我到地方回你",
+        "我倒"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "wodaogongsihuini",
+      "expected": "我到公司回你",
+      "source": "6000",
+      "lookup_us": 4618,
+      "candidates": [
+        "我倒公司会你",
+        "我倒公司回你",
+        "我倒公司会呢",
+        "我到公司会你",
+        "我到公司回你",
+        "我到公司会呢",
+        "我倒公司灰你",
+        "我倒公司辉你",
+        "我倒"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "wodaojiahouhuini",
+      "expected": "我到家后回你",
+      "source": "6000",
+      "lookup_us": 5565,
+      "candidates": [
+        "我到家后悔你",
+        "我到家后会你",
+        "我到家后回你",
+        "我到家后悔呢",
+        "我到家后会呢",
+        "我到家后悔泥",
+        "我倒家后悔你",
+        "我到家后悔腻",
+        "我倒"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "wodaolouxiahuini",
+      "expected": "我到楼下回你",
+      "source": "6000",
+      "lookup_us": 5948,
+      "candidates": [
+        "我倒楼下回你",
+        "我到楼下回你",
+        "我倒楼下会你",
+        "我到楼下会你",
+        "我倒楼下会呢",
+        "我倒楼下回呢",
+        "我到楼下会呢",
+        "我到楼下回呢",
+        "我倒"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "wodaomenkouhuini",
+      "expected": "我到门口回你",
+      "source": "6000",
+      "lookup_us": 4057,
+      "candidates": [
+        "我到门口会你",
+        "我到门口会呢",
+        "我到门口回你",
+        "我到门口会泥",
+        "我到门口灰你",
+        "我倒门口会你",
+        "我倒门口会呢",
+        "我到门口回呢",
+        "我倒"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "wodenghuihuini",
+      "expected": "我等会回你",
+      "source": "6000",
+      "lookup_us": 4310,
+      "candidates": [
+        "我等会回你",
+        "我等会会你",
+        "我等会会呢",
+        "我等会回呢",
+        "我等会汇你",
+        "我等会回泥",
+        "我等会会泥",
+        "我等会灰你",
+        "我等"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woduwanhuini",
+      "expected": "我读完回你",
+      "source": "6000",
+      "lookup_us": 4358,
+      "candidates": [
+        "我读完回你",
+        "我读完会你",
+        "我读完会呢",
+        "我都晚会你",
+        "我读完回呢",
+        "我读完灰你",
+        "我都晚会呢",
+        "我读完辉你",
+        "我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wogaiwanhuini",
+      "expected": "我改完回你",
+      "source": "6000",
+      "lookup_us": 4193,
+      "candidates": [
+        "我改完回你",
+        "我改完会你",
+        "我改完会呢",
+        "我改完回呢",
+        "我改完灰你",
+        "我改完辉你",
+        "我改完汇你",
+        "我改完惠你",
+        "我该"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woheduihouhuini",
+      "expected": "我核对后回你",
+      "source": "6000",
+      "lookup_us": 3877,
+      "candidates": [
+        "我和对后悔你",
+        "我核对后悔你",
+        "我和对后会你",
+        "我和对后悔呢",
+        "我和对后会呢",
+        "我核对后会你",
+        "我和对后悔泥",
+        "我核对后回你",
+        "我和"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "wohuidanweihuini",
+      "expected": "我回单位回你",
+      "source": "6000",
+      "lookup_us": 7003,
+      "candidates": [
+        "我会单位会你",
+        "我会单位会呢",
+        "我会单位回你",
+        "我会单位会泥",
+        "我会单位恢你",
+        "我会单位灰你",
+        "我会单位辉你",
+        "我回单位回你",
+        "我"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "wohuiquzaicha",
+      "expected": "我回去再查",
+      "source": "6000",
+      "lookup_us": 2596,
+      "candidates": [
+        "我回去再查",
+        "我回去再差",
+        "我回去在茶",
+        "我回去在查",
+        "我回去再茶",
+        "我回去在差",
+        "我回去再察",
+        "我回去在察",
+        "我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wohuiquzaigai",
+      "expected": "我回去再改",
+      "source": "6000",
+      "lookup_us": 2331,
+      "candidates": [
+        "我回去再改",
+        "我回去再盖",
+        "我回去在改",
+        "我会去再改",
+        "我回去在盖",
+        "我回去再概",
+        "我回去再该",
+        "我回去载改",
+        "我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wohuiquzaikan",
+      "expected": "我回去再看",
+      "source": "6000",
+      "lookup_us": 2553,
+      "candidates": [
+        "我回去再看",
+        "我会去再看",
+        "我回去在看",
+        "我回去载看",
+        "我回去仔看",
+        "我回去再刊",
+        "我回去哉看",
+        "我回去灾看",
+        "我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wohuiquzailu",
+      "expected": "我回去再录",
+      "source": "6000",
+      "lookup_us": 2474,
+      "candidates": [
+        "我回去再录",
+        "我回去在路",
+        "我回去再路",
+        "我回去再炉",
+        "我回去在录",
+        "我回去载路",
+        "我回去再橹",
+        "我回去在陆",
+        "我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wohuiquzaipai",
+      "expected": "我回去再拍",
+      "source": "6000",
+      "lookup_us": 2144,
+      "candidates": [
+        "我回去再拍",
+        "我回去再排",
+        "我回去再牌",
+        "我回去仔排",
+        "我回去在排",
+        "我回去在牌",
+        "我回去载排",
+        "我回去栽排",
+        "我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wohuiquzaishi",
+      "expected": "我回去再试",
+      "source": "6000",
+      "lookup_us": 3798,
+      "candidates": [
+        "我回去再试",
+        "我回去在是",
+        "我回去再使",
+        "我回去再是",
+        "我回去再时",
+        "我回去在试",
+        "我回去再事",
+        "我会去再试",
+        "我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wohuiquzaiwen",
+      "expected": "我回去再问",
+      "source": "6000",
+      "lookup_us": 2776,
+      "candidates": [
+        "我回去再问",
+        "我回去在问",
+        "我会去再问",
+        "我回去再文",
+        "我回去再稳",
+        "我回去在文",
+        "我回去再纹",
+        "我回去载问",
+        "我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wohuiquzaixiang",
+      "expected": "我回去再想",
+      "source": "6000",
+      "lookup_us": 6142,
+      "candidates": [
+        "我回去再想",
+        "我回去在想",
+        "我回去再向",
+        "我回去宰相",
+        "我回去再香",
+        "我回去再箱",
+        "我回去再响",
+        "我回去再象",
+        "我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wohuiquzaixie",
+      "expected": "我回去再写",
+      "source": "6000",
+      "lookup_us": 4025,
+      "candidates": [
+        "我回去在些",
+        "我回去再写",
+        "我回去在写",
+        "我回去再些",
+        "我回去再谢",
+        "我回去再歇",
+        "我回去再鞋",
+        "我回去在谢",
+        "我"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "wohuiquzaizhao",
+      "expected": "我回去再找",
+      "source": "6000",
+      "lookup_us": 2902,
+      "candidates": [
+        "我回去再找",
+        "我回去再着",
+        "我回去再照",
+        "我回去在找",
+        "我回去在着",
+        "我回去再罩",
+        "我回去在照",
+        "我回去载着",
+        "我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wohuitouhuini",
+      "expected": "我回头回你",
+      "source": "6000",
+      "lookup_us": 3076,
+      "candidates": [
+        "我回头回你",
+        "我回头会你",
+        "我回头会呢",
+        "我回头回呢",
+        "我回头灰你",
+        "我回头辉你",
+        "我回头汇你",
+        "我回头惠你",
+        "我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wojinzhanhouhuini",
+      "expected": "我进站后回你",
+      "source": "6000",
+      "lookup_us": 4641,
+      "candidates": [
+        "我进站后悔你",
+        "我进站后会你",
+        "我进站后悔呢",
+        "我进站后回你",
+        "我进站后会呢",
+        "我进站后悔泥",
+        "我进站后悔腻",
+        "我进展后悔你",
+        "握紧"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "wokanwanhuini",
+      "expected": "我看完回你",
+      "source": "6000",
+      "lookup_us": 4122,
+      "candidates": [
+        "我看晚会你",
+        "我看挽回你",
+        "我看完回你",
+        "我看晚会呢",
+        "我看完会你",
+        "我看完会呢",
+        "我看挽回呢",
+        "我看晚会泥",
+        "我看"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "woluwanhuini",
+      "expected": "我录完回你",
+      "source": "6000",
+      "lookup_us": 4436,
+      "candidates": [
+        "我路晚会你",
+        "我路挽回你",
+        "我路晚会呢",
+        "我录晚会你",
+        "我录挽回你",
+        "我录完回你",
+        "我录晚会呢",
+        "我路弯回你",
+        "我"
+      ],
+      "expected_rank": 6
+    },
+    {
+      "pinyin": "womangwanhuini",
+      "expected": "我忙完回你",
+      "source": "6000",
+      "lookup_us": 4814,
+      "candidates": [
+        "我忙完回你",
+        "我忙完会你",
+        "我忙完会呢",
+        "我忙完回呢",
+        "我忙完灰你",
+        "我忙完辉你",
+        "我忙完汇你",
+        "我忙完惠你",
+        "我妈"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wonongwanhuini",
+      "expected": "我弄完回你",
+      "source": "6000",
+      "lookup_us": 3639,
+      "candidates": [
+        "我弄完回你",
+        "我弄晚会你",
+        "我弄挽回你",
+        "我弄完会你",
+        "我弄晚会呢",
+        "我弄完会呢",
+        "我弄挽回呢",
+        "我弄完回呢",
+        "我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wopaiwanhuini",
+      "expected": "我拍完回你",
+      "source": "6000",
+      "lookup_us": 3623,
+      "candidates": [
+        "我拍晚会你",
+        "我拍挽回你",
+        "我拍完回你",
+        "我拍晚会呢",
+        "我拍完会你",
+        "我拍挽回呢",
+        "我拍完会呢",
+        "我拍晚会泥",
+        "我拍"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "woquedinghouhuini",
+      "expected": "我确定后回你",
+      "source": "6000",
+      "lookup_us": 5236,
+      "candidates": [
+        "我确定后悔你",
+        "我确定后会你",
+        "我确定后悔呢",
+        "我确定后会呢",
+        "我确定后悔泥",
+        "我确定后回你",
+        "我确定后悔腻",
+        "我确定后会泥",
+        "我却"
+      ],
+      "expected_rank": 6
+    },
+    {
+      "pinyin": "woquerenhouhuini",
+      "expected": "我确认后回你",
+      "source": "6000",
+      "lookup_us": 5664,
+      "candidates": [
+        "我确认后悔你",
+        "我确认后会你",
+        "我确认后悔呢",
+        "我确认后会呢",
+        "我确认后悔泥",
+        "我确认后回你",
+        "我确认后悔腻",
+        "我确认后会泥",
+        "我却"
+      ],
+      "expected_rank": 6
+    },
+    {
+      "pinyin": "woshangchehouhuini",
+      "expected": "我上车后回你",
+      "source": "6000",
+      "lookup_us": 3339,
+      "candidates": [
+        "我上车后悔你",
+        "我上车后会你",
+        "我上车后悔呢",
+        "我上车后会呢",
+        "我上车后回你",
+        "我上车后悔泥",
+        "我上车后悔腻",
+        "我上车后会泥",
+        "我上"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "woshaohouhuini",
+      "expected": "我稍后回你",
+      "source": "6000",
+      "lookup_us": 3391,
+      "candidates": [
+        "我稍后回你",
+        "我稍后会你",
+        "我稍后会呢",
+        "我稍后会泥",
+        "我稍后悔你",
+        "我稍后回呢",
+        "我稍后会腻",
+        "我稍后回泥",
+        "我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woshiwanhuini",
+      "expected": "我试完回你",
+      "source": "6000",
+      "lookup_us": 4548,
+      "candidates": [
+        "我是晚会你",
+        "我是晚会呢",
+        "我是挽回你",
+        "我是晚会泥",
+        "我是万会你",
+        "我市晚会你",
+        "我市挽回你",
+        "我试完回你",
+        "卧室"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "wotinghaochehuini",
+      "expected": "我停好车回你",
+      "source": "6000",
+      "lookup_us": 4282,
+      "candidates": [
+        "我听好撤回你",
+        "我挺好撤回你",
+        "我听好车回你",
+        "我听好撤回呢",
+        "我听好车会你",
+        "我听好撤回泥",
+        "我听好车慧你",
+        "我停好车回你",
+        "我听"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "wotingwanhuini",
+      "expected": "我听完回你",
+      "source": "6000",
+      "lookup_us": 4210,
+      "candidates": [
+        "我听完回你",
+        "我听完会你",
+        "我听完会呢",
+        "我听晚会你",
+        "我听挽回你",
+        "我听完回呢",
+        "我听完灰你",
+        "我听晚会呢",
+        "我听"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wowandianhuini",
+      "expected": "我晚点回你",
+      "source": "6000",
+      "lookup_us": 5367,
+      "candidates": [
+        "我晚点回你",
+        "我晚点回呢",
+        "我晚点回泥",
+        "我晚点会你",
+        "我晚点灰你",
+        "我玩电汇你",
+        "我晚点会呢",
+        "我晚点回腻",
+        "我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wowenwanhuini",
+      "expected": "我问完回你",
+      "source": "6000",
+      "lookup_us": 4076,
+      "candidates": [
+        "我问晚会你",
+        "我问挽回你",
+        "我问晚会呢",
+        "我问完回你",
+        "我问完会你",
+        "我问挽回呢",
+        "我问晚会泥",
+        "我问挽回泥",
+        "我问"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "woxiachehouhuini",
+      "expected": "我下车后回你",
+      "source": "6000",
+      "lookup_us": 3714,
+      "candidates": [
+        "我下车后悔你",
+        "我下车后回你",
+        "我下车后会你",
+        "我下车后悔呢",
+        "我下车后会呢",
+        "我下车后悔泥",
+        "我下车后悔腻",
+        "我下车后会泥",
+        "我"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "woxianbangeshi",
+      "expected": "我先办个事",
+      "source": "6000",
+      "lookup_us": 5666,
+      "candidates": [
+        "我先半个时",
+        "我先半个是",
+        "我先半个世",
+        "我先半个室",
+        "我先半个事",
+        "我先办个时",
+        "我先半个式",
+        "我先办个事",
+        "我先"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "woxianchulixia",
+      "expected": "我先处理下",
+      "source": "6000",
+      "lookup_us": 5209,
+      "candidates": [
+        "我先处理下",
+        "我先处理夏",
+        "我先处理霞",
+        "我先处理虾",
+        "我先处理吓",
+        "我先处理暇",
+        "我先处理瞎",
+        "我先处理侠",
+        "我先"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woxianchuquyixia",
+      "expected": "我先出去一下",
+      "source": "6000",
+      "lookup_us": 6257,
+      "candidates": [
+        "我先出去一下",
+        "我现出去一下",
+        "我先出去以下",
+        "我先处屈一下",
+        "我先处区一下",
+        "我先处取一下",
+        "我先出区一下",
+        "我先处曲一下",
+        "我先"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woxianghaohuini",
+      "expected": "我想好回你",
+      "source": "6000",
+      "lookup_us": 7036,
+      "candidates": [
+        "我想好回你",
+        "我想好会你",
+        "我想好会呢",
+        "我想好恢你",
+        "我想好回呢",
+        "我想好灰你",
+        "我想好辉你",
+        "我想好汇你",
+        "我想"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woxiangqingchuhuini",
+      "expected": "我想清楚回你",
+      "source": "6000",
+      "lookup_us": 7284,
+      "candidates": [
+        "我想清楚会你",
+        "我想清楚惠你",
+        "我想清楚回你",
+        "我想清楚会呢",
+        "我想清楚蕙你",
+        "我想清楚灰你",
+        "我想清楚辉你",
+        "我想清楚汇你",
+        "我想"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "woxianhuiwuyixia",
+      "expected": "我先回屋一下",
+      "source": "6000",
+      "lookup_us": 6821,
+      "candidates": [
+        "我先挥舞一下",
+        "我先会晤一下",
+        "我先回无一下",
+        "我先回五一下",
+        "我先会务一下",
+        "我先回吴一下",
+        "我先回舞一下",
+        "我先回屋一下",
+        "我先"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "woxianlikaiyixia",
+      "expected": "我先离开一下",
+      "source": "6000",
+      "lookup_us": 6154,
+      "candidates": [
+        "我先离开一下",
+        "我先莉开一下",
+        "我先离开以下",
+        "我先李锴一下",
+        "我先李凯一下",
+        "我先理凯一下",
+        "我先理锎一下",
+        "我先例锎一下",
+        "我先"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woxianmangnage",
+      "expected": "我先忙那个",
+      "source": "6000",
+      "lookup_us": 4695,
+      "candidates": [
+        "我先忙那个",
+        "我先盲那个",
+        "我先芒那个",
+        "我先茫那个",
+        "我先莽那个",
+        "我先蟒那个",
+        "我先氓那个",
+        "我先厖那个",
+        "我先忙"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woxianmangyihui",
+      "expected": "我先忙一会",
+      "source": "6000",
+      "lookup_us": 6389,
+      "candidates": [
+        "我先忙一会",
+        "我先忙一回",
+        "我先盲一会",
+        "我先芒一会",
+        "我先茫一会",
+        "我先莽一会",
+        "我先蟒一会",
+        "我先氓一会",
+        "我先忙"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woxianmangyixia",
+      "expected": "我先忙一下",
+      "source": "6000",
+      "lookup_us": 5679,
+      "candidates": [
+        "我先忙一下",
+        "我先盲一下",
+        "我先芒一下",
+        "我先茫一下",
+        "我先莽一下",
+        "我先蟒一下",
+        "我先氓一下",
+        "我先厖一下",
+        "我先忙"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woxianmangyizhen",
+      "expected": "我先忙一阵",
+      "source": "6000",
+      "lookup_us": 5594,
+      "candidates": [
+        "我先忙一阵",
+        "我先盲一阵",
+        "我先芒一阵",
+        "我先茫一阵",
+        "我先莽一阵",
+        "我先蟒一阵",
+        "我先氓一阵",
+        "我先厖一阵",
+        "我先忙"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woxianmangzhege",
+      "expected": "我先忙这个",
+      "source": "6000",
+      "lookup_us": 4353,
+      "candidates": [
+        "我先忙这个",
+        "我先盲这个",
+        "我先芒这个",
+        "我先茫这个",
+        "我先莽这个",
+        "我先蟒这个",
+        "我先氓这个",
+        "我先厖这个",
+        "我先忙"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woxianqubangeshi",
+      "expected": "我先去办个事",
+      "source": "6000",
+      "lookup_us": 6807,
+      "candidates": [
+        "我先去半个时",
+        "我先去半个是",
+        "我先去办个时",
+        "我先去办个是",
+        "我先去半个世",
+        "我先去半个室",
+        "我先去半个事",
+        "我先去办个事",
+        "我先去"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "woxianquchonggedian",
+      "expected": "我先去充个电",
+      "source": "6000",
+      "lookup_us": 6738,
+      "candidates": [
+        "我先去重个垫",
+        "我先去重个电",
+        "我先去重个点",
+        "我先去冲个垫",
+        "我先去充个电",
+        "我先去冲个电",
+        "我先去重各点",
+        "我先去重个店",
+        "我先去"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "woxianqudageshui",
+      "expected": "我先去打个水",
+      "source": "6000",
+      "lookup_us": 4813,
+      "candidates": [
+        "我先去打个说",
+        "我先去打个水",
+        "我先去打个谁",
+        "我先去打个睡",
+        "我先去打个税",
+        "我先去大哥谁",
+        "我先去大哥水",
+        "我先去打隔水",
+        "我先去"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "woxianqujiaogefei",
+      "expected": "我先去交个费",
+      "source": "6000",
+      "lookup_us": 8811,
+      "candidates": [
+        "我先去交个费",
+        "我先去交割费",
+        "我先去叫个费",
+        "我先去交割肥",
+        "我先去交个肥",
+        "我先去交割飞",
+        "我先去觉个费",
+        "我先去交个飞",
+        "我先去"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woxianqujiegeshui",
+      "expected": "我先去接个水",
+      "source": "6000",
+      "lookup_us": 7471,
+      "candidates": [
+        "我先去接个说",
+        "我先去接隔水",
+        "我先去接个水",
+        "我先去借个说",
+        "我先去借个水",
+        "我先去接个谁",
+        "我先去接个睡",
+        "我先去接个税",
+        "我先去"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "woxianqujigejian",
+      "expected": "我先去寄个件",
+      "source": "6000",
+      "lookup_us": 6471,
+      "candidates": [
+        "我先去几个简",
+        "我先去几个见",
+        "我先去几个间",
+        "我先去几个件",
+        "我先去几个键",
+        "我先去几个煎",
+        "我先去几个荐",
+        "我先去寄个件",
+        "我先去"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "woxianqukanyixia",
+      "expected": "我先去看一下",
+      "source": "6000",
+      "lookup_us": 6326,
+      "candidates": [
+        "我先去看一下",
+        "我先取看一下",
+        "我先去堪一下",
+        "我先去看以下",
+        "我先去砍一下",
+        "我先去刊一下",
+        "我先去坎一下",
+        "我先去侃一下",
+        "我先去"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woxianqumaidianshui",
+      "expected": "我先去买点水",
+      "source": "6000",
+      "lookup_us": 8403,
+      "candidates": [
+        "我先去买点水",
+        "我先去买点睡",
+        "我先去卖点睡",
+        "我先去卖点水",
+        "我先去买点说",
+        "我先去买电水",
+        "我先去买点谁",
+        "我先去脉点水",
+        "我先去"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woxianqumaidianzhi",
+      "expected": "我先去买点纸",
+      "source": "6000",
+      "lookup_us": 7958,
+      "candidates": [
+        "我先去买点之",
+        "我先去买点只",
+        "我先去买点纸",
+        "我先去买点志",
+        "我先去买点至",
+        "我先去买点置",
+        "我先去买电之",
+        "我先去买电只",
+        "我先去"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "woxianqumanghui",
+      "expected": "我先去忙会",
+      "source": "6000",
+      "lookup_us": 5808,
+      "candidates": [
+        "我先去忙会",
+        "我先去忙回",
+        "我先去盲会",
+        "我先去芒会",
+        "我先去忙灰",
+        "我先去茫会",
+        "我先去盲回",
+        "我先去莽会",
+        "我先去"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woxianqumiaoyiyan",
+      "expected": "我先去瞄一眼",
+      "source": "6000",
+      "lookup_us": 7976,
+      "candidates": [
+        "我先去瞄一眼",
+        "我先去秒一眼",
+        "我先去苗一眼",
+        "我先去妙一眼",
+        "我先去庙一眼",
+        "我先去喵一眼",
+        "我先去描一眼",
+        "我先去渺一眼",
+        "我先去"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woxianqunadongxi",
+      "expected": "我先去拿东西",
+      "source": "6000",
+      "lookup_us": 4508,
+      "candidates": [
+        "我先去哪东西",
+        "我先去拿东西",
+        "我先去那东西",
+        "我现去哪东西",
+        "我现去拿东西",
+        "我先去哪洞悉",
+        "我先去拿洞悉",
+        "我先去那洞悉",
+        "我先去"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "woxianqunagejian",
+      "expected": "我先去拿个件",
+      "source": "6000",
+      "lookup_us": 8183,
+      "candidates": [
+        "我先去那个简",
+        "我先去那个见",
+        "我先去那个间",
+        "我先去那个件",
+        "我先去那个键",
+        "我先去那个煎",
+        "我先去那个荐",
+        "我先去拿个件",
+        "我先去"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "woxianquraoyiquan",
+      "expected": "我先去绕一圈",
+      "source": "6000",
+      "lookup_us": 5405,
+      "candidates": [
+        "我先去绕一圈",
+        "我先取绕一圈",
+        "我先去扰一圈",
+        "我先去饶一圈",
+        "我先去桡一圈",
+        "我先去娆一圈",
+        "我先去繞一圈",
+        "我先取扰一圈",
+        "我先去"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woxianquwengeren",
+      "expected": "我先去问个人",
+      "source": "6000",
+      "lookup_us": 6672,
+      "candidates": [
+        "我先去问个人",
+        "我先去文个人",
+        "我先去温个人",
+        "我先去稳个人",
+        "我先去闻个人",
+        "我先去纹个人",
+        "我先去吻个人",
+        "我先去蚊个人",
+        "我先去"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woxianquzhaodongxi",
+      "expected": "我先去找东西",
+      "source": "6000",
+      "lookup_us": 4916,
+      "candidates": [
+        "我先去找东西",
+        "我先去照东西",
+        "我先去赵东西",
+        "我先取找东西",
+        "我先去招东西",
+        "我先去肇东西",
+        "我先去着东西",
+        "我先去朝东西",
+        "我先去"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woxianquzhuanyiquan",
+      "expected": "我先去转一圈",
+      "source": "6000",
+      "lookup_us": 7267,
+      "candidates": [
+        "我先去转一圈",
+        "我先去专一圈",
+        "我先取转一圈",
+        "我先去传一圈",
+        "我先去赚一圈",
+        "我先去砖一圈",
+        "我先去撰一圈",
+        "我先去篆一圈",
+        "我先去"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woxianxialouyixia",
+      "expected": "我先下楼一下",
+      "source": "6000",
+      "lookup_us": 8315,
+      "candidates": [
+        "我先下楼一下",
+        "我先下楼以下",
+        "我先下漏一下",
+        "我先下喽一下",
+        "我先下露一下",
+        "我现下楼一下",
+        "我先下搂一下",
+        "我先下娄一下",
+        "我先"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woxiewanhuini",
+      "expected": "我写完回你",
+      "source": "6000",
+      "lookup_us": 5257,
+      "candidates": [
+        "我写完回你",
+        "我写完会你",
+        "我写完会呢",
+        "我写完回呢",
+        "我写完灰你",
+        "我写完辉你",
+        "我写完汇你",
+        "我写完惠你",
+        "我写"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woyihuihuini",
+      "expected": "我一会回你",
+      "source": "6000",
+      "lookup_us": 4866,
+      "candidates": [
+        "我一会回你",
+        "我一会会你",
+        "我一会会呢",
+        "我一会回呢",
+        "我一会回泥",
+        "我一会汇你",
+        "我已会回你",
+        "我一回回你",
+        "我一"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozailushanghuini",
+      "expected": "我在路上回你",
+      "source": "6000",
+      "lookup_us": 6701,
+      "candidates": [
+        "我在路上回你",
+        "我在路上会你",
+        "我在路上回呢",
+        "我在路上回泥",
+        "我在路上恢你",
+        "我在路上会呢",
+        "我在路上回腻",
+        "我在路上会泥",
+        "我在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozhaowanhuini",
+      "expected": "我找完回你",
+      "source": "6000",
+      "lookup_us": 3947,
+      "candidates": [
+        "我找晚会你",
+        "我找挽回你",
+        "我找晚会呢",
+        "我找挽回呢",
+        "我找完回你",
+        "我找晚会泥",
+        "我找挽回泥",
+        "我找玩会你",
+        "我找"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "wozuoxialaihuini",
+      "expected": "我坐下来回你",
+      "source": "6000",
+      "lookup_us": 4823,
+      "candidates": [
+        "我坐下来回你",
+        "我坐下来会你",
+        "我坐下来会呢",
+        "我坐下来回呢",
+        "我坐下来毁你",
+        "我坐下来回泥",
+        "我坐下来灰你",
+        "我坐下来会泥",
+        "我做"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhaohaodifanghuini",
+      "expected": "找好地方回你",
+      "source": "6000",
+      "lookup_us": 6548,
+      "candidates": [
+        "找好地方会你",
+        "找好地方会呢",
+        "找好地方回你",
+        "找好地方会泥",
+        "找好地方灰你",
+        "找好地方辉你",
+        "找好地方汇你",
+        "找好地方惠你",
+        "找好"
+      ],
+      "expected_rank": 3
+    }
+  ],
+  "previous_pass": {
+    "sha256": "1362e5529a1d4eca8589d82c15fdeb9f05e8bb4e585ed9940ee981d99876e0df",
+    "summary": {
+      "cases": 374,
+      "top1_correct": 254,
+      "top9_present": 374,
+      "top1_percent": 67.91,
+      "top9_percent": 100.0,
+      "character_error_rate": 0.0948,
+      "p50_lookup_ms": 3.654,
+      "p95_lookup_ms": 7.842,
+      "max_lookup_ms": 11.102,
+      "missing_from_top9_count": 0,
+      "missing_from_top9": [],
+      "max_returned_candidate_count": 9
+    }
+  }
+}

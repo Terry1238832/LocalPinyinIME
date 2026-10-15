@@ -1,0 +1,306 @@
+{
+  "batch": "lexicon_batch_120",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "旅行收纳、短途露营与住宿沟通常用表达",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 331,
+  "sha256": "670fafe0e90841f892eac38a1810fdb61ed0e0e3eeb001edd8616ec21038edee",
+  "authoring_files_sha256": {
+    "lexicon_batch_120.authoring.json": "8c5030a4a180b3c0feecbd47638e9b040eba898b6e7a3a86fc18d9613f2efab5",
+    "batch120_authored_daily_draft.txt": "700782c0960ef945e1be8bb2e5f1ae9b134041075267b8ea0dbd50eabc05d161",
+    "batch120_pronunciation_review.tsv": "89f75b7e1d8c943f80aa8f0ee2eeccc07f9ab2ad26370a19aca2eb0ee50a365e"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "b1777c21e77974f65533aeb387524a6fecc1ca515934a4e77491bb3b0d36b5b5",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "packing_and_personal_travel_items": 6000,
+    "short_outings_and_camping_supplies": 6000,
+    "lodging_and_practical_travel_messages": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "lodging_and_practical_travel_messages": 72,
+    "packing_and_personal_travel_items": 114,
+    "short_outings_and_camping_supplies": 145
+  },
+  "length_distribution": {
+    "5": 222,
+    "4": 67,
+    "6": 37,
+    "3": 5
+  },
+  "authoring_rejections": [
+    {
+      "word": "行李压缩袋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "行李箱轮套",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "行李箱绑带",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "旅行洗漱包",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "旅行分装瓶",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "旅行分装罐",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "牙刷保护盖",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "一次性牙刷",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "旅行枕套",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "鞋子防尘袋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "旅行鞋袋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "露营置物架",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帐篷地布",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帐篷内帐",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帐篷外帐",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帐篷底布",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帐篷收纳袋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "天幕收纳袋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "睡袋压缩袋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "睡袋收纳袋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "食品保冷袋",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "泳镜防雾剂",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "潜水袜",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "房间朝向",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "房间楼层",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "房间采光",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "房间通风",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "房间窗户",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "房间空调",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "房间插座",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "房间灯光",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "房间门锁",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "房间钥匙",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "房卡补办",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "房卡归还",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "入住人数",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "入住须知",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "入住核验",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "随行儿童",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "退房提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "续住申请",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "续住房费",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "房型升级",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "换房申请",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "有窗房间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "无窗房间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "临街房间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "安静房间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "连通房间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "相邻房间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "加床申请",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "加被子",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "加枕头",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "加毛巾",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "房间有异味",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门卡刷不开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门锁打不开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "灯不亮了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "网络连不上",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "行李先寄存",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帮我留一下",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 279,
+  "manual_pronunciation_overrides": {
+    "东西落房间了": "dongxilafangjianle",
+    "耳机落房间了": "erjilafangjianle"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 2,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}
