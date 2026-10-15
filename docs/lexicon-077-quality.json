@@ -1,0 +1,349 @@
+{
+  "version": "0.7.7",
+  "baseline_version": "0.7.6",
+  "evaluated_at_utc": "2026-10-15T02:57:13.295797+00:00",
+  "method": {
+    "personal_data_isolated": true,
+    "expected_answers_learned": false,
+    "blind_evaluation": false,
+    "weights_not_adjusted_from_public_sentence_answers": true,
+    "runtime_frozen_during_evaluation": true,
+    "keystroke_benchmark_run": false,
+    "baseline_method": "Same final evaluator replaying byte-exact prior-release data, not an unavailable old binary.",
+    "raw_reports_retained_after_delivery": false
+  },
+  "engine_sha256": "25fd5094a4c8d700f7f16be699bf043a4bc5982e4ddaad0fe753e701e1626986",
+  "runtime_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "de221b61942688029d646532548456643929bc7a42fe5225c45f1cded08ef1b5",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+    "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+    "continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e"
+  },
+  "baseline_runtime_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "aeb69f672af44f92f04b7857f69cee3da908e3ca2f55bd7f425e605c2433ef53",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+    "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+    "continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e"
+  },
+  "data_changes": {
+    "baseline_unique_key_display_pairs": 168873,
+    "current_unique_key_display_pairs": 185127,
+    "added_key_display_pairs": 16254,
+    "removed_key_display_pairs": 0,
+    "baseline_local_core_entries": 121982,
+    "current_local_core_entries": 138236,
+    "added_local_core_rows": 16254,
+    "existing_local_core_weight_changes": [],
+    "effective_max_layer_weight_changes": [],
+    "new_full_fixture_answers": [],
+    "new_full_fixture_answer_count": 0
+  },
+  "fixtures": {
+    "fixed": {
+      "fixture": "tests/data/typing_holdout.tsv",
+      "fixture_sha256": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+      "baseline_summary": {
+        "cases": 138,
+        "top1_correct": 91,
+        "top9_present": 119,
+        "top1_percent": 65.94,
+        "top9_percent": 86.23,
+        "character_error_rate": 0.0469,
+        "p50_lookup_ms": 14.141,
+        "p95_lookup_ms": 21.707,
+        "max_lookup_ms": 32.453
+      },
+      "current_summary": {
+        "cases": 138,
+        "top1_correct": 91,
+        "top9_present": 119,
+        "top1_percent": 65.94,
+        "top9_percent": 86.23,
+        "character_error_rate": 0.0469,
+        "p50_lookup_ms": 14.254,
+        "p95_lookup_ms": 21.977,
+        "max_lookup_ms": 32.699
+      },
+      "comparison": {
+        "top1_changes": 0,
+        "top1_improvements": 0,
+        "top1_regressions": 0,
+        "top9_improvements": 0,
+        "top9_regressions": 0
+      },
+      "candidate_array_changes": [
+        {
+          "source": "article:guxiang:15",
+          "pinyin": "wochiguowufanzuozhehecha",
+          "expected": "我吃过午饭坐着喝茶",
+          "before": [
+            "我吃过午饭坐着喝茶",
+            "我吃过午饭作者喝茶",
+            "我吃过午饭做着喝茶",
+            "我吃过午饭坐着核查",
+            "我吃过午饭作者核查",
+            "我吃过午饭坐着河查",
+            "我吃过午饭坐着合查",
+            "我吃过午饭做这喝茶",
+            "我"
+          ],
+          "current": [
+            "我吃过午饭坐着喝茶",
+            "我吃过午饭坐着核查",
+            "我吃过午饭作者喝茶",
+            "我吃过午饭做着喝茶",
+            "我吃过午饭坐着河查",
+            "我吃过午饭作者核查",
+            "我吃过午饭坐着合查",
+            "我吃过午饭坐着河差",
+            "我"
+          ],
+          "before_rank": 1,
+          "current_rank": 1
+        },
+        {
+          "source": "daily:066",
+          "pinyin": "laoshizhengzaigeidajiajiangjiezhedaoti",
+          "expected": "老师正在给大家讲解这道题",
+          "before": [
+            "老师正在给大家讲解这道题",
+            "老师正在给大家讲结这道题",
+            "老师正在给大家讲接着道题",
+            "老师正在给大家将接着道题",
+            "老师正在给大家讲解者道题",
+            "老师正在给大家讲结者道题",
+            "老师正在给大家讲接着导体",
+            "老师正在给大家讲解折道题",
+            "老师"
+          ],
+          "current": [
+            "老师正在给大家讲解这道题",
+            "老师正在给大家讲结这道题",
+            "老师正在给大家讲接着道题",
+            "老师正在给大家将接着道题",
+            "老师正在给大家讲解者道题",
+            "老师正在给大家讲解这道提",
+            "老师正在给大家讲结者道题",
+            "老师正在给大家讲接着导体",
+            "老师"
+          ],
+          "before_rank": 1,
+          "current_rank": 1
+        }
+      ]
+    },
+    "fresh": {
+      "fixture": "tests/data/typing_fresh.tsv",
+      "fixture_sha256": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+      "baseline_summary": {
+        "cases": 67,
+        "top1_correct": 38,
+        "top9_present": 52,
+        "top1_percent": 56.72,
+        "top9_percent": 77.61,
+        "character_error_rate": 0.088,
+        "p50_lookup_ms": 9.924,
+        "p95_lookup_ms": 16.846,
+        "max_lookup_ms": 21.257
+      },
+      "current_summary": {
+        "cases": 67,
+        "top1_correct": 38,
+        "top9_present": 52,
+        "top1_percent": 56.72,
+        "top9_percent": 77.61,
+        "character_error_rate": 0.088,
+        "p50_lookup_ms": 9.802,
+        "p95_lookup_ms": 17.256,
+        "max_lookup_ms": 21.53
+      },
+      "comparison": {
+        "top1_changes": 0,
+        "top1_improvements": 0,
+        "top1_regressions": 0,
+        "top9_improvements": 0,
+        "top9_regressions": 0
+      },
+      "candidate_array_changes": [
+        {
+          "source": "article:hetang:02",
+          "pinyin": "jinwanzaiyuanzilizuozhechengliang",
+          "expected": "今晚在院子里坐着乘凉",
+          "before": [
+            "今晚在院子里坐着乘凉",
+            "今晚在院子里作者乘凉",
+            "今晚在院子里坐着称量",
+            "今晚再院子里坐着乘凉",
+            "今晚在院子里坐着城量",
+            "今晚在院子里作者称量",
+            "今晚在院子里坐着城亮",
+            "今晚在院子里坐着程量",
+            "今晚"
+          ],
+          "current": [
+            "今晚在院子里坐着乘凉",
+            "今晚在院子里作者乘凉",
+            "今晚在院子里坐着称量",
+            "今晚再院子里坐着乘凉",
+            "今晚在院子里坐着城量",
+            "今晚在院子里坐着城亮",
+            "今晚在院子里坐着程量",
+            "今晚在院子里作者称量",
+            "今晚"
+          ],
+          "before_rank": 1,
+          "current_rank": 1
+        },
+        {
+          "source": "article:hetang:42",
+          "pinyin": "bianjueshigeziyouderen",
+          "expected": "便觉是个自由的人",
+          "before": [
+            "便觉十个字有的人",
+            "便决十个字有的人",
+            "便觉时各自由的人",
+            "便决时各自由的人",
+            "便觉时各自幼的人",
+            "便觉时各自油的人",
+            "便决时各自幼的人",
+            "便觉时各自游的人",
+            "编剧"
+          ],
+          "current": [
+            "便觉十个字有的人",
+            "便觉时各自由的人",
+            "便决十个字有的人",
+            "便决时各自由的人",
+            "便觉时各自幼的人",
+            "便觉时各自油的人",
+            "便觉时各自游的人",
+            "便决时各自幼的人",
+            "编剧"
+          ],
+          "before_rank": 0,
+          "current_rank": 0
+        }
+      ]
+    },
+    "independent": {
+      "fixture": "tests/data/typing_independent.tsv",
+      "fixture_sha256": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98",
+      "baseline_summary": {
+        "cases": 62,
+        "top1_correct": 25,
+        "top9_present": 33,
+        "top1_percent": 40.32,
+        "top9_percent": 53.23,
+        "character_error_rate": 0.1329,
+        "p50_lookup_ms": 12.625,
+        "p95_lookup_ms": 28.144,
+        "max_lookup_ms": 32.261
+      },
+      "current_summary": {
+        "cases": 62,
+        "top1_correct": 25,
+        "top9_present": 33,
+        "top1_percent": 40.32,
+        "top9_percent": 53.23,
+        "character_error_rate": 0.1329,
+        "p50_lookup_ms": 12.754,
+        "p95_lookup_ms": 31.922,
+        "max_lookup_ms": 40.545
+      },
+      "comparison": {
+        "top1_changes": 0,
+        "top1_improvements": 0,
+        "top1_regressions": 0,
+        "top9_improvements": 0,
+        "top9_regressions": 0
+      },
+      "candidate_array_changes": [
+        {
+          "source": "article:fengzheng:13",
+          "pinyin": "lingdingdexianchuqiaocuikelianmuyang",
+          "expected": "伶仃地显出憔悴可怜模样",
+          "before": [
+            "令定的显出憔悴可怜模样",
+            "领定的显出憔悴可怜模样",
+            "令定的显出憔悴可脸模样",
+            "领定的显出憔悴可脸模样",
+            "令定的显出憔悴可连模样",
+            "领定的显出憔悴可连模样",
+            "令定的显出憔悴可怜木阳",
+            "令定的显出憔悴可怜幕样",
+            "领地"
+          ],
+          "current": [
+            "令定的显出憔悴可怜模样",
+            "领定的显出憔悴可怜模样",
+            "令定的显出憔悴可脸模样",
+            "领定的显出憔悴可脸模样",
+            "令定的显出憔悴课练模样",
+            "领定的显出憔悴课练模样",
+            "令定的显出憔悴可连模样",
+            "领定的显出憔悴可连模样",
+            "领地"
+          ],
+          "before_rank": 0,
+          "current_rank": 0
+        },
+        {
+          "source": "daily:independent:12",
+          "pinyin": "nengbunengbazheduanluyinjianchenglianggebufen",
+          "expected": "能不能把这段录音剪成两个部分",
+          "before": [
+            "能不能把这段录音简称两个部分",
+            "能不能把这段录音建成两个部分",
+            "能不能把这段录音简称量各部分",
+            "能不能把这段录音简称两个部份",
+            "能不能把这段录音简称两个不分",
+            "能不能把这段录音简称量格部分",
+            "能不能把这段录音简称量歌部分",
+            "能不能把这段录音简称量哥部分",
+            "能不能"
+          ],
+          "current": [
+            "能不能把这段录音简称两个部分",
+            "能不能把这段录音建成两个部分",
+            "能不能把这段录音简称量各部分",
+            "能不能把这段录音简称两个部份",
+            "能不能把这段录音简称两个不分",
+            "能不能把这段录音建成两个部份",
+            "能不能把这段录音简称量格部分",
+            "能不能把这段录音建成两个不分",
+            "能不能"
+          ],
+          "before_rank": 0,
+          "current_rank": 0
+        }
+      ]
+    }
+  },
+  "overall": {
+    "baseline_summary": {
+      "cases": 267,
+      "top1_correct": 154,
+      "top9_present": 204,
+      "top1_percent": 57.68,
+      "top9_percent": 76.4,
+      "character_error_rate": 0.0759,
+      "p50_lookup_ms": 12.727,
+      "p95_lookup_ms": 22.014,
+      "max_lookup_ms": 32.453
+    },
+    "current_summary": {
+      "cases": 267,
+      "top1_correct": 154,
+      "top9_present": 204,
+      "top1_percent": 57.68,
+      "top9_percent": 76.4,
+      "character_error_rate": 0.0759,
+      "p50_lookup_ms": 12.957,
+      "p95_lookup_ms": 22.739,
+      "max_lookup_ms": 40.545
+    }
+  },
+  "scope": "Public sentence regressions evaluated through the actual native engine. No OS keyboard dispatch, installed-profile compatibility or blind general-language accuracy claim."
+}

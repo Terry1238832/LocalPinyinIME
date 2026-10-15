@@ -1,0 +1,113 @@
+{
+  "batch": "lexicon_batch_047",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "日常任务分工、排期进度、需求协作、审核修复与汇报跟进",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 735,
+  "sha256": "5cb4c306219778fd43af7a7b5697009f9811a200fa0900e9eb8fddfa574d7ede",
+  "authoring_files_sha256": {
+    "lexicon_batch_047.authoring.json": "c90b1c3b7d49dbb0a79780de2dcc46a287667b8e76be0fe2b298cc6f3ef93cb2",
+    "batch047_authored_daily_draft.txt": "3c0e7113bc4e1a834a8077f041142333dbb0a54cfd650175ec2582ac521d5a6a",
+    "batch047_pronunciation_review.tsv": "9d278aa5663da650fb05e1fa5a46e6fb7c64f57ca6ac0b714c13fd450708ac05"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "e09aee9324c35b6760879134462a89007c4ac820250786380b2af68437f091d3",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "task_assignments": 6000,
+    "schedules_and_deadlines": 6000,
+    "progress_updates": 6000,
+    "discussing_requirements": 6000,
+    "coordination_and_handover": 6000,
+    "documents_and_review": 6000,
+    "issues_and_fixes": 6000,
+    "reporting_and_followup": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "coordination_and_handover": 93,
+    "discussing_requirements": 89,
+    "documents_and_review": 98,
+    "issues_and_fixes": 84,
+    "progress_updates": 93,
+    "reporting_and_followup": 93,
+    "schedules_and_deadlines": 94,
+    "task_assignments": 91
+  },
+  "length_distribution": {
+    "6": 571,
+    "5": 164
+  },
+  "authoring_rejections": [
+    {
+      "word": "先确认时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "给我留点时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "有结果告诉我",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "需求优先级",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "先确认一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "先核对一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "先分析一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "先讨论一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "先检查一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "先整理一下",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 674,
+  "manual_pronunciation_overrides": {
+    "需求还没收到": "xuqiuhaimeishoudao",
+    "文件发重了": "wenjianfachongle",
+    "文档发重了": "wendangfachongle",
+    "问题还没收到": "wentihaimeishoudao",
+    "反馈还没收到": "fankuihaimeishoudao"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 5,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

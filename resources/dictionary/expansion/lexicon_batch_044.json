@@ -1,0 +1,201 @@
+{
+  "batch": "lexicon_batch_044",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "旅行规划、行李车站机场、酒店入住、景点游览与返程交流",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 732,
+  "sha256": "6b48902b355dace3c55dc3a3a9c1e2a7ca5ec6210f28f6803b4f0a594f7eec3d",
+  "authoring_files_sha256": {
+    "lexicon_batch_044.authoring.json": "aa29398b76ed959a3452737cdc1added0625595fa5057a73fd3ac414b3816106",
+    "batch044_authored_daily_draft.txt": "281829130fb80bcf2a090b0856d26fa089c56a235313bf4ca9409d1236e53a3d",
+    "batch044_pronunciation_review.tsv": "b00e466d0b486cc112148cc01e1b77981351abd9fadf676599c355c759a89ebb"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "2aa45845792cbe53a605a0e14ae3f5e2877d45f9966742d4074ab37b6e33b103",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "travel_planning": 5500,
+    "packing_luggage": 5500,
+    "railway_stations": 5500,
+    "airports_and_boarding": 5500,
+    "hotel_booking_and_arrival": 5500,
+    "hotel_stay_and_checkout": 5500,
+    "travel_sights_and_food": 5500,
+    "changes_and_return_trips": 5500
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "airports_and_boarding": 90,
+    "changes_and_return_trips": 100,
+    "hotel_booking_and_arrival": 93,
+    "hotel_stay_and_checkout": 91,
+    "packing_luggage": 88,
+    "railway_stations": 87,
+    "travel_planning": 89,
+    "travel_sights_and_food": 94
+  },
+  "length_distribution": {
+    "6": 308,
+    "5": 363,
+    "4": 61
+  },
+  "authoring_rejections": [
+    {
+      "word": "旅行清单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "旅行用品",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "旅行预算",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "行李托运柜台",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "行李提取处",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "行李转盘号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "行李拿错了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车站广播",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车站寄存处",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "出站通道",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "检票提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "检票时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "检票通道",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车次查询",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "靠窗座位",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "靠过道座位",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "中间座位",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车厢连接处",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "航站楼入口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "航站楼出口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "登机口在哪",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "登机口广播",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "登机提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "登机时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "登机通道",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "航班经停",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "房型介绍",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "房间有异味",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "房间有蚊子",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "房间烧水壶",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "房间保险箱",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "游览注意事项",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 686,
+  "manual_pronunciation_overrides": {
+    "行李还没收拾": "xinglihaimeishoushi",
+    "架上行李拿下": "jiashangxinglinaxia",
+    "房间有空调吗": "fangjianyoukongtiaoma",
+    "房间没收拾": "fangjianmeishoushi"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 4,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

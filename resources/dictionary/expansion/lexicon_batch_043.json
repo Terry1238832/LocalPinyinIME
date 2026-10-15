@@ -1,0 +1,331 @@
+{
+  "batch": "lexicon_batch_043",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "网购选购、订单客服、物流取件、验货与售后交流",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 706,
+  "sha256": "71a47136c82a65766f2ce38272987fc26d5381adc9114edae29dc9d205cf6ffb",
+  "authoring_files_sha256": {
+    "lexicon_batch_043.authoring.json": "1634ceb741099692063151e8b474e6f4e012e7071af66971129df115fb084a0f",
+    "batch043_authored_daily_draft.txt": "f37bafda4af236bd6e1b693864733c3c3a302b87a6ce882d850b97c2dd0a36ba",
+    "batch043_pronunciation_review.tsv": "a0bc0117f6e922c214c2666b87b2a39006a88283b394efd9927e150e4ac5486c"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "66962fa0faf04bedd0a54030bd34a11a826a31f03d17c03678645e46cc7ec128",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "choosing_products": 5500,
+    "carts_and_orders": 5500,
+    "customer_service_chat": 5500,
+    "dispatch_and_tracking": 5500,
+    "delivery_and_collection": 5500,
+    "checking_received_goods": 5500,
+    "returns_and_exchanges": 5500,
+    "reviews_invoices_and_followup": 5500
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "carts_and_orders": 89,
+    "checking_received_goods": 91,
+    "choosing_products": 85,
+    "customer_service_chat": 75,
+    "delivery_and_collection": 93,
+    "dispatch_and_tracking": 87,
+    "returns_and_exchanges": 97,
+    "reviews_invoices_and_followup": 89
+  },
+  "length_distribution": {
+    "5": 475,
+    "4": 44,
+    "6": 187
+  },
+  "authoring_rejections": [
+    {
+      "word": "什么时候补货",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "颜色选错了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "颜色偏深",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "颜色偏浅",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "尺码偏大",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "尺码偏小",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "型号选错了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "购物车删除",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "购物车结算",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "下单时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "下单数量",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "下单备注",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "下单地址",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "下单记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "客服没回复",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "客服工单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "客服转接",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帮我查一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帮我问一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帮我看一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帮我核对下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帮我确认下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帮我登记下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帮我催一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帮我改一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帮我补一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "麻烦查一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "麻烦看一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "麻烦问一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "麻烦确认一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "收到请回复",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "看到请回复",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发货通知",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发货提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发货凭证",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发货时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发货地址",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发货仓库",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发货单号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发货批次",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发货进度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发货延迟",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发货前确认",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "物流没更新",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "物流停住了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "快递送错了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "派件员电话",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我在楼下等",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "取件码没收到",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "柜门打不开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "柜门关不上",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "站点通知",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "包装有破损",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "包装压坏了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "颜色发错了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "型号发错了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "数量发错了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "尺码不合适",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "售后处理中",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "售后记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "售后工单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "售后说明",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "售后备注",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 589,
+  "manual_pronunciation_overrides": {
+    "选个长一点的": "xuangechangyidiande",
+    "订单重下": "dingdanchongxia",
+    "备注没收到": "beizhumeishoudao",
+    "柜门卡住了": "guimenqiazhule",
+    "商品没收到": "shangpinmeishoudao",
+    "厚薄不合适": "houbaobuheshi",
+    "发票重开好了": "fapiaochongkaihaole"
+  },
+  "reading_variant_choices": {
+    "柜门卡住了": "guimenqiazhule",
+    "厚薄不合适": "houbaobuheshi"
+  },
+  "semantic_pronunciation_corrections": 5,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

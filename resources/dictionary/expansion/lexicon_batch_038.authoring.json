@@ -1,0 +1,43 @@
+{
+  "author": "root",
+  "scope": "厨房备餐、食材处理、烹饪交流、面食烘焙与收纳",
+  "draft": "batch038_authored_daily_draft.txt",
+  "review": "batch038_pronunciation_review.tsv",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "categories": {
+    "meal_preparation": 5500,
+    "washing_and_cutting": 5500,
+    "meat_fish_and_eggs": 5500,
+    "cooking_heat_and_pans": 5500,
+    "seasoning_and_texture": 5500,
+    "grains_noodles_and_dough": 5500,
+    "baking_drinks_and_plating": 5500,
+    "kitchen_cleanup_and_storage": 5500
+  },
+  "quality_exclusions": {},
+  "pronunciation_references": [
+    {
+      "url": "https://www.moe.gov.cn/jyb_sjzl/ziliao/A19/201001/W020190416497956176438.pdf",
+      "scope": "Official standard search excerpt explicitly lists 择菜 zhai; no full PDF linguistic audit claimed."
+    },
+    {
+      "url": "https://dict.revised.moe.edu.tw/dictView.jsp?ID=3097&la=0&powerMode=0",
+      "scope": "Opened the 黏 nian entry before selecting the unambiguous 黏 spelling in noodle and dumpling expressions."
+    },
+    {
+      "url": "https://www.cns11643.gov.tw/wordView.jsp?ID=87116",
+      "scope": "Opened official 剝 character record listing bo and bao; colloquial bao choices are variants, not blanket rejection of bo."
+    }
+  ],
+  "author_revisions": {
+    "naturalness_rewrites": {
+      "洗菜盆里": "菜放洗菜盆",
+      "洗菜筐里": "洗菜筐沥水",
+      "片薄一点": "片得薄一点",
+      "皮削薄点": "把皮削薄点",
+      "模具脱模": "从模具脱模",
+      "面条粘一起": "面条黏在一起",
+      "饺子粘锅了": "饺子黏锅了"
+    }
+  }
+}

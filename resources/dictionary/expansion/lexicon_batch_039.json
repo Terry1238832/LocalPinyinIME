@@ -1,0 +1,510 @@
+{
+  "batch": "lexicon_batch_039",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "通勤交流、道路导航、停车接人、公共交通与车辆日常",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 662,
+  "sha256": "5c52392cfe79f545cae69f82d87e92a9a59dfc2442890734f9710eeffe15b2a3",
+  "authoring_files_sha256": {
+    "lexicon_batch_039.authoring.json": "4bbdd7560f6cfa5aa6c4955366a152b2b687bb71b2e2fa571e1c0b137158916c",
+    "batch039_authored_daily_draft.txt": "7209a84344d9d4b65a1aeb16cac05b103053562da62852377f25758ae2f71676",
+    "batch039_pronunciation_review.tsv": "88e15ceaf57bb273fc1017745dfa10f46734b70f32620368c1d49072f85bb219"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "5f488fa93728b91370fbbdbe4e1a68b53228b29056369061826fd47093b4ae41",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "leaving_and_commuting": 5500,
+    "driving_route_conversation": 5500,
+    "road_conditions": 5500,
+    "highway_and_navigation": 5500,
+    "parking_and_pickup": 5500,
+    "buses_and_subways": 5500,
+    "taxis_and_shared_mobility": 5500,
+    "vehicle_daily_tasks": 5500
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "buses_and_subways": 79,
+    "driving_route_conversation": 85,
+    "highway_and_navigation": 84,
+    "leaving_and_commuting": 74,
+    "parking_and_pickup": 86,
+    "road_conditions": 84,
+    "taxis_and_shared_mobility": 86,
+    "vehicle_daily_tasks": 84
+  },
+  "length_distribution": {
+    "5": 358,
+    "4": 294,
+    "6": 10
+  },
+  "authoring_rejections": [
+    {
+      "word": "今天坐地铁",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "今天坐公交",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "今天打车",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "明天打车",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "早上出门",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "晚点出门",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "骑车过去",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "出门带钥匙",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "出门看天气",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "下班路线",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "通勤路线",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "通勤时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "通勤距离",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "通勤高峰",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "错峰出门",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "路口减速",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "后面有车",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "转弯半径",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "直行车道",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "出口错过了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "路面有冰",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "路面不平",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "道路绕行",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "临时封路",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "临时改道",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "临时围挡",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "单向通行",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "双向通行",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "路口拥堵",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "高架入口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "高架出口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "山路湿滑",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "路边护栏",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "路边施工",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "地图旋转",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "地图定位",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "地图路线",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "地图标记",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "实时路况",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "路况播报",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "拥堵路段",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "拥堵时长",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "高速入口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "高速出口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "高速服务区",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "服务区停车",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "服务区加油",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "服务区休息",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "收费窗口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车位太窄了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "停车场入口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "停车场出口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "停车场缴费",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "地面停车位",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "无障碍车位",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "停车票丢了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "停车券领取",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "停车券使用",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "停车券过期",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "停车时长",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车牌没识别",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我在门口等",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "公交班次",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "公交车门",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "公交扶手",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "公交报站",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "公交刷卡",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "交通卡充值",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "交通卡余额",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "地铁站台",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "地铁站厅",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "地铁列车",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "地铁车厢",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "乘车码刷新",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车票买好了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车票没买到",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "站台屏蔽门",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "站台指示牌",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "列车方向",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "下一站下车",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "坐过站了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车门要关了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "司机定位",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "等车时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我在路边",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我在对面",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我在出口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "往后退一点",
+      "reason": "duplicate_draft"
+    },
+    {
+      "word": "行程分享",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "行程费用",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "行程评价",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "取消叫车",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "重新叫车",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "单车座椅",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "骑行订单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "骑行轨迹",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车钥匙没电",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "备用车钥匙",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车内温度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车内照明",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "玻璃水没了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "靠背调直点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "安全带扣好",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "安全带卡扣",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "后排座椅",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "充电桩坏了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "充电枪插好",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 589,
+  "manual_pronunciation_overrides": {
+    "道路标识": "daolubiaozhi",
+    "公交还没来": "gongjiaohaimeilai",
+    "单车还回去": "danchehuanhuiqu",
+    "单车还车点": "danchehuanchedian",
+    "后视镜调好": "houshijingtiaohao",
+    "空调调小点": "kongtiaotiaoxiaodian",
+    "空调调大点": "kongtiaotiaodadian",
+    "座椅往前调": "zuoyiwangqiantiao",
+    "座椅往后调": "zuoyiwanghoutiao",
+    "座椅调高点": "zuoyitiaogaodian",
+    "座椅调低点": "zuoyitiaodidian"
+  },
+  "reading_variant_choices": {
+    "道路标识": "daolubiaozhi"
+  },
+  "semantic_pronunciation_corrections": 10,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

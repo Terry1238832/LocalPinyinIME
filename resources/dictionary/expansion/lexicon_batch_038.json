@@ -1,0 +1,425 @@
+{
+  "batch": "lexicon_batch_038",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "厨房备餐、食材处理、烹饪交流、面食烘焙与收纳",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 699,
+  "sha256": "65b87095ad2a81b71f910cf920631b7f092d09bc72652f575bfadd77944d177e",
+  "authoring_files_sha256": {
+    "lexicon_batch_038.authoring.json": "6a1d581fee002b631e98eb78a303b983b78a1f0eb62f8e19e0bad0ae684fe220",
+    "batch038_authored_daily_draft.txt": "b6a236712d437925ecc443f2e6173bd8d58627918b341f289ea6b271781871bb",
+    "batch038_pronunciation_review.tsv": "646e423532b72d380ec986d63699c55203787dc57150253476c720c4079930da"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "7becf39df1e21f4f8138e84626ce0ccfdbe038ecaef8bd044fe4f85c2559e16c",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "meal_preparation": 5500,
+    "washing_and_cutting": 5500,
+    "meat_fish_and_eggs": 5500,
+    "cooking_heat_and_pans": 5500,
+    "seasoning_and_texture": 5500,
+    "grains_noodles_and_dough": 5500,
+    "baking_drinks_and_plating": 5500,
+    "kitchen_cleanup_and_storage": 5500
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "baking_drinks_and_plating": 97,
+    "cooking_heat_and_pans": 66,
+    "grains_noodles_and_dough": 96,
+    "kitchen_cleanup_and_storage": 85,
+    "meal_preparation": 79,
+    "meat_fish_and_eggs": 89,
+    "seasoning_and_texture": 94,
+    "washing_and_cutting": 93
+  },
+  "length_distribution": {
+    "4": 584,
+    "5": 111,
+    "6": 1,
+    "3": 3
+  },
+  "authoring_rejections": [
+    {
+      "word": "饭还没熟",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "先尝一口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "尝尝咸淡",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "上菜顺序",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "菜篮沥水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "切成薄片",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "切成厚片",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "切成小块",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "切成细丝",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "切成小丁",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "切成小段",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "刀尖挑出",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "肉馅调味",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "排骨剁块",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "排骨焯水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "鸡腿去骨",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "牛肉逆纹切",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "蛤蜊吐沙",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "蛋液过筛",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "锅盖留缝",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "热锅凉油",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "小火慢煎",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "小火慢炖",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "小火慢煮",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "大火烧开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "中火翻炒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "小火收汁",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "转成小火",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "转成中火",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水开下锅",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "油热下锅",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "油温升高",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "油温太高",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "油温不够",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "煎至金黄",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "炒至变色",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "炒出香味",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "炒散肉末",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "翻炒均匀",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "快速翻炒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "轻轻翻面",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "两面煎黄",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "撇去浮油",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "撇去浮沫",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "汤汁浓稠",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "油溅出来",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "离火放凉",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "离火搅拌",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "盛到盘里",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "盛到碗里",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "翻面再煎",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "味道偏淡",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "味道偏咸",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "咸淡适中",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "酸甜适中",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "辣度适中",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "外皮酥脆",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "米饭松软",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "加水没过",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "面粉过筛",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "面粉加水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "面糊调匀",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "面糊太稀",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "面糊太稠",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "面条过水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "面条捞出",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "烤箱预热",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "烤箱温度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "烤盘抹油",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "锡纸包好",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "餐具沥水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水槽滤篮",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "厨房台面",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "海绵挤干",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "调料归位",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "剩饭装盒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "剩菜装盒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "食材分装",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "生熟分开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "冰箱抽屉",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 534,
+  "manual_pronunciation_overrides": {
+    "饭盛好了": "fanchenghaole",
+    "不够再盛点": "bugouzaichengdian",
+    "汤先别盛": "tangxianbiecheng",
+    "拿碗来盛": "nawanlaicheng",
+    "蒜皮剥掉": "suanpibaodiao",
+    "豆角择好": "doujiaozhaihao",
+    "韭菜择好": "jiucaizhaihao",
+    "菠菜择好": "bocaizhaihao",
+    "玉米剥粒": "yumibaoli",
+    "切成长条": "qiechengchangtiao",
+    "把皮削薄点": "bapixiaobaodian",
+    "虾壳剥掉": "xiakebaodiao",
+    "水煮蛋剥好": "shuizhudanbaohao",
+    "火调小点": "huotiaoxiaodian",
+    "火调大点": "huotiaodadian",
+    "汤盛出来": "tangchengchulai",
+    "菜盛出来": "caichengchulai",
+    "饭盛出来": "fanchengchulai",
+    "慢慢盛汤": "manmanchengtang",
+    "别盛太满": "biechengtaiman",
+    "生抽调味": "shengchoutiaowei",
+    "芝麻酱调开": "zhimajiangtiaokai",
+    "花生酱调开": "huashengjiangtiaokai",
+    "蘸水调好": "zhanshuitiaohao",
+    "酱汁调好": "jiangzhitiaohao",
+    "芡汁调好": "qianzhitiaohao",
+    "淀粉水调好": "dianfenshuitiaohao",
+    "粥盛一碗": "zhouchengyiwan",
+    "汤面盛好": "tangmianchenghao",
+    "面汤盛好": "miantangchenghao"
+  },
+  "reading_variant_choices": {
+    "蒜皮剥掉": "suanpibaodiao",
+    "玉米剥粒": "yumibaoli",
+    "虾壳剥掉": "xiakebaodiao",
+    "水煮蛋剥好": "shuizhudanbaohao"
+  },
+  "semantic_pronunciation_corrections": 26,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

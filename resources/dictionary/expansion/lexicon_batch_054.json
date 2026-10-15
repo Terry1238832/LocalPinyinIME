@@ -1,0 +1,169 @@
+{
+  "batch": "lexicon_batch_054",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "Individually authored clarification, questions, permission, everyday responses and follow-up conversation",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 577,
+  "sha256": "97d1ed4ece3c16729e4b2327c0a4ede968131f2a5b2dabdf03625a98fa0f506d",
+  "authoring_files_sha256": {
+    "lexicon_batch_054.authoring.json": "cfc5d4b80a306c3ca4175d05d44b6150d76507dee8465b569de9c3a94b93d69d",
+    "batch054_authored_daily_draft.txt": "aa72661412e0316ee01edfc07442f709247ad0288c33f263185e256105b1620a",
+    "batch054_pronunciation_review.tsv": "aad89407299510692e882cfe18d2953139a93c59ff8a5d0f8bd9f2f524731171"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "3e84e7c51e606edc259900b6892f8252592a481a28ab237fed4344d6cc8e9155",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "asking_for_clarification": 6000,
+    "checking_understanding": 6000,
+    "checking_details": 6000,
+    "asking_permission_and_help": 6000,
+    "accepting_and_declining": 6000,
+    "offering_options": 6000,
+    "reassurance_and_followup": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "accepting_and_declining": 83,
+    "asking_for_clarification": 80,
+    "asking_permission_and_help": 82,
+    "checking_details": 84,
+    "checking_understanding": 77,
+    "offering_options": 88,
+    "reassurance_and_followup": 83
+  },
+  "length_distribution": {
+    "5": 559,
+    "6": 18
+  },
+  "authoring_rejections": [
+    {
+      "word": "我理解对吗",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我没听清楚",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我没看清楚",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我没记清楚",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我有点没懂",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "这下清楚了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "这下明白了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "原来是这样",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "原来在那儿",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "是我记错了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "是我弄错了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帮忙查一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帮忙找一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帮忙拿一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帮忙改一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "方便帮忙吗",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "这次先算了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "这次先不去",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "要不要再试",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "你想怎么做",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我再问一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我再查一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "有结果告诉你",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 524,
+  "manual_pronunciation_overrides": {
+    "是哪一行呢": "shinayihangne",
+    "我可以查查": "wokeyichacha",
+    "这次先不了": "zhecixianbule",
+    "要不要查查": "yaobuyaochacha",
+    "要不要重来": "yaobuyaochonglai",
+    "要不要重试": "yaobuyaochongshi",
+    "要不要重发": "yaobuyaochongfa",
+    "要不要重写": "yaobuyaochongxie",
+    "要不要重做": "yaobuyaochongzuo",
+    "要不要重看": "yaobuyaochongkan",
+    "我先去查查": "woxianquchacha"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 11,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

@@ -1,0 +1,436 @@
+{
+  "batch": "lexicon_batch_042",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "视频语音通话、线上会议、屏幕共享、聊天与在线课程",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 704,
+  "sha256": "95434f83d34151bb5c0126401051a0070e52bd657cc36fc8e1c998a9f0e08a2e",
+  "authoring_files_sha256": {
+    "lexicon_batch_042.authoring.json": "4caf8722fc008062b62d3d2b6d6abbc12cc32396cd00e2351cacc551ec521413",
+    "batch042_authored_daily_draft.txt": "826328bc4b3e04337832180c01e4fd7038f516d7484f7aa8998abbb9b45b2ed6",
+    "batch042_pronunciation_review.tsv": "25c27c7a453c99ad7868577098cea9c3c63a87e9407cfb2a7fc4c491245847c7"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "805ab10ec466fb9f4e1e178f4cb56df37df633919071fe05fd69077b09e1b0d6",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "call_setup_and_invitations": 5500,
+    "microphones_and_audio": 5500,
+    "camera_and_video_quality": 5500,
+    "joining_and_running_meetings": 5500,
+    "screen_sharing_and_documents": 5500,
+    "instant_messages_and_groups": 5500,
+    "online_classes": 5500,
+    "connection_problems_and_followup": 5500
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "call_setup_and_invitations": 89,
+    "camera_and_video_quality": 82,
+    "connection_problems_and_followup": 93,
+    "instant_messages_and_groups": 87,
+    "joining_and_running_meetings": 86,
+    "microphones_and_audio": 75,
+    "online_classes": 99,
+    "screen_sharing_and_documents": 93
+  },
+  "length_distribution": {
+    "5": 418,
+    "4": 205,
+    "6": 81
+  },
+  "authoring_rejections": [
+    {
+      "word": "视频预览",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "视频截图",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "通话记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "通话音量",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "通话静音",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "通话录音",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "通话时长",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "通话质量",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "麦克风关了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "麦克风没开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "麦克风音量",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "麦克风增益",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "麦克风权限",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "麦克风测试",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "麦克风设置",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "麦克风输入",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "麦克风设备",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "麦克风静音",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "麦克风降噪",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "麦克风杂音",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "麦克风回声",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "全体静音",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "全员静音",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "解除静音",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "取消静音",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "声音断断续续",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我听不到你",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "音频回声",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "音频延迟",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "音频采样率",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "摄像头没开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "摄像头权限",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "摄像头设备",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "摄像头设置",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "摄像头角度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "摄像头画面",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "前置摄像头",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "后置摄像头",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "画面看不到",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "画面卡住了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "画面比例",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "背景虚化",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "背景替换",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "虚拟背景",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "光线太暗",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "光线均匀",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "入会提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "入会密码",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "入会链接",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "主持人权限",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "主持人邀请",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "主持人确认",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "参会人名单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "参会人数",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "参会时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "参会记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "参会通知",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "参会确认",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "参会提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "举手发言",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "共享指定窗口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "共享鼠标指针",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "文档批注",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "标注工具",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "标注颜色",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "标注粗细",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "演示备注",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "消息发出去了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "消息没收到",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "消息已读",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "消息未读",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "消息发送中",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "消息发送失败",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "消息免打扰",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "群聊通知",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "群聊设置",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "群聊头像",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "群聊成员",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "群里说一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "群里问一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "答题记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "网络延迟高",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "信号不太好",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "重新发一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "刚才断线了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "刚才没听清",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "刚才没看清",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 566,
+  "manual_pronunciation_overrides": {
+    "视频重拨": "shipinchongbo",
+    "视频重连": "shipinchonglian",
+    "语音重拨": "yuyinchongbo",
+    "语音重连": "yuyinchonglian",
+    "等我重拨": "dengwochongbo",
+    "人脸没入镜": "renlianmeirujing",
+    "灯光调一下": "dengguangtiaoyixia",
+    "灯光调暗点": "dengguangtiaoandian",
+    "灯光调亮点": "dengguangtiaoliangdian",
+    "亮度调一下": "liangdutiaoyixia",
+    "亮度调暗点": "liangdutiaoandian",
+    "亮度调亮点": "liangdutiaoliangdian",
+    "白板重做": "baibanchongzuo",
+    "私信没收到": "sixinmeishoudao",
+    "图片没收到": "tupianmeishoudao",
+    "连接重试中": "lianjiechongshizhong",
+    "等我重连": "dengwochonglian",
+    "等我重进": "dengwochongjin",
+    "刚才没收到": "gangcaimeishoudao"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 19,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

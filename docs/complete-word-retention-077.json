@@ -1,0 +1,229 @@
+{
+  "version": "0.7.7",
+  "measured_at_utc": "2026-10-15T02:57:25.256687+00:00",
+  "method": "Separate engine retention changes from dictionary additions on fixed data.\n\nThe same final resources are queried by the preserved pre-change executable and\nthe current executable; the 267 public fixtures stay unchanged. The controlled\nregression and four development discoveries are disclosed, not called blind.",
+  "old_engine_sha256": "8449dddae0183be06cf0f5ad90b44e4088fdcacab66bbb3776520621a89a0b5f",
+  "current_engine_sha256": "25fd5094a4c8d700f7f16be699bf043a4bc5982e4ddaad0fe753e701e1626986",
+  "same_final_runtime_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "de221b61942688029d646532548456643929bc7a42fe5225c45f1cded08ef1b5",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+    "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+    "continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e"
+  },
+  "engine_source_sha256": "b2c4b048bbd2654e4672c684ab596c59b3739e87e2cadbf8c76c030a665c35dd",
+  "controlled_regression_source_sha256": "0b184233e51c6c5550f4dbfdf1abf2c9819461eb8b5f4eda65ed5801864c0c07",
+  "dictionary_weights_changed_for_cases": false,
+  "personal_data_isolated": true,
+  "expected_answers_learned": false,
+  "old_engine_final_data_summary": {
+    "cases": 267,
+    "top1_correct": 154,
+    "top9_present": 204,
+    "top1_percent": 57.68,
+    "top9_percent": 76.4,
+    "character_error_rate": 0.0759,
+    "p50_lookup_ms": 13.468,
+    "p95_lookup_ms": 24.275,
+    "max_lookup_ms": 34.544
+  },
+  "current_engine_final_data_summary": {
+    "cases": 267,
+    "top1_correct": 154,
+    "top9_present": 204,
+    "top1_percent": 57.68,
+    "top9_percent": 76.4,
+    "character_error_rate": 0.0759,
+    "p50_lookup_ms": 12.957,
+    "p95_lookup_ms": 22.739,
+    "max_lookup_ms": 40.545
+  },
+  "current_engine_baseline_data_summary": {
+    "cases": 267,
+    "top1_correct": 154,
+    "top9_present": 204,
+    "top1_percent": 57.68,
+    "top9_percent": 76.4,
+    "character_error_rate": 0.0759,
+    "p50_lookup_ms": 12.727,
+    "p95_lookup_ms": 22.014,
+    "max_lookup_ms": 32.453
+  },
+  "development_discoveries": {
+    "before": {
+      "summary": {
+        "cases": 4,
+        "top1_correct": 0,
+        "top9_present": 0,
+        "top1_percent": 0.0,
+        "top9_percent": 0.0,
+        "character_error_rate": 0.4348,
+        "p50_lookup_ms": 4.251,
+        "p95_lookup_ms": 4.382,
+        "max_lookup_ms": 4.382
+      },
+      "rows": [
+        {
+          "pinyin": "nabujuhaimeikan",
+          "expected": "那部剧还没看",
+          "source": "authored049",
+          "lookup_us": 4197,
+          "candidates": [
+            "那布局还没看",
+            "那不惧还没看",
+            "那布局还没刊",
+            "那不惧还没刊",
+            "那布局还没砍",
+            "那不惧还没砍",
+            "那布局还没坎",
+            "哪部剧还没看",
+            "那部"
+          ],
+          "expected_rank": 0
+        },
+        {
+          "pinyin": "nabujukanwanle",
+          "expected": "那部剧看完了",
+          "source": "authored049",
+          "lookup_us": 3526,
+          "candidates": [
+            "那布局看完了",
+            "那不惧看完了",
+            "那布局砍完了",
+            "那不惧砍完了",
+            "那布局刊完了",
+            "那布局坎完了",
+            "那布局堪完了",
+            "哪部剧看完了",
+            "那部"
+          ],
+          "expected_rank": 0
+        },
+        {
+          "pinyin": "yigongjijia",
+          "expected": "一共几集啊",
+          "source": "authored049",
+          "lookup_us": 4251,
+          "candidates": [
+            "一共几家",
+            "一共计价",
+            "以供给家",
+            "一共几加",
+            "一共己家",
+            "一供给家",
+            "一公鸡家",
+            "一共几季啊",
+            "一共"
+          ],
+          "expected_rank": 0
+        },
+        {
+          "pinyin": "zhebujudijiji",
+          "expected": "这部剧第几集",
+          "source": "authored049",
+          "lookup_us": 4382,
+          "candidates": [
+            "这部句地急急",
+            "这部句地积极",
+            "这部句地几级",
+            "这部句地几集",
+            "这部句地鸡鸡",
+            "这部句地基及",
+            "这部据地急急",
+            "这部剧第几季",
+            "这部"
+          ],
+          "expected_rank": 0
+        }
+      ]
+    },
+    "after": {
+      "summary": {
+        "cases": 4,
+        "top1_correct": 0,
+        "top9_present": 4,
+        "top1_percent": 0.0,
+        "top9_percent": 100.0,
+        "character_error_rate": 0.4348,
+        "p50_lookup_ms": 4.695,
+        "p95_lookup_ms": 4.934,
+        "max_lookup_ms": 4.934
+      },
+      "rows": [
+        {
+          "pinyin": "nabujuhaimeikan",
+          "expected": "那部剧还没看",
+          "source": "authored049",
+          "lookup_us": 4934,
+          "candidates": [
+            "那布局还没看",
+            "那不惧还没看",
+            "那布局还没刊",
+            "那不惧还没刊",
+            "那布局还没砍",
+            "那不惧还没砍",
+            "哪部剧还没看",
+            "那部剧还没看",
+            "那部"
+          ],
+          "expected_rank": 8
+        },
+        {
+          "pinyin": "nabujukanwanle",
+          "expected": "那部剧看完了",
+          "source": "authored049",
+          "lookup_us": 3609,
+          "candidates": [
+            "那布局看完了",
+            "那不惧看完了",
+            "那布局砍完了",
+            "那不惧砍完了",
+            "那布局刊完了",
+            "那布局坎完了",
+            "哪部剧看完了",
+            "那部剧看完了",
+            "那部"
+          ],
+          "expected_rank": 8
+        },
+        {
+          "pinyin": "yigongjijia",
+          "expected": "一共几集啊",
+          "source": "authored049",
+          "lookup_us": 4695,
+          "candidates": [
+            "一共几家",
+            "一共计价",
+            "以供给家",
+            "一共几加",
+            "一共己家",
+            "一供给家",
+            "一共几季啊",
+            "一共几集啊",
+            "一共"
+          ],
+          "expected_rank": 8
+        },
+        {
+          "pinyin": "zhebujudijiji",
+          "expected": "这部剧第几集",
+          "source": "authored049",
+          "lookup_us": 4451,
+          "candidates": [
+            "这部句地急急",
+            "这部句地积极",
+            "这部句地几级",
+            "这部句地几集",
+            "这部句地鸡鸡",
+            "这部句地基及",
+            "这部剧第几季",
+            "这部剧第几集",
+            "这部"
+          ],
+          "expected_rank": 8
+        }
+      ]
+    }
+  },
+  "limitation": "Up to two eligible complete alternatives can be rescued beside contextual choices and the shorter prefix. This does not guarantee every homophone, all whole sentences or installed-host routing."
+}

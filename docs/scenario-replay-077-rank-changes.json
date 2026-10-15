@@ -1,0 +1,48 @@
+{
+  "version": "0.7.7",
+  "scenario_report_sha256": "a7636b470e256bc3925a2a28861c832c4d05791dd53c018afcb2601d65af9321",
+  "cases_sha256": "56336449fe84b66c46ce2a44aab272ff54a7d7462cf28aa015275baf7526979f",
+  "engine_sha256": "25fd5094a4c8d700f7f16be699bf043a4bc5982e4ddaad0fe753e701e1626986",
+  "runtime_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "de221b61942688029d646532548456643929bc7a42fe5225c45f1cded08ef1b5",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+    "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+    "continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e"
+  },
+  "scope": "Observed whole-input candidate changes on the unchanged 32 public development cases. No answer import, learning or per-case weight adjustment. Selecting shorter words interactively remains a separate path.",
+  "lost_from_top9": [
+    {
+      "source": "authored_scenario:004",
+      "pinyin": "zhebenwoyijingkanwanlexiangjiexiayiben",
+      "expected": "这本我已经看完了想借下一本",
+      "baseline_rank": 2,
+      "current_rank": 0,
+      "baseline_candidates": [
+        "这本我已经看完了详解下一本",
+        "这本我已经看完了想借下一本",
+        "这本我已经看完了详解吓一本",
+        "这本我已经看完了详解夏一本",
+        "这本我已经看完了详解下译本",
+        "这本我已经看完了详解虾一本",
+        "这本我已经看完了详解霞一本",
+        "这本我已经看完了详解瞎一本",
+        "这本"
+      ],
+      "current_candidates": [
+        "这本我已经看完了详解下一本",
+        "这本我已经看完了想接下一本",
+        "这本我已经看完了详解吓一本",
+        "这本我已经看完了详解下译本",
+        "这本我已经看完了详解下一笨",
+        "这本我已经看完了详解夏一本",
+        "这本我已经看完了详解虾一本",
+        "这本我已经看完了详解霞一本",
+        "这本"
+      ]
+    }
+  ],
+  "gained_in_top9": [],
+  "lost_first_place": [],
+  "gained_first_place": []
+}

@@ -1,0 +1,174 @@
+{
+  "batch": "lexicon_batch_058",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "Individually authored phones, desktop settings, app installation, storage, connections and everyday device conversation",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 492,
+  "sha256": "2f097612d44f83eff6bd6e3966a6b660f2a163282f4c26cdcb68442058e6e526",
+  "authoring_files_sha256": {
+    "lexicon_batch_058.authoring.json": "d30fec96cb0f94a67956f177fe0b2e93b96aba62268449ed3122eb11b643bcd1",
+    "batch058_authored_daily_draft.txt": "5a32cca17de27ba2743ef5c5163486f0a052b287c5e786ef38f4442fd76e7dea",
+    "batch058_pronunciation_review.tsv": "db5bb11a9ce7b2e170b742f710565ec165d28fd8393174f0631def67ff769b06"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "01b777eb0289eab5b080a16e32ea7a410b253503fdbf107ef3ad523015643499",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "charging_and_battery": 6000,
+    "screens_and_controls": 6000,
+    "settings_and_notifications": 6000,
+    "installing_and_updating_apps": 6000,
+    "storage_and_file_transfer": 6000,
+    "connection_and_troubleshooting": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "charging_and_battery": 83,
+    "connection_and_troubleshooting": 82,
+    "installing_and_updating_apps": 86,
+    "screens_and_controls": 81,
+    "settings_and_notifications": 81,
+    "storage_and_file_transfer": 79
+  },
+  "length_distribution": {
+    "5": 477,
+    "6": 15
+  },
+  "authoring_rejections": [
+    {
+      "word": "充电宝没电",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "亮度调一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "设置没保存",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "密码输错了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "软件打不开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "软件卡住了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "软件没反应",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "文件找不到",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "文件打不开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "文件损坏了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "文件夹满了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "文件夹空了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "文件夹路径",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "文件夹位置",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "压缩包密码",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "压缩包大小",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "解压失败了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "网络信号弱",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "网络信号强",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "网络不稳定",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "网络连不上",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "信号恢复了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "开启飞行模式",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "关闭飞行模式",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 447,
+  "manual_pronunciation_overrides": {
+    "充电线太长": "chongdianxiantaichang",
+    "按钮卡住了": "anniuqiazhule",
+    "设置重置吧": "shezhichongzhiba",
+    "铃声调小点": "lingshengtiaoxiaodian",
+    "铃声调大点": "lingshengtiaodadian",
+    "下载重新来": "xiazaichongxinlai",
+    "安装重来吧": "anzhuangchonglaiba",
+    "卸载重来吧": "xiezaichonglaiba",
+    "更新重来吧": "gengxinchonglaiba",
+    "文件重名了": "wenjianchongmingle",
+    "解压重来吧": "jieyachonglaiba",
+    "传输重来吧": "chuanshuchonglaiba"
+  },
+  "reading_variant_choices": {
+    "按钮卡住了": "anniuqiazhule"
+  },
+  "semantic_pronunciation_corrections": 11,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

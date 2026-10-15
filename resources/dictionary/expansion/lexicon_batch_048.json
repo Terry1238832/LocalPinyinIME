@@ -1,0 +1,367 @@
+{
+  "batch": "lexicon_batch_048",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "洗衣家电、空调热水、门窗灯具、居家故障与报修交流",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 706,
+  "sha256": "c014d9aee839e7011dd60a716256cf04e1531dc6f9aa22c3aa64608216fd4455",
+  "authoring_files_sha256": {
+    "lexicon_batch_048.authoring.json": "feb7557b964ae3378d266208309c0aae778c5a4fca4098f2ca0d90b6d8dd354d",
+    "batch048_authored_daily_draft.txt": "99df62f40d57a8b2743add73eec631c4ae067807e6eb586b74b479754f60ec13",
+    "batch048_pronunciation_review.tsv": "7cbffa1773a9513de81db443e7ebc65a4dee4e4bb87126465568d37e0a2c56f9"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "33a20d2868648ce79b8ed6f457fc9a331be7c56e0c1346a295190744d6719bb2",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "laundry_and_drying": 6000,
+    "kitchen_appliances": 6000,
+    "heating_cooling_and_hot_water": 6000,
+    "cleaning_appliances": 6000,
+    "doors_windows_and_lights": 6000,
+    "water_and_household_problems": 6000,
+    "reporting_and_appointments": 6000,
+    "maintenance_followup": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "cleaning_appliances": 90,
+    "doors_windows_and_lights": 84,
+    "heating_cooling_and_hot_water": 87,
+    "kitchen_appliances": 92,
+    "laundry_and_drying": 81,
+    "maintenance_followup": 95,
+    "reporting_and_appointments": 91,
+    "water_and_household_problems": 86
+  },
+  "length_distribution": {
+    "5": 290,
+    "6": 383,
+    "4": 33
+  },
+  "authoring_rejections": [
+    {
+      "word": "洗衣机漏水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "洗衣机排水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "洗衣机进水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "洗衣机脱水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "洗衣机滤网",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "洗衣机胶圈",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "洗衣机进水管",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "洗衣机排水管",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "冰箱不制冷",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "微波炉加热",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "微波炉解冻",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "微波炉转盘",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "烤箱烤盘",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "空调不制冷",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "空调不制热",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "空调制冷慢",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "空调制热慢",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "热水器漏水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "热水器插头",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吸尘器吸头",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吸尘器刷头",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吸尘器滤网",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吸尘器尘盒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吸尘器软管",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "洗碗机滤网",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门锁打不开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门锁锁芯",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门锁锁舌",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门锁电池",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门把手松了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门把手掉了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门把手坏了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门轴响了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门框歪了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门缝漏风",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门铃电池",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "窗户关不上",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "灯座松了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "开关松了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "开关坏了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "开关没反应",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "插座松了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "插座坏了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水龙头漏水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水龙头滴水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水龙头松了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "花洒堵住了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "下水管漏了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "下水管堵了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "地漏堵住了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "马桶堵住了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "马桶盖松了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "马桶进水阀",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "马桶排水阀",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水槽堵住了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "墙面渗水了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "师傅几点来",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "维修人员确认",
+      "reason": "duplicate_draft"
+    },
+    {
+      "word": "配件装好了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "还是没修好",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 630,
+  "manual_pronunciation_overrides": {
+    "洗衣机门卡住": "xiyijimenqiazhu",
+    "衣服洗褪色了": "yifuxituisele",
+    "衣服还没收": "yifuhaimeishou",
+    "晾衣架卡住": "liangyijiaqiazhu",
+    "冰箱抽屉卡住": "bingxiangchoutiqiazhu",
+    "冰箱温度调好": "bingxiangwendutiaohao",
+    "冰箱模式调好": "bingxiangmoshitiaohao",
+    "烤箱温度调好": "kaoxiangwendutiaohao",
+    "烤箱模式调好": "kaoxiangmoshitiaohao",
+    "烤箱时间调好": "kaoxiangshijiantiaohao",
+    "空调温度调好": "kongtiaowendutiaohao",
+    "空调风速调好": "kongtiaofengsutiaohao",
+    "空调模式调好": "kongtiaomoshitiaohao",
+    "空调定时调好": "kongtiaodingshitiaohao",
+    "空调方向调好": "kongtiaofangxiangtiaohao",
+    "风扇挡位调好": "fengshandangweitiaohao",
+    "风扇方向调好": "fengshanfangxiangtiaohao",
+    "风扇高度调好": "fengshangaodutiaohao",
+    "风扇定时调好": "fengshandingshitiaohao",
+    "暖气温度调好": "nuanqiwendutiaohao",
+    "热水温度调好": "reshuiwendutiaohao",
+    "热水模式调好": "reshuimoshitiaohao",
+    "吸尘刷头卡住": "xichenshuatouqiazhu",
+    "吸头被卡住": "xitoubeiqiazhu",
+    "扫地机卡住了": "saodijiqiazhule",
+    "扫地刷头卡住": "saodishuatouqiazhu",
+    "边刷被卡住": "bianshuabeiqiazhu",
+    "滚刷被卡住": "gunshuabeiqiazhu",
+    "扫地轮子卡住": "saodilunziqiazhu",
+    "拖地机卡住了": "tuodijiqiazhule",
+    "拖地滚刷卡住": "tuodigunshuaqiazhu",
+    "洗碗机门卡住": "xiwanjimenqiazhu",
+    "门锁卡住了": "mensuoqiazhule",
+    "门锁钥匙丢了": "mensuoyaoshidiule",
+    "门锁钥匙配好": "mensuoyaoshipeihao",
+    "窗户轨道卡住": "chuanghuguidaoqiazhu",
+    "窗帘轨道卡住": "chuanglianguidaoqiazhu",
+    "灯泡亮度调好": "dengpaoliangdutiaohao",
+    "灯泡色温调好": "dengpaosewentiaohao",
+    "马桶水位调好": "matongshuiweitiaohao"
+  },
+  "reading_variant_choices": {
+    "洗衣机门卡住": "xiyijimenqiazhu",
+    "衣服洗褪色了": "yifuxituisele",
+    "晾衣架卡住": "liangyijiaqiazhu",
+    "冰箱抽屉卡住": "bingxiangchoutiqiazhu",
+    "吸尘刷头卡住": "xichenshuatouqiazhu",
+    "吸头被卡住": "xitoubeiqiazhu",
+    "扫地机卡住了": "saodijiqiazhule",
+    "扫地刷头卡住": "saodishuatouqiazhu",
+    "边刷被卡住": "bianshuabeiqiazhu",
+    "滚刷被卡住": "gunshuabeiqiazhu",
+    "扫地轮子卡住": "saodilunziqiazhu",
+    "拖地机卡住了": "tuodijiqiazhule",
+    "拖地滚刷卡住": "tuodigunshuaqiazhu",
+    "洗碗机门卡住": "xiwanjimenqiazhu",
+    "门锁卡住了": "mensuoqiazhule",
+    "窗户轨道卡住": "chuanghuguidaoqiazhu",
+    "窗帘轨道卡住": "chuanglianguidaoqiazhu"
+  },
+  "semantic_pronunciation_corrections": 23,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

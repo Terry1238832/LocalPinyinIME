@@ -1,0 +1,113 @@
+{
+  "batch": "lexicon_batch_060",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "Individually authored ingredients, cooking, dishes, taste, fruit and table conversation",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 519,
+  "sha256": "b368c3656281ccdc63797c07a9cd42c490e7d24dc7f6be27976403bb9dd06ffb",
+  "authoring_files_sha256": {
+    "lexicon_batch_060.authoring.json": "bd465ff3ad7393bf50613bdf4c12b59ec9b1d524ab90670b878773625b5844a0",
+    "batch060_authored_daily_draft.txt": "a7e9964e650b2a0fb7e8474a8ac673a4b6bc8bfe7f96059a3e79e2480b226b73",
+    "batch060_pronunciation_review.tsv": "c0b8ca11bac42f1db0f3f258990d11693be8d69aaca4dda14cbd326325598d58"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "a3b2cd7483440abe2f265e7ce30bce97e04b72c0bf2ecc670c2b7305f18d199d",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "ingredients_and_preparation": 6000,
+    "cooking_and_timing": 6000,
+    "seasoning_and_taste": 6000,
+    "dishes_and_meal_choices": 6000,
+    "fruit_snacks_and_drinks": 6000,
+    "at_the_table": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "at_the_table": 89,
+    "cooking_and_timing": 82,
+    "dishes_and_meal_choices": 92,
+    "fruit_snacks_and_drinks": 89,
+    "ingredients_and_preparation": 77,
+    "seasoning_and_taste": 90
+  },
+  "length_distribution": {
+    "5": 472,
+    "6": 11,
+    "4": 36
+  },
+  "authoring_rejections": [
+    {
+      "word": "菜叶摘一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "胡萝卜削皮",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "胡萝卜切片",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "汤勺拿过来",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "夹子拿过来",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "盐够了吗",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "这菜挺嫩的",
+      "reason": "duplicate_draft"
+    }
+  ],
+  "mandatory_polyphone_reviews": 475,
+  "manual_pronunciation_overrides": {
+    "菜择好了吗": "caizhaihaolema",
+    "菜还没择呢": "caihaimeizhaine",
+    "大蒜剥好了": "dasuanbaohaole",
+    "大蒜还没剥": "dasuanhaimeibao",
+    "先把面和好": "xianbamianhuohao",
+    "盛一下饭吧": "chengyixiafanba",
+    "盛一下汤吧": "chengyixiatangba",
+    "盛一下粥吧": "chengyixiazhouba",
+    "橙子剥了吗": "chengzibaolema",
+    "香蕉剥了吗": "xiangjiaobaolema",
+    "芒果剥了吗": "mangguobaolema",
+    "再盛点饭吧": "zaichengdianfanba",
+    "再盛点汤吧": "zaichengdiantangba",
+    "再盛点粥吧": "zaichengdianzhouba"
+  },
+  "reading_variant_choices": {
+    "大蒜剥好了": "dasuanbaohaole",
+    "大蒜还没剥": "dasuanhaimeibao",
+    "橙子剥了吗": "chengzibaolema",
+    "香蕉剥了吗": "xiangjiaobaolema",
+    "芒果剥了吗": "mangguobaolema"
+  },
+  "semantic_pronunciation_corrections": 9,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

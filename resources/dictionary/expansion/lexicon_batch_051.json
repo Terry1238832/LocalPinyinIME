@@ -1,0 +1,120 @@
+{
+  "batch": "lexicon_batch_051",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "Individually authored moving, furniture placement, packing, assembly and home organisation vocabulary",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 644,
+  "sha256": "b70f7de5b1d3e1c4e68c10bd8ba8c11654356df5525a853213aebed875a4eb08",
+  "authoring_files_sha256": {
+    "lexicon_batch_051.authoring.json": "3875063b4d0f4063eee35143a4e95ef7e649f8d9ba9e50d20f784a764d492652",
+    "batch051_authored_daily_draft.txt": "ebb16851f928a25e69558efa2183f068a1f65feb2a90591db182d21cecfe984e",
+    "batch051_pronunciation_review.tsv": "d9fe69cbc8618da60bc3db5a0d7c7c9f1193bb81f8bcc28bb9063fc1d44effd3"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "0ff88f80dd8f3c295c44c407e902906f089a5f5469890c63b11299b0bcab5cd2",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "planning_a_move": 6000,
+    "packing_and_labels": 6000,
+    "carrying_and_loading": 6000,
+    "measuring_furniture": 6000,
+    "arranging_furniture": 6000,
+    "assembly_and_repairs": 6000,
+    "sorting_and_storage": 6000,
+    "settling_in": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "arranging_furniture": 88,
+    "assembly_and_repairs": 87,
+    "carrying_and_loading": 86,
+    "measuring_furniture": 71,
+    "packing_and_labels": 79,
+    "planning_a_move": 68,
+    "settling_in": 77,
+    "sorting_and_storage": 88
+  },
+  "length_distribution": {
+    "5": 634,
+    "6": 6,
+    "4": 4
+  },
+  "authoring_rejections": [
+    {
+      "word": "收纳袋装好",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帮我拿一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "慢慢往前走",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "再核对一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "走道留出来",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "零件装反了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "柜门打不开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "轻的放上面",
+      "reason": "duplicate_draft"
+    },
+    {
+      "word": "鞋子摆整齐",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "明天再整理",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 559,
+  "manual_pronunciation_overrides": {
+    "桌子多长啊": "zhuoziduochanga",
+    "沙发多长啊": "shafaduochanga",
+    "窗帘多长啊": "chuanglianduochanga",
+    "地毯多长啊": "ditanduochanga",
+    "这个太长了": "zhegetaichangle",
+    "那个太长了": "nagetaichangle",
+    "合页调一下": "heyetiaoyixia",
+    "门板调一下": "menbantiaoyixia",
+    "滑轨调一下": "huaguitiaoyixia",
+    "袋口扎好吧": "daikouzahaoba",
+    "新家还没收拾": "xinjiahaimeishoushi"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 11,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

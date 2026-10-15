@@ -1,0 +1,126 @@
+{
+  "batch": "lexicon_batch_049",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "阅读书籍、图书借阅、影视音频、展览演出与文化活动交流",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 737,
+  "sha256": "4de8c79bfc56371663434f1e5ac512945afdc58d5315fb32c38a8e403e11cb70",
+  "authoring_files_sha256": {
+    "lexicon_batch_049.authoring.json": "90a9ffb2db173d21a1395469d2814bdc17e7ae91642e5ac285eccdbe9f3a16a0",
+    "batch049_authored_daily_draft.txt": "cadce9241dda26b55618d203f277caee521b6de0d82e4c727feab52daba13698",
+    "batch049_pronunciation_review.tsv": "d9cbd02b6b415ade0839ef03aaef5902dfbe0178a76a27558322516559af1044"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "e4609104a7b0ad966d8da281ce2adfc0d227c14535e9e772bb5ba3bcdd818080",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "reading_books": 6000,
+    "libraries_and_bookstores": 6000,
+    "films_and_series": 6000,
+    "cinema_and_screening": 6000,
+    "audio_music_and_subtitles": 6000,
+    "exhibitions_and_museums": 6000,
+    "shows_and_live_events": 6000,
+    "opinions_and_feedback": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "audio_music_and_subtitles": 92,
+    "cinema_and_screening": 89,
+    "exhibitions_and_museums": 92,
+    "films_and_series": 90,
+    "libraries_and_bookstores": 94,
+    "opinions_and_feedback": 96,
+    "reading_books": 89,
+    "shows_and_live_events": 95
+  },
+  "length_distribution": {
+    "5": 254,
+    "6": 437,
+    "4": 46
+  },
+  "authoring_rejections": [
+    {
+      "word": "图书馆位置",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "图书馆提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "座位没找到",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "歌词字幕",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "字幕不同步",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "展品目录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "演出座位号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "演出检票口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "演出合影",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "演出录像",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "演出反馈",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 612,
+  "manual_pronunciation_overrides": {
+    "书已经还好了": "shuyijinghuanhaole",
+    "书还没还回去": "shuhaimeihuanhuiqu",
+    "这部电影挺长": "zhebudianyingtingchang",
+    "这部剧挺长的": "zhebujutingchangde",
+    "这集有点长": "zhejiyoudianchang",
+    "字幕颜色调好": "zimuyansetiaohao",
+    "字幕字号调好": "zimuzihaotiaohao",
+    "字幕位置调好": "zimuweizhitiaohao",
+    "字幕时间调好": "zimushijiantiaohao",
+    "字幕进度调好": "zimujindutiaohao",
+    "弹幕颜色调好": "danmuyansetiaohao",
+    "弹幕字号调好": "danmuzihaotiaohao",
+    "弹幕速度调好": "danmusudutiaohao"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 13,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

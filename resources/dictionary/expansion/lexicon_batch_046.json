@@ -1,0 +1,256 @@
+{
+  "batch": "lexicon_batch_046",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "日常观点表述、解释因果、条件对比、过程总结与连接短语",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 735,
+  "sha256": "849f918ef68c4dc61585a28c8d19f25c9409d5d11800c3ae72164fde9c429114",
+  "authoring_files_sha256": {
+    "lexicon_batch_046.authoring.json": "d9c2fa3b52cd3ee33f841da3b3dfb4f36affe5eb1ab83fb294b8e7f752a6e769",
+    "batch046_authored_daily_draft.txt": "526b78b3dfe430354a8f80048ba96799b5b5c9727b66eb5c031e3123cd50b7c6",
+    "batch046_pronunciation_review.tsv": "b0f11201189486b67dc724dc31e2ec67d4caeb8cf66a155a61df494452188622"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "4a3eb99a9d1c356430a0cbeff0a121edb569fb4702dbb9f3254487b80a4d5847",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "stating_a_view": 6000,
+    "explanations_and_clarification": 6000,
+    "reasons_and_results": 6000,
+    "conditions_and_possibilities": 6000,
+    "comparison_and_contrast": 6000,
+    "time_and_progress": 6000,
+    "summarizing_and_next_steps": 6000,
+    "careful_conversational_wording": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "careful_conversational_wording": 94,
+    "comparison_and_contrast": 90,
+    "conditions_and_possibilities": 96,
+    "explanations_and_clarification": 86,
+    "reasons_and_results": 92,
+    "stating_a_view": 88,
+    "summarizing_and_next_steps": 93,
+    "time_and_progress": 96
+  },
+  "length_distribution": {
+    "5": 383,
+    "6": 339,
+    "4": 13
+  },
+  "authoring_rejections": [
+    {
+      "word": "从结果来看",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "从长远来看",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "从数据来看",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我的意思是",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "你的意思是",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "换一种说法",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "换个角度想想",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "更准确地说",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "这也意味着",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "说清楚一点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "先说明一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "先确认一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "把问题说清楚",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "主要原因是",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "直接原因是",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "根本原因是",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "如果有时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "时间允许的话",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "与此相比",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "与此相反",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "与此有关",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "与之相比",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "与之对应",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "与之相反",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "不完全一样",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "并不意味着",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "开始之前",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "结束之后",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "可以总结为",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "可以理解为",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "可以归纳为",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "可以认为是",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "别急着下结论",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "先看看情况",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 713,
+  "manual_pronunciation_overrides": {
+    "更直接地说": "gengzhijiedeshuo",
+    "更简单地说": "gengjiandandeshuo",
+    "更具体地说": "gengjutideshuo",
+    "更完整地说": "gengwanzhengdeshuo",
+    "更清楚地说": "gengqingchudeshuo",
+    "更通俗地说": "gengtongsudeshuo",
+    "更客观地说": "gengkeguandeshuo",
+    "更直白地说": "gengzhibaideshuo",
+    "更明确地说": "gengmingquedeshuo",
+    "这也表明了": "zheyebiaomingle",
+    "这也证明了": "zheyezhengmingle",
+    "进行当中": "jinxingdangzhong",
+    "接下来还得": "jiexialaihaidei",
+    "下一步还得": "xiayibuhaidei",
+    "我们还得考虑": "womenhaideikaolv",
+    "我们还得确认": "womenhaideiqueren",
+    "我们还得分析": "womenhaideifenxi",
+    "我们还得讨论": "womenhaideitaolun",
+    "我们还得说明": "womenhaideishuoming",
+    "我们还得解释": "womenhaideijieshi",
+    "我们还得调整": "womenhaideitiaozheng",
+    "我们还得改进": "womenhaideigaijin",
+    "我们还得补充": "womenhaideibuchong",
+    "我们还得完善": "womenhaideiwanshan",
+    "我们还得继续": "womenhaideijixu",
+    "我们还得再看": "womenhaideizaikan",
+    "我们还得再想": "womenhaideizaixiang",
+    "我们还得再说": "womenhaideizaishuo",
+    "我们还得再试": "womenhaideizaishi",
+    "我们还得再查": "womenhaideizaicha",
+    "还得再考虑": "haideizaikaolv",
+    "还得再确认": "haideizaiqueren",
+    "还得再分析": "haideizaifenxi",
+    "还得再讨论": "haideizaitaolun",
+    "还得再说明": "haideizaishuoming",
+    "还得再解释": "haideizaijieshi",
+    "还得再调整": "haideizaitiaozheng",
+    "还得再改进": "haideizaigaijin",
+    "还得再补充": "haideizaibuchong",
+    "还得再完善": "haideizaiwanshan",
+    "得先说明白": "deixianshuomingbai",
+    "得先想清楚": "deixianxiangqingchu",
+    "得先问清楚": "deixianwenqingchu",
+    "得先看清楚": "deixiankanqingchu",
+    "得先查清楚": "deixianchaqingchu",
+    "得先弄清楚": "deixiannongqingchu",
+    "得先确认好": "deixianquerenhao",
+    "得先安排好": "deixiananpaihao",
+    "得先准备好": "deixianzhunbeihao",
+    "得先处理好": "deixianchulihao",
+    "不妨先查查": "bufangxianchacha"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 51,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

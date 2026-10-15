@@ -1,0 +1,322 @@
+{
+  "batch": "lexicon_batch_045",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "日常身体感受、作息休息、运动交流、游泳徒步与露营",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 716,
+  "sha256": "93364001e735c1a8f221af7d6bb4031da53eef456ff9fa2ff25376837cecded5",
+  "authoring_files_sha256": {
+    "lexicon_batch_045.authoring.json": "a4bd8f3de690ad741d1886ea46ed781ece336a7b2b0074acceef23de6f673012",
+    "batch045_authored_daily_draft.txt": "9e23c7b7739bfc769af7ba39c414f3a831522db41fe84f696ef423067c4aa1a9",
+    "batch045_pronunciation_review.tsv": "1d8a8cc30262772d3d5570a7d61c003661229aa624222127dff034de5efb56b4"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "f74a89e9243fe7ddb925808ccf8a66de57c867ce0b6eb7981e0d290d7b0cde4b",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "everyday_physical_feelings": 5500,
+    "resting_and_sleeping": 5500,
+    "walking_and_running": 5500,
+    "gym_and_indoor_exercise": 5500,
+    "balls_and_team_sports": 5500,
+    "swimming_and_water_activities": 5500,
+    "hiking_and_camping": 5500,
+    "recreation_feedback": 5500
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "balls_and_team_sports": 90,
+    "everyday_physical_feelings": 92,
+    "gym_and_indoor_exercise": 89,
+    "hiking_and_camping": 93,
+    "recreation_feedback": 94,
+    "resting_and_sleeping": 90,
+    "swimming_and_water_activities": 81,
+    "walking_and_running": 87
+  },
+  "length_distribution": {
+    "5": 488,
+    "6": 150,
+    "4": 78
+  },
+  "authoring_rejections": [
+    {
+      "word": "刚才有点冷",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "刚才有点热",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "感觉好多了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "休息间隔",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "休息安排",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "休息状态",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "休息计划",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "闹钟没响",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "睡眠记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "睡眠时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "睡眠状态",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "跑步记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "跑步时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "跑步距离",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "跑步配速",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "跑步路线",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "跑步计划",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "步行时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "步行距离",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "步行速度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "步行路线",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "健身房更衣室",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "健身房储物柜",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "自由重量区",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "器械重量",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "跑步机速度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "跑步机坡度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "球场时段",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "球场照明",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "球场边线",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "球场底线",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "球场围网",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "球场地面",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "球场座椅",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "球出界了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "泳池水温",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "泳池泳道",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "泳池照明",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "泳池台阶",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "泳池更衣室",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "泳池救生员",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "泳道编号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "泳道长度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "泳道宽度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "泳道浮标",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "游泳记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "游泳时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "游泳距离",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "游泳速度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "游泳圈数",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "储物柜钥匙",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "储物柜号码",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "储物柜密码",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "更衣柜钥匙",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帐篷门帘",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帐篷内帐",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帐篷外帐",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帐篷拉链",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "睡袋拉链",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "下次一起去",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 640,
+  "manual_pronunciation_overrides": {
+    "午睡睡不着": "wushuishuibuzhao",
+    "器械调一下": "qixietiaoyixia",
+    "器械调高点": "qixietiaogaodian",
+    "器械调低点": "qixietiaodidian",
+    "器械调重一点": "qixietiaozhongyidian",
+    "器械调轻一点": "qixietiaoqingyidian",
+    "球没落地": "qiumeiluodi",
+    "这球算谁的": "zheqiusuanshuide",
+    "泳镜带调好": "yongjingdaitiaohao",
+    "山路有点长": "shanluyoudianchang",
+    "帐篷还没收": "zhangpenghaimeishou"
+  },
+  "reading_variant_choices": {
+    "这球算谁的": "zheqiusuanshuide"
+  },
+  "semantic_pronunciation_corrections": 10,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

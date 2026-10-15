@@ -121,6 +121,44 @@ int main() {
         return word.text == retention_words.back();
     }), 1);
 
+    // Independently bias sentence composition toward other homophones. Both
+    // complete dictionary alternatives must remain selectable, without raising
+    // their frequencies or replacing the contextual first choice.
+    const auto plural_fixture = user_lexicon_root / L"plural_retention.tsv";
+    const auto plural_context = user_lexicon_root / L"plural_context.tsv";
+    {
+        std::ofstream file(plural_fixture, std::ios::binary);
+        file << localpinyin::wide_to_utf8(
+            L"wo\t我\t10000\nxiang\t想\t10000\n"
+            L"xie\t谢\t10000\nxie\t鞋\t10000\nxie\t协\t10000\nxie\t写\t9000\n"
+            L"shi\t是\t10000\nshi\t市\t10000\nshi\t诗\t9000\nshi\t事\t9000\n"
+            L"le\t乐\t10000\nle\t了\t9000\n"
+            L"woxiangxieshile\t我想写诗了\t6000\n"
+            L"woxiangxieshile\t我想写事了\t6000\n");
+        std::ofstream context_file(plural_context, std::ios::binary);
+        for (const auto& sequence : {L"我想", L"想鞋", L"想谢", L"想协", L"鞋市", L"谢市", L"协市",
+                                     L"鞋是", L"谢是", L"协是", L"市乐", L"是乐", L"市了", L"是了"})
+            context_file << localpinyin::wide_to_utf8(std::wstring(sequence) + L"\t10000\n");
+    }
+    localpinyin::PinyinEngine plural(localpinyin::DictionaryLoadMode::Empty);
+    REQUIRE_TRUE(plural.load_dictionary(plural_fixture.wstring()));
+    REQUIRE_TRUE(plural.load_context_model(plural_context.wstring()));
+    const auto plural_choices = plural.lookup(L"woxiangxieshile");
+    REQUIRE_EQ(plural_choices.size(), localpinyin::kMaxCandidateCount);
+    REQUIRE_EQ(plural_choices.front().text, std::wstring(L"我想谢是乐"));
+    for (const auto& word : {L"我想写诗了", L"我想写事了"}) {
+        const auto choice = std::find_if(plural_choices.begin(), plural_choices.end(), [&](const auto& item) {
+            return item.text == word;
+        });
+        REQUIRE_TRUE(choice != plural_choices.end());
+        REQUIRE_EQ(choice->consumed_pinyin, size_t{0});
+        REQUIRE_EQ(std::count_if(plural_choices.begin(), plural_choices.end(), [&](const auto& item) {
+            return item.text == word;
+        }), 1);
+    }
+    REQUIRE_EQ(plural_choices.back().text, std::wstring(L"我"));
+    REQUIRE_EQ(plural_choices.back().consumed_pinyin, size_t{2});
+
     // High-frequency spelling keys may coincide with pinyin. These synthetic
     // names remain directly selectable, but must not form Chinese sentences
     // unless the user explicitly selected or added that token.

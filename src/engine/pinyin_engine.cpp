@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <limits>
+#include <iterator>
 #include <filesystem>
 #include <cmath>
 #include <unordered_map>
@@ -386,20 +387,44 @@ std::vector<Candidate> PinyinEngine::lookup(const std::wstring& pinyin, const st
     if (candidates.empty()) candidates = typo_candidates(dictionary_, normalized);
     auto ranked = deduplicate_and_limit(ranker_.rank(normalized, std::move(candidates), &learning_));
 
-    // Keep one explicit complete long word available beside sentence decoding.
-    // It remains an optional candidate: do not replace the contextual first
-    // choice, and leave a ninth slot for selecting a shorter prefix.
+    // Keep complete long-word alternatives beside sentence decoding. A rescue
+    // must not evict another complete word already in the last two slots.
+    // Preserve contextual leading choices and a slot for a shorter prefix.
     auto complete_words = dictionary_.lookup(normalized);
     complete_words.erase(std::remove_if(complete_words.begin(), complete_words.end(), [&](const auto& word) {
         return word.text.size() <= 4 || word.text.size() > 16 || word.base_score < kPreferredUserLexiconFrequency ||
                !dictionary_.reading_matches_boundaries(normalized, word.text, parsed.boundaries);
     }), complete_words.end());
     complete_words = ranker_.rank(normalized, std::move(complete_words), &learning_);
-    for (auto& word : complete_words) {
-        if (std::any_of(ranked.begin(), ranked.end(), [&](const auto& item) { return item.text == word.text; })) continue;
-        if (ranked.size() >= kMaxCandidateCount - 1) ranked.resize(kMaxCandidateCount - 2);
-        ranked.push_back(std::move(word));
-        break;
+    auto missing_word = std::find_if(complete_words.begin(), complete_words.end(), [&](const auto& word) {
+        return std::none_of(ranked.begin(), ranked.end(), [&](const auto& item) { return item.text == word.text; });
+    });
+    if (missing_word != complete_words.end()) {
+        std::vector<Candidate> rescued;
+        // Retain existing whole words in their contextual order, including
+        // their original score and commit metadata, before adding a missing one.
+        for (size_t index = std::min(ranked.size(), kMaxCandidateCount - 3); index < ranked.size(); ++index) {
+            const auto& item = ranked[index];
+            if (std::any_of(complete_words.begin(), complete_words.end(), [&](const auto& word) {
+                    return item.text == word.text;
+                })) {
+                rescued.push_back(item);
+                break;
+            }
+        }
+        rescued.push_back(*missing_word);
+        if (rescued.size() < 2) {
+            const auto second = std::find_if(std::next(missing_word), complete_words.end(), [&](const auto& word) {
+                return std::none_of(ranked.begin(), ranked.end(), [&](const auto& item) { return item.text == word.text; });
+            });
+            if (second != complete_words.end()) rescued.push_back(*second);
+        }
+        const size_t leading_slots = kMaxCandidateCount - 1 - rescued.size();
+        if (ranked.size() > leading_slots) ranked.resize(leading_slots);
+        for (auto& word : rescued) {
+            if (std::none_of(ranked.begin(), ranked.end(), [&](const auto& item) { return item.text == word.text; }))
+                ranked.push_back(std::move(word));
+        }
     }
 
     std::vector<Candidate> prefixes;

@@ -1,0 +1,165 @@
+{
+  "batch": "lexicon_batch_052",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "Individually authored weather, seasons, outdoor plans, walking and nature conversation",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 577,
+  "sha256": "fe86288fbedc95b239e90ac45abf9d51873eedc2335c0c0bba8133c84a67495b",
+  "authoring_files_sha256": {
+    "lexicon_batch_052.authoring.json": "a7771913c0fb614da68ade2ab8615fb2df7e845277eb462491d3f5418ca42298",
+    "batch052_authored_daily_draft.txt": "2bcaf9a386666496192e6823d57053f0baead155dbe5c46c60d33e9a19d2a731",
+    "batch052_pronunciation_review.tsv": "3c3c8a3361ff25ef910165094c3636666447118b925964efc8a68c9a8d90a138"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "973546c082e086658a2a1e31f2e9fcccfb8dec0d19f55b8d1dfc0f9d08d2a000",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "checking_the_weather": 6000,
+    "rain_and_snow": 6000,
+    "wind_and_sun": 6000,
+    "temperature_and_seasons": 6000,
+    "outdoor_plans": 6000,
+    "walking_and_exploring": 6000,
+    "noticing_nature": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "checking_the_weather": 78,
+    "noticing_nature": 82,
+    "outdoor_plans": 76,
+    "rain_and_snow": 88,
+    "temperature_and_seasons": 88,
+    "walking_and_exploring": 84,
+    "wind_and_sun": 81
+  },
+  "length_distribution": {
+    "5": 555,
+    "6": 2,
+    "4": 20
+  },
+  "authoring_rejections": [
+    {
+      "word": "雨下起来了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "雨伞拿了吗",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "找地方避雨",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "前面有积水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "太阳出来了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "太阳落山了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "阳光照进来",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "找个阴凉处",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "温差有点大",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "天亮得早了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "天亮得晚了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "天黑得早了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "天黑得晚了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "野餐垫铺好",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "野餐盒装好",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帐篷搭好了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帐篷还没搭",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帐篷收好了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帐篷还没收",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "睡袋铺好了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "前面有台阶",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "站着歇一会",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 504,
+  "manual_pronunciation_overrides": {
+    "秋叶落了呢": "qiuyeluolene",
+    "白天变长了": "baitianbianchangle",
+    "夜晚变长了": "yewanbianchangle",
+    "别冻着了啊": "biedongzhaolea",
+    "别热着了啊": "bierezhaolea",
+    "去长椅坐坐": "quchangyizuozuo",
+    "长椅在哪里": "changyizainali",
+    "这条路挺长": "zhetiaolutingchang",
+    "前面有长椅": "qianmianyouchangyi",
+    "在长椅上等": "zaichangyishangdeng"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 10,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

@@ -1,0 +1,122 @@
+{
+  "batch": "lexicon_batch_050",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "衣着搭配、鞋帽配件、发型打理、出门准备与衣物修整",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 746,
+  "sha256": "b755ef208e322a90c4504723278df1653991d9e9ffdf90768dce0e34ee428310",
+  "authoring_files_sha256": {
+    "lexicon_batch_050.authoring.json": "518c7a78489d7ce901fb4c8731f33425a9fd8454867c9b85ded016f614e3361b",
+    "batch050_authored_daily_draft.txt": "59e0d7c064c901cd5ca9decc2a6c8cad2b50e88227cb1b4ead7869fc6ad6d26c",
+    "batch050_pronunciation_review.tsv": "22584c38b890188617d5e740e8852f5e757fd0a2a6b174f35772c5f2cabf314a"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "6a8146469aaf5a197862e26dc114e1d7a6129337aef1f7d8d198df9a2e0bd959",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "choosing_outfits": 6000,
+    "fit_and_fabric": 6000,
+    "shoes_and_socks": 6000,
+    "coats_and_accessories": 6000,
+    "grooming_and_hair": 6000,
+    "getting_ready_to_leave": 6000,
+    "clothing_care_and_repairs": 6000,
+    "appearance_conversation": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "appearance_conversation": 90,
+    "choosing_outfits": 87,
+    "clothing_care_and_repairs": 92,
+    "coats_and_accessories": 97,
+    "fit_and_fabric": 96,
+    "getting_ready_to_leave": 90,
+    "grooming_and_hair": 97,
+    "shoes_and_socks": 97
+  },
+  "length_distribution": {
+    "5": 512,
+    "6": 226,
+    "4": 8
+  },
+  "authoring_rejections": [
+    {
+      "word": "外套有点薄",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "你看这样行吗",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 705,
+  "manual_pronunciation_overrides": {
+    "这件穿着太长": "zhejianchuanzhetaichang",
+    "那件穿着太长": "najianchuanzhetaichang",
+    "衣服有点长": "yifuyoudianchang",
+    "袖子有点长": "xiuziyoudianchang",
+    "衣摆有点长": "yibaiyoudianchang",
+    "裤子有点长": "kuziyoudianchang",
+    "裤腿有点长": "kutuiyoudianchang",
+    "裤脚有点长": "kujiaoyoudianchang",
+    "裙子有点长": "qunziyoudianchang",
+    "袜子有点长": "waziyoudianchang",
+    "外套有点长": "waitaoyoudianchang",
+    "大衣有点长": "dayiyoudianchang",
+    "围巾还没系": "weijinhaimeiji",
+    "围巾有点长": "weijinyoudianchang",
+    "包带有点长": "baodaiyoudianchang",
+    "包带调好了": "baodaitiaohaole",
+    "包带还没调": "baodaihaimeitiao",
+    "包带调长点": "baodaitiaochangdian",
+    "包带调短点": "baodaitiaoduandian",
+    "头发扎好了": "toufazahaole",
+    "头发还没扎": "toufahaimeiza",
+    "头发有点长": "toufayoudianchang",
+    "头发扎紧了": "toufazajinle",
+    "头发扎松了": "toufazasongle",
+    "刘海有点长": "liuhaiyoudianchang",
+    "发卡戴好了": "fakadaihaole",
+    "发卡还没戴": "fakahaimeidai",
+    "发卡拿好了": "fakanahaole",
+    "发卡还没拿": "fakahaimeina",
+    "发卡带好了": "fakadaihaole",
+    "发卡还没带": "fakahaimeidai",
+    "衣服拉链卡住": "yifulalianqiazhu",
+    "裤子改长了": "kuzigaichangle",
+    "裙子改长了": "qunzigaichangle",
+    "衣袖改长了": "yixiugaichangle",
+    "口袋拉链卡住": "koudailalianqiazhu",
+    "腰带有点长": "yaodaiyoudianchang",
+    "腰带调好了": "yaodaitiaohaole",
+    "腰带还没调": "yaodaihaimeitiao",
+    "腰带调长点": "yaodaitiaochangdian",
+    "腰带调短点": "yaodaitiaoduandian",
+    "我觉得太长了": "wojuedetaichangle"
+  },
+  "reading_variant_choices": {
+    "衣服拉链卡住": "yifulalianqiazhu",
+    "口袋拉链卡住": "koudailalianqiazhu"
+  },
+  "semantic_pronunciation_corrections": 40,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

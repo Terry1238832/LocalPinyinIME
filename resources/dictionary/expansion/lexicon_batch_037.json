@@ -1,0 +1,642 @@
+{
+  "batch": "lexicon_batch_037",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "家庭沟通、孩子日常、接送上学、课堂活动与课后学习",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 585,
+  "sha256": "ac203df09d872c3b2504c367a851f54bda28add78d9ce194351f0f9ad19281ee",
+  "authoring_files_sha256": {
+    "lexicon_batch_037.authoring.json": "75df7c6079aeced4dde6dd402df1885ef5915906532410e0739bbe7eb41aba65",
+    "batch037_authored_daily_draft.txt": "551d18598b87a4fa0d93000c2f09c4c60cadddb704c0cc35fca459be09809d61",
+    "batch037_pronunciation_review.tsv": "8faf84e7ba6f55dde39a7b3ad8d3f735a4f48ac73aaec3548e5a21414fe4dc85"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "aeb69f672af44f92f04b7857f69cee3da908e3ca2f55bd7f425e605c2433ef53",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "family_conversation": 5500,
+    "child_daily_routine": 5500,
+    "child_play_and_emotions": 5500,
+    "school_dropoff_and_pickup": 5500,
+    "school_classroom_life": 5500,
+    "school_activities": 5500,
+    "after_school_learning": 5500,
+    "school_trips_and_supplies": 5500
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "after_school_learning": 71,
+    "child_daily_routine": 71,
+    "child_play_and_emotions": 78,
+    "family_conversation": 63,
+    "school_activities": 73,
+    "school_classroom_life": 69,
+    "school_dropoff_and_pickup": 75,
+    "school_trips_and_supplies": 85
+  },
+  "length_distribution": {
+    "4": 479,
+    "5": 96,
+    "6": 1,
+    "3": 9
+  },
+  "authoring_rejections": [
+    {
+      "word": "家人团聚",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "姥姥家",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "奶奶家",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "姥爷家",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "爷爷家",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "外婆家",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "外公家",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "亲戚来访",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "家庭群聊",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "家庭相册",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "家庭约定",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "家庭分工",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "家庭会议",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "家庭留言",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "家庭安排",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "家庭合影",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "穿好鞋子",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "指甲剪短",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "毛巾挂好",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "饭前洗手",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "饭后漱口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "自己吃饭",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "喝口温水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "吃点水果",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "书包整理",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "睡前故事",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "午睡时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "玩具小车",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "玩具分享",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "闭上眼睛",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "睁开眼睛",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "不要推人",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "不要打人",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "说出感受",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "接送孩子",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "接送时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "接送地点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "接送提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "校车接送",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "排队上车",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "班级通知",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "老师留言",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "老师反馈",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "接送授权",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "临时接送",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "提前接走",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "晚点来接",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "到了告诉我",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "教室通风",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "课堂笔记",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "课堂作业",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "课堂纪律",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "课堂发言",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "课堂提问",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "课堂讨论",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "课堂练习",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "课堂展示",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "课堂观察",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "课桌整理",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "错题标记",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "卷面整洁",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "课间休息",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "课间活动",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "轮流发言",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "小组讨论",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "小组汇报",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "小组展示",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "班级值日",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "值日安排",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "图书归还",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "班会主题",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "班会记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "班会总结",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "主题班会",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "开学典礼",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "开学报到",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "开学准备",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "开学通知",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "学期计划",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "学期目标",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "学期总结",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "期末复习",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "期末考试",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "期末成绩",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "运动会报名",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "运动会项目",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "入场队伍",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "入场顺序",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "文艺汇演",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "家长会通知",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "家长会签到",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "家长会反馈",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "课后作业",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "课后复习",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "课后辅导",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "课后服务",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "课后托管",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "作业订正",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "作业补交",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "作业提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "作业要求",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "作业记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "词语积累",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "词语解释",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "句子改写",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "阅读打卡",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "阅读笔记",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "阅读计划",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "阅读进度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "竖式计算",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "计算检查",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "计算步骤",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "英语跟读",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "单词卡片",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "单词拼写",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "单词发音",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "单词复习",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "错题整理",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "错题回顾",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "错题分析",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "复习提纲",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "复习清单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "研学活动",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "研学手册",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "研学记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "研学报告",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "小组人数",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "小组名单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "集合地点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "集合时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "集合清点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "活动名单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "活动通知",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "活动照片",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "活动反馈",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "备用衣物",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "备用袜子",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "备用裤子",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "换洗衣物",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "随身物品",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 429,
+  "manual_pronunciation_overrides": {
+    "扎好头发": "zahaotoufa",
+    "发卡掉了": "fakadiaole",
+    "慢慢嚼饭": "manmanjiaofan",
+    "别噎着了": "bieyezhaole",
+    "玩完还我": "wanwanhuanwo",
+    "铅笔削好": "qianbixiaohao",
+    "留好空行": "liuhaokonghang",
+    "卫生角整理": "weishengjiaozhengli",
+    "作业重写": "zuoyechongxie",
+    "作业重做": "zuoyechongzuo",
+    "作业重交": "zuoyechongjiao",
+    "错题重做": "cuotichongzuo"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 12,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

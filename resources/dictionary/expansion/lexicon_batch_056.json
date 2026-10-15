@@ -1,0 +1,162 @@
+{
+  "batch": "lexicon_batch_056",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "Individually authored document editing, tables, data review, images, charts, printing and sharing conversation",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 509,
+  "sha256": "cc0f9553d30278a5981ccb4c4df2c5428a73ca5263d318f6cf0556cf0c1e01df",
+  "authoring_files_sha256": {
+    "lexicon_batch_056.authoring.json": "558d114af58bb8ba8490a12913d8563adbbc5a5edc87583470e948af8a8381ff",
+    "batch056_authored_daily_draft.txt": "5a6d273cc709b304d6959a0ba3da78761652205891ee00cc59cab813b7671eba",
+    "batch056_pronunciation_review.tsv": "f10af92c20cd820b71bfc0b93167e1898b4ad81aa79922393e114b325c821cfe"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "aa2126bea48d9edad4ae9f030def93c07c38a1c56384cae35502ca76b711c69c",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "document_editing": 6000,
+    "text_layout": 6000,
+    "tables_and_spreadsheets": 6000,
+    "sorting_and_reviewing_data": 6000,
+    "images_and_diagrams": 6000,
+    "sharing_and_exporting": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "document_editing": 82,
+    "images_and_diagrams": 86,
+    "sharing_and_exporting": 87,
+    "sorting_and_reviewing_data": 83,
+    "tables_and_spreadsheets": 84,
+    "text_layout": 87
+  },
+  "length_distribution": {
+    "5": 502,
+    "6": 4,
+    "4": 3
+  },
+  "authoring_rejections": [
+    {
+      "word": "文档发给你",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "单元格合并",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "单元格锁定",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "单元格解锁",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "单元格格式",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "单元格边框",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "单元格底色",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "单元格对齐",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "按名称排序",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "按时间排序",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "按大小排序",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "大小写统一",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "图片加载慢",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "保存这份吧",
+      "reason": "duplicate_draft"
+    },
+    {
+      "word": "保存那份吧",
+      "reason": "duplicate_draft"
+    }
+  ],
+  "mandatory_polyphone_reviews": 464,
+  "manual_pronunciation_overrides": {
+    "文档没收到": "wendangmeishoudao",
+    "文档重命名": "wendangchongmingming",
+    "选中这行吧": "xuanzhongzhehangba",
+    "选中那行吧": "xuanzhongnahangba",
+    "删除这行吧": "shanchuzhehangba",
+    "删除那行吧": "shanchunahangba",
+    "插入这行吧": "charuzhehangba",
+    "插入那行吧": "charunahangba",
+    "标题有点长": "biaotiyoudianchang",
+    "段落空一行": "duanluokongyihang",
+    "行距调一下": "hangjutiaoyixia",
+    "间距调一下": "jianjutiaoyixia",
+    "空行多了吗": "konghangduolema",
+    "空行少了吗": "konghangshaolema",
+    "表格太长了": "biaogetaichangle",
+    "表尾加一行": "biaoweijiayihang",
+    "表尾删一行": "biaoweishanyihang",
+    "这一行删掉": "zheyihangshandiao",
+    "那一行删掉": "nayihangshandiao",
+    "这一行加粗": "zheyihangjiacu",
+    "那一行加粗": "nayihangjiacu",
+    "这一行隐藏": "zheyihangyincang",
+    "那一行隐藏": "nayihangyincang",
+    "这一行展开": "zheyihangzhankai",
+    "那一行展开": "nayihangzhankai",
+    "行高改一下": "hanggaogaiyixia",
+    "行高太高了": "hanggaotaigaole",
+    "行高太低了": "hanggaotaidile",
+    "插入一行吧": "charuyihangba",
+    "删除一行吧": "shanchuyihangba",
+    "增加一行吧": "zengjiayihangba",
+    "数据去重吧": "shujuquchongba",
+    "图片太长了": "tupiantaichangle",
+    "导出没反应": "daochumeifanying",
+    "导出重来吧": "daochuchonglaiba",
+    "保存重来吧": "baocunchonglaiba",
+    "打印重来吧": "dayinchonglaiba"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 37,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

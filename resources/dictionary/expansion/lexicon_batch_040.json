@@ -1,0 +1,1080 @@
+{
+  "batch": "lexicon_batch_040",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "社区物业、公共设施、缴费办事、证件材料与付款交流",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 550,
+  "sha256": "b4e85f0d95b72cc7bed8ca9222c9789c852f891b9318eaf7c65d60d08f8d696d",
+  "authoring_files_sha256": {
+    "lexicon_batch_040.authoring.json": "f75f49b249ae73454d05dca17272951eaaa03704b87fdd9f9daec1a6b1b86b8b",
+    "batch040_authored_daily_draft.txt": "d65b262eca74946d7af7f1821957e4287abd453cfd5b82576ef3fcb0638bb6b9",
+    "batch040_pronunciation_review.tsv": "142122b4e186ab2e9f85c19df411b1b5e69ffb0bdb90fdade7661a5db137ea43"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "79248e456676361337ea799f25c81023f7cc2e189fd2f2774edbe25ce8648eb4",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "community_and_property": 5500,
+    "building_facilities": 5500,
+    "water_power_and_bills": 5500,
+    "service_halls_and_appointments": 5500,
+    "documents_and_forms": 5500,
+    "banking_counter_conversation": 5500,
+    "payments_and_transfers": 5500,
+    "renewals_and_receipts": 5500
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "banking_counter_conversation": 77,
+    "building_facilities": 75,
+    "community_and_property": 66,
+    "documents_and_forms": 75,
+    "payments_and_transfers": 63,
+    "renewals_and_receipts": 59,
+    "service_halls_and_appointments": 54,
+    "water_power_and_bills": 81
+  },
+  "length_distribution": {
+    "5": 260,
+    "4": 290
+  },
+  "authoring_rejections": [
+    {
+      "word": "小区侧门",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "小区北门",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "小区南门",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "小区东门",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "小区西门",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "小区公告",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "小区绿化",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "小区路灯",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "小区出入口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门禁卡补办",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门禁卡失效",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门禁刷不开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门禁没反应",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门禁故障",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门禁密码",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门禁授权",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "门禁登记",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "物业办公室",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "物业前台",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "物业电话",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "物业回复",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "物业报修",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "物业通知",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "物业公告",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "物业值班",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "物业经理",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "物业确认",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "楼上邻居",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "楼下邻居",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "对门邻居",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "隔壁邻居",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "同层邻居",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "楼道照明",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电梯停运",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电梯检修",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电梯故障",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电梯保养",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电梯按钮",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电梯轿厢",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电梯楼层",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电梯检修日",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "消防通道口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "公共照明",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "公共维修",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "公共走廊",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "公共楼道",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "公共门厅",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "公共绿地",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "公共座椅",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "公共厕所",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "小区健身区",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "小区长椅",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "小区花坛",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "小区步道",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "维修时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "维修进度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "话费账单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水费查询",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电费查询",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "缴费户号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "缴费金额",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "缴费时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "缴费记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "缴费凭证",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "缴费收据",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "缴费通知",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "手机缴费",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "代缴费用",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "账单周期",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "账单日期",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "账单金额",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "账单明细",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "账单查询",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "账单下载",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "账单核对",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "账单备注",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水表读数",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "水表更换",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电表读数",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电表更换",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "电表余额",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "燃气表读数",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "办事大厅",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "办事窗口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "办事指南",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "办事预约",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "办事流程",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "服务大厅",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "服务窗口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "咨询窗口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "咨询电话",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "咨询记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "咨询结果",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "预约办事",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "预约窗口",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "预约日期",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "预约时段",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "预约号码",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "预约确认",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "预约取消",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "预约修改",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "预约提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "预约凭证",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "预约回执",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "到场签到",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "到场确认",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "到场时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "到场人数",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "现场取号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "现场咨询",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "现场受理",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "现场办理",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "现场领证",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "现场确认",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "现场签字",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "现场拍照",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "取号凭证",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "取号时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "取号机坏了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "叫号通知",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "叫号提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "叫到我了吗",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "前面几个人",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "排队人数",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "排队时长",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "排队号码",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "证件快到期",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "证件核验",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "证件号码",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "证件照片",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "证件原件",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "证件复印件",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "证件扫描件",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "证件有效期",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "证件到期日",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "证件签发日",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "证件签发地",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "原件核对",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "表格填写",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "表格盖章",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "表格编号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "姓名核对",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "材料补交",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "材料退回",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "材料清单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "材料复印件",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "材料扫描件",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "银行柜台",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "银行取号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "银行预约",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "银行网点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "银行流水",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "户名核对",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "开户网点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "开户申请",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "开户预约",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "柜台叫号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "柜台排队",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "业务编号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "业务受理",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "密码输错了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "密码确认",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "验证码没来",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "验证码过期",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "验证码失效",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "短信提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "短信确认",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "联系电话",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "联系地址",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "付款失败了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "付款金额",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "付款方式",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "付款时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "付款记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "付款备注",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "付款凭证",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "付款截图",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "付款确认",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "付款提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "收款金额",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "收款方式",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "收款账户",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "收款户名",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "收款时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "收款记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "收款备注",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "收款凭证",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "收款通知",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "收款确认",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "收款提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "收款二维码",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "转账金额",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "转账记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "转账备注",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "转账凭证",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "转账限额",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "余额明细",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "退款处理中",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "退款进度",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "退款时间",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "退款记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "退款金额",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "退款凭证",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "退款通知",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "退款确认",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "退款提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "退款方式",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "费用明细单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "费用报销单",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "费用分摊",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "费用补缴",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "收据补开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "收据日期",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "收据金额",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "收据盖章",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发票抬头",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发票金额",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发票日期",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发票编号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发票备注",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发票寄送",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发票下载",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发票打印",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发票查验",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发票补开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发票重开",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发票作废",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发票红冲",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "发票申请",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "开票信息",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "开票资料",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "开票金额",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "开票申请",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "开票记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "开票备注",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "开票抬头",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "开票税号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "续费提醒",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "续费记录",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "宽带续费",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "话费充值",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "会员续费",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "会员到期",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "会员权益",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "会员积分",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "会员账号",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "自动续费",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "手动续费",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "取消续费",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "关闭续费",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 470,
+  "manual_pronunciation_overrides": {
+    "电梯上行": "diantishangxing",
+    "电梯卡住了": "diantiqiazhule",
+    "消防门标识": "xiaofangmenbiaozhi",
+    "公共长椅": "gonggongchangyi",
+    "号码重排": "haomachongpai",
+    "表格重填": "biaogechongtian",
+    "密码重设": "mimachongshe",
+    "密码重输": "mimachongshu",
+    "短信没收到": "duanxinmeishoudao"
+  },
+  "reading_variant_choices": {
+    "电梯卡住了": "diantiqiazhule",
+    "消防门标识": "xiaofangmenbiaozhi"
+  },
+  "semantic_pronunciation_corrections": 7,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

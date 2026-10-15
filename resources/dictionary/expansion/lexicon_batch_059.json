@@ -1,0 +1,278 @@
+{
+  "batch": "lexicon_batch_059",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "Individually authored airports, railways, tickets, luggage, boarding and arrival conversation",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 528,
+  "sha256": "5940b43b7d023ce8544a0bc7938ea5e41a06ef1eb40f65eab58100b4d577ea73",
+  "authoring_files_sha256": {
+    "lexicon_batch_059.authoring.json": "4ffcb537e197e1604faf83c45392d5ead54ff56291e64516e3f192d77dceb987",
+    "batch059_authored_daily_draft.txt": "ce90520cdf949702f2e5bf41bb535d6f076ef6279a2537f4d745509db1602ef0",
+    "batch059_pronunciation_review.tsv": "f8ea09b62b486d5aaa3e422cc883266639be6736b351ce056f80e6a896c321e3"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "29f7bfec53503665334fd381a9026b9d94d6d5a25f878a53415ebeaeb269be91",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "tickets_and_departure_plans": 6000,
+    "packing_and_documents": 6000,
+    "airport_checkin": 6000,
+    "security_and_boarding": 6000,
+    "railway_stations": 6000,
+    "on_the_journey": 6000,
+    "arriving_and_collecting_luggage": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "airport_checkin": 68,
+    "arriving_and_collecting_luggage": 77,
+    "on_the_journey": 83,
+    "packing_and_documents": 75,
+    "railway_stations": 73,
+    "security_and_boarding": 75,
+    "tickets_and_departure_plans": 77
+  },
+  "length_distribution": {
+    "5": 516,
+    "6": 12
+  },
+  "authoring_rejections": [
+    {
+      "word": "车次看一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "航班取消了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "航班提前了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "航班晚点了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "行李称一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "行李箱没锁",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "行李箱轮子",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "行李箱拉杆",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "行李箱标签",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "行李箱密码",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "行李箱钥匙",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "机场门口等",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "机场大厅等",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "航站楼在哪",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "值机开始了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "值机结束了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "登机牌拿好",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "登机牌打印",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "登机牌发我",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "登机牌丢了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "登机牌补办",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "座位换一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "座位没选好",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "登机口在哪",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "登机口换了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "登机口开了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "登机开始了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "登机结束了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "飞机起飞了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "飞机落地了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车站门口等",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "车站大厅等",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "检票口在哪",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "检票口换了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "检票口开了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "检票开始了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "检票结束了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "座位在哪里",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "列车进站了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "列车出站了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "列车晚点了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "到站告诉我",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "空调调小点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "空调调大点",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "还没到站呢",
+      "reason": "duplicate_draft"
+    },
+    {
+      "word": "我来接你吧",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我在门口等",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "行李拿错了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "行李找不到",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "失物招领处",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 483,
+  "manual_pronunciation_overrides": {
+    "机票再查查": "jipiaozaichacha",
+    "安检还没过": "anjianhaimeiguo",
+    "座椅调一下": "zuoyitiaoyixia",
+    "风口调一下": "fengkoutiaoyixia",
+    "行李轮子卡住": "xinglilunziqiazhu",
+    "行李拉杆卡住": "xinglilaganqiazhu",
+    "行李箱卡住": "xinglixiangqiazhu",
+    "还没落地呢": "haimeiluodine"
+  },
+  "reading_variant_choices": {
+    "行李轮子卡住": "xinglilunziqiazhu",
+    "行李拉杆卡住": "xinglilaganqiazhu",
+    "行李箱卡住": "xinglixiangqiazhu"
+  },
+  "semantic_pronunciation_corrections": 5,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}

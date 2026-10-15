@@ -1,0 +1,156 @@
+{
+  "batch": "lexicon_batch_057",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "Individually authored appointments, service counters, paperwork, banking and postal errands, library conversation",
+  "author": "root",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 470,
+  "sha256": "9f87adcfdcaf2cca793c6d04508fca4370f325837bcb97d61b62d66d7d6fa7ea",
+  "authoring_files_sha256": {
+    "lexicon_batch_057.authoring.json": "b0be64ab7b05960411f54580da36596ad32ba7a102e4564805e292b0fa50d30a",
+    "batch057_authored_daily_draft.txt": "d47e1e38f8df70ba08f4ce71659c5818cbe352a1b4aff321819b6abbc0fb6536",
+    "batch057_pronunciation_review.tsv": "8541c92fd46fdfba65132064e3562f0c6e74e6aeb69d92391f361dc10b950dd7"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "487585e17354a3b7b561d6aaa70a0d30bd83376f1b9977fe9d5e8fbebd609430",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "making_appointments": 6000,
+    "arriving_and_queueing": 6000,
+    "talking_at_the_counter": 6000,
+    "paperwork_and_progress": 6000,
+    "banking_and_postal_errands": 6000,
+    "library_and_public_spaces": 6000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "arriving_and_queueing": 77,
+    "banking_and_postal_errands": 84,
+    "library_and_public_spaces": 80,
+    "making_appointments": 74,
+    "paperwork_and_progress": 79,
+    "talking_at_the_counter": 76
+  },
+  "length_distribution": {
+    "5": 460,
+    "6": 10
+  },
+  "authoring_rejections": [
+    {
+      "word": "预约没成功",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "预约成功了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "我来问一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "取号机坏了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "前面几个人",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "轮到我了吗",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "轮到你了吗",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "窗口开了吗",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "窗口关了吗",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "帮我确认下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "地址写错了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "材料带齐了",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "材料没带齐",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "进度发给我",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "进度发给你",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "银行门口等",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "余额查一下",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "图书馆人多吗",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "图书馆人少吗",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "借书卡带好",
+      "reason": "existing_three_layer_display"
+    },
+    {
+      "word": "座位换一下",
+      "reason": "existing_three_layer_display"
+    }
+  ],
+  "mandatory_polyphone_reviews": 433,
+  "manual_pronunciation_overrides": {
+    "表格重填吧": "biaogechongtianba",
+    "通知没收到": "tongzhimeishoudao",
+    "回单还没收": "huidanhaimeishou",
+    "还几本书啊": "huanjibenshua",
+    "这本还了吗": "zhebenhuanlema",
+    "那本还了吗": "nabenhuanlema",
+    "这本没还呢": "zhebenmeihuanne",
+    "那本没还呢": "nabenmeihuanne"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 8,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}
