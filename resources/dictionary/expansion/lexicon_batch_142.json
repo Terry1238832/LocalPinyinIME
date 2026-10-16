@@ -1,0 +1,45 @@
+{
+  "batch": "lexicon_batch_142",
+  "license": "MIT",
+  "authoring_source": "reference-derived",
+  "external_lexicon_import": false,
+  "bulk_third_party_lexicon_import": false,
+  "scope": "台湾监察院与考试院",
+  "author": "gap-fill",
+  "review_scope": "Single AI author reads every selected entry and its default key in context, then records positional polyphone decisions. Jieba words were chosen one by one from the missing-common-word checklist. This is not an independent human linguistic review and not a bulk import.",
+  "reference_source": "jieba dict.txt",
+  "reference_license": "MIT",
+  "reference_license_url": "https://github.com/fxsjy/jieba/blob/master/LICENSE",
+  "pronunciation_dependency": "pypinyin 0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 2,
+  "sha256": "04325feb030995934322c5ec394c61207e4a40e8949c355701b528d645ba492b",
+  "authoring_files_sha256": {
+    "batch142_draft.txt": "0211cd025a0bcb327104fa14cf9156b7a023108f5971a3950744614f249e483a",
+    "batch142_pronunciation_review.tsv": "83a70969bebbcb6e25a0f45be2aa764f165209ada927664f7223ab11a394528e"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "e697786ed505c731920bf546aea152738113d915f59404cd4ed988359efe8978",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "preset_category_weights": {
+    "taiwan_government_institutions": [
+      5500
+    ]
+  },
+  "weights_used": [
+    5500
+  ],
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "taiwan_government_institutions": 2
+  },
+  "length_distribution": {
+    "3": 2
+  },
+  "mandatory_polyphone_reviews": 1,
+  "manual_pronunciation_overrides": {},
+  "multi_reading_semantic_entries": [],
+  "line_endings": "UTF-8 LF",
+  "source_policy": "Entries were selected and reviewed one at a time from the jieba frequency checklist (dict.txt, MIT), not from a bulk import and not from tests/data. No Sogou, Baidu, Rime, or public GitHub lexicon was imported. Existing entries and weights were not modified."
+}
