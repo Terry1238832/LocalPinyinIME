@@ -1,7 +1,7 @@
 {
   "lexicon": {
-    "entries": 210953,
-    "distinct_words": 210455
+    "entries": 210948,
+    "distinct_words": 210450
   },
   "standard_characters": {
     "一级 (1-3500)": {
@@ -12,20 +12,24 @@
     },
     "二级 (3501-6500)": {
       "characters": 3000,
-      "typeable_by_standard_reading": 3000,
-      "percent": 100.0,
-      "single_entry_any_reading": 3000
+      "typeable_by_standard_reading": 2997,
+      "percent": 99.9,
+      "single_entry_any_reading": 2997
     },
     "三级 (6501-8105)": {
       "characters": 1605,
-      "typeable_by_standard_reading": 263,
-      "percent": 16.39,
-      "single_entry_any_reading": 269
+      "typeable_by_standard_reading": 261,
+      "percent": 16.26,
+      "single_entry_any_reading": 267
     }
   },
   "standard_characters_missing_examples": {
     "一级 (1-3500)": [],
-    "二级 (3501-6500)": [],
+    "二级 (3501-6500)": [
+      "𬉼(ou)",
+      "𠳐(bang)",
+      "𥻗(cha)"
+    ],
     "三级 (6501-8105)": [
       "尢(wang)",
       "卬(ang)",
@@ -184,14 +188,10 @@
     "音乐堂"
   ],
   "common_words_missing_but_typed": {
-    "status": "未重测",
-    "reason": "LocalPinyinImeEval.exe 不在这台 Linux 机器上，不能重测未收录词的首选和前九。",
-    "baseline_0_8_3": {
-      "words": 870,
-      "first_candidate": 327,
-      "within_nine": 586,
-      "percent_within_nine": 67.36
-    }
+    "words": 438,
+    "first_candidate": 138,
+    "within_nine": 285,
+    "percent_within_nine": 65.07
   },
   "running_text": {
     "heldout_sentences.tsv": {
@@ -241,38 +241,23 @@
         "神户×2",
         "昨天上午×2",
         "见证人×2"
-      ],
-      "measurement": "2026-10-16 lexicon membership only; engine typing not rerun"
+      ]
     },
     "wikinews_sample.txt": {
       "lines": 2000,
       "word_tokens": 52264,
       "word_types": 15242,
-      "token_coverage_percent": 85.31,
-      "type_coverage_percent": 64.58,
+      "token_coverage_percent": 86.25,
+      "type_coverage_percent": 65.29,
       "frequent_missing": [
-        "特朗普×47",
-        "拜登×38",
-        "奥巴马×26",
-        "立法会×24",
-        "亿美元×21",
         "监测站×21",
         "川普×19",
-        "立法院×18",
         "示威者×17",
-        "录得×16",
-        "赖清德×16",
-        "冠状病毒×16",
         "美国之音×15",
-        "新冠×15",
         "总统大选×14",
         "民主派×14",
-        "李克强×14",
         "辞书×13",
         "据报×13",
-        "港府×13",
-        "介乎×11",
-        "本港×11",
         "抗议者×11",
         "内塔尼亚胡×11",
         "是因为×10",
@@ -281,25 +266,38 @@
         "未成年人×10",
         "绿营×10",
         "三连胜×10",
-        "捷运×9",
         "南港×9",
         "纳瓦尔×9",
-        "中华人民共和国×9",
-        "金正恩×9",
         "美斯×9",
-        "新台币×8",
         "新界×8",
         "沙马×8",
-        "美国国务院×8"
-      ],
-      "status": "未重测"
+        "署于×8",
+        "卢卡申科×7",
+        "维基人×7",
+        "月台×7",
+        "摄氏×7",
+        "风势×7",
+        "气象厅×7",
+        "铁线×7",
+        "苏亚雷斯×7",
+        "检控×7",
+        "新闻公报×7",
+        "翌日×7",
+        "控方×7",
+        "正生会×7",
+        "出版业务×6",
+        "接获×6",
+        "消防员×6",
+        "我会×6",
+        "借由×6"
+      ]
     },
     "tatoeba_sample.txt": {
       "lines": 3000,
       "word_tokens": 10085,
       "word_types": 4380,
-      "token_coverage_percent": 90.8,
-      "type_coverage_percent": 80.78,
+      "token_coverage_percent": 91.0,
+      "type_coverage_percent": 81.19,
       "frequent_missing": [
         "我会×15",
         "玛莉×8",
@@ -328,7 +326,6 @@
         "上床睡觉×2",
         "难学×2",
         "我读×2",
-        "希腊语×2",
         "驾驶执照×2",
         "正忙×2",
         "搭公车×2",
@@ -340,19 +337,9 @@
         "变冷×2",
         "萨拉曼×2",
         "齐莉×2",
-        "有益于×2"
-      ],
-      "status": "未重测"
+        "义大利×2",
+        "阴阳人×2"
+      ]
     }
-  },
-  "remeasurement": {
-    "date": "2026-10-16",
-    "product_version_unchanged": "0.8.3",
-    "unihan": "未重新下载。单字覆盖由 0.8.3 基线加上本次已补标准读音推算，并与词库单字条目核对。",
-    "eval_exe": "未运行",
-    "common_words": "用本机 jieba dict.txt 按 report_lexicon_coverage.py 的同样规则重算。",
-    "heldout_sentences.tsv": "只重算词库是否收录，没有跑引擎。",
-    "tatoeba_sample.txt": "未重测",
-    "wikinews_sample.txt": "未重测"
   }
 }

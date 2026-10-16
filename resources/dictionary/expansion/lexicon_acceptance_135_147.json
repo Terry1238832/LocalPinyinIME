@@ -1,0 +1,103 @@
+{
+  "batches": "lexicon_batch_135 – lexicon_batch_147 (pull request #1)",
+  "accepted_at": "2026-10-16",
+  "accepted_by": "maintainer native acceptance on Windows",
+  "frozen_batch_files_modified": false,
+  "changes_applied_to_canonical": [
+    {
+      "action": "withheld",
+      "row": "bang\t𠳐\t3000",
+      "reason": "CJK Extension B+ character (UTF-16 surrogate pair). The 0.8.3 context language model works on UTF-16 units, so these characters scored as two unknown units and displaced common characters in sentence decoding (不𨱏 over 不大 in typing_independent). Withheld until the engine handles surrogate pairs as one character; the frozen batch files are unchanged."
+    },
+    {
+      "action": "withheld",
+      "row": "cha\t𥻗\t3000",
+      "reason": "CJK Extension B+ character (UTF-16 surrogate pair). The 0.8.3 context language model works on UTF-16 units, so these characters scored as two unknown units and displaced common characters in sentence decoding (不𨱏 over 不大 in typing_independent). Withheld until the engine handles surrogate pairs as one character; the frozen batch files are unchanged."
+    },
+    {
+      "action": "withheld",
+      "row": "ou\t𬉼\t3000",
+      "reason": "CJK Extension B+ character (UTF-16 surrogate pair). The 0.8.3 context language model works on UTF-16 units, so these characters scored as two unknown units and displaced common characters in sentence decoding (不𨱏 over 不大 in typing_independent). Withheld until the engine handles surrogate pairs as one character; the frozen batch files are unchanged."
+    },
+    {
+      "action": "withheld",
+      "row": "da\t𨱏\t3000",
+      "reason": "CJK Extension B+ character (UTF-16 surrogate pair). The 0.8.3 context language model works on UTF-16 units, so these characters scored as two unknown units and displaced common characters in sentence decoding (不𨱏 over 不大 in typing_independent). Withheld until the engine handles surrogate pairs as one character; the frozen batch files are unchanged."
+    },
+    {
+      "action": "withheld",
+      "row": "fan\t𫔍\t3000",
+      "reason": "CJK Extension B+ character (UTF-16 surrogate pair). The 0.8.3 context language model works on UTF-16 units, so these characters scored as two unknown units and displaced common characters in sentence decoding (不𨱏 over 不大 in typing_independent). Withheld until the engine handles surrogate pairs as one character; the frozen batch files are unchanged."
+    },
+    {
+      "action": "reading",
+      "from": "tizhang\t体长\t5500",
+      "to": "tichang\t体长\t5500",
+      "reason": "Reading error: 体长 (body length) is tǐcháng."
+    },
+    {
+      "action": "weight",
+      "from": "lude\t录得\t5500",
+      "to": "lude\t录得\t5000",
+      "reason": "Displaced 路的 in sentence decoding (路的一旁 → 录得一旁 in typing_fresh). Lowered to the lowest common band; still first for the standalone key lude."
+    }
+  ],
+  "native_accuracy": {
+    "engine": "LocalPinyinImeEval 0.8.3 with character-count word prior fix",
+    "baseline_0.8.3": {
+      "逐词输入·参考前文": {
+        "cases": 20626,
+        "top1": 85.95,
+        "top9": 97.98
+      },
+      "留出整句": {
+        "cases": 4126,
+        "top1": 57.22,
+        "top9": 73.0
+      },
+      "项目留出": {
+        "cases": 138,
+        "top1": 81.16,
+        "top9": 86.96
+      },
+      "新增用例": {
+        "cases": 67,
+        "top1": 61.19,
+        "top9": 74.63
+      },
+      "独立用例": {
+        "cases": 62,
+        "top1": 41.94,
+        "top9": 66.13
+      }
+    },
+    "after_acceptance": {
+      "逐词输入·参考前文": {
+        "cases": 20626,
+        "top1": 85.98,
+        "top9": 98.02
+      },
+      "留出整句": {
+        "cases": 4126,
+        "top1": 57.27,
+        "top9": 73.05
+      },
+      "项目留出": {
+        "cases": 138,
+        "top1": 81.16,
+        "top9": 86.96
+      },
+      "新增用例": {
+        "cases": 67,
+        "top1": 61.19,
+        "top9": 74.63
+      },
+      "独立用例": {
+        "cases": 62,
+        "top1": 41.94,
+        "top9": 66.13
+      }
+    },
+    "result": "No test set below the 0.8.3 baseline; word-by-word and held-out sentences improve slightly."
+  }
+}
