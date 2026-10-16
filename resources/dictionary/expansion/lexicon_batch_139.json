@@ -1,0 +1,56 @@
+{
+  "batch": "lexicon_batch_139",
+  "license": "MIT",
+  "authoring_source": "reference-derived",
+  "external_lexicon_import": false,
+  "bulk_third_party_lexicon_import": false,
+  "scope": "历史事件、思想用语与知名人物",
+  "author": "gap-fill",
+  "review_scope": "Single AI author reads every selected entry and its default key in context, then records positional polyphone decisions. Readings for single characters come from Unicode Unihan kTGHZ2013 as listed in the gap checklist. Jieba words were chosen one by one from that checklist. This is not an independent human linguistic review and not a bulk import.",
+  "reference_source": "jieba dict.txt",
+  "reference_license": "MIT",
+  "reference_license_url": "https://github.com/fxsjy/jieba/blob/master/LICENSE",
+  "pronunciation_dependency": "pypinyin 0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 130,
+  "sha256": "6795ee9f8c28c0d94251ef00e0c2fc36eecb2286d7857c3e9728f3eb68297cec",
+  "authoring_files_sha256": {
+    "batch139_draft.txt": "e02262c12157c0147bd5230eec104dd78663978e122c9414094b07c1f9bbb7d8",
+    "batch139_pronunciation_review.tsv": "237b078e58a966762be43d0e1d1ea7b6da05aed766ce53544e9fff4a2ffc7b5a"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "2935571edcf7fe9fc707e3f6c3a5d80068c04e51f9989e7f29853a3f9954056e",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "preset_category_weights": {
+    "history_and_known_people": [
+      5000,
+      5500,
+      6000
+    ]
+  },
+  "weights_used": [
+    5000,
+    5500,
+    6000
+  ],
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "history_and_known_people": 130
+  },
+  "length_distribution": {
+    "3": 37,
+    "4": 35,
+    "2": 35,
+    "5": 8,
+    "7": 6,
+    "6": 5,
+    "8": 2,
+    "9": 2
+  },
+  "mandatory_polyphone_reviews": 90,
+  "manual_pronunciation_overrides": {},
+  "multi_reading_semantic_entries": [],
+  "line_endings": "UTF-8 LF",
+  "source_policy": "Entries were selected and reviewed one at a time from the named reference. Single-character readings are the standard readings already listed in the gap checklist (Unicode Unihan kTGHZ2013). Common words were taken from the jieba frequency checklist (dict.txt, MIT), not from a bulk import of that dictionary and not from tests/data. No Sogou, Baidu, Rime, or public GitHub lexicon was imported. Existing entries and weights were not modified."
+}
