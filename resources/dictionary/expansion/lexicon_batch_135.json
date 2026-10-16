@@ -1,0 +1,85 @@
+{
+  "batch": "lexicon_batch_135",
+  "license": "Unicode License V3",
+  "authoring_source": "reference-derived",
+  "external_lexicon_import": false,
+  "bulk_third_party_lexicon_import": false,
+  "scope": "通用规范汉字表一级与二级缺字",
+  "author": "gap-fill",
+  "review_scope": "Single AI author reads every selected entry and its default key in context, then records positional polyphone decisions. Readings for single characters come from Unicode Unihan kTGHZ2013 as listed in the gap checklist. Jieba words were chosen one by one from that checklist. This is not an independent human linguistic review and not a bulk import.",
+  "reference_source": "Unicode Unihan kTGHZ2013",
+  "reference_license": "Unicode License V3",
+  "reference_license_url": "https://www.unicode.org/license.txt",
+  "pronunciation_dependency": "pypinyin 0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 688,
+  "sha256": "51f708a2fbeb7105358a62441b9e0a99334a61f426f7d2d6324b9e488c4e4f95",
+  "authoring_files_sha256": {
+    "batch135_draft.txt": "1882278fc479adae8681a2d0a63770b2d47396270db56cb798d24b3a5189f3f0",
+    "batch135_pronunciation_review.tsv": "bb7d1a6c97ddb6574faf3066e6daa6d95dbaa5366eb865c9f2afd124cf505062"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "bc4d33cac36f590bec181bfd86bdb54583c9a3c1ef5cf3542c0f2feedc1c3130",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "preset_category_weights": {
+    "general_standard_level_1_characters": [
+      3000
+    ],
+    "general_standard_level_2_characters": [
+      3000
+    ]
+  },
+  "weights_used": [
+    3000
+  ],
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "general_standard_level_1_characters": 15,
+    "general_standard_level_2_characters": 673
+  },
+  "length_distribution": {
+    "1": 688
+  },
+  "mandatory_polyphone_reviews": 198,
+  "manual_pronunciation_overrides": {
+    "蕃": "bo",
+    "孱": "chan",
+    "坻": "di",
+    "镦": "dun",
+    "纥": "he",
+    "珲": "hun",
+    "剋": "kei",
+    "袷": "qia",
+    "綮": "qing",
+    "嗄": "sha",
+    "楯": "shun",
+    "窨": "yin",
+    "繇": "you",
+    "碡": "zhou"
+  },
+  "multi_reading_semantic_entries": [
+    "嘚\tdei",
+    "饹\tge",
+    "鹘\thu",
+    "偻\tlv",
+    "杻\tniu",
+    "慊\tqie",
+    "趄\tqie",
+    "麇\tqun",
+    "阇\tshe",
+    "葚\tshen",
+    "挲\tsuo",
+    "镡\ttan",
+    "蛸\txiao",
+    "铫\tyao",
+    "荥\tying",
+    "喁\tyu",
+    "馇\tzha",
+    "啁\tzhou",
+    "奘\tzhuang",
+    "笮\tzuo"
+  ],
+  "line_endings": "UTF-8 LF",
+  "source_policy": "Entries were selected and reviewed one at a time from the named reference. Single-character readings are the standard readings already listed in the gap checklist (Unicode Unihan kTGHZ2013). Common words were taken from the jieba frequency checklist (dict.txt, MIT), not from a bulk import of that dictionary and not from tests/data. No Sogou, Baidu, Rime, or public GitHub lexicon was imported. Existing entries and weights were not modified."
+}

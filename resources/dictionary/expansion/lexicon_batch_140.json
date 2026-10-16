@@ -1,0 +1,61 @@
+{
+  "batch": "lexicon_batch_140",
+  "license": "MIT",
+  "authoring_source": "reference-derived",
+  "external_lexicon_import": false,
+  "bulk_third_party_lexicon_import": false,
+  "scope": "普通词语、单位与固定说法",
+  "author": "gap-fill",
+  "review_scope": "Single AI author reads every selected entry and its default key in context, then records positional polyphone decisions. Readings for single characters come from Unicode Unihan kTGHZ2013 as listed in the gap checklist. Jieba words were chosen one by one from that checklist. This is not an independent human linguistic review and not a bulk import.",
+  "reference_source": "jieba dict.txt",
+  "reference_license": "MIT",
+  "reference_license_url": "https://github.com/fxsjy/jieba/blob/master/LICENSE",
+  "pronunciation_dependency": "pypinyin 0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 327,
+  "sha256": "5bf44008c5637db6f1d7349375d25c62b1e92d7bc701858ff10e4484abbca668",
+  "authoring_files_sha256": {
+    "batch140_draft.txt": "47678a2f55448b38b8c4d7856db946c5ef430357d43934763dfc1a381a372deb",
+    "batch140_pronunciation_review.tsv": "b537227dec6d730eef2b51c1208f0a27f682869fdf4ce79e876d2057ccce8051"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "b6e1b429d8a53a7127217afc17004f88639449eec1be0d90c1a9bbf638718177",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "preset_category_weights": {
+    "ordinary_words": [
+      5000,
+      5500,
+      6000
+    ]
+  },
+  "weights_used": [
+    5000,
+    5500,
+    6000
+  ],
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "ordinary_words": 327
+  },
+  "length_distribution": {
+    "4": 41,
+    "2": 185,
+    "7": 1,
+    "3": 92,
+    "5": 4,
+    "6": 4
+  },
+  "mandatory_polyphone_reviews": 194,
+  "manual_pronunciation_overrides": {
+    "重檐": "chongyan",
+    "汉藏语系": "hanzangyuxi",
+    "系统地": "xitongde",
+    "藏传": "zangchuan",
+    "藏文": "zangwen",
+    "藏语": "zangyu"
+  },
+  "multi_reading_semantic_entries": [],
+  "line_endings": "UTF-8 LF",
+  "source_policy": "Entries were selected and reviewed one at a time from the named reference. Single-character readings are the standard readings already listed in the gap checklist (Unicode Unihan kTGHZ2013). Common words were taken from the jieba frequency checklist (dict.txt, MIT), not from a bulk import of that dictionary and not from tests/data. No Sogou, Baidu, Rime, or public GitHub lexicon was imported. Existing entries and weights were not modified."
+}

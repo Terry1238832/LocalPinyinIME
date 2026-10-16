@@ -1,0 +1,45 @@
+{
+  "batch": "lexicon_batch_146",
+  "license": "MIT",
+  "authoring_source": "reference-derived",
+  "external_lexicon_import": false,
+  "bulk_third_party_lexicon_import": false,
+  "scope": "中华人民共和国",
+  "author": "gap-fill",
+  "review_scope": "Single AI author reads the selected entry and its default key in context, then records positional polyphone decisions. The word was chosen from the jieba missing-common-word checklist. This is not an independent human linguistic review and not a bulk import.",
+  "reference_source": "jieba dict.txt",
+  "reference_license": "MIT",
+  "reference_license_url": "https://github.com/fxsjy/jieba/blob/master/LICENSE",
+  "pronunciation_dependency": "pypinyin 0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 1,
+  "sha256": "bd29df747d22e4483ab088dbab4f1595dc10e2ef1fd4992bb17a461f1b0282bc",
+  "authoring_files_sha256": {
+    "batch146_draft.txt": "95029577b7acf88b3389336e6e87a79a5db64d18261a56a50a1ca993a44a82a2",
+    "batch146_pronunciation_review.tsv": "cfa04c6a351ee590c5edff716fd34a81e9e1de63e738270701b171a58c97d54b"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "8eb06de0542e392a1dc2689e5b1185e4b2e17a4747934225b13cbd31655c76da",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "preset_category_weights": {
+    "country_name": [
+      6000
+    ]
+  },
+  "weights_used": [
+    6000
+  ],
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "country_name": 1
+  },
+  "length_distribution": {
+    "7": 1
+  },
+  "mandatory_polyphone_reviews": 1,
+  "manual_pronunciation_overrides": {},
+  "multi_reading_semantic_entries": [],
+  "line_endings": "UTF-8 LF",
+  "source_policy": "The entry was selected from the jieba frequency checklist (dict.txt, MIT), not from a bulk import and not from tests/data. Existing entries and weights were not modified."
+}
