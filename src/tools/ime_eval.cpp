@@ -25,11 +25,20 @@ std::string json_string(const std::string& value) {
 }
 }
 
-// UTF-8 TSV input: pinyin<TAB>expected text<TAB>source/case ID.
+// UTF-8 TSV input: pinyin<TAB>expected text<TAB>source/case ID[<TAB>preceding text].
+// The optional preceding text is the committed document text before the caret.
 // Evaluation is separate from training and never learns the expected answers.
 int wmain(int argc, wchar_t** argv) {
-    if (argc != 3 && !(argc == 4 && std::wstring(argv[3]) == L"--keystrokes")) {
-        std::cerr << "Usage: LocalPinyinImeEval <directory containing dictionary/> <cases.tsv> [--keystrokes]\n";
+    bool keystrokes = false, use_context = true, scores = false, valid = argc >= 3;
+    for (int index = 3; index < argc; ++index) {
+        const std::wstring flag = argv[index];
+        if (flag == L"--keystrokes") keystrokes = true;
+        else if (flag == L"--no-context") use_context = false;
+        else if (flag == L"--scores") scores = true;
+        else valid = false;
+    }
+    if (!valid) {
+        std::cerr << "Usage: LocalPinyinImeEval <directory containing dictionary/> <cases.tsv> [--keystrokes] [--no-context] [--scores]\n";
         return 2;
     }
     localpinyin::PinyinEngine engine(localpinyin::DictionaryLoadMode::Empty);
@@ -46,20 +55,23 @@ int wmain(int argc, wchar_t** argv) {
         if (first == std::string::npos || second == std::string::npos) return 5;
         const auto pinyin = line.substr(0, first);
         const auto expected = line.substr(first + 1, second - first - 1);
-        const auto source = line.substr(second + 1);
+        const auto third = line.find('	', second + 1);
+        const auto source = line.substr(second + 1, third == std::string::npos ? std::string::npos : third - second - 1);
+        const auto preceding = third == std::string::npos || !use_context ? std::wstring() :
+            localpinyin::utf8_to_wide(line.substr(third + 1));
         const auto wide_pinyin = localpinyin::utf8_to_wide(pinyin);
         std::vector<long long> typing_durations;
-        if (argc == 4) {
+        if (keystrokes) {
             for (size_t end = 1; end < wide_pinyin.size(); ++end) {
                 const auto started = std::chrono::steady_clock::now();
-                const auto interim = engine.lookup(wide_pinyin.substr(0, end));
+                const auto interim = engine.lookup(wide_pinyin.substr(0, end), preceding);
                 if (interim.empty()) return 6;
                 typing_durations.push_back(std::chrono::duration_cast<std::chrono::microseconds>(
                     std::chrono::steady_clock::now()-started).count());
             }
         }
         const auto begin = std::chrono::steady_clock::now();
-        const auto candidates = engine.lookup(wide_pinyin);
+        const auto candidates = engine.lookup(wide_pinyin, preceding);
         const auto micros = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - begin).count();
         int rank = 0;
         std::cout << "{\"pinyin\":" << json_string(pinyin)
@@ -73,7 +85,13 @@ int wmain(int argc, wchar_t** argv) {
             if (text == expected) rank = static_cast<int>(index + 1);
         }
         std::cout << "],\"expected_rank\":" << rank;
-        if (argc == 4) {
+        if (scores) {
+            std::cout << ",\"scores\":[";
+            for (size_t index = 0; index < candidates.size(); ++index)
+                std::cout << (index ? "," : "") << candidates[index].total_score();
+            std::cout << ']';
+        }
+        if (keystrokes) {
             typing_durations.push_back(micros);
             std::cout << ",\"typing_lookup_us\":[";
             for (size_t index = 0; index < typing_durations.size(); ++index) {

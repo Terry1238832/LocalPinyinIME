@@ -56,7 +56,7 @@ export default function App() {
   useLayoutEffect(() => { document.documentElement.dataset.theme = resolvedTheme; }, [resolvedTheme]);
   useEffect(() => {
     if (!notice) return;
-    const timeout = window.setTimeout(() => setNotice(null), 3600);
+    const timeout = window.setTimeout(() => setNotice(null), 3200);
     return () => window.clearTimeout(timeout);
   }, [notice]);
 
@@ -81,20 +81,39 @@ export default function App() {
   };
 
   return <div className="app-shell">
-    <header className="titlebar"><span className="titlebar-caption">Local Pinyin<span className="titlebar-divider" />设置</span><div className="window-controls"><button aria-label="最小化" onClick={() => void controlWindow('minimize')}><Icon name="minimize" size={16} /></button><button aria-label="最大化或还原" onClick={() => void controlWindow('maximize')}><Icon name="maximize" size={14} /></button><button className="window-close" aria-label="关闭窗口" onClick={() => void controlWindow('close')}><Icon name="close" size={17} /></button></div></header>
+    <header className="titlebar">
+      <span className="titlebar-caption"><BrandMark size={16} />本地拼音 · 设置</span>
+      <div className="window-controls">
+        <button aria-label="最小化" onClick={() => void controlWindow('minimize')}><Icon name="minimize" size={16} /></button>
+        <button aria-label="最大化或还原" onClick={() => void controlWindow('maximize')}><Icon name="maximize" size={14} /></button>
+        <button className="window-close" aria-label="关闭窗口" onClick={() => void controlWindow('close')}><Icon name="close" size={16} /></button>
+      </div>
+    </header>
     <div className="workspace">
-      <aside className="sidebar" id="app-sidebar"><div className="brand"><BrandMark /><div><strong>Local Pinyin</strong><span>本地拼音输入法</span></div></div><div className="nav-label">偏好设置</div><nav aria-label="设置导航">{navigation.map(item => <button key={item.id} className={`nav-item${page === item.id ? ' selected' : ''}`} aria-current={page === item.id ? 'page' : undefined} onClick={() => { setPage(item.id); content.current?.scrollTo({ top: 0 }); }}><Icon name={item.icon} /><span>{item.label}</span>{page === item.id && <span className="nav-active-dot" />}</button>)}</nav><div className="sidebar-bottom"><div className="offline-pill"><span className="status-dot" />完全离线</div><p>每一次输入<br />都留在你的电脑里。</p><span className="sidebar-version">{state ? `版本 ${state.version}` : 'Local Pinyin'}</span></div></aside>
+      <aside className="sidebar" id="app-sidebar">
+        <div className="brand"><BrandMark size={40} /><div><strong>本地拼音</strong><span>Local Pinyin</span></div></div>
+        <nav aria-label="设置导航">{navigation.map(item =>
+          <button key={item.id} className={`nav-item${page === item.id ? ' selected' : ''}`} aria-current={page === item.id ? 'page' : undefined}
+            onClick={() => { setPage(item.id); content.current?.scrollTo({ top: 0 }); }}>
+            <Icon name={item.icon} size={18} /><span>{item.label}</span>
+          </button>)}
+        </nav>
+        <div className="sidebar-bottom">
+          <div className="offline-pill"><span className="status-dot" />离线运行</div>
+          <span className="sidebar-version">{state ? `版本 ${state.version}` : 'Local Pinyin'}</span>
+        </div>
+      </aside>
       <main className="main-content" ref={content} id="app-content" aria-busy={loading}>
-        {!state ? <div className="connection-state"><span className="connection-icon"><Icon name="keyboard" size={30} /></span><h1>{loading ? '正在打开设置' : '暂时无法打开设置'}</h1><p>{loading ? '读取本机设置与词库。' : '本地输入引擎没有响应，请重试。'}</p><ErrorNotice message={error} />{!loading && <button className="button primary" onClick={() => void refresh()}>重新连接</button>}</div> : <>
+        {!state ? <div className="connection-state"><span className="connection-icon"><Icon name="keyboard" size={28} /></span><h1>{loading ? '正在打开设置' : '暂时无法打开设置'}</h1><p>{loading ? '正在读取本机设置与词库。' : '本地输入引擎没有响应，请重试。'}</p><ErrorNotice message={error} />{!loading && <button className="button primary" onClick={() => void refresh()}>重新连接</button>}</div> : <div className="page-frame">
           <div className="global-message"><ErrorNotice message={error} /></div>
           <section id="page-appearance" className="page" hidden={page !== 'appearance'}><AppearancePage state={state} saving={saving} saveSettings={saveSettings} lookupRevision={lexiconRevision} /></section>
           <section id="page-input" className="page" hidden={page !== 'input'}><InputPage state={state} saving={saving} saveSettings={saveSettings} lookupRevision={lexiconRevision} /></section>
           <section id="page-dictionary" className="page" hidden={page !== 'dictionary'}><DictionaryPage state={state} entries={entries} onEntries={updateEntries} loadError={lexiconError} notify={setNotice} /></section>
           <section id="page-learning" className="page" hidden={page !== 'learning'}><LearningPage state={state} onState={setState} notify={setNotice} /></section>
           <section id="page-about" className="page" hidden={page !== 'about'}><AboutPage state={state} /></section>
-        </>}
+        </div>}
       </main>
     </div>
-    {notice && <div className="toast" role="status"><span><Icon name="check" size={17} /></span>{notice}</div>}
+    {notice && <div className="toast" role="status"><Icon name="check" size={16} />{notice}</div>}
   </div>;
 }

@@ -606,6 +606,33 @@ int wmain(int argc, wchar_t** argv) {
             s.key(L'1');
             require(s.store->text == digit_word, "digit overrides host selection using current page slot");
             paged_behavior.Reset();
+
+            // CapsLock or Shift: a letter outside a composition passes through
+            // to the application (which types it in upper case); inside one it
+            // keeps its case and the composition is offered as typed text.
+            s.store->host_replace(L"");
+            for (const auto lock : {VK_CAPITAL, VK_SHIFT}) {
+                s.modifier_keys[lock] = true;
+                s.key(L'A', false);
+                s.modifier_keys[lock] = false;
+                require(s.store->text.empty() && !s.adapter->current_element, "literal letter passes through");
+            }
+            for (const auto letter : std::wstring(L"NI")) s.key(letter);
+            s.modifier_keys[VK_SHIFT] = true;
+            s.key(L'H');
+            s.modifier_keys[VK_SHIFT] = false;
+            require(s.first_candidate() == L"niH", "Shift letter inside a composition keeps its case");
+            s.key(VK_SPACE);
+            require(s.store->text == L"niH", "mixed composition commits as typed");
+            s.store->host_replace(L"");
+
+            const auto write_settings = [&](const char* json) {
+                std::filesystem::create_directories(isolated / L"LocalPinyinIME");
+                std::ofstream options(isolated / L"LocalPinyinIME" / L"settings.json", std::ios::binary | std::ios::trunc);
+                options << json;
+            };
+            // Next-word suggestions are opt-in; enable them for this section.
+            write_settings("{\"inputMode\":{\"nextWordPrediction\":true}}");
             s.store->host_replace(L"");
             for (const auto letter : std::wstring(L"FENYE")) s.key(letter);
             s.key(VK_SPACE);
@@ -804,10 +831,7 @@ int wmain(int argc, wchar_t** argv) {
             s.store->host_replace(L"");
             for (const auto letter : std::wstring(L"NIHAO")) s.key(letter);
             s.key(VK_SPACE);
-            {
-                std::ofstream options(isolated / L"LocalPinyinIME" / L"settings.json", std::ios::binary | std::ios::trunc);
-                options << "{\"inputMode\":{\"predictionEnabled\":false}}";
-            }
+            write_settings("{\"inputMode\":{\"nextWordPrediction\":false}}");
             const UINT changed_message = RegisterWindowMessageW(L"LocalPinyinIME.CandidateOptionsChanged");
             EnumThreadWindows(GetCurrentThreadId(), [](HWND hwnd, LPARAM message) -> BOOL {
                 wchar_t name[64]{}; GetClassNameW(hwnd, name, 64);
@@ -821,7 +845,7 @@ int wmain(int argc, wchar_t** argv) {
             s.key(VK_SPACE);
             require(!s.adapter->current_element && s.store->text == L"你好", "disabled prediction preserves normal Chinese commit");
             s.key(VK_TAB, false);
-            std::filesystem::remove(isolated / L"LocalPinyinIME" / L"settings.json");
+            write_settings("{\"inputMode\":{\"nextWordPrediction\":true}}");
 
             for (const auto modifier : {VK_SHIFT, VK_CONTROL, VK_MENU, VK_LWIN}) {
                 s.store->host_replace(L"");
@@ -833,10 +857,7 @@ int wmain(int argc, wchar_t** argv) {
                 require(s.store->text == L"你好" && !s.adapter->current_element,
                     "modified Tab passes through and closes prediction without inserting");
             }
-            {
-                std::ofstream options(isolated / L"LocalPinyinIME" / L"settings.json", std::ios::binary | std::ios::trunc);
-                options << "{\"inputMode\":{\"predictionEnabled\":true,\"shiftToggleEnabled\":true}}";
-            }
+            write_settings("{\"inputMode\":{\"nextWordPrediction\":true,\"shiftToggleEnabled\":true}}");
             s.store->host_replace(L"");
             for (const auto letter : std::wstring(L"NIHAO")) s.key(letter);
             s.key(VK_SPACE);
@@ -849,7 +870,7 @@ int wmain(int argc, wchar_t** argv) {
             s.modifier_keys[VK_SHIFT] = true;
             s.key(VK_SHIFT);
             s.modifier_keys[VK_SHIFT] = false;
-            std::filesystem::remove(isolated / L"LocalPinyinIME" / L"settings.json");
+            write_settings("{\"inputMode\":{\"nextWordPrediction\":true}}");
 
             s.store->host_replace(L"");
             for (const auto letter : std::wstring(L"NIHAO")) s.key(letter);

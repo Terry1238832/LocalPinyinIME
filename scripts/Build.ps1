@@ -1,4 +1,4 @@
-[CmdletBinding()]
+﻿[CmdletBinding()]
 param(
     [string]$CMakePath = '',
     [string]$IsccPath = '',
@@ -65,7 +65,7 @@ $devScript = Join-Path $buildRoot 'dev-env.cmd'
 if ($LASTEXITCODE -ne 0) { throw 'Failed to initialize C++ build tools' }
 $env:VSLANG = '1033'
 $ninjaPath = Find-Tool '' 'ninja.exe' @((Join-Path $vsRoots[0] 'Common7\IDE\CommonExtensions\Microsoft\CMake\Ninja\ninja.exe'))
-Invoke-Checked $CMakePath @('-S', $sourceRoot, '-B', $buildRoot, '-G', 'Ninja', '-DCMAKE_BUILD_TYPE=Release', '-DCMAKE_CXX_COMPILER=cl.exe', '-DCMAKE_CXX_FLAGS_DEBUG=/Z7 /Ob0 /Od /RTC1', "-DCMAKE_MAKE_PROGRAM=$ninjaPath", "-DLOCALPINYINIME_PYTHON_EXECUTABLE=$PythonPath")
+Invoke-Checked $CMakePath @('-S', $sourceRoot, '-B', $buildRoot, '-G', 'Ninja', '-DCMAKE_BUILD_TYPE=Release', '-DCMAKE_CXX_COMPILER=cl.exe', '-DCMAKE_CXX_FLAGS_DEBUG=/Z7 /Ob0 /Od /RTC1', "-DCMAKE_MAKE_PROGRAM=$ninjaPath", "-DLOCALPINYINIME_PYTHON_EXECUTABLE=$PythonPath", '-DLOCALPINYIN_INNER_INSTALLER=', '-DLOCALPINYIN_PAYLOAD_BYTES=')
 Invoke-Checked $CMakePath @('--build', $buildRoot, '--config', 'Release', '--parallel', "$Jobs")
 Invoke-Checked $ctestPath @('--test-dir', $buildRoot, '-C', 'Release', '--output-on-failure')
 
@@ -92,22 +92,32 @@ Get-ChildItem -LiteralPath $desktopPackage -Force | Copy-Item -Destination (Join
 foreach ($binary in @('LocalPinyinIME.dll', 'LocalPinyinSettingsBridge.exe', 'LocalPinyinImeSetup.exe')) {
     Copy-Item -LiteralPath (Join-Path $buildRoot "bin\$binary") -Destination (Join-Path $stageRoot 'bin')
 }
-Copy-Item -LiteralPath (Join-Path $sourceRoot 'resources\dictionary\core_zh_pinyin.tsv'), (Join-Path $sourceRoot 'resources\dictionary\local_core_zh_pinyin.tsv'), (Join-Path $sourceRoot 'resources\dictionary\context_zh.tsv'), (Join-Path $sourceRoot 'resources\dictionary\standard_zh_pinyin.tsv'), (Join-Path $sourceRoot 'resources\dictionary\continuations_zh.tsv') -Destination (Join-Path $stageRoot 'bin\dictionary')
+Copy-Item -LiteralPath (Join-Path $sourceRoot 'resources\dictionary\core_zh_pinyin.tsv'), (Join-Path $sourceRoot 'resources\dictionary\local_core_zh_pinyin.tsv'), (Join-Path $sourceRoot 'resources\dictionary\context_zh.tsv'), (Join-Path $sourceRoot 'resources\dictionary\context_zh.lm'), (Join-Path $sourceRoot 'resources\dictionary\standard_zh_pinyin.tsv'), (Join-Path $sourceRoot 'resources\dictionary\continuations_zh.tsv') -Destination (Join-Path $stageRoot 'bin\dictionary')
 Copy-Item -LiteralPath (Join-Path $sourceRoot 'LICENSE') -Destination $stageRoot
 Copy-Item -LiteralPath (Join-Path $sourceRoot 'resources\THIRD_PARTY_NOTICES.txt') -Destination $stageRoot
 $versionHeader = Get-Content -LiteralPath (Join-Path $buildRoot 'generated\localpinyin_version.h') -Raw
 $version = [regex]::Match($versionHeader, '#define LOCALPINYINIME_VERSION_STRING_UTF8 "([^"]+)"').Groups[1].Value
 if (!$version) { throw 'Cannot read generated release version' }
 $installerName = "LocalPinyinIME-$version-x64"
+# Inno Setup builds the package that copies, registers and enables the input
+# method. It runs silently inside the installer window, which is the file users
+# download.
+$packageOutput = Join-Path $buildRoot 'installer'
+New-Item -ItemType Directory -Path $packageOutput -Force | Out-Null
 $configPath = Join-Path $buildRoot 'InstallerVersion.iss'
 @(
     "#define MyAppVersion `"$version`"",
     "#define MyAppPackageDir `"$stageRoot`"",
-    "#define MyAppOutputDir `"$outputRoot`"",
-    "#define MyAppSetupBaseFilename `"$installerName`""
+    "#define MyAppOutputDir `"$packageOutput`"",
+    "#define MyAppSetupBaseFilename `"$installerName-package`""
 ) | Set-Content -LiteralPath $configPath -Encoding UTF8
 Invoke-Checked $IsccPath @((Join-Path $sourceRoot 'installer\LocalPinyinIME.iss'))
+$packagePath = Join-Path $packageOutput "$installerName-package.exe"
+$payloadBytes = (Get-ChildItem -LiteralPath $stageRoot -Recurse -File | Measure-Object -Property Length -Sum).Sum
+Invoke-Checked $CMakePath @('-S', $sourceRoot, '-B', $buildRoot, "-DLOCALPINYIN_INNER_INSTALLER=$packagePath", "-DLOCALPINYIN_PAYLOAD_BYTES=$payloadBytes")
+Invoke-Checked $CMakePath @('--build', $buildRoot, '--config', 'Release', '--target', 'LocalPinyinInstaller')
 $installerPath = Join-Path $outputRoot "$installerName.exe"
+Copy-Item -LiteralPath (Join-Path $buildRoot 'bin\LocalPinyinInstaller.exe') -Destination $installerPath -Force
 $hash = (Get-FileHash -LiteralPath $installerPath -Algorithm SHA256).Hash
 Set-Content -LiteralPath "$installerPath.sha256" -Value "$hash  $installerName.exe" -Encoding ASCII
 Write-Host "Installer: $installerPath"

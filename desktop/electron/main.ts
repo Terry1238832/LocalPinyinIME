@@ -59,7 +59,7 @@ function handle(channel: string, callback: (...args: unknown[]) => unknown) {
 async function state(): Promise<AppState> {
   const result = await bridge<AppState>('state');
   nativeTheme.themeSource = result.settings.theme;
-  window?.setBackgroundColor(nativeTheme.shouldUseDarkColors ? '#13151d' : '#f5f6fa');
+  window?.setBackgroundColor(nativeTheme.shouldUseDarkColors ? '#191b20' : '#eceef3');
   return result;
 }
 function installHandlers() {
@@ -141,7 +141,7 @@ else {
       callback({ cancel: !details.url.startsWith('app://local/') && !details.url.startsWith('devtools://') });
     });
     window = new BrowserWindow({ width: 1160, height: 800, minWidth: 920, minHeight: 680,
-      frame: false, show: false, backgroundColor: nativeTheme.shouldUseDarkColors ? '#13151d' : '#f5f6fa', title: '本地拼音设置',
+      frame: false, show: false, backgroundColor: nativeTheme.shouldUseDarkColors ? '#191b20' : '#eceef3', title: '本地拼音设置',
       icon: app.isPackaged ? path.join(path.dirname(process.execPath), 'icon.ico')
         : path.resolve(app.getAppPath(), '../assets/branding/icon/LocalPinyinIME.ico'), webPreferences: {
         preload: path.join(__dirname, 'preload.cjs'), contextIsolation: true, sandbox: true,

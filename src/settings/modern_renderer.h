@@ -15,7 +15,10 @@ namespace localpinyin {
 // graphics runtime is distributed with the input method.
 class ModernRenderer {
 public:
-    bool begin(HDC dc, const RECT& bounds);
+    // With `premultiplied_alpha`, the DC must select a 32-bit DIB; drawing keeps
+    // per-pixel transparency (for UpdateLayeredWindow) and text is grayscale
+    // antialiased, since ClearType needs an opaque destination.
+    bool begin(HDC dc, const RECT& bounds, bool premultiplied_alpha = false);
     void finish();
     [[nodiscard]] bool drawing() const noexcept { return drawing_; }
 
@@ -31,14 +34,19 @@ public:
     void icon(int kind, const RECT& bounds, COLORREF color, float stroke = 1.6f);
 
 private:
-    bool initialize();
+    struct Target {
+        Microsoft::WRL::ComPtr<ID2D1DCRenderTarget> target;
+        Microsoft::WRL::ComPtr<ID2D1SolidColorBrush> brush;
+    };
+    bool initialize(bool premultiplied_alpha);
     void color(COLORREF color);
     IDWriteTextFormat* format(float size, int weight);
 
     Microsoft::WRL::ComPtr<ID2D1Factory> factory_;
     Microsoft::WRL::ComPtr<IDWriteFactory> write_factory_;
-    Microsoft::WRL::ComPtr<ID2D1DCRenderTarget> target_;
-    Microsoft::WRL::ComPtr<ID2D1SolidColorBrush> brush_;
+    Target opaque_;
+    Target alpha_;
+    Target* active_ = nullptr;
     Microsoft::WRL::ComPtr<ID2D1StrokeStyle> stroke_style_;
     std::map<std::pair<int, int>, Microsoft::WRL::ComPtr<IDWriteTextFormat>> formats_;
     bool drawing_ = false;
@@ -49,7 +57,7 @@ private:
 ModernRenderer* active_modern_renderer() noexcept;
 class ModernRenderScope {
 public:
-    ModernRenderScope(ModernRenderer& renderer, HDC dc, const RECT& bounds);
+    ModernRenderScope(ModernRenderer& renderer, HDC dc, const RECT& bounds, bool premultiplied_alpha = false);
     ~ModernRenderScope();
     void finish();
     [[nodiscard]] bool active() const noexcept { return active_; }

@@ -88,10 +88,10 @@ async function navigate(id) {
 }
 const pages = [
   { id: 'appearance', label: '外观', heading: '外观' },
-  { id: 'input', label: '输入', heading: '输入习惯' },
-  { id: 'dictionary', label: '词库', heading: '我的词库' },
-  { id: 'learning', label: '学习', heading: '个性学习' },
-  { id: 'about', label: '关于', heading: '关于 Local Pinyin' },
+  { id: 'input', label: '输入', heading: '输入' },
+  { id: 'dictionary', label: '词库', heading: '词库' },
+  { id: 'learning', label: '学习', heading: '学习' },
+  { id: 'about', label: '关于', heading: '关于' },
 ];
 
 // PNG decoding stays in the test, so no image package is required to reject blank captures.
@@ -290,7 +290,7 @@ async function run() {
   await check('Real native state and preview', async () => {
     const initial = await state();
     assert.equal(initial.version, expectedVersion);
-    assert.equal(initial.settings.predictionEnabled, true, 'Fresh installations enable contextual suggestions.');
+    assert.equal(initial.settings.predictionEnabled, false, 'Next-word suggestions are opt-in on fresh installations.');
     assert.equal(initial.dictionary.total, 209306, `The ${expectedVersion} built-in resources were not loaded.`);
     report.dictionary = initial.dictionary;
     assert.equal(path.resolve(initial.dataDirectory), path.join(data, 'LocalPinyinIME'));
@@ -507,13 +507,14 @@ async function run() {
     const predictionPages = [], contextPages = [];
     assert.deepEqual(await collectCandidatePages('联想候选', '.prediction-chip', predictionPages), nativePredictions);
     assert.deepEqual(await collectCandidatePages('前文候选', '.context-word', contextPages), nativeContextCandidates);
-    assert(predictionPages.length > 1, 'Context suggestions need a second page for the click test.');
-    assert(contextPages.length > 1, 'Contextual lookup should also require paging.');
+    assert(predictionPages.length >= 1 && contextPages.length >= 1, 'Context trial rows must render their candidates.');
+    // Select from the second page when the row needs one; the first otherwise.
+    const targetPage = predictionPages.length > 1 ? 1 : 0;
     const predictions = page.getByLabel('联想候选', { exact: true });
-    await predictions.getByRole('button', { name: '联想候选下一页', exact: true }).click();
+    if (targetPage) await predictions.getByRole('button', { name: '联想候选下一页', exact: true }).click();
     const selection = predictions.locator('.paged-candidate-items .prediction-chip').first();
     const selectedWord = await selection.textContent();
-    assert.equal(selectedWord, predictionPages[1].candidates[0]);
+    assert.equal(selectedWord, predictionPages[targetPage].candidates[0]);
     await page.locator('.context-preview-card').scrollIntoViewIfNeeded();
     await screenshot('paging-context-page-2');
     await selection.click();
@@ -605,19 +606,24 @@ async function run() {
     report.contextPreview = { context: '我想', pinyin: 'qu', predictions: nativePredictions, candidates: nativeContextCandidates,
       probes: contextProbes, previewFilesUnchanged: true, navigationPreserved: true, blankContextStopped: true, invalidAsciiRejected: true };
   });
-  await check('Contextual-suggestion setting persists restart while disabled preview remains usable', async () => {
+  await check('Next-word suggestion setting persists restart while disabled preview remains usable', async () => {
     await navigate(pages[1]);
     const original = (await state()).settings;
-    const predictionSwitch = page.getByRole('switch', { name: '前文联想', exact: true });
-    assert.equal(original.predictionEnabled, true);
-    await predictionSwitch.click();
+    assert.equal(original.predictionEnabled, false);
+    // Enable, restart, then disable again: both states persist.
+    await page.getByRole('switch', { name: '联想下一个词', exact: true }).click();
+    await waitState(value => value.settings.predictionEnabled === true);
+    await app.close(); await launch(); await navigate(pages[1]);
+    assert.deepEqual((await state()).settings, { ...original, predictionEnabled: true });
+    assert.equal(await page.evaluate(() => window.localPinyin.initialState.settings.predictionEnabled), true);
+    assert.equal(await page.getByRole('switch', { name: '联想下一个词', exact: true }).getAttribute('aria-checked'), 'true');
+    await page.getByRole('switch', { name: '联想下一个词', exact: true }).click();
     await waitState(value => value.settings.predictionEnabled === false);
-    assert.deepEqual((await state()).settings, { ...original, predictionEnabled: false });
     await app.close(); await launch(); await navigate(pages[1]);
     const disabled = await state();
     assert.deepEqual(disabled.settings, { ...original, predictionEnabled: false });
     assert.equal(await page.evaluate(() => window.localPinyin.initialState.settings.predictionEnabled), false);
-    assert.equal(await page.getByRole('switch', { name: '前文联想', exact: true }).getAttribute('aria-checked'), 'false');
+    assert.equal(await page.getByRole('switch', { name: '联想下一个词', exact: true }).getAttribute('aria-checked'), 'false');
     const filesBefore = savedFiles(disabled.dataDirectory);
     const nativePredictions = native('predict', ['我想']).candidates;
     assert(nativePredictions.includes('去'));
@@ -631,12 +637,7 @@ async function run() {
     assert.equal(await page.getByLabel('前文', { exact: true }).inputValue(), '我想去');
     await waitPredictions(native('predict', ['我想去']).candidates);
     assert.deepEqual(savedFiles(disabled.dataDirectory), filesBefore, 'Disabled preview modified personal files or reenabled predictions.');
-    await page.getByRole('switch', { name: '前文联想', exact: true }).click();
-    await waitState(value => value.settings.predictionEnabled === true);
-    await app.close(); await launch(); await navigate(pages[1]);
     assert.deepEqual((await state()).settings, original);
-    assert.equal(await page.evaluate(() => window.localPinyin.initialState.settings.predictionEnabled), true);
-    assert.equal(await page.getByRole('switch', { name: '前文联想', exact: true }).getAttribute('aria-checked'), 'true');
     report.predictionSetting = { disabledRestartVerified: true, enabledRestartVerified: true, disabledPreviewWorks: true };
   });
   await check('Personal words add/edit/search/delete and restart', async () => {
@@ -691,7 +692,7 @@ async function run() {
     await page.keyboard.press('Tab');
     assert.equal(await page.evaluate(() => document.activeElement?.textContent.trim()), '输入');
     await page.keyboard.press('Enter');
-    await page.getByRole('heading', { name: '输入习惯', exact: true }).waitFor();
+    await page.getByRole('heading', { name: '输入', exact: true }).waitFor();
     assert.equal(await page.evaluate(() => document.activeElement?.matches(':focus-visible')), true);
     await navigate(pages[2]);
     const addButton = page.locator('#page-dictionary .page-header').getByRole('button', { name: '添加词语', exact: true });

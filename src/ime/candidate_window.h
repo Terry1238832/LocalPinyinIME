@@ -6,6 +6,7 @@
 
 #include <windows.h>
 
+#include <cstdint>
 #include <string>
 #include <functional>
 #include <vector>
@@ -127,10 +128,11 @@ public:
     void set_selection_callback(std::function<void(size_t)> callback);
     void set_page_callback(std::function<void(int)> callback) { page_callback_ = std::move(callback); }
     void set_options_changed_callback(std::function<void()> callback);
+    // Called after Windows switches light/dark or high contrast.
+    void set_theme_changed_callback(std::function<void()> callback) { theme_changed_callback_ = std::move(callback); }
     void set_prediction_mode(bool enabled) noexcept { prediction_mode_ = enabled; }
 
 private:
-    friend class SettingsWindowCapture;
     friend class CandidateWindowCapture;
     static LRESULT CALLBACK window_proc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam);
     LRESULT handle_message(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam);
@@ -138,30 +140,35 @@ private:
     HWND create_replacement_hwnd(HWND requested_owner, HWND original_hwnd);
     void destroy_hwnd_for_recreate();
     void reset_window_lifecycle_state() noexcept;
-    bool apply_window_region(int width, int height);
     bool position_and_show_current_layout();
     void maybe_recover_from_shell_cloak();
     void reload_options();
     void update_fonts(int dpi);
     bool rebuild_layout(int dpi);
     void apply_options_changed();
-    void paint();
+    // The popup is a per-pixel alpha layered window: present() renders the
+    // panel and its shadow and pushes them with UpdateLayeredWindow.
+    bool present();
+    void redraw();
     void render(HDC hdc);
-    void draw_settings_button(HDC hdc);
-    void draw_page_controls(HDC hdc);
+    void render_layered(HDC dc, std::uint8_t* pixels, int width, int height);
+    void draw_content();
+    void draw_page_button(int direction);
+    void draw_settings_button();
+    [[nodiscard]] bool settings_button_at_point(POINT point) const noexcept;
+    void composite_shadow(std::uint8_t* pixels, int width, int height) const;
+    [[nodiscard]] std::wstring fitted_composition_text(int available_px);
     int page_direction_at_point(POINT point) const noexcept;
-    bool hit_test_settings_button(POINT point) const noexcept;
-    void update_settings_button_hot(bool hot);
-    void update_candidate_hot(POINT point);
+    void update_pointer_hot(POINT point);
     void cancel_pointer_interaction() noexcept;
     void track_mouse_leave();
-    void open_settings_window();
     void reset_presentation_state() noexcept;
     bool notify_ime_window_shown(HWND hwnd);
     void notify_ime_window_hidden(HWND hwnd) noexcept;
     void release_fonts();
 
     HWND hwnd_ = nullptr;
+    HWND owner_hwnd_ = nullptr;
     std::wstring composition_text_;
     std::vector<std::wstring> candidate_texts_;
     size_t selected_index_ = 0;
@@ -175,17 +182,18 @@ private:
     CandidateLayoutResult layout_;
     HFONT composition_font_ = nullptr;
     HFONT candidate_font_ = nullptr;
-    HFONT hint_font_ = nullptr;
     int font_dpi_ = 0;
     CandidateTextSize font_text_size_ = CandidateTextSize::Standard;
-    bool settings_button_hot_ = false;
-    bool settings_button_pressed_ = false;
+    int hot_page_direction_ = 0;
+    bool settings_hot_ = false;
+    bool settings_pressed_ = false;
     int pressed_page_direction_ = 0;
     bool tracking_mouse_leave_ = false;
     CandidatePointerState candidate_pointer_;
     std::function<void(size_t)> selection_callback_;
     std::function<void(int)> page_callback_;
     std::function<void()> options_changed_callback_;
+    std::function<void()> theme_changed_callback_;
     UINT_PTR layout_retry_timer_ = 0;
     unsigned int layout_retry_attempt_ = 0;
     std::function<void()> layout_retry_callback_;

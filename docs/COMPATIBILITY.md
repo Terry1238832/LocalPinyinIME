@@ -23,7 +23,7 @@
 
 这些记录属于此前版本和当时的应用场景，不能作为重构后 0.7.9 已完成相同安装后验收的证明。
 
-此前在 Microsoft Store 和部分 Windows 11 沉浸式宿主中观察到：拼音组合、候选生成及 Space 提交可用，自绘候选窗可能不可见。0.7.9 仍保留这项已知兼容性限制，尚未证明在这些宿主中的候选呈现问题已修复。
+此前在 Microsoft Store 和部分 Windows 11 沉浸式宿主中观察到：拼音组合、候选生成及 Space 提交可用，自绘候选窗可能不可见。原因是这类进程中没有所有者的顶层窗口会被系统 shell 隐藏，而旧的补救逻辑要求所有者窗口与输入法同进程，Store 应用的外框窗口属于 ApplicationFrameHost，所以补救从未生效。0.8.1 在沉浸式进程（IsImmersiveProcess）中按 Microsoft SampleIME 的做法，以输入框所在窗口为所有者创建候选窗口，输入框切换到其他窗口时重建。2026-10-15 已在 Notepads 1.5.6（Microsoft Store 版）中实机确认：输入 nihao 时候选窗口显示在光标下方，所有者为 Notepads 窗口。另外 Store 应用处于 AppContainer 沙盒，读不到 %LOCALAPPDATA%\LocalPinyinIME 中的设置与个人词库，在其中使用默认主题和字号。
 
 ## 使用范围和问题反馈
 

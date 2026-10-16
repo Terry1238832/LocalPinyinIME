@@ -12,19 +12,22 @@ D2D1_RECT_F rectf(const RECT& r, float inset = 0.0f) {
 }
 }
 
-bool ModernRenderer::initialize() {
+bool ModernRenderer::initialize(bool premultiplied_alpha) {
     if (!factory_ && FAILED(D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED,
             __uuidof(ID2D1Factory), nullptr, reinterpret_cast<void**>(factory_.GetAddressOf())))) return false;
     if (!write_factory_ && FAILED(DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED,
             __uuidof(IDWriteFactory), reinterpret_cast<IUnknown**>(write_factory_.GetAddressOf())))) return false;
-    if (!target_) {
+    Target& slot = premultiplied_alpha ? alpha_ : opaque_;
+    if (!slot.target) {
         const auto properties = D2D1::RenderTargetProperties(D2D1_RENDER_TARGET_TYPE_DEFAULT,
-            D2D1::PixelFormat(DXGI_FORMAT_B8G8R8A8_UNORM, D2D1_ALPHA_MODE_IGNORE), 96, 96);
-        if (FAILED(factory_->CreateDCRenderTarget(&properties, &target_))) return false;
-        target_->SetAntialiasMode(D2D1_ANTIALIAS_MODE_PER_PRIMITIVE);
-        target_->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_CLEARTYPE);
-        if (FAILED(target_->CreateSolidColorBrush(D2D1::ColorF(0.0f, 0.0f, 0.0f), &brush_))) {
-            target_.Reset();
+            D2D1::PixelFormat(DXGI_FORMAT_B8G8R8A8_UNORM,
+                              premultiplied_alpha ? D2D1_ALPHA_MODE_PREMULTIPLIED : D2D1_ALPHA_MODE_IGNORE), 96, 96);
+        if (FAILED(factory_->CreateDCRenderTarget(&properties, &slot.target))) return false;
+        slot.target->SetAntialiasMode(D2D1_ANTIALIAS_MODE_PER_PRIMITIVE);
+        slot.target->SetTextAntialiasMode(premultiplied_alpha ? D2D1_TEXT_ANTIALIAS_MODE_GRAYSCALE
+                                                              : D2D1_TEXT_ANTIALIAS_MODE_CLEARTYPE);
+        if (FAILED(slot.target->CreateSolidColorBrush(D2D1::ColorF(0.0f, 0.0f, 0.0f), &slot.brush))) {
+            slot.target.Reset();
             return false;
         }
     }
@@ -36,12 +39,15 @@ bool ModernRenderer::initialize() {
     return true;
 }
 
-bool ModernRenderer::begin(HDC dc, const RECT& bounds) {
-    if (drawing_ || !dc || bounds.right <= bounds.left || bounds.bottom <= bounds.top || !initialize()) return false;
-    if (FAILED(target_->BindDC(dc, &bounds))) return false;
-    target_->SetTransform(D2D1::Matrix3x2F::Translation(-static_cast<float>(bounds.left),
-                                                     -static_cast<float>(bounds.top)));
-    target_->BeginDraw();
+bool ModernRenderer::begin(HDC dc, const RECT& bounds, bool premultiplied_alpha) {
+    if (drawing_ || !dc || bounds.right <= bounds.left || bounds.bottom <= bounds.top ||
+        !initialize(premultiplied_alpha)) return false;
+    active_ = premultiplied_alpha ? &alpha_ : &opaque_;
+    if (FAILED(active_->target->BindDC(dc, &bounds))) return false;
+    active_->target->SetTransform(D2D1::Matrix3x2F::Translation(-static_cast<float>(bounds.left),
+                                                               -static_cast<float>(bounds.top)));
+    active_->target->BeginDraw();
+    if (premultiplied_alpha) active_->target->Clear(D2D1::ColorF(0, 0, 0, 0));
     drawing_ = true;
     return true;
 }
@@ -49,43 +55,43 @@ bool ModernRenderer::begin(HDC dc, const RECT& bounds) {
 void ModernRenderer::finish() {
     if (!drawing_) return;
     drawing_ = false;
-    const HRESULT result = target_->EndDraw();
+    const HRESULT result = active_->target->EndDraw();
     if (result == D2DERR_RECREATE_TARGET) {
-        brush_.Reset();
-        target_.Reset();
+        active_->brush.Reset();
+        active_->target.Reset();
     }
 }
 
 void ModernRenderer::color(COLORREF value) {
-    brush_->SetColor(D2D1::ColorF(GetRValue(value) / 255.0f, GetGValue(value) / 255.0f,
-                                 GetBValue(value) / 255.0f));
+    active_->brush->SetColor(D2D1::ColorF(GetRValue(value) / 255.0f, GetGValue(value) / 255.0f,
+                                         GetBValue(value) / 255.0f));
 }
 void ModernRenderer::fill(const RECT& bounds, COLORREF value) {
     color(value);
-    target_->FillRectangle(rectf(bounds), brush_.Get());
+    active_->target->FillRectangle(rectf(bounds), active_->brush.Get());
 }
 void ModernRenderer::rounded(const RECT& bounds, float radius, COLORREF fill_value,
                              COLORREF border, float stroke) {
     const auto geometry = D2D1::RoundedRect(rectf(bounds, stroke / 2), radius, radius);
     color(fill_value);
-    target_->FillRoundedRectangle(geometry, brush_.Get());
+    active_->target->FillRoundedRectangle(geometry, active_->brush.Get());
     if (border != fill_value) {
         color(border);
-        target_->DrawRoundedRectangle(geometry, brush_.Get(), stroke);
+        active_->target->DrawRoundedRectangle(geometry, active_->brush.Get(), stroke);
     }
 }
 void ModernRenderer::outline(const RECT& bounds, float radius, COLORREF value, float stroke) {
     color(value);
-    target_->DrawRoundedRectangle(D2D1::RoundedRect(rectf(bounds, stroke / 2), radius, radius),
-                                   brush_.Get(), stroke, stroke_style_.Get());
+    active_->target->DrawRoundedRectangle(D2D1::RoundedRect(rectf(bounds, stroke / 2), radius, radius),
+                                   active_->brush.Get(), stroke, stroke_style_.Get());
 }
 void ModernRenderer::ellipse(float x, float y, float rx, float ry, COLORREF value) {
     color(value);
-    target_->FillEllipse(D2D1::Ellipse(D2D1::Point2F(x, y), rx, ry), brush_.Get());
+    active_->target->FillEllipse(D2D1::Ellipse(D2D1::Point2F(x, y), rx, ry), active_->brush.Get());
 }
 void ModernRenderer::line(float x1, float y1, float x2, float y2, COLORREF value, float stroke) {
     color(value);
-    target_->DrawLine(D2D1::Point2F(x1, y1), D2D1::Point2F(x2, y2), brush_.Get(), stroke, stroke_style_.Get());
+    active_->target->DrawLine(D2D1::Point2F(x1, y1), D2D1::Point2F(x2, y2), active_->brush.Get(), stroke, stroke_style_.Get());
 }
 
 IDWriteTextFormat* ModernRenderer::format(float size, int weight) {
@@ -121,12 +127,12 @@ void ModernRenderer::text(std::wstring_view value, const RECT& bounds, COLORREF 
         }
     }
     color(value_color);
-    target_->DrawTextLayout(D2D1::Point2F(static_cast<float>(bounds.left), static_cast<float>(bounds.top)),
-                             layout.Get(), brush_.Get(), D2D1_DRAW_TEXT_OPTIONS_CLIP);
+    active_->target->DrawTextLayout(D2D1::Point2F(static_cast<float>(bounds.left), static_cast<float>(bounds.top)),
+                             layout.Get(), active_->brush.Get(), D2D1_DRAW_TEXT_OPTIONS_CLIP);
 }
 
 int ModernRenderer::measure_text(std::wstring_view value, float size, int weight) {
-    if (value.empty() || !initialize()) return 0;
+    if (value.empty() || !initialize(false)) return 0;
     IDWriteTextFormat* text_format = format(size, weight);
     if (!text_format) return 0;
     Microsoft::WRL::ComPtr<IDWriteTextLayout> layout;
@@ -173,8 +179,8 @@ void ModernRenderer::icon(int kind, const RECT& bounds, COLORREF value, float st
 }
 
 ModernRenderer* active_modern_renderer() noexcept { return current_renderer; }
-ModernRenderScope::ModernRenderScope(ModernRenderer& renderer, HDC dc, const RECT& bounds)
-    : renderer_(renderer), previous_(current_renderer), active_(renderer.begin(dc, bounds)) {
+ModernRenderScope::ModernRenderScope(ModernRenderer& renderer, HDC dc, const RECT& bounds, bool premultiplied_alpha)
+    : renderer_(renderer), previous_(current_renderer), active_(renderer.begin(dc, bounds, premultiplied_alpha)) {
     // A failed nested bind must use the GDI fallback, never the parent's DC.
     current_renderer = active_ ? &renderer_ : nullptr;
 }

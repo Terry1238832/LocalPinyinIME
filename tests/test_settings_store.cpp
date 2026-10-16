@@ -31,7 +31,7 @@ int main() {
     const auto root = make_temp_directory();
     SettingsStore store(root.wstring());
     REQUIRE_TRUE(!store.load_input_mode_options().shift_toggle_enabled);
-    REQUIRE_TRUE(store.load_input_mode_options().prediction_enabled);
+    REQUIRE_TRUE(!store.load_input_mode_options().prediction_enabled);
     CandidateWindowOptions options;
     options.theme_mode = CandidateThemeMode::Dark;
     options.show_key_hints = false;

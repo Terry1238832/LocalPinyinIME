@@ -12,6 +12,8 @@ class UserLearning {
 public:
     bool open(const std::wstring& storage_path);
     int frequency(const std::wstring& pinyin, const std::wstring& word) const;
+    // Seconds since the epoch of the latest selection, or 0.
+    long long last_selected(const std::wstring& pinyin, const std::wstring& word) const;
     bool record_selection(const std::wstring& pinyin, const std::wstring& word);
     bool clear();
     void refresh_if_changed();

@@ -12,7 +12,9 @@ enum class InputMode {
 
 struct InputModeOptions {
     bool shift_toggle_enabled = false;
-    bool prediction_enabled = true;
+    // Next-word suggestions after a commit are opt-in. Context always ranks
+    // the candidates of newly typed pinyin regardless of this option.
+    bool prediction_enabled = false;
 };
 
 struct ModifierKeyState {

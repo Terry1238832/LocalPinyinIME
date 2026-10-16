@@ -208,6 +208,20 @@ int main() {
     REQUIRE_TRUE(personal_mixed.load_dictionary_resource_directory(personal_resources.wstring(), personal_file.wstring()));
     REQUIRE_TRUE(contains(personal_mixed.lookup(L"yuxue"), L"Yu雪"));
 
+    // The candidate popup shows typed pinyin with syllable separators.
+    using localpinyin::PinyinEngine;
+    REQUIRE_EQ(PinyinEngine::display_pinyin(L"nihaoshijie"), std::wstring(L"ni'hao'shi'jie"));
+    REQUIRE_EQ(PinyinEngine::display_pinyin(L"nihaoshij"), std::wstring(L"ni'hao'shi'j"));
+    REQUIRE_EQ(PinyinEngine::display_pinyin(L"zhongguoren"), std::wstring(L"zhong'guo'ren"));
+    REQUIRE_EQ(PinyinEngine::display_pinyin(L"woaini"), std::wstring(L"wo'ai'ni"));
+    REQUIRE_EQ(PinyinEngine::display_pinyin(L"fangan"), std::wstring(L"fang'an"));
+    REQUIRE_EQ(PinyinEngine::display_pinyin(L"xian"), std::wstring(L"xian"));
+    REQUIRE_EQ(PinyinEngine::display_pinyin(L"xi'an"), std::wstring(L"xi'an"));
+    REQUIRE_EQ(PinyinEngine::display_pinyin(L"zh"), std::wstring(L"zh"));
+    REQUIRE_EQ(PinyinEngine::display_pinyin(L"NIhao"), std::wstring(L"ni'hao"));
+    REQUIRE_EQ(PinyinEngine::display_pinyin(L"xyz"), std::wstring(L"xyz"));
+    REQUIRE_EQ(PinyinEngine::display_pinyin(L""), std::wstring());
+
     std::filesystem::remove_all(user_lexicon_root);
     return 0;
 }

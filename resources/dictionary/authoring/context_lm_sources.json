@@ -1,0 +1,53 @@
+{
+  "artifact": "../context_zh.lm",
+  "content": "Smoothed 1-4 character n-gram statistics only; no sentence text is packaged.",
+  "authoring_scripts": [
+    "tools/fetch_context_corpus.py",
+    "tools/build_context_lm.py"
+  ],
+  "sources": [
+    {
+      "name": "Project-authored prose and public-domain prose",
+      "files": "resources/dictionary/authoring/*.txt (daily_* weight 8, others weight 1)",
+      "license": "MIT (project) / public domain",
+      "manifest": "resources/dictionary/authoring/sources.json"
+    },
+    {
+      "name": "Tatoeba Mandarin sentences",
+      "url": "https://downloads.tatoeba.org/exports/per_language/cmn/cmn_sentences.tsv.bz2",
+      "sha256": "91ded8d50ee05db5aca76e23dd9c7f2eeb2e948bcb538fa301cc82f8f4d8048e",
+      "retrieved": "2026-10-15",
+      "license": "CC BY 2.0 FR",
+      "attribution": "Tatoeba contributors, https://tatoeba.org",
+      "weight": 3
+    },
+    {
+      "name": "Chinese Wikinews article dump",
+      "url": "https://dumps.wikimedia.org/zhwikinews/20261001/zhwikinews-20261001-pages-articles.xml.bz2",
+      "sha256": "d82f9ffc1bfb298989c58258032f49dde495669a830ad086eecbce32e00c0d3f",
+      "license": "CC BY 2.5 / CC BY 4.0",
+      "attribution": "Wikinews contributors, https://zh.wikinews.org",
+      "weight": 1
+    },
+    {
+      "name": "Mozilla Common Voice sentence text (zh-CN, zh-TW)",
+      "url": "https://github.com/common-voice/common-voice/tree/7015419eb71f82ac8121f91d3f4c5338b83d6844/server/data",
+      "license": "CC0 1.0",
+      "weight": 3
+    },
+    {
+      "name": "Bundled dictionary words (internal n-grams only, no clause boundaries)",
+      "files": "core_zh_pinyin.tsv, local_core_zh_pinyin.tsv, standard_zh_pinyin.tsv",
+      "weight": 2
+    }
+  ],
+  "processing": [
+    "Traditional text converted to simplified Chinese with OpenCC t2s (tw2sp for zh-TW).",
+    "Wikinews markup removed; interwiki link labels kept.",
+    "Text split into clauses of Han characters; each clause wrapped in sentence boundary markers.",
+    "One line in forty (SHA-256 of its text) held out; held-out Tatoeba and Common Voice lines form tests/data/heldout_*.tsv.",
+    "Clauses containing any evaluation sentence of four or more characters are excluded.",
+    "Interpolated modified Kneser-Ney estimation; count cutoffs 1/2/3/4 for orders 1-4; pruned rows renormalized."
+  ],
+  "build_command": "python tools/build_context_lm.py --input resources/dictionary/authoring/daily_*.txt:8 <other authoring .txt>:1 <work>/train/wikinews.txt:1 <work>/train/tatoeba.txt:3 <work>/train/cv.txt:3 --fragments resources/dictionary/local_core_zh_pinyin.tsv:2 resources/dictionary/standard_zh_pinyin.tsv:2 resources/dictionary/core_zh_pinyin.tsv:2 --exclude tests/data/typing_holdout.tsv tests/data/typing_fresh.tsv tests/data/typing_independent.tsv tests/data/scenario_replay_076.tsv tests/data/common_word_order_079.tsv tests/data/heldout_sentences.tsv --min-count 1 2 3 4 --output resources/dictionary/context_zh.lm"
+}

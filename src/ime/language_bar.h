@@ -16,6 +16,15 @@ inline constexpr GUID GUID_LocalPinyinInputModeLangBarItem =
 [[nodiscard]] const wchar_t* input_mode_label(InputMode mode) noexcept;
 [[nodiscard]] const wchar_t* input_mode_tooltip(InputMode mode) noexcept;
 
+// Taskbar input indicator glyph (中 / 英) drawn at `size` pixels with a
+// transparent background. Returns nullptr when rendering is unavailable.
+[[nodiscard]] HICON render_mode_icon(InputMode mode, int size, COLORREF color) noexcept;
+// Pixel size and glyph color for the current taskbar: real system DPI (DPI
+// virtualized processes would otherwise get a blurry upscaled 16 px icon),
+// light or dark taskbar theme, and high contrast.
+[[nodiscard]] int mode_icon_pixel_size() noexcept;
+[[nodiscard]] COLORREF mode_icon_color() noexcept;
+
 enum class ModeIconPopupCommand {
     Cancel,
     Toggle,
@@ -42,6 +51,8 @@ public:
     HRESULT register_item(ITfThreadMgr* thread_mgr);
     HRESULT unregister_item();
     void notify_mode_changed();
+    // Re-request the icon after a Windows theme or DPI change.
+    void refresh_icon();
     void publish_initial_mode();
     HRESULT retry_pending_initial_update(const wchar_t* reason);
 

@@ -9,6 +9,8 @@
 #include <oleauto.h>
 
 #include <algorithm>
+#include <cmath>
+#include <cstdint>
 #include <cwchar>
 #include <sstream>
 #include <utility>
@@ -52,14 +54,15 @@ HICON load_mode_icon(InputMode mode, int* width, int* height, DWORD* last_error)
     if (last_error) {
         *last_error = ERROR_SUCCESS;
     }
-    const int cx = std::max(16, GetSystemMetrics(SM_CXSMICON));
-    const int cy = std::max(16, GetSystemMetrics(SM_CYSMICON));
+    const int cx = mode_icon_pixel_size();
+    const int cy = cx;
     if (width) {
         *width = cx;
     }
     if (height) {
         *height = cy;
     }
+    if (HICON rendered = render_mode_icon(mode, cx, mode_icon_color())) return rendered;
 
     HMODULE module = language_bar_module();
     if (!module) {
@@ -77,6 +80,14 @@ HICON load_mode_icon(InputMode mode, int* width, int* height, DWORD* last_error)
         *last_error = GetLastError();
     }
     return icon;
+}
+
+bool taskbar_uses_light_theme() noexcept {
+    DWORD value = 0;
+    DWORD size = sizeof(value);
+    return RegGetValueW(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
+                        L"SystemUsesLightTheme", RRF_RT_REG_DWORD, nullptr, &value, &size) == ERROR_SUCCESS &&
+           value != 0;
 }
 
 std::wstring update_flags_text(DWORD flags) {
@@ -133,6 +144,130 @@ const wchar_t* popup_command_text(ModeIconPopupCommand command) noexcept {
 }
 
 }  // namespace
+
+int mode_icon_pixel_size() noexcept {
+    // Query metrics as a per-monitor aware thread so a DPI virtualized host
+    // still receives an icon at the taskbar's real pixel size.
+    using SetContextFn = DPI_AWARENESS_CONTEXT(WINAPI*)(DPI_AWARENESS_CONTEXT);
+    using DpiForSystemFn = UINT(WINAPI*)();
+    using MetricsForDpiFn = int(WINAPI*)(int, UINT);
+    static const HMODULE user32 = GetModuleHandleW(L"user32.dll");
+    static const auto set_context = user32 ? reinterpret_cast<SetContextFn>(GetProcAddress(user32, "SetThreadDpiAwarenessContext")) : nullptr;
+    static const auto dpi_for_system = user32 ? reinterpret_cast<DpiForSystemFn>(GetProcAddress(user32, "GetDpiForSystem")) : nullptr;
+    static const auto metrics_for_dpi = user32 ? reinterpret_cast<MetricsForDpiFn>(GetProcAddress(user32, "GetSystemMetricsForDpi")) : nullptr;
+    int size = GetSystemMetrics(SM_CXSMICON);
+    if (set_context && dpi_for_system && metrics_for_dpi) {
+        const auto previous = set_context(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
+        if (previous) {
+            size = metrics_for_dpi(SM_CXSMICON, dpi_for_system());
+            set_context(previous);
+        }
+    }
+    return std::clamp(size, 16, 64);
+}
+
+COLORREF mode_icon_color() noexcept {
+    HIGHCONTRASTW contrast{sizeof(contrast)};
+    if (SystemParametersInfoW(SPI_GETHIGHCONTRAST, sizeof(contrast), &contrast, 0) &&
+        (contrast.dwFlags & HCF_HIGHCONTRASTON)) return GetSysColor(COLOR_BTNTEXT);
+    return taskbar_uses_light_theme() ? RGB(26, 26, 26) : RGB(255, 255, 255);
+}
+
+HICON render_mode_icon(InputMode mode, int size, COLORREF color) noexcept {
+    if (size < 8 || size > 256) return nullptr;
+    const wchar_t glyph = mode == InputMode::Chinese ? L'\u4E2D' : L'\u82F1';
+    // Draw white on black with grayscale antialiasing into an oversized
+    // canvas, then center the glyph's ink so it sits optically centered.
+    const int canvas = size * 2;
+    BITMAPINFO info{};
+    info.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+    info.bmiHeader.biWidth = canvas;
+    info.bmiHeader.biHeight = -canvas;
+    info.bmiHeader.biPlanes = 1;
+    info.bmiHeader.biBitCount = 32;
+    info.bmiHeader.biCompression = BI_RGB;
+    HDC dc = CreateCompatibleDC(nullptr);
+    if (!dc) return nullptr;
+    void* raw = nullptr;
+    HBITMAP scratch = CreateDIBSection(dc, &info, DIB_RGB_COLORS, &raw, nullptr, 0);
+    if (!scratch || !raw) {
+        if (scratch) DeleteObject(scratch);
+        DeleteDC(dc);
+        return nullptr;
+    }
+    const HGDIOBJ previous_bitmap = SelectObject(dc, scratch);
+    std::fill_n(static_cast<std::uint32_t*>(raw), static_cast<size_t>(canvas) * canvas, 0u);
+    // The em box of a CJK face is a little larger than its ink. At taskbar
+    // sizes the face's hinted outlines without antialiasing put every stroke
+    // on whole pixels (as the system's own indicator does); larger icons use
+    // smooth grayscale strokes.
+    const bool hinted = size <= 20;
+    const int em = std::max(8, static_cast<int>(std::lround(size * 1.02)));
+    HFONT font = CreateFontW(-em, 0, 0, 0, hinted ? FW_NORMAL : FW_SEMIBOLD, FALSE, FALSE, FALSE,
+                             DEFAULT_CHARSET, OUT_TT_PRECIS, CLIP_DEFAULT_PRECIS,
+                             hinted ? NONANTIALIASED_QUALITY : ANTIALIASED_QUALITY,
+                             DEFAULT_PITCH | FF_DONTCARE, L"Microsoft YaHei UI");
+    const HGDIOBJ previous_font = font ? SelectObject(dc, font) : nullptr;
+    SetBkMode(dc, TRANSPARENT);
+    SetTextColor(dc, RGB(255, 255, 255));
+    RECT area{0, 0, canvas, canvas};
+    DrawTextW(dc, &glyph, 1, &area, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOPREFIX);
+    GdiFlush();
+    if (previous_font) SelectObject(dc, previous_font);
+    if (font) DeleteObject(font);
+    SelectObject(dc, previous_bitmap);
+    DeleteDC(dc);
+
+    const auto* source = static_cast<const std::uint8_t*>(raw);
+    int left = canvas, top = canvas, right = -1, bottom = -1;
+    for (int y = 0; y < canvas; ++y) {
+        for (int x = 0; x < canvas; ++x) {
+            if (source[(static_cast<size_t>(y) * canvas + x) * 4 + 1] > 8) {
+                left = std::min(left, x); right = std::max(right, x);
+                top = std::min(top, y); bottom = std::max(bottom, y);
+            }
+        }
+    }
+    HICON icon = nullptr;
+    if (right >= left && bottom >= top) {
+        const int offset_x = (size - (right - left + 1)) / 2 - left;
+        const int offset_y = (size - (bottom - top + 1)) / 2 - top;
+        info.bmiHeader.biWidth = size;
+        info.bmiHeader.biHeight = -size;
+        void* pixels = nullptr;
+        HBITMAP color_bitmap = CreateDIBSection(nullptr, &info, DIB_RGB_COLORS, &pixels, nullptr, 0);
+        HBITMAP mask = CreateBitmap(size, size, 1, 1, nullptr);
+        if (color_bitmap && pixels && mask) {
+            auto* target = static_cast<std::uint8_t*>(pixels);
+            for (int y = 0; y < size; ++y) {
+                for (int x = 0; x < size; ++x) {
+                    const int sx = x - offset_x, sy = y - offset_y;
+                    const std::uint8_t coverage = sx >= 0 && sy >= 0 && sx < canvas && sy < canvas
+                        ? source[(static_cast<size_t>(sy) * canvas + sx) * 4 + 1] : 0;
+                    std::uint8_t* pixel = target + (static_cast<size_t>(y) * size + x) * 4;
+                    // Icons carry straight (not premultiplied) alpha.
+                    pixel[0] = GetBValue(color);
+                    pixel[1] = GetGValue(color);
+                    pixel[2] = GetRValue(color);
+                    pixel[3] = coverage;
+                }
+            }
+            HDC mask_dc = CreateCompatibleDC(nullptr);
+            if (mask_dc) {
+                const HGDIOBJ previous_mask = SelectObject(mask_dc, mask);
+                PatBlt(mask_dc, 0, 0, size, size, BLACKNESS);
+                SelectObject(mask_dc, previous_mask);
+                DeleteDC(mask_dc);
+            }
+            ICONINFO icon_info{TRUE, 0, 0, mask, color_bitmap};
+            icon = CreateIconIndirect(&icon_info);
+        }
+        if (color_bitmap) DeleteObject(color_bitmap);
+        if (mask) DeleteObject(mask);
+    }
+    DeleteObject(scratch);
+    return icon;
+}
 
 const wchar_t* input_mode_label(InputMode mode) noexcept {
     return mode == InputMode::Chinese ? L"\u4E2D" : L"\u82F1";
@@ -228,6 +363,12 @@ HRESULT LanguageBarState::unregister_item() {
 
 void LanguageBarState::notify_mode_changed() {
     send_update(kModeUpdateFlags, L"mode_changed", true);
+}
+
+void LanguageBarState::refresh_icon() {
+    logged_get_icon_chinese_ = false;
+    logged_get_icon_english_ = false;
+    send_update(TF_LBI_ICON, L"theme_changed", false);
 }
 
 void LanguageBarState::publish_initial_mode() {
@@ -450,7 +591,7 @@ HRESULT LanguageBarState::GetIcon(HICON* icon) {
                    std::wstring(L"event=language_bar_get_icon mode=") +
                        input_mode_log_text(mode_) +
                        L" icon_variant=" + icon_variant(mode_) +
-                       L" source=resource resource_id=" +
+                       L" source=rendered_or_resource resource_id=" +
                        std::to_wstring(mode_icon_resource_id(mode_)) +
                        L" size=" + std::to_wstring(width) + L"x" + std::to_wstring(height) +
                        L" result=" + (succeeded ? L"S_OK" : L"E_FAIL") +

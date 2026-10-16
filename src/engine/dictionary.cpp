@@ -869,6 +869,14 @@ bool Dictionary::is_syllable(const std::wstring& pinyin) {
     return syllable_set().contains(pinyin);
 }
 
+bool Dictionary::is_syllable_prefix(const std::wstring& pinyin) {
+    if (pinyin.empty()) return false;
+    const auto& syllables = syllable_set();
+    return std::any_of(syllables.begin(), syllables.end(), [&](const std::wstring& syllable) {
+        return syllable.compare(0, pinyin.size(), pinyin) == 0;
+    });
+}
+
 size_t Dictionary::entry_count() const noexcept {
     return entry_count_;
 }

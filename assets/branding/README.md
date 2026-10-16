@@ -4,16 +4,13 @@ This directory contains first-party LocalPinyinIME brand assets for the “Trust
 
 ## Icon
 
-The app icon uses a blue rounded Windows tile, a pinyin speech bubble mark, and a compact keyboard motif. The canonical editable sources are:
+The app icon is a blue rounded Windows tile with a white speech bubble holding a blue "P" and a text caret above a keyboard. Its vector definition lives in `tools/generate_brand_icon.py`, which writes:
 
-- `icon/LocalPinyinIME.svg`
-- `icon/LocalPinyinIME-small.svg`
+- `icon/LocalPinyinIME.svg` (vector mark)
+- `icon/LocalPinyinIME.ico` (16, 20, 24, 32, 40, 48, 64, 128 and 256 px, each rasterized on its own pixel grid)
+- `icon/LocalPinyinIME-master.png` and `icon/small/*.png`
 
-The Windows icon file is generated from the same design language:
-
-- `icon/LocalPinyinIME.ico`
-
-The ICO contains 16, 20, 24, 32, 40, 48, 64, 128, and 256 px images. The smallest sizes use a simplified mark to avoid unreadable detail.
+See `icon/README.md` for regeneration.
 
 ## Theme Tokens
 

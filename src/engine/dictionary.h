@@ -72,6 +72,8 @@ public:
     [[nodiscard]] bool reading_matches_boundaries(const std::wstring& pinyin, const std::wstring& word,
                                                   const std::vector<size_t>& boundaries) const;
     [[nodiscard]] static bool is_syllable(const std::wstring& pinyin);
+    // True when `pinyin` begins (or is) a legal syllable, e.g. zh, shu, xia.
+    [[nodiscard]] static bool is_syllable_prefix(const std::wstring& pinyin);
     [[nodiscard]] std::vector<std::wstring> matching_pinyins_at(const std::wstring& input, size_t offset) const;
     UserLexiconRefreshResult refresh_user_lexicon_if_changed(bool composition_active);
     [[nodiscard]] size_t entry_count() const noexcept;

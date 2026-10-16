@@ -225,6 +225,18 @@ Model transformation and checksums: resources/dictionary/context_zh.metadata.jso
 Validation works are excluded from training.
 
 
+Character language model (context_zh.lm)
+The 4-gram language model used to rank candidates by the preceding text contains only smoothed character n-gram statistics (no sentences) estimated from:
+- the project-authored and public-domain prose listed above;
+- Tatoeba Mandarin sentences, https://tatoeba.org, licensed CC BY 2.0 FR (https://creativecommons.org/licenses/by/2.0/fr/), by the Tatoeba contributors;
+- Chinese Wikinews (zh.wikinews.org) article dump of 2026-10-01, licensed CC BY 2.5 / CC BY 4.0 (https://creativecommons.org/licenses/by/2.5/), by the Wikinews contributors;
+- Mozilla Common Voice zh-CN and zh-TW sentence text, released under CC0 1.0 (https://github.com/common-voice/common-voice, commit 7015419eb71f82ac8121f91d3f4c5338b83d6844);
+- internal n-grams of the bundled dictionary words.
+Text was converted to simplified Chinese with OpenCC (Apache-2.0), which is used at authoring time only.
+Sources, downloads and checksums: resources/dictionary/authoring/context_lm_sources.json and resources/dictionary/context_zh.lm.metadata.json in the source repository.
+One line in forty and all evaluation sentences are held out of training.
+
+
 Next-text continuations
 The bundled short next-text continuation pairs are original first-party text authored by LocalPinyinIME contributors and distributed under the project MIT license.
 Weights are relative editorial preferences. No corpus, commercial lexicon or user conversation history is imported.

@@ -26,10 +26,16 @@ OutputBaseFilename={#MyAppSetupBaseFilename}
 SetupIconFile=..\assets\branding\icon\LocalPinyinIME.ico
 Compression=lzma2/ultra64
 SolidCompression=yes
-WizardStyle=modern
+; A short, quiet flow: welcome (install) -> progress -> finished. The style
+; follows the Windows light/dark setting like the input method itself.
+WizardStyle=modern dynamic windows11 hidebevels
 WizardSizePercent=110
+WizardImageFile=art\wizard-202.png,art\wizard-269.png,art\wizard-336.png,art\wizard-403.png,art\wizard-498.png
+WizardSmallImageFile=art\small-55.png,art\small-69.png,art\small-83.png,art\small-110.png,art\small-138.png
+WizardImageFileDynamicDark=art\wizard-202.png,art\wizard-269.png,art\wizard-336.png,art\wizard-403.png,art\wizard-498.png
+WizardSmallImageFileDynamicDark=art\small-55.png,art\small-69.png,art\small-83.png,art\small-110.png,art\small-138.png
 DisableWelcomePage=no
-LicenseFile=..\LICENSE
+DisableReadyPage=yes
 SetupLogging=yes
 UninstallDisplayName={#MyAppName}
 UninstallDisplayIcon={app}\LocalPinyinSettings.exe
@@ -38,6 +44,9 @@ UninstallDisplayIcon={app}\LocalPinyinSettings.exe
 Source: "{#MyAppPackageDir}\bin\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "{#MyAppPackageDir}\THIRD_PARTY_NOTICES.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MyAppPackageDir}\LICENSE"; DestDir: "{app}"; Flags: ignoreversion
+
+[Run]
+Filename: "{app}\LocalPinyinSettings.exe"; Description: "打开本地拼音设置"; WorkingDir: "{app}"; Flags: postinstall nowait skipifsilent runasoriginaluser
 
 [Icons]
 Name: "{group}\本地拼音设置"; Filename: "{app}\LocalPinyinSettings.exe"; WorkingDir: "{app}"; IconFilename: "{app}\LocalPinyinSettings.exe"
@@ -50,7 +59,7 @@ UninstallAppTitle=卸载本地拼音
 UninstallAppFullTitle=卸载 %1
 ButtonBack=< 上一步
 ButtonNext=下一步 >
-ButtonInstall=安装
+ButtonInstall=立即安装
 ButtonCancel=取消
 ButtonFinish=完成
 ButtonOK=确定
@@ -65,7 +74,7 @@ WizardReady=准备安装
 ReadyLabel1=即将安装本地拼音。
 ReadyLabel2a=点击“安装”开始。
 WizardInstalling=正在安装
-InstallingLabel=正在安装本地拼音，请稍候。
+InstallingLabel=正在安装并注册输入法，通常只需几秒。
 FinishedHeadingLabel=安装完成
 FinishedLabelNoIcons=本地拼音已安装。
 ConfirmUninstall=确定卸载本地拼音吗？个人词库和学习记录将保留。
@@ -312,14 +321,20 @@ begin
   end;
 end;
 
+procedure CurPageChanged(CurPageID: Integer);
+begin
+  // The welcome page leads straight to installation.
+  if CurPageID = wpWelcome then
+    WizardForm.NextButton.Caption := SetupMessage(msgButtonInstall);
+end;
+
 procedure InitializeWizard();
 begin
-  WizardForm.WelcomeLabel1.Caption := '欢迎使用本地拼音';
-  WizardForm.WelcomeLabel2.Caption := '轻巧、离线、越用越顺手。' + #13#10 + #13#10 +
-    '支持全拼、简拼、连续拼音、拼写容错和本地选词学习。' + #13#10 +
-    '安装后使用 Win + 空格切换到本地拼音。';
-  WizardForm.FinishedHeadingLabel.Caption := '本地拼音已安装';
-  WizardForm.FinishedLabel.Caption := '按 Win + 空格选择「本地拼音」。' + #13#10 +
-    '空格选首项，数字 1–9 选词，Esc 取消，Ctrl + Space 切换中英文。' + #13#10 + #13#10 +
-    '可从开始菜单打开「本地拼音设置」。已打开的应用如未刷新输入法，请关闭后重新打开。';
+  WizardForm.WelcomeLabel1.Caption := '本地拼音 {#MyAppVersion}';
+  WizardForm.WelcomeLabel2.Caption := '完全离线的中文拼音输入法。' + #13#10 + #13#10 +
+    '根据前文排列候选，越用越懂你的选词习惯。' + #13#10 +
+    '输入内容和学习记录只保存在这台电脑。';
+  WizardForm.FinishedHeadingLabel.Caption := '安装完成';
+  WizardForm.FinishedLabel.Caption := '按 Win + 空格切换到「本地拼音」即可开始输入。' + #13#10 + #13#10 +
+    '已经打开的程序，需要重新打开后才能使用新版本。';
 end;

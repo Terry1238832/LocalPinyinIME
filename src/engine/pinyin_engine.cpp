@@ -14,8 +14,23 @@ namespace {
 constexpr int kExactMatchBonus = 100000;
 constexpr int kCompleteSegmentationBonus = 2000;
 constexpr int kFallbackScore = 1;
+constexpr int kStandaloneTieBreakDivisor = 10;
 constexpr size_t kSentenceBeamWidth = 32;
 constexpr size_t kMaxInputLength = 256;
+
+// Relative weights of the character language model (milli-nats), the lexicon
+// prior and the clause-final probability. Calibrated on held-out development
+// cases only; see docs/CONTEXT_MODEL.md for the measurements.
+struct ScoreWeights {
+    double language_model = 0.7;
+    double lexical = 3.0;
+    double finish = 0.5;
+    int split_penalty = 1800;
+    int boundary_penalty = -1000;
+};
+
+constexpr ScoreWeights kWeights{};
+constexpr const ScoreWeights& weights() { return kWeights; }
 
 struct ParsedInput {
     std::wstring pinyin;
@@ -132,7 +147,7 @@ std::vector<std::vector<SegmentPath>> decode(const Dictionary& dictionary, const
     for (size_t start = 0; start < pinyin.size(); ++start) {
         for (size_t length = 2; length <= 6 && start + length <= pinyin.size(); ++length) {
             if (!Dictionary::is_syllable(pinyin.substr(start, length))) continue;
-            for (size_t boundary = start + 1; boundary < start + length; ++boundary) split_penalties[boundary] = 1800;
+            for (size_t boundary = start + 1; boundary < start + length; ++boundary) split_penalties[boundary] = weights().split_penalty;
         }
     }
     for (size_t boundary : input.boundaries) split_penalties[boundary] = 0;
@@ -162,7 +177,7 @@ std::vector<std::vector<SegmentPath>> decode(const Dictionary& dictionary, const
             for (auto& candidate : part_candidates) {
                 if (!can_compose_token(candidate, offset == 0 && next == pinyin.size())) continue;
                 if (!dictionary.reading_matches_boundaries(part_pinyin, candidate.text, boundaries)) continue;
-                const int prior = lexical_score(candidate) + candidate.user_frequency / 3;
+                const int prior = static_cast<int>(weights().lexical * lexical_score(candidate)) + candidate.user_frequency / 3;
                 prepared.push_back({std::move(candidate), prior});
             }
             std::stable_sort(prepared.begin(), prepared.end(), [](const auto& left, const auto& right) {
@@ -175,7 +190,8 @@ std::vector<std::vector<SegmentPath>> decode(const Dictionary& dictionary, const
             for (const auto& path : dp[offset]) {
                 const auto history = transition_history(preceding, path.text);
                 for (const auto& item : prepared) {
-                    const int score = path.score + item.prior - split_penalties[next] + context.extend_score(history, item.candidate.text);
+                    const int score = path.score + item.prior - split_penalties[next] +
+                                      static_cast<int>(weights().language_model * context.extend_score(history, item.candidate.text));
                     add_path(paths, indices, SegmentPath{score, path.segment_count + 1, path.text + item.candidate.text});
                 }
             }
@@ -188,7 +204,7 @@ std::vector<std::vector<SegmentPath>> decode(const Dictionary& dictionary, const
 
 Candidate candidate_from_path(const SegmentPath& path, const ContextModel& context) {
     Candidate candidate;
-    candidate.base_score = path.score + context.finish_score(path.text);
+    candidate.base_score = path.score + static_cast<int>(weights().finish * weights().language_model * context.finish_score(path.text));
     candidate.complete_segmentation_bonus = kCompleteSegmentationBonus;
     candidate.text = path.text;
     return candidate;
@@ -266,7 +282,14 @@ PinyinEngine::PinyinEngine(DictionaryLoadMode dictionary_load_mode)
 void PinyinEngine::rebuild_context_model(const std::wstring& context_path) {
     context_path_ = context_path;
     context_model_.reset(dictionary_);
-    if (!context_path.empty()) context_model_.load(context_path);
+    context_model_.set_boundary_penalty(weights().boundary_penalty);
+    if (!context_path.empty()) {
+        // The packaged binary model supersedes the authored count table.
+        const auto binary = std::filesystem::path(context_path).replace_extension(L".lm");
+        std::error_code error;
+        if (!std::filesystem::is_regular_file(binary, error) || !context_model_.load(binary.wstring()))
+            context_model_.load(context_path);
+    }
     continuation_model_.reset(dictionary_);
     if (!context_path.empty()) continuation_model_.load((std::filesystem::path(context_path).parent_path() / L"continuations_zh.tsv").wstring());
     learning_revision_ = static_cast<size_t>(-1);
@@ -356,6 +379,11 @@ std::vector<Candidate> PinyinEngine::lookup(const std::wstring& pinyin, const st
             !dictionary_.reading_matches_boundaries(normalized, candidate.text, parsed.boundaries)) continue;
         candidate.exact_match_bonus = kExactMatchBonus;
         candidate.complete_segmentation_bonus = kCompleteSegmentationBonus;
+        // Lexicon frequencies are coarse and often tied (请 and 晴 share one
+        // value). A tenth of the clause-start language model score breaks such
+        // near ties without overriding deliberate frequency priorities.
+        if (standalone_word && !candidate.is_user_lexicon_entry)
+            candidate.base_score += context_model_.extend_score(L"", candidate.text) / kStandaloneTieBreakDivisor;
         candidates.push_back(std::move(candidate));
     }
 
@@ -374,8 +402,9 @@ std::vector<Candidate> PinyinEngine::lookup(const std::wstring& pinyin, const st
         for (const auto& path : dp[offset]) {
             for (size_t index = 0; index < std::min<size_t>(12, completions.size()); ++index) {
                 const auto& word = completions[index];
-                SegmentPath completed{path.score + lexical_score(word) + word.user_frequency / 3 +
-                                      context_model_.extend_score(transition_history(context, path.text), word.text) - 600,
+                SegmentPath completed{path.score + static_cast<int>(weights().lexical * lexical_score(word)) + word.user_frequency / 3 +
+                                      static_cast<int>(weights().language_model *
+                                          context_model_.extend_score(transition_history(context, path.text), word.text)) - 600,
                                       path.segment_count + 1, path.text + word.text};
                 candidates.push_back(candidate_from_path(completed, context_model_));
             }
@@ -482,6 +511,49 @@ std::vector<Candidate> PinyinEngine::lookup(const std::wstring& pinyin, const st
     }
     if (ranked.empty()) ranked.push_back(Candidate{normalized, kFallbackScore, 0});
     return ranked;
+}
+
+std::wstring PinyinEngine::display_pinyin(const std::wstring& typed) {
+    const auto segment = [&](const std::wstring& chunk) {
+        const size_t n = chunk.size();
+        if (n == 0 || n > 64) return chunk;
+        // Fewest pieces; on a tie the longest first syllable (fang'an, xian).
+        std::vector<double> cost(n + 1, 1e9);
+        std::vector<size_t> next(n + 1, 0);
+        cost[n] = 0;
+        for (size_t start = n; start-- > 0;) {
+            for (size_t length = std::min<size_t>(6, n - start); length > 0; --length) {
+                const auto piece = chunk.substr(start, length);
+                double piece_cost = 0;
+                if (Dictionary::is_syllable(piece)) piece_cost = 1;
+                else if (start + length == n && Dictionary::is_syllable_prefix(piece)) piece_cost = 1.4;
+                else continue;
+                if (piece_cost + cost[start + length] < cost[start]) {
+                    cost[start] = piece_cost + cost[start + length];
+                    next[start] = start + length;
+                }
+            }
+        }
+        if (cost[0] >= 1e9) return chunk;
+        std::wstring result;
+        for (size_t position = 0; position < n; position = next[position]) {
+            if (!result.empty()) result.push_back(L'\'');
+            result += chunk.substr(position, next[position] - position);
+        }
+        return result;
+    };
+    std::wstring result;
+    std::wstring chunk;
+    for (wchar_t ch : typed) {
+        if (ch == L'\'') {
+            result += segment(chunk);
+            result.push_back(L'\'');
+            chunk.clear();
+        } else {
+            chunk.push_back(ch >= L'A' && ch <= L'Z' ? static_cast<wchar_t>(ch - L'A' + L'a') : ch);
+        }
+    }
+    return result + segment(chunk);
 }
 
 UserLexiconRefreshResult PinyinEngine::refresh_user_lexicon_if_needed(bool composition_active) {

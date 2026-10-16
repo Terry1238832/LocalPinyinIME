@@ -5,6 +5,9 @@
 #include "../settings/settings_store.h"
 
 #include <algorithm>
+#include <cmath>
+#include <cstdint>
+#include <cstring>
 #include <cwchar>
 #include <sstream>
 #include <string>
@@ -14,11 +17,9 @@ namespace localpinyin {
 namespace {
 
 constexpr wchar_t kWindowClassName[] = L"LocalPinyinCandidateWindow";
-constexpr wchar_t kSettingsWindowClassName[] = L"LocalPinyinSettingsWindow";
-constexpr wchar_t kSettingsExecutableName[] = L"LocalPinyinSettings.exe";
-constexpr wchar_t kHintText[] = L"\u7A7A\u683C \u786E\u8BA4  \u00B7  \u6570\u5B57 \u9009\u8BCD  \u00B7  Esc \u53D6\u6D88";
-constexpr wchar_t kPredictionHintText[] = L"Tab 续写  ·  点击选词  ·  Esc 关闭";
 constexpr wchar_t kCandidateOptionsChangedMessageName[] = L"LocalPinyinIME.CandidateOptionsChanged";
+constexpr wchar_t kEllipsis[] = L"…";
+constexpr wchar_t kSettingsExecutableName[] = L"LocalPinyinSettings.exe";
 constexpr UINT_PTR kLayoutRetryTimerId = 1;
 constexpr UINT kDwmAttributeCloaked = 14;
 constexpr DWORD kDwmCloakedShell = 0x00000002;
@@ -29,6 +30,16 @@ struct DwmSnapshot {
     HRESULT cloaked_hr = E_NOTIMPL;
     DWORD cloaked = 0;
 };
+
+// Windows Store (immersive) processes: the shell cloaks unowned top-level
+// windows, so the popup must be owned by the text input's window there.
+bool immersive_process() noexcept {
+    using IsImmersiveProcessFn = BOOL(WINAPI*)(HANDLE);
+    static const auto function = reinterpret_cast<IsImmersiveProcessFn>(
+        GetProcAddress(GetModuleHandleW(L"user32.dll"), "IsImmersiveProcess"));
+    static const bool immersive = function && function(GetCurrentProcess());
+    return immersive;
+}
 
 bool rect_valid(const RECT& rect) noexcept {
     return rect.right > rect.left && rect.bottom > rect.top;
@@ -83,14 +94,6 @@ RECT monitor_work_area_for(const RECT& rect) {
     return work;
 }
 
-void fill_round_rect(HDC hdc, const RECT& rect, int radius, HBRUSH brush, HPEN pen) {
-    HGDIOBJ old_brush = SelectObject(hdc, brush);
-    HGDIOBJ old_pen = SelectObject(hdc, pen);
-    RoundRect(hdc, rect.left, rect.top, rect.right, rect.bottom, radius, radius);
-    SelectObject(hdc, old_pen);
-    SelectObject(hdc, old_brush);
-}
-
 COLORREF blend_color(COLORREF from, COLORREF to, int percent_to) {
     const int keep = 100 - percent_to;
     return RGB((GetRValue(from) * keep + GetRValue(to) * percent_to) / 100,
@@ -134,30 +137,32 @@ int measure_text_width_px(HWND hwnd, HFONT font, const std::wstring& text, int f
     return estimate_candidate_text_width_px(text, fallback_font_px);
 }
 
-std::wstring settings_executable_path_from_module() {
+// The settings app sits beside the input method DLL. It is single-instance,
+// so a second launch only brings the open window forward.
+void open_settings_app() {
     wchar_t module_path[MAX_PATH]{};
-    constexpr DWORD buffer_size = static_cast<DWORD>(sizeof(module_path) / sizeof(module_path[0]));
-    const DWORD size = GetModuleFileNameW(g_instance, module_path, buffer_size);
-    if (size == 0 || size >= buffer_size) {
-        return {};
-    }
-
+    const DWORD size = GetModuleFileNameW(g_instance, module_path, MAX_PATH);
+    if (size == 0 || size >= MAX_PATH) return;
     std::wstring path(module_path, size);
     const size_t slash = path.find_last_of(L"\\/");
-    if (slash == std::wstring::npos) {
-        return kSettingsExecutableName;
+    if (slash == std::wstring::npos) return;
+    const std::wstring directory = path.substr(0, slash);
+    path = directory + L"\\" + kSettingsExecutableName;
+    if (GetFileAttributesW(path.c_str()) == INVALID_FILE_ATTRIBUTES) {
+        log_status(L"candidate-ui", L"settings_open=false reason=settings_exe_not_found");
+        return;
     }
-    path.resize(slash + 1);
-    path += kSettingsExecutableName;
-    return path;
-}
-
-std::wstring parent_directory_of(const std::wstring& path) {
-    const size_t slash = path.find_last_of(L"\\/");
-    if (slash == std::wstring::npos) {
-        return {};
+    std::wstring command_line = L"\"" + path + L"\"";
+    STARTUPINFOW startup{};
+    startup.cb = sizeof(startup);
+    PROCESS_INFORMATION process{};
+    if (!CreateProcessW(path.c_str(), command_line.data(), nullptr, nullptr, FALSE, 0, nullptr,
+                        directory.c_str(), &startup, &process)) {
+        log_status(L"candidate-ui", L"settings_open=false create_process_last_error=" + std::to_wstring(GetLastError()));
+        return;
     }
-    return path.substr(0, slash);
+    CloseHandle(process.hThread);
+    CloseHandle(process.hProcess);
 }
 
 void notify_candidate_ime_win_event(DWORD event,
@@ -166,6 +171,42 @@ void notify_candidate_ime_win_event(DWORD event,
                                     LONG child_id,
                                     void*) noexcept {
     NotifyWinEvent(event, hwnd, object_id, child_id);
+}
+
+// Coverage (0..1) of a rounded rectangle at a pixel center, antialiased over
+// one pixel. Used only for the shadow mask, which is blurred afterwards.
+float rounded_rect_coverage(float x, float y, const RECT& rect, float radius) noexcept {
+    const float cx = std::clamp(x, rect.left + radius, rect.right - radius);
+    const float cy = std::clamp(y, rect.top + radius, rect.bottom - radius);
+    const float distance = std::hypot(x - cx, y - cy) - radius;
+    return std::clamp(0.5f - distance, 0.0f, 1.0f);
+}
+
+// Three box blurs approximate a Gaussian. Operates in place on one channel.
+void box_blur(std::vector<float>& values, int width, int height, int radius) {
+    if (radius <= 0) return;
+    std::vector<float> scratch(values.size());
+    const float scale = 1.0f / static_cast<float>(radius * 2 + 1);
+    for (int pass = 0; pass < 3; ++pass) {
+        for (int y = 0; y < height; ++y) {
+            float sum = 0;
+            const float* row = values.data() + static_cast<size_t>(y) * width;
+            for (int x = -radius; x <= radius; ++x) sum += row[std::clamp(x, 0, width - 1)];
+            for (int x = 0; x < width; ++x) {
+                scratch[static_cast<size_t>(y) * width + x] = sum * scale;
+                sum += row[std::min(x + radius + 1, width - 1)] - row[std::max(x - radius, 0)];
+            }
+        }
+        for (int x = 0; x < width; ++x) {
+            float sum = 0;
+            for (int y = -radius; y <= radius; ++y) sum += scratch[static_cast<size_t>(std::clamp(y, 0, height - 1)) * width + x];
+            for (int y = 0; y < height; ++y) {
+                values[static_cast<size_t>(y) * width + x] = sum * scale;
+                sum += scratch[static_cast<size_t>(std::min(y + radius + 1, height - 1)) * width + x] -
+                       scratch[static_cast<size_t>(std::max(y - radius, 0)) * width + x];
+            }
+        }
+    }
 }
 
 }  // namespace
@@ -198,9 +239,10 @@ HWND CandidateWindow::create_replacement_hwnd(HWND requested_owner, HWND origina
     const CandidateWindowCreateConfig create_config =
         make_candidate_window_create_config(requested_owner, requested_owner_is_window);
 
+    // The popup draws its own antialiased corners and soft shadow through
+    // per-pixel alpha, so the class needs no legacy CS_DROPSHADOW.
     WNDCLASSEXW wc{};
     wc.cbSize = sizeof(wc);
-    wc.style = CS_DROPSHADOW;
     wc.lpfnWndProc = CandidateWindow::window_proc;
     wc.hInstance = g_instance;
     wc.hCursor = LoadCursorW(nullptr, IDC_ARROW);
@@ -226,13 +268,7 @@ HWND CandidateWindow::create_replacement_hwnd(HWND requested_owner, HWND origina
     }
     if (created_hwnd) {
         hwnd_ = created_hwnd;
-        SetLastError(ERROR_SUCCESS);
-        const BOOL layered_ok = SetLayeredWindowAttributes(created_hwnd, 0, 248, LWA_ALPHA);
-        if (!layered_ok) {
-            log_status(L"candidate-ui",
-                       L"SetLayeredWindowAttributes failed last_error=" +
-                           std::to_wstring(GetLastError()));
-        }
+        owner_hwnd_ = create_config.parent;
     } else {
         log_status(L"candidate-ui",
                    L"CreateWindowEx failed last_error=" + std::to_wstring(create_error));
@@ -259,41 +295,20 @@ void CandidateWindow::reset_window_lifecycle_state() noexcept {
     paint_seen_ = false;
 }
 
-bool CandidateWindow::apply_window_region(int width, int height) {
-    HRGN region = CreateRoundRectRgn(0, 0, width + 1, height + 1,
-                                     layout_.corner_radius * 2, layout_.corner_radius * 2);
-    if (!region) {
-        return false;
-    }
-    if (!SetWindowRgn(hwnd_, region, FALSE)) {
-        DeleteObject(region);
-        return false;
-    }
-    return true;
-}
-
 bool CandidateWindow::position_and_show_current_layout() {
-    const int width = layout_.window_rect.right - layout_.window_rect.left;
-    const int height = layout_.window_rect.bottom - layout_.window_rect.top;
-    apply_window_region(width, height);
-
+    if (!present()) {
+        log_status(L"candidate-ui", L"UpdateLayeredWindow failed last_error=" + std::to_wstring(GetLastError()));
+        return false;
+    }
     SetLastError(ERROR_SUCCESS);
-    const BOOL set_window_pos_ok = SetWindowPos(hwnd_, HWND_TOPMOST,
-                                                layout_.window_rect.left,
-                                                layout_.window_rect.top,
-                                                width,
-                                                height,
-                                                SWP_NOACTIVATE | SWP_SHOWWINDOW);
-    const DWORD set_window_pos_error = set_window_pos_ok ? ERROR_SUCCESS : GetLastError();
+    const BOOL set_window_pos_ok = SetWindowPos(hwnd_, HWND_TOPMOST, 0, 0, 0, 0,
+                                                SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE | SWP_SHOWWINDOW);
     if (!set_window_pos_ok) {
         log_status(L"candidate-ui",
-                   L"SetWindowPos failed last_error=" + std::to_wstring(set_window_pos_error));
+                   L"SetWindowPos failed last_error=" + std::to_wstring(GetLastError()));
         return false;
     }
-
-    InvalidateRect(hwnd_, nullptr, FALSE);
     ShowWindow(hwnd_, SW_SHOWNOACTIVATE);
-    UpdateWindow(hwnd_);
     return true;
 }
 
@@ -320,7 +335,13 @@ void CandidateWindow::show(const std::wstring& composition_text,
         hide(L"empty_candidates");
         return;
     }
-    if (!create()) {
+    const HWND owner = immersive_process() && owner_info.context_valid ? owner_info.context_hwnd : nullptr;
+    if (hwnd_ && owner && owner != owner_hwnd_) {
+        // The input moved to another window: recreate under the new owner.
+        destroy_hwnd_for_recreate();
+        reset_window_lifecycle_state();
+    }
+    if (!create_with_owner(owner)) {
         hide(L"create_failed");
         return;
     }
@@ -417,7 +438,7 @@ void CandidateWindow::set_options_changed_callback(std::function<void()> callbac
 void CandidateWindow::set_selection_callback(std::function<void(size_t)> callback) {
     cancel_pointer_interaction();
     selection_callback_ = std::move(callback);
-    if (hwnd_) InvalidateRect(hwnd_, nullptr, FALSE);
+    redraw();
 }
 
 void CandidateWindow::reset_presentation_state() noexcept {
@@ -546,21 +567,30 @@ LRESULT CandidateWindow::handle_message(HWND hwnd, UINT message, WPARAM wparam, 
                 return 0;
             }
             break;
+        case WM_SETTINGCHANGE:
+        case WM_THEMECHANGED:
+        case WM_SYSCOLORCHANGE:
+            if (message != WM_SETTINGCHANGE ||
+                (lparam && std::wcscmp(reinterpret_cast<const wchar_t*>(lparam), L"ImmersiveColorSet") == 0) ||
+                wparam == SPI_SETHIGHCONTRAST) {
+                apply_options_changed();
+                const auto callback = theme_changed_callback_;
+                if (callback) callback();
+            }
+            break;
         case WM_MOUSEACTIVATE:
             return MA_NOACTIVATE;
         case WM_MOUSEMOVE: {
             const POINTS points = MAKEPOINTS(lparam);
             const POINT point{points.x, points.y};
-            update_settings_button_hot(hit_test_settings_button(point));
-            update_candidate_hot(point);
+            update_pointer_hot(point);
             track_mouse_leave();
             return 0;
         }
         case WM_MOUSELEAVE:
             tracking_mouse_leave_ = false;
-            update_settings_button_hot(false);
             cancel_pointer_interaction();
-            InvalidateRect(hwnd_, nullptr, FALSE);
+            redraw();
             return 0;
         case WM_LBUTTONDOWN: {
             const POINTS points = MAKEPOINTS(lparam);
@@ -570,13 +600,14 @@ LRESULT CandidateWindow::handle_message(HWND hwnd, UINT message, WPARAM wparam, 
                 candidate_pointer_.cancel();
                 pressed_page_direction_ = page_direction;
                 SetCapture(hwnd_);
+                redraw();
                 return 0;
             }
-            if (hit_test_settings_button(point)) {
+            if (settings_button_at_point(point)) {
                 candidate_pointer_.cancel();
-                settings_button_pressed_ = true;
+                settings_pressed_ = true;
                 SetCapture(hwnd_);
-                InvalidateRect(hwnd_, &layout_.action_button_rect, FALSE);
+                redraw();
                 return 0;
             }
             if (selection_callback_) {
@@ -585,7 +616,7 @@ LRESULT CandidateWindow::handle_message(HWND hwnd, UINT message, WPARAM wparam, 
                     candidate_pointer_.press(index);
                     SetCapture(hwnd_);
                     track_mouse_leave();
-                    InvalidateRect(hwnd_, nullptr, FALSE);
+                    redraw();
                     return 0;
                 }
             }
@@ -596,23 +627,23 @@ LRESULT CandidateWindow::handle_message(HWND hwnd, UINT message, WPARAM wparam, 
             const POINT point{points.x, points.y};
             const int page_direction = pressed_page_direction_ == page_direction_at_point(point) ? pressed_page_direction_ : 0;
             pressed_page_direction_ = 0;
-            const bool activate_settings = settings_button_pressed_ && hit_test_settings_button(point);
+            const bool open_settings = settings_pressed_ && settings_button_at_point(point);
+            settings_pressed_ = false;
             const auto display_index = candidate_pointer_.release(
                 selection_callback_ ? candidate_index_at_point(layout_, point) : std::nullopt);
             const auto model_index = display_index ? candidate_model_index(layout_, *display_index, candidate_texts_)
                                                     : std::nullopt;
-            settings_button_pressed_ = false;
             if (GetCapture() == hwnd_) ReleaseCapture();
-            update_candidate_hot(point);
+            update_pointer_hot(point);
             track_mouse_leave();
-            InvalidateRect(hwnd_, nullptr, FALSE);
+            redraw();
             if (page_direction && page_callback_) {
                 const auto callback = page_callback_;
                 callback(page_direction);
                 return 0;
             }
-            if (activate_settings) {
-                open_settings_window();
+            if (open_settings) {
+                open_settings_app();
                 return 0;
             }
             if (model_index && selection_callback_) {
@@ -627,10 +658,10 @@ LRESULT CandidateWindow::handle_message(HWND hwnd, UINT message, WPARAM wparam, 
         case WM_CAPTURECHANGED:
         case WM_CANCELMODE:
             cancel_pointer_interaction();
-            InvalidateRect(hwnd_, nullptr, FALSE);
+            redraw();
             return 0;
         case WM_SETCURSOR:
-            if (settings_button_hot_ || (selection_callback_ && candidate_pointer_.hovered())) {
+            if (hot_page_direction_ || settings_hot_ || (selection_callback_ && candidate_pointer_.hovered())) {
                 SetCursor(LoadCursorW(nullptr, IDC_HAND));
                 return TRUE;
             }
@@ -645,10 +676,13 @@ LRESULT CandidateWindow::handle_message(HWND hwnd, UINT message, WPARAM wparam, 
             return DefWindowProcW(hwnd, message, wparam, lparam);
         case WM_ERASEBKGND:
             return 1;
-        case WM_PAINT:
-            paint_seen_ = true;
-            paint();
+        case WM_PAINT: {
+            // Content is pushed with UpdateLayeredWindow; only validate here.
+            PAINTSTRUCT ps{};
+            BeginPaint(hwnd_, &ps);
+            EndPaint(hwnd_, &ps);
             return 0;
+        }
         case WM_PRINTCLIENT:
             render(reinterpret_cast<HDC>(wparam));
             return 0;
@@ -677,16 +711,15 @@ void CandidateWindow::reload_options() {
 }
 
 void CandidateWindow::update_fonts(int dpi) {
-    if (composition_font_ && candidate_font_ && hint_font_ && font_dpi_ == dpi && font_text_size_ == options_.text_size) {
+    if (composition_font_ && candidate_font_ && font_dpi_ == dpi && font_text_size_ == options_.text_size) {
         return;
     }
     release_fonts();
     font_dpi_ = dpi;
     font_text_size_ = options_.text_size;
 
-    composition_font_ = create_candidate_font(scale_dip(15, dpi), FW_NORMAL);
-    candidate_font_ = create_candidate_font(candidate_font_px_for_size(options_.text_size, dpi), FW_MEDIUM);
-    hint_font_ = create_candidate_font(scale_dip(13, dpi), FW_NORMAL);
+    composition_font_ = create_candidate_font(scale_dip(13, dpi), FW_NORMAL);
+    candidate_font_ = create_candidate_font(candidate_font_px_for_size(options_.text_size, dpi), FW_NORMAL);
 }
 
 bool CandidateWindow::rebuild_layout(int dpi) {
@@ -698,10 +731,12 @@ bool CandidateWindow::rebuild_layout(int dpi) {
     candidate_text_widths.reserve(candidate_texts_.size());
     number_text_widths.reserve(candidate_texts_.size());
     for (size_t i = 0; i < candidate_texts_.size(); ++i) {
-        const int measured = renderer_.measure_text(candidate_texts_[i], static_cast<float>(fallback_font_px), FW_MEDIUM);
+        const int measured = renderer_.measure_text(candidate_texts_[i], static_cast<float>(fallback_font_px), FW_NORMAL);
         candidate_text_widths.push_back(measured > 0 ? measured : measure_text_width_px(hwnd_, candidate_font_, candidate_texts_[i], fallback_font_px));
-        const std::wstring number = std::to_wstring(i + 1);
-        const int number_width = renderer_.measure_text(number, static_cast<float>(fallback_font_px));
+        // Numbers are drawn smaller than the candidate text.
+        const std::wstring number = std::to_wstring(i % kMaxCandidateCount + 1);
+        const float number_px = static_cast<float>(fallback_font_px) * 0.78f;
+        const int number_width = renderer_.measure_text(number, number_px);
         number_text_widths.push_back(number_width > 0 ? number_width : measure_text_width_px(hwnd_, candidate_font_, number, fallback_font_px));
     }
 
@@ -712,11 +747,13 @@ bool CandidateWindow::rebuild_layout(int dpi) {
     input.number_text_widths_px = std::move(number_text_widths);
     input.selected_index = selected_index_;
     input.page_indices = page_indices_;
-    input.composition_text_width_px = renderer_.measure_text(composition_text_, static_cast<float>(scale_dip(15, dpi)));
+    input.composition_text_width_px = renderer_.measure_text(composition_text_, static_cast<float>(scale_dip(13, dpi)));
     input.caret_rect = caret_rect_;
     input.work_area = monitor_work_area_for(caret_rect_);
     input.dpi = dpi;
     input.options = options_;
+    // A Store app sandbox cannot start the settings app.
+    input.settings_button = !immersive_process();
     layout_ = make_candidate_layout(input);
     return layout_.visible;
 }
@@ -733,59 +770,64 @@ void CandidateWindow::apply_options_changed() {
         hide(L"options_changed_layout_hidden");
         return;
     }
-    const int width = layout_.window_rect.right - layout_.window_rect.left;
-    const int height = layout_.window_rect.bottom - layout_.window_rect.top;
-    HRGN region = CreateRoundRectRgn(0, 0, width + 1, height + 1,
-                                     layout_.corner_radius * 2, layout_.corner_radius * 2);
-    if (region) {
-        if (!SetWindowRgn(hwnd_, region, FALSE)) {
-            DeleteObject(region);
-        }
+    if (!present()) {
+        log_status(L"candidate-ui", L"candidate_options_changed_present_success=false last_error=" +
+                   std::to_wstring(GetLastError()));
     }
-    SetLastError(ERROR_SUCCESS);
-    const BOOL set_window_pos_ok = SetWindowPos(hwnd_,
-                                                HWND_TOPMOST,
-                                                layout_.window_rect.left,
-                                                layout_.window_rect.top,
-                                                width,
-                                                height,
-                                                SWP_NOACTIVATE | SWP_SHOWWINDOW);
-    const DWORD set_window_pos_error = set_window_pos_ok ? ERROR_SUCCESS : GetLastError();
-    if (!set_window_pos_ok) {
-        std::wstringstream stream;
-        stream << L"candidate_options_changed_setwindowpos_success=false last_error=" << set_window_pos_error;
-        log_status(L"candidate-ui", stream.str());
-    }
-    RedrawWindow(hwnd_, nullptr, nullptr, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
-bool CandidateWindow::hit_test_settings_button(POINT point) const noexcept {
-    const RECT& rect = layout_.action_button_rect;
-    return layout_.action_button_visible &&
-           point.x >= rect.left && point.x < rect.right &&
-           point.y >= rect.top && point.y < rect.bottom;
-}
-
-void CandidateWindow::update_settings_button_hot(bool hot) {
-    if (settings_button_hot_ == hot) {
-        return;
-    }
-    settings_button_hot_ = hot;
-    InvalidateRect(hwnd_, &layout_.action_button_rect, FALSE);
-}
-
-void CandidateWindow::update_candidate_hot(POINT point) {
-    const auto index = selection_callback_ ? candidate_index_at_point(layout_, point) : std::nullopt;
-    if (candidate_pointer_.hovered() == index) return;
+void CandidateWindow::update_pointer_hot(POINT point) {
+    const int page = page_direction_at_point(point);
+    const bool settings = settings_button_at_point(point);
+    const auto index = selection_callback_ && !page && !settings ? candidate_index_at_point(layout_, point) : std::nullopt;
+    if (candidate_pointer_.hovered() == index && hot_page_direction_ == page && settings_hot_ == settings) return;
     candidate_pointer_.move(index);
-    if (hwnd_) InvalidateRect(hwnd_, nullptr, FALSE);
+    hot_page_direction_ = page;
+    settings_hot_ = settings;
+    redraw();
+}
+
+bool CandidateWindow::settings_button_at_point(POINT point) const noexcept {
+    return layout_.visible && layout_.action_button_visible && PtInRect(&layout_.action_button_rect, point);
+}
+
+void CandidateWindow::draw_settings_button() {
+    auto* canvas = active_modern_renderer();
+    if (!canvas || !layout_.action_button_visible) return;
+    const RECT rect = layout_.action_button_rect;
+    // A hairline separates the button from the candidates.
+    const float separator_x = rect.left - layout_.item_gap_px * 1.5f;
+    const float inset = (rect.bottom - rect.top) * 0.2f;
+    canvas->line(separator_x, rect.top + inset, separator_x, rect.bottom - inset, palette_.border, 1.0f);
+    COLORREF fill = palette_.background;
+    if (settings_hot_ || settings_pressed_) {
+        fill = settings_pressed_ ? blend_color(palette_.hover_background, palette_.text, palette_.dark ? 10 : 6)
+                                 : palette_.hover_background;
+        canvas->rounded(rect, static_cast<float>(layout_.selected_corner_radius), fill, fill);
+    }
+    // Gear: eight rounded teeth around a ring with a hollow centre.
+    const COLORREF color = settings_hot_ ? palette_.text : palette_.muted_text;
+    const float cx = (rect.left + rect.right) / 2.0f;
+    const float cy = (rect.top + rect.bottom) / 2.0f;
+    const float unit = (rect.right - rect.left) / 24.0f;
+    const float stroke = (std::max)(1.2f, unit * 1.5f);
+    for (int tooth = 0; tooth < 8; ++tooth) {
+        const float angle = tooth * 3.14159265f / 4.0f;
+        const float c = std::cos(angle), s = std::sin(angle);
+        canvas->line(cx + c * unit * 5.0f, cy + s * unit * 5.0f, cx + c * unit * 7.4f, cy + s * unit * 7.4f, color, stroke * 1.35f);
+    }
+    canvas->ellipse(cx, cy, unit * 5.8f, unit * 5.8f, color);
+    canvas->ellipse(cx, cy, unit * 5.8f - stroke, unit * 5.8f - stroke, fill);
+    canvas->ellipse(cx, cy, unit * 2.3f, unit * 2.3f, color);
+    canvas->ellipse(cx, cy, unit * 2.3f - stroke, unit * 2.3f - stroke, fill);
 }
 
 void CandidateWindow::cancel_pointer_interaction() noexcept {
     candidate_pointer_.cancel();
-    settings_button_hot_ = false;
-    settings_button_pressed_ = false;
+    hot_page_direction_ = 0;
     pressed_page_direction_ = 0;
+    settings_hot_ = false;
+    settings_pressed_ = false;
     if (tracking_mouse_leave_ && hwnd_) {
         TRACKMOUSEEVENT event{};
         event.cbSize = sizeof(event);
@@ -810,261 +852,223 @@ void CandidateWindow::track_mouse_leave() {
     }
 }
 
-void CandidateWindow::open_settings_window() {
-    HWND existing = FindWindowW(kSettingsWindowClassName, nullptr);
-    if (existing) {
-        ShowWindow(existing, SW_SHOWNORMAL);
-        SetForegroundWindow(existing);
-        return;
-    }
-
-    const std::wstring executable_path = settings_executable_path_from_module();
-    if (executable_path.empty() || GetFileAttributesW(executable_path.c_str()) == INVALID_FILE_ATTRIBUTES) {
-        log_status(L"candidate-ui", L"settings_open=false reason=settings_exe_not_found");
-        return;
-    }
-
-    std::wstring command_line = L"\"" + executable_path + L"\"";
-    const std::wstring working_directory = parent_directory_of(executable_path);
-    STARTUPINFOW startup{};
-    startup.cb = sizeof(startup);
-    PROCESS_INFORMATION process{};
-    const BOOL created = CreateProcessW(executable_path.c_str(),
-                                        command_line.data(),
-                                        nullptr,
-                                        nullptr,
-                                        FALSE,
-                                        0,
-                                        nullptr,
-                                        working_directory.empty() ? nullptr : working_directory.c_str(),
-                                        &startup,
-                                        &process);
-    if (!created) {
-        std::wstringstream stream;
-        stream << L"settings_open=false create_process_last_error=" << GetLastError();
-        log_status(L"candidate-ui", stream.str());
-        return;
-    }
-    CloseHandle(process.hThread);
-    CloseHandle(process.hProcess);
-}
-
 int CandidateWindow::page_direction_at_point(POINT point) const noexcept {
-    if (!layout_.visible) return 0;
+    if (!layout_.visible || !layout_.paging_visible) return 0;
     if (PtInRect(&layout_.previous_page_rect, point)) return -1;
     if (PtInRect(&layout_.next_page_rect, point)) return 1;
     return 0;
 }
 
-void CandidateWindow::draw_page_controls(HDC hdc) {
-    const std::wstring page = std::to_wstring(layout_.current_page + 1) + L"/" + std::to_wstring(layout_.page_indices.size());
-    auto draw = [&](const std::wstring& text, RECT rect, bool enabled) {
-        const COLORREF color = enabled ? palette_.muted_text : blend_color(palette_.background, palette_.muted_text, 40);
-        const UINT flags = DT_SINGLELINE | DT_VCENTER | DT_CENTER | DT_NOPREFIX;
-        if (auto* canvas = active_modern_renderer()) {
-            canvas->text(text, rect, color, static_cast<float>(layout_.hint_font_px), FW_NORMAL, flags);
-        } else {
-            if (hint_font_) SelectObject(hdc, hint_font_);
-            SetTextColor(hdc, color);
-            DrawTextW(hdc, text.c_str(), static_cast<int>(text.size()), &rect, flags);
+std::wstring CandidateWindow::fitted_composition_text(int available_px) {
+    // Keep the end of long pinyin visible: it is where typing happens.
+    const float size = static_cast<float>(layout_.composition_font_px);
+    std::wstring text = composition_text_;
+    if (available_px <= 0 || renderer_.measure_text(text, size) <= available_px) return text;
+    size_t drop = 1;
+    while (drop < composition_text_.size()) {
+        text = kEllipsis + composition_text_.substr(drop);
+        if (renderer_.measure_text(text, size) <= available_px) break;
+        drop += std::max<size_t>(1, (composition_text_.size() - drop) / 8);
+    }
+    return text;
+}
+
+void CandidateWindow::draw_page_button(int direction) {
+    auto* canvas = active_modern_renderer();
+    if (!canvas || !layout_.paging_visible) return;
+    const RECT rect = direction < 0 ? layout_.previous_page_rect : layout_.next_page_rect;
+    const bool enabled = direction < 0 ? layout_.has_previous_page : layout_.has_next_page;
+    if (enabled && (hot_page_direction_ == direction || pressed_page_direction_ == direction)) {
+        const COLORREF fill = pressed_page_direction_ == direction
+            ? blend_color(palette_.hover_background, palette_.text, palette_.dark ? 10 : 6)
+            : palette_.hover_background;
+        canvas->rounded(rect, static_cast<float>(layout_.selected_corner_radius), fill, fill);
+    }
+    const COLORREF color = enabled ? palette_.muted_text : blend_color(palette_.background, palette_.muted_text, 35);
+    const float cx = (rect.left + rect.right) / 2.0f;
+    const float cy = (rect.top + rect.bottom) / 2.0f;
+    const float arm = static_cast<float>(std::max(3, scale_dip(4, layout_.dpi)));
+    const float stroke = std::max(1.25f, static_cast<float>(layout_.dpi) / 96.0f * 1.6f);
+    const float tip = cx + (direction < 0 ? -arm / 2 : arm / 2);
+    const float back = cx + (direction < 0 ? arm / 2 : -arm / 2);
+    canvas->line(back, cy - arm, tip, cy, color, stroke);
+    canvas->line(tip, cy, back, cy + arm, color, stroke);
+}
+
+void CandidateWindow::draw_content() {
+    auto* canvas = active_modern_renderer();
+    if (!canvas) return;
+    const float radius = static_cast<float>(layout_.corner_radius);
+    canvas->rounded(layout_.panel_rect, radius, palette_.background, palette_.border);
+    const RECT& label = layout_.composition_rect;
+    canvas->text(fitted_composition_text(label.right - label.left), label, palette_.composition_text,
+                 static_cast<float>(layout_.composition_font_px), FW_NORMAL,
+                 DT_SINGLELINE | DT_VCENTER | DT_NOPREFIX);
+    const float candidate_px = static_cast<float>(layout_.candidate_font_px);
+    for (const auto& item : layout_.items) {
+        // Inset the highlight vertically so it reads as a pill inside the row.
+        RECT pill = item.bounds;
+        const int inset = std::max(1, scale_dip(2, layout_.dpi));
+        pill.top += inset;
+        pill.bottom -= inset;
+        if (item.selected) {
+            canvas->rounded(pill, static_cast<float>(layout_.selected_corner_radius),
+                            palette_.selected_background, palette_.selected_background);
+        } else if (candidate_pointer_.hovered() == item.candidate_index) {
+            const COLORREF hover = candidate_pointer_.pressed() == item.candidate_index
+                ? blend_color(palette_.hover_background, palette_.selected_background, 14)
+                : palette_.hover_background;
+            canvas->rounded(pill, static_cast<float>(layout_.selected_corner_radius), hover, hover);
         }
-    };
-    draw(L"‹", layout_.previous_page_rect, layout_.has_previous_page);
-    draw(page, layout_.page_indicator_rect, true);
-    draw(L"›", layout_.next_page_rect, layout_.has_next_page);
+        canvas->text(std::to_wstring(item.page_number), item.number_bounds,
+                     item.selected ? palette_.selected_number_text : palette_.number_text,
+                     candidate_px * 0.78f, FW_NORMAL, DT_SINGLELINE | DT_VCENTER | DT_NOPREFIX);
+        canvas->text(item.display_text, item.text_bounds,
+                     item.selected ? palette_.selected_text : palette_.text,
+                     candidate_px, FW_NORMAL, candidate_text_draw_flags(item.truncated));
+    }
+    draw_page_button(-1);
+    draw_page_button(1);
+    draw_settings_button();
 }
 
-void CandidateWindow::draw_settings_button(HDC hdc) {
-    if (!layout_.action_button_visible) {
-        return;
+void CandidateWindow::composite_shadow(std::uint8_t* pixels, int width, int height) const {
+    if (palette_.shadow_alpha <= 0 || layout_.shadow_margin_px <= 0) return;
+    // Blurred panel silhouette, slightly offset downward, placed beneath the
+    // already drawn premultiplied panel ("destination over").
+    const int offset = std::max(1, scale_dip(2, layout_.dpi));
+    RECT casting = layout_.panel_rect;
+    OffsetRect(&casting, 0, offset);
+    std::vector<float> mask(static_cast<size_t>(width) * height);
+    const float radius = static_cast<float>(layout_.corner_radius);
+    for (int y = 0; y < height; ++y)
+        for (int x = 0; x < width; ++x)
+            mask[static_cast<size_t>(y) * width + x] = rounded_rect_coverage(x + 0.5f, y + 0.5f, casting, radius);
+    box_blur(mask, width, height, std::max(1, layout_.shadow_margin_px / 3));
+    const float peak = static_cast<float>(palette_.shadow_alpha);
+    for (size_t index = 0; index < mask.size(); ++index) {
+        std::uint8_t* pixel = pixels + index * 4;
+        const float shadow = mask[index] * peak;
+        const float remaining = 1.0f - pixel[3] / 255.0f;
+        // Black shadow: premultiplied color stays, only alpha accumulates.
+        pixel[3] = static_cast<std::uint8_t>(std::clamp(pixel[3] + shadow * remaining + 0.5f, 0.0f, 255.0f));
     }
-
-    const RECT rect = layout_.action_button_rect;
-    const int icon_extent = (std::min)(rect.right - rect.left, rect.bottom - rect.top);
-    COLORREF fill = blend_color(palette_.background, palette_.border, 30);
-    if (settings_button_hot_) {
-        fill = blend_color(fill, palette_.selected_background, palette_.dark ? 28 : 16);
-    }
-    if (settings_button_pressed_) {
-        fill = blend_color(fill, RGB(0, 0, 0), palette_.dark ? 18 : 8);
-    }
-    const COLORREF border_color = settings_button_hot_ ? palette_.selected_border : palette_.border;
-    if (auto* canvas = active_modern_renderer()) {
-        canvas->rounded(rect, static_cast<float>(scale_dip(7, layout_.dpi)), fill, border_color);
-        RECT icon = rect;
-        const int inset = (std::min)(scale_dip(6, layout_.dpi), icon_extent / 4);
-        InflateRect(&icon, -inset, -inset);
-        canvas->icon(8, icon, settings_button_hot_ ? palette_.number_text : palette_.muted_text,
-                       scale_dip(1, layout_.dpi) * 1.5f);
-        return;
-    }
-    HBRUSH brush = CreateSolidBrush(fill);
-    HPEN pen = CreatePen(PS_SOLID, std::max(1, scale_dip(1, layout_.dpi)), border_color);
-    fill_round_rect(hdc, rect, scale_dip(8, layout_.dpi) * 2, brush, pen);
-    DeleteObject(pen);
-    DeleteObject(brush);
-
-    // Draw the settings affordance with GDI, so it stays crisp at every DPI
-    // without a symbol-font dependency or a bitmap resource.
-    const int center_x = (rect.left + rect.right) / 2;
-    const int center_y = (rect.top + rect.bottom) / 2;
-    HPEN icon_pen = CreatePen(PS_SOLID, std::max(1, scale_dip(2, layout_.dpi)),
-                              settings_button_hot_ ? palette_.number_text : palette_.muted_text);
-    HGDIOBJ old_pen = SelectObject(hdc, icon_pen);
-    HGDIOBJ old_brush = SelectObject(hdc, GetStockObject(NULL_BRUSH));
-    const int radius = (std::min)(scale_dip(5, layout_.dpi), icon_extent / 6);
-    Ellipse(hdc, center_x - radius, center_y - radius, center_x + radius, center_y + radius);
-    const int inner = (std::min)(scale_dip(2, layout_.dpi), icon_extent / 12);
-    Ellipse(hdc, center_x - inner, center_y - inner, center_x + inner, center_y + inner);
-    const int outer = (std::min)(scale_dip(8, layout_.dpi), icon_extent / 3);
-    const POINT spokes[][2] = {
-        {{center_x - outer, center_y}, {center_x - radius, center_y}},
-        {{center_x + radius, center_y}, {center_x + outer, center_y}},
-        {{center_x, center_y - outer}, {center_x, center_y - radius}},
-        {{center_x, center_y + radius}, {center_x, center_y + outer}}
-    };
-    for (const auto& spoke : spokes) {
-        MoveToEx(hdc, spoke[0].x, spoke[0].y, nullptr);
-        LineTo(hdc, spoke[1].x, spoke[1].y);
-    }
-    SelectObject(hdc, old_brush);
-    SelectObject(hdc, old_pen);
-    DeleteObject(icon_pen);
 }
 
-void CandidateWindow::paint() {
-    PAINTSTRUCT ps{};
-    HDC hdc = BeginPaint(hwnd_, &ps);
-    render(hdc);
-    EndPaint(hwnd_, &ps);
+void CandidateWindow::render_layered(HDC dc, std::uint8_t* pixels, int width, int height) {
+    std::memset(pixels, 0, static_cast<size_t>(width) * height * 4);
+    const RECT bounds{0, 0, width, height};
+    {
+        ModernRenderScope modern(renderer_, dc, bounds, true);
+        if (modern.active()) {
+            draw_content();
+            modern.finish();
+            GdiFlush();
+            composite_shadow(pixels, width, height);
+            return;
+        }
+    }
+    // GDI fallback: an opaque, square-cornered panel without shadow.
+    HBRUSH background = CreateSolidBrush(palette_.background);
+    FillRect(dc, &layout_.panel_rect, background);
+    DeleteObject(background);
+    HBRUSH border = CreateSolidBrush(palette_.border);
+    FrameRect(dc, &layout_.panel_rect, border);
+    DeleteObject(border);
+    SetBkMode(dc, TRANSPARENT);
+    if (composition_font_) SelectObject(dc, composition_font_);
+    SetTextColor(dc, palette_.composition_text);
+    RECT label = layout_.composition_rect;
+    DrawTextW(dc, composition_text_.c_str(), static_cast<int>(composition_text_.size()), &label,
+              DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS | DT_NOPREFIX);
+    if (candidate_font_) SelectObject(dc, candidate_font_);
+    for (const auto& item : layout_.items) {
+        if (item.selected) {
+            HBRUSH selected = CreateSolidBrush(palette_.selected_background);
+            FillRect(dc, &item.bounds, selected);
+            DeleteObject(selected);
+        }
+        const std::wstring number = std::to_wstring(item.page_number);
+        RECT number_rect = item.number_bounds;
+        SetTextColor(dc, item.selected ? palette_.selected_number_text : palette_.number_text);
+        DrawTextW(dc, number.c_str(), static_cast<int>(number.size()), &number_rect, DT_SINGLELINE | DT_VCENTER | DT_NOPREFIX);
+        RECT text_rect = item.text_bounds;
+        SetTextColor(dc, item.selected ? palette_.selected_text : palette_.text);
+        DrawTextW(dc, item.display_text.c_str(), static_cast<int>(item.display_text.size()), &text_rect,
+                  candidate_text_draw_flags(item.truncated));
+    }
+    GdiFlush();
+    for (int y = layout_.panel_rect.top; y < layout_.panel_rect.bottom; ++y)
+        for (int x = layout_.panel_rect.left; x < layout_.panel_rect.right; ++x)
+            pixels[(static_cast<size_t>(y) * width + x) * 4 + 3] = 255;
+}
+
+bool CandidateWindow::present() {
+    if (!hwnd_ || !layout_.visible || layout_.width <= 0 || layout_.height <= 0) return false;
+    const int width = layout_.width;
+    const int height = layout_.height;
+    BITMAPINFO info{};
+    info.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+    info.bmiHeader.biWidth = width;
+    info.bmiHeader.biHeight = -height;
+    info.bmiHeader.biPlanes = 1;
+    info.bmiHeader.biBitCount = 32;
+    info.bmiHeader.biCompression = BI_RGB;
+    HDC screen = GetDC(nullptr);
+    HDC dc = screen ? CreateCompatibleDC(screen) : nullptr;
+    void* bits = nullptr;
+    HBITMAP dib = dc ? CreateDIBSection(screen, &info, DIB_RGB_COLORS, &bits, nullptr, 0) : nullptr;
+    bool presented = false;
+    if (dib && bits) {
+        const HGDIOBJ previous = SelectObject(dc, dib);
+        render_layered(dc, static_cast<std::uint8_t*>(bits), width, height);
+        POINT source{0, 0};
+        POINT destination{layout_.window_rect.left, layout_.window_rect.top};
+        SIZE size{width, height};
+        BLENDFUNCTION blend{AC_SRC_OVER, 0, 255, AC_SRC_ALPHA};
+        presented = UpdateLayeredWindow(hwnd_, screen, &destination, &size, dc, &source, 0, &blend, ULW_ALPHA) != FALSE;
+        SelectObject(dc, previous);
+    }
+    if (dib) DeleteObject(dib);
+    if (dc) DeleteDC(dc);
+    if (screen) ReleaseDC(nullptr, screen);
+    if (presented) {
+        paint_seen_ = true;
+        if (IsWindowVisible(hwnd_)) {
+            RECT rect{};
+            if (GetWindowRect(hwnd_, &rect)) ime_win_event_state_.notify_rect_changed(hwnd_, rect);
+        }
+    }
+    return presented;
+}
+
+void CandidateWindow::redraw() {
+    if (hwnd_ && has_cached_show_state_ && IsWindowVisible(hwnd_)) present();
 }
 
 void CandidateWindow::render(HDC hdc) {
-    if (!hdc || !hwnd_) return;
-    RECT rect{};
-    GetClientRect(hwnd_, &rect);
-    if (rect.right <= rect.left || rect.bottom <= rect.top) return;
-
-    HDC memory_dc = CreateCompatibleDC(hdc);
-    HBITMAP bitmap = memory_dc ? CreateCompatibleBitmap(hdc, rect.right - rect.left, rect.bottom - rect.top) : nullptr;
-    if (!bitmap) {
-        if (memory_dc) DeleteDC(memory_dc);
-        return;
+    // WM_PRINTCLIENT and offline capture: compose the layered image over the
+    // destination with its alpha.
+    if (!hdc || !layout_.visible || layout_.width <= 0 || layout_.height <= 0) return;
+    BITMAPINFO info{};
+    info.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+    info.bmiHeader.biWidth = layout_.width;
+    info.bmiHeader.biHeight = -layout_.height;
+    info.bmiHeader.biPlanes = 1;
+    info.bmiHeader.biBitCount = 32;
+    info.bmiHeader.biCompression = BI_RGB;
+    HDC dc = CreateCompatibleDC(hdc);
+    void* bits = nullptr;
+    HBITMAP dib = dc ? CreateDIBSection(hdc, &info, DIB_RGB_COLORS, &bits, nullptr, 0) : nullptr;
+    if (dib && bits) {
+        const HGDIOBJ previous = SelectObject(dc, dib);
+        render_layered(dc, static_cast<std::uint8_t*>(bits), layout_.width, layout_.height);
+        BLENDFUNCTION blend{AC_SRC_OVER, 0, 255, AC_SRC_ALPHA};
+        GdiAlphaBlend(hdc, 0, 0, layout_.width, layout_.height, dc, 0, 0, layout_.width, layout_.height, blend);
+        SelectObject(dc, previous);
     }
-    HGDIOBJ old_bitmap = SelectObject(memory_dc, bitmap);
-    SetBkMode(memory_dc, TRANSPARENT);
-
-    ModernRenderScope modern(renderer_, memory_dc, rect);
-    if (modern.active()) {
-        renderer_.fill(rect, palette_.background);
-        renderer_.rounded(rect, static_cast<float>(layout_.corner_radius), palette_.background, palette_.border);
-        renderer_.text(composition_text_, layout_.composition_rect, palette_.muted_text,
-                         static_cast<float>(layout_.composition_font_px), FW_NORMAL, candidate_text_draw_flags(true));
-        for (const auto& item : layout_.items) {
-            if (item.selected) renderer_.rounded(item.bounds, static_cast<float>(layout_.selected_corner_radius),
-                                                 palette_.selected_background, palette_.selected_border);
-            else if (candidate_pointer_.hovered() == item.candidate_index) {
-                const int tint = candidate_pointer_.pressed() == item.candidate_index ? 22 : 12;
-                const COLORREF hover = blend_color(palette_.background, palette_.selected_background, tint);
-                renderer_.rounded(item.bounds, static_cast<float>(layout_.selected_corner_radius), hover, hover);
-            }
-            renderer_.text(std::to_wstring(item.page_number), item.number_bounds,
-                             item.selected ? palette_.selected_text : palette_.number_text,
-                             static_cast<float>(layout_.candidate_font_px));
-            renderer_.text(item.display_text, item.text_bounds,
-                             item.selected ? palette_.selected_text : palette_.text,
-                             static_cast<float>(layout_.candidate_font_px), FW_MEDIUM, candidate_text_draw_flags(item.truncated));
-        }
-        draw_page_controls(memory_dc);
-        draw_settings_button(memory_dc);
-        if (layout_.show_hint) {
-            const float y = static_cast<float>(layout_.hint_rect.top - scale_dip(4, layout_.dpi));
-            renderer_.line(static_cast<float>(layout_.hint_rect.left), y,
-                             static_cast<float>(layout_.hint_rect.right), y, palette_.border, 1);
-            renderer_.text(prediction_mode_ ? kPredictionHintText : kHintText, layout_.hint_rect, palette_.hint_text,
-                             static_cast<float>(layout_.hint_font_px));
-        }
-        modern.finish();
-        BitBlt(hdc, 0, 0, rect.right, rect.bottom, memory_dc, 0, 0, SRCCOPY);
-        SelectObject(memory_dc, old_bitmap);
-        DeleteObject(bitmap);
-        DeleteDC(memory_dc);
-        return;
-    }
-
-    HBRUSH background = CreateSolidBrush(palette_.background);
-    HPEN border = CreatePen(PS_SOLID, std::max(1, scale_dip(1, layout_.dpi)), palette_.border);
-    fill_round_rect(memory_dc, rect, layout_.corner_radius * 2, background, border);
-
-    if (composition_font_) {
-        SelectObject(memory_dc, composition_font_);
-    }
-    SetTextColor(memory_dc, palette_.muted_text);
-    if (!composition_text_.empty() && layout_.composition_rect.bottom > layout_.composition_rect.top) {
-        DrawTextW(memory_dc, composition_text_.c_str(), static_cast<int>(composition_text_.size()),
-                  &layout_.composition_rect, DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS | DT_NOPREFIX);
-    }
-
-    if (candidate_font_) {
-        SelectObject(memory_dc, candidate_font_);
-    }
-    for (const auto& item : layout_.items) {
-        if (item.selected) {
-            HBRUSH selected_brush = CreateSolidBrush(palette_.selected_background);
-            HPEN selected_pen = CreatePen(PS_SOLID, std::max(1, scale_dip(1, layout_.dpi)), palette_.selected_border);
-            fill_round_rect(memory_dc, item.bounds, layout_.selected_corner_radius * 2, selected_brush, selected_pen);
-            DeleteObject(selected_pen);
-            DeleteObject(selected_brush);
-        } else if (candidate_pointer_.hovered() == item.candidate_index) {
-            const int tint = candidate_pointer_.pressed() == item.candidate_index ? 22 : 12;
-            const COLORREF hover = blend_color(palette_.background, palette_.selected_background, tint);
-            HBRUSH hover_brush = CreateSolidBrush(hover);
-            HPEN hover_pen = CreatePen(PS_SOLID, 1, hover);
-            fill_round_rect(memory_dc, item.bounds, layout_.selected_corner_radius * 2, hover_brush, hover_pen);
-            DeleteObject(hover_pen);
-            DeleteObject(hover_brush);
-        }
-
-        const std::wstring number = std::to_wstring(item.page_number);
-        RECT number_rect = item.number_bounds;
-        SetTextColor(memory_dc, item.selected ? palette_.selected_text : palette_.number_text);
-        DrawTextW(memory_dc, number.c_str(), static_cast<int>(number.size()), &number_rect,
-                  DT_SINGLELINE | DT_VCENTER | DT_NOPREFIX);
-
-        RECT text_rect = item.text_bounds;
-        SetTextColor(memory_dc, item.selected ? palette_.selected_text : palette_.text);
-        DrawTextW(memory_dc, item.display_text.c_str(), static_cast<int>(item.display_text.size()), &text_rect,
-                  candidate_text_draw_flags(item.truncated));
-    }
-
-    draw_page_controls(memory_dc);
-    draw_settings_button(memory_dc);
-
-    if (layout_.show_hint) {
-        HPEN separator = CreatePen(PS_SOLID, 1, palette_.border);
-        HGDIOBJ old_pen = SelectObject(memory_dc, separator);
-        const int separator_y = layout_.hint_rect.top - scale_dip(4, layout_.dpi);
-        MoveToEx(memory_dc, layout_.hint_rect.left, separator_y, nullptr);
-        LineTo(memory_dc, layout_.hint_rect.right, separator_y);
-        SelectObject(memory_dc, old_pen);
-        DeleteObject(separator);
-        if (hint_font_) {
-            SelectObject(memory_dc, hint_font_);
-        }
-        RECT hint_rect = layout_.hint_rect;
-        SetTextColor(memory_dc, palette_.hint_text);
-        const auto hint = prediction_mode_ ? kPredictionHintText : kHintText;
-        DrawTextW(memory_dc, hint, static_cast<int>(wcslen(hint)), &hint_rect,
-                  DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS | DT_NOPREFIX);
-    }
-
-    BitBlt(hdc, 0, 0, rect.right - rect.left, rect.bottom - rect.top, memory_dc, 0, 0, SRCCOPY);
-    SelectObject(memory_dc, old_bitmap);
-    DeleteObject(border);
-    DeleteObject(background);
-    DeleteObject(bitmap);
-    DeleteDC(memory_dc);
-
+    if (dib) DeleteObject(dib);
+    if (dc) DeleteDC(dc);
 }
 
 void CandidateWindow::release_fonts() {
@@ -1075,10 +1079,6 @@ void CandidateWindow::release_fonts() {
     if (candidate_font_) {
         DeleteObject(candidate_font_);
         candidate_font_ = nullptr;
-    }
-    if (hint_font_) {
-        DeleteObject(hint_font_);
-        hint_font_ = nullptr;
     }
 }
 

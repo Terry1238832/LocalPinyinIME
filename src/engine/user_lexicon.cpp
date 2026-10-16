@@ -340,8 +340,21 @@ UserLexiconSaveResult save_user_lexicon_file_atomic(const std::wstring& path,
         return result;
     }
 
-    if (!MoveFileExW(temp_path.c_str(), path.c_str(), MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH)) {
-        result.win32_error = GetLastError();
+    // Antivirus and the search indexer briefly open freshly written files;
+    // replacing the target then fails with a sharing error, so retry shortly.
+    DWORD move_error = ERROR_SUCCESS;
+    for (int attempt = 0; attempt < 10; ++attempt) {
+        if (MoveFileExW(temp_path.c_str(), path.c_str(), MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH)) {
+            move_error = ERROR_SUCCESS;
+            break;
+        }
+        move_error = GetLastError();
+        if (move_error != ERROR_ACCESS_DENIED && move_error != ERROR_SHARING_VIOLATION &&
+            move_error != ERROR_LOCK_VIOLATION) break;
+        Sleep(15);
+    }
+    if (move_error != ERROR_SUCCESS) {
+        result.win32_error = move_error;
         DeleteFileW(temp_path.c_str());
         return result;
     }

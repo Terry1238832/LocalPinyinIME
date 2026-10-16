@@ -137,6 +137,12 @@ struct CandidateThemePalette {
     COLORREF selected_background = RGB(220, 236, 255);
     COLORREF selected_border = RGB(120, 170, 230);
     COLORREF selected_text = RGB(255, 255, 255);
+    // Pinyin row, pointer feedback, the selected item's number and the
+    // drop shadow's peak opacity (0-255).
+    COLORREF composition_text = RGB(80, 86, 96);
+    COLORREF hover_background = RGB(238, 243, 252);
+    COLORREF selected_number_text = RGB(214, 230, 255);
+    int shadow_alpha = 60;
 };
 
 struct CandidateLayoutInput {
@@ -152,6 +158,7 @@ struct CandidateLayoutInput {
     RECT work_area{};
     int dpi = 96;
     CandidateWindowOptions options{};
+    bool settings_button = true;
 };
 
 struct CandidateItemLayout {
@@ -170,10 +177,18 @@ struct CandidateItemLayout {
     std::wstring display_text;
 };
 
+// The popup is a rounded panel with a soft shadow. The window extends the
+// panel by `shadow_margin_px` on every side; every RECT below except
+// `window_rect` and `panel_screen_rect` is in window client coordinates.
+// The top row shows the segmented pinyin, the bottom row the candidates.
 struct CandidateLayoutResult {
     bool visible = false;
     CandidatePlacement placement = CandidatePlacement::Hidden;
     RECT window_rect{};
+    RECT panel_rect{};
+    RECT panel_screen_rect{};
+    int shadow_margin_px = 0;
+    bool paging_visible = false;
     RECT composition_rect{};
     RECT candidate_area_rect{};
     RECT action_button_rect{};

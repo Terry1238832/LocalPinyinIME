@@ -77,6 +77,11 @@ int UserLearning::frequency(const std::wstring& pinyin, const std::wstring& word
     return it == records_.end() ? 0 : it->second.selection_count;
 }
 
+long long UserLearning::last_selected(const std::wstring& pinyin, const std::wstring& word) const {
+    const auto it = records_.find(key_for(pinyin, word));
+    return it == records_.end() ? 0 : it->second.last_selected_time;
+}
+
 std::vector<std::pair<std::wstring, int>> UserLearning::selected_texts() const {
     std::vector<std::pair<std::wstring, int>> result;
     result.reserve(records_.size());
@@ -193,7 +198,15 @@ bool UserLearning::flush() const {
             return false;
         }
     }
-    if (MoveFileExW(temporary.c_str(), storage_path_.c_str(), MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH)) return true;
+    // Antivirus and the search indexer briefly open freshly written files;
+    // replacing the target then fails with a sharing error, so retry shortly.
+    for (int attempt = 0; attempt < 10; ++attempt) {
+        if (MoveFileExW(temporary.c_str(), storage_path_.c_str(), MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH)) return true;
+        const DWORD move_error = GetLastError();
+        if (move_error != ERROR_ACCESS_DENIED && move_error != ERROR_SHARING_VIOLATION &&
+            move_error != ERROR_LOCK_VIOLATION) break;
+        Sleep(15);
+    }
     DeleteFileW(temporary.c_str());
     return false;
 }

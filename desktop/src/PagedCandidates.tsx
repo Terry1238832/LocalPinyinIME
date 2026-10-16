@@ -25,19 +25,22 @@ export function PagedCandidates({ words, label, fontSize, pending = false, empty
   useLayoutEffect(() => {
     const update = () => {
       if (!container.current || !measurements.current || !controls.current || !container.current.clientWidth) return;
-      const available = Math.max(1, container.current.clientWidth - controls.current.getBoundingClientRect().width - 8);
+      // Spacing comes from the stylesheet, so paging matches the rendered row.
+      const gap = parseFloat(getComputedStyle(measurements.current).columnGap) || 0;
+      const rowGap = parseFloat(getComputedStyle(container.current).columnGap) || 0;
+      const available = Math.max(1, container.current.clientWidth - controls.current.getBoundingClientRect().width - rowGap);
       const widths = Array.from(measurements.current.children, child => child.getBoundingClientRect().width);
       const next: Page[] = [];
       let start = 0;
       let used = 0;
       for (let index = 0; index < widths.length; ++index) {
         const width = Math.min(available, widths[index]);
-        if (index > start && used + 7 + width > available) {
+        if (index > start && used + gap + width > available) {
           next.push({ start, end: index });
           start = index;
           used = 0;
         }
-        used += (index > start ? 7 : 0) + width;
+        used += (index > start ? gap : 0) + width;
       }
       if (widths.length) next.push({ start, end: widths.length });
       if (!next.length) next.push({ start: 0, end: 0 });

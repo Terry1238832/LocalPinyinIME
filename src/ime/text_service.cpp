@@ -18,6 +18,8 @@ namespace localpinyin {
 namespace {
 
 thread_local TextService* g_thread_keyboard_hook_service = nullptr;
+// Remembered commits are a ranking hint only while the user keeps typing.
+constexpr ULONGLONG kRecentCommitLifetimeMs = 120000;
 
 const wchar_t* bool_text(bool value) noexcept {
     return value ? L"true" : L"false";
@@ -25,6 +27,11 @@ const wchar_t* bool_text(bool value) noexcept {
 
 bool usable_anchor_rect(const RECT& rect) noexcept {
     return rect.right >= rect.left && rect.bottom > rect.top && !(rect.left == rect.right && rect.top == rect.bottom);
+}
+
+bool caps_lock_on(TextService::KeyStateReader reader, void* context) noexcept {
+    // Test hosts report CapsLock through the same reader as held keys.
+    return reader ? reader(VK_CAPITAL, context) : (GetKeyState(VK_CAPITAL) & 1) != 0;
 }
 
 bool win32_key_is_down(int virtual_key) noexcept {
@@ -301,6 +308,7 @@ TextService::TextService() {
         if (prediction_active_) dismiss_prediction(L"host_abort");
         else if (composition_context_) cancel_composition(composition_context_);
     });
+    candidate_window_.set_theme_changed_callback([this]() { language_bar_.refresh_icon(); });
     candidate_window_.set_options_changed_callback([this]() {
         if (prediction_active_ && !settings_store_.load_input_mode_options().prediction_enabled)
             dismiss_prediction(L"prediction_disabled");
@@ -320,6 +328,7 @@ TextService::~TextService() {
     candidate_ui_element_session_.set_selection_changed_callback({});
     candidate_ui_element_session_.set_page_indices_changed_callback({});
     candidate_window_.set_options_changed_callback({});
+    candidate_window_.set_theme_changed_callback({});
     candidate_ui_element_session_.set_finalize_callback({});
     candidate_ui_element_session_.set_abort_callback({});
     unadvise_prediction_edits();
@@ -457,6 +466,7 @@ HRESULT TextService::ActivateEx(ITfThreadMgr* thread_mgr, TfClientId client_id, 
 }
 
 HRESULT TextService::Deactivate() {
+    forget_committed_text();
     ActivationFocusDiagnostics deactivation{};
     deactivation.deactivation_started = true;
     deactivation.text_service_activated = false;
@@ -808,6 +818,7 @@ bool TextService::handle_ctrl_space_keyup_fallback(ITfContext* context,
 
 HRESULT TextService::OnSetFocus(BOOL foreground) {
     if (!foreground && prediction_active_) dismiss_prediction(L"focus_lost");
+    forget_committed_text();
     ITfDocumentMgr* focus_document_mgr = nullptr;
     ITfContext* top_context = nullptr;
     HRESULT focus_hr = E_UNEXPECTED;
@@ -918,8 +929,11 @@ HRESULT TextService::OnTestKeyDown(ITfContext* context, WPARAM wparam, LPARAM, B
         *eaten = should_eat_backspace_for_composition(mode_, !composing_.empty(), false);
         return S_OK;
     }
-    if ((wparam >= L'A' && wparam <= L'Z') || (wparam == VK_OEM_7 && !composing_.empty()) ||
-        (wparam == VK_ESCAPE && !composing_.empty())) {
+    if (wparam >= L'A' && wparam <= L'Z') {
+        // With CapsLock or Shift, a letter outside a composition goes straight
+        // to the application, which types it in upper case.
+        *eaten = !composing_.empty() || !letter_is_literal();
+    } else if ((wparam == VK_OEM_7 && !composing_.empty()) || (wparam == VK_ESCAPE && !composing_.empty())) {
         *eaten = TRUE;
     } else if (wparam == VK_LEFT || wparam == VK_RIGHT) {
         *eaten = should_eat_candidate_navigation_key(
@@ -936,6 +950,12 @@ HRESULT TextService::OnKeyDown(ITfContext* context, WPARAM wparam, LPARAM, BOOL*
         return E_POINTER;
     }
     *eaten = FALSE;
+    const HRESULT hr = handle_key_down(context, wparam, eaten);
+    if (SUCCEEDED(hr) && !*eaten && composing_.empty()) note_unhandled_key(static_cast<unsigned long>(wparam));
+    return hr;
+}
+
+HRESULT TextService::handle_key_down(ITfContext* context, WPARAM wparam, BOOL* eaten) {
     const auto passthrough_key = prediction_passthrough_key_;
     prediction_passthrough_key_ = 0;
     if (passthrough_key == static_cast<unsigned long>(wparam) &&
@@ -1087,6 +1107,7 @@ HRESULT TextService::OnUninitDocumentMgr(ITfDocumentMgr*) {
     return S_OK;
 }
 HRESULT TextService::OnSetFocus(ITfDocumentMgr* focus, ITfDocumentMgr*) {
+    forget_committed_text();
     if (prediction_active_) {
         ITfDocumentMgr* prediction_document = nullptr;
         if (!composition_context_ || FAILED(composition_context_->GetDocumentMgr(&prediction_document)) ||
@@ -1253,18 +1274,29 @@ bool TextService::handle_chinese_key(ITfContext* context, WPARAM wparam, BOOL* e
     }
 
     if (wparam >= L'A' && wparam <= L'Z') {
+        const bool literal = letter_is_literal();
+        if (literal && composing_.empty()) return false;
         if (composing_.empty()) {
             engine_.refresh_user_lexicon_if_needed(false);
             set_composition_context(context);
             preceding_committed_text_.clear();
-            if (!secure_mode_ && composition_.read_preceding_text(context, client_id_, &preceding_committed_text_) != S_OK)
-                preceding_committed_text_.clear();
+            if (!secure_mode_) {
+                const HRESULT read = composition_.read_preceding_text(context, client_id_, &preceding_committed_text_);
+                if (read != S_OK) preceding_committed_text_.clear();
+                // S_FALSE marks a protected or read-only field: no fallback there.
+                if (FAILED(read) || (read == S_OK && preceding_committed_text_.empty()))
+                    preceding_committed_text_ = recent_committed_text(context);
+            }
         }
         if (FAILED(make_composition_room(context))) {
             *eaten = FALSE;
             return false;
         }
-        composing_.push_back(static_cast<wchar_t>(std::towlower(static_cast<wint_t>(wparam))));
+        // Inside a composition a literal letter keeps its case (Shift XOR
+        // CapsLock); the composition is then committed as typed.
+        const bool upper = literal && (modifiers.shift != caps_lock_on(key_state_reader_, key_state_reader_context_));
+        composing_.push_back(upper ? static_cast<wchar_t>(wparam)
+                                   : static_cast<wchar_t>(std::towlower(static_cast<wint_t>(wparam))));
         selected_index_ = 0;
         refresh_candidates();
         update_composition(context);
@@ -1370,7 +1402,21 @@ void TextService::refresh_candidates() {
     host_page_indices_ = false;
     selected_index_ = 0;
     engine_.refresh_user_lexicon_if_needed(!composing_.empty());
+    if (composition_has_literal_letters()) {
+        // Mixed Chinese/English input: offer the typed text as is.
+        candidates_ = {Candidate{composing_, 1, 0}};
+        return;
+    }
     candidates_ = engine_.lookup(composing_, preceding_committed_text_);
+}
+
+bool TextService::letter_is_literal() const noexcept {
+    const auto modifiers = current_modifier_key_state(key_state_reader_, key_state_reader_context_);
+    return modifiers.shift || caps_lock_on(key_state_reader_, key_state_reader_context_);
+}
+
+bool TextService::composition_has_literal_letters() const noexcept {
+    return std::any_of(composing_.begin(), composing_.end(), [](wchar_t ch) { return ch >= L'A' && ch <= L'Z'; });
 }
 
 size_t TextService::current_candidate_page() const noexcept {
@@ -1410,7 +1456,8 @@ void TextService::update_candidate_window(ITfContext* context) {
     if (prediction_active_ && !settings_store_.load_input_mode_options().prediction_enabled) {
         dismiss_prediction(L"prediction_disabled"); return;
     }
-    const std::wstring display_label = prediction_active_ ? L"联想 · Tab" : composing_;
+    const std::wstring display_label = prediction_active_ ? L"联想 · Tab" :
+        composition_has_literal_letters() ? composing_ : PinyinEngine::display_pinyin(composing_);
     const bool logical_show_requested =
         mode_ == InputMode::Chinese && !display_label.empty() && !candidates_.empty();
     if (logical_show_requested) {
@@ -1548,7 +1595,8 @@ void TextService::refresh_candidate_window_from_host() {
         !candidate_window_.is_visible() || !candidate_context_) return;
     RECT anchor{};
     if (!candidate_anchor_rect(candidate_context_, &anchor)) return;
-    const std::wstring label = prediction_active_ ? L"联想 · Tab" : composing_;
+    const std::wstring label = prediction_active_ ? L"联想 · Tab" :
+        composition_has_literal_letters() ? composing_ : PinyinEngine::display_pinyin(composing_);
     candidate_window_.show(label, candidates_, selected_index_, anchor,
         candidate_owner_info(candidate_context_), candidate_page_indices_);
 }
@@ -1622,7 +1670,10 @@ HRESULT TextService::commit_prediction(ITfContext* context) {
     // sent to the persistent learning store.
     dismiss_prediction(L"prediction_accepted");
     const HRESULT hr = composition_.insert_text(context, client_id_, extension);
-    if (SUCCEEDED(hr)) start_prediction(context);
+    if (SUCCEEDED(hr)) {
+        remember_committed_text(context, extension);
+        start_prediction(context);
+    }
     context->Release();
     return hr;
 }
@@ -1660,6 +1711,7 @@ HRESULT TextService::commit_selected(ITfContext* context) {
         return hr;
     }
     engine_.learn(learned_pinyin, committed);
+    remember_committed_text(context, committed);
     reset_transient_input_state(L"commit");
     if (!suffix.empty()) {
         set_composition_context(context);
@@ -1708,6 +1760,7 @@ HRESULT TextService::commit_punctuation(ITfContext* context, wchar_t punctuation
     if (!composing_.empty()) return E_UNEXPECTED;
     const HRESULT hr = composition_.insert_text(context, client_id_, std::wstring(1, punctuation));
     if (SUCCEEDED(hr)) {
+        remember_committed_text(context, std::wstring(1, punctuation));
         if (punctuation == L'“' || punctuation == L'”') opening_double_quote_ = !opening_double_quote_;
         if (punctuation == L'‘' || punctuation == L'’') opening_single_quote_ = !opening_single_quote_;
     }
@@ -1727,8 +1780,53 @@ HRESULT TextService::commit_raw_composition(ITfContext* context) {
         }
         return hr;
     }
+    remember_committed_text(context, committed);
     reset_transient_input_state(L"commit_raw");
     return S_OK;
+}
+
+void TextService::remember_committed_text(ITfContext* context, const std::wstring& text) {
+    if (secure_mode_ || !context || text.empty()) return;
+    const auto identity = reinterpret_cast<std::uintptr_t>(context);
+    if (identity != recent_committed_context_ || GetTickCount64() - recent_committed_tick_ > kRecentCommitLifetimeMs)
+        recent_committed_text_.clear();
+    recent_committed_context_ = identity;
+    recent_committed_tick_ = GetTickCount64();
+    recent_committed_text_ += text;
+    if (recent_committed_text_.size() > 32) recent_committed_text_.erase(0, recent_committed_text_.size() - 32);
+}
+
+void TextService::note_unhandled_key(unsigned long key) {
+    if (recent_committed_text_.empty()) return;
+    switch (key) {
+        case VK_SHIFT: case VK_LSHIFT: case VK_RSHIFT: case VK_CONTROL: case VK_LCONTROL: case VK_RCONTROL:
+        case VK_MENU: case VK_LMENU: case VK_RMENU: case VK_CAPITAL:
+            return;
+        case VK_BACK:
+            recent_committed_text_.pop_back();
+            return;
+        default:
+            break;
+    }
+    const auto modifiers = current_modifier_key_state(key_state_reader_, key_state_reader_context_);
+    const bool printable = key == VK_SPACE || key == VK_RETURN || (key >= L'0' && key <= L'9') ||
+                           (key >= L'A' && key <= L'Z') || (key >= VK_OEM_1 && key <= VK_OEM_8);
+    // Typed host text is unknown but is a clause boundary for ranking. Caret
+    // movement and editing shortcuts make the remembered text unreliable.
+    if (printable && !modifiers.ctrl && !modifiers.alt && !modifiers.win) recent_committed_text_ += L' ';
+    else forget_committed_text();
+}
+
+void TextService::forget_committed_text() noexcept {
+    recent_committed_text_.clear();
+    recent_committed_context_ = 0;
+    recent_committed_tick_ = 0;
+}
+
+std::wstring TextService::recent_committed_text(ITfContext* context) const {
+    if (!context || reinterpret_cast<std::uintptr_t>(context) != recent_committed_context_ ||
+        GetTickCount64() - recent_committed_tick_ > kRecentCommitLifetimeMs) return {};
+    return recent_committed_text_;
 }
 
 HRESULT TextService::cancel_composition(ITfContext* context) {

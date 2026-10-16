@@ -78,7 +78,18 @@ private:
     bool should_pass_through(WPARAM wparam) const;
     bool handle_ctrl_space_toggle(ITfContext* context, const wchar_t* reason);
     void publish_runtime_input_mode_status(const wchar_t* source, bool active);
+    HRESULT handle_key_down(ITfContext* context, WPARAM wparam, BOOL* eaten);
     bool handle_chinese_key(ITfContext* context, WPARAM wparam, BOOL* eaten);
+    // CapsLock on or Shift held: letters are typed as English letters.
+    [[nodiscard]] bool letter_is_literal() const noexcept;
+    [[nodiscard]] bool composition_has_literal_letters() const noexcept;
+    // Text this service committed into a context recently. It is the ranking
+    // context for hosts that cannot report the text before the caret; it lives
+    // only in memory and is dropped on focus changes and caret movement.
+    void remember_committed_text(ITfContext* context, const std::wstring& text);
+    void note_unhandled_key(unsigned long key);
+    void forget_committed_text() noexcept;
+    [[nodiscard]] std::wstring recent_committed_text(ITfContext* context) const;
     bool shift_toggle_enabled() const;
     HRESULT toggle_input_mode(ITfContext* context, const wchar_t* reason);
     HRESULT toggle_input_mode_from_language_bar(const wchar_t* reason);
@@ -138,6 +149,9 @@ private:
     void* key_state_reader_context_ = nullptr;
     std::wstring composing_;
     std::wstring preceding_committed_text_;
+    std::wstring recent_committed_text_;
+    std::uintptr_t recent_committed_context_ = 0;
+    ULONGLONG recent_committed_tick_ = 0;
     bool opening_double_quote_ = true;
     bool opening_single_quote_ = true;
     std::vector<Candidate> candidates_;

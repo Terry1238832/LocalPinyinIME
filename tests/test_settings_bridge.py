@@ -68,7 +68,7 @@ class SettingsBridgeContract(unittest.TestCase):
         self.assertIn(state["settings"]["theme"], {"system", "light", "dark"})
         self.assertIn(state["settings"]["textSize"], range(1, 8))
         self.assertIsInstance(state["settings"]["shiftToggleEnabled"], bool)
-        self.assertIs(state["settings"]["predictionEnabled"], True)
+        self.assertIs(state["settings"]["predictionEnabled"], False)
         self.assertGreater(state["dictionary"]["total"], 1000)
         self.assertTrue(all(state["dictionary"][key] > 0 for key in ("core", "local", "standard")))
         self.assertEqual(state["learning"], {"count": 0})
@@ -93,7 +93,7 @@ class SettingsBridgeContract(unittest.TestCase):
             "inputMode": {"shiftToggleEnabled": False},
         }), encoding="utf-8")
         for theme, size, shift in (("dark", "7", "true"), ("system", "1", "false"), ("light", "4", "true")):
-            expected = {"theme": theme, "textSize": int(size), "shiftToggleEnabled": shift == "true", "predictionEnabled": True}
+            expected = {"theme": theme, "textSize": int(size), "shiftToggleEnabled": shift == "true", "predictionEnabled": False}
             self.assertEqual(self.call("save-settings", theme, size, shift), {"settings": expected})
             self.assertEqual(self.call("state")["settings"], expected)
             self.assertFalse(json.loads(settings.read_text(encoding="utf-8"))["candidateWindow"]["showKeyHints"])
@@ -114,11 +114,16 @@ class SettingsBridgeContract(unittest.TestCase):
         self.call("lookup", "qu", "我\n想", success=False)
         self.call("save-settings", "light", "4", "false", "invalid", success=False)
         self.assertEqual(self.snapshot(), before)
-        settings = self.call("save-settings", "dark", "5", "true", "false")["settings"]
-        self.assertIs(settings["predictionEnabled"], False)
+        settings = self.call("save-settings", "dark", "5", "true", "true")["settings"]
+        self.assertIs(settings["predictionEnabled"], True)
         self.assertEqual(self.call("state")["settings"], settings)
         # Legacy callers that only change theme/font/Shift preserve the option.
-        self.assertIs(self.call("save-settings", "light", "4", "false")["settings"]["predictionEnabled"], False)
+        self.assertIs(self.call("save-settings", "light", "4", "false")["settings"]["predictionEnabled"], True)
+        # Settings saved by 0.7 (always predictionEnabled=true) do not opt in.
+        legacy = self.data / "settings.json"
+        legacy.write_text(json.dumps({"inputMode": {"predictionEnabled": True}}), encoding="utf-8")
+        self.assertIs(self.call("state")["settings"]["predictionEnabled"], False)
+        self.call("save-settings", "light", "4", "false", "false")
         stopped = self.snapshot()
         self.assertEqual(self.call("predict", "我想")["candidates"], predicted)
         self.call("lookup", "qu", "我想")
@@ -207,7 +212,7 @@ class SettingsBridgeContract(unittest.TestCase):
         self.assertFalse(learning.exists())
         self.assertEqual(self.call("state")["learning"], {"count": 0})
         self.assertEqual(self.call("user-list"), personal)
-        self.assertEqual(self.call("state")["settings"], {"theme": "dark", "textSize": 5, "shiftToggleEnabled": True, "predictionEnabled": True})
+        self.assertEqual(self.call("state")["settings"], {"theme": "dark", "textSize": 5, "shiftToggleEnabled": True, "predictionEnabled": False})
         self.assertEqual(self.call("clear-learning"), {"cleared": True})
 
     def test_valid_runtime_status_is_reported_and_not_rewritten(self) -> None:

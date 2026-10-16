@@ -356,9 +356,9 @@ int main() {
         }
         const auto result = layout_for(candidates, middle, work);
         REQUIRE_TRUE(result.visible);
-        REQUIRE_TRUE(is_inside(work, result.window_rect));
-        REQUIRE_TRUE(width(result.window_rect) <= width(work));
-        REQUIRE_TRUE(height(result.window_rect) <= height(work));
+        REQUIRE_TRUE(is_inside(work, result.panel_screen_rect));
+        REQUIRE_TRUE(width(result.panel_screen_rect) <= width(work));
+        REQUIRE_TRUE(height(result.panel_screen_rect) <= height(work));
         REQUIRE_TRUE(!result.items.empty());
         REQUIRE_TRUE(result.items.size() <= count);
     }
@@ -370,30 +370,47 @@ int main() {
     }, middle, work);
     REQUIRE_TRUE(three.visible);
     REQUIRE_EQ(three.items.size(), size_t{3});
-    REQUIRE_TRUE(is_inside(work, three.window_rect));
-    REQUIRE_TRUE(three.panel_padding_px == scale_dip(8, three.dpi));
-    REQUIRE_TRUE(three.corner_radius >= scale_dip(12, three.dpi));
-    REQUIRE_TRUE(three.selected_corner_radius >= scale_dip(7, three.dpi));
-    REQUIRE_EQ(three.composition_font_px, scale_dip(15, three.dpi));
+    REQUIRE_TRUE(is_inside(work, three.panel_screen_rect));
+    // A rounded panel inside a shadow margin; the window adds the margin.
+    REQUIRE_TRUE(three.shadow_margin_px == scale_dip(12, three.dpi));
+    REQUIRE_EQ(width(three.window_rect), width(three.panel_screen_rect) + three.shadow_margin_px * 2);
+    REQUIRE_EQ(height(three.window_rect), height(three.panel_screen_rect) + three.shadow_margin_px * 2);
+    REQUIRE_EQ(three.panel_rect.left, three.shadow_margin_px);
+    REQUIRE_EQ(three.panel_rect.top, three.shadow_margin_px);
+    REQUIRE_TRUE(three.panel_padding_px == scale_dip(10, three.dpi));
+    REQUIRE_TRUE(three.corner_radius == scale_dip(8, three.dpi));
+    REQUIRE_TRUE(three.selected_corner_radius == scale_dip(6, three.dpi));
+    REQUIRE_EQ(three.composition_font_px, scale_dip(13, three.dpi));
     REQUIRE_EQ(three.candidate_font_px, scale_dip(18, three.dpi));
-    REQUIRE_EQ(three.hint_font_px, scale_dip(13, three.dpi));
     REQUIRE_TRUE(three.candidate_font_px > three.composition_font_px);
-    REQUIRE_TRUE(three.composition_font_px > three.hint_font_px);
-    REQUIRE_TRUE(three.reserves_action_icon_space);
-    REQUIRE_TRUE(three.action_button_visible);
-    REQUIRE_TRUE(three.action_button_size_px >= scale_dip(28, three.dpi));
-    REQUIRE_TRUE(three.action_button_gap_px == scale_dip(4, three.dpi));
-    REQUIRE_TRUE(width(three.action_button_rect) == three.action_button_size_px);
-    REQUIRE_TRUE(height(three.action_button_rect) == three.action_button_size_px);
-    REQUIRE_TRUE(is_inside(make_rect(0, 0, three.width, three.height), three.action_button_rect));
-    REQUIRE_TRUE(rects_do_not_overlap(three.composition_rect, three.candidate_area_rect));
-    REQUIRE_TRUE(!three.show_hint || rects_do_not_overlap(three.candidate_area_rect, three.hint_rect));
+    // A settings button ends the candidate row, beside (never over) the items.
+    REQUIRE_TRUE(three.reserves_action_icon_space && three.action_button_visible);
+    REQUIRE_TRUE(is_inside(three.panel_rect, three.action_button_rect));
     REQUIRE_TRUE(rects_do_not_overlap(three.candidate_area_rect, three.action_button_rect));
-    REQUIRE_TRUE(!three.show_hint || rects_do_not_overlap(three.action_button_rect, three.hint_rect));
+    for (const auto& item : three.items) REQUIRE_TRUE(rects_do_not_overlap(item.bounds, three.action_button_rect));
+    // Pinyin row above the candidate row, both inside the panel.
+    REQUIRE_TRUE(is_inside(three.panel_rect, three.composition_rect));
+    REQUIRE_TRUE(is_inside(three.panel_rect, three.candidate_area_rect));
+    REQUIRE_TRUE(three.composition_rect.bottom <= three.candidate_area_rect.top);
+    REQUIRE_TRUE(rects_do_not_overlap(three.composition_rect, three.candidate_area_rect));
+    // A single page needs no page buttons.
+    REQUIRE_TRUE(!three.paging_visible && three.page_indices.size() == 1);
     REQUIRE_TRUE(three.items.front().selected);
     REQUIRE_TRUE(candidate_items_do_not_overlap(three.items));
-    for (const auto& item : three.items) {
-        REQUIRE_TRUE(rects_do_not_overlap(item.bounds, three.action_button_rect));
+    for (const auto& item : three.items) REQUIRE_TRUE(is_inside(three.candidate_area_rect, item.bounds));
+
+    // Nine single characters fit one line; nine longer words page, with
+    // page buttons beside (never over) the candidates.
+    // Hosts that cannot open settings (Store app sandboxes) omit the button.
+    {
+        CandidateLayoutInput no_button;
+        no_button.composition_text = L"ni";
+        no_button.candidate_texts = {L"你"};
+        no_button.caret_rect = middle;
+        no_button.work_area = work;
+        no_button.settings_button = false;
+        const auto plain = make_candidate_layout(no_button);
+        REQUIRE_TRUE(plain.visible && !plain.action_button_visible && !plain.reserves_action_icon_space);
     }
 
     const auto nine = layout_for({
@@ -401,16 +418,34 @@ int main() {
         L"\u516D", L"\u4E03", L"\u516B", L"\u4E5D"
     }, middle, work);
     REQUIRE_TRUE(nine.visible);
-    REQUIRE_TRUE(nine.items.size() < size_t{9});
-    REQUIRE_TRUE(nine.page_indices.size() > 1);
-    REQUIRE_TRUE(is_inside(work, nine.window_rect));
-    REQUIRE_TRUE(candidate_items_do_not_overlap(nine.items));
+    REQUIRE_EQ(nine.items.size(), size_t{9});
+    REQUIRE_TRUE(!nine.paging_visible);
+    const auto paged = layout_for({
+        L"\u7B2C\u4E00\u4E2A\u5019\u9009", L"\u7B2C\u4E8C\u4E2A\u5019\u9009", L"\u7B2C\u4E09\u4E2A\u5019\u9009",
+        L"\u7B2C\u56DB\u4E2A\u5019\u9009", L"\u7B2C\u4E94\u4E2A\u5019\u9009", L"\u7B2C\u516D\u4E2A\u5019\u9009",
+        L"\u7B2C\u4E03\u4E2A\u5019\u9009", L"\u7B2C\u516B\u4E2A\u5019\u9009", L"\u7B2C\u4E5D\u4E2A\u5019\u9009"
+    }, middle, work);
+    REQUIRE_TRUE(paged.visible);
+    REQUIRE_TRUE(paged.items.size() < size_t{9});
+    REQUIRE_TRUE(paged.page_indices.size() > 1 && paged.paging_visible);
+    REQUIRE_TRUE(!paged.has_previous_page && paged.has_next_page);
+    REQUIRE_TRUE(is_inside(work, paged.panel_screen_rect));
+    REQUIRE_TRUE(candidate_items_do_not_overlap(paged.items));
+    REQUIRE_TRUE(is_inside(paged.panel_rect, paged.previous_page_rect));
+    REQUIRE_TRUE(is_inside(paged.panel_rect, paged.next_page_rect));
+    REQUIRE_TRUE(rects_do_not_overlap(paged.previous_page_rect, paged.next_page_rect));
+    REQUIRE_TRUE(rects_do_not_overlap(paged.next_page_rect, paged.action_button_rect));
+    REQUIRE_TRUE(paged.next_page_rect.right <= paged.action_button_rect.left);
+    for (const auto& item : paged.items) {
+        REQUIRE_TRUE(rects_do_not_overlap(item.bounds, paged.previous_page_rect));
+        REQUIRE_TRUE(rects_do_not_overlap(item.bounds, paged.next_page_rect));
+    }
 
     const auto long_word = layout_for({
         L"\u8FD9\u662F\u4E00\u4E2A\u975E\u5E38\u975E\u5E38\u957F\u7684\u5019\u9009\u8BCD\u7528\u4E8E\u9A8C\u8BC1\u622A\u65AD\u884C\u4E3A"
     }, middle, make_rect(0, 0, 360, 240));
     REQUIRE_TRUE(long_word.visible);
-    REQUIRE_TRUE(width(long_word.window_rect) <= 360);
+    REQUIRE_TRUE(width(long_word.panel_screen_rect) <= 360);
     REQUIRE_TRUE(long_word.items.front().truncated);
     REQUIRE_TRUE(long_word.items.front().candidate_text_width_px > long_word.items.front().text_available_width_px);
     REQUIRE_TRUE((candidate_text_draw_flags(long_word.items.front().truncated) & DT_END_ELLIPSIS) == DT_END_ELLIPSIS);
@@ -418,21 +453,23 @@ int main() {
     const auto bottom = layout_for({L"\u4F60\u597D"}, make_rect(100, 560, 101, 580), work);
     REQUIRE_TRUE(bottom.visible);
     REQUIRE_EQ(bottom.placement, CandidatePlacement::Above);
-    REQUIRE_TRUE(is_inside(work, bottom.window_rect));
+    REQUIRE_TRUE(is_inside(work, bottom.panel_screen_rect));
+    REQUIRE_TRUE(bottom.panel_screen_rect.bottom <= 560);
 
     const auto top = layout_for({L"\u4F60\u597D"}, make_rect(100, 4, 101, 24), work);
     REQUIRE_TRUE(top.visible);
     REQUIRE_EQ(top.placement, CandidatePlacement::Below);
-    REQUIRE_TRUE(is_inside(work, top.window_rect));
+    REQUIRE_TRUE(is_inside(work, top.panel_screen_rect));
+    REQUIRE_TRUE(top.panel_screen_rect.top >= 24);
 
     const auto right_edge = layout_for({L"\u4F60\u597D\u4E16\u754C"}, make_rect(790, 200, 791, 220), work);
     REQUIRE_TRUE(right_edge.visible);
-    REQUIRE_TRUE(is_inside(work, right_edge.window_rect));
+    REQUIRE_TRUE(is_inside(work, right_edge.panel_screen_rect));
     REQUIRE_TRUE(right_edge.rect_clamped);
 
     const auto left_edge = layout_for({L"\u4F60\u597D\u4E16\u754C"}, make_rect(-40, 200, -39, 220), work);
     REQUIRE_TRUE(left_edge.visible);
-    REQUIRE_TRUE(is_inside(work, left_edge.window_rect));
+    REQUIRE_TRUE(is_inside(work, left_edge.panel_screen_rect));
     REQUIRE_TRUE(left_edge.rect_clamped);
 
     int previous_width = 0;
@@ -441,8 +478,7 @@ int main() {
         REQUIRE_TRUE(dpi_layout.visible);
         REQUIRE_TRUE(dpi_layout.dpi == dpi);
         REQUIRE_TRUE(dpi_layout.width > previous_width);
-        REQUIRE_TRUE(dpi_layout.action_button_visible);
-        REQUIRE_TRUE(dpi_layout.action_button_size_px == scale_dip(30, dpi));
+        REQUIRE_TRUE(dpi_layout.shadow_margin_px == scale_dip(12, dpi));
         previous_width = dpi_layout.width;
     }
 
@@ -463,7 +499,7 @@ int main() {
                     input.options.text_size = candidate_text_size_from_level(level);
                     const auto first = make_candidate_layout(input);
                     REQUIRE_TRUE(first.visible && !first.show_hint && first.row_gap_px == 0);
-                    REQUIRE_TRUE(is_inside(input.work_area, first.window_rect));
+                    REQUIRE_TRUE(is_inside(input.work_area, first.panel_screen_rect));
                     REQUIRE_EQ(first.page_indices.front(), UINT{0});
                     std::vector<size_t> visited;
                     for (size_t page = 0; page < first.page_indices.size(); ++page) {
@@ -472,9 +508,10 @@ int main() {
                         REQUIRE_EQ(current.current_page, page);
                         REQUIRE_EQ(current.page_indices, first.page_indices);
                         REQUIRE_TRUE(!current.items.empty());
-                        REQUIRE_TRUE(is_inside(input.work_area, current.window_rect));
-                        REQUIRE_TRUE(is_inside(make_rect(0, 0, current.width, current.height), current.composition_rect));
-                        REQUIRE_TRUE(is_inside(make_rect(0, 0, current.width, current.height), current.action_button_rect));
+                        REQUIRE_TRUE(is_inside(input.work_area, current.panel_screen_rect));
+                        REQUIRE_TRUE(is_inside(current.panel_rect, current.composition_rect));
+                        REQUIRE_TRUE(is_inside(make_rect(0, 0, current.width, current.height), current.panel_rect));
+                        REQUIRE_EQ(current.paging_visible, first.page_indices.size() > 1);
                         REQUIRE_EQ(current.height, first.height);
                         REQUIRE_TRUE(candidate_items_do_not_overlap(current.items));
                         REQUIRE_TRUE(current.items.front().selected);
@@ -513,7 +550,7 @@ int main() {
     REQUIRE_EQ(forced.items.size(), size_t{9});
     REQUIRE_EQ(forced.page_indices.size(), size_t{1});
     REQUIRE_TRUE(!forced.show_hint && candidate_items_do_not_overlap(forced.items));
-    REQUIRE_TRUE(is_inside(forced_host.work_area, forced.window_rect));
+    REQUIRE_TRUE(is_inside(forced_host.work_area, forced.panel_screen_rect));
     for (size_t i = 0; i < forced.items.size(); ++i) {
         const auto& item = forced.items[i];
         REQUIRE_TRUE(is_inside(forced.candidate_area_rect, item.bounds));
@@ -527,13 +564,14 @@ int main() {
     REQUIRE_TRUE(!make_candidate_palette(CandidateThemeMode::Light, true).dark);
     const auto dark_palette = make_candidate_palette(CandidateThemeMode::Dark, false);
     REQUIRE_TRUE(dark_palette.dark);
-    REQUIRE_EQ(dark_palette.background, RGB(38,38,42));
-    REQUIRE_EQ(dark_palette.muted_text, RGB(176,178,187));
-    REQUIRE_EQ(dark_palette.hint_text, RGB(140,143,156));
-    REQUIRE_EQ(dark_palette.text, RGB(246,247,250));
-    REQUIRE_EQ(dark_palette.selected_background, RGB(96,175,255));
-    REQUIRE_EQ(dark_palette.selected_border, RGB(96,175,255));
-    REQUIRE_EQ(dark_palette.selected_text, RGB(17,35,56));
+    REQUIRE_EQ(dark_palette.background, RGB(43,45,50));
+    REQUIRE_EQ(dark_palette.text, RGB(240,242,245));
+    REQUIRE_EQ(dark_palette.selected_background, RGB(61,130,246));
+    REQUIRE_EQ(dark_palette.selected_text, RGB(255,255,255));
+    const auto light_palette = make_candidate_palette(CandidateThemeMode::Light, false);
+    REQUIRE_EQ(light_palette.selected_background, RGB(25,118,243));
+    REQUIRE_EQ(light_palette.background, RGB(255,255,255));
+    REQUIRE_TRUE(light_palette.shadow_alpha > 0 && dark_palette.shadow_alpha > light_palette.shadow_alpha);
     REQUIRE_TRUE(make_candidate_palette(CandidateThemeMode::System, true).dark);
     REQUIRE_TRUE(!make_candidate_palette(CandidateThemeMode::System, false).dark);
     REQUIRE_EQ(candidate_theme_mode_to_string(parse_candidate_theme_mode(L"dark")), std::wstring(L"dark"));

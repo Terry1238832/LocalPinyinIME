@@ -28,6 +28,9 @@ public:
     [[nodiscard]] std::vector<Candidate> lookup(const std::wstring& pinyin,
                                                const std::wstring& preceding_text = L"") const;
     UserLexiconRefreshResult refresh_user_lexicon_if_needed(bool composition_active);
+    // Typed pinyin with syllable separators for display, e.g. nihaoshij ->
+    // ni'hao'shi'j. Typed apostrophes are kept; unparseable text is unchanged.
+    [[nodiscard]] static std::wstring display_pinyin(const std::wstring& typed);
     void learn(const std::wstring& pinyin, const std::wstring& selected_word);
 
 private:
