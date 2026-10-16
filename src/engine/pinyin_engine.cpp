@@ -59,12 +59,20 @@ size_t raw_prefix_end(const ParsedInput& input, const std::wstring& raw, size_t 
     return end;
 }
 
+// Characters, not UTF-16 units: a CJK Extension B+ character is one character
+// written as a surrogate pair, and must not count as a two-character word.
+size_t character_count(const std::wstring& text) {
+    return static_cast<size_t>(std::count_if(text.begin(), text.end(),
+                                             [](wchar_t ch) { return ch < 0xDC00 || ch > 0xDFFF; }));
+}
+
 int lexical_score(const Candidate& candidate) {
-    int word_prior = candidate.text.size() >= 2 && candidate.text.size() <= 4 ? 350 : 0;
+    const size_t characters = character_count(candidate.text);
+    int word_prior = characters >= 2 && characters <= 4 ? 350 : 0;
     // A deliberately frequent project/user expression is useful evidence, even
     // when it spans more than a conventional word. Keep the preference modest:
     // every character still receives the same context score as any other path.
-    if (candidate.text.size() >= 5 && candidate.text.size() <= 8 && candidate.base_score >= 8000) word_prior = 2000;
+    if (characters >= 5 && characters <= 8 && candidate.base_score >= 8000) word_prior = 2000;
     const int frequency = std::clamp(candidate.decoding_frequency > 0 ? candidate.decoding_frequency : candidate.base_score, 0, 20000);
     // Project frequencies encode a deliberate common-word preference. Keep
     // that evidence meaningful beside ngram scores while limiting each token.
