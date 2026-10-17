@@ -1,0 +1,47 @@
+{
+  "batch": "lexicon_batch_161",
+  "license": "MIT",
+  "authoring_source": "reference-derived",
+  "external_lexicon_import": false,
+  "bulk_third_party_lexicon_import": false,
+  "scope": "常见谚语",
+  "author": "gap-fill",
+  "review_scope": "Single AI author reads every selected idiom and its default key in context, then records positional polyphone decisions. Entries were chosen one by one from the jieba missing-common-word checklist (dict.txt, MIT), ranks 30001-100000, tag i, four characters, excluding names. This is not an independent human linguistic review and not a bulk import.",
+  "reference_source": "jieba dict.txt",
+  "reference_license": "MIT",
+  "reference_license_url": "https://github.com/fxsjy/jieba/blob/master/LICENSE",
+  "pronunciation_dependency": "pypinyin 0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 24,
+  "sha256": "76efc256e93dde820135142fa8322a9ab990b055d4e6c0a94b51fb45fd3d2486",
+  "authoring_files_sha256": {
+    "batch161_draft.txt": "0c522f790763e3c453e74f2fe73c5268269a7d49b9bb586528d6080041dd0c8d",
+    "batch161_pronunciation_review.tsv": "0acccc41651e7c0fe4a2bc80346437db2169299fdd614a0199be61bd2a825fd2"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "2c14baccb97121d6ca71d7ad21a5923014668e971cc1a4c9a4269a63dd51a4e1",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "preset_category_weights": {
+    "idioms": [
+      5000
+    ]
+  },
+  "weights_used": [
+    5000
+  ],
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "idioms": 24
+  },
+  "length_distribution": {
+    "7": 22,
+    "8": 1,
+    "9": 1
+  },
+  "mandatory_polyphone_reviews": 23,
+  "manual_pronunciation_overrides": {},
+  "multi_reading_semantic_entries": [],
+  "line_endings": "UTF-8 LF",
+  "source_policy": "Entries were selected one at a time from the jieba frequency checklist (dict.txt, MIT), not from a bulk import and not from tests/data. Names, fragments, and uncertain two-character leftovers were left out. Existing entries and weights were not modified."
+}
