@@ -90,7 +90,7 @@ add_library(pinyin_ui STATIC src/ime/candidate_ui.cpp src/settings/settings_stor
     src/ime/candidate_styles/adaptive_flow.cpp src/ime/candidate_styles/cursor_rail.cpp
     src/ime/candidate_styles/modern_type.cpp src/ime/candidate_styles/floating_glass.cpp
     src/ime/candidate_styles/capsule.cpp src/ime/candidate_styles/column_list.cpp
-    src/ime/candidate_styles/outline.cpp src/ime/candidate_styles/ink_dot.cpp)
+    src/ime/candidate_styles/split_flap.cpp src/ime/candidate_styles/highlighter.cpp)
 target_link_libraries(pinyin_ui PUBLIC pinyin_common d2d1 dwrite)
 add_library(pinyin_settings STATIC src/settings/dictionary_catalog.cpp)
 target_link_libraries(pinyin_settings PUBLIC pinyin_ui pinyin_engine comctl32 advapi32)

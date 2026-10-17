@@ -13,8 +13,8 @@ void paint_candidate_window(const CandidatePaintContext& context) {
         case CandidateStyle::FloatingGlass: candidate_styles::paint_floating_glass(context); break;
         case CandidateStyle::Capsule: candidate_styles::paint_capsule(context); break;
         case CandidateStyle::ColumnList: candidate_styles::paint_column_list(context); break;
-        case CandidateStyle::Outline: candidate_styles::paint_outline(context); break;
-        case CandidateStyle::InkDot: candidate_styles::paint_ink_dot(context); break;
+        case CandidateStyle::SplitFlap: candidate_styles::paint_split_flap(context); break;
+        case CandidateStyle::Highlighter: candidate_styles::paint_highlighter(context); break;
         case CandidateStyle::AdaptiveFlow:
         default: candidate_styles::paint_adaptive_flow(context); break;
     }
@@ -28,8 +28,8 @@ RECT candidate_marker_target(const CandidateLayoutResult& layout, std::optional<
         case CandidateStyle::FloatingGlass: return candidate_styles::marker_floating_glass(layout, hovered);
         case CandidateStyle::Capsule: return candidate_styles::marker_capsule(layout, hovered);
         case CandidateStyle::ColumnList: return candidate_styles::marker_column_list(layout, hovered);
-        case CandidateStyle::Outline: return candidate_styles::marker_outline(layout, hovered);
-        case CandidateStyle::InkDot: return candidate_styles::marker_ink_dot(layout, hovered);
+        case CandidateStyle::SplitFlap: return candidate_styles::marker_split_flap(layout, hovered);
+        case CandidateStyle::Highlighter: return candidate_styles::marker_highlighter(layout, hovered);
         case CandidateStyle::AdaptiveFlow:
         default: return RECT{};
     }
@@ -38,6 +38,10 @@ RECT candidate_marker_target(const CandidateLayoutResult& layout, std::optional<
 RECT candidate_track_target(const CandidateLayoutResult& layout) {
     return layout.visible && layout.style == CandidateStyle::CursorRail ? candidate_styles::track_cursor_rail(layout)
                                                                         : RECT{};
+}
+
+bool candidate_style_reveals(CandidateStyle style) noexcept {
+    return style == CandidateStyle::SplitFlap || style == CandidateStyle::Highlighter;
 }
 
 namespace candidate_paint {

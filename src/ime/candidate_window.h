@@ -228,6 +228,14 @@ private:
     bool motion_active_ = false;
     bool snap_motion_ = true;
     UINT_PTR motion_timer_ = 0;
+    // New content (Split-Flap's turning tiles): when the visible candidates
+    // last changed, and what each slot showed before that.
+    std::vector<std::wstring> shown_texts_;
+    std::vector<std::wstring> previous_texts_;
+    ULONGLONG reveal_start_ = 0;
+    bool reveal_active_ = false;
+    // Offline capture only: paint the reveal frozen this long after it began.
+    std::optional<ULONGLONG> reveal_frozen_ms_;
     // The blurred shadow depends only on the panel geometry: kept between frames.
     std::vector<float> shadow_cache_;
     std::array<int, 11> shadow_key_{};

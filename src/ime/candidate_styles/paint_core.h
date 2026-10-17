@@ -12,6 +12,11 @@
 
 namespace localpinyin {
 
+// A reveal this old has finished in every style.
+inline constexpr ULONGLONG kRevealAtRestMs = 60000;
+// Long enough for the slowest reveal (a full row of turning tiles).
+inline constexpr ULONGLONG kRevealSpanMs = 900;
+
 struct CandidatePaintState {
     std::optional<size_t> hovered;
     std::optional<size_t> pressed;
@@ -30,6 +35,11 @@ struct CandidatePaintState {
     RECT marker{};
     // Cursor Rail's page segment, animated the same way.
     RECT track_marker{};
+    // How long ago the visible candidates changed, and what each slot showed
+    // before, for styles that animate new content (Split-Flap turns only the
+    // tiles whose character changed). At rest unless the window is animating.
+    ULONGLONG reveal_ms = kRevealAtRestMs;
+    std::vector<std::wstring> previous_texts;
 };
 
 struct CandidatePaintContext {
@@ -47,6 +57,8 @@ void paint_candidate_window(const CandidatePaintContext& context);
 RECT candidate_marker_target(const CandidateLayoutResult& layout, std::optional<size_t> hovered);
 // Cursor Rail's current page segment on the track; empty otherwise.
 RECT candidate_track_target(const CandidateLayoutResult& layout);
+// Whether the style animates new content (the window then runs its clock).
+bool candidate_style_reveals(CandidateStyle style) noexcept;
 
 namespace candidate_paint {
 
@@ -77,8 +89,8 @@ CandidateLayoutResult layout_modern_type(const CandidateLayoutInput& input);
 CandidateLayoutResult layout_floating_glass(const CandidateLayoutInput& input);
 CandidateLayoutResult layout_capsule(const CandidateLayoutInput& input);
 CandidateLayoutResult layout_column_list(const CandidateLayoutInput& input);
-CandidateLayoutResult layout_outline(const CandidateLayoutInput& input);
-CandidateLayoutResult layout_ink_dot(const CandidateLayoutInput& input);
+CandidateLayoutResult layout_split_flap(const CandidateLayoutInput& input);
+CandidateLayoutResult layout_highlighter(const CandidateLayoutInput& input);
 
 void paint_adaptive_flow(const CandidatePaintContext& context);
 void paint_cursor_rail(const CandidatePaintContext& context);
@@ -86,16 +98,16 @@ void paint_modern_type(const CandidatePaintContext& context);
 void paint_floating_glass(const CandidatePaintContext& context);
 void paint_capsule(const CandidatePaintContext& context);
 void paint_column_list(const CandidatePaintContext& context);
-void paint_outline(const CandidatePaintContext& context);
-void paint_ink_dot(const CandidatePaintContext& context);
+void paint_split_flap(const CandidatePaintContext& context);
+void paint_highlighter(const CandidatePaintContext& context);
 
 RECT marker_cursor_rail(const CandidateLayoutResult& layout, std::optional<size_t> hovered);
 RECT marker_modern_type(const CandidateLayoutResult& layout, std::optional<size_t> hovered);
 RECT marker_floating_glass(const CandidateLayoutResult& layout, std::optional<size_t> hovered);
 RECT marker_capsule(const CandidateLayoutResult& layout, std::optional<size_t> hovered);
 RECT marker_column_list(const CandidateLayoutResult& layout, std::optional<size_t> hovered);
-RECT marker_outline(const CandidateLayoutResult& layout, std::optional<size_t> hovered);
-RECT marker_ink_dot(const CandidateLayoutResult& layout, std::optional<size_t> hovered);
+RECT marker_split_flap(const CandidateLayoutResult& layout, std::optional<size_t> hovered);
+RECT marker_highlighter(const CandidateLayoutResult& layout, std::optional<size_t> hovered);
 RECT track_cursor_rail(const CandidateLayoutResult& layout);
 
 }  // namespace candidate_styles

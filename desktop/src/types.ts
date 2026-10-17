@@ -1,7 +1,7 @@
 export type Theme = 'system' | 'light' | 'dark';
 // Candidate window styles: Cursor Rail, Modern Type, Floating Glass, Adaptive
-// Flow, Capsule, Column List, Outline and Ink Dot, by their native ids.
-export const candidateStyleIds = ['rail', 'type', 'glass', 'flow', 'capsule', 'column', 'outline', 'dot'] as const;
+// Flow, Capsule, Column List, Split-Flap and Highlighter, by their native ids.
+export const candidateStyleIds = ['rail', 'type', 'glass', 'flow', 'capsule', 'column', 'flap', 'marker'] as const;
 export type CandidateStyle = (typeof candidateStyleIds)[number];
 // Fuzzy pinyin pairs, written as the native settings store them.
 export type FuzzyPair = 'z-zh' | 'c-ch' | 's-sh' | 'n-l' | 'f-h' | 'r-l' | 'an-ang' | 'en-eng' | 'in-ing' | 'ian-iang' | 'uan-uang';

@@ -211,7 +211,7 @@ function savedFiles(directory, includeSettings = true) {
 // The Appearance preview shows this fixed sample (previewSample in CandidatePreview.tsx).
 const previewPinyin = "sui'bian";
 const previewWords = ['随便', '岁', '随', '碎', '虽', '遂', '穗', '隋', '髓', '祟', '燧', '邃'];
-const candidateStyleOrder = ['rail', 'type', 'glass', 'flow', 'capsule', 'column', 'outline', 'dot'];
+const candidateStyleOrder = ['rail', 'type', 'glass', 'flow', 'capsule', 'column', 'flap', 'marker'];
 
 async function waitPreviewCandidates(expected, snapshots) {
   await page.waitForFunction(words => {
@@ -278,7 +278,7 @@ async function collectCandidatePages(label, selector, snapshots) {
     assert(measurements.length, `${label}: page ${i + 1} has no candidates`);
     assert(measurements.every(item => item.inside), `${label}: candidate overflow`);
     // The preview follows its style: one row (Cursor Rail, Modern Type,
-    // Floating Glass, Capsule, Outline, Ink Dot, Adaptive Flow's Compact form),
+    // Floating Glass, Capsule, Split-Flap, Highlighter, Adaptive Flow's Compact form),
     // the current choice above one row of chips (Balanced), or one candidate
     // per row (Expanded, Column List). The suggestion and context lanes are a
     // single row.
@@ -541,7 +541,7 @@ async function run() {
     }
     // Column List stacks its rows and keeps the fullest page's height.
     assert.equal(styles.column.arrangement, 'column');
-    for (const style of ['capsule', 'outline', 'dot']) assert.equal(styles[style].arrangement, 'row');
+    for (const style of ['capsule', 'flap', 'marker']) assert.equal(styles[style].arrangement, 'row');
     // 更多: all eight at once, four to a row; a pick there applies at once.
     await page.getByRole('button', { name: '更多', exact: true }).click();
     const overview = page.getByRole('dialog', { name: '全部候选框风格', exact: true });
@@ -552,7 +552,7 @@ async function run() {
     assert.equal(new Set(tops.slice(0, 4)).size, 1, 'The first four styles share a row.');
     assert.equal(new Set(tops.slice(4)).size, 1, 'The last four styles share a row.');
     assert(tops[4] > tops[0], 'The second four sit below the first.');
-    assert.equal(await overview.locator('.style-card.active input').getAttribute('value'), 'dot');
+    assert.equal(await overview.locator('.style-card.active input').getAttribute('value'), 'marker');
     await screenshot('style-overview');
     await overview.locator('.style-card:has(input[value="glass"])').click();
     await waitState(value => value.settings.candidateStyle === 'glass');
@@ -566,8 +566,8 @@ async function run() {
       const view = document.querySelector('.style-viewport').getBoundingClientRect();
       return card && card.left >= view.left - 1 && card.right <= view.right + 1;
     });
-    // Cursor Rail, Modern Type and Ink Dot move their mark to the candidate under the pointer.
-    for (const [style, selector] of [['rail', '.rail-marker'], ['type', '.type-rule'], ['dot', '.dot-marker']]) {
+    // Cursor Rail, Modern Type and the Highlighter move their mark to the candidate under the pointer.
+    for (const [style, selector] of [['rail', '.rail-marker'], ['type', '.type-rule'], ['marker', '.marker-stroke']]) {
       await chooseStyle(style);
       const marker = page.locator(selector);
       await marker.waitFor();

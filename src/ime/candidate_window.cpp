@@ -390,6 +390,9 @@ void CandidateWindow::hide(const wchar_t*) {
     // Adaptive Flow chooses its form anew.
     snap_motion_ = true;
     flow_form_memory_.reset();
+    // The next popup turns in from blank.
+    shown_texts_.clear();
+    previous_texts_.clear();
     if (hwnd_) {
         ShowWindow(hwnd_, SW_HIDE);
         notify_ime_window_hidden(hwnd_);
@@ -863,6 +866,13 @@ void CandidateWindow::paint_content() {
     state.focus_hint = focus_hint_;
     state.marker = marker_motion_.current;
     state.track_marker = track_motion_.current;
+    if (reveal_frozen_ms_) {
+        state.reveal_ms = *reveal_frozen_ms_;
+        state.previous_texts = previous_texts_;
+    } else if (reveal_active_) {
+        state.reveal_ms = GetTickCount64() - reveal_start_;
+        state.previous_texts = previous_texts_;
+    }
     paint_candidate_window(CandidatePaintContext{*canvas, layout_, palette_, state});
 }
 
@@ -885,6 +895,21 @@ void CandidateWindow::update_motion(bool snap) {
     const bool marker_moved = retarget(marker_motion_, marker);
     const bool track_moved = retarget(track_motion_, track);
     const ULONGLONG now = GetTickCount64();
+    // New content starts the reveal clock for the styles that animate it,
+    // also on the popup's first frame (everything turns in from blank).
+    // Offline capture (snap), high contrast and "animations off" stay at rest.
+    std::vector<std::wstring> texts;
+    texts.reserve(layout_.items.size());
+    for (const auto& item : layout_.items) texts.push_back(item.display_text);
+    if (texts != shown_texts_) {
+        previous_texts_ = std::move(shown_texts_);
+        shown_texts_ = std::move(texts);
+        const bool reveal = candidate_style_reveals(layout_.style) && !snap && !palette_.high_contrast &&
+                            client_animations_enabled();
+        reveal_active_ = reveal;
+        reveal_start_ = now;
+    }
+    if (reveal_active_ && (snap || now - reveal_start_ >= kRevealSpanMs)) reveal_active_ = false;
     if (marker_moved || track_moved) {
         motion_start_ = now;
         motion_active_ = true;
@@ -901,14 +926,16 @@ void CandidateWindow::update_motion(bool snap) {
         marker_motion_.current = marker_motion_.to;
         track_motion_.current = track_motion_.to;
     }
-    if (motion_active_ && hwnd_ && !motion_timer_) motion_timer_ = SetTimer(hwnd_, kMotionTimerId, kMotionFrameMs, nullptr);
-    if (!motion_active_) stop_motion();
+    if ((motion_active_ || reveal_active_) && hwnd_ && !motion_timer_)
+        motion_timer_ = SetTimer(hwnd_, kMotionTimerId, kMotionFrameMs, nullptr);
+    if (!motion_active_ && !reveal_active_) stop_motion();
 }
 
 void CandidateWindow::stop_motion() noexcept {
     if (motion_timer_ && hwnd_) KillTimer(hwnd_, kMotionTimerId);
     motion_timer_ = 0;
     motion_active_ = false;
+    reveal_active_ = false;
 }
 
 void CandidateWindow::composite_shadow(std::uint8_t* pixels, int width, int height) {

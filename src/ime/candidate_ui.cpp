@@ -397,13 +397,13 @@ CandidateThemePalette make_candidate_palette(CandidateThemeMode mode, bool syste
             palette = dark ? LOCALPINYIN_CANDIDATE_PALETTE(tokens::candidate_column_dark)
                            : LOCALPINYIN_CANDIDATE_PALETTE(tokens::candidate_column_light);
             break;
-        case CandidateStyle::Outline:
-            palette = dark ? LOCALPINYIN_CANDIDATE_PALETTE(tokens::candidate_outline_dark)
-                           : LOCALPINYIN_CANDIDATE_PALETTE(tokens::candidate_outline_light);
+        case CandidateStyle::SplitFlap:
+            palette = dark ? LOCALPINYIN_CANDIDATE_PALETTE(tokens::candidate_flap_dark)
+                           : LOCALPINYIN_CANDIDATE_PALETTE(tokens::candidate_flap_light);
             break;
-        case CandidateStyle::InkDot:
-            palette = dark ? LOCALPINYIN_CANDIDATE_PALETTE(tokens::candidate_dot_dark)
-                           : LOCALPINYIN_CANDIDATE_PALETTE(tokens::candidate_dot_light);
+        case CandidateStyle::Highlighter:
+            palette = dark ? LOCALPINYIN_CANDIDATE_PALETTE(tokens::candidate_marker_dark)
+                           : LOCALPINYIN_CANDIDATE_PALETTE(tokens::candidate_marker_light);
             break;
         case CandidateStyle::AdaptiveFlow:
         default:
@@ -455,8 +455,8 @@ CandidateStyle parse_candidate_style(const std::wstring& value) noexcept {
     if (lowered == L"flow") return CandidateStyle::AdaptiveFlow;
     if (lowered == L"capsule") return CandidateStyle::Capsule;
     if (lowered == L"column") return CandidateStyle::ColumnList;
-    if (lowered == L"outline") return CandidateStyle::Outline;
-    if (lowered == L"dot") return CandidateStyle::InkDot;
+    if (lowered == L"flap") return CandidateStyle::SplitFlap;
+    if (lowered == L"marker") return CandidateStyle::Highlighter;
     return kDefaultCandidateStyle;
 }
 
@@ -467,8 +467,8 @@ std::wstring candidate_style_to_string(CandidateStyle style) {
         case CandidateStyle::FloatingGlass: return L"glass";
         case CandidateStyle::Capsule: return L"capsule";
         case CandidateStyle::ColumnList: return L"column";
-        case CandidateStyle::Outline: return L"outline";
-        case CandidateStyle::InkDot: return L"dot";
+        case CandidateStyle::SplitFlap: return L"flap";
+        case CandidateStyle::Highlighter: return L"marker";
         case CandidateStyle::AdaptiveFlow:
         default: return L"flow";
     }
@@ -503,8 +503,8 @@ CandidateLayoutResult make_candidate_layout(const CandidateLayoutInput& input) {
         case CandidateStyle::FloatingGlass: return candidate_styles::layout_floating_glass(input);
         case CandidateStyle::Capsule: return candidate_styles::layout_capsule(input);
         case CandidateStyle::ColumnList: return candidate_styles::layout_column_list(input);
-        case CandidateStyle::Outline: return candidate_styles::layout_outline(input);
-        case CandidateStyle::InkDot: return candidate_styles::layout_ink_dot(input);
+        case CandidateStyle::SplitFlap: return candidate_styles::layout_split_flap(input);
+        case CandidateStyle::Highlighter: return candidate_styles::layout_highlighter(input);
         case CandidateStyle::AdaptiveFlow:
         default: return candidate_styles::layout_adaptive_flow(input);
     }

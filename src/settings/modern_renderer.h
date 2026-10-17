@@ -34,6 +34,8 @@ public:
     // A rounded fill shading from `top` to `bottom`.
     void rounded_gradient(const RECT& bounds, float radius, COLORREF top, COLORREF bottom);
     void ellipse(float x, float y, float rx, float ry, COLORREF color);
+    // A filled polygon at partial opacity (a marker stroke, a turning flap).
+    void polygon(const std::vector<D2D1_POINT_2F>& points, COLORREF color, float opacity = 1.0f);
     void line(float x1, float y1, float x2, float y2, COLORREF color, float stroke = 1.5f);
     // `family` defaults to Microsoft YaHei UI.
     void text(std::wstring_view text, const RECT& bounds, COLORREF color, float size,

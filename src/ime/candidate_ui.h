@@ -39,8 +39,8 @@ enum class CandidateStyle {
     FloatingGlass,  // "glass": a layered panel with a ceramic selected key
     Capsule,        // "capsule": one rounded bar, a solid pill on the choice
     ColumnList,     // "column": one candidate per row under the pinyin
-    Outline,        // "outline": a flat sheet, the choice ringed in accent
-    InkDot          // "dot": type only, an accent dot under the choice
+    SplitFlap,      // "flap": a departure board, every character on a flap tile
+    Highlighter     // "marker": a paper slip, the choice swiped with a highlighter
 };
 
 inline constexpr CandidateStyle kDefaultCandidateStyle = CandidateStyle::AdaptiveFlow;
@@ -48,7 +48,7 @@ inline constexpr std::array<CandidateStyle, 8> kCandidateStyles{
     CandidateStyle::CursorRail, CandidateStyle::ModernType,
     CandidateStyle::FloatingGlass, CandidateStyle::AdaptiveFlow,
     CandidateStyle::Capsule, CandidateStyle::ColumnList,
-    CandidateStyle::Outline, CandidateStyle::InkDot};
+    CandidateStyle::SplitFlap, CandidateStyle::Highlighter};
 
 // Adaptive Flow's three forms, chosen from the measured candidates.
 enum class CandidateFlowForm {
@@ -402,7 +402,7 @@ CandidateTextSize parse_candidate_text_size(const std::wstring& value) noexcept;
 std::wstring candidate_theme_mode_to_string(CandidateThemeMode mode);
 std::wstring candidate_text_size_to_string(CandidateTextSize size);
 // Style ids are "flow", "rail", "type", "glass", "capsule", "column",
-// "outline" and "dot"; anything else (a missing
+// "flap" and "marker"; anything else (a missing
 // key, a value from a newer version) falls back to the default style.
 CandidateStyle parse_candidate_style(const std::wstring& value) noexcept;
 std::wstring candidate_style_to_string(CandidateStyle style);

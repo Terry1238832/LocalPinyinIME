@@ -112,6 +112,20 @@ void ModernRenderer::ellipse(float x, float y, float rx, float ry, COLORREF valu
     color(value);
     active_->target->FillEllipse(D2D1::Ellipse(D2D1::Point2F(x, y), rx, ry), active_->brush.Get());
 }
+void ModernRenderer::polygon(const std::vector<D2D1_POINT_2F>& points, COLORREF value, float opacity) {
+    if (points.size() < 3) return;
+    Microsoft::WRL::ComPtr<ID2D1PathGeometry> path;
+    Microsoft::WRL::ComPtr<ID2D1GeometrySink> sink;
+    if (FAILED(factory_->CreatePathGeometry(&path)) || FAILED(path->Open(&sink))) return;
+    sink->BeginFigure(points.front(), D2D1_FIGURE_BEGIN_FILLED);
+    sink->AddLines(points.data() + 1, static_cast<UINT32>(points.size() - 1));
+    sink->EndFigure(D2D1_FIGURE_END_CLOSED);
+    if (FAILED(sink->Close())) return;
+    color(value);
+    active_->brush->SetOpacity(opacity);
+    active_->target->FillGeometry(path.Get(), active_->brush.Get());
+    active_->brush->SetOpacity(1.0f);
+}
 void ModernRenderer::line(float x1, float y1, float x2, float y2, COLORREF value, float stroke) {
     color(value);
     active_->target->DrawLine(D2D1::Point2F(x1, y1), D2D1::Point2F(x2, y2), active_->brush.Get(), stroke, stroke_style_.Get());

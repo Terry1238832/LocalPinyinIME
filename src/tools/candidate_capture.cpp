@@ -26,6 +26,9 @@ public:
         bool prediction = false;
         // Pointer over this page slot (shows a style's moving focus at rest there).
         std::optional<size_t> hover;
+        // A moment of the new-content animation (turning tiles, a swipe being
+        // drawn), as if the popup had just appeared from nothing.
+        std::optional<ULONGLONG> reveal_ms;
     };
 
     // Shows the real layered popup for a moment and copies that screen area,
@@ -109,6 +112,10 @@ public:
         HBRUSH backdrop = CreateSolidBrush(scene.dark ? RGB(24, 26, 30) : RGB(236, 239, 244));
         FillRect(dc, &all, backdrop);
         DeleteObject(backdrop);
+        if (scene.reveal_ms) {
+            window.previous_texts_.clear();
+            window.reveal_frozen_ms_ = scene.reveal_ms;
+        }
         window.render(dc);
         GdiFlush();
         auto* pixels = static_cast<unsigned char*>(bits);
@@ -204,6 +211,12 @@ int wmain(int argc, wchar_t** argv) {
         scenes.push_back({name + L"-mixed", style, true, 120, 3, 1920, false, L"win", mixed});
         scenes.push_back({name + L"-prediction-narrow", style, false, 144, 7, 360, true, L"联想 · Tab", long_list, true});
         scenes.push_back({name + L"-hover", style, false, 96, 4, 1920, false, L"ni'hao'shi'jie", sentence, false, size_t{3}});
+        if (localpinyin::candidate_style_reveals(style)) {
+            for (const ULONGLONG ms : {60, 120, 200}) {
+                scenes.push_back({name + L"-reveal-" + std::to_wstring(ms), style, false, 144, 4, 1920, false,
+                                  L"ni'hao'shi'jie", sentence, false, std::nullopt, ms});
+            }
+        }
     }
     bool ok = true;
     for (const auto& scene : scenes) ok = localpinyin::CandidateWindowCapture::capture(output, scene) && ok;

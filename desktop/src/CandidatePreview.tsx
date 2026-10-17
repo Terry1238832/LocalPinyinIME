@@ -18,8 +18,8 @@ export const candidateStyles: { value: CandidateStyle; name: string; english: st
   { value: 'flow', name: '自适应流体', english: 'Adaptive Flow', description: '按候选长短在紧凑、平衡、展开三种形态间自动切换。' },
   { value: 'capsule', name: '胶囊', english: 'Capsule', description: '整个窗口是一条圆角长条：拼音在左，候选随后，当前候选是一枚实心胶囊。窗口最矮。' },
   { value: 'column', name: '竖排列表', english: 'Column List', description: '候选一行一个，像菜单一样从上往下读；长词和整句都能完整显示。' },
-  { value: 'outline', name: '线框', english: 'Outline', description: '平整的面板加一圈细线框，几乎没有阴影；当前候选只用一圈强调色描边。' },
-  { value: 'dot', name: '墨点', english: 'Ink Dot', description: '只有文字：当前候选下方一颗小圆点，随指针滑到其他候选。没有底色和按钮。' },
+  { value: 'flap', name: '翻牌', english: 'Split-Flap', description: '机场航班牌：每个字一块翻页牌，当前候选是一排琥珀色牌；候选变化时，变了的字一块接一块翻过来。' },
+  { value: 'marker', name: '荧光笔', english: 'Highlighter', description: '一张笔记纸：当前候选被荧光笔划上一道，笔触跟着指针走，换词时重新划一笔。' },
 ];
 
 // What the preview shows: a fixed input, as the IME would list it.
@@ -97,7 +97,7 @@ export function CandidatePreview({ candidateStyle: style, words, pinyin, fontSiz
   const [page, setPage] = useState(0);
   const [form, setForm] = useState<FlowForm>('balanced');
   const [hovered, setHovered] = useState<number | null>(null);
-  const [marker, setMarker] = useState<{ left: number; width: number } | null>(null);
+  const [marker, setMarker] = useState<{ left: number; width: number; top?: number; height?: number } | null>(null);
   const [ticks, setTicks] = useState<number[]>([]);
   const listKey = JSON.stringify(words);
 
@@ -167,11 +167,11 @@ export function CandidatePreview({ candidateStyle: style, words, pinyin, fontSiz
   // Column List keeps the fullest page's height while paging.
   const rows = Math.max(1, ...pages.map(item => item.end - item.start));
 
-  // Cursor Rail's focus line, Modern Type's short rule and Ink Dot's dot
-  // rest under the current choice and move to the candidate under the pointer.
+  // Cursor Rail's focus line, Modern Type's short rule and the Highlighter's
+  // stroke rest on the current choice and move to the candidate under the pointer.
   useLayoutEffect(() => {
     const line = row.current;
-    if ((style !== 'rail' && style !== 'type' && style !== 'dot') || !line || !shown.length) { setMarker(null); return; }
+    if ((style !== 'rail' && style !== 'type' && style !== 'marker') || !line || !shown.length) { setMarker(null); return; }
     const item = line.querySelector<HTMLElement>(`[data-slot="${hovered ?? 0}"]`) ?? line.querySelector<HTMLElement>('[data-slot="0"]');
     const word = item?.querySelector<HTMLElement>('.candidate-word');
     const number = item?.querySelector<HTMLElement>('.candidate-number');
@@ -185,8 +185,13 @@ export function CandidatePreview({ candidateStyle: style, words, pinyin, fontSiz
       setTicks(current => JSON.stringify(current) === JSON.stringify(next) ? current : next);
       const left = number.getBoundingClientRect().left - origin;
       setMarker({ left, width: Math.min(wordBox.right, item.getBoundingClientRect().right) - origin - left });
-    } else if (style === 'dot') {
-      setMarker({ left: wordBox.left + wordBox.width / 2 - 3 - origin, width: 6 });
+    } else if (style === 'marker') {
+      // Over most of the word, from just before it to a little past its
+      // end, slightly low: as highlighter.cpp places it.
+      const size = parseFloat(getComputedStyle(word).fontSize);
+      const center = (wordBox.top + wordBox.bottom) / 2 - line.getBoundingClientRect().top;
+      setMarker({ left: wordBox.left - origin - size * 0.08, width: wordBox.width + size * 0.33,
+        top: center - size * 0.3, height: size * 0.75 });
     } else {
       const size = parseFloat(getComputedStyle(word).fontSize);
       setMarker({ left: wordBox.left - origin, width: Math.min(wordBox.width, Math.max(14, size)) });
@@ -204,12 +209,20 @@ export function CandidatePreview({ candidateStyle: style, words, pinyin, fontSiz
     }
   };
 
+  // Split-Flap: where each slot's tiles start along the row, so the tiles
+  // turn over one after another from the left.
+  const tileStarts = shown.reduce<number[]>((starts, word, index) =>
+    [...starts, index ? starts[index - 1] + Array.from(shown[index - 1]).length : 0], []);
   const candidate = (word: string, slot: number, focus: boolean, extra?: ReactNode, measure = false) =>
-    <span className={`preview-candidate ${focus ? 'focus' : 'chip'}`} key={`${word}-${slot}`} title={word} data-slot={measure ? undefined : slot}
+    <span className={`preview-candidate ${focus ? 'focus' : 'chip'}${style === 'marker' && !measure && slot === (hovered ?? 0) ? ' marked' : ''}`}
+      key={`${word}-${slot}`} title={word} data-slot={measure ? undefined : slot}
       onMouseEnter={measure ? undefined : () => setHovered(slot)}
       onMouseLeave={measure ? undefined : () => setHovered(current => current === slot ? null : current)}>
       <span className="candidate-number">{slot + 1}</span>
-      <span className="candidate-word">{word}</span>
+      <span className="candidate-word">{style === 'flap'
+        ? Array.from(word).map((character, index) => <span key={index} className="flap-tile"
+            style={measure ? undefined : { animationDelay: `${((tileStarts[slot] ?? 0) + index) * 16}ms` }}>{character}</span>)
+        : word}</span>
       {extra}
     </span>;
   const hint = <span className="focus-hint" aria-hidden="true">空格</span>;
@@ -249,7 +262,9 @@ export function CandidatePreview({ candidateStyle: style, words, pinyin, fontSiz
           style={style === 'column' ? { '--rows': rows } as CSSProperties : undefined}>{body}</div>
         {style === 'rail' && words.length > 0 && <span className="rail-line" aria-hidden="true" />}
         {style === 'rail' && words.length > 0 && ticks.map(left => <i key={left} className="rail-tick" aria-hidden="true" style={{ left }} />)}
-        {marker && <span className={style === 'rail' ? 'rail-marker' : style === 'dot' ? 'dot-marker' : 'type-rule'} aria-hidden="true" style={{ left: marker.left, width: marker.width }} />}
+        {marker && <span className={style === 'rail' ? 'rail-marker' : style === 'marker' ? 'marker-stroke' : 'type-rule'} aria-hidden="true"
+          key={style === 'marker' ? `${listKey}:${currentPage}` : undefined}
+          style={{ left: marker.left, width: marker.width, top: marker.top, height: marker.height }} />}
       </div>
       {style === 'rail' && paging && <div className="rail-track" aria-hidden="true"><i style={{ left: `${(currentPage * 100) / pages.length}%`, width: `${100 / pages.length}%` }} /></div>}
       <div className="candidate-measurements" ref={measurements} aria-hidden="true">{words.map((word, index) => candidate(word, index % 9, false, undefined, true))}</div>
@@ -273,9 +288,9 @@ export function StyleThumbnail({ candidateStyle: style, tone }: { candidateStyle
     </span>;
   } else {
     body = <span className={style === 'column' ? 'thumb-list' : 'thumb-row'}>{words.map((word, index) =>
-      <span key={word} className={`thumb-word${index === 0 ? ' on' : ''}`}><small>{index + 1}</small>{word}</span>)}
+      <span key={word} className={`thumb-word${index === 0 ? ' on' : ''}`}><small>{index + 1}</small>
+        {style === 'flap' ? Array.from(word).map((character, tile) => <b key={tile} className="thumb-tile">{character}</b>) : word}</span>)}
       {style === 'rail' && <span className="thumb-rail"><i /></span>}
-      {style === 'dot' && <span className="thumb-dot" />}
     </span>;
   }
   return <span className="style-thumb" data-cand-style={style} data-cand-tone={tone} aria-hidden="true">

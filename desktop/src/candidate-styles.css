@@ -135,30 +135,44 @@
 [data-cand-style="column"] .preview-candidate.focus::before { content: ""; position: absolute; left: 1px; top: 30%; bottom: 30%; width: 2px; border-radius: 1px; background: var(--cand-focus-bar); }
 [data-cand-style="column"] .preview-candidate.focus .candidate-number { color: var(--cand-focus-number); }
 
-/* ── Outline: a flat sheet, the choice ringed in accent ────────────────── */
-[data-cand-style="outline"].ime-preview { border-radius: 10px; box-shadow: 0 1px 2px rgba(0, 0, 0, .05); }
-[data-cand-style="outline"] .palette-query { height: 28px; padding: 3px 8px 0 18px; font-size: 13px; }
-[data-cand-style="outline"] .paged-candidate-row { padding: 3px 8px 9px; }
-[data-cand-style="outline"] .paged-candidate-items { align-items: stretch; gap: 4px; }
-[data-cand-style="outline"] .candidate-measurements, [data-cand-style="outline"] .focus-measurements { gap: 4px; }
-[data-cand-style="outline"] .preview-candidate { flex: none; gap: 6px; height: calc(1em + 12px); padding: 0 10px; border-radius: 7px; color: var(--cand-text-muted); }
-[data-cand-style="outline"] .preview-candidate .candidate-number { font-size: max(10px, .62em); color: var(--cand-number); }
-[data-cand-style="outline"] .preview-candidate.chip:hover { box-shadow: inset 0 0 0 1px var(--cand-chip-edge); color: var(--cand-text); }
-[data-cand-style="outline"] .preview-candidate.focus { background: var(--cand-focus); box-shadow: inset 0 0 0 1.5px var(--cand-focus-edge); color: var(--cand-focus-text); }
-[data-cand-style="outline"] .preview-candidate.focus .candidate-number { color: var(--cand-focus-number); }
+/* ── Split-Flap: a departure board of flap tiles ─────────────────────────
+   Every character on a tile of one width (surface-top / inner-edge are its
+   halves, divider the hinge); the current choice is a row of amber tiles.
+   New content turns over tile by tile from the left. */
+[data-cand-style="flap"].ime-preview { border-radius: 12px; box-shadow: var(--shadow-md); }
+[data-cand-style="flap"] .palette-query { height: 28px; padding: 2px 8px 0 12px; font-size: 12px; }
+[data-cand-style="flap"] .paged-candidate-row { padding: 0 10px 9px; }
+[data-cand-style="flap"] .paged-candidate-items { align-items: center; gap: 10px; perspective: 360px; }
+[data-cand-style="flap"] .candidate-measurements, [data-cand-style="flap"] .focus-measurements { gap: 10px; }
+[data-cand-style="flap"] .preview-candidate { flex: none; gap: 4px; color: var(--cand-text); }
+[data-cand-style="flap"] .preview-candidate .candidate-number { min-width: .62em; font-size: max(10px, .62em); font-weight: 600; text-align: center; color: var(--cand-number); }
+[data-cand-style="flap"] .candidate-word { display: flex; gap: 2px; overflow: visible; }
+.flap-tile { position: relative; display: grid; place-items: center; width: calc(1em + 6px); height: calc(1em + 12px); border-radius: 3px; background: linear-gradient(180deg, var(--cand-surface-top) 50%, var(--cand-inner-edge) 50%); font-weight: 500; line-height: 1; transform-origin: 50% 50%; animation: flap-turn 170ms var(--ease-out) both; }
+.flap-tile::after { content: ""; position: absolute; left: 0; right: 0; top: calc(50% - .5px); height: 1px; background: var(--cand-divider); }
+[data-cand-style="flap"] .preview-candidate:hover .flap-tile { background: linear-gradient(180deg, var(--cand-hover) 50%, var(--cand-pressed) 50%); }
+[data-cand-style="flap"] .preview-candidate.focus .flap-tile { background: linear-gradient(180deg, var(--cand-focus-top) 50%, var(--cand-focus) 50%); color: var(--cand-focus-text); font-weight: 600; }
+[data-cand-style="flap"] .preview-candidate.focus .flap-tile::after { background: var(--cand-focus-edge); }
+[data-cand-style="flap"] .preview-candidate.focus .candidate-number { color: var(--cand-focus-number); }
+@keyframes flap-turn { from { transform: rotateX(90deg); filter: brightness(.75); } to { transform: none; filter: none; } }
 
-/* ── Ink Dot: type only, a dot under the choice ────────────────────────── */
-[data-cand-style="dot"].ime-preview { border-radius: 14px; box-shadow: var(--shadow-md); }
-[data-cand-style="dot"] .palette-query { height: 26px; padding: 4px 10px 0 17px; font-size: 12px; }
-[data-cand-style="dot"] .paged-candidate-row { padding: 0 10px 4px; }
-[data-cand-style="dot"] .paged-candidate-items { align-items: baseline; gap: 4px; padding-bottom: 12px; margin-bottom: 0; }
-[data-cand-style="dot"] .candidate-measurements, [data-cand-style="dot"] .focus-measurements { gap: 4px; align-items: baseline; }
-[data-cand-style="dot"] .preview-candidate { flex: none; align-items: baseline; gap: 4px; padding: 4px 7px 0; line-height: 1.25; color: var(--cand-text-muted); }
-[data-cand-style="dot"] .preview-candidate:hover { color: var(--cand-text); }
-[data-cand-style="dot"] .preview-candidate .candidate-number { font-size: max(9px, .55em); color: var(--cand-number); }
-[data-cand-style="dot"] .preview-candidate.focus { font-weight: 600; color: var(--cand-focus-text); }
-[data-cand-style="dot"] .preview-candidate.focus .candidate-number { color: var(--cand-focus-number); }
-.dot-marker { position: absolute; bottom: 8px; height: 6px; border-radius: 50%; background: var(--cand-focus-bar); transition: left 140ms var(--ease-out); }
+/* ── Highlighter: notebook paper and a highlighter swipe ─────────────────
+   Ink on one ruled line; the current choice is swiped with the focus
+   colour. The stroke slides to the word under the pointer and draws itself
+   on when the content changes; the word under it turns to dark ink. */
+[data-cand-style="marker"].ime-preview { border-radius: 10px; box-shadow: var(--shadow-md); }
+[data-cand-style="marker"] .palette-query { height: 28px; padding: 3px 10px 0 20px; font-size: 13px; }
+[data-cand-style="marker"] .paged-candidate-row { padding: 0 12px 6px; }
+[data-cand-style="marker"] .paged-candidate-row::after { content: ""; position: absolute; left: 12px; right: 12px; bottom: 5px; height: 1px; background: var(--cand-divider); }
+[data-cand-style="marker"] .paged-candidate-items { position: relative; z-index: 1; gap: 6px; }
+[data-cand-style="marker"] .candidate-measurements, [data-cand-style="marker"] .focus-measurements { gap: 6px; }
+[data-cand-style="marker"] .preview-candidate { flex: none; gap: 3px; height: calc(1em + 18px); padding: 0 8px; color: var(--cand-text-muted); }
+[data-cand-style="marker"] .preview-candidate .candidate-number { font-size: max(10px, .62em); color: var(--cand-number); }
+[data-cand-style="marker"] .preview-candidate.focus { font-weight: 500; color: var(--cand-text); }
+[data-cand-style="marker"] .preview-candidate.focus .candidate-number { color: var(--cand-focus-number); }
+[data-cand-style="marker"] .preview-candidate.marked { font-weight: 500; color: var(--cand-focus-text); }
+.marker-stroke { position: absolute; z-index: 0; background: var(--cand-focus); opacity: .86; transform: skewX(-14deg); border-radius: 3px 8px 4px 9px / 6px 10px 6px 10px; transition: left 140ms var(--ease-out), width 140ms var(--ease-out); animation: marker-draw 190ms var(--ease-out) both; }
+.marker-stroke::after { content: ""; position: absolute; inset: 22% 4% 8% 6%; border-radius: 4px 9px 3px 8px; background: var(--cand-focus); opacity: .35; }
+@keyframes marker-draw { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
 
 /* ── Style gallery on the Appearance page ───────────────────────────────
    Four cards at a time; the arrows beside them turn to the next four, and
@@ -263,15 +277,20 @@
 [data-cand-style="column"] .thumb-word { position: relative; gap: 5px; padding: 2px 6px; border-radius: 4px; font-size: 10.5px; line-height: 1.05; }
 [data-cand-style="column"] .thumb-word.on { background: var(--cand-focus); box-shadow: inset 0 0 0 1px var(--cand-focus-edge); font-weight: 600; }
 [data-cand-style="column"] .thumb-word.on::before { content: ""; position: absolute; left: 1px; top: 30%; bottom: 30%; width: 1.5px; border-radius: 1px; background: var(--cand-focus-bar); }
-/* Outline */
-[data-cand-style="outline"] .thumb-panel { border-radius: 6px; box-shadow: 0 1px 2px rgba(0, 0, 0, .06); }
-[data-cand-style="outline"] .thumb-row { gap: 2px; }
-[data-cand-style="outline"] .thumb-word { padding: 3px 5px; border-radius: 4px; }
-[data-cand-style="outline"] .thumb-word.on { background: var(--cand-focus); box-shadow: inset 0 0 0 1.25px var(--cand-focus-edge); }
-/* Ink Dot */
-[data-cand-style="dot"] .thumb-panel { padding-bottom: 11px; border-radius: 9px; }
-[data-cand-style="dot"] .thumb-word.on { font-weight: 600; }
-.thumb-dot { position: absolute; left: 17px; bottom: -6px; width: 4px; height: 4px; border-radius: 50%; background: var(--cand-focus-bar); }
+/* Split-Flap */
+[data-cand-style="flap"] .thumb-panel { border-radius: 7px; }
+[data-cand-style="flap"] .thumb-row { align-items: center; gap: 5px; }
+[data-cand-style="flap"] .thumb-word { align-items: center; gap: 1px; }
+[data-cand-style="flap"] .thumb-word small { margin-right: 2px; font-weight: 600; }
+.thumb-tile { position: relative; display: grid; place-items: center; width: 15px; height: 17px; border-radius: 2px; background: linear-gradient(180deg, var(--cand-surface-top) 50%, var(--cand-inner-edge) 50%); font-size: 11.5px; font-weight: 500; color: var(--cand-text); }
+.thumb-tile::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--cand-divider); }
+[data-cand-style="flap"] .thumb-word.on .thumb-tile { background: linear-gradient(180deg, var(--cand-focus-top) 50%, var(--cand-focus) 50%); color: var(--cand-focus-text); }
+[data-cand-style="flap"] .thumb-word.on .thumb-tile::after { background: var(--cand-focus-edge); }
+/* Highlighter */
+[data-cand-style="marker"] .thumb-panel { border-radius: 7px; }
+[data-cand-style="marker"] .thumb-row { padding-bottom: 4px; border-bottom: 1px solid var(--cand-divider); }
+[data-cand-style="marker"] .thumb-word.on { position: relative; isolation: isolate; font-weight: 500; color: var(--cand-focus-text); }
+[data-cand-style="marker"] .thumb-word.on::before { content: ""; position: absolute; z-index: -1; left: 6px; right: -3px; top: 30%; bottom: -3px; border-radius: 2px 6px 3px 7px; background: var(--cand-focus); opacity: .86; transform: skewX(-14deg); }
 /* Theme swatches show the chosen style in each theme, smaller. */
 .swatch-art .style-thumb { height: 100%; border-radius: 0; }
 .swatch-art .thumb-panel { zoom: .62; }

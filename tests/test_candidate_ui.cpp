@@ -791,32 +791,49 @@ int main() {
         REQUIRE_EQ(seven.items.size(), size_t{6});
     }
 
-    // Outline: a flat sheet; the accent ring stays with the current choice.
+    // Split-Flap: every character on a tile of one shared width; long
+    // candidates show as many tiles as fit. Nothing slides: the amber tiles
+    // stay with the current choice.
     {
         CandidateWindowOptions options;
-        options.style = CandidateStyle::Outline;
-        const auto outline = layout_for({L"你好世界", L"你好", L"拟好", L"你"}, middle, work, 96, options);
-        REQUIRE_TRUE(outline.visible && outline.composition_rect.bottom <= outline.items.front().bounds.top);
-        const RECT ring = candidate_marker_target(outline, outline.items[1].candidate_index);
-        REQUIRE_TRUE(EqualRect(&ring, &outline.items[0].bounds));
-        const auto palette = make_candidate_palette(CandidateThemeMode::Light, false, CandidateStyle::Outline);
-        REQUIRE_TRUE(palette.focus_border == palette.focus_bar && palette.focus_border != palette.border);
+        options.style = CandidateStyle::SplitFlap;
+        const auto flap = layout_for({L"你好世界", L"你好", L"拟好", L"你"}, middle, work, 96, options);
+        REQUIRE_TRUE(flap.visible && flap.composition_rect.bottom <= flap.items.front().text_bounds.top);
+        const int tile = flap.items.front().horizontal_padding_px;
+        const int gap = scale_dip(2, 96);
+        REQUIRE_TRUE(tile >= flap.candidate_font_px);
+        REQUIRE_EQ(width(flap.items[0].text_bounds), 4 * tile + 3 * gap);
+        REQUIRE_EQ(width(flap.items[3].text_bounds), tile);
+        for (const auto& item : flap.items) {
+            REQUIRE_EQ(item.horizontal_padding_px, tile);
+            REQUIRE_TRUE(!item.truncated && is_inside(item.bounds, item.text_bounds));
+        }
+        REQUIRE_TRUE(candidate_paint::is_empty(candidate_marker_target(flap, flap.items[2].candidate_index)));
+        REQUIRE_TRUE(candidate_style_reveals(CandidateStyle::SplitFlap) && !candidate_style_reveals(CandidateStyle::AdaptiveFlow));
+        // A long candidate shows fewer tiles and is marked cut.
+        const auto long_flap = layout_for({std::wstring(60, L'长'), L"你好"}, middle, make_rect(0, 0, 500, 400), 96, options);
+        REQUIRE_TRUE(long_flap.items.front().truncated);
+        REQUIRE_TRUE(width(long_flap.items.front().text_bounds) % (tile + gap) == tile);
+        const auto palette = make_candidate_palette(CandidateThemeMode::Dark, false, CandidateStyle::SplitFlap);
+        REQUIRE_TRUE(palette.focus_background != palette.inner_edge && palette.surface_top != palette.inner_edge);
     }
 
-    // Ink Dot: a small round dot under the current word glides to the word
-    // under the pointer.
+    // Highlighter: a stroke behind the lower part of the current word,
+    // a little past both ends; it moves to the word under the pointer.
     {
         CandidateWindowOptions options;
-        options.style = CandidateStyle::InkDot;
-        const auto dot = layout_for({L"你好世界", L"你好", L"拟好", L"你"}, middle, work, 96, options);
-        REQUIRE_TRUE(dot.visible);
-        const auto centred_under = [](const RECT& mark, const CandidateItemLayout& item) {
-            const int center = (mark.left + mark.right) / 2;
-            return width(mark) == height(mark) && width(mark) > 0 && mark.top >= item.text_bounds.bottom &&
-                   mark.bottom <= item.bounds.bottom && center >= item.text_bounds.left && center <= item.text_bounds.right;
+        options.style = CandidateStyle::Highlighter;
+        const auto marker = layout_for({L"你好世界", L"你好", L"拟好", L"你"}, middle, work, 96, options);
+        REQUIRE_TRUE(marker.visible && !candidate_paint::is_empty(marker.rail_rect));
+        const auto covers = [&](const RECT& band, const CandidateItemLayout& item) {
+            const int center = (item.text_bounds.top + item.text_bounds.bottom) / 2;
+            return band.left < item.text_bounds.left && band.right > item.text_bounds.left &&
+                   band.top < center + marker.candidate_font_px / 2 && band.bottom > center &&
+                   is_inside(item.bounds, band);
         };
-        REQUIRE_TRUE(centred_under(candidate_marker_target(dot, std::nullopt), dot.items[0]));
-        REQUIRE_TRUE(centred_under(candidate_marker_target(dot, dot.items[2].candidate_index), dot.items[2]));
+        REQUIRE_TRUE(covers(candidate_marker_target(marker, std::nullopt), marker.items[0]));
+        REQUIRE_TRUE(covers(candidate_marker_target(marker, marker.items[2].candidate_index), marker.items[2]));
+        REQUIRE_TRUE(candidate_style_reveals(CandidateStyle::Highlighter));
     }
 
     // Adaptive Flow chooses its form from the measured candidates...
