@@ -1,0 +1,66 @@
+{
+  "batch": "lexicon_batch_162",
+  "license": "MIT",
+  "authoring_source": "first-party authored",
+  "external_lexicon_import": false,
+  "bulk_third_party_lexicon_import": false,
+  "scope": "日常聊天短句",
+  "author": "chat-batch",
+  "review_scope": "Single AI author wrote every phrase as a common instant-messaging turn (questions, replies, particles, pronoun-verb chunks, feelings, plans) and checked each reading in chat use. Phrases equal to a held-out colloquial test line, or a 3+ character piece of one, were dropped so tests/data/colloquial_test.tsv stays held out. Not an independent human linguistic review and not a bulk import.",
+  "pronunciation_dependency": "pypinyin 0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 175,
+  "sha256": "69a1ece8206c786f19c6e441e57c64ea95c9330b6699f91c548c3e924d8fe923",
+  "authoring_files_sha256": {
+    "batch162_draft.txt": "f0cf082444d0ccd141aca4a906df0b6f9c6eee1fb9ec27f0aee94e698cc7bc14",
+    "batch162_pronunciation_review.tsv": "8273519001f8b223d96f69f9c4726ec63f578873c908ec872ff3a4705c1e1679"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "3483d6d560814ca5d76bd3e68d3edfdde527c4eaa9a82192cadca8526dc8f184",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "preset_category_weights": {
+    "chat_high": [
+      6000
+    ],
+    "chat_low": [
+      5500
+    ]
+  },
+  "weights_used": [
+    5500,
+    6000
+  ],
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "chat_high": 89,
+    "chat_low": 86
+  },
+  "length_distribution": {
+    "2": 27,
+    "3": 119,
+    "4": 27,
+    "5": 2
+  },
+  "mandatory_polyphone_reviews": 116,
+  "manual_pronunciation_overrides": {
+    "干嘛呢": "ganmane",
+    "在干啥": "zaigansha",
+    "转我": "zhuanwo",
+    "转你": "zhuanni",
+    "转过去了": "zhuanguoqule",
+    "干啥去": "ganshaqu",
+    "啥玩意儿": "shawanyier",
+    "到没到": "daomeidao",
+    "还没吃": "haimeichi",
+    "干嘛呀": "ganmaya",
+    "嗯嗯嗯": "enenen",
+    "么么哒": "memeda",
+    "爱咋咋地": "aizazadi",
+    "转过来": "zhuanguolai",
+    "我觉得行": "wojuedexing"
+  },
+  "multi_reading_semantic_entries": [],
+  "line_endings": "UTF-8 LF",
+  "source_policy": "Project-authored chat phrases, not taken from tests/data or any third-party lexicon. Phrases already present in any dictionary layer were left out, so existing entries and weights are unchanged."
+}
