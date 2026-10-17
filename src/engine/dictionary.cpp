@@ -1,5 +1,6 @@
 #include "dictionary.h"
 #include "fuzzy_pinyin.h"
+#include "pinyin_spelling.h"
 
 #include "../common/logging.h"
 #include "../common/utf_utils.h"
@@ -98,6 +99,7 @@ std::wstring normalize_pinyin_key(const std::wstring& value) {
             normalized.push_back(ch);
         }
     }
+    spell_ue(normalized);
     return normalized;
 }
 

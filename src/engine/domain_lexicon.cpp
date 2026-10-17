@@ -1,6 +1,7 @@
 #include "domain_lexicon.h"
 
 #include "input_options.h"
+#include "pinyin_spelling.h"
 #include "../common/utf_utils.h"
 
 #include <algorithm>
@@ -23,6 +24,7 @@ std::vector<std::pair<std::wstring, std::wstring>> DomainLexicon::read_pack(cons
         std::wstring word = utf8_to_wide(line.substr(tab + 1));
         if (pinyin.empty() || word.empty() ||
             !std::all_of(pinyin.begin(), pinyin.end(), [](wchar_t ch) { return ch >= L'a' && ch <= L'z'; })) continue;
+        spell_ue(pinyin);
         result.emplace_back(std::move(pinyin), std::move(word));
     }
     return result;

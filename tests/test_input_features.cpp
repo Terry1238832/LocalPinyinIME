@@ -2,6 +2,7 @@
 #include "../src/engine/pinyin_engine.h"
 #include "../src/engine/double_pinyin.h"
 #include "../src/engine/fuzzy_pinyin.h"
+#include "../src/engine/pinyin_spelling.h"
 #include "../src/engine/typo_correction.h"
 
 #include <algorithm>
@@ -199,5 +200,36 @@ int main() {
     engine.set_input_options(defaults);
     REQUIRE_TRUE(!engine.lookup(L"haoxiangshi").front().domain);
     REQUIRE_TRUE(!engine.lookup(L"yilaizhuru").front().domain);
+
+    // ── ü before e: typed ue or ve ─────────────────────────────────────────
+    // Either spelling finds the same words, whichever one a dictionary key
+    // was written with; nver stays nü'er.
+    std::wstring spelled = L"lvenvernve";
+    spell_ue(spelled);
+    REQUIRE_EQ(spelled, std::wstring(L"luenvernue"));
+    for (const auto* typed : {L"lue", L"lve"}) REQUIRE_EQ(engine.lookup(typed).front().text, std::wstring(L"略"));
+    for (const auto* typed : {L"nue", L"nve"}) REQUIRE_EQ(engine.lookup(typed).front().text, std::wstring(L"虐"));
+    for (const auto* typed : {L"zhuzhouweinue", L"zhuzhouweinve"})
+        REQUIRE_EQ(engine.lookup(typed).front().text, std::wstring(L"助纣为虐"));
+    for (const auto* typed : {L"gongchengluedi", L"gongchenglvedi"})
+        REQUIRE_EQ(engine.lookup(typed).front().text, std::wstring(L"攻城掠地"));
+    REQUIRE_EQ(engine.lookup(L"nver").front().text, std::wstring(L"女儿"));
+    // A scene pack keyed gonglve answers gonglue too.
+    auto games = defaults;
+    games.domains = kDomainGames;
+    engine.set_input_options(games);
+    REQUIRE_TRUE(engine.lookup(L"gonglue").front().text == L"攻略" && engine.lookup(L"gonglue").front().domain);
+    engine.set_input_options(defaults);
+
+    // ── Whole words after preceding text ──────────────────────────────────
+    // Typing a word's pinyin after some text lists the whole words before
+    // loose character pairs (是自, 是紫), as it does at the start of a field.
+    auto shizi = engine.lookup(L"shizi", L"但是");
+    REQUIRE_TRUE(contains(shizi, L"式子"));
+    for (const auto* loose : {L"是自", L"是紫", L"是资"}) REQUIRE_TRUE(!contains(shizi, loose));
+    // The leading choice keeps its contextual rank, word or not.
+    auto woshi = engine.lookup(L"woshi", L"你知道");
+    REQUIRE_EQ(woshi.front().text, std::wstring(L"我是"));
+    REQUIRE_TRUE(rank_of(woshi, L"卧室") < rank_of(woshi, L"我时"));
     return 0;
 }

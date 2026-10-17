@@ -1,6 +1,7 @@
 #include "pinyin_engine.h"
 
 #include "double_pinyin.h"
+#include "pinyin_spelling.h"
 #include "typo_correction.h"
 
 #include <algorithm>
@@ -90,6 +91,8 @@ ParsedInput parse_input(const std::wstring& raw) {
             result.boundaries.push_back(result.pinyin.size());
         }
     }
+    // One letter for one letter, so raw positions stay valid.
+    spell_ue(result.pinyin);
     return result;
 }
 
@@ -159,6 +162,7 @@ std::wstring normalize_input(const std::wstring& input) {
             normalized.push_back(ch);
         }
     }
+    spell_ue(normalized);
     return normalized;
 }
 
@@ -685,6 +689,37 @@ std::vector<Candidate> PinyinEngine::lookup_pinyin(const std::wstring& pinyin, c
         for (auto& word : rescued) {
             if (std::none_of(ranked.begin(), ranked.end(), [&](const auto& item) { return item.text == word.text; }))
                 ranked.push_back(std::move(word));
+        }
+    }
+
+    // With text before the caret, an input that spells whole words (shizi)
+    // lists them right after the leading choice, ahead of loose character
+    // pairs (是自, 是紫), as it does without context. The leading choice keeps
+    // its contextual rank, and so does anything the user has chosen before.
+    if (!context.empty() && !mixed && ranked.size() > 1) {
+        auto whole = words_for(normalized);
+        whole.erase(std::remove_if(whole.begin(), whole.end(), [&](const auto& word) {
+            const size_t characters = character_count(word.text);
+            return characters < 2 || characters > 4 ||
+                   !dictionary_.reading_matches_boundaries(normalized, word.text, parsed.boundaries);
+        }), whole.end());
+        if (!whole.empty()) {
+            whole = ranker_.rank(normalized, std::move(whole), &learning_);
+            std::unordered_set<std::wstring> word_texts;
+            for (const auto& word : whole) word_texts.insert(word.text);
+            const auto stays = [&](const Candidate& item) {
+                return word_texts.count(item.text) > 0 || item.user_frequency > 0 || item.is_user_lexicon_entry;
+            };
+            std::vector<Candidate> reordered{ranked.front()};
+            std::unordered_set<std::wstring> listed{ranked.front().text};
+            for (size_t index = 1; index < ranked.size(); ++index)
+                if (stays(ranked[index]) && listed.insert(ranked[index].text).second) reordered.push_back(ranked[index]);
+            for (auto& word : whole)
+                if (reordered.size() < kMaxCandidateCount && listed.insert(word.text).second) reordered.push_back(std::move(word));
+            for (size_t index = 1; index < ranked.size() && reordered.size() < kMaxCandidateCount; ++index)
+                if (listed.insert(ranked[index].text).second) reordered.push_back(ranked[index]);
+            if (reordered.size() > kMaxCandidateCount) reordered.resize(kMaxCandidateCount);
+            ranked = std::move(reordered);
         }
     }
 
