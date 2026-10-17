@@ -8,11 +8,11 @@
   "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
   "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
   "new_entries": 550,
-  "sha256": "041f12909cf4f98a6ae814c3cd1476d52f68ba6087ba74f765868f501774a1d4",
+  "sha256": "44454aa70a2c6991f8fd286d4659451238f633b35fbad784da884c0bb02d1d14",
   "authoring_files_sha256": {
     "lexicon_batch_152.authoring.json": "6b3b124ffdfa9cd3e604249fc8fe1507d6506c216b11134556459745dc3cb213",
     "batch152_authored_daily_draft.txt": "e2b1836b669b531c098a07b1b31a937c4882c58b429538aa0bb6f580bcc19a93",
-    "batch152_pronunciation_review.tsv": "28a1b8fed1ebf2575e9275c6c89c9e69b0d3a1cc836ec8b9e6292e524d4737fb"
+    "batch152_pronunciation_review.tsv": "a4ffd820702ed1f7dc0c25d1debd7ad34f1a7483e5dca223bf3b7a6e05084148"
   },
   "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
   "supporting_tools_sha256": {
@@ -51,9 +51,15 @@
   },
   "authoring_rejections": [],
   "mandatory_polyphone_reviews": 410,
-  "manual_pronunciation_overrides": {},
+  "manual_pronunciation_overrides": {
+    "还款失败": "huankuanshibai",
+    "全额还款": "quanehuankuan",
+    "自动还款": "zidonghuankuan",
+    "最低还款": "zuidihuankuan",
+    "信用卡还款": "xinyongkahuankuan"
+  },
   "reading_variant_choices": {},
-  "semantic_pronunciation_corrections": 0,
+  "semantic_pronunciation_corrections": 5,
   "line_endings": "UTF-8 LF",
   "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
 }
