@@ -1,0 +1,51 @@
+{
+  "batch": "lexicon_batch_159",
+  "license": "MIT",
+  "authoring_source": "reference-derived",
+  "external_lexicon_import": false,
+  "bulk_third_party_lexicon_import": false,
+  "scope": "四字成语中",
+  "author": "gap-fill",
+  "review_scope": "Single AI author reads every selected idiom and its default key in context, then records positional polyphone decisions. Entries were chosen one by one from the jieba missing-common-word checklist (dict.txt, MIT), ranks 30001-100000, tag i, four characters, excluding names. This is not an independent human linguistic review and not a bulk import.",
+  "reference_source": "jieba dict.txt",
+  "reference_license": "MIT",
+  "reference_license_url": "https://github.com/fxsjy/jieba/blob/master/LICENSE",
+  "pronunciation_dependency": "pypinyin 0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 950,
+  "sha256": "15addf88f61562841031410f82c34040951916c0ba6e631bba9aa0eca355fbec",
+  "authoring_files_sha256": {
+    "batch159_draft.txt": "6ce119c2922a81d5a84caf0b6937b46a1a938cd10f8b157f13037a67fffd4ee0",
+    "batch159_pronunciation_review.tsv": "489e8473795060803dc89bbffc716acb9ffa88b49651bd13165d134363936bef"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "9b53ce1516f90a82e4b0d37ab7833a35227a79930f64e638dde1109e00bd2494",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "preset_category_weights": {
+    "idioms": [
+      5000
+    ]
+  },
+  "weights_used": [
+    5000
+  ],
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "idioms": 950
+  },
+  "length_distribution": {
+    "4": 950
+  },
+  "mandatory_polyphone_reviews": 747,
+  "manual_pronunciation_overrides": {
+    "骄阳似火": "jiaoyangsihuo",
+    "舍我其谁": "shewoqishei"
+  },
+  "multi_reading_semantic_entries": [
+    "舍我其谁",
+    "骄阳似火"
+  ],
+  "line_endings": "UTF-8 LF",
+  "source_policy": "Entries were selected one at a time from the jieba frequency checklist (dict.txt, MIT), not from a bulk import and not from tests/data. Names, fragments, and uncertain two-character leftovers were left out. Existing entries and weights were not modified."
+}
