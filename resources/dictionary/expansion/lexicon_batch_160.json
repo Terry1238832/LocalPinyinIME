@@ -1,0 +1,51 @@
+{
+  "batch": "lexicon_batch_160",
+  "license": "MIT",
+  "authoring_source": "reference-derived",
+  "external_lexicon_import": false,
+  "bulk_third_party_lexicon_import": false,
+  "scope": "四字成语下",
+  "author": "gap-fill",
+  "review_scope": "Single AI author reads every selected idiom and its default key in context, then records positional polyphone decisions. Entries were chosen one by one from the jieba missing-common-word checklist (dict.txt, MIT), ranks 30001-100000, tag i, four characters, excluding names. This is not an independent human linguistic review and not a bulk import.",
+  "reference_source": "jieba dict.txt",
+  "reference_license": "MIT",
+  "reference_license_url": "https://github.com/fxsjy/jieba/blob/master/LICENSE",
+  "pronunciation_dependency": "pypinyin 0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 941,
+  "sha256": "4382efc7bd0fc8596fe689602f4f1715410b243a83a1d6ee3d2e80f61e440477",
+  "authoring_files_sha256": {
+    "batch160_draft.txt": "a9be146e690af14d1d2e6f826ecef1645eef322112b9eaa95ea27535414e7f9b",
+    "batch160_pronunciation_review.tsv": "a16a8a381c0a61eabb7ee72be044c8d4c3db7bb723fa5d1feee664105fc2ca50"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "4f07a533136ad46bea93c32cb9d8d4302a281c1eb72bde6aebe919fe1d83688b",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "preset_category_weights": {
+    "idioms": [
+      5000
+    ]
+  },
+  "weights_used": [
+    5000
+  ],
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "idioms": 941
+  },
+  "length_distribution": {
+    "4": 941
+  },
+  "mandatory_polyphone_reviews": 743,
+  "manual_pronunciation_overrides": {
+    "柔情似水": "rouqingsishui",
+    "势在必得": "shizaibide"
+  },
+  "multi_reading_semantic_entries": [
+    "势在必得",
+    "柔情似水"
+  ],
+  "line_endings": "UTF-8 LF",
+  "source_policy": "Entries were selected one at a time from the jieba frequency checklist (dict.txt, MIT), not from a bulk import and not from tests/data. Names, fragments, and uncertain two-character leftovers were left out. Existing entries and weights were not modified."
+}
