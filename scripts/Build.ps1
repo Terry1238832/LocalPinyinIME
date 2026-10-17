@@ -8,6 +8,7 @@ param(
 $ErrorActionPreference = 'Stop'
 $sourceRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '..')).Path
 $buildRoot = Join-Path $sourceRoot '.build'
+$buildRootX86 = Join-Path $sourceRoot '.build-x86'
 $outputRoot = Join-Path $sourceRoot 'dist'
 $stageRoot = Join-Path $buildRoot 'package'
 
@@ -59,6 +60,22 @@ $devScript = Join-Path $buildRoot 'dev-env.cmd'
     'if errorlevel 1 exit /b 1',
     'set'
 ) | Set-Content -LiteralPath $devScript -Encoding ASCII
+# The 32-bit input method for 32-bit applications (QQ Music and many other
+# desktop programs), built and tested in its own tree with the x86 tools. It
+# runs before this process takes on the x64 build environment.
+$ninjaPath = Join-Path $vsRoots[0] 'Common7\IDE\CommonExtensions\Microsoft\CMake\Ninja\ninja.exe'
+$devScriptX86 = Join-Path $buildRoot 'build-x86.cmd'
+@(
+    '@echo off',
+    "call `"$(Join-Path $vsRoots[0] 'Common7\Tools\VsDevCmd.bat')`" -arch=x86 -host_arch=x64 >nul",
+    'if errorlevel 1 exit /b 1',
+    'set VSLANG=1033',
+    "`"$CMakePath`" -S `"$sourceRoot`" -B `"$buildRootX86`" -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=cl.exe `"-DCMAKE_MAKE_PROGRAM=$ninjaPath`" `"-DLOCALPINYINIME_PYTHON_EXECUTABLE=$PythonPath`" -DLOCALPINYIN_INNER_INSTALLER= -DLOCALPINYIN_PAYLOAD_BYTES= || exit /b 1",
+    "`"$CMakePath`" --build `"$buildRootX86`" --config Release --parallel $Jobs || exit /b 1",
+    "`"$ctestPath`" --test-dir `"$buildRootX86`" -C Release --output-on-failure || exit /b 1"
+) | Set-Content -LiteralPath $devScriptX86 -Encoding ASCII
+& cmd.exe /d /c $devScriptX86
+if ($LASTEXITCODE -ne 0) { throw 'The 32-bit build or its tests failed' }
 & cmd.exe /d /c $devScript | ForEach-Object {
     if ($_ -match '^([^=]+)=(.*)$') { [Environment]::SetEnvironmentVariable($matches[1], $matches[2], 'Process') }
 }
@@ -92,7 +109,14 @@ Get-ChildItem -LiteralPath $desktopPackage -Force | Copy-Item -Destination (Join
 foreach ($binary in @('LocalPinyinIME.dll', 'LocalPinyinSettingsBridge.exe', 'LocalPinyinImeSetup.exe')) {
     Copy-Item -LiteralPath (Join-Path $buildRoot "bin\$binary") -Destination (Join-Path $stageRoot 'bin')
 }
-Copy-Item -LiteralPath (Join-Path $sourceRoot 'resources\dictionary\core_zh_pinyin.tsv'), (Join-Path $sourceRoot 'resources\dictionary\local_core_zh_pinyin.tsv'), (Join-Path $sourceRoot 'resources\dictionary\context_zh.tsv'), (Join-Path $sourceRoot 'resources\dictionary\context_zh.lm'), (Join-Path $sourceRoot 'resources\dictionary\standard_zh_pinyin.tsv'), (Join-Path $sourceRoot 'resources\dictionary\continuations_zh.tsv') -Destination (Join-Path $stageRoot 'bin\dictionary')
+# The 32-bit input method and its setup tool; it reads the dictionary above.
+New-Item -ItemType Directory -Path (Join-Path $stageRoot 'bin\x86') -Force | Out-Null
+foreach ($binary in @('LocalPinyinIME.dll', 'LocalPinyinImeSetup.exe')) {
+    Copy-Item -LiteralPath (Join-Path $buildRootX86 "bin\$binary") -Destination (Join-Path $stageRoot 'bin\x86')
+}
+Copy-Item -LiteralPath (Join-Path $sourceRoot 'resources\dictionary\core_zh_pinyin.tsv'), (Join-Path $sourceRoot 'resources\dictionary\local_core_zh_pinyin.tsv'), (Join-Path $sourceRoot 'resources\dictionary\context_zh.tsv'), (Join-Path $sourceRoot 'resources\dictionary\context_zh.lm'), (Join-Path $sourceRoot 'resources\dictionary\standard_zh_pinyin.tsv'), (Join-Path $sourceRoot 'resources\dictionary\continuations_zh.tsv'), (Join-Path $sourceRoot 'resources\dictionary\english_terms.tsv') -Destination (Join-Path $stageRoot 'bin\dictionary')
+New-Item -ItemType Directory -Path (Join-Path $stageRoot 'bin\dictionary\domains') -Force | Out-Null
+Copy-Item -Path (Join-Path $sourceRoot 'resources\dictionary\domains\*.tsv') -Destination (Join-Path $stageRoot 'bin\dictionary\domains')
 Copy-Item -LiteralPath (Join-Path $sourceRoot 'LICENSE') -Destination $stageRoot
 Copy-Item -LiteralPath (Join-Path $sourceRoot 'resources\THIRD_PARTY_NOTICES.txt') -Destination $stageRoot
 $versionHeader = Get-Content -LiteralPath (Join-Path $buildRoot 'generated\localpinyin_version.h') -Raw

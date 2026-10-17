@@ -1,33 +1,49 @@
 // A modern one-window installer front end. The proven Inno Setup package is
-// embedded as a resource and run silently (it still elevates, copies, registers
-// and enables the input method); this window only presents the flow:
+// embedded as a resource and run silently (it copies, registers and enables
+// the input method); this window only presents the flow:
 // welcome -> progress -> finished (or failed, with retry and log).
 //
 //   LocalPinyinInstaller.exe              install
 //   LocalPinyinInstaller.exe --preview    simulate an installation (no changes)
 //   LocalPinyinInstaller.exe --capture D  render every state to PNG files in D
+//
+// The manifest asks for the highest rights the user has (highestAvailable):
+// an administrator confirms the system prompt as the installer opens, and
+// setup then runs without asking again. A standard user opens it unelevated
+// and setup asks for an administrator's password on install, so the input
+// method is still enabled for the signed-in user. With the environment
+// variable __COMPAT_LAYER=RunAsInvoker the developer modes run unelevated.
 #include "../settings/modern_renderer.h"
+#include "localpinyin_design_tokens.h"
 #include "localpinyin_version.h"
 
 #include <windows.h>
 #include <dwmapi.h>
+#include <exdisp.h>
 #include <gdiplus.h>
 #include <shellapi.h>
+#include <shldisp.h>
 #include <shlobj.h>
 #include <windowsx.h>
+#include <wrl/client.h>
 
 #include <algorithm>
+#include <atomic>
+#include <chrono>
 #include <cmath>
 #include <cstdint>
 #include <filesystem>
 #include <fstream>
 #include <string>
+#include <thread>
 
 namespace {
 
 constexpr int kPayloadResource = 201;
 constexpr int kIconResource = 1;
 constexpr UINT_PTR kTimer = 1;
+// Posted by the preparation thread once setup is unpacked and started.
+constexpr UINT kPreparedMessage = WM_APP + 1;
 constexpr wchar_t kWindowClass[] = L"LocalPinyinInstallerWindow";
 #ifndef LOCALPINYIN_PAYLOAD_BYTES
 #define LOCALPINYIN_PAYLOAD_BYTES 340000000ULL
@@ -46,13 +62,17 @@ bool system_dark() {
                         L"AppsUseLightTheme", RRF_RT_REG_DWORD, nullptr, &value, &size) == ERROR_SUCCESS && value == 0;
 }
 
+// The installer shares the design tokens with the settings app and the
+// candidate window (assets/branding/theme/design_tokens.json).
 Palette palette_for(bool dark) {
-    if (dark) return {RGB(32, 34, 39), RGB(240, 242, 245), RGB(160, 167, 178), RGB(112, 119, 130), RGB(75, 141, 247),
-                      RGB(106, 161, 249), RGB(58, 123, 230), RGB(255, 255, 255), RGB(58, 62, 70), RGB(52, 56, 64),
-                      RGB(111, 208, 154), RGB(255, 138, 122)};
-    return {RGB(255, 255, 255), RGB(27, 31, 39), RGB(92, 101, 116), RGB(139, 147, 161), RGB(25, 118, 243),
-            RGB(15, 104, 220), RGB(12, 88, 189), RGB(255, 255, 255), RGB(230, 233, 239), RGB(241, 243, 247),
-            RGB(15, 123, 63), RGB(196, 43, 28)};
+    if (dark) {
+        namespace ui = localpinyin::tokens::ui_dark;
+        return {ui::kSurface, ui::kText, ui::kText2, ui::kText3, ui::kAccent, ui::kAccentHover, ui::kAccentPressed,
+                ui::kOnAccent, ui::kTrack, localpinyin::tokens::candidate_flow_dark::kHover, ui::kSuccess, ui::kDanger};
+    }
+    namespace ui = localpinyin::tokens::ui_light;
+    return {ui::kSurface, ui::kText, ui::kText2, ui::kText3, ui::kAccent, ui::kAccentHover, ui::kAccentPressed,
+            ui::kOnAccent, ui::kTrack, localpinyin::tokens::candidate_flow_light::kHover, ui::kSuccess, ui::kDanger};
 }
 
 std::wstring install_root() {
@@ -67,6 +87,60 @@ std::wstring install_dir() {
     return install_root() + L"\\releases\\" + LOCALPINYINIME_VERSION_NUMERIC_STRING + L"\\x64";
 }
 
+bool process_elevated() {
+    HANDLE token = nullptr;
+    if (!OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &token)) return false;
+    TOKEN_ELEVATION elevation{};
+    DWORD size = 0;
+    const bool elevated = GetTokenInformation(token, TokenElevation, &elevation, sizeof(elevation), &size) &&
+                          elevation.TokenIsElevated;
+    CloseHandle(token);
+    return elevated;
+}
+
+// Opens a file through the desktop (Explorer), so it runs as the signed-in
+// user rather than inheriting the installer's elevation.
+bool open_as_desktop_user(const std::wstring& file, const std::wstring& directory) {
+    using Microsoft::WRL::ComPtr;
+    ComPtr<IShellWindows> windows;
+    if (FAILED(CoCreateInstance(CLSID_ShellWindows, nullptr, CLSCTX_LOCAL_SERVER, IID_PPV_ARGS(&windows)))) return false;
+    VARIANT desktop{}, none{};
+    desktop.vt = VT_I4;
+    desktop.lVal = CSIDL_DESKTOP;
+    long desktop_window = 0;
+    ComPtr<IDispatch> found, background, application;
+    ComPtr<IServiceProvider> provider;
+    ComPtr<IShellBrowser> browser;
+    ComPtr<IShellView> view;
+    ComPtr<IShellFolderViewDual> folder_view;
+    ComPtr<IShellDispatch2> shell;
+    if (windows->FindWindowSW(&desktop, &none, SWC_DESKTOP, &desktop_window, SWFO_NEEDDISPATCH, &found) != S_OK ||
+        !found || FAILED(found.As(&provider)) ||
+        FAILED(provider->QueryService(SID_STopLevelBrowser, IID_PPV_ARGS(&browser))) ||
+        FAILED(browser->QueryActiveShellView(&view)) ||
+        FAILED(view->GetItemObject(SVGIO_BACKGROUND, IID_PPV_ARGS(&background))) ||
+        FAILED(background.As(&folder_view)) || FAILED(folder_view->get_Application(&application)) ||
+        FAILED(application.As(&shell))) {
+        return false;
+    }
+    const auto text = [](const std::wstring& value) {
+        VARIANT variant{};
+        variant.vt = VT_BSTR;
+        variant.bstrVal = SysAllocString(value.c_str());
+        return variant;
+    };
+    BSTR path = SysAllocString(file.c_str());
+    VARIANT arguments = text(L""), folder = text(directory), verb = text(L""), show{};
+    show.vt = VT_I4;
+    show.lVal = SW_SHOWNORMAL;
+    const HRESULT result = shell->ShellExecute(path, arguments, folder, verb, show);
+    SysFreeString(path);
+    VariantClear(&arguments);
+    VariantClear(&folder);
+    VariantClear(&verb);
+    return SUCCEEDED(result);
+}
+
 std::uint64_t directory_bytes(const std::wstring& directory) {
     std::uint64_t total = 0;
     std::error_code error;
@@ -78,7 +152,8 @@ std::uint64_t directory_bytes(const std::wstring& directory) {
 
 class InstallerWindow {
 public:
-    explicit InstallerWindow(bool preview) : preview_(preview), palette_(palette_for(system_dark())) {}
+    explicit InstallerWindow(bool preview)
+        : preview_(preview), elevated_(!preview && process_elevated()), palette_(palette_for(system_dark())) {}
 
     int run(HINSTANCE instance, int show) {
         instance_ = instance;
@@ -153,7 +228,7 @@ private:
         DwmExtendFrameIntoClientArea(hwnd_, &margins);
         const DWORD round = 2;  // DWMWCP_ROUND
         DwmSetWindowAttribute(hwnd_, 33, &round, sizeof(round));
-        const BOOL dark = palette_.background != RGB(255, 255, 255);
+        const BOOL dark = palette_.background != localpinyin::tokens::ui_light::kSurface;
         DwmSetWindowAttribute(hwnd_, 20, &dark, sizeof(dark));
         SetWindowPos(hwnd_, nullptr, 0, 0, 0, 0, SWP_FRAMECHANGED | SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER);
     }
@@ -166,8 +241,13 @@ private:
     RECT close_rect() const { return dip_rect(kWidth - 46, 0, kWidth, 36); }
     RECT minimize_rect() const { return dip_rect(kWidth - 92, 0, kWidth - 46, 36); }
 
+    // Only a standard user's setup still asks for an administrator here.
     bool waiting_for_elevation() const {
-        return stage_ == Stage::Installing && !preview_ && !elevated_at_ && !setup_finished_ && target_progress_ <= 0;
+        return stage_ == Stage::Installing && !preview_ && !preparing_ && !elevated_at_ && !setup_finished_ && target_progress_ <= 0;
+    }
+    void open(const std::wstring& file, const std::wstring& directory) const {
+        if (elevated_ && open_as_desktop_user(file, directory)) return;
+        ShellExecuteW(nullptr, L"open", file.c_str(), nullptr, directory.empty() ? nullptr : directory.c_str(), SW_SHOWNORMAL);
     }
     bool has_primary() const { return stage_ != Stage::Installing; }
     bool has_secondary() const {
@@ -192,7 +272,7 @@ private:
         // Window buttons.
         const auto glyph_color = [&](Hit which) { return hot_ == which ? palette_.text : palette_.muted; };
         if (hot_ == Hit::Minimize) r.fill(minimize_rect(), palette_.hover);
-        if (hot_ == Hit::Close) r.fill(close_rect(), RGB(196, 43, 28));
+        if (hot_ == Hit::Close) r.fill(close_rect(), localpinyin::tokens::ui_light::kWindowClose);
         const float unit = static_cast<float>(dpi_) / 96.0f;
         RECT minimize = minimize_rect(), close = close_rect();
         const float mx = (minimize.left + minimize.right) / 2.0f, my = (minimize.top + minimize.bottom) / 2.0f;
@@ -252,7 +332,8 @@ private:
                 static_cast<LONG>(std::lround((track.right - track.left) * std::clamp(shown_progress_, 0.0, 1.0))));
             r.rounded(fill, (fill.bottom - fill.top) / 2.0f, palette_.accent, palette_.accent);
             const int percent = static_cast<int>(std::lround(std::clamp(shown_progress_, 0.0, 1.0) * 100));
-            const std::wstring status = waiting_for_elevation() ? std::wstring(L"正在等待管理员权限")
+            const std::wstring status = preparing_ ? std::wstring(L"正在准备安装文件")
+                : waiting_for_elevation() ? std::wstring(L"正在等待管理员权限")
                 : (shown_progress_ < 0.92 ? L"正在复制文件 · " : L"正在注册输入法 · ") + std::to_wstring(percent) + L"%";
             r.text(status, dip_rect(0, 264, kWidth, 286), palette_.muted, 12.5f * unit, 400, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
         }
@@ -350,13 +431,29 @@ private:
         hot_ = pressed_ = Hit::None;
         EnableMenuItem(GetSystemMenu(hwnd_, FALSE), SC_CLOSE, MF_GRAYED);
         if (!preview_) {
-            std::wstring setup;
-            if (!extract_payload(&setup)) return fail(L"安装文件已损坏，请重新下载安装包。");
+            // Unpacking 110 MB and starting setup take a moment: they run on
+            // a worker so the window keeps painting and moving meanwhile.
+            preparing_ = true;
+            elevated_at_ = 0;
+            worker_ = std::thread([this] { prepare_setup(); });
+        }
+        SetTimer(hwnd_, kTimer, 33, nullptr);
+        InvalidateRect(hwnd_, nullptr, FALSE);
+    }
+
+    // Worker thread: unpack the setup package and start it. The result is
+    // read on the UI thread after it joins this thread.
+    void prepare_setup() {
+        CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
+        prepared_error_.clear();
+        std::wstring setup;
+        if (!extract_payload(&setup)) {
+            prepared_error_ = L"安装文件已损坏，请重新下载安装包。";
+        } else {
             baseline_bytes_ = directory_bytes(install_dir());
             // Setup writes its log only once it runs elevated, so a fresh log
             // tells the administrator prompt was accepted.
             DeleteFileW(log_path_.c_str());
-            elevated_at_ = 0;
             std::wstring parameters = L"/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP- /LOG=\"" + log_path_ + L"\"";
             SHELLEXECUTEINFOW info{sizeof(info)};
             info.fMask = SEE_MASK_NOCLOSEPROCESS | SEE_MASK_NOASYNC;
@@ -365,13 +462,39 @@ private:
             info.lpParameters = parameters.c_str();
             info.nShow = SW_SHOWNORMAL;
             if (!ShellExecuteExW(&info) || !info.hProcess) {
-                return fail(GetLastError() == ERROR_CANCELLED ? L"需要允许管理员权限，才能安装输入法。"
-                                                              : L"安装程序无法启动，请重新下载后再试。");
+                prepared_error_ = GetLastError() == ERROR_CANCELLED ? L"需要允许管理员权限，才能安装输入法。"
+                                                                    : L"安装程序无法启动，请重新下载后再试。";
+            } else {
+                prepared_process_ = info.hProcess;
             }
-            process_ = info.hProcess;
         }
-        SetTimer(hwnd_, kTimer, 33, nullptr);
-        InvalidateRect(hwnd_, nullptr, FALSE);
+        CoUninitialize();
+        PostMessageW(hwnd_, kPreparedMessage, 0, 0);
+    }
+
+    void on_prepared() {
+        if (worker_.joinable()) worker_.join();
+        preparing_ = false;
+        if (!prepared_error_.empty()) return fail(prepared_error_);
+        process_ = prepared_process_;
+        prepared_process_ = nullptr;
+        // Opened elevated: setup inherits it and starts at once.
+        if (elevated_) elevated_at_ = GetTickCount64();
+        // The installed size is measured on its own thread: walking the
+        // growing folder would otherwise stall the progress animation.
+        copied_bytes_ = baseline_bytes_;
+        scanning_ = true;
+        scanner_ = std::thread([this] {
+            while (scanning_) {
+                copied_bytes_ = directory_bytes(install_dir());
+                for (int slice = 0; slice < 5 && scanning_; ++slice) std::this_thread::sleep_for(std::chrono::milliseconds(60));
+            }
+        });
+    }
+
+    void stop_scanner() {
+        scanning_ = false;
+        if (scanner_.joinable()) scanner_.join();
     }
 
     void fail(const std::wstring& reason) {
@@ -395,7 +518,7 @@ private:
         } else if (process_) {
             // Files land in a new versioned folder: their size tracks the copy.
             if (++polls_ % 8 == 0) {
-                const auto bytes = directory_bytes(install_dir());
+                const std::uint64_t bytes = copied_bytes_;
                 const double copied = bytes > baseline_bytes_
                     ? static_cast<double>(bytes - baseline_bytes_) / LOCALPINYIN_PAYLOAD_BYTES : 0.0;
                 if (!elevated_at_ && GetFileAttributesW(log_path_.c_str()) != INVALID_FILE_ATTRIBUTES)
@@ -406,14 +529,15 @@ private:
                 target_progress_ = std::max(target_progress_, std::min(0.92, std::max(copied * 0.92, paced)));
             }
             if (WaitForSingleObject(process_, 0) == WAIT_OBJECT_0) {
+                stop_scanner();
                 GetExitCodeProcess(process_, &code);
                 CloseHandle(process_);
                 process_ = nullptr;
                 if (code != 0) {
                     // No log and nothing copied: setup never ran elevated, so
                     // the administrator prompt was declined or timed out.
-                    const bool declined = GetFileAttributesW(log_path_.c_str()) == INVALID_FILE_ATTRIBUTES &&
-                                          directory_bytes(install_dir()) <= baseline_bytes_;
+                    const bool declined = !elevated_ && GetFileAttributesW(log_path_.c_str()) == INVALID_FILE_ATTRIBUTES &&
+                                          copied_bytes_ <= baseline_bytes_;
                     return fail(declined ? L"安装已取消：没有获得管理员权限。点“重试”后，在弹出的窗口中选择“是”。"
                                          : L"安装过程出错（代码 " + std::to_wstring(code) + L"），可查看安装日志。");
                 }
@@ -440,16 +564,12 @@ private:
         } else if (hit == Hit::Primary) {
             if (stage_ == Stage::Welcome || stage_ == Stage::Failed) start_install();
             else if (stage_ == Stage::Done) {
-                if (!preview_) {
-                    const std::wstring settings = install_dir() + L"\\LocalPinyinSettings.exe";
-                    ShellExecuteW(nullptr, L"open", settings.c_str(), nullptr, install_dir().c_str(), SW_SHOWNORMAL);
-                }
+                if (!preview_) open(install_dir() + L"\\LocalPinyinSettings.exe", install_dir());
                 DestroyWindow(hwnd_);
             }
         } else if (hit == Hit::Secondary) {
             if (stage_ == Stage::Done) DestroyWindow(hwnd_);
-            else if (stage_ == Stage::Failed && !log_path_.empty())
-                ShellExecuteW(nullptr, L"open", log_path_.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
+            else if (stage_ == Stage::Failed && !log_path_.empty()) open(log_path_, L"");
         }
     }
 
@@ -498,6 +618,9 @@ private:
                 if (wparam == VK_RETURN && has_primary()) activate(Hit::Primary);
                 if (wparam == VK_ESCAPE && stage_ != Stage::Installing) DestroyWindow(hwnd_);
                 return 0;
+            case kPreparedMessage:
+                on_prepared();
+                return 0;
             case WM_TIMER:
                 if (wparam == kTimer) tick();
                 return 0;
@@ -524,6 +647,8 @@ private:
                 paint();
                 return 0;
             case WM_DESTROY:
+                if (worker_.joinable()) worker_.join();
+                stop_scanner();
                 PostQuitMessage(0);
                 return 0;
             default:
@@ -535,6 +660,7 @@ private:
     HINSTANCE instance_ = nullptr;
     HWND hwnd_ = nullptr;
     bool preview_ = false;
+    bool elevated_ = false;
     Palette palette_;
     localpinyin::ModernRenderer renderer_;
     int dpi_ = 96;
@@ -549,6 +675,14 @@ private:
     unsigned polls_ = 0;
     std::uint64_t baseline_bytes_ = 0;
     HANDLE process_ = nullptr;
+    // Preparation and size measurement threads (see prepare_setup).
+    std::thread worker_;
+    std::thread scanner_;
+    bool preparing_ = false;
+    std::wstring prepared_error_;
+    HANDLE prepared_process_ = nullptr;
+    std::atomic<bool> scanning_{false};
+    std::atomic<std::uint64_t> copied_bytes_{0};
     std::wstring failure_;
     std::wstring log_path_;
 };

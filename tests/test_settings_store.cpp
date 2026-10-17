@@ -45,7 +45,20 @@ int main() {
     REQUIRE_EQ(loaded.theme_mode, CandidateThemeMode::Dark);
     REQUIRE_TRUE(!loaded.show_key_hints);
     REQUIRE_EQ(loaded.text_size, CandidateTextSize::Level6);
+    REQUIRE_EQ(loaded.style, kDefaultCandidateStyle);
     REQUIRE_TRUE(!store.load_input_mode_options().shift_toggle_enabled);
+
+    // The style is saved on its own and leaves every other option alone.
+    for (const auto style : kCandidateStyles) {
+        options.style = style;
+        REQUIRE_TRUE(store.save_candidate_options(options));
+        const auto styled = store.load_candidate_options();
+        REQUIRE_EQ(styled.style, style);
+        REQUIRE_EQ(styled.theme_mode, CandidateThemeMode::Dark);
+        REQUIRE_EQ(styled.text_size, CandidateTextSize::Level6);
+        REQUIRE_TRUE(!styled.show_key_hints);
+    }
+    options.style = kDefaultCandidateStyle;
 
     const auto dictionary = root / L"core_zh_pinyin.tsv";
     const auto learning = std::filesystem::path(store.learning_data_path());

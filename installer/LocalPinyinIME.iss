@@ -294,6 +294,56 @@ begin
       'Final verification failed after enable-current-user.', PreviousDll);
 end;
 
+// The 32-bit input method: 32-bit applications (QQ Music and many other
+// desktop programs) load input methods from the 32-bit registry view only.
+// It lives in {app}\x86 and reads the dictionary in {app}. Its own 32-bit
+// setup tool registers it, since a 64-bit process cannot load a 32-bit DLL.
+function SetupToolX86Path(): String;
+begin
+  Result := ExpandConstant('{app}\x86\{#MySetupToolName}');
+end;
+
+function InstalledDllX86Path(): String;
+begin
+  Result := ExpandConstant('{app}\x86\{#MyAppExeName}');
+end;
+
+function RunSetupToolX86(Params: String; StepName: String; var ResultCode: Integer): Boolean;
+begin
+  ResultCode := -1;
+  Log('LocalPinyinIME 32-bit step: ' + StepName);
+  Log('LocalPinyinIME 32-bit params: ' + Params);
+  Result := Exec(SetupToolX86Path(), Params + ' --diagnostic-log ' + QuoteArg(ExpandConstant('{app}\setup-diagnostics-x86.log')),
+                 SetupWorkingDir(), SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  Log('LocalPinyinIME 32-bit started: ' + BoolText(Result) + ', exit code: ' + IntToStr(ResultCode));
+end;
+
+function CurrentRegisteredDllX86(): String;
+var
+  Value: String;
+begin
+  Result := '';
+  if RegQueryStringValue(HKCR32, 'CLSID\' + LocalPinyinClsid + '\InprocServer32', '', Value) then
+    Result := Value;
+end;
+
+// Registered before the 64-bit input method, which then owns the shared
+// profile (and its icon path). A failure here leaves 64-bit applications
+// working, so it is logged rather than undoing the whole installation.
+procedure RunRegisterX86AndVerify();
+var
+  Code: Integer;
+  PreviousX86Dll: String;
+begin
+  PreviousX86Dll := CurrentRegisteredDllX86();
+  if RunSetupToolX86('--register-system --dll ' + QuoteArg(InstalledDllX86Path()), 'register 32-bit', Code) and (Code = 0) and
+     RunSetupToolX86('--verify --expected-dll ' + QuoteArg(InstalledDllX86Path()), 'verify 32-bit', Code) and (Code = 0) then
+    Exit;
+  Log('LocalPinyinIME 32-bit registration failed; 32-bit applications cannot use this version.');
+  if (PreviousX86Dll <> '') and (CompareText(PreviousX86Dll, InstalledDllX86Path()) <> 0) and FileExists(PreviousX86Dll) then
+    RunSetupToolX86('--register-system --dll ' + QuoteArg(PreviousX86Dll), 'restore previous 32-bit registration', Code);
+end;
+
 procedure CurStepChanged(CurStep: TSetupStep);
 var
   CurrentDll: String;
@@ -306,12 +356,15 @@ begin
     if (CurrentDll <> '') and (CompareText(CurrentDll, NewDll) <> 0) then
       Log('LocalPinyinIME preserving previous registration until new target verifies: ' + CurrentDll);
 
+    RunRegisterX86AndVerify();
     RunRegisterAndVerify(NewDll, CurrentDll);
     RunEnableAndVerify(NewDll, CurrentDll);
   end;
 end;
 
 procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
+var
+  Code: Integer;
 begin
   if (CurUninstallStep = usUninstall) and RegisteredDllMatches(InstalledDllPath()) then
   begin
@@ -319,6 +372,8 @@ begin
     RunBestEffort('--unregister-system --dll ' + QuoteArg(InstalledDllPath()),
                   'unregister system');
   end;
+  if (CurUninstallStep = usUninstall) and (CompareText(CurrentRegisteredDllX86(), InstalledDllX86Path()) = 0) then
+    RunSetupToolX86('--unregister-system --dll ' + QuoteArg(InstalledDllX86Path()), 'unregister 32-bit', Code);
 end;
 
 procedure CurPageChanged(CurPageID: Integer);

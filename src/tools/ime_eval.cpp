@@ -30,20 +30,26 @@ std::string json_string(const std::string& value) {
 // Evaluation is separate from training and never learns the expected answers.
 int wmain(int argc, wchar_t** argv) {
     bool keystrokes = false, use_context = true, scores = false, valid = argc >= 3;
+    unsigned domains = 0;
     for (int index = 3; index < argc; ++index) {
         const std::wstring flag = argv[index];
         if (flag == L"--keystrokes") keystrokes = true;
         else if (flag == L"--no-context") use_context = false;
         else if (flag == L"--scores") scores = true;
+        else if (flag.starts_with(L"--weights=")) valid = valid && localpinyin::PinyinEngine::set_evaluation_weights(flag.substr(10));
+        else if (flag.starts_with(L"--domains=")) domains = localpinyin::parse_usage_domains(flag.substr(10));
         else valid = false;
     }
     if (!valid) {
-        std::cerr << "Usage: LocalPinyinImeEval <directory containing dictionary/> <cases.tsv> [--keystrokes] [--no-context] [--scores]\n";
+        std::cerr << "Usage: LocalPinyinImeEval <directory containing dictionary/> <cases.tsv> [--keystrokes] [--no-context] [--scores] [--domains=coding,daily]\n";
         return 2;
     }
     localpinyin::PinyinEngine engine(localpinyin::DictionaryLoadMode::Empty);
     const auto isolated_user = std::filesystem::path(argv[2]).parent_path() / L"eval-user" / L"user_lexicon.tsv";
     if (!engine.load_dictionary_resource_directory(argv[1], isolated_user.wstring())) return 3;
+    localpinyin::EngineInputOptions options;
+    options.domains = domains;
+    engine.set_input_options(options);
     std::ifstream cases(std::filesystem::path(argv[2]), std::ios::binary);
     if (!cases) return 4;
     std::string line;

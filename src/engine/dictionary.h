@@ -75,6 +75,15 @@ public:
     // True when `pinyin` begins (or is) a legal syllable, e.g. zh, shu, xia.
     [[nodiscard]] static bool is_syllable_prefix(const std::wstring& pinyin);
     [[nodiscard]] std::vector<std::wstring> matching_pinyins_at(const std::wstring& input, size_t offset) const;
+    // Keys reachable from `offset` when typed syllables stand for their fuzzy
+    // partners (fuzzy_pinyin.h), as (key, typed length). Only keys that use at
+    // least one partner; matching_pinyins_at finds the literal ones. Typed
+    // apostrophes (`boundaries`) are respected.
+    [[nodiscard]] std::vector<std::pair<std::wstring, size_t>> fuzzy_matches_at(
+        const std::wstring& input, size_t offset, const std::vector<size_t>& boundaries, unsigned mask) const;
+    [[nodiscard]] bool has_key_with_prefix(const std::wstring& prefix) const;
+    // A cheap existence test before copying a key's candidates.
+    [[nodiscard]] bool has_key(const std::wstring& pinyin) const { return entries_.contains(pinyin); }
     UserLexiconRefreshResult refresh_user_lexicon_if_changed(bool composition_active);
     [[nodiscard]] size_t entry_count() const noexcept;
     [[nodiscard]] const DictionaryStats& stats() const noexcept { return stats_; }
@@ -126,6 +135,10 @@ private:
         std::wstring initials;
     };
     const PredictionReading& prediction_reading(const std::wstring& key, size_t character_count) const;
+    // Abbreviation lookup by one letter per character; with `tokens`, each
+    // syllable must also begin with its token (zh, ch, sh).
+    std::vector<Candidate> lookup_abbreviation_letters(const std::wstring& initials,
+                                                       const std::vector<std::wstring>* tokens) const;
 
     std::unordered_map<std::wstring, std::vector<Candidate>> entries_;
     size_t max_key_length_ = 0;

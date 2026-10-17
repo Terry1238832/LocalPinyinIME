@@ -36,6 +36,24 @@
       "weight": 3
     },
     {
+      "name": "KdConv dialogue utterances (film, music, travel chit-chat)",
+      "url": "https://github.com/thu-coai/KdConv/tree/653db76432de09a004ba708a68f8bbd5500e6bec/data",
+      "files": "data/{film,music,travel}/{train,dev,test}.json (utterances only; knowledge-base files unused)",
+      "retrieved": "2026-10-16",
+      "license": "Apache-2.0",
+      "attribution": "Tsinghua University CoAI group (thu-coai), https://github.com/thu-coai/KdConv",
+      "weight": 1
+    },
+    {
+      "name": "CrossWOZ dialogue utterances (hotel, restaurant, attraction, metro, taxi requests)",
+      "url": "https://github.com/thu-coai/CrossWOZ/tree/df82c9fdff91b9b130f2d6b89110d3870ba6260e/data/crosswoz",
+      "files": "data/crosswoz/{train,val,test}.json.zip (message content only)",
+      "retrieved": "2026-10-16",
+      "license": "Apache-2.0",
+      "attribution": "Tsinghua University CoAI group (thu-coai), https://github.com/thu-coai/CrossWOZ",
+      "weight": 1
+    },
+    {
       "name": "Bundled dictionary words (internal n-grams only, no clause boundaries)",
       "files": "core_zh_pinyin.tsv, local_core_zh_pinyin.tsv, standard_zh_pinyin.tsv",
       "weight": 2
@@ -47,7 +65,8 @@
     "Text split into clauses of Han characters; each clause wrapped in sentence boundary markers.",
     "One line in forty (SHA-256 of its text) held out; held-out Tatoeba and Common Voice lines form tests/data/heldout_*.tsv.",
     "Clauses containing any evaluation sentence of four or more characters are excluded.",
-    "Interpolated modified Kneser-Ney estimation; count cutoffs 1/2/3/4 for orders 1-4; pruned rows renormalized."
+    "Interpolated modified Kneser-Ney estimation; count cutoffs 1/2/3/4 for orders 1-4; pruned rows renormalized.",
+    "Dialogue lines are held out by the same one-in-forty hash; held-out dialogue clauses that occur in no training text form tests/data/heldout_dialogue_*.tsv (dialogue repeats set phrases, so a clause also seen in training would only test recall). Clauses containing an evaluation sentence are excluded from training as before."
   ],
-  "build_command": "python tools/build_context_lm.py --input resources/dictionary/authoring/daily_*.txt:8 <other authoring .txt>:1 <work>/train/wikinews.txt:1 <work>/train/tatoeba.txt:3 <work>/train/cv.txt:3 --fragments resources/dictionary/local_core_zh_pinyin.tsv:2 resources/dictionary/standard_zh_pinyin.tsv:2 resources/dictionary/core_zh_pinyin.tsv:2 --exclude tests/data/typing_holdout.tsv tests/data/typing_fresh.tsv tests/data/typing_independent.tsv tests/data/scenario_replay_076.tsv tests/data/common_word_order_079.tsv tests/data/heldout_sentences.tsv --min-count 1 2 3 4 --output resources/dictionary/context_zh.lm"
+  "build_command": "python tools/build_context_lm.py --input resources/dictionary/authoring/daily_*.txt:8 <other authoring .txt>:1 <work>/train/wikinews.txt:1 <work>/train/tatoeba.txt:3 <work>/train/cv.txt:3 <work>/train/kdconv.txt:1 <work>/train/crosswoz.txt:1 --fragments resources/dictionary/local_core_zh_pinyin.tsv:2 resources/dictionary/standard_zh_pinyin.tsv:2 resources/dictionary/core_zh_pinyin.tsv:2 --exclude tests/data/typing_holdout.tsv tests/data/typing_fresh.tsv tests/data/typing_independent.tsv tests/data/scenario_replay_076.tsv tests/data/common_word_order_079.tsv tests/data/heldout_sentences.tsv tests/data/heldout_dialogue_sentences.tsv --min-count 1 2 3 4 --output resources/dictionary/context_zh.lm"
 }

@@ -1,4 +1,5 @@
 #include "dictionary.h"
+#include "fuzzy_pinyin.h"
 
 #include "../common/logging.h"
 #include "../common/utf_utils.h"
@@ -247,6 +248,12 @@ bool Dictionary::add_entry(const std::wstring& pinyin,
     if (!added) {
         if (mode == EntryAddMode::ReferenceFrequency) {
             it->decoding_frequency = base_frequency;
+            // Project weights are coarse bands, and many everyday words sit
+            // in a low one (公司 3000, 其实 7000), below rarer homophones that
+            // only the reference layer lists (骑士 7856). The reference
+            // frequency is a floor for the visible order; higher project
+            // weights (deliberate priorities) still win.
+            it->base_score = std::max(it->base_score, base_frequency);
         } else if (mode == EntryAddMode::ReplaceExisting) {
             it->base_score = base_frequency;
         } else {
@@ -278,12 +285,26 @@ void Dictionary::load_minimal_fallback() {
     using_fallback_ = true;
 }
 
+// The dictionary beside the module, or, for the 32-bit input method in the
+// x86 subfolder, the one it shares with the 64-bit build in the parent folder.
+std::wstring dictionary_directory() {
+    const std::wstring module = module_directory();
+    const std::wstring own = join_path(module, L"dictionary");
+    if (GetFileAttributesW(own.c_str()) != INVALID_FILE_ATTRIBUTES) return own;
+    const size_t slash = module.find_last_of(L"\\/");
+    if (slash != std::wstring::npos) {
+        const std::wstring shared = join_path(module.substr(0, slash), L"dictionary");
+        if (GetFileAttributesW(shared.c_str()) != INVALID_FILE_ATTRIBUTES) return shared;
+    }
+    return own;
+}
+
 std::wstring Dictionary::default_resource_path() {
-    return join_path(join_path(module_directory(), L"dictionary"), L"core_zh_pinyin.tsv");
+    return join_path(dictionary_directory(), L"core_zh_pinyin.tsv");
 }
 
 std::wstring Dictionary::default_local_core_resource_path() {
-    return join_path(join_path(module_directory(), L"dictionary"), L"local_core_zh_pinyin.tsv");
+    return join_path(dictionary_directory(), L"local_core_zh_pinyin.tsv");
 }
 
 std::wstring Dictionary::default_user_lexicon_path() {
@@ -296,7 +317,7 @@ bool Dictionary::load_from_default_resource() {
                                 default_local_core_resource_path(),
                                 default_user_lexicon_path(),
                                 UserLexiconCreateMode::CreateIfMissing,
-                                join_path(join_path(module_directory(), L"dictionary"), L"standard_zh_pinyin.tsv"))) {
+                                join_path(dictionary_directory(), L"standard_zh_pinyin.tsv"))) {
         return true;
     }
 
@@ -719,6 +740,44 @@ std::vector<Candidate> Dictionary::lookup(const std::wstring& pinyin) const {
     return it->second;
 }
 
+bool Dictionary::has_key_with_prefix(const std::wstring& prefix) const {
+    if (prefix.empty()) return false;
+    const auto& keys = rebuild_prediction_index(prefix.front()).sorted_keys;
+    const auto found = std::lower_bound(keys.begin(), keys.end(), prefix);
+    return found != keys.end() && found->starts_with(prefix);
+}
+
+std::vector<std::pair<std::wstring, size_t>> Dictionary::fuzzy_matches_at(
+    const std::wstring& input, size_t offset, const std::vector<size_t>& boundaries, unsigned mask) const {
+    std::vector<std::pair<std::wstring, size_t>> matches;
+    if (!mask || offset >= input.size()) return matches;
+    std::unordered_set<std::wstring> seen;
+    const auto crosses_boundary = [&](size_t begin, size_t end) {
+        return std::any_of(boundaries.begin(), boundaries.end(), [&](size_t boundary) { return boundary > begin && boundary < end; });
+    };
+    // Walk the typed syllables from `offset`, each as typed or as a fuzzy
+    // partner, while some dictionary key still begins with the spelling.
+    const auto walk = [&](auto&& self, size_t position, const std::wstring& key, bool fuzzy, int depth) -> void {
+        if (depth >= 8) return;
+        for (size_t length = 1; length <= 6 && position + length <= input.size(); ++length) {
+            const std::wstring typed = input.substr(position, length);
+            if (!is_syllable(typed) || crosses_boundary(position, position + length)) continue;
+            std::vector<std::wstring> spellings{typed};
+            for (auto& variant : fuzzy_syllable_variants(typed, mask)) spellings.push_back(std::move(variant));
+            for (const auto& spelling : spellings) {
+                const std::wstring next = key + spelling;
+                if (!has_key_with_prefix(next)) continue;
+                const bool used = fuzzy || spelling != typed;
+                if (used && entries_.contains(next) && seen.insert(next + L'#' + std::to_wstring(position + length)).second)
+                    matches.emplace_back(next, position + length - offset);
+                self(self, position + length, next, used, depth + 1);
+            }
+        }
+    };
+    walk(walk, offset, L"", false, 0);
+    return matches;
+}
+
 std::vector<std::wstring> Dictionary::matching_pinyins_at(const std::wstring& input, size_t offset) const {
     std::vector<std::wstring> matches;
     if (offset >= input.size()) return matches;
@@ -779,7 +838,35 @@ const Dictionary::PredictionReading& Dictionary::prediction_reading(const std::w
     return readings.back();
 }
 
-std::vector<Candidate> Dictionary::lookup_abbreviation(const std::wstring& initials) const {
+std::vector<Candidate> Dictionary::lookup_abbreviation(const std::wstring& typed) const {
+    if (typed.size() < 2 || typed.size() > 16) return {};
+    // zh, ch and sh may be typed as two-letter initials: zhq is z(h)q. Words
+    // whose syllables begin with the typed initials come first.
+    std::vector<std::wstring> tokens;
+    for (size_t index = 0; index < typed.size(); ++index) {
+        if (index + 1 < typed.size() && typed[index + 1] == L'h' &&
+            (typed[index] == L'z' || typed[index] == L'c' || typed[index] == L's')) {
+            tokens.push_back(typed.substr(index, 2));
+            ++index;
+        } else {
+            tokens.emplace_back(1, typed[index]);
+        }
+    }
+    std::vector<Candidate> result;
+    if (tokens.size() != typed.size() && tokens.size() >= 2) {
+        std::wstring letters;
+        for (const auto& token : tokens) letters.push_back(token.front());
+        for (auto& candidate : lookup_abbreviation_letters(letters, &tokens)) result.push_back(std::move(candidate));
+    }
+    for (auto& candidate : lookup_abbreviation_letters(typed, nullptr)) {
+        if (std::none_of(result.begin(), result.end(), [&](const auto& item) { return item.text == candidate.text; }))
+            result.push_back(std::move(candidate));
+    }
+    return result;
+}
+
+std::vector<Candidate> Dictionary::lookup_abbreviation_letters(const std::wstring& initials,
+                                                               const std::vector<std::wstring>* tokens) const {
     if (initials.size() < 2 || initials.size() > 16) return {};
     const auto& partition = rebuild_prediction_index(initials.front());
     auto it = initials_index_.find(initials);
@@ -809,6 +896,17 @@ std::vector<Candidate> Dictionary::lookup_abbreviation(const std::wstring& initi
     }
     std::vector<Candidate> result;
     for (const auto& key : it->second) {
+        if (tokens) {
+            // Each syllable must begin with its typed initial (zh, not z).
+            std::vector<size_t> ends;
+            if (initials_for(key, tokens->size(), {}, &ends).empty()) continue;
+            bool matches = true;
+            for (size_t index = 0; index < tokens->size() && matches; ++index) {
+                const size_t begin = index == 0 ? 0 : ends[index - 1];
+                matches = key.compare(begin, (*tokens)[index].size(), (*tokens)[index]) == 0;
+            }
+            if (!matches) continue;
+        }
         const auto& candidates = entries_.at(key);
         size_t added = 0;
         for (const auto& candidate : candidates) {

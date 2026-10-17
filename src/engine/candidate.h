@@ -24,6 +24,11 @@ struct Candidate {
     int decoding_frequency = 0;
     // Explicit personal dictionary provenance, including built-in overrides.
     bool is_user_lexicon_entry = false;
+    // A spelling correction of the typed keys (a keyboard slip), not a
+    // reading of them; fuzzy pinyin readings are ordinary readings.
+    bool correction = false;
+    // A word of a usage scene the user chose (常用场景).
+    bool domain = false;
 
     [[nodiscard]] int total_score() const noexcept {
         const long long score = static_cast<long long>(base_score) + user_frequency + exact_match_bonus + complete_segmentation_bonus - segmentation_penalty;

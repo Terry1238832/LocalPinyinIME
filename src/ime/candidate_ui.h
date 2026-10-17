@@ -4,6 +4,7 @@
 
 #include <string>
 #include <array>
+#include <functional>
 #include <vector>
 #include <optional>
 
@@ -25,6 +26,41 @@ enum class CandidateTextSize {
     Level7 = 7,
     Small = Level1,
     Large = Level7
+};
+
+// Candidate window styles. They share the input state, paging rules and
+// keyboard behavior; each has its own layout and painter
+// (src/ime/candidate_styles). New styles add an entry here, in
+// kCandidateStyles, and in the design tokens.
+enum class CandidateStyle {
+    AdaptiveFlow,   // "flow": the layout follows the candidates (default)
+    CursorRail,     // "rail": candidates along one rail, a gliding focus line
+    ModernType,     // "type": a typeset line; size, weight and a short rule
+    FloatingGlass,  // "glass": a layered panel with a ceramic selected key
+    Capsule,        // "capsule": one rounded bar, a solid pill on the choice
+    ColumnList,     // "column": one candidate per row under the pinyin
+    Outline,        // "outline": a flat sheet, the choice ringed in accent
+    InkDot          // "dot": type only, an accent dot under the choice
+};
+
+inline constexpr CandidateStyle kDefaultCandidateStyle = CandidateStyle::AdaptiveFlow;
+inline constexpr std::array<CandidateStyle, 8> kCandidateStyles{
+    CandidateStyle::CursorRail, CandidateStyle::ModernType,
+    CandidateStyle::FloatingGlass, CandidateStyle::AdaptiveFlow,
+    CandidateStyle::Capsule, CandidateStyle::ColumnList,
+    CandidateStyle::Outline, CandidateStyle::InkDot};
+
+// Adaptive Flow's three forms, chosen from the measured candidates.
+enum class CandidateFlowForm {
+    Compact,    // one row: short words
+    Balanced,   // the current choice on its own row, alternatives below
+    Expanded    // one candidate per row: long words and sentences
+};
+
+// Fonts the styles draw with (all ship with Windows).
+enum class CandidateFontFace {
+    Ui,       // Microsoft YaHei UI: Chinese, pinyin, labels
+    Numeral   // Segoe UI: Modern Type's small figures
 };
 
 enum class CandidatePlacement {
@@ -124,26 +160,64 @@ struct CandidateWindowOptions {
     CandidateThemeMode theme_mode = CandidateThemeMode::System;
     bool show_key_hints = true;
     CandidateTextSize text_size = CandidateTextSize::Standard;
+    CandidateStyle style = kDefaultCandidateStyle;
 };
 
+// Filled from the design tokens (assets/branding/theme/design_tokens.json):
+// every style fills the same fields with its own colors. The comments give
+// Adaptive Flow's use; the other styles document theirs in their painters.
 struct CandidateThemePalette {
     bool dark = false;
+    // System high-contrast colors; styles drop material effects.
+    bool high_contrast = false;
     COLORREF background = RGB(255, 255, 255);
-    COLORREF border = RGB(210, 210, 210);
-    COLORREF text = RGB(24, 24, 24);
-    COLORREF muted_text = RGB(105, 105, 105);
-    COLORREF hint_text = RGB(120, 120, 120);
-    COLORREF number_text = RGB(0, 92, 180);
-    COLORREF selected_background = RGB(220, 236, 255);
-    COLORREF selected_border = RGB(120, 170, 230);
-    COLORREF selected_text = RGB(255, 255, 255);
-    // Pinyin row, pointer feedback, the selected item's number and the
-    // drop shadow's peak opacity (0-255).
-    COLORREF composition_text = RGB(80, 86, 96);
-    COLORREF hover_background = RGB(238, 243, 252);
-    COLORREF selected_number_text = RGB(214, 230, 255);
-    int shadow_alpha = 60;
+    // The top of a panel that shades downward (Floating Glass).
+    COLORREF surface_top = RGB(255, 255, 255);
+    // Glass edge: the border, a lighter hairline inside it, and in dark mode a
+    // lighter line along the top.
+    COLORREF border = RGB(215, 219, 226);
+    COLORREF inner_edge = RGB(255, 255, 255);
+    COLORREF highlight = RGB(255, 255, 255);
+    COLORREF text = RGB(22, 23, 27);
+    // Alternatives' text where a style sets them back from the current choice.
+    COLORREF text_muted = RGB(22, 23, 27);
+    // Query bar: the brand mark, pinyin syllables, their lighter apostrophes,
+    // and the caret where typing continues (the icon's "P|").
+    COLORREF mark = RGB(26, 111, 232);
+    COLORREF composition_text = RGB(79, 82, 90);
+    COLORREF separator_text = RGB(169, 174, 184);
+    COLORREF caret = RGB(26, 111, 232);
+    // Focus row: tinted, edged, with the brand caret at its left edge and an
+    // accent keycap; Space (Tab for suggestions) commits it.
+    COLORREF focus_background = RGB(238, 244, 253);
+    COLORREF focus_top = RGB(238, 244, 253);
+    COLORREF focus_text = RGB(22, 23, 27);
+    COLORREF focus_border = RGB(205, 223, 250);
+    COLORREF focus_bar = RGB(26, 111, 232);
+    COLORREF focus_keycap = RGB(26, 111, 232);
+    COLORREF focus_number_text = RGB(255, 255, 255);
+    // Alternatives: chips with keycap numbers; the hint keycap in the focus row.
+    COLORREF chip_background = RGB(245, 246, 248);
+    COLORREF chip_border = RGB(231, 234, 238);
+    COLORREF keycap = RGB(232, 235, 240);
+    COLORREF number_text = RGB(100, 106, 121);
+    COLORREF hint_text = RGB(124, 127, 135);
+    COLORREF hover_background = RGB(236, 239, 244);
+    COLORREF pressed_background = RGB(226, 230, 237);
+    // Pager chevrons, page dots or number, settings gear.
+    COLORREF control = RGB(134, 139, 150);
+    COLORREF control_disabled = RGB(211, 215, 222);
+    COLORREF divider = RGB(228, 231, 236);
+    // Peak opacity (0-255) of the tight key shadow and the wide ambient one.
+    int shadow_key_alpha = 30;
+    int shadow_ambient_alpha = 46;
+    // Peak opacity of the shadow under a raised selected key (0: flat).
+    int focus_shadow_alpha = 0;
 };
+
+// Measures text as the window will draw it (DirectWrite in the IME). Layouts
+// fall back to estimates when no measurer is supplied (tests, tools).
+using CandidateTextMeasurer = std::function<int(const std::wstring& text, int font_px, int weight, CandidateFontFace face)>;
 
 struct CandidateLayoutInput {
     std::wstring composition_text;
@@ -159,6 +233,15 @@ struct CandidateLayoutInput {
     int dpi = 96;
     CandidateWindowOptions options{};
     bool settings_button = true;
+    // The focus row is drawn larger; hosts may pass its measured text widths.
+    std::vector<int> focus_text_widths_px;
+    // The key that commits the focus row, shown as a hint keycap.
+    std::wstring focus_hint = L"\u7A7A\u683C";
+    int focus_hint_width_px = 0;
+    CandidateTextMeasurer measure;
+    // Adaptive Flow keeps its previous form unless the candidates clearly
+    // call for another, so the popup does not flip shape on every key.
+    std::optional<CandidateFlowForm> previous_flow_form;
 };
 
 struct CandidateItemLayout {
@@ -168,6 +251,8 @@ struct CandidateItemLayout {
     RECT number_bounds{};
     RECT text_bounds{};
     bool selected = false;
+    // The current choice, drawn as the focus row; the others are chips.
+    bool featured = false;
     bool truncated = false;
     int number_text_width_px = 0;
     int candidate_text_width_px = 0;
@@ -180,18 +265,32 @@ struct CandidateItemLayout {
 // The popup is a rounded panel with a soft shadow. The window extends the
 // panel by `shadow_margin_px` on every side; every RECT below except
 // `window_rect` and `panel_screen_rect` is in window client coordinates.
-// The top row shows the segmented pinyin, the bottom row the candidates.
+// All styles fill the shared fields (panel, pinyin, controls, items, pages);
+// the remaining ones are named for the styles that use them.
 struct CandidateLayoutResult {
     bool visible = false;
+    CandidateStyle style = kDefaultCandidateStyle;
+    // Adaptive Flow only.
+    CandidateFlowForm flow_form = CandidateFlowForm::Balanced;
     CandidatePlacement placement = CandidatePlacement::Hidden;
     RECT window_rect{};
     RECT panel_rect{};
     RECT panel_screen_rect{};
     int shadow_margin_px = 0;
     bool paging_visible = false;
+    RECT query_rect{};
+    RECT mark_rect{};
     RECT composition_rect{};
+    RECT focus_rect{};
+    RECT chips_rect{};
+    // Cursor Rail: the rail the candidates sit on and the page track below;
+    // Modern Type: the hairline under the pinyin.
+    RECT rail_rect{};
+    RECT track_rect{};
+    // Focus row and chip row together.
     RECT candidate_area_rect{};
     RECT action_button_rect{};
+    // The commit-key hint keycap at the right end of the focus row.
     RECT hint_rect{};
     RECT previous_page_rect{};
     RECT page_indicator_rect{};
@@ -205,13 +304,23 @@ struct CandidateLayoutResult {
     int height = 0;
     int dpi = 96;
     int corner_radius = 0;
+    // Focus row and chip corner radii.
     int selected_corner_radius = 0;
+    int chip_corner_radius = 0;
     int panel_padding_px = 0;
     int item_gap_px = 0;
     int row_gap_px = 0;
     int composition_font_px = 0;
     int candidate_font_px = 0;
+    int focus_font_px = 0;
+    int number_font_px = 0;
     int hint_font_px = 0;
+    // Cursor Rail and Modern Type set every text size on this baseline.
+    int baseline_y = 0;
+    // Text weights the layout measured with, so the painter draws the same.
+    int focus_weight = 400;
+    int item_weight = 400;
+    CandidateFontFace number_face = CandidateFontFace::Ui;
     bool rect_clamped = false;
     bool reserves_action_icon_space = false;
     bool action_button_visible = false;
@@ -256,6 +365,8 @@ int candidate_text_size_dip(CandidateTextSize size) noexcept;
 std::wstring candidate_text_size_display_label(CandidateTextSize size);
 std::wstring candidate_text_size_display_text(CandidateTextSize size);
 int candidate_font_px_for_size(CandidateTextSize size, int dpi) noexcept;
+// Keycap digits scale with the candidates but stay legible at small sizes.
+int candidate_number_font_px(int candidate_font_px, int dpi) noexcept;
 int estimate_candidate_text_width_px(const std::wstring& text, int font_px);
 UINT candidate_text_draw_flags(bool truncated) noexcept;
 bool should_show_candidate_window(const std::wstring& composition_text,
@@ -290,8 +401,33 @@ CandidateThemeMode parse_candidate_theme_mode(const std::wstring& value) noexcep
 CandidateTextSize parse_candidate_text_size(const std::wstring& value) noexcept;
 std::wstring candidate_theme_mode_to_string(CandidateThemeMode mode);
 std::wstring candidate_text_size_to_string(CandidateTextSize size);
-CandidateThemePalette make_candidate_palette(CandidateThemeMode mode, bool system_dark);
+// Style ids are "flow", "rail", "type", "glass", "capsule", "column",
+// "outline" and "dot"; anything else (a missing
+// key, a value from a newer version) falls back to the default style.
+CandidateStyle parse_candidate_style(const std::wstring& value) noexcept;
+std::wstring candidate_style_to_string(CandidateStyle style);
+const wchar_t* candidate_font_family(CandidateFontFace face) noexcept;
+CandidateThemePalette make_candidate_palette(CandidateThemeMode mode, bool system_dark,
+                                             CandidateStyle style = kDefaultCandidateStyle);
+// Windows high-contrast colors, flat, for every style.
+CandidateThemePalette make_high_contrast_candidate_palette();
 
+// Lays out the candidates in input.options.style.
 CandidateLayoutResult make_candidate_layout(const CandidateLayoutInput& input);
+
+// Adaptive Flow's choice of form, from the candidates' measured text widths
+// at the candidate font size. Hysteresis: a form is entered on a clear
+// signal and kept on a weaker one, so typing one more letter rarely changes
+// the shape of the popup.
+struct CandidateFlowMeasures {
+    int font_px = 0;
+    int longest_px = 0;
+    int median_px = 0;
+    // Widest row the popup may use on this monitor.
+    int inner_max_px = 0;
+};
+CandidateFlowForm decide_candidate_flow_form(const CandidateFlowMeasures& measures,
+                                             std::optional<CandidateFlowForm> previous) noexcept;
+std::wstring candidate_flow_form_to_string(CandidateFlowForm form);
 
 }  // namespace localpinyin

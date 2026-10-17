@@ -80,6 +80,29 @@ void ModernRenderer::rounded(const RECT& bounds, float radius, COLORREF fill_val
         active_->target->DrawRoundedRectangle(geometry, active_->brush.Get(), stroke);
     }
 }
+void ModernRenderer::rounded_fill(const RECT& bounds, float radius, COLORREF value, float opacity) {
+    color(value);
+    active_->brush->SetOpacity(opacity);
+    active_->target->FillRoundedRectangle(D2D1::RoundedRect(rectf(bounds, 0), radius, radius), active_->brush.Get());
+    active_->brush->SetOpacity(1.0f);
+}
+void ModernRenderer::rounded_gradient(const RECT& bounds, float radius, COLORREF top, COLORREF bottom) {
+    const auto rgba = [](COLORREF value) {
+        return D2D1::ColorF(GetRValue(value) / 255.0f, GetGValue(value) / 255.0f, GetBValue(value) / 255.0f, 1.0f);
+    };
+    const D2D1_GRADIENT_STOP stops[] = {{0.0f, rgba(top)}, {1.0f, rgba(bottom)}};
+    Microsoft::WRL::ComPtr<ID2D1GradientStopCollection> collection;
+    Microsoft::WRL::ComPtr<ID2D1LinearGradientBrush> brush;
+    if (FAILED(active_->target->CreateGradientStopCollection(stops, 2, &collection)) ||
+        FAILED(active_->target->CreateLinearGradientBrush(
+            D2D1::LinearGradientBrushProperties(D2D1::Point2F(0, static_cast<float>(bounds.top)),
+                                                D2D1::Point2F(0, static_cast<float>(bounds.bottom))),
+            collection.Get(), &brush))) {
+        rounded(bounds, radius, bottom, bottom);
+        return;
+    }
+    active_->target->FillRoundedRectangle(D2D1::RoundedRect(rectf(bounds, 0), radius, radius), brush.Get());
+}
 void ModernRenderer::outline(const RECT& bounds, float radius, COLORREF value, float stroke) {
     color(value);
     active_->target->DrawRoundedRectangle(D2D1::RoundedRect(rectf(bounds, stroke / 2), radius, radius),
@@ -94,12 +117,13 @@ void ModernRenderer::line(float x1, float y1, float x2, float y2, COLORREF value
     active_->target->DrawLine(D2D1::Point2F(x1, y1), D2D1::Point2F(x2, y2), active_->brush.Get(), stroke, stroke_style_.Get());
 }
 
-IDWriteTextFormat* ModernRenderer::format(float size, int weight) {
-    const std::pair<int, int> key{static_cast<int>(std::lround(size * 10)), weight};
+IDWriteTextFormat* ModernRenderer::format(float size, int weight, std::wstring_view family) {
+    const std::wstring name = family.empty() ? std::wstring(L"Microsoft YaHei UI") : std::wstring(family);
+    const std::tuple<int, int, std::wstring> key{static_cast<int>(std::lround(size * 10)), weight, name};
     auto found = formats_.find(key);
     if (found != formats_.end()) return found->second.Get();
     Microsoft::WRL::ComPtr<IDWriteTextFormat> created;
-    if (FAILED(write_factory_->CreateTextFormat(L"Microsoft YaHei UI", nullptr,
+    if (FAILED(write_factory_->CreateTextFormat(name.c_str(), nullptr,
         static_cast<DWRITE_FONT_WEIGHT>(weight), DWRITE_FONT_STYLE_NORMAL,
         DWRITE_FONT_STRETCH_NORMAL, size, L"zh-CN", &created))) return nullptr;
     created->SetWordWrapping(DWRITE_WORD_WRAPPING_NO_WRAP);
@@ -107,9 +131,9 @@ IDWriteTextFormat* ModernRenderer::format(float size, int weight) {
 }
 
 void ModernRenderer::text(std::wstring_view value, const RECT& bounds, COLORREF value_color,
-                          float size, int weight, UINT flags) {
+                          float size, int weight, UINT flags, std::wstring_view family) {
     if (value.empty() || bounds.right <= bounds.left || bounds.bottom <= bounds.top) return;
-    IDWriteTextFormat* text_format = format(size, weight);
+    IDWriteTextFormat* text_format = format(size, weight, family);
     if (!text_format) return;
     Microsoft::WRL::ComPtr<IDWriteTextLayout> layout;
     if (FAILED(write_factory_->CreateTextLayout(value.data(), static_cast<UINT32>(value.size()), text_format,
@@ -131,9 +155,35 @@ void ModernRenderer::text(std::wstring_view value, const RECT& bounds, COLORREF 
                              layout.Get(), active_->brush.Get(), D2D1_DRAW_TEXT_OPTIONS_CLIP);
 }
 
-int ModernRenderer::measure_text(std::wstring_view value, float size, int weight) {
+float ModernRenderer::text_runs(std::wstring_view value, const RECT& bounds, COLORREF base,
+                                const std::vector<ColorRun>& runs, float size, int weight, UINT flags,
+                                std::wstring_view family) {
+    if (value.empty() || bounds.right <= bounds.left || bounds.bottom <= bounds.top) return 0;
+    IDWriteTextFormat* text_format = format(size, weight, family);
+    if (!text_format) return 0;
+    Microsoft::WRL::ComPtr<IDWriteTextLayout> layout;
+    if (FAILED(write_factory_->CreateTextLayout(value.data(), static_cast<UINT32>(value.size()), text_format,
+        static_cast<float>(bounds.right - bounds.left), static_cast<float>(bounds.bottom - bounds.top), &layout))) return 0;
+    layout->SetParagraphAlignment((flags & DT_VCENTER) ? DWRITE_PARAGRAPH_ALIGNMENT_CENTER : DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
+    // Each run's brush rides on the layout as its drawing effect.
+    std::vector<Microsoft::WRL::ComPtr<ID2D1SolidColorBrush>> brushes;
+    for (const auto& run : runs) {
+        Microsoft::WRL::ComPtr<ID2D1SolidColorBrush> brush;
+        const D2D1_COLOR_F rgba{GetRValue(run.color) / 255.0f, GetGValue(run.color) / 255.0f, GetBValue(run.color) / 255.0f, 1.0f};
+        if (FAILED(active_->target->CreateSolidColorBrush(rgba, &brush))) continue;
+        layout->SetDrawingEffect(brush.Get(), DWRITE_TEXT_RANGE{run.start, run.length});
+        brushes.push_back(std::move(brush));
+    }
+    color(base);
+    active_->target->DrawTextLayout(D2D1::Point2F(static_cast<float>(bounds.left), static_cast<float>(bounds.top)),
+                                    layout.Get(), active_->brush.Get(), D2D1_DRAW_TEXT_OPTIONS_CLIP);
+    DWRITE_TEXT_METRICS metrics{};
+    return SUCCEEDED(layout->GetMetrics(&metrics)) ? metrics.widthIncludingTrailingWhitespace : 0.0f;
+}
+
+int ModernRenderer::measure_text(std::wstring_view value, float size, int weight, std::wstring_view family) {
     if (value.empty() || !initialize(false)) return 0;
-    IDWriteTextFormat* text_format = format(size, weight);
+    IDWriteTextFormat* text_format = format(size, weight, family);
     if (!text_format) return 0;
     Microsoft::WRL::ComPtr<IDWriteTextLayout> layout;
     if (FAILED(write_factory_->CreateTextLayout(value.data(), static_cast<UINT32>(value.size()),
@@ -141,6 +191,23 @@ int ModernRenderer::measure_text(std::wstring_view value, float size, int weight
     DWRITE_TEXT_METRICS metrics{};
     if (FAILED(layout->GetMetrics(&metrics))) return 0;
     return static_cast<int>(std::ceil(metrics.widthIncludingTrailingWhitespace)) + 1;
+}
+
+float ModernRenderer::baseline(float size, int weight, std::wstring_view family) {
+    const std::wstring name = family.empty() ? std::wstring(L"Microsoft YaHei UI") : std::wstring(family);
+    const std::tuple<int, int, std::wstring> key{static_cast<int>(std::lround(size * 10)), weight, name};
+    const auto found = baselines_.find(key);
+    if (found != baselines_.end()) return found->second;
+    float result = size * 0.8f;
+    IDWriteTextFormat* text_format = initialize(false) ? format(size, weight, family) : nullptr;
+    Microsoft::WRL::ComPtr<IDWriteTextLayout> layout;
+    if (text_format && SUCCEEDED(write_factory_->CreateTextLayout(L"国Ag", 3, text_format, 100000, 100000, &layout))) {
+        DWRITE_LINE_METRICS line{};
+        UINT32 lines = 0;
+        if (SUCCEEDED(layout->GetLineMetrics(&line, 1, &lines)) && lines) result = line.baseline;
+    }
+    baselines_.emplace(key, result);
+    return result;
 }
 
 void ModernRenderer::icon(int kind, const RECT& bounds, COLORREF value, float stroke) {

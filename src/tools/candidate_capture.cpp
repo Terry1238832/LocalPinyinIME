@@ -4,7 +4,9 @@
 #include <gdiplus.h>
 #include <filesystem>
 #include <iostream>
+#include <optional>
 #include <string>
+#include <vector>
 
 namespace localpinyin {
 // Test-only capture uses the actual native renderer in a hidden HWND. It never
@@ -12,6 +14,8 @@ namespace localpinyin {
 class CandidateWindowCapture {
 public:
     struct Scene {
+        std::wstring name;
+        CandidateStyle style = kDefaultCandidateStyle;
         bool dark = false;
         int dpi = 96;
         int level = 4;
@@ -19,11 +23,16 @@ public:
         bool last_page = false;
         std::wstring composition;
         std::vector<std::wstring> candidates;
+        bool prediction = false;
+        // Pointer over this page slot (shows a style's moving focus at rest there).
+        std::optional<size_t> hover;
     };
 
     // Shows the real layered popup for a moment and copies that screen area,
     // verifying UpdateLayeredWindow presentation (per-pixel alpha + shadow).
-    static bool capture_live(const std::filesystem::path& output, bool dark) {
+    // The style comes from settings.json, as in the IME (point
+    // LOCALPINYINIME_LOCALAPPDATA at a scratch folder to choose it).
+    static bool capture_live(const std::filesystem::path& directory, bool dark) {
         CandidateWindow window;
         std::vector<Candidate> candidates;
         for (const auto* text : {L"你好世界", L"你好", L"拟好", L"你", L"泥"}) candidates.push_back(Candidate{text, 1, 0});
@@ -31,8 +40,10 @@ public:
         window.show(L"ni'hao'shi'jie", candidates, 0, caret);
         if (!window.is_visible()) return false;
         window.options_.theme_mode = dark ? CandidateThemeMode::Dark : CandidateThemeMode::Light;
-        window.palette_ = make_candidate_palette(window.options_.theme_mode, dark);
+        window.palette_ = make_candidate_palette(window.options_.theme_mode, dark, window.options_.style);
         window.present();
+        const auto output = directory / (L"live-" + candidate_style_to_string(window.options_.style) +
+                                         (dark ? L"-dark.png" : L"-light.png"));
         for (int i = 0; i < 20; ++i) {
             MSG message;
             while (PeekMessageW(&message, nullptr, 0, 0, PM_REMOVE)) DispatchMessageW(&message);
@@ -56,34 +67,30 @@ public:
         return ok;
     }
 
-    static bool capture(const std::filesystem::path& output, const Scene& scene) {
+    static bool capture(const std::filesystem::path& directory, const Scene& scene) {
         CandidateWindow window;
         if (!window.create()) return false;
         window.options_.theme_mode = scene.dark ? CandidateThemeMode::Dark : CandidateThemeMode::Light;
         window.options_.text_size = candidate_text_size_from_level(scene.level);
-        window.palette_ = make_candidate_palette(window.options_.theme_mode, scene.dark);
+        window.options_.style = scene.style;
+        window.palette_ = make_candidate_palette(window.options_.theme_mode, scene.dark, scene.style);
         window.composition_text_ = scene.composition;
         window.candidate_texts_ = scene.candidates;
+        window.prediction_mode_ = scene.prediction;
+        window.caret_rect_ = RECT{60, 40, 61, 62};
         window.update_fonts(scene.dpi);
-        CandidateLayoutInput input;
-        input.composition_text = window.composition_text_;
-        input.candidate_texts = window.candidate_texts_;
-        input.work_area = RECT{0, 0, scene.work_width, 800};
-        input.caret_rect = RECT{60, 40, 61, 62};
-        input.dpi = scene.dpi;
-        input.options = window.options_;
-        const float font_px = static_cast<float>(candidate_font_px_for_size(input.options.text_size, scene.dpi));
-        input.composition_text_width_px = window.renderer_.measure_text(input.composition_text,
-            static_cast<float>(scale_dip(13, scene.dpi)));
-        for (size_t i = 0; i < input.candidate_texts.size(); ++i) {
-            input.candidate_text_widths_px.push_back(window.renderer_.measure_text(input.candidate_texts[i], font_px));
-            input.number_text_widths_px.push_back(window.renderer_.measure_text(std::to_wstring(i % 9 + 1), font_px * 0.78f));
-        }
-        window.layout_ = make_candidate_layout(input);
+        const RECT work{0, 0, scene.work_width, 800};
+        window.layout_ = make_candidate_layout(window.layout_input(scene.dpi, work));
         if (scene.last_page) {
-            input.selected_index = window.layout_.page_indices.back();
-            window.layout_ = make_candidate_layout(input);
+            // As the IME does after a page turn: the first slot of the last
+            // page is selected and the page boundaries are kept.
+            window.selected_index_ = window.layout_.page_indices.back();
+            window.page_indices_ = window.layout_.page_indices;
+            window.layout_ = make_candidate_layout(window.layout_input(scene.dpi, work));
         }
+        if (scene.hover && *scene.hover < window.layout_.items.size())
+            window.candidate_pointer_.move(window.layout_.items[*scene.hover].candidate_index);
+        const auto output = directory / (scene.name + L".png");
         const int width = window.layout_.width, height = window.layout_.height;
         BITMAPINFO info{};
         info.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
@@ -111,7 +118,10 @@ public:
         const bool ok = bitmap.Save(output.c_str(), &png, nullptr) == Gdiplus::Ok;
         SelectObject(dc, previous); DeleteObject(dib); DeleteDC(dc);
         std::wcout << output.filename().wstring() << L" " << width << L"x" << height << L" page "
-            << window.layout_.current_page + 1 << L"/" << window.layout_.page_indices.size() << L"\n";
+            << window.layout_.current_page + 1 << L"/" << window.layout_.page_indices.size();
+        if (scene.style == CandidateStyle::AdaptiveFlow)
+            std::wcout << L" form " << candidate_flow_form_to_string(window.layout_.flow_form);
+        std::wcout << L"\n";
         return ok;
     }
 };
@@ -167,27 +177,36 @@ int wmain(int argc, wchar_t** argv) {
     }
     if (argc == 3) {
         SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
-        const bool live = localpinyin::CandidateWindowCapture::capture_live(output / L"live-light.png", false) &&
-                          localpinyin::CandidateWindowCapture::capture_live(output / L"live-dark.png", true);
+        const bool live = localpinyin::CandidateWindowCapture::capture_live(output, false) &&
+                          localpinyin::CandidateWindowCapture::capture_live(output, true);
         Gdiplus::GdiplusShutdown(token);
         CoUninitialize();
         return live ? 0 : 1;
     }
     using Scene = localpinyin::CandidateWindowCapture::Scene;
+    using localpinyin::CandidateStyle;
     const std::vector<std::wstring> sentence = {L"你好世界", L"你好", L"拟好", L"你", L"泥", L"尼", L"妮", L"逆", L"倪"};
     const std::vector<std::wstring> long_list = {L"你好", L"你好世界", L"这是一个非常长的候选词用来验证单行省略与完整上屏",
         L"离线输入", L"本地拼音", L"分页显示", L"左右翻页", L"原始候选完整保留", L"最后一页的长候选也必须完整保留"};
-    const bool ok =
-        localpinyin::CandidateWindowCapture::capture(output / L"candidate-light.png",
-            Scene{false, 96, 4, 1920, false, L"ni'hao'shi'jie", sentence}) &&
-        localpinyin::CandidateWindowCapture::capture(output / L"candidate-dark.png",
-            Scene{true, 96, 4, 1920, false, L"ni'hao'shi'jie", sentence}) &&
-        localpinyin::CandidateWindowCapture::capture(output / L"candidate-light-paged.png",
-            Scene{false, 144, 4, 900, false, L"ce'shi'yi'ge'hen'chang'de'pin'yin", long_list}) &&
-        localpinyin::CandidateWindowCapture::capture(output / L"candidate-dark-large-last.png",
-            Scene{true, 192, 7, 900, true, L"ce'shi'yi'ge'hen'chang'de'pin'yin", long_list}) &&
-        localpinyin::CandidateWindowCapture::capture(output / L"prediction-narrow.png",
-            Scene{false, 144, 7, 360, true, L"联想 · Tab", long_list});
+    const std::vector<std::wstring> single = {L"你", L"泥", L"尼", L"呢", L"拟", L"逆", L"妮", L"倪", L"腻"};
+    const std::vector<std::wstring> sentences = {L"我今天下午要去图书馆还书", L"我今天下午要去图书馆", L"我今天下午",
+        L"我今天", L"我"};
+    const std::vector<std::wstring> mixed = {L"Windows 输入法", L"Win", L"微信", L"文档", L"维度"};
+    std::vector<Scene> scenes;
+    for (const auto style : localpinyin::kCandidateStyles) {
+        const std::wstring name = localpinyin::candidate_style_to_string(style);
+        scenes.push_back({name + L"-light", style, false, 96, 4, 1920, false, L"ni'hao'shi'jie", sentence});
+        scenes.push_back({name + L"-dark", style, true, 96, 4, 1920, false, L"ni'hao'shi'jie", sentence});
+        scenes.push_back({name + L"-single", style, false, 96, 4, 1920, false, L"ni", single});
+        scenes.push_back({name + L"-paged", style, false, 144, 4, 900, false, L"ce'shi'yi'ge'hen'chang'de'pin'yin", long_list});
+        scenes.push_back({name + L"-large-last", style, true, 192, 7, 900, true, L"ce'shi'yi'ge'hen'chang'de'pin'yin", long_list});
+        scenes.push_back({name + L"-sentence", style, false, 96, 4, 1920, false, L"wo'jin'tian'xia'wu'yao'qu'tu'shu'guan'huan'shu", sentences});
+        scenes.push_back({name + L"-mixed", style, true, 120, 3, 1920, false, L"win", mixed});
+        scenes.push_back({name + L"-prediction-narrow", style, false, 144, 7, 360, true, L"联想 · Tab", long_list, true});
+        scenes.push_back({name + L"-hover", style, false, 96, 4, 1920, false, L"ni'hao'shi'jie", sentence, false, size_t{3}});
+    }
+    bool ok = true;
+    for (const auto& scene : scenes) ok = localpinyin::CandidateWindowCapture::capture(output, scene) && ok;
     Gdiplus::GdiplusShutdown(token);
     CoUninitialize();
     return ok ? 0 : 1;

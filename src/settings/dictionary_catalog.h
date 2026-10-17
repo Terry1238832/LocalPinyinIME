@@ -26,6 +26,9 @@ struct DictionaryCatalogStats {
 class DictionaryCatalog {
 public:
     bool load(const std::wstring& resource_directory);
+    // The counts load() would report, several times faster: for showing the
+    // dictionary's size without building the searchable catalog.
+    [[nodiscard]] static DictionaryCatalogStats count(const std::wstring& resource_directory);
     [[nodiscard]] const DictionaryCatalogStats& stats() const noexcept { return stats_; }
     [[nodiscard]] const std::vector<DictionaryCatalogEntry>& entries() const noexcept { return entries_; }
     [[nodiscard]] std::vector<DictionaryCatalogEntry> preview(std::wstring_view query,

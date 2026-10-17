@@ -17,6 +17,16 @@
 namespace localpinyin {
 namespace {
 
+// The host's executable name, e.g. code.exe. Tests name a host through
+// LOCALPINYINIME_TEST_HOST_EXECUTABLE.
+std::wstring host_executable_name() {
+    wchar_t buffer[MAX_PATH]{};
+    if (GetEnvironmentVariableW(L"LOCALPINYINIME_TEST_HOST_EXECUTABLE", buffer, MAX_PATH) - 1u < MAX_PATH - 1u)
+        return buffer;
+    const std::wstring path = module_path(nullptr);
+    return path.substr(path.find_last_of(L"\\/") + 1);
+}
+
 thread_local TextService* g_thread_keyboard_hook_service = nullptr;
 // Remembered commits are a ranking hint only while the user keeps typing.
 constexpr ULONGLONG kRecentCommitLifetimeMs = 120000;
@@ -45,16 +55,6 @@ bool key_is_down(TextService::KeyStateReader reader,
     return reader ? reader(virtual_key, context) : win32_key_is_down(virtual_key);
 }
 
-std::wstring same_directory_settings_path(const std::wstring& dll_path) {
-    if (dll_path.empty()) {
-        return L"";
-    }
-    const size_t slash = dll_path.find_last_of(L"\\/");
-    if (slash == std::wstring::npos) {
-        return L"LocalPinyinSettings.exe";
-    }
-    return dll_path.substr(0, slash + 1) + L"LocalPinyinSettings.exe";
-}
 
 struct RouteThreadSnapshot {
     DWORD process_id = 0;
@@ -420,6 +420,7 @@ HRESULT TextService::ActivateEx(ITfThreadMgr* thread_mgr, TfClientId client_id, 
     thread_mgr_->AddRef();
     client_id_ = client_id;
     secure_mode_ = ((flags | activation.active_flags) & TF_TMAE_SECUREMODE) != 0;
+    code_application_ = is_code_application(host_executable_name());
     language_bar_.set_toggle_callback([this](const wchar_t* source) {
         return toggle_input_mode_from_language_bar(source ? source : L"mode_icon");
     });
@@ -874,6 +875,12 @@ HRESULT TextService::OnTestKeyDown(ITfContext* context, WPARAM wparam, LPARAM, B
         current_ctrl_space_runtime_state(key_state_reader_, key_state_reader_context_);
     const ModifierKeyState modifiers = ctrl_space_state.modifiers;
     const unsigned long key = static_cast<unsigned long>(wparam);
+    if (wparam != tested_key_) {
+        previous_key_digit_ = tested_key_digit_;
+        tested_key_ = wparam;
+    }
+    tested_key_digit_ = composing_.empty() && !modifiers.shift &&
+                        ((wparam >= L'0' && wparam <= L'9') || (wparam >= VK_NUMPAD0 && wparam <= VK_NUMPAD9));
     const bool ctrl_space_relevant_key = is_ctrl_space_key(key);
     if (ctrl_space_relevant_key) {
         ctrl_space_chord_on_key_down(ctrl_space_toggle_, key);
@@ -909,6 +916,12 @@ HRESULT TextService::OnTestKeyDown(ITfContext* context, WPARAM wparam, LPARAM, B
         return S_OK;
     }
     if (mode_ == InputMode::English || should_pass_through(wparam)) {
+        return S_OK;
+    }
+    if (code_punctuation_for_key(wparam, modifiers.shift)) {
+        // With nothing being typed the code editor types the key itself and
+        // keeps its own bracket pairing; during pinyin the IME commits first.
+        *eaten = composing_.empty() ? FALSE : TRUE;
         return S_OK;
     }
     if (chinese_punctuation_for_key(wparam, modifiers.shift, !composing_.empty(),
@@ -1021,6 +1034,7 @@ HRESULT TextService::OnTestKeyUp(ITfContext*, WPARAM wparam, LPARAM, BOOL* eaten
     if (!eaten) {
         return E_POINTER;
     }
+    if (wparam == tested_key_) tested_key_ = 0;
     *eaten = is_shift_key(static_cast<unsigned long>(wparam)) && shift_toggle_.pending ? TRUE : FALSE;
     return S_OK;
 }
@@ -1187,7 +1201,10 @@ void TextService::publish_runtime_input_mode_status(const wchar_t* source, bool 
 HRESULT TextService::toggle_input_mode(ITfContext* context, const wchar_t* reason) {
     if (prediction_active_) dismiss_prediction(reason ? reason : L"mode_toggle");
     if (!composing_.empty()) {
-        cancel_composition(context);
+        // Letters typed before noticing the Chinese mode stay as typed
+        // (hello stays hello) instead of vanishing with the composition.
+        ITfContext* target = context ? context : composition_context_;
+        if (!target || FAILED(commit_raw_composition(target))) cancel_composition(context);
     } else {
         candidates_.clear();
         selected_index_ = 0;
@@ -1215,10 +1232,10 @@ HRESULT TextService::toggle_input_mode_from_language_bar(const wchar_t* reason) 
 }
 
 HRESULT TextService::open_settings_from_language_bar(const wchar_t* source) {
-    const std::wstring settings_path = same_directory_settings_path(module_path(g_instance));
+    const std::wstring settings_path = install_file_path(g_instance, L"LocalPinyinSettings.exe");
     const std::wstring source_text = source ? source : L"unknown";
     if (settings_path.empty()) {
-        log_status(L"language-bar", L"event=open_settings source=" + source_text + L" path= result=module_path_empty");
+        log_status(L"language-bar", L"event=open_settings source=" + source_text + L" path= result=not_found");
         return HRESULT_FROM_WIN32(ERROR_PATH_NOT_FOUND);
     }
     const DWORD attributes = GetFileAttributesW(settings_path.c_str());
@@ -1264,8 +1281,19 @@ bool TextService::handle_chinese_key(ITfContext* context, WPARAM wparam, BOOL* e
     }
 
     const auto modifiers = current_modifier_key_state(key_state_reader_, key_state_reader_context_);
-    const wchar_t punctuation = chinese_punctuation_for_key(wparam, modifiers.shift, !composing_.empty(),
+    if (const wchar_t ascii = code_punctuation_for_key(wparam, modifiers.shift)) {
+        if (composing_.empty()) return false;
+        const HRESULT hr = commit_punctuation(context, ascii);
+        if (FAILED(hr)) log_status(L"composition", L"punctuation failed " + hresult_hex(hr));
+        *eaten = TRUE;
+        return true;
+    }
+    wchar_t punctuation = chinese_punctuation_for_key(wparam, modifiers.shift, !composing_.empty(),
         opening_double_quote_, opening_single_quote_);
+    // After a digit . , / and : are ASCII: 3.14, 1,000, 1/2, 12:30.
+    if (composing_.empty() && is_digit_punctuation(punctuation) &&
+        settings_store_.load_input_mode_options().digit_period && digit_before_caret(context))
+        punctuation = ascii_punctuation_for_key(wparam, modifiers.shift);
     if (punctuation) {
         const HRESULT hr = commit_punctuation(context, punctuation);
         if (FAILED(hr)) log_status(L"composition", L"punctuation failed " + hresult_hex(hr));
@@ -1402,9 +1430,24 @@ void TextService::refresh_candidates() {
     host_page_indices_ = false;
     selected_index_ = 0;
     engine_.refresh_user_lexicon_if_needed(!composing_.empty());
+    // Fuzzy pinyin, corrections, mixed input and double pinyin follow the
+    // saved options on every key, like the candidate window's appearance.
+    const auto options = settings_store_.load_input_mode_options().engine;
+    engine_.set_input_options(options);
     if (composition_has_literal_letters()) {
-        // Mixed Chinese/English input: offer the typed text as is.
+        // Shift-typed English: the text as typed first (Space commits it as
+        // before), and with mixed input on, the pinyin before it converted
+        // as the second choice (woyong + Python -> 我用 Python).
         candidates_ = {Candidate{composing_, 1, 0}};
+        const auto first_upper = std::find_if(composing_.begin(), composing_.end(),
+                                              [](wchar_t ch) { return ch >= L'A' && ch <= L'Z'; }) - composing_.begin();
+        if (options.mixed_english && options.double_pinyin == DoublePinyinScheme::None && first_upper > 0) {
+            const auto head = engine_.lookup(composing_.substr(0, static_cast<size_t>(first_upper)), preceding_committed_text_);
+            if (!head.empty() && !head.front().consumed_pinyin &&
+                std::any_of(head.front().text.begin(), head.front().text.end(), [](wchar_t ch) { return ch >= 0x3400; })) {
+                candidates_.push_back(Candidate{head.front().text + L' ' + composing_.substr(static_cast<size_t>(first_upper)), 2, 0});
+            }
+        }
         return;
     }
     candidates_ = engine_.lookup(composing_, preceding_committed_text_);
@@ -1457,7 +1500,7 @@ void TextService::update_candidate_window(ITfContext* context) {
         dismiss_prediction(L"prediction_disabled"); return;
     }
     const std::wstring display_label = prediction_active_ ? L"联想 · Tab" :
-        composition_has_literal_letters() ? composing_ : PinyinEngine::display_pinyin(composing_);
+        composition_has_literal_letters() ? composing_ : engine_.display_input(composing_);
     const bool logical_show_requested =
         mode_ == InputMode::Chinese && !display_label.empty() && !candidates_.empty();
     if (logical_show_requested) {
@@ -1596,7 +1639,7 @@ void TextService::refresh_candidate_window_from_host() {
     RECT anchor{};
     if (!candidate_anchor_rect(candidate_context_, &anchor)) return;
     const std::wstring label = prediction_active_ ? L"联想 · Tab" :
-        composition_has_literal_letters() ? composing_ : PinyinEngine::display_pinyin(composing_);
+        composition_has_literal_letters() ? composing_ : engine_.display_input(composing_);
     candidate_window_.show(label, candidates_, selected_index_, anchor,
         candidate_owner_info(candidate_context_), candidate_page_indices_);
 }
@@ -1744,6 +1787,23 @@ HRESULT TextService::make_composition_room(ITfContext* context) {
         preceding_committed_text_ = preceding.substr(preceding.size() > 128 ? preceding.size() - 128 : 0);
     }
     return S_OK;
+}
+
+wchar_t TextService::code_punctuation_for_key(WPARAM wparam, bool shift) const {
+    // An unshifted apostrophe still separates pinyin syllables.
+    if (!code_application_ || (wparam == VK_OEM_7 && !shift && !composing_.empty())) return 0;
+    const wchar_t ascii = ascii_punctuation_for_key(wparam, shift);
+    return ascii && settings_store_.load_input_mode_options().code_punctuation ? ascii : 0;
+}
+
+bool TextService::digit_before_caret(ITfContext* context) {
+    if (!secure_mode_) {
+        std::wstring before;
+        if (composition_.read_preceding_text(context, client_id_, &before) == S_OK && !before.empty())
+            return before.back() >= L'0' && before.back() <= L'9';
+    }
+    // The document cannot be read: go by the key typed before.
+    return previous_key_digit_;
 }
 
 HRESULT TextService::commit_punctuation(ITfContext* context, wchar_t punctuation) {

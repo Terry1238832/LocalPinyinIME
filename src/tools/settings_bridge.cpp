@@ -98,13 +98,36 @@ void notify_options_changed() {
     if (message) PostMessageW(HWND_BROADCAST, message, 0, 0);
 }
 
+// ["z-zh","n-l"]: the enabled fuzzy pairs.
+// "a,b" -> ["a","b"]
+std::string ids_json(const std::wstring& ids) {
+    std::string result = "[";
+    size_t start = 0;
+    while (!ids.empty() && start <= ids.size()) {
+        const size_t comma = ids.find(L',', start);
+        if (result.size() > 1) result += ',';
+        result += json_string(ids.substr(start, comma == std::wstring::npos ? std::wstring::npos : comma - start));
+        if (comma == std::wstring::npos) break;
+        start = comma + 1;
+    }
+    return result + ']';
+}
+
 std::string settings_json(const SettingsStore& store) {
     const auto candidate = store.load_candidate_options();
     const auto input = store.load_input_mode_options();
     return "{\"theme\":" + json_string(candidate_theme_mode_to_string(candidate.theme_mode)) +
            ",\"textSize\":" + std::to_string(candidate_text_size_level(candidate.text_size)) +
+           ",\"candidateStyle\":" + json_string(candidate_style_to_string(candidate.style)) +
            ",\"shiftToggleEnabled\":" + (input.shift_toggle_enabled ? "true" : "false") +
-           ",\"predictionEnabled\":" + (input.prediction_enabled ? "true" : "false") + '}';
+           ",\"predictionEnabled\":" + (input.prediction_enabled ? "true" : "false") +
+           ",\"typoCorrection\":" + (input.engine.typo_correction ? "true" : "false") +
+           ",\"mixedEnglish\":" + (input.engine.mixed_english ? "true" : "false") +
+           ",\"fuzzyPinyin\":" + ids_json(fuzzy_pinyin_to_string(input.engine.fuzzy)) +
+           ",\"doublePinyin\":" + json_string(double_pinyin_to_string(input.engine.double_pinyin)) +
+           ",\"usageDomains\":" + ids_json(usage_domains_to_string(input.engine.domains)) +
+           ",\"digitPeriod\":" + (input.digit_period ? "true" : "false") +
+           ",\"codePunctuation\":" + (input.code_punctuation ? "true" : "false") + '}';
 }
 
 UserLexiconLoadResult read_user_lexicon(const std::wstring& path) {
@@ -151,8 +174,9 @@ std::string run(const std::vector<std::wstring>& args) {
 
     if (command == L"state") {
         require_count(args, 1);
-        const auto catalog = read_catalog();
-        const auto& stats = catalog.stats();
+        // Counted rather than loaded: the settings window waits for this.
+        const auto stats = DictionaryCatalog::count((resource_directory() / L"dictionary").wstring());
+        require(stats.total_unique_entries > 0, L"无法读取内置词库，请重新安装本地拼音。");
         const auto user = read_user_lexicon(user_path);
         UserLearning learning;
         require(learning.open(store.learning_data_path()), L"无法读取学习记录，请检查文件权限。");
@@ -162,7 +186,8 @@ std::string run(const std::vector<std::wstring>& args) {
                std::to_string(stats.total_unique_entries) + ",\"core\":" + std::to_string(stats.core_entries) +
                ",\"local\":" + std::to_string(stats.local_core_entries) + ",\"standard\":" +
                std::to_string(stats.standard_entries) + "},\"learning\":{\"count\":" +
-               std::to_string(learning.selected_texts().size()) + "},\"runtime\":{\"active\":" +
+               std::to_string(learning.selected_texts().size()) + ",\"capacity\":" +
+               std::to_string(UserLearning::kCapacity) + "},\"runtime\":{\"active\":" +
                (runtime.active ? "true" : "false") + ",\"mode\":" +
                json_string(runtime.mode == InputMode::Chinese ? L"Chinese" : L"English") +
                ",\"available\":" + (runtime.available ? "true" : "false") +
@@ -170,11 +195,39 @@ std::string run(const std::vector<std::wstring>& args) {
                std::to_string(user.entries.size()) + '}';
     }
     if (command == L"save-settings") {
-        require(args.size() == 4 || args.size() == 5, L"请求参数数量不正确。");
+        // theme size shift [prediction [style]] [key=value...]: the named
+        // input options follow the positional ones.
+        size_t positional = args.size();
+        for (size_t index = 4; index < args.size(); ++index) {
+            if (args[index].find(L'=') != std::wstring::npos) { positional = index; break; }
+        }
+        require(positional >= 4 && positional <= 6, L"请求参数数量不正确。");
         require(args[1] == L"system" || args[1] == L"light" || args[1] == L"dark", L"主题必须是 system、light 或 dark。");
         const int level = integer(args[2], 1, 7);
         require(args[3] == L"true" || args[3] == L"false", L"Shift 切换选项必须是 true 或 false。");
-        if (args.size() == 5) require(args[4] == L"true" || args[4] == L"false", L"前文联想选项必须是 true 或 false。");
+        if (positional >= 5) require(args[4] == L"true" || args[4] == L"false", L"前文联想选项必须是 true 或 false。");
+        // The style is optional: a caller that omits it keeps the saved one.
+        // A style id must be one the native candidate window knows.
+        if (positional == 6) require(candidate_style_to_string(parse_candidate_style(args[5])) == args[5],
+                                      L"候选框风格无效。");
+        std::vector<std::pair<std::wstring, std::wstring>> named;
+        for (size_t index = positional; index < args.size(); ++index) {
+            const size_t equals = args[index].find(L'=');
+            require(equals != std::wstring::npos, L"请求参数格式不正确。");
+            const auto key = args[index].substr(0, equals), value = args[index].substr(equals + 1);
+            if (key == L"typoCorrection" || key == L"mixedEnglish" || key == L"digitPeriod" || key == L"codePunctuation")
+                require(value == L"true" || value == L"false", L"开关选项必须是 true 或 false。");
+            else if (key == L"doublePinyin")
+                require(value == L"none" || value == L"xiaohe" || value == L"ziranma", L"双拼方案必须是 none、xiaohe 或 ziranma。");
+            else if (key == L"fuzzyPinyin")
+                require(value.empty() || fuzzy_pinyin_to_string(parse_fuzzy_pinyin(value)).size() == value.size(),
+                        L"模糊音选项无效。");
+            else if (key == L"usageDomains")
+                require(value.empty() || usage_domains_to_string(parse_usage_domains(value)) == value,
+                        L"常用场景选项无效。");
+            else require(false, L"未知的设置项。");
+            named.emplace_back(key, value);
+        }
         BridgeFileLock lock(store.settings_path());
         require(lock.acquired(), L"设置正在保存，请稍后重试。");
         auto candidate = store.load_candidate_options();
@@ -182,7 +235,17 @@ std::string run(const std::vector<std::wstring>& args) {
         candidate.theme_mode = parse_candidate_theme_mode(args[1]);
         candidate.text_size = candidate_text_size_from_level(level);
         input.shift_toggle_enabled = args[3] == L"true";
-        if (args.size() == 5) input.prediction_enabled = args[4] == L"true";
+        if (positional >= 5) input.prediction_enabled = args[4] == L"true";
+        if (positional == 6) candidate.style = parse_candidate_style(args[5]);
+        for (const auto& [key, value] : named) {
+            if (key == L"typoCorrection") input.engine.typo_correction = value == L"true";
+            else if (key == L"mixedEnglish") input.engine.mixed_english = value == L"true";
+            else if (key == L"doublePinyin") input.engine.double_pinyin = parse_double_pinyin(value);
+            else if (key == L"fuzzyPinyin") input.engine.fuzzy = parse_fuzzy_pinyin(value);
+            else if (key == L"usageDomains") input.engine.domains = parse_usage_domains(value);
+            else if (key == L"digitPeriod") input.digit_period = value == L"true";
+            else if (key == L"codePunctuation") input.code_punctuation = value == L"true";
+        }
         require(store.save_options(candidate, input), L"无法保存设置，请检查文件权限。");
         notify_options_changed();
         return "{\"settings\":" + settings_json(store) + '}';
@@ -205,12 +268,17 @@ std::string run(const std::vector<std::wstring>& args) {
         PinyinEngine engine(DictionaryLoadMode::Empty);
         require(engine.load_dictionary_resource_directory(resource_directory().wstring(), user_path,
                     UserLexiconCreateMode::DoNotCreate), L"无法加载输入法词库。");
+        // The preview types exactly as the IME does under the saved options.
+        engine.set_input_options(store.load_input_mode_options().engine);
         const auto candidates = command == L"predict" ? engine.predict(preceding) : engine.lookup(args[1], preceding);
         std::string result = "{\"candidates\":[";
         for (size_t index = 0; index < candidates.size(); ++index) {
             if (index) result += ',';
             result += json_string(candidates[index].text);
         }
+        // Lookups also return the pinyin as the candidate window shows it
+        // (segmented, e.g. sui'bian), so previews match the real popup.
+        if (command == L"lookup") return result + "],\"pinyin\":" + json_string(engine.display_input(args[1])) + '}';
         return result + "]}";
     }
     if (command == L"user-list") {
@@ -259,6 +327,20 @@ std::string run(const std::vector<std::wstring>& args) {
                       ",\"frequency\":" + std::to_string(entry.weight) + ",\"source\":" + json_string(source) + '}';
         }
         return result + "],\"total\":" + std::to_string(total) + '}';
+    }
+    if (command == L"domain-words") {
+        // The words of every usage-scene pack, for the settings page to list.
+        require_count(args, 1);
+        std::string result = "{\"domains\":{";
+        for (unsigned bit = 1; bit & kDomainAll; bit <<= 1) {
+            const std::wstring id = usage_domain_id(static_cast<UsageDomain>(bit));
+            const auto pack = DomainLexicon::read_pack((resource_directory() / L"dictionary" / L"domains" / (id + L".tsv")).wstring());
+            result += (bit == 1 ? "" : ",") + json_string(id) + ":[";
+            for (size_t index = 0; index < pack.size(); ++index)
+                result += (index ? "," : "") + json_string(pack[index].second);
+            result += ']';
+        }
+        return result + "}}";
     }
     if (command == L"clear-learning") {
         require_count(args, 1);

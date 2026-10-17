@@ -17,6 +17,18 @@ std::wstring module_path(HINSTANCE instance) {
     return buffer;
 }
 
+std::wstring install_file_path(HINSTANCE instance, const std::wstring& name) {
+    std::wstring directory = module_path(instance);
+    for (int level = 0; level < 2; ++level) {
+        const size_t slash = directory.find_last_of(L"\\/");
+        if (slash == std::wstring::npos) return L"";
+        directory.resize(slash);
+        const std::wstring candidate = directory + L"\\" + name;
+        if (GetFileAttributesW(candidate.c_str()) != INVALID_FILE_ATTRIBUTES) return candidate;
+    }
+    return L"";
+}
+
 std::wstring local_app_data_path() {
     // A process can choose an isolated data location for smoke tests or portable use.
     const DWORD required = GetEnvironmentVariableW(L"LOCALPINYINIME_LOCALAPPDATA", nullptr, 0);

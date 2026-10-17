@@ -208,35 +208,43 @@ function savedFiles(directory, includeSettings = true) {
   }));
 }
 
-async function waitContextCandidates(expected) {
-  await page.waitForFunction(words => {
-    const region = document.querySelector('[aria-label="前文拼音候选"]');
-    if (region?.getAttribute('aria-busy') !== 'false') return false;
-    const actual = Array.from(region.querySelectorAll('.candidate-measurements .context-word')).map(element => element.firstChild?.textContent);
-    return JSON.stringify(actual) === JSON.stringify(words);
-  }, expected);
-  assert.deepEqual(await collectCandidatePages('前文候选', '.context-word'), expected);
-}
-
-async function waitPredictions(expected) {
-  await page.waitForFunction(words => {
-    const region = document.querySelector('[aria-label="联想后续词"]');
-    if (region?.getAttribute('aria-busy') !== 'false') return false;
-    const actual = Array.from(region.querySelectorAll('.candidate-measurements .prediction-chip')).map(element => element.textContent);
-    return JSON.stringify(actual) === JSON.stringify(words);
-  }, expected);
-  assert.deepEqual(await collectCandidatePages('联想候选', '.prediction-chip'), expected);
-}
+// The Appearance preview shows this fixed sample (previewSample in CandidatePreview.tsx).
+const previewPinyin = "sui'bian";
+const previewWords = ['随便', '岁', '随', '碎', '虽', '遂', '穗', '隋', '髓', '祟', '燧', '邃'];
+const candidateStyleOrder = ['rail', 'type', 'glass', 'flow', 'capsule', 'column', 'outline', 'dot'];
 
 async function waitPreviewCandidates(expected, snapshots) {
   await page.waitForFunction(words => {
     const panel = document.querySelector('[aria-label="候选预览"]');
-    if (panel?.getAttribute('aria-busy') !== 'false') return false;
-    const actual = Array.from(panel.querySelectorAll('.candidate-measurements .candidate-word')).map(element => element.textContent);
+    const actual = Array.from(panel?.querySelectorAll('.candidate-measurements .candidate-word') ?? []).map(element => element.textContent);
     return JSON.stringify(actual) === JSON.stringify(words);
   }, expected);
-  if (expected.length) assert.match(await page.getByLabel('候选预览', { exact: true }).locator('.candidate-page-status').textContent(), /^1\//, 'New preview input or font size did not reset to page 1.');
+  if (expected.length) assert.match(await page.getByLabel('候选预览', { exact: true }).locator('.candidate-page-status').textContent(), /^1\//, 'A new font size or style did not reset the preview to page 1.');
   assert.deepEqual(await collectCandidatePages('候选预览', '.preview-candidate', snapshots), expected);
+}
+
+async function styleCardInView(style) {
+  return page.locator(`.style-viewport .style-card:has(input[value="${style}"])`).evaluate(card => {
+    const box = card.getBoundingClientRect();
+    const view = card.closest('.style-viewport').getBoundingClientRect();
+    return box.left >= view.left - 1 && box.right <= view.right + 1;
+  });
+}
+
+async function chooseStyle(style) {
+  // Turn to the card's group unless it is the current one, then let the
+  // scroll settle before picking the card.
+  const group = Math.floor(candidateStyleOrder.indexOf(style) / 4);
+  const current = await page.locator('.carousel-dots i').evaluateAll(dots => dots.findIndex(dot => dot.classList.contains('on')));
+  if (current !== group) await page.getByRole('button', { name: group > current ? '下一组风格' : '上一组风格', exact: true }).click();
+  await page.waitForFunction(value => {
+    const card = document.querySelector(`.style-viewport .style-card:has(input[value="${value}"])`);
+    const box = card.getBoundingClientRect();
+    const view = card.closest('.style-viewport').getBoundingClientRect();
+    return box.left >= view.left - 1 && box.right <= view.right + 1;
+  }, style);
+  await page.locator(`.style-viewport .style-card:has(input[value="${style}"])`).click();
+  return waitState(value => value.settings.candidateStyle === style);
 }
 
 async function collectCandidatePages(label, selector, snapshots) {
@@ -246,12 +254,17 @@ async function collectCandidatePages(label, selector, snapshots) {
   const previous = panel.getByRole('button', { name: `${label}上一页`, exact: true });
   const next = panel.getByRole('button', { name: `${label}下一页`, exact: true });
   if (!(await panel.locator('.paged-candidate-items ' + selector).count())) return [];
-  for (let i = 0; i < 64 && await previous.isEnabled(); ++i) {
+  // Like the native popup, the pager ("<  2/5  >") only appears with several pages.
+  const pager = panel.locator('.candidate-page-controls .candidate-pager');
+  const pageTotal = Number((await panel.locator('.candidate-page-status').textContent()).split('/')[1]);
+  assert.equal(await pager.isVisible(), pageTotal > 1, `${label}: pager visibility does not match ${pageTotal} page(s)`);
+  const enabled = async button => (await pager.isVisible()) && await button.isEnabled();
+  for (let i = 0; i < 64 && await enabled(previous); ++i) {
     const current = Number((await panel.locator('.candidate-page-status').textContent()).split('/')[0]);
     await previous.click();
     await page.waitForFunction(({ label, number }) => document.querySelector(`[aria-label="${label}"] .candidate-page-status`)?.textContent.startsWith(`${number}/`), { label, number: current - 1 });
   }
-  assert(!(await previous.isEnabled()), `${label}: pagination did not return to first page`);
+  assert(!(await enabled(previous)), `${label}: pagination did not return to first page`);
   const result = [];
   for (let i = 0; i < 64; ++i) {
     const items = panel.locator('.paged-candidate-items ' + selector);
@@ -264,24 +277,40 @@ async function collectCandidatePages(label, selector, snapshots) {
     }));
     assert(measurements.length, `${label}: page ${i + 1} has no candidates`);
     assert(measurements.every(item => item.inside), `${label}: candidate overflow`);
-    assert(measurements.every(item => Math.abs(item.top - measurements[0].top) <= 1 && Math.abs(item.bottom - measurements[0].bottom) <= 1), `${label}: more than one row`);
+    // The preview follows its style: one row (Cursor Rail, Modern Type,
+    // Floating Glass, Capsule, Outline, Ink Dot, Adaptive Flow's Compact form),
+    // the current choice above one row of chips (Balanced), or one candidate
+    // per row (Expanded, Column List). The suggestion and context lanes are a
+    // single row.
+    const arrangement = selector === '.preview-candidate'
+      ? await page.evaluate(() => document.querySelector('.ime-preview')?.dataset.arrangement) : 'row';
+    const sameRow = items => items.length < 2 || Math.max(...items.map(item => item.top)) < Math.min(...items.map(item => item.bottom)) - 1;
+    if (arrangement === 'row') assert(sameRow(measurements), `${label}: more than one row`);
+    else if (arrangement === 'focus-row') {
+      const chips = measurements.slice(1);
+      assert(chips.every(item => Math.abs(item.top - chips[0].top) <= 1 && Math.abs(item.bottom - chips[0].bottom) <= 1), `${label}: chips on more than one row`);
+      if (chips.length) assert(chips[0].top >= measurements[0].bottom - 1, `${label}: focus row is not above the chips`);
+    } else {
+      assert.equal(arrangement, 'column', `${label}: unknown arrangement`);
+      assert(measurements.every((item, index) => !index || item.top >= measurements[index - 1].bottom - 1), `${label}: rows overlap`);
+    }
     assert(measurements.every(item => item.title === item.text), `${label}: displayed value differs from complete candidate`);
     if (selector === '.preview-candidate') assert.deepEqual(measurements.map(item => item.number), measurements.map((_, index) => String(index + 1)), `${label}: page numbers do not restart at 1`);
     const status = await panel.locator('.candidate-page-status').textContent();
     assert.equal(Number(status.split('/')[0]), i + 1, `${label}: incorrect page status`);
     if (snapshots) snapshots.push({ status, candidates: measurements.map(item => item.text) });
     result.push(...measurements.map(item => item.text));
-    if (!(await next.isEnabled())) break;
+    if (!(await enabled(next))) break;
     await next.click();
     await page.waitForFunction(({ label, number }) => document.querySelector(`[aria-label="${label}"] .candidate-page-status`)?.textContent.startsWith(`${number}/`), { label, number: i + 2 });
   }
-  assert(!(await next.isEnabled()), `${label}: pagination did not reach last page`);
-  for (let i = 0; i < 64 && await previous.isEnabled(); ++i) {
+  assert(!(await enabled(next)), `${label}: pagination did not reach last page`);
+  for (let i = 0; i < 64 && await enabled(previous); ++i) {
     const current = Number((await panel.locator('.candidate-page-status').textContent()).split('/')[0]);
     await previous.click();
     await page.waitForFunction(({ label, number }) => document.querySelector(`[aria-label="${label}"] .candidate-page-status`)?.textContent.startsWith(`${number}/`), { label, number: current - 1 });
   }
-  assert(!(await previous.isEnabled()), `${label}: pagination did not return to first page`);
+  assert(!(await enabled(previous)), `${label}: pagination did not return to first page`);
   return result;
 }
 
@@ -291,34 +320,28 @@ async function run() {
     const initial = await state();
     assert.equal(initial.version, expectedVersion);
     assert.equal(initial.settings.predictionEnabled, false, 'Next-word suggestions are opt-in on fresh installations.');
-    assert.equal(initial.dictionary.total, 209306, `The ${expectedVersion} built-in resources were not loaded.`);
+    assert.equal(initial.dictionary.total, 210948, `The ${expectedVersion} built-in resources were not loaded.`);
     report.dictionary = initial.dictionary;
     assert.equal(path.resolve(initial.dataDirectory), path.join(data, 'LocalPinyinIME'));
     assert.deepEqual((await api('listUserLexicon')).entries, []);
-    assert.equal((await api('lookup', ['suibian'])).candidates[0], '随便');
+    assert.equal(native('lookup', ['suibian']).candidates[0], '随便');
     for (const context of ['', '请帮忙']) {
-      assert((await api('lookup', ['jinyibufenxi', context])).candidates.includes('进一步分析'),
+      assert(native('lookup', ['jinyibufenxi', context]).candidates.includes('进一步分析'),
         'A complete-key common expression was lost among segmented alternatives.');
     }
-    assert.deepEqual((await api('lookup', [''])).candidates, []);
-    const preview = page.getByLabel('试试拼音', { exact: true });
-    await preview.fill('suibian');
-    await waitPreviewCandidates(native('lookup', ['suibian']).candidates);
-    await preview.fill('zzzzzzzzzzzzzz');
-    await waitPreviewCandidates(native('lookup', ['zzzzzzzzzzzzzz']).candidates);
-    await screenshot('appearance-unknown');
-    await preview.fill('');
-    await waitPreviewCandidates([]);
-    await screenshot('appearance-empty');
-    await preview.fill('suibian');
-    await waitPreviewCandidates(native('lookup', ['suibian']).candidates);
+    assert.deepEqual(native('lookup', ['']).candidates, []);
+    // The Appearance preview only shows a fixed sample: no input field, no lookups.
+    assert.equal(await page.getByLabel('试试拼音', { exact: true }).count(), 0);
+    assert.equal(await page.locator('.ime-preview-pinyin').textContent(), previewPinyin);
+    await waitPreviewCandidates(previewWords);
+    await screenshot('appearance-preview');
   });
   await check('Electron renderer isolation and fixed bridge', async () => {
     const exposed = await page.evaluate(() => ({ require: typeof window.require, process: typeof window.process, api: Object.keys(window.localPinyin).sort(), frozen: Object.isFrozen(window.localPinyin) }));
     assert.equal(exposed.require, 'undefined');
     assert.equal(exposed.process, 'undefined');
     assert.equal(exposed.frozen, true);
-    assert.deepEqual(exposed.api, ['clearLearning', 'deleteUserEntry', 'getState', 'initialState', 'listUserLexicon', 'lookup', 'openDataDirectory', 'predict', 'saveSettings', 'searchDictionary', 'upsertUserEntry', 'windowControl'].sort());
+    assert.deepEqual(exposed.api, ['clearLearning', 'deleteUserEntry', 'domainWords', 'getState', 'initialState', 'listUserLexicon', 'openDataDirectory', 'saveSettings', 'searchDictionary', 'upsertUserEntry', 'windowControl'].sort());
     assert.equal(await page.evaluate(() => typeof window.localPinyin.initialState), 'object');
     assert.equal(await page.evaluate(() => window.localPinyin.initialState.version), expectedVersion);
     const preferences = await app.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows()[0].webContents.getLastWebPreferences());
@@ -364,7 +387,7 @@ async function run() {
         if (sections.some(section => !section.isConnected)) failures.push('page unmounted');
         if (buttons.filter(button => button.getAttribute('aria-current') === 'page').length !== 1) failures.push('navigation selection lost');
       }
-      return { failures, frames, sections: sections.length, samePreview: document.querySelector('#preview-pinyin')?.value === 'suibian' };
+      return { failures, frames, sections: sections.length, samePreview: document.querySelector('.ime-preview-pinyin')?.textContent === "sui'bian" };
     });
     assert.deepEqual(observations.failures, []);
     assert.equal(observations.sections, 5);
@@ -396,6 +419,13 @@ async function run() {
     const fontValue = Number(await slider.inputValue());
     assert.equal((await waitState(value => value.settings.textSize === fontValue)).settings.theme, 'dark');
     await navigate(pages[1]);
+    // The candidate style is saved from its card and kept on its own.
+    await navigate(pages[0]);
+    const beforeStyle = (await state()).settings;
+    await page.locator('.style-card input[value="glass"]').check({ force: true });
+    const styled = await waitState(value => value.settings.candidateStyle === 'glass');
+    assert.deepEqual(styled.settings, { ...beforeStyle, candidateStyle: 'glass' });
+    await navigate(pages[1]);
     const expectedShift = !(await state()).settings.shiftToggleEnabled;
     const shift = page.getByRole('switch', { name: '按 Shift 切换中英文', exact: true });
     await shift.click();
@@ -407,21 +437,23 @@ async function run() {
     assert.deepEqual(await page.evaluate(() => window.localPinyin.initialState.settings), saved);
     await navigate(pages[1]);
     assert.equal(await page.getByRole('switch', { name: '按 Shift 切换中英文', exact: true }).getAttribute('aria-checked'), String(saved.shiftToggleEnabled));
+    assert.equal(saved.candidateStyle, 'glass');
+    await navigate(pages[0]);
+    assert.equal(await page.locator('.ime-preview').getAttribute('data-cand-style'), 'glass');
+    assert.equal(await page.locator('.style-card input[value="glass"]').isChecked(), true);
+    // Back to the default style for the checks that follow.
+    await page.locator('.style-card input[value="flow"]').check({ force: true });
+    await waitState(value => value.settings.candidateStyle === 'flow');
     report.persistedSettings = saved;
   });
-  await check('Single-row paging preserves complete native candidates across sizes and keyboard boundaries', async () => {
+  await check('The preview pages its whole sample across sizes and keyboard boundaries', async () => {
     await navigate(pages[0]);
     const initial = await state();
     const originalTextSize = initial.settings.textSize;
-    const personalBefore = savedFiles(initial.dataDirectory, false);
-    const previewInput = page.getByLabel('试试拼音', { exact: true });
+    const filesBefore = savedFiles(initial.dataDirectory);
     const previewPanel = page.getByLabel('候选预览', { exact: true });
     const previewRow = previewPanel.getByRole('group', { name: '候选预览，左右箭头翻页', exact: true });
     const slider = page.getByRole('slider');
-    const nativeCandidates = native('lookup', ['ni']).candidates;
-    assert(nativeCandidates.length >= 9, 'Paging needs the full native ni result set.');
-    assert.deepEqual((await api('lookup', ['ni'])).candidates, nativeCandidates);
-    await previewInput.fill('ni');
     const matrix = [];
     for (const [width, height] of [[1160, 800], [920, 680]]) {
       await viewport(width, height);
@@ -435,13 +467,13 @@ async function run() {
         const fontSize = [14, 16, 17, 18, 20, 22, 24][level - 1];
         await page.waitForFunction(expected => getComputedStyle(document.querySelector('[aria-label="候选预览"]')).fontSize === `${expected}px`, fontSize);
         const snapshots = [];
-        await waitPreviewCandidates(nativeCandidates, snapshots);
+        await waitPreviewCandidates(previewWords, snapshots);
         await noOverflow();
         matrix.push({ width, fontSize, pages: snapshots });
       }
     }
     const pageCount = Number((await previewPanel.locator('.candidate-page-status').textContent()).split('/')[1]);
-    assert(pageCount > 1, 'Large ni preview should require several pages.');
+    assert(pageCount > 1, 'The sample holds more than one page of candidates.');
     await screenshot('paging-preview-page-1');
     await previewRow.focus();
     await page.keyboard.press('ArrowLeft');
@@ -457,156 +489,265 @@ async function run() {
     assert.equal(await previewPanel.locator('.candidate-page-status').textContent(), `1/${pageCount}`);
     assert.equal(await previewPanel.getByRole('button', { name: '候选预览上一页', exact: true }).isDisabled(), true);
 
-    // A changed query must restart paging even when normalization produces the same words.
-    await page.keyboard.press('ArrowRight');
-    await previewInput.fill('NI');
-    assert.deepEqual(native('lookup', ['NI']).candidates, nativeCandidates);
-    await waitPreviewCandidates(nativeCandidates);
-    await previewRow.focus(); await page.keyboard.press('ArrowRight');
-    await previewInput.fill('');
-    await waitPreviewCandidates([]);
-    assert.equal(await previewPanel.locator('.candidate-page-controls').isVisible(), false);
-    await previewInput.fill('ni');
-    await waitPreviewCandidates(nativeCandidates);
-
-    // Restore the saved font before proving that all remaining previews leave all four files unchanged.
+    // Back to the saved size; previewing and paging leave every file unchanged.
     await slider.focus(); await page.keyboard.press('Home');
     await waitFontLevel(1);
     for (let level = 2; level <= originalTextSize; ++level) {
       await slider.focus(); await page.keyboard.press('ArrowRight');
       await waitFontLevel(level);
     }
-    assert.deepEqual(savedFiles(initial.dataDirectory, false), personalBefore, 'Font or paging controls changed personal learning data.');
-    const filesBefore = savedFiles(initial.dataDirectory);
-    const longQuery = 'z'.repeat(256);
-    const longCandidates = native('lookup', [longQuery]).candidates;
-    assert.deepEqual(longCandidates, [longQuery], 'The native long-input fallback must retain the whole value.');
-    await previewInput.fill(longQuery);
-    await waitPreviewCandidates(longCandidates);
-    const clipping = await previewPanel.locator('.paged-candidate-items .candidate-word').evaluate(element => ({
-      text: element.textContent, width: element.clientWidth, scrollWidth: element.scrollWidth,
-      whiteSpace: getComputedStyle(element).whiteSpace, overflow: getComputedStyle(element).textOverflow,
-    }));
-    assert.equal(clipping.text, longQuery);
-    assert(clipping.scrollWidth > clipping.width + 10, 'Long candidate should be clipped within the row.');
-    assert.equal(clipping.whiteSpace, 'nowrap');
-    assert.equal(clipping.overflow, 'ellipsis');
-    await noOverflow();
-    await screenshot('paging-preview-long-clip');
-    await previewInput.fill('suibian');
-    await waitPreviewCandidates(native('lookup', ['suibian']).candidates);
-
-    await navigate(pages[1]);
-    const contextField = page.getByLabel('前文', { exact: true });
-    const pinyinField = page.getByLabel(/^后续拼音/);
-    await contextField.fill('我想'); await pinyinField.fill('ni');
-    const nativePredictions = native('predict', ['我想']).candidates;
-    const nativeContextCandidates = native('lookup', ['ni', '我想']).candidates;
-    await waitPredictions(nativePredictions);
-    await waitContextCandidates(nativeContextCandidates);
-    const predictionPages = [], contextPages = [];
-    assert.deepEqual(await collectCandidatePages('联想候选', '.prediction-chip', predictionPages), nativePredictions);
-    assert.deepEqual(await collectCandidatePages('前文候选', '.context-word', contextPages), nativeContextCandidates);
-    assert(predictionPages.length >= 1 && contextPages.length >= 1, 'Context trial rows must render their candidates.');
-    // Select from the second page when the row needs one; the first otherwise.
-    const targetPage = predictionPages.length > 1 ? 1 : 0;
-    const predictions = page.getByLabel('联想候选', { exact: true });
-    if (targetPage) await predictions.getByRole('button', { name: '联想候选下一页', exact: true }).click();
-    const selection = predictions.locator('.paged-candidate-items .prediction-chip').first();
-    const selectedWord = await selection.textContent();
-    assert.equal(selectedWord, predictionPages[targetPage].candidates[0]);
-    await page.locator('.context-preview-card').scrollIntoViewIfNeeded();
-    await screenshot('paging-context-page-2');
-    await selection.click();
-    assert.equal(await contextField.inputValue(), `我想${selectedWord}`);
-    await waitPredictions(native('predict', [`我想${selectedWord}`]).candidates);
-    await waitContextCandidates(native('lookup', ['ni', `我想${selectedWord}`]).candidates);
-    await pinyinField.fill(longQuery);
-    await waitContextCandidates(native('lookup', [longQuery, `我想${selectedWord}`]).candidates);
-    await noOverflow();
-    assert.deepEqual(savedFiles(initial.dataDirectory), filesBefore, 'Paging, long previews, or a second-page selection changed personal files.');
-    await contextField.fill('我想'); await pinyinField.fill('');
-    await waitPredictions(nativePredictions); await waitContextCandidates([]);
+    assert.deepEqual(savedFiles(initial.dataDirectory), filesBefore, 'Paging the preview changed personal files.');
     await viewport(1160, 800);
-    report.pagination = { nativeCandidates, matrix, keyboardClamped: true, newInputReset: true, emptyInputReset: true,
-      longCandidate: { length: longQuery.length, clipped: true, completeValuePreserved: true },
-      predictionPages, contextPages, selectedSecondPageWord: selectedWord, previewFilesUnchanged: true };
+    report.pagination = { sample: previewWords, matrix, keyboardClamped: true, previewFilesUnchanged: true };
   });
-  await check('Contextual suggestions and preview use the real native engine without learning writes', async () => {
+  await check('Eight candidate styles: the carousel turns, 更多 shows all, each choice persists for the IME', async () => {
+    await navigate(pages[0]);
+    const before = await state();
+    const settingsFile = path.join(before.dataDirectory, 'settings.json');
+    const previous = page.getByRole('button', { name: '上一组风格', exact: true });
+    const next = page.getByRole('button', { name: '下一组风格', exact: true });
+    // Four cards in view, the first group; the arrows turn to the other four.
+    assert.equal(await page.locator('.style-viewport .style-card').count(), candidateStyleOrder.length);
+    const inView = async () => (await Promise.all(candidateStyleOrder.map(styleCardInView))).map((shown, index) => shown ? candidateStyleOrder[index] : null).filter(Boolean);
+    assert.deepEqual(await inView(), candidateStyleOrder.slice(0, 4));
+    assert.equal(await previous.isDisabled(), true);
+    await next.click();
+    await page.waitForFunction(() => document.querySelector('.carousel-dots i:last-child')?.classList.contains('on'));
+    await page.waitForFunction(style => {
+      const card = document.querySelector(`.style-viewport .style-card:has(input[value="${style}"])`).getBoundingClientRect();
+      return Math.abs(card.left - document.querySelector('.style-viewport').getBoundingClientRect().left) < 6;
+    }, candidateStyleOrder[4]);
+    assert.deepEqual(await inView(), candidateStyleOrder.slice(4));
+    assert.equal(await next.isDisabled(), true);
+    await screenshot('style-carousel-second');
+    await previous.click();
+    await page.waitForFunction(() => document.querySelector('.carousel-dots i:first-child')?.classList.contains('on'));
+    const styles = {};
+    for (const style of candidateStyleOrder) {
+      const saved = await chooseStyle(style);
+      // Only the style changes: theme, size and input options stay.
+      assert.deepEqual(saved.settings, { ...before.settings, candidateStyle: style });
+      // A fresh native process, as the IME reads it on the next key.
+      assert.equal(native('state').settings.candidateStyle, style);
+      assert.match(fs.readFileSync(settingsFile, 'utf8'), new RegExp(`"style": "${style}"`));
+      assert.equal(await page.locator('.ime-preview').getAttribute('data-cand-style'), style);
+      assert.equal(await page.locator('.style-viewport .style-card.active input').getAttribute('value'), style);
+      const snapshots = [];
+      await waitPreviewCandidates(previewWords, snapshots);
+      await noOverflow();
+      styles[style] = { arrangement: await page.locator('.ime-preview').getAttribute('data-arrangement'),
+        form: await page.locator('.ime-preview').getAttribute('data-form'), pages: snapshots.length };
+      await screenshot(`style-${style}`);
+    }
+    // Column List stacks its rows and keeps the fullest page's height.
+    assert.equal(styles.column.arrangement, 'column');
+    for (const style of ['capsule', 'outline', 'dot']) assert.equal(styles[style].arrangement, 'row');
+    // 更多: all eight at once, four to a row; a pick there applies at once.
+    await page.getByRole('button', { name: '更多', exact: true }).click();
+    const overview = page.getByRole('dialog', { name: '全部候选框风格', exact: true });
+    await overview.waitFor();
+    const cards = overview.locator('.style-card');
+    assert.equal(await cards.count(), candidateStyleOrder.length);
+    const tops = await cards.evaluateAll(elements => elements.map(element => Math.round(element.getBoundingClientRect().top)));
+    assert.equal(new Set(tops.slice(0, 4)).size, 1, 'The first four styles share a row.');
+    assert.equal(new Set(tops.slice(4)).size, 1, 'The last four styles share a row.');
+    assert(tops[4] > tops[0], 'The second four sit below the first.');
+    assert.equal(await overview.locator('.style-card.active input').getAttribute('value'), 'dot');
+    await screenshot('style-overview');
+    await overview.locator('.style-card:has(input[value="glass"])').click();
+    await waitState(value => value.settings.candidateStyle === 'glass');
+    assert.equal(await overview.locator('.style-card.active input').getAttribute('value'), 'glass');
+    await page.keyboard.press('Escape');
+    await overview.waitFor({ state: 'detached' });
+    // The gallery turns to the chosen style's group.
+    await page.waitForFunction(() => document.querySelector('.carousel-dots i:first-child')?.classList.contains('on'));
+    await page.waitForFunction(() => {
+      const card = document.querySelector('.style-viewport .style-card.active')?.getBoundingClientRect();
+      const view = document.querySelector('.style-viewport').getBoundingClientRect();
+      return card && card.left >= view.left - 1 && card.right <= view.right + 1;
+    });
+    // Cursor Rail, Modern Type and Ink Dot move their mark to the candidate under the pointer.
+    for (const [style, selector] of [['rail', '.rail-marker'], ['type', '.type-rule'], ['dot', '.dot-marker']]) {
+      await chooseStyle(style);
+      const marker = page.locator(selector);
+      await marker.waitFor();
+      const rest = await marker.boundingBox();
+      await page.locator('.paged-candidate-items [data-slot="2"]').hover();
+      // The mark glides (140 ms) and settles under the hovered candidate.
+      await page.waitForFunction(selector => {
+        const mark = document.querySelector(selector).getBoundingClientRect();
+        const target = document.querySelector('.paged-candidate-items [data-slot="2"]').getBoundingClientRect();
+        return mark.left >= target.left - 1 && mark.right <= target.right + 1 && mark.width > 4;
+      }, selector);
+      const moved = await marker.boundingBox();
+      assert(Math.abs(moved.x - rest.x) > 8, `${style}: focus mark did not follow the pointer`);
+      await page.mouse.move(2, 2);
+    }
+    await chooseStyle('flow');
+    report.candidateStyles = styles;
+  });
+  await check('Spelling correction, mixed input, fuzzy pinyin and double pinyin save and drive the native engine', async () => {
     await navigate(pages[1]);
     const before = await state();
-    const filesBefore = savedFiles(before.dataDirectory);
-    const contextField = page.getByLabel('前文', { exact: true });
-    const pinyinField = page.getByLabel(/^后续拼音/);
-    const predictionRegion = page.getByRole('region', { name: '联想后续词', exact: true });
-    const lookupRegion = page.getByRole('region', { name: '前文拼音候选', exact: true });
-    assert.equal(await contextField.inputValue(), '我想');
-    assert.equal(await pinyinField.inputValue(), '');
-    const nativePredictions = native('predict', ['我想']).candidates;
-    assert(nativePredictions.includes('去'), 'The real engine must offer 去 after 我想.');
-    assert.deepEqual((await api('predict', ['我想'])).candidates, nativePredictions);
-    await waitPredictions(nativePredictions);
-    await pinyinField.fill('qu');
-    const nativeContextCandidates = native('lookup', ['qu', '我想']).candidates;
-    assert.deepEqual((await api('lookup', ['qu', '我想'])).candidates, nativeContextCandidates);
-    await waitContextCandidates(nativeContextCandidates);
-    await page.locator('.context-preview-card').scrollIntoViewIfNeeded();
-    await noOverflow();
-    await screenshot('context-preview');
-
-    await predictionRegion.getByRole('button', { name: '去', exact: true }).click();
-    assert.equal(await contextField.inputValue(), '我想去');
-    await waitPredictions(native('predict', ['我想去']).candidates);
-    await waitContextCandidates(native('lookup', ['qu', '我想去']).candidates);
-    assert.deepEqual(savedFiles(before.dataDirectory), filesBefore, 'Preview clicks or queries modified personal files.');
-    await screenshot('context-preview-appended');
-
-    // The same mounted preview survives navigation through all other pages.
-    for (const item of [pages[4], pages[2], pages[0], pages[3], pages[1]]) await navigate(item);
-    assert.equal(await contextField.inputValue(), '我想去');
-    assert.equal(await pinyinField.inputValue(), 'qu');
-    await contextField.fill('');
-    await page.waitForFunction(() => {
-      const regions = ['联想后续词', '前文拼音候选'].map(label => document.querySelector(`[aria-label="${label}"]`));
-      return regions.every(region => region?.getAttribute('aria-busy') === 'false') &&
-        !document.querySelector('.prediction-chip') && !document.querySelector('.context-word');
-    });
-    assert.equal(await predictionRegion.getByText('填写前文后，在这里查看后续词。', { exact: true }).count(), 1);
-    assert.deepEqual((await api('predict', [''])).candidates, []);
-    await contextField.fill('我想');
-    await pinyinField.fill('qu汉');
-    await lookupRegion.getByRole('alert').getByText('拼音只接受英文字母、数字和英文单引号。', { exact: true }).waitFor();
-    assert.equal(await lookupRegion.locator('.context-word').count(), 0);
-    await pinyinField.fill('');
-    await page.waitForFunction(() => document.querySelector('[aria-label="前文拼音候选"]')?.getAttribute('aria-busy') === 'false' &&
-      !document.querySelector('[aria-label="前文拼音候选"] [role="alert"]'));
-
-    // Rapid edits must settle on the final request, not a late prior response.
-    for (const query of ['shi', 'lian', 'qu']) await pinyinField.fill(query);
-    await waitContextCandidates(nativeContextCandidates);
-    await waitPredictions(nativePredictions);
-    const contextProbes = [];
-    for (const probe of [
-      { pinyin: 'xieshi', context: '我想' },
-      { pinyin: 'dehenkuai', context: '我跑' },
-      { pinyin: 'shishi', context: '我们开始' },
-    ]) {
-      const expected = native('lookup', [probe.pinyin, probe.context]).candidates;
-      const plain = native('lookup', [probe.pinyin]).candidates;
-      assert.deepEqual((await api('lookup', [probe.pinyin, probe.context])).candidates, expected);
-      await contextField.fill(probe.context);
-      await pinyinField.fill(probe.pinyin);
-      await waitContextCandidates(expected);
-      contextProbes.push({ ...probe, candidates: expected, contextChangesOrder: JSON.stringify(expected) !== JSON.stringify(plain) });
-    }
-    assert(contextProbes.some(probe => probe.contextChangesOrder), 'Contextual lookup never differed from context-free lookup in the homophone probes.');
-    await contextField.fill('我想'); await pinyinField.fill('qu');
-    await waitContextCandidates(nativeContextCandidates);
-    assert.deepEqual(savedFiles(before.dataDirectory), filesBefore);
-    report.contextPreview = { context: '我想', pinyin: 'qu', predictions: nativePredictions, candidates: nativeContextCandidates,
-      probes: contextProbes, previewFilesUnchanged: true, navigationPreserved: true, blankContextStopped: true, invalidAsciiRejected: true };
+    assert.deepEqual([before.settings.typoCorrection, before.settings.mixedEnglish, before.settings.fuzzyPinyin, before.settings.doublePinyin],
+      [true, true, [], 'none'], 'Defaults: correction and mixed input on, no fuzzy pairs, full pinyin.');
+    const idle = () => page.waitForFunction(() => !document.querySelector('.segmented input')?.disabled);
+    // Settings are rows: switches on the right, fuzzy pinyin behind its row.
+    const fuzzyRow = page.getByRole('button', { name: /^模糊音/ });
+    await fuzzyRow.scrollIntoViewIfNeeded();
+    assert.equal(await fuzzyRow.getAttribute('aria-expanded'), 'false');
+    assert.match(await fuzzyRow.textContent(), /关闭/);
+    await fuzzyRow.click();
+    assert.equal(await fuzzyRow.getAttribute('aria-expanded'), 'true');
+    // Fuzzy pairs: each chip saves on its own and the engine reads zongguo as 中国.
+    assert.notEqual(native('lookup', ['zongguo']).candidates[0], '中国');
+    await page.getByRole('button', { name: 'z 与 zh 不区分', exact: true }).click();
+    await waitState(value => value.settings.fuzzyPinyin.join() === 'z-zh');
+    await idle();
+    await page.getByRole('button', { name: 'in 与 ing 不区分', exact: true }).click();
+    const fuzzy = await waitState(value => value.settings.fuzzyPinyin.join() === 'z-zh,in-ing');
+    assert.deepEqual({ ...fuzzy.settings, fuzzyPinyin: [] }, { ...before.settings, fuzzyPinyin: [] }, 'A fuzzy pair changed another setting.');
+    assert.equal(await page.getByRole('button', { name: 'z 与 zh 不区分', exact: true }).getAttribute('aria-pressed'), 'true');
+    assert.deepEqual(native('state').settings.fuzzyPinyin, ['z-zh', 'in-ing']);
+    assert.equal(native('lookup', ['zongguo']).candidates[0], '中国');
+    assert.match(await fuzzyRow.textContent(), /已开启 2 项/);
+    // Spelling correction off: nihso no longer becomes 你好.
+    assert.equal(native('lookup', ['nihso']).candidates[0], '你好');
+    await idle();
+    await page.getByRole('switch', { name: '拼写纠错', exact: true }).click();
+    await waitState(value => value.settings.typoCorrection === false);
+    assert.notEqual(native('lookup', ['nihso']).candidates[0], '你好');
+    await idle();
+    await page.getByRole('switch', { name: '中英混输', exact: true }).click();
+    await waitState(value => value.settings.mixedEnglish === false);
+    assert(!native('lookup', ['ppt']).candidates.includes('PPT'));
+    // Double pinyin shows its key map and changes the Appearance preview.
+    await idle();
+    await page.locator('.segmented input[value="xiaohe"]').click({ force: true });
+    await waitState(value => value.settings.doublePinyin === 'xiaohe');
+    await page.getByLabel('小鹤双拼键位', { exact: true }).waitFor();
+    await screenshot('input-options-xiaohe');
+    assert.equal(native('lookup', ['nihcuijp']).candidates[0], '你好世界');
+    assert.equal(native('lookup', ['nihcuijp']).pinyin, "ni'hao'shi'jie");
+    // The options survive a restart, then return to their defaults.
+    const saved = (await state()).settings;
+    await app.close();
+    await launch();
+    assert.deepEqual((await state()).settings, saved);
+    await navigate(pages[1]);
+    await page.locator('#group-scheme').scrollIntoViewIfNeeded();
+    assert.equal(await page.locator('.segmented input[value="xiaohe"]').isChecked(), true);
+    // Back to the defaults through the same controls.
+    await page.locator('.segmented input[value="none"]').click({ force: true });
+    await waitState(value => value.settings.doublePinyin === 'none');
+    assert.equal(await page.getByLabel('小鹤双拼键位', { exact: true }).count(), 0);
+    await idle();
+    await page.getByRole('switch', { name: '拼写纠错', exact: true }).click();
+    await waitState(value => value.settings.typoCorrection === true);
+    await idle();
+    await page.getByRole('switch', { name: '中英混输', exact: true }).click();
+    await waitState(value => value.settings.mixedEnglish === true);
+    await idle();
+    await page.getByRole('button', { name: /^模糊音/ }).click();
+    await page.getByRole('button', { name: '全部关闭', exact: true }).click();
+    await waitState(value => value.settings.fuzzyPinyin.length === 0);
+    assert.deepEqual((await state()).settings, before.settings);
+    report.inputOptions = { fuzzy: ['z-zh', 'in-ing'], correctionOff: true, mixedOff: true, doublePinyin: 'xiaohe', restored: true };
   });
-  await check('Next-word suggestion setting persists restart while disabled preview remains usable', async () => {
+  await check('Usage scenes save, list their words and drive the native engine', async () => {
+    await navigate(pages[1]);
+    const before = await state();
+    assert.deepEqual(before.settings.usageDomains, [], 'No usage scene is chosen by default.');
+    const idle = () => page.waitForFunction(() => !document.querySelector('.scene-card')?.disabled);
+    const daily = page.getByRole('button', { name: /^日常聊天/ });
+    const coding = page.getByRole('button', { name: /^编程开发/ });
+    await daily.scrollIntoViewIfNeeded();
+    assert.equal(await daily.getAttribute('aria-pressed'), 'false');
+    assert.equal(native('lookup', ['haoxiangshi']).candidates[0], '好象是');
+    // Each card saves on its own and the engine ranks the scene's words first.
+    await daily.click();
+    await waitState(value => value.settings.usageDomains.join() === 'daily');
+    assert.equal(await daily.getAttribute('aria-pressed'), 'true');
+    assert.equal(native('lookup', ['haoxiangshi']).candidates[0], '好像是');
+    await idle();
+    await coding.click();
+    const chosen = await waitState(value => value.settings.usageDomains.join() === 'coding,daily');
+    assert.deepEqual({ ...chosen.settings, usageDomains: [] }, before.settings, 'A scene changed another setting.');
+    assert.equal(native('lookup', ['yilaizhuru']).candidates[0], '依赖注入');
+    // The chosen scenes' words are listed behind their row.
+    const words = page.getByRole('button', { name: /^场景词条/ });
+    await page.waitForFunction(() => /2 个场景 · \d+ 个词/.test(document.querySelector('[aria-labelledby="group-scenes"]')?.textContent ?? ''));
+    await words.click();
+    assert.equal(await words.getAttribute('aria-expanded'), 'true');
+    const panel = page.getByRole('region', { name: '场景词条' });
+    assert.match(await panel.textContent(), /其实/);
+    assert.match(await panel.textContent(), /依赖注入/);
+    await screenshot('input-scenes');
+    // Back to none through the same cards.
+    await idle();
+    await daily.click();
+    await waitState(value => value.settings.usageDomains.join() === 'coding');
+    await idle();
+    await coding.click();
+    await waitState(value => value.settings.usageDomains.length === 0);
+    assert.match(await panel.textContent(), /先在上面选择场景/);
+    assert.equal(native('lookup', ['haoxiangshi']).candidates[0], '好象是');
+    assert.deepEqual((await state()).settings, before.settings);
+    report.usageScenes = { chosen: ['coding', 'daily'], listed: true, restored: true };
+  });
+  await check('Typing helpers switch off and on and persist for the IME', async () => {
+    await navigate(pages[1]);
+    const before = await state();
+    assert.deepEqual([before.settings.digitPeriod, before.settings.codePunctuation], [true, true], 'Both helpers are on by default.');
+    const idle = () => page.waitForFunction(() => !document.querySelector('.segmented input')?.disabled);
+    const digit = page.getByRole('switch', { name: '数字后使用英文标点', exact: true });
+    const code = page.getByRole('switch', { name: '编程软件中使用英文标点', exact: true });
+    await digit.scrollIntoViewIfNeeded();
+    await digit.click();
+    await waitState(value => value.settings.digitPeriod === false);
+    await idle();
+    await code.click();
+    const off = await waitState(value => value.settings.codePunctuation === false);
+    assert.deepEqual({ ...off.settings, digitPeriod: true, codePunctuation: true }, before.settings, 'A helper changed another setting.');
+    const stored = native('state').settings;
+    assert.deepEqual([stored.digitPeriod, stored.codePunctuation], [false, false]);
+    await screenshot('input-helpers');
+    await idle();
+    await digit.click();
+    await waitState(value => value.settings.digitPeriod === true);
+    await idle();
+    await code.click();
+    await waitState(value => value.settings.codePunctuation === true);
+    assert.deepEqual((await state()).settings, before.settings);
+    report.typingHelpers = { toggled: ['digitPeriod', 'codePunctuation'], restored: true };
+  });
+  await check('Setting explanations stay closed until their details button opens them', async () => {
+    await navigate(pages[1]);
+    assert.equal(await page.getByText('试一试', { exact: true }).count(), 0, 'The 试一试 panel is gone.');
+    const visibleNotes = await page.evaluate(() => Array.from(document.querySelectorAll('#page-input .setting-detail'))
+      .filter(element => element.getClientRects().length > 0).length);
+    assert.equal(visibleNotes, 0, 'No explanation is open before it is asked for.');
+    const details = page.getByRole('button', { name: '拼写纠错详情', exact: true });
+    await details.scrollIntoViewIfNeeded();
+    assert.equal(await details.getAttribute('aria-expanded'), 'false');
+    await details.click();
+    assert.equal(await details.getAttribute('aria-expanded'), 'true');
+    const panel = page.getByRole('region', { name: '拼写纠错说明', exact: true });
+    assert.match(await panel.textContent(), /nihso/);
+    assert.equal(await panel.locator('.typing-demo').count(), 1, 'The explanation shows its demonstration.');
+    await page.waitForTimeout(2600);
+    await screenshot('details-typing-demo');
+    const keyDetails = page.getByRole('button', { name: '数字后使用英文标点详情', exact: true });
+    await keyDetails.scrollIntoViewIfNeeded();
+    await keyDetails.click();
+    assert.equal(await page.getByRole('region', { name: '数字后使用英文标点说明', exact: true }).locator('.key-demo').count(), 1);
+    await details.click();
+    assert.equal(await details.getAttribute('aria-expanded'), 'false');
+    assert.equal(await panel.isVisible(), false);
+    await keyDetails.click();
+    report.settingDetails = { closedByDefault: true, opensWithDemo: true, closesAgain: true };
+  });
+  await check('Next-word suggestion setting persists restart', async () => {
     await navigate(pages[1]);
     const original = (await state()).settings;
     assert.equal(original.predictionEnabled, false);
@@ -624,21 +765,8 @@ async function run() {
     assert.deepEqual(disabled.settings, { ...original, predictionEnabled: false });
     assert.equal(await page.evaluate(() => window.localPinyin.initialState.settings.predictionEnabled), false);
     assert.equal(await page.getByRole('switch', { name: '联想下一个词', exact: true }).getAttribute('aria-checked'), 'false');
-    const filesBefore = savedFiles(disabled.dataDirectory);
-    const nativePredictions = native('predict', ['我想']).candidates;
-    assert(nativePredictions.includes('去'));
-    assert.deepEqual((await api('predict', ['我想'])).candidates, nativePredictions);
-    await waitPredictions(nativePredictions);
-    await page.getByLabel(/^后续拼音/).fill('qu');
-    await waitContextCandidates(native('lookup', ['qu', '我想']).candidates);
-    await page.locator('.context-preview-card').scrollIntoViewIfNeeded();
-    await screenshot('context-preview-disabled');
-    await page.getByRole('region', { name: '联想后续词', exact: true }).getByRole('button', { name: '去', exact: true }).click();
-    assert.equal(await page.getByLabel('前文', { exact: true }).inputValue(), '我想去');
-    await waitPredictions(native('predict', ['我想去']).candidates);
-    assert.deepEqual(savedFiles(disabled.dataDirectory), filesBefore, 'Disabled preview modified personal files or reenabled predictions.');
     assert.deepEqual((await state()).settings, original);
-    report.predictionSetting = { disabledRestartVerified: true, enabledRestartVerified: true, disabledPreviewWorks: true };
+    report.predictionSetting = { disabledRestartVerified: true, enabledRestartVerified: true };
   });
   await check('Personal words add/edit/search/delete and restart', async () => {
     await navigate(pages[2]);
@@ -649,7 +777,7 @@ async function run() {
     await add.getByLabel(/^词频/).fill('5000');
     await add.getByRole('button', { name: '保存词语', exact: true }).click();
     await page.getByRole('button', { name: '编辑 青石科技发展有限公司', exact: true }).waitFor();
-    assert.equal((await api('lookup', ['qingshikejifazhanyouxiangongsi'])).candidates[0], '青石科技发展有限公司');
+    assert.equal(native('lookup', ['qingshikejifazhanyouxiangongsi']).candidates[0], '青石科技发展有限公司');
     await app.close(); await launch(); await navigate(pages[2]);
     await page.getByRole('button', { name: '编辑 青石科技发展有限公司', exact: true }).click();
     const edit = page.getByRole('dialog', { name: '编辑词语', exact: true });
@@ -659,7 +787,7 @@ async function run() {
     await page.getByRole('button', { name: '编辑 青石科技服务有限公司', exact: true }).waitFor();
     const entries = (await api('listUserLexicon')).entries;
     assert.deepEqual(entries, [{ pinyin: 'qingshikejifuwuyouxiangongsi', word: '青石科技服务有限公司', frequency: 5000 }]);
-    assert.equal((await api('lookup', [entries[0].pinyin])).candidates[0], entries[0].word);
+    assert.equal(native('lookup', [entries[0].pinyin]).candidates[0], entries[0].word);
     const search = page.getByLabel('搜索个人词库', { exact: true });
     await search.fill('qingshikeji');
     await page.getByRole('button', { name: '编辑 青石科技服务有限公司', exact: true }).waitFor();
@@ -760,6 +888,12 @@ async function run() {
       ['saveSettings', [{ ...before.settings, textSize: -100 }]],
       ['saveSettings', [{ ...before.settings, predictionEnabled: 'true' }]],
       ['saveSettings', [{ ...before.settings, predictionEnabled: undefined }]],
+      ['saveSettings', [{ ...before.settings, candidateStyle: 'aurora' }]],
+      ['saveSettings', [{ ...before.settings, candidateStyle: undefined }]],
+      ['saveSettings', [{ ...before.settings, fuzzyPinyin: ['zz'] }]],
+      ['saveSettings', [{ ...before.settings, fuzzyPinyin: 'z-zh' }]],
+      ['saveSettings', [{ ...before.settings, doublePinyin: 'qwerty' }]],
+      ['saveSettings', [{ ...before.settings, typoCorrection: 'yes' }]],
       ['upsertUserEntry', [{ pinyin: '../outside', word: '无效词', frequency: 5000 }]],
       ['lookup', ['qu汉', '我想']],
       ['lookup', ['q'.repeat(257), '我想']],

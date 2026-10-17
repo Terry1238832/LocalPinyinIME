@@ -2,7 +2,7 @@ import { app, BrowserWindow, ipcMain, nativeTheme, protocol, session, shell } fr
 import { execFile } from 'node:child_process';
 import { mkdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
-import type { AppState } from '../src/types';
+import { candidateStyleIds, type AppState } from '../src/types';
 
 protocol.registerSchemesAsPrivileged([{ scheme: 'app', privileges: { standard: true, secure: true, supportFetchAPI: true } }]);
 app.setName('本地拼音设置');
@@ -59,7 +59,7 @@ function handle(channel: string, callback: (...args: unknown[]) => unknown) {
 async function state(): Promise<AppState> {
   const result = await bridge<AppState>('state');
   nativeTheme.themeSource = result.settings.theme;
-  window?.setBackgroundColor(nativeTheme.shouldUseDarkColors ? '#191b20' : '#eceef3');
+  window?.setBackgroundColor(nativeTheme.shouldUseDarkColors ? '#0f1012' : '#eceef1');
   return result;
 }
 function installHandlers() {
@@ -68,19 +68,35 @@ function installHandlers() {
       event.senderFrame === window.webContents.mainFrame && event.senderFrame?.url === 'app://local/index.html' ? bootstrap : null;
   });
   handle('state', state);
+  const fuzzyIds = ['z-zh', 'c-ch', 's-sh', 'n-l', 'f-h', 'r-l', 'an-ang', 'en-eng', 'in-ing', 'ian-iang', 'uan-uang'];
+  const domainIds = ['coding', 'work', 'math', 'study', 'daily', 'games'];
   handle('save-settings', (value) => {
     const settings = record(value);
-    if (!['system', 'light', 'dark'].includes(String(settings.theme)) || !Number.isInteger(settings.textSize) ||
+    const fuzzy = settings.fuzzyPinyin;
+    const domains = settings.usageDomains;
+    if (!Array.isArray(fuzzy) || fuzzy.some(id => typeof id !== 'string' || !fuzzyIds.includes(id)) ||
+        !Array.isArray(domains) || domains.some(id => typeof id !== 'string' || !domainIds.includes(id)) ||
+        typeof settings.typoCorrection !== 'boolean' || typeof settings.mixedEnglish !== 'boolean' ||
+        typeof settings.digitPeriod !== 'boolean' || typeof settings.codePunctuation !== 'boolean' ||
+        !['none', 'xiaohe', 'ziranma'].includes(String(settings.doublePinyin)))
+      throw new Error('设置选项无效。');
+    if (!['system', 'light', 'dark'].includes(String(settings.theme)) ||
+        !(candidateStyleIds as readonly string[]).includes(String(settings.candidateStyle)) || !Number.isInteger(settings.textSize) ||
         (settings.textSize as number) < 1 || (settings.textSize as number) > 7 || typeof settings.shiftToggleEnabled !== 'boolean' ||
         typeof settings.predictionEnabled !== 'boolean')
       throw new Error('设置选项无效。');
     return enqueue(async () => {
-      await bridge('save-settings', [String(settings.theme), String(settings.textSize), String(settings.shiftToggleEnabled), String(settings.predictionEnabled)]);
+      // Fuzzy pairs in the canonical order the native settings use.
+      const pairs = fuzzyIds.filter(id => (fuzzy as string[]).includes(id)).join(',');
+      const scenes = domainIds.filter(id => (domains as string[]).includes(id)).join(',');
+      await bridge('save-settings', [String(settings.theme), String(settings.textSize), String(settings.shiftToggleEnabled),
+        String(settings.predictionEnabled), String(settings.candidateStyle), `typoCorrection=${settings.typoCorrection}`,
+        `mixedEnglish=${settings.mixedEnglish}`, `fuzzyPinyin=${pairs}`, `doublePinyin=${settings.doublePinyin}`,
+        `usageDomains=${scenes}`, `digitPeriod=${settings.digitPeriod}`, `codePunctuation=${settings.codePunctuation}`]);
       return state();
     });
   });
-  handle('lookup', (pinyin, preceding = '') => bridge('lookup', [text(pinyin, 256, true), text(preceding, 32, true)]));
-  handle('predict', (preceding) => bridge('predict', [text(preceding, 32, true)]));
+  handle('domain-words', () => bridge('domain-words'));
   handle('user-list', () => bridge('user-list'));
   handle('user-upsert', (entry, previous) => {
     const args = entryArgs(entry);
@@ -116,8 +132,12 @@ const csp = "default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inl
 if (!app.requestSingleInstanceLock()) app.quit();
 else {
   app.on('second-instance', () => { if (!hidden && window) { if (window.isMinimized()) window.restore(); window.show(); window.focus(); } });
+  // Read the settings while Electron starts up rather than after it: the
+  // window waits for them, and the two together are most of the launch.
+  const initialState = bridge<AppState>('state');
+  initialState.catch(() => undefined);
   app.whenReady().then(async () => {
-    bootstrap = await bridge<AppState>('state');
+    bootstrap = await initialState;
     nativeTheme.themeSource = bootstrap.settings.theme;
     const dist = path.join(app.getAppPath(), 'dist');
     protocol.handle('app', async request => {
@@ -141,7 +161,7 @@ else {
       callback({ cancel: !details.url.startsWith('app://local/') && !details.url.startsWith('devtools://') });
     });
     window = new BrowserWindow({ width: 1160, height: 800, minWidth: 920, minHeight: 680,
-      frame: false, show: false, backgroundColor: nativeTheme.shouldUseDarkColors ? '#191b20' : '#eceef3', title: '本地拼音设置',
+      frame: false, show: false, backgroundColor: nativeTheme.shouldUseDarkColors ? '#0f1012' : '#eceef1', title: '本地拼音设置',
       icon: app.isPackaged ? path.join(path.dirname(process.execPath), 'icon.ico')
         : path.resolve(app.getAppPath(), '../assets/branding/icon/LocalPinyinIME.ico'), webPreferences: {
         preload: path.join(__dirname, 'preload.cjs'), contextIsolation: true, sandbox: true,

@@ -28,9 +28,11 @@ set(LOCALPINYINIME_DISPLAY_NAME "本地拼音 · 离线智能输入法")
 set(LOCALPINYINIME_COMPANY_NAME "LocalPinyinIME contributors")
 set(LOCALPINYINIME_COPYRIGHT "Copyright (c) 2026 LocalPinyinIME contributors")
 configure_file(cmake/LocalPinyinVersion.h.in "${CMAKE_BINARY_DIR}/generated/localpinyin_version.h" @ONLY)
-execute_process(COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tools/generate_brand_theme_header.py"
-    --input "${CMAKE_CURRENT_SOURCE_DIR}/assets/branding/theme/local_pinyin_blue_theme.json"
-    --output "${CMAKE_BINARY_DIR}/generated/local_pinyin_blue_theme.h" COMMAND_ERROR_IS_FATAL ANY)
+# One token file styles the candidate window, the installer and the settings app.
+execute_process(COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tools/generate_design_tokens.py"
+    --header "${CMAKE_BINARY_DIR}/generated/localpinyin_design_tokens.h" COMMAND_ERROR_IS_FATAL ANY)
+set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS
+    "${CMAKE_CURRENT_SOURCE_DIR}/assets/branding/theme/design_tokens.json")
 include_directories(src "${CMAKE_BINARY_DIR}/generated")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 function(localpinyin_add_version_resource target file_description original_filename file_type)
@@ -49,29 +51,46 @@ endif()
 string(APPEND localpinyin_dictionary_output_dir "/dictionary")
 set(localpinyin_dictionary_sources)
 set(localpinyin_dictionary_outputs)
-foreach(name IN ITEMS core_zh_pinyin.tsv local_core_zh_pinyin.tsv context_zh.tsv context_zh.lm standard_zh_pinyin.tsv continuations_zh.tsv)
+foreach(name IN ITEMS core_zh_pinyin.tsv local_core_zh_pinyin.tsv context_zh.tsv context_zh.lm standard_zh_pinyin.tsv continuations_zh.tsv english_terms.tsv)
     list(APPEND localpinyin_dictionary_sources "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/${name}")
     list(APPEND localpinyin_dictionary_outputs "${localpinyin_dictionary_output_dir}/${name}")
+endforeach()
+# Usage-scene word packs (常用场景), dictionary/domains/<id>.tsv.
+set(localpinyin_domain_sources)
+set(localpinyin_domain_outputs)
+foreach(id IN ITEMS coding work math study daily games)
+    list(APPEND localpinyin_domain_sources "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/domains/${id}.tsv")
+    list(APPEND localpinyin_domain_outputs "${localpinyin_dictionary_output_dir}/domains/${id}.tsv")
 endforeach()
 # A single dependency owns the shared files. Parallel DLL/bridge builds must
 # never copy into the same dictionary directory concurrently. Explicit outputs
 # also refresh data-only edits and restore deleted output files without relinking.
-add_custom_command(OUTPUT ${localpinyin_dictionary_outputs}
-    COMMAND "${CMAKE_COMMAND}" -E make_directory "${localpinyin_dictionary_output_dir}"
+add_custom_command(OUTPUT ${localpinyin_dictionary_outputs} ${localpinyin_domain_outputs}
+    COMMAND "${CMAKE_COMMAND}" -E make_directory "${localpinyin_dictionary_output_dir}/domains"
     COMMAND "${CMAKE_COMMAND}" -E copy_if_different ${localpinyin_dictionary_sources}
         "${localpinyin_dictionary_output_dir}"
-    DEPENDS ${localpinyin_dictionary_sources} VERBATIM)
-add_custom_target(localpinyin_dictionary_resources ALL DEPENDS ${localpinyin_dictionary_outputs})
+    COMMAND "${CMAKE_COMMAND}" -E copy_if_different ${localpinyin_domain_sources}
+        "${localpinyin_dictionary_output_dir}/domains"
+    DEPENDS ${localpinyin_dictionary_sources} ${localpinyin_domain_sources} VERBATIM)
+add_custom_target(localpinyin_dictionary_resources ALL DEPENDS ${localpinyin_dictionary_outputs} ${localpinyin_domain_outputs})
 function(localpinyin_copy_dictionary_resource target)
     add_dependencies(${target} localpinyin_dictionary_resources)
 endfunction()
 # One copy of shared code is compiled for the product and all regression tests.
-add_library(pinyin_common STATIC src/common/logging.cpp src/common/utf_utils.cpp src/common/win32_utils.cpp)
+add_library(pinyin_common STATIC src/common/logging.cpp src/common/utf_utils.cpp src/common/win32_utils.cpp
+    src/engine/input_options.cpp)
 target_link_libraries(pinyin_common PUBLIC user32 gdi32 shell32 shlwapi ole32)
 add_library(pinyin_engine STATIC src/engine/pinyin_engine.cpp src/engine/dictionary.cpp
-    src/engine/user_lexicon.cpp src/engine/candidate_ranker.cpp src/engine/user_learning.cpp src/engine/context_model.cpp src/engine/continuation_model.cpp)
+    src/engine/user_lexicon.cpp src/engine/candidate_ranker.cpp src/engine/user_learning.cpp src/engine/context_model.cpp src/engine/continuation_model.cpp
+    src/engine/double_pinyin.cpp src/engine/fuzzy_pinyin.cpp src/engine/english_terms.cpp src/engine/typo_correction.cpp
+    src/engine/domain_lexicon.cpp)
 target_link_libraries(pinyin_engine PUBLIC pinyin_common)
-add_library(pinyin_ui STATIC src/ime/candidate_ui.cpp src/settings/settings_store.cpp src/settings/modern_renderer.cpp)
+add_library(pinyin_ui STATIC src/ime/candidate_ui.cpp src/settings/settings_store.cpp src/settings/modern_renderer.cpp
+    src/ime/candidate_styles/layout_core.cpp src/ime/candidate_styles/paint_core.cpp
+    src/ime/candidate_styles/adaptive_flow.cpp src/ime/candidate_styles/cursor_rail.cpp
+    src/ime/candidate_styles/modern_type.cpp src/ime/candidate_styles/floating_glass.cpp
+    src/ime/candidate_styles/capsule.cpp src/ime/candidate_styles/column_list.cpp
+    src/ime/candidate_styles/outline.cpp src/ime/candidate_styles/ink_dot.cpp)
 target_link_libraries(pinyin_ui PUBLIC pinyin_common d2d1 dwrite)
 add_library(pinyin_settings STATIC src/settings/dictionary_catalog.cpp)
 target_link_libraries(pinyin_settings PUBLIC pinyin_ui pinyin_engine comctl32 advapi32)
@@ -97,7 +116,10 @@ set(LOCALPINYIN_INNER_INSTALLER "" CACHE FILEPATH "Inno Setup package embedded i
 set(LOCALPINYIN_PAYLOAD_BYTES "" CACHE STRING "Total size of the installed files, for the progress bar")
 add_executable(LocalPinyinInstaller WIN32 src/installer/installer_shell.cpp src/installer/installer.rc
     src/installer/installer.manifest)
-target_link_libraries(LocalPinyinInstaller PRIVATE pinyin_ui dwmapi gdiplus shell32 ole32)
+target_link_libraries(LocalPinyinInstaller PRIVATE pinyin_ui dwmapi gdiplus shell32 ole32 oleaut32 uuid)
+# The execution level comes from installer.manifest (highestAvailable), not
+# the linker's default asInvoker.
+target_link_options(LocalPinyinInstaller PRIVATE /MANIFESTUAC:NO)
 localpinyin_add_version_resource(LocalPinyinInstaller "本地拼音安装程序" "LocalPinyinInstaller.exe" "VFT_APP")
 if(LOCALPINYIN_INNER_INSTALLER)
     file(TO_CMAKE_PATH "${LOCALPINYIN_INNER_INSTALLER}" localpinyin_inner_installer)
@@ -119,13 +141,14 @@ if(BUILD_TESTING)
     endfunction()
     foreach(name IN ITEMS test_dictionary test_pinyin_engine test_candidate_ranker test_user_learning
         test_candidate_selection test_dictionary_resource_layout test_dictionary_layers test_user_lexicon test_sentence_input_baseline test_contextual_engine test_continuation_engine test_personal_phrases
-        test_context_language_model test_learning_promotion)
+        test_context_language_model test_learning_promotion test_input_features)
         pinyin_test(${name} pinyin_engine)
     endforeach()
     foreach(name IN ITEMS test_candidate_ui test_cross_app_compatibility test_settings_store)
         pinyin_test(${name} pinyin_ui)
     endforeach()
     pinyin_test(test_dictionary_catalog pinyin_settings)
+    localpinyin_copy_dictionary_resource(test_dictionary_catalog)
     foreach(name IN ITEMS test_candidate_ui_element test_runtime_diagnostics test_preserved_key_registration)
         pinyin_test(${name} pinyin_service)
     endforeach()
@@ -174,6 +197,9 @@ if(BUILD_TESTING)
         "${CMAKE_CURRENT_SOURCE_DIR}/tools/validate_context_model.py"
         --dictionary-dir "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary"
         --cases-dir "${CMAKE_CURRENT_SOURCE_DIR}/tests/data")
+    add_test(NAME test_design_tokens_css COMMAND "${Python3_EXECUTABLE}"
+        "${CMAKE_CURRENT_SOURCE_DIR}/tools/generate_design_tokens.py"
+        --css "${CMAKE_CURRENT_SOURCE_DIR}/desktop/src/tokens.css" --check)
     add_test(NAME test_continuation_model_data COMMAND "${Python3_EXECUTABLE}"
         "${CMAKE_CURRENT_SOURCE_DIR}/tools/validate_continuations.py"
         --dictionary-dir "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary")
@@ -183,6 +209,7 @@ if(BUILD_TESTING)
         ENVIRONMENT "TEMP=${CMAKE_BINARY_DIR}/test-tmp;TMP=${CMAKE_BINARY_DIR}/test-tmp;LOCALPINYINIME_LOCALAPPDATA=${CMAKE_BINARY_DIR}/test-data")
 endif()
 install(TARGETS LocalPinyinIME LocalPinyinSettingsBridge LocalPinyinImeSetup RUNTIME DESTINATION .)
-install(FILES resources/dictionary/core_zh_pinyin.tsv resources/dictionary/local_core_zh_pinyin.tsv resources/dictionary/context_zh.tsv resources/dictionary/context_zh.lm resources/dictionary/standard_zh_pinyin.tsv resources/dictionary/continuations_zh.tsv DESTINATION dictionary)
+install(FILES resources/dictionary/core_zh_pinyin.tsv resources/dictionary/local_core_zh_pinyin.tsv resources/dictionary/context_zh.tsv resources/dictionary/context_zh.lm resources/dictionary/standard_zh_pinyin.tsv resources/dictionary/continuations_zh.tsv resources/dictionary/english_terms.tsv DESTINATION dictionary)
+install(FILES ${localpinyin_domain_sources} DESTINATION dictionary/domains)
 install(FILES resources/THIRD_PARTY_NOTICES.txt DESTINATION .)
 install(FILES LICENSE DESTINATION .)

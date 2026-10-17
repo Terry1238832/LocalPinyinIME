@@ -675,6 +675,30 @@ int wmain(int argc, wchar_t** argv) {
             require(s.store->text == L"你好ni你好随便，", "punctuation converts then inserts");
             s.key(VK_OEM_PERIOD);
             require(s.store->text == L"你好ni你好随便，。", "idle punctuation insertion");
+            // After a digit the application typed, the period key is a
+            // decimal point (3.14); after anything else it stays 。.
+            const std::wstring before_digit = s.store->text;
+            s.store->host_replace(before_digit + L"3");
+            s.key(VK_OEM_PERIOD);
+            require(s.store->text == before_digit + L"3.", "a period after a digit is a decimal point");
+            s.key(VK_OEM_PERIOD);
+            require(s.store->text == before_digit + L"3.。", "a period after a period stays Chinese");
+            // A comma and a slash after a digit are ASCII too: 1,000 and 1/2.
+            s.store->host_replace(before_digit + L"1");
+            s.key(VK_OEM_COMMA);
+            require(s.store->text == before_digit + L"1,", "a comma after a digit is ASCII");
+            s.store->host_replace(before_digit + L"1");
+            s.key(VK_OEM_2);
+            require(s.store->text == before_digit + L"1/", "a slash after a digit is ASCII");
+            s.store->host_replace(before_digit);
+            // Switching to English keeps the letters typed so far.
+            BOOL toggle_eaten = FALSE;
+            for (const auto letter : std::wstring(L"HELLO")) s.key(letter);
+            check(s.keys->OnPreservedKey(s.context.Get(), kCtrlSpace, &toggle_eaten), "English mode during a composition");
+            require(s.store->text == before_digit + L"hello", "mode switch keeps typed letters");
+            check(s.keys->OnKeyUp(s.context.Get(), VK_CONTROL, 0, &toggle_eaten), "release the Ctrl mode chord");
+            check(s.keys->OnPreservedKey(s.context.Get(), kCtrlSpace, &toggle_eaten), "back to Chinese mode");
+            s.store->host_replace(before_digit);
             s.key(VK_ESCAPE, false);
             // A long run must keep every key when the composition buffer rolls over.
             const std::wstring before_long_input = s.store->text;
@@ -940,6 +964,23 @@ int wmain(int argc, wchar_t** argv) {
             }
             check(s.service->Deactivate(), "text service deactivation");
             s.service_active = false;
+            // In a code editor (named for this test) punctuation is ASCII: the
+            // editor types it itself, and after pinyin the candidate comes first.
+            require(SetEnvironmentVariableW(L"LOCALPINYINIME_TEST_HOST_EXECUTABLE", L"Code.exe") != FALSE,
+                "name a code editor host");
+            check(s.service->Activate(static_cast<ITfThreadMgr*>(s.adapter.Get()), service_client),
+                "text service activation in a code editor");
+            s.service_active = true;
+            check(s.keys->OnPreservedKey(s.context.Get(), kCtrlSpace, &eaten), "Chinese mode in the code editor");
+            const std::wstring before_code = s.store->text;
+            s.key(VK_OEM_COMMA, false);
+            require(s.store->text == before_code, "code editor punctuation goes to the editor");
+            for (const auto letter : std::wstring(L"NIHAO")) s.key(letter);
+            s.key(VK_OEM_COMMA);
+            require(s.store->text == before_code + L"你好,", "code editor punctuation after pinyin is ASCII");
+            check(s.service->Deactivate(), "text service deactivation in a code editor");
+            s.service_active = false;
+            SetEnvironmentVariableW(L"LOCALPINYINIME_TEST_HOST_EXECUTABLE", nullptr);
             std::cout << "PASS: single-line candidate pages, page-relative digit/Space commits, host page boundaries/selection, cross-page prediction Tab, DLL COM creation, real TSF edit sessions, context-ranked pinyin, bounded/private preceding text, Tab prediction, host-managed selection, edit/focus/context invalidation, ordinary key passthrough and composition regressions.\n"
                 << "Scope: key-sink registration is in memory; OS profile loading/key routing and candidate presentation require desktop acceptance.\n";
         }

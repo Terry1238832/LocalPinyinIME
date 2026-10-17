@@ -36,6 +36,20 @@ int main() {
     REQUIRE_EQ(catalog.preview(L"nihao", 500).front().weight, 7000);
     REQUIRE_EQ(catalog.preview(L"nihao", 500).front().source, DictionaryCatalogSource::LocalCore);
     REQUIRE_EQ(catalog.preview(L"随便", 500).front().source, DictionaryCatalogSource::Standard);
+    // Counting reports exactly what loading does, invalid rows included.
+    const auto same_counts = [](const DictionaryCatalogStats& left, const DictionaryCatalogStats& right) {
+        return left.core_entries == right.core_entries && left.local_core_entries == right.local_core_entries &&
+               left.standard_entries == right.standard_entries &&
+               left.total_unique_entries == right.total_unique_entries && left.invalid_rows == right.invalid_rows;
+    };
+    REQUIRE_TRUE(same_counts(DictionaryCatalog::count(root.wstring()), catalog.stats()));
     std::filesystem::remove_all(root);
+    // And on the shipped dictionary beside the test.
+    wchar_t module[MAX_PATH]{};
+    GetModuleFileNameW(nullptr, module, MAX_PATH);
+    const auto shipped = std::filesystem::path(module).parent_path() / L"dictionary";
+    DictionaryCatalog full;
+    REQUIRE_TRUE(full.load(shipped.wstring()));
+    REQUIRE_TRUE(same_counts(DictionaryCatalog::count(shipped.wstring()), full.stats()));
     return 0;
 }

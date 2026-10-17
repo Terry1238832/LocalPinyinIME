@@ -304,7 +304,7 @@ bool is_missing_status(LSTATUS status) {
 
 std::wstring read_reg_string(HKEY root, const std::wstring& subkey, const wchar_t* name) {
     HKEY key = nullptr;
-    LSTATUS status = RegOpenKeyExW(root, subkey.c_str(), 0, KEY_READ | KEY_WOW64_64KEY, &key);
+    LSTATUS status = RegOpenKeyExW(root, subkey.c_str(), 0, KEY_READ | kRegistryView, &key);
     if (status != ERROR_SUCCESS) {
         return L"";
     }
@@ -336,7 +336,7 @@ HRESULT set_reg_string(HKEY root, const std::wstring& subkey, const wchar_t* nam
                                      0,
                                      nullptr,
                                      0,
-                                     KEY_WRITE | KEY_WOW64_64KEY,
+                                     KEY_WRITE | kRegistryView,
                                      nullptr,
                                      &key,
                                      nullptr);
@@ -356,7 +356,7 @@ HRESULT delete_registry_tree(HKEY root, const std::wstring& parent_subkey, const
                                    parent_subkey.c_str(),
                                    0,
                                    DELETE | KEY_ENUMERATE_SUB_KEYS | KEY_QUERY_VALUE | KEY_SET_VALUE |
-                                       KEY_WOW64_64KEY,
+                                       kRegistryView,
                                    &parent);
     log_status(L"registration", log_name + L" open parent win32 " + win32_error_text(status));
     if (is_missing_status(status)) {
@@ -368,7 +368,7 @@ HRESULT delete_registry_tree(HKEY root, const std::wstring& parent_subkey, const
     }
 
     HKEY child = nullptr;
-    status = RegOpenKeyExW(parent, child_name.c_str(), 0, KEY_READ | KEY_WOW64_64KEY, &child);
+    status = RegOpenKeyExW(parent, child_name.c_str(), 0, KEY_READ | kRegistryView, &child);
     log_status(L"registration", log_name + L" precheck win32 " + win32_error_text(status));
     if (is_missing_status(status)) {
         RegCloseKey(parent);
@@ -392,7 +392,7 @@ HRESULT delete_registry_tree(HKEY root, const std::wstring& parent_subkey, const
         return HRESULT_FROM_WIN32(status);
     }
 
-    status = RegOpenKeyExW(parent, child_name.c_str(), 0, KEY_READ | KEY_WOW64_64KEY, &child);
+    status = RegOpenKeyExW(parent, child_name.c_str(), 0, KEY_READ | kRegistryView, &child);
     log_status(L"registration", log_name + L" postcheck win32 " + win32_error_text(status));
     if (status == ERROR_SUCCESS) {
         RegCloseKey(child);

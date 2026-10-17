@@ -4,24 +4,29 @@ Sources (see resources/dictionary/authoring/context_lm_sources.json):
   * Tatoeba Mandarin sentences, CC BY 2.0 FR
   * Chinese Wikinews 2026-10-01 article dump, CC BY 2.5 / CC BY 4.0
   * Mozilla Common Voice zh-CN/zh-TW sentence text, CC0 1.0
+  * KdConv and CrossWOZ dialogue utterances (Tsinghua thu-coai), Apache-2.0
 
 Every line is converted to simplified Chinese. One line in forty (chosen by a
 hash of its text) is held out of training; held-out Tatoeba and Common Voice
-lines become the evaluation cases in tests/data. Only n-gram statistics built
-from the remaining lines are distributed; no sentence text is packaged.
+lines become the evaluation cases in tests/data, held-out dialogue lines the
+heldout_dialogue_* cases. Only n-gram statistics built from the remaining
+lines are distributed; no sentence text is packaged.
 
 Authoring-time requirements: opencc, plus pypinyin and jieba for --write-eval.
 
   python tools/fetch_context_corpus.py --work <dir> [--write-eval tests/data]
+                                        [--write-dialogue-eval tests/data]
 """
 from __future__ import annotations
 
 import argparse
 import bz2
 import hashlib
+import json
 import re
 import urllib.request
 import xml.etree.ElementTree as ET
+import zipfile
 from pathlib import Path
 
 import opencc
@@ -40,6 +45,33 @@ DOWNLOADS = {
     "cv_zhtw_sentence-collector.txt": (f"{CV_BASE}/zh-TW/sentence-collector.txt", None),
     "cv_zhtw_setences.txt": (f"{CV_BASE}/zh-TW/setences.txt", None),
     "cv_zhtw_chatlogs.txt": (f"{CV_BASE}/zh-TW/chatlogs.txt", None),
+}
+# Everyday dialogue: chit-chat about films, music and travel (KdConv) and
+# task-oriented requests for hotels, restaurants, sights, metro and taxis
+# (CrossWOZ). Both repositories are Apache-2.0; pinned to these commits.
+KDCONV_COMMIT = "653db76432de09a004ba708a68f8bbd5500e6bec"
+CROSSWOZ_COMMIT = "df82c9fdff91b9b130f2d6b89110d3870ba6260e"
+DIALOGUE_DOWNLOADS = {
+    **{f"kdconv_{domain}_{split}.json": (
+        f"https://raw.githubusercontent.com/thu-coai/KdConv/{KDCONV_COMMIT}/data/{domain}/{split}.json", digest)
+       for (domain, split), digest in {
+           ("film", "train"): "b48a491c30ace856914c6863679ba5c8ea95d7e3a1734f45177f69afbcd88e74",
+           ("film", "dev"): "2f156d8d34bdd3eac31c196772156d36e017f8cb2255a2c312bd98e367ed363e",
+           ("film", "test"): "5ba2b79f9791bedbe5fe8a1bf5d7cbf277697743ee426ecd05459d9e28bcf21b",
+           ("music", "train"): "d5835bb6a61da0067ab2d0dc3ba90059f07cfa781a70206a8266ecafd22641ad",
+           ("music", "dev"): "ee34a4af167195db43fdcc910f8d125956222517f0572d248a069057493d557f",
+           ("music", "test"): "46f048c5db9dde45127cf6630b2fa06b685be369b71c5bc2dc3022d3f4bbad65",
+           ("travel", "train"): "b582a7171f8a7bb6b579bbf8d31a06cebd0966e520c95301a143b1629d20fb2f",
+           ("travel", "dev"): "8d1f31295888cf61eff398bab8aa042f7fccd04a088bd63c939f0b79625a9093",
+           ("travel", "test"): "730426b0997b8375c8477c7e658c0ec645fced6ab8d546adda114b21cf30faac",
+       }.items()},
+    **{f"crosswoz_{split}.json.zip": (
+        f"https://raw.githubusercontent.com/thu-coai/CrossWOZ/{CROSSWOZ_COMMIT}/data/crosswoz/{split}.json.zip", digest)
+       for split, digest in {
+           "train": "b81f6a0845011bb4593d21dd58e2d76af4dd5d52e300ecc68cb8dee17ccc3cf8",
+           "val": "b2b717990f6f0a1c98daaf5dc465e61d42f7de69c0d31e88e674275b1f34c94c",
+           "test": "e57703894995211bba8638f130dc7df81e8992b71f3c05c10022ad23d6ca5310",
+       }.items()},
 }
 HELD_OUT_MODULO = 40
 
@@ -82,9 +114,9 @@ def held_out(text: str) -> bool:
     return int(hashlib.sha256(text.encode("utf-8")).hexdigest()[:8], 16) % HELD_OUT_MODULO == 0
 
 
-def download(directory: Path) -> None:
+def download(directory: Path, downloads: dict[str, tuple[str, str | None]] = DOWNLOADS) -> None:
     directory.mkdir(parents=True, exist_ok=True)
-    for name, (url, digest) in DOWNLOADS.items():
+    for name, (url, digest) in downloads.items():
         target = directory / name
         if not target.exists():
             print("download", url)
@@ -194,7 +226,42 @@ def wikinews_lines(path: Path) -> list[str]:
     return lines
 
 
-def write_eval(held: dict[str, list[str]], directory: Path) -> None:
+def kdconv_lines(directory: Path) -> list[str]:
+    lines = []
+    for path in sorted(directory.glob("kdconv_*.json")):
+        for dialogue in json.loads(path.read_text(encoding="utf-8")):
+            lines.extend(T2S.convert(turn["message"].strip()) for turn in dialogue["messages"] if turn.get("message", "").strip())
+    return lines
+
+
+def crosswoz_lines(directory: Path) -> list[str]:
+    lines = []
+    for path in sorted(directory.glob("crosswoz_*.json.zip")):
+        with zipfile.ZipFile(path) as archive:
+            for name in archive.namelist():
+                for dialogue in json.loads(archive.read(name).decode("utf-8")).values():
+                    lines.extend(T2S.convert(turn["content"].strip()) for turn in dialogue["messages"]
+                                 if turn.get("content", "").strip())
+    return lines
+
+
+def unseen(clauses: set[str], training: list[str]) -> set[str]:
+    """The clauses that occur nowhere in the training text."""
+    by_first: dict[str, list[str]] = {}
+    for clause in clauses:
+        by_first.setdefault(clause[0], []).append(clause)
+    seen = set()
+    for line in training:
+        for run in HAN_CLAUSE.findall(line):
+            for item in {item for ch in set(run) for item in by_first.get(ch, ())}:
+                if item in run:
+                    seen.add(item)
+    return clauses - seen
+
+
+def write_eval(held: dict[str, list[str]], directory: Path, stem: str = "heldout",
+               header: str = "# Held-out Tatoeba (CC BY 2.0 FR) and Common Voice (CC0) text; generated by tools/fetch_context_corpus.py\n",
+               training: list[str] | None = None) -> None:
     import jieba
     from pypinyin import Style, lazy_pinyin
     jieba.setLogLevel(60)
@@ -206,9 +273,17 @@ def write_eval(held: dict[str, list[str]], directory: Path) -> None:
         return "".join(syllables)
 
     sentences, contexts = [], []
+    # Dialogue repeats set phrases (谢谢你啊, 营业时间是什么): a held-out
+    # clause that also occurs in training text would only test recall, so
+    # with `training` given only unseen clauses become cases.
+    novel = None
+    if training is not None:
+        novel = unseen({clause for lines in held.values() for line in lines for clause in HAN_CLAUSE.findall(line)
+                        if 4 <= len(clause) <= 24}, training)
     for name, lines in held.items():
         seen = set()
-        clauses = [clause for line in lines for clause in HAN_CLAUSE.findall(line) if 4 <= len(clause) <= 24]
+        clauses = [clause for line in lines for clause in HAN_CLAUSE.findall(line)
+                   if 4 <= len(clause) <= 24 and (novel is None or clause in novel)]
         for index, clause in enumerate(clauses):
             key = pinyin(clause)
             if clause in seen or not key:
@@ -223,10 +298,9 @@ def write_eval(held: dict[str, list[str]], directory: Path) -> None:
                 if word_key and len(word) <= 4:
                     contexts.append(f"{word_key}\t{word}\t{name}:{index}:{position}\t{prefix}")
                 prefix += word
-    header = "# Held-out Tatoeba (CC BY 2.0 FR) and Common Voice (CC0) text; generated by tools/fetch_context_corpus.py\n"
-    (directory / "heldout_sentences.tsv").write_text(header + "# pinyin\texpected\tsource\n" + "\n".join(sentences) + "\n",
+    (directory / f"{stem}_sentences.tsv").write_text(header + "# pinyin\texpected\tsource\n" + "\n".join(sentences) + "\n",
                                                      encoding="utf-8", newline="\n")
-    (directory / "heldout_context.tsv").write_text(header + "# pinyin\texpected\tsource\tpreceding\n" + "\n".join(contexts) + "\n",
+    (directory / f"{stem}_context.tsv").write_text(header + "# pinyin\texpected\tsource\tpreceding\n" + "\n".join(contexts) + "\n",
                                                    encoding="utf-8", newline="\n")
     print(len(sentences), "sentence cases;", len(contexts), "context cases")
 
@@ -235,24 +309,34 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--work", type=Path, required=True, help="download and output directory")
     parser.add_argument("--write-eval", type=Path, help="directory for heldout_*.tsv evaluation cases")
+    parser.add_argument("--write-dialogue-eval", type=Path, help="directory for heldout_dialogue_*.tsv evaluation cases")
     args = parser.parse_args()
     downloads = args.work / "downloads"
     download(downloads)
+    dialogue = args.work / "dialogue"
+    download(dialogue, DIALOGUE_DOWNLOADS)
     sources = {
         "tatoeba": tatoeba_lines(downloads / "cmn_sentences.tsv.bz2"),
         "cv": common_voice_lines(downloads),
         "wikinews": wikinews_lines(downloads / "zhwikinews.xml.bz2"),
+        "kdconv": kdconv_lines(dialogue),
+        "crosswoz": crosswoz_lines(dialogue),
     }
     train = args.work / "train"
     train.mkdir(parents=True, exist_ok=True)
-    held = {}
+    held, training = {}, []
     for name, lines in sources.items():
         kept = [line for line in lines if not held_out(line)]
         held[name] = [line for line in lines if held_out(line)]
+        training.extend(kept)
         (train / f"{name}.txt").write_text("\n".join(kept) + "\n", encoding="utf-8", newline="\n")
         print(name, len(kept), "training lines;", len(held[name]), "held out")
     if args.write_eval:
         write_eval({name: held[name] for name in ("tatoeba", "cv")}, args.write_eval)
+    if args.write_dialogue_eval:
+        write_eval({name: held[name] for name in ("kdconv", "crosswoz")}, args.write_dialogue_eval, "heldout_dialogue",
+                   "# Held-out KdConv and CrossWOZ dialogue text (Apache-2.0, Tsinghua thu-coai), only clauses that occur "
+                   "in no training text; generated by tools/fetch_context_corpus.py\n", training)
     return 0
 
 

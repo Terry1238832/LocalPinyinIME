@@ -2,6 +2,7 @@
 
 #include "globals.h"
 #include "../common/logging.h"
+#include "../common/win32_utils.h"
 #include "../settings/settings_store.h"
 
 #include <algorithm>
@@ -21,6 +22,10 @@ constexpr wchar_t kCandidateOptionsChangedMessageName[] = L"LocalPinyinIME.Candi
 constexpr wchar_t kEllipsis[] = L"…";
 constexpr wchar_t kSettingsExecutableName[] = L"LocalPinyinSettings.exe";
 constexpr UINT_PTR kLayoutRetryTimerId = 1;
+constexpr UINT_PTR kMotionTimerId = 2;
+// The focus marker eases out over this long; a frame every 15 ms meanwhile.
+constexpr ULONGLONG kMotionMs = 140;
+constexpr UINT kMotionFrameMs = 15;
 constexpr UINT kDwmAttributeCloaked = 14;
 constexpr DWORD kDwmCloakedShell = 0x00000002;
 
@@ -107,48 +112,35 @@ HFONT create_candidate_font(int height_px, LONG weight) {
                        CLEARTYPE_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Microsoft YaHei UI");
 }
 
-int measure_text_width_px(HWND hwnd, HFONT font, const std::wstring& text, int fallback_font_px) {
-    HDC hdc = GetDC(hwnd);
-    if (!hdc) {
-        return estimate_candidate_text_width_px(text, fallback_font_px);
-    }
+// Windows' "Animation effects" setting (also off for Remote Desktop and
+// some accessibility setups): when off, the popup changes without motion.
+bool client_animations_enabled() noexcept {
+    BOOL enabled = TRUE;
+    return !SystemParametersInfoW(SPI_GETCLIENTAREAANIMATION, 0, &enabled, 0) || enabled != FALSE;
+}
 
-    HGDIOBJ old_font = nullptr;
-    if (font) {
-        old_font = SelectObject(hdc, font);
-    }
+bool high_contrast_enabled() noexcept {
+    HIGHCONTRASTW contrast{};
+    contrast.cbSize = sizeof(contrast);
+    return SystemParametersInfoW(SPI_GETHIGHCONTRAST, sizeof(contrast), &contrast, 0) &&
+           (contrast.dwFlags & HCF_HIGHCONTRASTON);
+}
 
-    RECT rect{0, 0, 0, 0};
-    const int measured_height = DrawTextW(hdc,
-                                          text.c_str(),
-                                          static_cast<int>(text.size()),
-                                          &rect,
-                                          DT_SINGLELINE | DT_NOPREFIX | DT_CALCRECT);
-    const int width = measured_height ? rect.right - rect.left : 0;
+RECT lerp_rect(const RECT& from, const RECT& to, float t) noexcept {
+    const auto mix = [t](LONG a, LONG b) { return static_cast<LONG>(std::lround(a + (b - a) * t)); };
+    return RECT{mix(from.left, to.left), mix(from.top, to.top), mix(from.right, to.right), mix(from.bottom, to.bottom)};
+}
 
-    if (old_font) {
-        SelectObject(hdc, old_font);
-    }
-    ReleaseDC(hwnd, hdc);
-
-    if (width > 0) {
-        return width;
-    }
-    return estimate_candidate_text_width_px(text, fallback_font_px);
+bool rect_empty(const RECT& rect) noexcept {
+    return rect.right <= rect.left || rect.bottom <= rect.top;
 }
 
 // The settings app sits beside the input method DLL. It is single-instance,
 // so a second launch only brings the open window forward.
 void open_settings_app() {
-    wchar_t module_path[MAX_PATH]{};
-    const DWORD size = GetModuleFileNameW(g_instance, module_path, MAX_PATH);
-    if (size == 0 || size >= MAX_PATH) return;
-    std::wstring path(module_path, size);
-    const size_t slash = path.find_last_of(L"\\/");
-    if (slash == std::wstring::npos) return;
-    const std::wstring directory = path.substr(0, slash);
-    path = directory + L"\\" + kSettingsExecutableName;
-    if (GetFileAttributesW(path.c_str()) == INVALID_FILE_ATTRIBUTES) {
+    const std::wstring path = install_file_path(g_instance, kSettingsExecutableName);
+    const std::wstring directory = path.substr(0, path.find_last_of(L'\\') + 1);
+    if (path.empty()) {
         log_status(L"candidate-ui", L"settings_open=false reason=settings_exe_not_found");
         return;
     }
@@ -289,6 +281,9 @@ void CandidateWindow::destroy_hwnd_for_recreate() {
     }
     release_fonts();
     font_dpi_ = 0;
+    motion_timer_ = 0;
+    motion_active_ = false;
+    snap_motion_ = true;
 }
 
 void CandidateWindow::reset_window_lifecycle_state() noexcept {
@@ -390,6 +385,11 @@ CandidateLayoutResult CandidateWindow::prepare_layout(const std::wstring& compos
 
 void CandidateWindow::hide(const wchar_t*) {
     cancel_pointer_interaction();
+    stop_motion();
+    // The next popup starts fresh: no motion from stale positions, and
+    // Adaptive Flow chooses its form anew.
+    snap_motion_ = true;
+    flow_form_memory_.reset();
     if (hwnd_) {
         ShowWindow(hwnd_, SW_HIDE);
         notify_ime_window_hidden(hwnd_);
@@ -555,6 +555,11 @@ LRESULT CandidateWindow::handle_message(HWND hwnd, UINT message, WPARAM wparam, 
     }
     switch (message) {
         case WM_TIMER:
+            if (wparam == kMotionTimerId) {
+                if (has_cached_show_state_ && IsWindowVisible(hwnd_)) present();
+                else stop_motion();
+                return 0;
+            }
             if (wparam == kLayoutRetryTimerId && layout_retry_timer_) {
                 KillTimer(hwnd_, layout_retry_timer_);
                 layout_retry_timer_ = 0;
@@ -667,6 +672,7 @@ LRESULT CandidateWindow::handle_message(HWND hwnd, UINT message, WPARAM wparam, 
             }
             break;
         case WM_DESTROY:
+            stop_motion();
             cancel_pointer_interaction();
             notify_ime_window_hidden(hwnd);
             break;
@@ -707,7 +713,9 @@ void CandidateWindow::notify_ime_window_hidden(HWND hwnd) noexcept {
 void CandidateWindow::reload_options() {
     SettingsStore store;
     options_ = store.load_candidate_options();
-    palette_ = make_candidate_palette(options_.theme_mode, windows_apps_use_dark_theme());
+    palette_ = high_contrast_enabled()
+        ? make_high_contrast_candidate_palette()
+        : make_candidate_palette(options_.theme_mode, windows_apps_use_dark_theme(), options_.style);
 }
 
 void CandidateWindow::update_fonts(int dpi) {
@@ -722,39 +730,34 @@ void CandidateWindow::update_fonts(int dpi) {
     candidate_font_ = create_candidate_font(candidate_font_px_for_size(options_.text_size, dpi), FW_NORMAL);
 }
 
+CandidateLayoutInput CandidateWindow::layout_input(int dpi, const RECT& work_area) {
+    CandidateLayoutInput input;
+    input.composition_text = query_text();
+    input.candidate_texts = candidate_texts_;
+    input.selected_index = selected_index_;
+    input.page_indices = page_indices_;
+    input.caret_rect = caret_rect_;
+    input.work_area = work_area;
+    input.dpi = dpi;
+    input.options = options_;
+    // Space commits the current choice; Tab accepts a suggestion.
+    focus_hint_ = prediction_mode_ ? L"Tab" : L"\u7A7A\u683C";
+    input.focus_hint = focus_hint_;
+    // Each style measures in the sizes, weights and faces it draws with.
+    input.measure = [this](const std::wstring& text, int font_px, int weight, CandidateFontFace face) {
+        return renderer_.measure_text(text, static_cast<float>(font_px), weight, candidate_font_family(face));
+    };
+    input.previous_flow_form = flow_form_memory_;
+    // A Store app sandbox cannot start the settings app.
+    input.settings_button = !immersive_process();
+    return input;
+}
+
 bool CandidateWindow::rebuild_layout(int dpi) {
     cancel_pointer_interaction();
     update_fonts(dpi);
-    const int fallback_font_px = candidate_font_px_for_size(options_.text_size, dpi);
-    std::vector<int> candidate_text_widths;
-    std::vector<int> number_text_widths;
-    candidate_text_widths.reserve(candidate_texts_.size());
-    number_text_widths.reserve(candidate_texts_.size());
-    for (size_t i = 0; i < candidate_texts_.size(); ++i) {
-        const int measured = renderer_.measure_text(candidate_texts_[i], static_cast<float>(fallback_font_px), FW_NORMAL);
-        candidate_text_widths.push_back(measured > 0 ? measured : measure_text_width_px(hwnd_, candidate_font_, candidate_texts_[i], fallback_font_px));
-        // Numbers are drawn smaller than the candidate text.
-        const std::wstring number = std::to_wstring(i % kMaxCandidateCount + 1);
-        const float number_px = static_cast<float>(fallback_font_px) * 0.78f;
-        const int number_width = renderer_.measure_text(number, number_px);
-        number_text_widths.push_back(number_width > 0 ? number_width : measure_text_width_px(hwnd_, candidate_font_, number, fallback_font_px));
-    }
-
-    CandidateLayoutInput input;
-    input.composition_text = composition_text_;
-    input.candidate_texts = candidate_texts_;
-    input.candidate_text_widths_px = std::move(candidate_text_widths);
-    input.number_text_widths_px = std::move(number_text_widths);
-    input.selected_index = selected_index_;
-    input.page_indices = page_indices_;
-    input.composition_text_width_px = renderer_.measure_text(composition_text_, static_cast<float>(scale_dip(13, dpi)));
-    input.caret_rect = caret_rect_;
-    input.work_area = monitor_work_area_for(caret_rect_);
-    input.dpi = dpi;
-    input.options = options_;
-    // A Store app sandbox cannot start the settings app.
-    input.settings_button = !immersive_process();
-    layout_ = make_candidate_layout(input);
+    layout_ = make_candidate_layout(layout_input(dpi, monitor_work_area_for(caret_rect_)));
+    if (layout_.visible && layout_.style == CandidateStyle::AdaptiveFlow) flow_form_memory_ = layout_.flow_form;
     return layout_.visible;
 }
 
@@ -789,37 +792,6 @@ void CandidateWindow::update_pointer_hot(POINT point) {
 
 bool CandidateWindow::settings_button_at_point(POINT point) const noexcept {
     return layout_.visible && layout_.action_button_visible && PtInRect(&layout_.action_button_rect, point);
-}
-
-void CandidateWindow::draw_settings_button() {
-    auto* canvas = active_modern_renderer();
-    if (!canvas || !layout_.action_button_visible) return;
-    const RECT rect = layout_.action_button_rect;
-    // A hairline separates the button from the candidates.
-    const float separator_x = rect.left - layout_.item_gap_px * 1.5f;
-    const float inset = (rect.bottom - rect.top) * 0.2f;
-    canvas->line(separator_x, rect.top + inset, separator_x, rect.bottom - inset, palette_.border, 1.0f);
-    COLORREF fill = palette_.background;
-    if (settings_hot_ || settings_pressed_) {
-        fill = settings_pressed_ ? blend_color(palette_.hover_background, palette_.text, palette_.dark ? 10 : 6)
-                                 : palette_.hover_background;
-        canvas->rounded(rect, static_cast<float>(layout_.selected_corner_radius), fill, fill);
-    }
-    // Gear: eight rounded teeth around a ring with a hollow centre.
-    const COLORREF color = settings_hot_ ? palette_.text : palette_.muted_text;
-    const float cx = (rect.left + rect.right) / 2.0f;
-    const float cy = (rect.top + rect.bottom) / 2.0f;
-    const float unit = (rect.right - rect.left) / 24.0f;
-    const float stroke = (std::max)(1.2f, unit * 1.5f);
-    for (int tooth = 0; tooth < 8; ++tooth) {
-        const float angle = tooth * 3.14159265f / 4.0f;
-        const float c = std::cos(angle), s = std::sin(angle);
-        canvas->line(cx + c * unit * 5.0f, cy + s * unit * 5.0f, cx + c * unit * 7.4f, cy + s * unit * 7.4f, color, stroke * 1.35f);
-    }
-    canvas->ellipse(cx, cy, unit * 5.8f, unit * 5.8f, color);
-    canvas->ellipse(cx, cy, unit * 5.8f - stroke, unit * 5.8f - stroke, fill);
-    canvas->ellipse(cx, cy, unit * 2.3f, unit * 2.3f, color);
-    canvas->ellipse(cx, cy, unit * 2.3f - stroke, unit * 2.3f - stroke, fill);
 }
 
 void CandidateWindow::cancel_pointer_interaction() noexcept {
@@ -862,96 +834,124 @@ int CandidateWindow::page_direction_at_point(POINT point) const noexcept {
 std::wstring CandidateWindow::fitted_composition_text(int available_px) {
     // Keep the end of long pinyin visible: it is where typing happens.
     const float size = static_cast<float>(layout_.composition_font_px);
-    std::wstring text = composition_text_;
+    const std::wstring query = query_text();
+    std::wstring text = query;
     if (available_px <= 0 || renderer_.measure_text(text, size) <= available_px) return text;
     size_t drop = 1;
-    while (drop < composition_text_.size()) {
-        text = kEllipsis + composition_text_.substr(drop);
+    while (drop < query.size()) {
+        text = kEllipsis + query.substr(drop);
         if (renderer_.measure_text(text, size) <= available_px) break;
-        drop += std::max<size_t>(1, (composition_text_.size() - drop) / 8);
+        drop += std::max<size_t>(1, (query.size() - drop) / 8);
     }
     return text;
 }
 
-void CandidateWindow::draw_page_button(int direction) {
-    auto* canvas = active_modern_renderer();
-    if (!canvas || !layout_.paging_visible) return;
-    const RECT rect = direction < 0 ? layout_.previous_page_rect : layout_.next_page_rect;
-    const bool enabled = direction < 0 ? layout_.has_previous_page : layout_.has_next_page;
-    if (enabled && (hot_page_direction_ == direction || pressed_page_direction_ == direction)) {
-        const COLORREF fill = pressed_page_direction_ == direction
-            ? blend_color(palette_.hover_background, palette_.text, palette_.dark ? 10 : 6)
-            : palette_.hover_background;
-        canvas->rounded(rect, static_cast<float>(layout_.selected_corner_radius), fill, fill);
-    }
-    const COLORREF color = enabled ? palette_.muted_text : blend_color(palette_.background, palette_.muted_text, 35);
-    const float cx = (rect.left + rect.right) / 2.0f;
-    const float cy = (rect.top + rect.bottom) / 2.0f;
-    const float arm = static_cast<float>(std::max(3, scale_dip(4, layout_.dpi)));
-    const float stroke = std::max(1.25f, static_cast<float>(layout_.dpi) / 96.0f * 1.6f);
-    const float tip = cx + (direction < 0 ? -arm / 2 : arm / 2);
-    const float back = cx + (direction < 0 ? arm / 2 : -arm / 2);
-    canvas->line(back, cy - arm, tip, cy, color, stroke);
-    canvas->line(tip, cy, back, cy + arm, color, stroke);
-}
-
-void CandidateWindow::draw_content() {
+void CandidateWindow::paint_content() {
     auto* canvas = active_modern_renderer();
     if (!canvas) return;
-    const float radius = static_cast<float>(layout_.corner_radius);
-    canvas->rounded(layout_.panel_rect, radius, palette_.background, palette_.border);
+    CandidatePaintState state;
+    state.hovered = candidate_pointer_.hovered();
+    state.pressed = candidate_pointer_.pressed();
+    state.hot_page_direction = hot_page_direction_;
+    state.pressed_page_direction = pressed_page_direction_;
+    state.settings_hot = settings_hot_;
+    state.settings_pressed = settings_pressed_;
     const RECT& label = layout_.composition_rect;
-    canvas->text(fitted_composition_text(label.right - label.left), label, palette_.composition_text,
-                 static_cast<float>(layout_.composition_font_px), FW_NORMAL,
-                 DT_SINGLELINE | DT_VCENTER | DT_NOPREFIX);
-    const float candidate_px = static_cast<float>(layout_.candidate_font_px);
-    for (const auto& item : layout_.items) {
-        // Inset the highlight vertically so it reads as a pill inside the row.
-        RECT pill = item.bounds;
-        const int inset = std::max(1, scale_dip(2, layout_.dpi));
-        pill.top += inset;
-        pill.bottom -= inset;
-        if (item.selected) {
-            canvas->rounded(pill, static_cast<float>(layout_.selected_corner_radius),
-                            palette_.selected_background, palette_.selected_background);
-        } else if (candidate_pointer_.hovered() == item.candidate_index) {
-            const COLORREF hover = candidate_pointer_.pressed() == item.candidate_index
-                ? blend_color(palette_.hover_background, palette_.selected_background, 14)
-                : palette_.hover_background;
-            canvas->rounded(pill, static_cast<float>(layout_.selected_corner_radius), hover, hover);
-        }
-        canvas->text(std::to_wstring(item.page_number), item.number_bounds,
-                     item.selected ? palette_.selected_number_text : palette_.number_text,
-                     candidate_px * 0.78f, FW_NORMAL, DT_SINGLELINE | DT_VCENTER | DT_NOPREFIX);
-        canvas->text(item.display_text, item.text_bounds,
-                     item.selected ? palette_.selected_text : palette_.text,
-                     candidate_px, FW_NORMAL, candidate_text_draw_flags(item.truncated));
-    }
-    draw_page_button(-1);
-    draw_page_button(1);
-    draw_settings_button();
+    const int caret_space = (std::max)(4, scale_dip(4, layout_.dpi));
+    state.query = fitted_composition_text(label.right - label.left - caret_space);
+    state.show_caret = !prediction_mode_;
+    state.focus_hint = focus_hint_;
+    state.marker = marker_motion_.current;
+    state.track_marker = track_motion_.current;
+    paint_candidate_window(CandidatePaintContext{*canvas, layout_, palette_, state});
 }
 
-void CandidateWindow::composite_shadow(std::uint8_t* pixels, int width, int height) const {
-    if (palette_.shadow_alpha <= 0 || layout_.shadow_margin_px <= 0) return;
-    // Blurred panel silhouette, slightly offset downward, placed beneath the
-    // already drawn premultiplied panel ("destination over").
-    const int offset = std::max(1, scale_dip(2, layout_.dpi));
-    RECT casting = layout_.panel_rect;
-    OffsetRect(&casting, 0, offset);
-    std::vector<float> mask(static_cast<size_t>(width) * height);
-    const float radius = static_cast<float>(layout_.corner_radius);
-    for (int y = 0; y < height; ++y)
-        for (int x = 0; x < width; ++x)
-            mask[static_cast<size_t>(y) * width + x] = rounded_rect_coverage(x + 0.5f, y + 0.5f, casting, radius);
-    box_blur(mask, width, height, std::max(1, layout_.shadow_margin_px / 3));
-    const float peak = static_cast<float>(palette_.shadow_alpha);
-    for (size_t index = 0; index < mask.size(); ++index) {
+void CandidateWindow::update_motion(bool snap) {
+    const RECT marker = candidate_marker_target(layout_, candidate_pointer_.hovered());
+    const RECT track = candidate_track_target(layout_);
+    const bool instant = snap || snap_motion_ || palette_.high_contrast || !client_animations_enabled();
+    snap_motion_ = false;
+    const auto retarget = [instant](Motion& motion, const RECT& target) {
+        if (instant || !motion.valid || rect_empty(motion.current) || rect_empty(target)) {
+            motion.from = motion.to = motion.current = target;
+            motion.valid = true;
+            return false;
+        }
+        if (EqualRect(&motion.to, &target)) return false;
+        motion.from = motion.current;
+        motion.to = target;
+        return true;
+    };
+    const bool marker_moved = retarget(marker_motion_, marker);
+    const bool track_moved = retarget(track_motion_, track);
+    const ULONGLONG now = GetTickCount64();
+    if (marker_moved || track_moved) {
+        motion_start_ = now;
+        motion_active_ = true;
+    }
+    if (motion_active_ && !instant) {
+        const float t = (std::min)(1.0f, static_cast<float>(now - motion_start_) / static_cast<float>(kMotionMs));
+        // Ease out: quick to leave, precise to arrive; no overshoot.
+        const float eased = 1.0f - (1.0f - t) * (1.0f - t) * (1.0f - t);
+        marker_motion_.current = lerp_rect(marker_motion_.from, marker_motion_.to, eased);
+        track_motion_.current = lerp_rect(track_motion_.from, track_motion_.to, eased);
+        if (t >= 1.0f) motion_active_ = false;
+    } else {
+        motion_active_ = false;
+        marker_motion_.current = marker_motion_.to;
+        track_motion_.current = track_motion_.to;
+    }
+    if (motion_active_ && hwnd_ && !motion_timer_) motion_timer_ = SetTimer(hwnd_, kMotionTimerId, kMotionFrameMs, nullptr);
+    if (!motion_active_) stop_motion();
+}
+
+void CandidateWindow::stop_motion() noexcept {
+    if (motion_timer_ && hwnd_) KillTimer(hwnd_, kMotionTimerId);
+    motion_timer_ = 0;
+    motion_active_ = false;
+}
+
+void CandidateWindow::composite_shadow(std::uint8_t* pixels, int width, int height) {
+    if (layout_.shadow_margin_px <= 0 || (palette_.shadow_key_alpha <= 0 && palette_.shadow_ambient_alpha <= 0)) return;
+    // Two blurred panel silhouettes beneath the drawn panel ("destination
+    // over"): a tight key shadow that defines the edge and a wide, lower
+    // ambient one that lifts the popup off the page. Floating Glass floats
+    // higher: its ambient shadow drops further and spreads wider.
+    const bool floating = layout_.style == CandidateStyle::FloatingGlass;
+    const RECT& panel = layout_.panel_rect;
+    const std::array<int, 11> key{width, height, static_cast<int>(panel.left), static_cast<int>(panel.top),
+                                  static_cast<int>(panel.right), static_cast<int>(panel.bottom), layout_.corner_radius,
+                                  palette_.shadow_key_alpha, palette_.shadow_ambient_alpha, layout_.dpi, floating ? 1 : 0};
+    if (key != shadow_key_ || shadow_cache_.size() != static_cast<size_t>(width) * height) {
+        const float radius = static_cast<float>(layout_.corner_radius);
+        const auto silhouette = [&](int offset, int blur) {
+            RECT casting = panel;
+            OffsetRect(&casting, 0, offset);
+            std::vector<float> mask(static_cast<size_t>(width) * height);
+            for (int y = 0; y < height; ++y)
+                for (int x = 0; x < width; ++x)
+                    mask[static_cast<size_t>(y) * width + x] = rounded_rect_coverage(x + 0.5f, y + 0.5f, casting, radius);
+            box_blur(mask, width, height, blur);
+            return mask;
+        };
+        const int unit = std::max(1, scale_dip(1, layout_.dpi));
+        const auto key_shadow = silhouette(unit, unit);
+        const auto ambient = silhouette(std::max(1, scale_dip(floating ? 6 : 4, layout_.dpi)),
+                                        std::max(1, layout_.shadow_margin_px / (floating ? 3 : 4)));
+        shadow_cache_.resize(key_shadow.size());
+        for (size_t index = 0; index < key_shadow.size(); ++index) {
+            const float k = key_shadow[index] * palette_.shadow_key_alpha / 255.0f;
+            const float a = ambient[index] * palette_.shadow_ambient_alpha / 255.0f;
+            shadow_cache_[index] = 1.0f - (1.0f - k) * (1.0f - a);
+        }
+        shadow_key_ = key;
+    }
+    for (size_t index = 0; index < shadow_cache_.size(); ++index) {
         std::uint8_t* pixel = pixels + index * 4;
-        const float shadow = mask[index] * peak;
         const float remaining = 1.0f - pixel[3] / 255.0f;
         // Black shadow: premultiplied color stays, only alpha accumulates.
-        pixel[3] = static_cast<std::uint8_t>(std::clamp(pixel[3] + shadow * remaining + 0.5f, 0.0f, 255.0f));
+        pixel[3] = static_cast<std::uint8_t>(std::clamp(pixel[3] + shadow_cache_[index] * 255.0f * remaining + 0.5f,
+                                                        0.0f, 255.0f));
     }
 }
 
@@ -961,7 +961,7 @@ void CandidateWindow::render_layered(HDC dc, std::uint8_t* pixels, int width, in
     {
         ModernRenderScope modern(renderer_, dc, bounds, true);
         if (modern.active()) {
-            draw_content();
+            paint_content();
             modern.finish();
             GdiFlush();
             composite_shadow(pixels, width, height);
@@ -969,9 +969,12 @@ void CandidateWindow::render_layered(HDC dc, std::uint8_t* pixels, int width, in
         }
     }
     // GDI fallback: an opaque, square-cornered panel without shadow.
-    HBRUSH background = CreateSolidBrush(palette_.background);
-    FillRect(dc, &layout_.panel_rect, background);
-    DeleteObject(background);
+    const auto fill_rect = [dc](const RECT& rect, COLORREF color) {
+        HBRUSH brush = CreateSolidBrush(color);
+        FillRect(dc, &rect, brush);
+        DeleteObject(brush);
+    };
+    fill_rect(layout_.panel_rect, palette_.background);
     HBRUSH border = CreateSolidBrush(palette_.border);
     FrameRect(dc, &layout_.panel_rect, border);
     DeleteObject(border);
@@ -979,21 +982,20 @@ void CandidateWindow::render_layered(HDC dc, std::uint8_t* pixels, int width, in
     if (composition_font_) SelectObject(dc, composition_font_);
     SetTextColor(dc, palette_.composition_text);
     RECT label = layout_.composition_rect;
-    DrawTextW(dc, composition_text_.c_str(), static_cast<int>(composition_text_.size()), &label,
+    const std::wstring query = query_text();
+    DrawTextW(dc, query.c_str(), static_cast<int>(query.size()), &label,
               DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS | DT_NOPREFIX);
     if (candidate_font_) SelectObject(dc, candidate_font_);
     for (const auto& item : layout_.items) {
-        if (item.selected) {
-            HBRUSH selected = CreateSolidBrush(palette_.selected_background);
-            FillRect(dc, &item.bounds, selected);
-            DeleteObject(selected);
-        }
+        fill_rect(item.bounds, item.featured ? palette_.focus_background : palette_.chip_background);
+        fill_rect(item.number_bounds, item.featured ? palette_.focus_keycap : palette_.keycap);
         const std::wstring number = std::to_wstring(item.page_number);
         RECT number_rect = item.number_bounds;
-        SetTextColor(dc, item.selected ? palette_.selected_number_text : palette_.number_text);
-        DrawTextW(dc, number.c_str(), static_cast<int>(number.size()), &number_rect, DT_SINGLELINE | DT_VCENTER | DT_NOPREFIX);
+        SetTextColor(dc, item.featured ? palette_.focus_number_text : palette_.number_text);
+        DrawTextW(dc, number.c_str(), static_cast<int>(number.size()), &number_rect,
+                  DT_SINGLELINE | DT_CENTER | DT_VCENTER | DT_NOPREFIX);
         RECT text_rect = item.text_bounds;
-        SetTextColor(dc, item.selected ? palette_.selected_text : palette_.text);
+        SetTextColor(dc, palette_.text);
         DrawTextW(dc, item.display_text.c_str(), static_cast<int>(item.display_text.size()), &text_rect,
                   candidate_text_draw_flags(item.truncated));
     }
@@ -1005,6 +1007,7 @@ void CandidateWindow::render_layered(HDC dc, std::uint8_t* pixels, int width, in
 
 bool CandidateWindow::present() {
     if (!hwnd_ || !layout_.visible || layout_.width <= 0 || layout_.height <= 0) return false;
+    update_motion(false);
     const int width = layout_.width;
     const int height = layout_.height;
     BITMAPINFO info{};
@@ -1048,8 +1051,9 @@ void CandidateWindow::redraw() {
 
 void CandidateWindow::render(HDC hdc) {
     // WM_PRINTCLIENT and offline capture: compose the layered image over the
-    // destination with its alpha.
+    // destination with its alpha, focus marker at rest.
     if (!hdc || !layout_.visible || layout_.width <= 0 || layout_.height <= 0) return;
+    update_motion(true);
     BITMAPINFO info{};
     info.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
     info.bmiHeader.biWidth = layout_.width;

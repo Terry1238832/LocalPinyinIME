@@ -111,6 +111,9 @@ private:
     HRESULT make_composition_room(ITfContext* context);
     HRESULT commit_raw_composition(ITfContext* context);
     HRESULT commit_punctuation(ITfContext* context, wchar_t punctuation);
+    // A code-editor punctuation key that types ASCII (not the pinyin separator).
+    [[nodiscard]] wchar_t code_punctuation_for_key(WPARAM wparam, bool shift) const;
+    [[nodiscard]] bool digit_before_caret(ITfContext* context);
     HRESULT cancel_composition(ITfContext* context);
     bool candidate_anchor_rect(ITfContext* context, RECT* rect);
     CandidateWindowOwnerInfo candidate_owner_info(ITfContext* context) const;
@@ -152,6 +155,14 @@ private:
     std::wstring recent_committed_text_;
     std::uintptr_t recent_committed_context_ = 0;
     ULONGLONG recent_committed_tick_ = 0;
+    // The host is a code editor, IDE or terminal: punctuation is ASCII there.
+    bool code_application_ = false;
+    // Whether the key before the one being handled was a digit, for 3. when
+    // the document's text cannot be read. A host may test one key press more
+    // than once, so a key counts as new only after its key-up.
+    WPARAM tested_key_ = 0;
+    bool tested_key_digit_ = false;
+    bool previous_key_digit_ = false;
     bool opening_double_quote_ = true;
     bool opening_single_quote_ = true;
     std::vector<Candidate> candidates_;

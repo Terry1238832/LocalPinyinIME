@@ -1,0 +1,145 @@
+/* ── Settings: titled groups of rows ───────────────────────────────────────
+   A row is the setting's name and one line on what it does, with its control
+   on the right: a switch (on/off), a selector (one of a few) or a status
+   (fixed). A setting with more to it opens below its row. */
+.settings-group { display: flex; flex-direction: column; gap: 10px; }
+.settings-group-head { display: flex; align-items: center; gap: 6px; padding: 0 2px; }
+.settings-group-head h2 { font-size: var(--size-title-sm); font-weight: 600; color: var(--text); }
+.settings-list { border: 1px solid var(--border); border-radius: var(--radius-xl); background: linear-gradient(180deg, var(--highlight), transparent 64px), var(--surface); box-shadow: var(--shadow-sm), var(--shadow-inset); overflow: hidden; }
+:root[data-theme="light"] .settings-list { background: var(--surface); }
+.settings-list > * + * { border-top: 1px solid var(--border); }
+
+.setting-row { display: flex; align-items: center; gap: 20px; width: 100%; min-height: 62px; padding: 12px 18px; text-align: left; }
+.setting-text { display: flex; flex-direction: column; gap: 3px; flex: 1; min-width: 0; }
+.setting-title { font-size: var(--size-body); font-weight: 600; color: var(--text); }
+.setting-title { display: inline-flex; align-items: center; gap: 6px; }
+
+/* The details button: a small info icon beside the name. Explanations and
+   demonstrations open below the row, so the list itself stays short. */
+.info-button { display: inline-grid; place-items: center; width: 22px; height: 22px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: var(--text-3); cursor: pointer; transition: background var(--dur-fast), color var(--dur-fast); }
+.info-button:hover { background: var(--fill-hover); color: var(--text); }
+.info-button.open { background: var(--accent-soft); color: var(--accent-text); }
+.info-button:focus-visible { outline: 2px solid var(--accent-fg); outline-offset: 1px; }
+.setting-detail { display: flex; align-items: center; gap: 18px; padding: 12px 18px 14px; border-top: 1px solid var(--border); background: var(--surface-sunken); animation: disclosure-in var(--dur-base) var(--ease-out); }
+.setting-detail[hidden] { display: none; }
+.setting-detail p { flex: 1; min-width: 0; font-size: var(--size-caption); line-height: 1.65; color: var(--text-2); }
+.setting-detail ul { display: grid; gap: 4px; margin-top: 8px; font-size: var(--size-caption); color: var(--text-2); }
+.setting-detail li strong { margin-right: 8px; color: var(--text); font-weight: 600; }
+.settings-group-detail .setting-detail, .gallery-detail { border: 1px solid var(--border); border-radius: var(--radius-lg); }
+.gallery-detail { display: block; margin-bottom: 14px; }
+.setting-disclosure-note { font-size: var(--size-caption); line-height: 1.65; color: var(--text-2); }
+.setting-control { flex: none; display: flex; align-items: center; gap: 10px; }
+.setting-status { display: inline-flex; align-items: center; gap: 6px; font-size: var(--size-caption); color: var(--text-3); white-space: nowrap; }
+.setting-status::before { content: ""; width: 6px; height: 6px; border-radius: 3px; background: var(--success); }
+
+/* Expandable settings: the row shows what is set now and opens below. */
+.setting-disclosure-toggle { border: 0; border-radius: 0; background: transparent; color: inherit; font: inherit; cursor: pointer; transition: background var(--dur-fast); }
+.setting-disclosure-toggle:hover { background: var(--fill-hover); }
+.setting-disclosure-toggle:focus-visible { outline: 2px solid var(--accent-fg); outline-offset: -2px; }
+.setting-summary { font-size: var(--size-body-sm); color: var(--text-2); white-space: nowrap; }
+.setting-chevron { color: var(--text-3); transform: rotate(90deg); transition: transform var(--dur-base) var(--ease-out); }
+.setting-disclosure.open .setting-chevron { transform: rotate(-90deg); }
+.setting-disclosure.open .setting-disclosure-toggle { background: color-mix(in srgb, var(--fill-hover) 55%, transparent); }
+.setting-disclosure-panel { display: flex; flex-direction: column; gap: 14px; padding: 14px 18px 16px; border-top: 1px solid var(--border); background: var(--surface-sunken); animation: disclosure-in var(--dur-base) var(--ease-out); }
+.setting-disclosure-panel[hidden] { display: none; }
+@keyframes disclosure-in { from { opacity: 0; transform: translateY(-3px); } to { opacity: 1; transform: none; } }
+.disclosure-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: var(--size-caption); color: var(--text-3); }
+
+/* Multi-select: fuzzy pinyin pairs as toggle chips. */
+.fuzzy-groups { display: flex; flex-direction: column; gap: 10px; }
+.fuzzy-group { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.fuzzy-label { width: 36px; font-size: var(--size-caption); font-weight: 600; color: var(--text-3); }
+.fuzzy-chip { display: inline-flex; align-items: center; gap: 3px; height: 30px; padding: 0 11px; border: 1px solid var(--border-strong); border-radius: var(--radius-pill); background: var(--surface); color: var(--text-2); font: 13px/1 var(--font-mono); transition: background var(--dur-fast), border-color var(--dur-fast), color var(--dur-fast), transform var(--dur-fast) var(--ease-out); }
+.fuzzy-chip i { font-style: normal; color: var(--text-3); }
+.fuzzy-chip:hover:not(:disabled) { border-color: color-mix(in srgb, var(--border-strong), var(--text-3) 50%); color: var(--text); }
+.fuzzy-chip:active:not(:disabled) { transform: scale(.96); }
+.fuzzy-chip[aria-pressed="true"] { border-color: var(--accent-fg); background: var(--accent-soft); color: var(--accent-text); }
+.fuzzy-chip[aria-pressed="true"] i { color: var(--accent-text); }
+.fuzzy-chip:focus-visible { outline: 2px solid var(--accent-fg); outline-offset: 2px; }
+
+/* Usage scenes: a multi-select of cards, each a name and example words. */
+.scene-picker { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; padding: 14px 18px; }
+.scene-card { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; min-width: 0; padding: 10px 12px; border: 1px solid var(--border-strong); border-radius: var(--radius-md); background: var(--surface); color: var(--text-2); text-align: left; transition: background var(--dur-fast), border-color var(--dur-fast), color var(--dur-fast), transform var(--dur-fast) var(--ease-out); }
+.scene-card:hover:not(:disabled) { border-color: color-mix(in srgb, var(--border-strong), var(--text-3) 50%); color: var(--text); }
+.scene-card:active:not(:disabled) { transform: scale(.98); }
+.scene-card[aria-pressed="true"] { border-color: var(--accent-fg); background: var(--accent-soft); color: var(--accent-text); }
+.scene-card:focus-visible { outline: 2px solid var(--accent-fg); outline-offset: 2px; }
+.scene-name { display: flex; align-items: center; justify-content: space-between; gap: 6px; width: 100%; font-size: var(--size-body); font-weight: 600; color: var(--text); }
+.scene-card[aria-pressed="true"] .scene-name { color: var(--accent-text); }
+.scene-examples { max-width: 100%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: var(--size-caption); color: var(--text-3); }
+.scene-card[aria-pressed="true"] .scene-examples { color: color-mix(in srgb, var(--accent-text) 75%, transparent); }
+.scene-words { display: flex; flex-direction: column; gap: 4px; }
+.scene-words-label { font-size: var(--size-caption); font-weight: 600; color: var(--text-3); }
+.scene-words p { display: flex; flex-wrap: wrap; gap: 2px 14px; font-size: var(--size-body-sm); line-height: 1.75; color: var(--text-2); }
+.scene-words span { white-space: nowrap; }
+.disclosure-note { font-size: var(--size-caption); color: var(--text-3); }
+
+/* Selector: one of a few, side by side. */
+.segmented { flex: none; display: inline-flex; padding: 3px; border-radius: var(--radius-md); background: var(--surface-sunken); box-shadow: inset 0 0 0 1px var(--border); }
+.segmented label { position: relative; display: grid; place-items: center; height: 28px; padding: 0 14px; border-radius: calc(var(--radius-md) - 2px); font-size: var(--size-body-sm); color: var(--text-2); white-space: nowrap; cursor: pointer; transition: background var(--dur-fast), color var(--dur-fast), box-shadow var(--dur-fast); }
+.segmented label:hover { color: var(--text); }
+.segmented label.active { background: var(--surface); color: var(--text); font-weight: 600; box-shadow: var(--shadow-xs), 0 0 0 1px var(--border); }
+.segmented input { position: absolute; opacity: 0; pointer-events: none; }
+.segmented label:has(input:focus-visible) { outline: 2px solid var(--accent-fg); outline-offset: 1px; }
+
+/* The double-pinyin key map: a small keyboard, finals under each key. */
+.keymap { display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 4px 0 2px; }
+.keymap-row { display: flex; gap: 5px; }
+.keymap-row:nth-child(2) { margin-left: 22px; }
+.keymap-row:nth-child(3) { margin-left: 58px; }
+.keymap-key { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; width: 52px; height: 48px; border-radius: 7px; background: var(--kbd); box-shadow: 0 0 0 1px var(--border-strong), 0 1.5px 0 var(--border-strong); }
+.keymap-key b { font: 600 13px/1 var(--font-sans); color: var(--text); }
+.keymap-key small { max-width: 48px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font: 10.5px/1.15 var(--font-mono); color: var(--accent-text); }
+.keymap-key em { position: absolute; top: 3px; right: 4px; font: 600 9.5px/1 var(--font-mono); font-style: normal; color: var(--text-3); }
+.keymap figcaption { max-width: 600px; margin-top: 8px; font-size: var(--size-caption); line-height: 1.55; color: var(--text-3); text-align: center; }
+
+@container main (max-width: 760px) {
+  .setting-row:has(.segmented) { flex-wrap: wrap; }
+  .scene-picker { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .keymap-key { width: 44px; height: 44px; }
+  .keymap-key small { max-width: 40px; font-size: 9.5px; }
+  .keymap-row:nth-child(2) { margin-left: 18px; }
+  .keymap-row:nth-child(3) { margin-left: 46px; }
+}
+
+/* ── Feature demonstrations (FeatureDemo.tsx) ─────────────────────────────
+   One 6 s loop: keys are typed, candidates appear, the first is committed.
+   Reduced motion rests on the middle frame. */
+.feature-demo { flex: none; display: flex; flex-direction: column; gap: 8px; width: 236px; padding: 12px 14px; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--surface); box-shadow: var(--shadow-xs); }
+.demo-line { display: flex; align-items: center; min-height: 24px; font-size: 15px; color: var(--text); white-space: nowrap; overflow: hidden; }
+.demo-caret { width: 1.5px; height: 17px; margin-left: 1px; background: var(--accent-fg); animation: demo-blink 1s steps(1) infinite; }
+.demo-keys { display: inline-block; overflow: hidden; width: 0; font: 14px/1.4 var(--font-mono); color: var(--accent-text); text-decoration: underline dotted; text-underline-offset: 3px; animation: demo-keys 6s steps(var(--keys), end) infinite; }
+.demo-result { display: inline-block; overflow: hidden; max-width: 0; border-radius: 3px; animation: demo-result 6s ease-out infinite; }
+.demo-candidates { display: flex; gap: 4px; min-height: 26px; opacity: 0; animation: demo-candidates 6s ease-out infinite; }
+.demo-candidates span { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 6px; background: var(--surface-sunken); font-size: 13px; color: var(--text-2); white-space: nowrap; }
+.demo-candidates b { font: 600 10px/1 var(--font-mono); color: var(--text-3); }
+.demo-candidates .demo-first { background: var(--accent-soft); color: var(--accent-text); box-shadow: inset 0 0 0 1px var(--accent-fg); animation: demo-press 6s ease-out infinite; }
+.demo-candidates .demo-first b { color: var(--accent-text); }
+.key-demo.mono .demo-line { font: 14px/1.4 var(--font-mono); }
+.demo-output { display: inline-block; overflow: hidden; max-width: 0; color: var(--accent-text); animation: demo-output 6s ease-out infinite; }
+.demo-keycaps { display: flex; gap: 6px; }
+.demo-keycaps kbd { min-width: 30px; padding: 3px 8px; border-radius: 6px; background: var(--kbd); box-shadow: 0 0 0 1px var(--border-strong), 0 2px 0 var(--border-strong); font: 600 12px/1.4 var(--font-sans); color: var(--text); text-align: center; animation: demo-key 6s ease-out infinite; }
+.demo-modes { position: relative; display: inline-grid; width: 22px; height: 22px; margin-left: auto; }
+.demo-modes i { grid-area: 1 / 1; display: grid; place-items: center; border-radius: 6px; background: var(--accent-soft); color: var(--accent-text); font: 600 12px/1 var(--font-sans); font-style: normal; animation: demo-mode-from 6s ease-out infinite; }
+.demo-modes i + i { background: var(--surface-sunken); color: var(--text-2); opacity: 0; animation-name: demo-mode-to; }
+@keyframes demo-blink { 50% { opacity: 0; } }
+@keyframes demo-keys { 0%, 8% { width: 0; } 40%, 68% { width: calc(var(--keys) * 1ch); } 70%, 100% { width: 0; } }
+@keyframes demo-candidates { 0%, 34% { opacity: 0; transform: translateY(2px); } 42%, 68% { opacity: 1; transform: none; } 72%, 100% { opacity: 0; } }
+@keyframes demo-press { 0%, 58% { transform: none; } 62% { transform: scale(.93); } 66%, 100% { transform: none; } }
+@keyframes demo-result { 0%, 68% { max-width: 0; background: transparent; } 70% { max-width: 12em; background: var(--accent-soft); } 92%, 100% { max-width: 12em; background: transparent; } }
+@keyframes demo-key { 0%, 30% { transform: none; box-shadow: 0 0 0 1px var(--border-strong), 0 2px 0 var(--border-strong); } 34%, 40% { transform: translateY(2px); box-shadow: 0 0 0 1px var(--accent-fg), 0 0 0 var(--border-strong); } 44%, 100% { transform: none; } }
+@keyframes demo-output { 0%, 36% { max-width: 0; } 44%, 92% { max-width: 8em; } 100% { max-width: 0; } }
+@keyframes demo-mode-from { 0%, 36% { opacity: 1; } 42%, 92% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes demo-mode-to { 0%, 36% { opacity: 0; } 42%, 92% { opacity: 1; } 100% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .feature-demo *, .feature-demo *::before { animation: none !important; }
+  .demo-keys { width: calc(var(--keys) * 1ch); }
+  .demo-candidates { opacity: 1; }
+  .demo-output { max-width: 8em; }
+  .demo-modes i { opacity: 0; }
+  .demo-modes i + i { opacity: 1; }
+}
+@container main (max-width: 760px) {
+  .setting-detail { flex-direction: column; align-items: stretch; }
+  .feature-demo { width: auto; }
+}

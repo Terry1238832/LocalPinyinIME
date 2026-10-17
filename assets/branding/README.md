@@ -12,18 +12,15 @@ The app icon is a blue rounded Windows tile with a white speech bubble holding a
 
 See `icon/README.md` for regeneration.
 
-## Theme Tokens
+## Design Tokens
 
-The canonical color token source is:
+`theme/design_tokens.json` is the single source for colors, radii, type and motion
+across the settings app, the candidate window and the installer. Run
+`tools/generate_design_tokens.py` to regenerate `desktop/src/tokens.css`; CMake
+generates `localpinyin_design_tokens.h` for the native surfaces at configure time.
+Do not hand-edit either output. `docs/DESIGN_SYSTEM.md` describes how the tokens
+are used.
 
-- `theme/local_pinyin_blue_theme.json`
-
-The C++ header used by the app is generated into the build directory as `generated/local_pinyin_blue_theme.h`. Do not hand-edit the generated header.
-
-Core palette:
-
-- Deep Blue: `#0D47A1`
-- Azure Blue: `#1976F3`
-- Cyan Highlight: `#4DD0E1`
-- Cool Gray: `#6B7280`
-- Near White: `#F8FAFC`
+Brand colors: Azure `#1976F3` (the icon and brand mark) and Deep Blue `#0D47A1`.
+Interface fills use the deeper accent `#1A6FE8` (light) / `#2A6FE0` (dark) so white
+text keeps a 4.5:1 contrast.

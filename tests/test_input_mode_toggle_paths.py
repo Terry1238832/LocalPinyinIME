@@ -42,8 +42,8 @@ def main() -> int:
         fail("shared mode toggle must update Language Bar state")
     if "TF_LBI_ICON" not in text_service and "TF_LBI_ICON" not in Path(args.text_service).with_name("language_bar.cpp").read_text(encoding="utf-8"):
         fail("Language Bar mode changes must be able to notify icon updates")
-    if "cancel_composition(context)" not in toggle_block or "candidate_window_.hide(reason)" not in toggle_block:
-        fail("shared mode toggle must keep existing Shift composition/candidate cleanup")
+    if "commit_raw_composition(target)" not in toggle_block or "candidate_window_.hide(reason)" not in toggle_block:
+        fail("shared mode toggle must keep typed letters and clean up candidates")
 
     test_down = block_after(
         text_service,
@@ -130,8 +130,8 @@ def main() -> int:
         ("bool TextService::handle_chinese_key",),
     )
     for needle in (
-        "module_path(g_instance)",
-        "same_directory_settings_path",
+        # Beside the DLL, or one folder up for the 32-bit DLL in x86\.
+        "install_file_path(g_instance",
         "LocalPinyinSettings.exe",
         "GetFileAttributesW",
         "CreateProcessW",

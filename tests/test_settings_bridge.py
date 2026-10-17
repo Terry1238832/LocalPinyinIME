@@ -71,13 +71,14 @@ class SettingsBridgeContract(unittest.TestCase):
         self.assertIs(state["settings"]["predictionEnabled"], False)
         self.assertGreater(state["dictionary"]["total"], 1000)
         self.assertTrue(all(state["dictionary"][key] > 0 for key in ("core", "local", "standard")))
-        self.assertEqual(state["learning"], {"count": 0})
+        self.assertEqual(state["learning"], {"count": 0, "capacity": 2048})
         self.assertFalse(state["runtime"]["available"])
         self.assertEqual(Path(state["dataDirectory"]), self.data)
         self.assertEqual(state["userLexiconCount"], 0)
         self.assertEqual(self.call("user-list"), {"entries": []})
         self.assertEqual(self.call("lookup", "suibian")["candidates"][0], "随便")
-        self.assertEqual(self.call("lookup", ""), {"candidates": []})
+        self.assertEqual(self.call("lookup", ""), {"candidates": [], "pinyin": ""})
+        self.assertEqual(self.call("lookup", "suibian")["pinyin"], "sui'bian")
         self.assertIn("去", self.call("predict", "我想")["candidates"])
         self.assertEqual(self.call("predict", ""), {"candidates": []})
         matches = self.call("dictionary-search", "随便", "5")
@@ -93,11 +94,137 @@ class SettingsBridgeContract(unittest.TestCase):
             "inputMode": {"shiftToggleEnabled": False},
         }), encoding="utf-8")
         for theme, size, shift in (("dark", "7", "true"), ("system", "1", "false"), ("light", "4", "true")):
-            expected = {"theme": theme, "textSize": int(size), "shiftToggleEnabled": shift == "true", "predictionEnabled": False}
+            expected = {"theme": theme, "textSize": int(size), "candidateStyle": "flow",
+                        "shiftToggleEnabled": shift == "true", "predictionEnabled": False, "typoCorrection": True, "mixedEnglish": True, "fuzzyPinyin": [], "doublePinyin": "none", "usageDomains": [], "digitPeriod": True, "codePunctuation": True}
             self.assertEqual(self.call("save-settings", theme, size, shift), {"settings": expected})
             self.assertEqual(self.call("state")["settings"], expected)
             self.assertFalse(json.loads(settings.read_text(encoding="utf-8"))["candidateWindow"]["showKeyHints"])
         self.assertFalse(self.lexicon.exists())
+
+    def test_candidate_style_is_saved_independently_and_falls_back(self) -> None:
+        # Settings from before 0.12 have no style: the default applies and
+        # every other option survives the first save.
+        self.data.mkdir()
+        settings = self.data / "settings.json"
+        settings.write_text(json.dumps({
+            "candidateWindow": {"theme": "dark", "textSize": "level6", "showKeyHints": False},
+            "inputMode": {"shiftToggleEnabled": False, "nextWordPrediction": True},
+        }), encoding="utf-8")
+        self.assertEqual(self.call("state")["settings"], {"theme": "dark", "textSize": 6, "candidateStyle": "flow",
+                                                          "shiftToggleEnabled": False, "predictionEnabled": True, "typoCorrection": True, "mixedEnglish": True, "fuzzyPinyin": [], "doublePinyin": "none", "usageDomains": [], "digitPeriod": True, "codePunctuation": True})
+        for style in ("rail", "type", "glass", "flow"):
+            saved = self.call("save-settings", "dark", "6", "false", "true", style)["settings"]
+            self.assertEqual(saved, {"theme": "dark", "textSize": 6, "candidateStyle": style,
+                                     "shiftToggleEnabled": False, "predictionEnabled": True, "typoCorrection": True, "mixedEnglish": True, "fuzzyPinyin": [], "doublePinyin": "none", "usageDomains": [], "digitPeriod": True, "codePunctuation": True})
+            self.assertEqual(self.call("state")["settings"], saved)
+            stored = json.loads(settings.read_text(encoding="utf-8"))["candidateWindow"]
+            self.assertEqual(stored["style"], style)
+            self.assertFalse(stored["showKeyHints"])
+        # Changing the theme or size without a style keeps the saved style.
+        self.call("save-settings", "light", "2", "true", "true", "type")
+        self.assertEqual(self.call("save-settings", "system", "3", "true")["settings"]["candidateStyle"], "type")
+        # Unknown styles are rejected on save, and fall back when read.
+        self.call("save-settings", "light", "4", "true", "true", "aurora", success=False)
+        self.assertEqual(self.call("state")["settings"]["candidateStyle"], "type")
+        stored = json.loads(settings.read_text(encoding="utf-8"))
+        stored["candidateWindow"]["style"] = "aurora"
+        settings.write_text(json.dumps(stored), encoding="utf-8")
+        self.assertEqual(self.call("state")["settings"]["candidateStyle"], "flow")
+        self.assertEqual(self.call("state")["settings"]["textSize"], 3)
+
+    def test_input_options_are_saved_validated_and_used_by_lookup(self) -> None:
+        self.data.mkdir()
+        settings = self.data / "settings.json"
+        # Defaults: correction and mixed input on, no fuzzy pairs, full pinyin.
+        state = self.call("state")["settings"]
+        self.assertEqual((state["typoCorrection"], state["mixedEnglish"], state["fuzzyPinyin"], state["doublePinyin"]),
+                         (True, True, [], "none"))
+        self.assertEqual(self.call("lookup", "nihso")["candidates"][0], "你好")
+        self.assertEqual(self.call("lookup", "ppt")["candidates"][0], "PPT")
+        self.assertNotIn("中国", self.call("lookup", "zongguo")["candidates"])
+        # Named options follow the positional ones and change only themselves.
+        saved = self.call("save-settings", "dark", "5", "true", "false", "rail",
+                          "fuzzyPinyin=z-zh,n-l,in-ing", "typoCorrection=false")["settings"]
+        self.assertEqual(saved["fuzzyPinyin"], ["z-zh", "n-l", "in-ing"])
+        self.assertEqual((saved["typoCorrection"], saved["mixedEnglish"], saved["candidateStyle"], saved["theme"]),
+                         (False, True, "rail", "dark"))
+        stored = json.loads(settings.read_text(encoding="utf-8"))["inputMode"]
+        self.assertEqual(stored["fuzzyPinyin"], "z-zh,n-l,in-ing")
+        self.assertIs(stored["typoCorrection"], False)
+        # The preview types with the saved options.
+        self.assertEqual(self.call("lookup", "zongguo")["candidates"][0], "中国")
+        self.assertNotEqual(self.call("lookup", "nihso")["candidates"][0], "你好")
+        # A save without named options keeps them.
+        self.assertEqual(self.call("save-settings", "light", "4", "false")["settings"]["fuzzyPinyin"], ["z-zh", "n-l", "in-ing"])
+        # Double pinyin: the preview converts key pairs and shows full pinyin.
+        self.call("save-settings", "light", "4", "false", "false", "flow", "doublePinyin=xiaohe", "fuzzyPinyin=")
+        lookup = self.call("lookup", "nihc")
+        self.assertEqual((lookup["candidates"][0], lookup["pinyin"]), ("你好", "ni'hao"))
+        self.call("save-settings", "light", "4", "false", "false", "flow", "doublePinyin=ziranma")
+        self.assertEqual(self.call("lookup", "nihk")["candidates"][0], "你好")
+        # Mixed input off: English terms are not recognized.
+        self.call("save-settings", "light", "4", "false", "false", "flow", "doublePinyin=none", "mixedEnglish=false")
+        self.assertNotIn("PPT", self.call("lookup", "ppt")["candidates"])
+        before = settings.read_bytes()
+        for bad in ("doublePinyin=qwerty", "fuzzyPinyin=z-zh,zz", "typoCorrection=yes", "unknownOption=1", "noequals"):
+            self.call("save-settings", "light", "4", "false", "false", "flow", bad, success=False)
+        self.assertEqual(settings.read_bytes(), before)
+        # Unknown values in the file fall back to the defaults.
+        stored = json.loads(settings.read_text(encoding="utf-8"))
+        stored["inputMode"]["doublePinyin"] = "qwerty"
+        stored["inputMode"]["fuzzyPinyin"] = "zz,n-l"
+        settings.write_text(json.dumps(stored), encoding="utf-8")
+        state = self.call("state")["settings"]
+        self.assertEqual((state["doublePinyin"], state["fuzzyPinyin"]), ("none", ["n-l"]))
+
+    def test_usage_scenes_are_saved_listed_and_used_by_lookup(self) -> None:
+        self.data.mkdir()
+        settings = self.data / "settings.json"
+        self.assertEqual(self.call("state")["settings"]["usageDomains"], [])
+        # Every pack is listed for the settings page.
+        packs = self.call("domain-words")["domains"]
+        self.assertEqual(list(packs), ["coding", "work", "math", "study", "daily", "games"])
+        self.assertTrue(all(len(words) >= 50 for words in packs.values()))
+        self.assertIn("其实", packs["daily"])
+        self.assertIn("依赖注入", packs["coding"])
+        # Without scenes the old variant leads; the daily scene lifts 好像是.
+        self.assertEqual(self.call("lookup", "haoxiangshi")["candidates"][0], "好象是")
+        saved = self.call("save-settings", "light", "4", "false", "false", "flow", "usageDomains=coding,daily")["settings"]
+        self.assertEqual(saved["usageDomains"], ["coding", "daily"])
+        self.assertEqual(json.loads(settings.read_text(encoding="utf-8"))["inputMode"]["usageDomains"], "coding,daily")
+        self.assertEqual(self.call("lookup", "haoxiangshi")["candidates"][0], "好像是")
+        self.assertEqual(self.call("lookup", "qishi", "所以整道题")["candidates"][0], "其实")
+        self.assertEqual(self.call("lookup", "yilaizhuru")["candidates"][0], "依赖注入")
+        # Ids must be known and in the canonical order.
+        before = settings.read_bytes()
+        for bad in ("usageDomains=daily,coding", "usageDomains=cooking", "usageDomains=coding,"):
+            self.call("save-settings", "light", "4", "false", "false", "flow", bad, success=False)
+        self.assertEqual(settings.read_bytes(), before)
+        # An unknown id in the file is dropped; clearing restores the plain order.
+        stored = json.loads(settings.read_text(encoding="utf-8"))
+        stored["inputMode"]["usageDomains"] = "cooking,math"
+        settings.write_text(json.dumps(stored), encoding="utf-8")
+        self.assertEqual(self.call("state")["settings"]["usageDomains"], ["math"])
+        self.call("save-settings", "light", "4", "false", "false", "flow", "usageDomains=")
+        self.assertEqual(self.call("lookup", "haoxiangshi")["candidates"][0], "好象是")
+
+    def test_typing_helpers_are_saved_and_validated(self) -> None:
+        self.data.mkdir()
+        settings = self.data / "settings.json"
+        # Both helpers are on by default: 3. after a digit, ASCII punctuation in code editors.
+        state = self.call("state")["settings"]
+        self.assertEqual((state["digitPeriod"], state["codePunctuation"]), (True, True))
+        saved = self.call("save-settings", "light", "4", "false", "false", "flow",
+                          "digitPeriod=false", "codePunctuation=false")["settings"]
+        self.assertEqual((saved["digitPeriod"], saved["codePunctuation"]), (False, False))
+        stored = json.loads(settings.read_text(encoding="utf-8"))["inputMode"]
+        self.assertEqual((stored["digitPeriod"], stored["codePunctuation"]), (False, False))
+        before = settings.read_bytes()
+        for bad in ("digitPeriod=yes", "codePunctuation=1"):
+            self.call("save-settings", "light", "4", "false", "false", "flow", bad, success=False)
+        self.assertEqual(settings.read_bytes(), before)
+        self.call("save-settings", "light", "4", "false", "false", "flow", "digitPeriod=true")
+        self.assertEqual(self.call("state")["settings"]["digitPeriod"], True)
 
     def test_context_preview_and_prediction_persistence(self) -> None:
         before = self.snapshot()
@@ -203,16 +330,17 @@ class SettingsBridgeContract(unittest.TestCase):
         personal = self.call("user-upsert", "baoliu", "保留", "5000")
         learning = self.data / "user_learning.tsv"
         learning.write_text("nihao\t你好\t2\t1\nnihao\t你好\t4\t2\nsuibian\t随便\t1\t3\nbad row\n", encoding="utf-8")
-        self.assertEqual(self.call("state")["learning"], {"count": 2})
+        self.assertEqual(self.call("state")["learning"], {"count": 2, "capacity": 2048})
         before = self.snapshot()
         self.call("lookup", "suibian")
         self.call("state")
         self.assertEqual(self.snapshot(), before)
         self.assertEqual(self.call("clear-learning"), {"cleared": True})
         self.assertFalse(learning.exists())
-        self.assertEqual(self.call("state")["learning"], {"count": 0})
+        self.assertEqual(self.call("state")["learning"], {"count": 0, "capacity": 2048})
         self.assertEqual(self.call("user-list"), personal)
-        self.assertEqual(self.call("state")["settings"], {"theme": "dark", "textSize": 5, "shiftToggleEnabled": True, "predictionEnabled": False})
+        self.assertEqual(self.call("state")["settings"], {"theme": "dark", "textSize": 5, "candidateStyle": "flow",
+                                                          "shiftToggleEnabled": True, "predictionEnabled": False, "typoCorrection": True, "mixedEnglish": True, "fuzzyPinyin": [], "doublePinyin": "none", "usageDomains": [], "digitPeriod": True, "codePunctuation": True})
         self.assertEqual(self.call("clear-learning"), {"cleared": True})
 
     def test_valid_runtime_status_is_reported_and_not_rewritten(self) -> None:

@@ -109,6 +109,15 @@ int main() {
         {L"xianjiuzheng", L"\u5148\u7EA0\u6B63", L"targeted"},
         {L"yixie", L"\u4E00\u4E9B", L"targeted"},
         {L"qisiwole", L"\u6C14\u6B7B\u6211\u4E86", L"targeted"},
+        // Everyday words that a coarse project band once ranked below a
+        // rarer homophone listed only by the reference layer.
+        {L"qishi", L"\u5176\u5B9E", L"common"},
+        {L"jiushi", L"\u5C31\u662F", L"common"},
+        {L"zheyang", L"\u8FD9\u6837", L"common"},
+        {L"haoxiang", L"\u597D\u50CF", L"common"},
+        {L"limian", L"\u91CC\u9762", L"common"},
+        {L"guanxi", L"\u5173\u7CFB", L"common"},
+        {L"yixia", L"\u4E00\u4E0B", L"common"},
         {L"nihaoshijie", L"\u4F60\u597D\u4E16\u754C", L"required"},
         {L"woxiangqubeijing", L"\u6211\u60F3\u53BB\u5317\u4EAC", L"required"},
         {L"jintiantianqihenhao", L"\u4ECA\u5929\u5929\u6C14\u5F88\u597D", L"required"},

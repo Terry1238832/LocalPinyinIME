@@ -10,6 +10,9 @@ namespace localpinyin {
 
 class UserLearning {
 public:
+    // The oldest selections are dropped beyond this many records.
+    static constexpr size_t kCapacity = 2048;
+
     bool open(const std::wstring& storage_path);
     int frequency(const std::wstring& pinyin, const std::wstring& word) const;
     // Seconds since the epoch of the latest selection, or 0.

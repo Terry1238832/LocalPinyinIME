@@ -4,6 +4,16 @@
 
 namespace localpinyin {
 
+// The registry view this build registers its COM class in: 32-bit
+// applications load the 32-bit input method from the 32-bit view, 64-bit
+// ones the 64-bit DLL from the 64-bit view. The TSF profile under
+// SOFTWARE\Microsoft\CTF is shared by both views.
+#ifdef _WIN64
+inline constexpr REGSAM kRegistryView = KEY_WOW64_64KEY;
+#else
+inline constexpr REGSAM kRegistryView = KEY_WOW64_32KEY;
+#endif
+
 enum class RegistrationOperation {
     SnapshotProfile,
     RegisterProfile,

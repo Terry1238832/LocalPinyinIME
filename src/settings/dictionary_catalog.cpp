@@ -8,6 +8,7 @@
 #include <filesystem>
 #include <fstream>
 #include <map>
+#include <unordered_set>
 
 namespace localpinyin {
 namespace {
@@ -39,9 +40,9 @@ bool parse_weight(const std::wstring& text, int* value) {
     return true;
 }
 
-void load_file(const std::filesystem::path& path, DictionaryCatalogSource source,
-               std::map<std::pair<std::wstring, std::wstring>, DictionaryCatalogEntry>* merged,
-               size_t* valid, size_t* invalid) {
+// Every valid row of one layer file goes to `accept(pinyin, word, weight)`.
+template <typename Accept>
+void read_file(const std::filesystem::path& path, size_t* valid, size_t* invalid, Accept accept) {
     std::ifstream file(path, std::ios::binary);
     if (!file) return;
     std::string raw;
@@ -56,10 +57,18 @@ void load_file(const std::filesystem::path& path, DictionaryCatalogSource source
             ++*invalid;
             continue;
         }
-        DictionaryCatalogEntry entry{trim_ascii(fields[0]), trim_ascii(fields[1]), weight, source};
-        (*merged)[{entry.pinyin, entry.word}] = entry;
+        accept(trim_ascii(fields[0]), trim_ascii(fields[1]), weight);
         ++*valid;
     }
+}
+
+void load_file(const std::filesystem::path& path, DictionaryCatalogSource source,
+               std::map<std::pair<std::wstring, std::wstring>, DictionaryCatalogEntry>* merged,
+               size_t* valid, size_t* invalid) {
+    read_file(path, valid, invalid, [&](std::wstring pinyin, std::wstring word, int weight) {
+        DictionaryCatalogEntry entry{std::move(pinyin), std::move(word), weight, source};
+        (*merged)[{entry.pinyin, entry.word}] = entry;
+    });
 }
 
 }  // namespace
@@ -83,6 +92,22 @@ bool DictionaryCatalog::load(const std::wstring& resource_directory) {
         return left.word < right.word;
     });
     return !entries_.empty();
+}
+
+DictionaryCatalogStats DictionaryCatalog::count(const std::wstring& resource_directory) {
+    // The same rows as load(), only counted: no sorted catalog is built.
+    DictionaryCatalogStats stats;
+    std::unordered_set<std::wstring> keys;
+    keys.reserve(1u << 18);
+    const auto collect = [&](const std::wstring& pinyin, const std::wstring& word, int) {
+        keys.insert(pinyin + L'\t' + word);
+    };
+    const std::filesystem::path directory(resource_directory);
+    read_file(directory / L"standard_zh_pinyin.tsv", &stats.standard_entries, &stats.invalid_rows, collect);
+    read_file(directory / L"core_zh_pinyin.tsv", &stats.core_entries, &stats.invalid_rows, collect);
+    read_file(directory / L"local_core_zh_pinyin.tsv", &stats.local_core_entries, &stats.invalid_rows, collect);
+    stats.total_unique_entries = keys.size();
+    return stats;
 }
 
 std::vector<DictionaryCatalogEntry> DictionaryCatalog::preview(std::wstring_view query, size_t maximum) const {

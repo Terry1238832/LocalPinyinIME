@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../engine/input_options.h"
+
 #include <cstddef>
 #include <cstdint>
 
@@ -15,6 +17,13 @@ struct InputModeOptions {
     // Next-word suggestions after a commit are opt-in. Context always ranks
     // the candidates of newly typed pinyin regardless of this option.
     bool prediction_enabled = false;
+    // Helpers (辅助功能), both on by default: after a digit . , / : are ASCII
+    // (3.14, 1,000, 1/2, 12:30), and code editors, IDEs and terminals get
+    // ASCII punctuation (<({[!?,).
+    bool digit_period = true;
+    bool code_punctuation = true;
+    // Fuzzy pinyin, spelling correction, Chinese-English mixing, double pinyin.
+    EngineInputOptions engine;
 };
 
 struct ModifierKeyState {

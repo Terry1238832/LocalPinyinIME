@@ -1,6 +1,7 @@
 #include "candidate_ui.h"
 
-#include "local_pinyin_blue_theme.h"
+#include "localpinyin_design_tokens.h"
+#include "candidate_styles/paint_core.h"
 
 #include <algorithm>
 #include <cwctype>
@@ -9,21 +10,10 @@
 namespace localpinyin {
 namespace {
 
-constexpr int kMaxCandidates = 9;
 constexpr int kCandidateTextSizeMinLevel = 1;
 constexpr int kCandidateTextSizeMaxLevel = 7;
 constexpr int kCandidateTextSizeDefaultLevel = 4;
 constexpr int kCandidateTextSizeDipByLevel[] = {14, 16, 17, 18, 20, 22, 24};
-constexpr int kShadowMarginDip = 12;
-constexpr int kMinimumPanelWidthDip = 140;
-
-int rect_width(const RECT& rect) noexcept {
-    return std::max<LONG>(0, rect.right - rect.left);
-}
-
-int rect_height(const RECT& rect) noexcept {
-    return std::max<LONG>(0, rect.bottom - rect.top);
-}
 
 int clamp_int(int value, int low, int high) noexcept {
     if (high < low) {
@@ -43,16 +33,6 @@ std::wstring lower_ascii(std::wstring value) {
 
 bool is_cjk_or_wide(wchar_t ch) noexcept {
     return ch >= 0x2E80;
-}
-
-int width_from_input_or_estimate(const std::vector<int>& widths,
-                                 size_t index,
-                                 const std::wstring& text,
-                                 int font_px) {
-    if (index < widths.size() && widths[index] > 0) {
-        return widths[index];
-    }
-    return estimate_candidate_text_width_px(text, font_px);
 }
 
 }  // namespace
@@ -111,6 +91,10 @@ std::wstring candidate_text_size_display_text(CandidateTextSize size) {
 
 int candidate_font_px_for_size(CandidateTextSize size, int dpi) noexcept {
     return scale_dip(candidate_text_size_dip(size), dpi);
+}
+
+int candidate_number_font_px(int candidate_font_px, int dpi) noexcept {
+    return (std::max)(scale_dip(10, dpi), static_cast<int>(candidate_font_px * 0.62f + 0.5f));
 }
 
 int estimate_candidate_text_width_px(const std::wstring& text, int font_px) {
@@ -352,40 +336,146 @@ std::wstring candidate_text_size_to_string(CandidateTextSize size) {
     return L"level" + std::to_wstring(candidate_text_size_level(size));
 }
 
-CandidateThemePalette make_candidate_palette(CandidateThemeMode mode, bool system_dark) {
+// Every style's generated light and dark token namespaces have identical members.
+#define LOCALPINYIN_CANDIDATE_PALETTE(ns) [] {               \
+    CandidateThemePalette palette;                           \
+    palette.background = ns::kBackground;                    \
+    palette.surface_top = ns::kSurfaceTop;                   \
+    palette.border = ns::kBorder;                            \
+    palette.inner_edge = ns::kInnerEdge;                     \
+    palette.highlight = ns::kHighlight;                      \
+    palette.text = ns::kText;                                \
+    palette.text_muted = ns::kTextMuted;                     \
+    palette.mark = ns::kMark;                                \
+    palette.composition_text = ns::kComposition;             \
+    palette.separator_text = ns::kSeparator;                 \
+    palette.caret = ns::kCaret;                              \
+    palette.focus_background = ns::kFocus;                   \
+    palette.focus_top = ns::kFocusTop;                       \
+    palette.focus_text = ns::kFocusText;                     \
+    palette.focus_border = ns::kFocusEdge;                   \
+    palette.focus_bar = ns::kFocusBar;                       \
+    palette.focus_keycap = ns::kFocusKeycap;                 \
+    palette.focus_number_text = ns::kFocusNumber;            \
+    palette.chip_background = ns::kChip;                     \
+    palette.chip_border = ns::kChipEdge;                     \
+    palette.keycap = ns::kKeycap;                            \
+    palette.number_text = ns::kNumber;                       \
+    palette.hint_text = ns::kHint;                           \
+    palette.hover_background = ns::kHover;                   \
+    palette.pressed_background = ns::kPressed;               \
+    palette.control = ns::kControl;                          \
+    palette.control_disabled = ns::kControlDisabled;         \
+    palette.divider = ns::kDivider;                          \
+    palette.shadow_key_alpha = ns::kShadowKeyAlpha;          \
+    palette.shadow_ambient_alpha = ns::kShadowAmbientAlpha;  \
+    palette.focus_shadow_alpha = ns::kFocusShadowAlpha;      \
+    return palette;                                          \
+}()
+
+CandidateThemePalette make_candidate_palette(CandidateThemeMode mode, bool system_dark, CandidateStyle style) {
     const bool dark = mode == CandidateThemeMode::Dark || (mode == CandidateThemeMode::System && system_dark);
     CandidateThemePalette palette;
-    palette.dark = dark;
-    if (dark) {
-        palette.background = RGB(43, 45, 50);
-        palette.border = RGB(64, 68, 76);
-        palette.text = RGB(240, 242, 245);
-        palette.muted_text = RGB(150, 156, 166);
-        palette.hint_text = RGB(128, 134, 145);
-        palette.number_text = RGB(140, 146, 157);
-        palette.selected_background = RGB(61, 130, 246);
-        palette.selected_border = RGB(61, 130, 246);
-        palette.selected_text = RGB(255, 255, 255);
-        palette.composition_text = RGB(186, 192, 202);
-        palette.hover_background = RGB(56, 59, 66);
-        palette.selected_number_text = RGB(205, 224, 255);
-        palette.shadow_alpha = 110;
-    } else {
-        palette.background = RGB(255, 255, 255);
-        palette.border = RGB(221, 225, 232);
-        palette.text = RGB(28, 31, 36);
-        palette.muted_text = RGB(124, 131, 143);
-        palette.hint_text = RGB(140, 146, 157);
-        palette.number_text = RGB(140, 146, 157);
-        palette.selected_background = RGB(25, 118, 243);
-        palette.selected_border = RGB(25, 118, 243);
-        palette.selected_text = RGB(255, 255, 255);
-        palette.composition_text = RGB(78, 86, 99);
-        palette.hover_background = RGB(239, 243, 250);
-        palette.selected_number_text = RGB(208, 226, 255);
-        palette.shadow_alpha = 52;
+    switch (style) {
+        case CandidateStyle::CursorRail:
+            palette = dark ? LOCALPINYIN_CANDIDATE_PALETTE(tokens::candidate_rail_dark)
+                           : LOCALPINYIN_CANDIDATE_PALETTE(tokens::candidate_rail_light);
+            break;
+        case CandidateStyle::ModernType:
+            palette = dark ? LOCALPINYIN_CANDIDATE_PALETTE(tokens::candidate_type_dark)
+                           : LOCALPINYIN_CANDIDATE_PALETTE(tokens::candidate_type_light);
+            break;
+        case CandidateStyle::FloatingGlass:
+            palette = dark ? LOCALPINYIN_CANDIDATE_PALETTE(tokens::candidate_glass_dark)
+                           : LOCALPINYIN_CANDIDATE_PALETTE(tokens::candidate_glass_light);
+            break;
+        case CandidateStyle::Capsule:
+            palette = dark ? LOCALPINYIN_CANDIDATE_PALETTE(tokens::candidate_capsule_dark)
+                           : LOCALPINYIN_CANDIDATE_PALETTE(tokens::candidate_capsule_light);
+            break;
+        case CandidateStyle::ColumnList:
+            palette = dark ? LOCALPINYIN_CANDIDATE_PALETTE(tokens::candidate_column_dark)
+                           : LOCALPINYIN_CANDIDATE_PALETTE(tokens::candidate_column_light);
+            break;
+        case CandidateStyle::Outline:
+            palette = dark ? LOCALPINYIN_CANDIDATE_PALETTE(tokens::candidate_outline_dark)
+                           : LOCALPINYIN_CANDIDATE_PALETTE(tokens::candidate_outline_light);
+            break;
+        case CandidateStyle::InkDot:
+            palette = dark ? LOCALPINYIN_CANDIDATE_PALETTE(tokens::candidate_dot_dark)
+                           : LOCALPINYIN_CANDIDATE_PALETTE(tokens::candidate_dot_light);
+            break;
+        case CandidateStyle::AdaptiveFlow:
+        default:
+            palette = dark ? LOCALPINYIN_CANDIDATE_PALETTE(tokens::candidate_flow_dark)
+                           : LOCALPINYIN_CANDIDATE_PALETTE(tokens::candidate_flow_light);
+            break;
     }
+    palette.dark = dark;
     return palette;
+}
+#undef LOCALPINYIN_CANDIDATE_PALETTE
+
+CandidateThemePalette make_high_contrast_candidate_palette() {
+    // System colors only: window text on window, the selection in the
+    // highlight colors; no tints, gradients or shadows.
+    const COLORREF window = GetSysColor(COLOR_WINDOW);
+    const COLORREF ink = GetSysColor(COLOR_WINDOWTEXT);
+    const COLORREF highlight = GetSysColor(COLOR_HIGHLIGHT);
+    const COLORREF highlight_ink = GetSysColor(COLOR_HIGHLIGHTTEXT);
+    const COLORREF disabled = GetSysColor(COLOR_GRAYTEXT);
+    CandidateThemePalette palette;
+    palette.high_contrast = true;
+    palette.dark = (GetRValue(window) + GetGValue(window) + GetBValue(window)) < 384;
+    palette.background = palette.surface_top = window;
+    palette.border = palette.inner_edge = ink;
+    palette.highlight = window;
+    palette.text = palette.text_muted = palette.composition_text = palette.separator_text = ink;
+    palette.caret = palette.mark = palette.focus_bar = ink;
+    palette.focus_background = palette.focus_top = highlight;
+    palette.focus_text = palette.focus_number_text = highlight_ink;
+    palette.focus_border = highlight;
+    palette.focus_keycap = highlight;
+    palette.chip_background = window;
+    palette.chip_border = ink;
+    palette.keycap = window;
+    palette.number_text = palette.hint_text = palette.control = ink;
+    palette.hover_background = palette.pressed_background = window;
+    palette.control_disabled = disabled;
+    palette.divider = ink;
+    palette.shadow_key_alpha = palette.shadow_ambient_alpha = palette.focus_shadow_alpha = 0;
+    return palette;
+}
+
+CandidateStyle parse_candidate_style(const std::wstring& value) noexcept {
+    const std::wstring lowered = lower_ascii(value);
+    if (lowered == L"rail") return CandidateStyle::CursorRail;
+    if (lowered == L"type") return CandidateStyle::ModernType;
+    if (lowered == L"glass") return CandidateStyle::FloatingGlass;
+    if (lowered == L"flow") return CandidateStyle::AdaptiveFlow;
+    if (lowered == L"capsule") return CandidateStyle::Capsule;
+    if (lowered == L"column") return CandidateStyle::ColumnList;
+    if (lowered == L"outline") return CandidateStyle::Outline;
+    if (lowered == L"dot") return CandidateStyle::InkDot;
+    return kDefaultCandidateStyle;
+}
+
+std::wstring candidate_style_to_string(CandidateStyle style) {
+    switch (style) {
+        case CandidateStyle::CursorRail: return L"rail";
+        case CandidateStyle::ModernType: return L"type";
+        case CandidateStyle::FloatingGlass: return L"glass";
+        case CandidateStyle::Capsule: return L"capsule";
+        case CandidateStyle::ColumnList: return L"column";
+        case CandidateStyle::Outline: return L"outline";
+        case CandidateStyle::InkDot: return L"dot";
+        case CandidateStyle::AdaptiveFlow:
+        default: return L"flow";
+    }
+}
+
+const wchar_t* candidate_font_family(CandidateFontFace face) noexcept {
+    return face == CandidateFontFace::Numeral ? L"Segoe UI" : L"Microsoft YaHei UI";
 }
 
 std::optional<size_t> candidate_index_at_point(const CandidateLayoutResult& layout, POINT point) noexcept {
@@ -407,178 +497,17 @@ std::optional<size_t> candidate_model_index(const CandidateLayoutResult& layout,
 }
 
 CandidateLayoutResult make_candidate_layout(const CandidateLayoutInput& input) {
-    CandidateLayoutResult result;
-    result.dpi = std::max(1, input.dpi);
-    const size_t count = (std::min)(input.candidate_texts.size(), size_t{kMaxCandidates});
-    const int work_width = rect_width(input.work_area);
-    const int work_height = rect_height(input.work_area);
-    if (!should_show_candidate_window(input.composition_text, count, false) ||
-        work_width <= 0 || work_height <= 0) return result;
-
-    const int dpi = result.dpi;
-    // Every measure shrinks proportionally on a work area narrower than the
-    // nominal popup, so the panel and its rows always fit the monitor.
-    const int max_width = (std::min)(scale_dip(720, dpi), work_width);
-    const int margin = scale_dip(kShadowMarginDip, dpi);
-    const int padding_x = (std::min)(scale_dip(10, dpi), max_width / 16);
-    const int padding_y = (std::min)(scale_dip(6, dpi), max_width / 24);
-    const int gap = (std::min)(scale_dip(2, dpi), max_width / 64);
-    const int button = (std::min)(scale_dip(24, dpi), max_width / 10);
-    const int pager_width = button * 2 + gap;
-    result.composition_font_px = scale_dip(13, dpi);
-    result.candidate_font_px = candidate_font_px_for_size(input.options.text_size, dpi);
-    result.hint_font_px = scale_dip(12, dpi);
-    const int composition_row = result.composition_font_px + scale_dip(9, dpi);
-    const int candidate_row = (std::max)(result.candidate_font_px + scale_dip(14, dpi), button);
-    const int row_gap = scale_dip(1, dpi);
-    const int panel_height = (std::min)(padding_y * 2 + composition_row + row_gap + candidate_row, work_height);
-    const int inner_width = (std::max)(1, max_width - padding_x * 2);
-    const int item_pad = (std::min)(scale_dip(8, dpi), inner_width / 10);
-    const int number_gap = (std::min)(scale_dip(5, dpi), inner_width / 16);
-    const int slack = scale_dip(2, dpi);
-
-    std::vector<int> text_widths(count), number_widths(count), item_widths(count);
-    const auto paginate = [&](int available) {
-        std::vector<UINT> pages{0};
-        int used = 0;
-        for (size_t i = 0; i < count; ++i) {
-            item_widths[i] = (std::min)(available,
-                item_pad * 2 + number_widths[i] + number_gap + text_widths[i] + slack);
-            if (used > 0 && used + gap + item_widths[i] > available) {
-                pages.push_back(static_cast<UINT>(i));
-                used = 0;
-            }
-            used += (used ? gap : 0) + item_widths[i];
-        }
-        return pages;
-    };
-    for (size_t i = 0; i < count; ++i) {
-        text_widths[i] = width_from_input_or_estimate(input.candidate_text_widths_px, i,
-            input.candidate_texts[i], result.candidate_font_px);
-        number_widths[i] = width_from_input_or_estimate(input.number_text_widths_px, i,
-            std::to_wstring(i + 1), result.candidate_font_px);
+    switch (input.options.style) {
+        case CandidateStyle::CursorRail: return candidate_styles::layout_cursor_rail(input);
+        case CandidateStyle::ModernType: return candidate_styles::layout_modern_type(input);
+        case CandidateStyle::FloatingGlass: return candidate_styles::layout_floating_glass(input);
+        case CandidateStyle::Capsule: return candidate_styles::layout_capsule(input);
+        case CandidateStyle::ColumnList: return candidate_styles::layout_column_list(input);
+        case CandidateStyle::Outline: return candidate_styles::layout_outline(input);
+        case CandidateStyle::InkDot: return candidate_styles::layout_ink_dot(input);
+        case CandidateStyle::AdaptiveFlow:
+        default: return candidate_styles::layout_adaptive_flow(input);
     }
-    // Page buttons only appear when the candidates need more than one page.
-    // A settings button closes the candidate row (omitted where it cannot
-    // open the settings app, e.g. in Windows Store app sandboxes).
-    const int action_space = input.settings_button ? button + gap * 3 : 0;
-    int candidate_width = (std::max)(1, inner_width - action_space);
-    result.page_indices = paginate(candidate_width);
-    const bool host_pages = !input.page_indices.empty() && input.page_indices.front() == 0 &&
-        input.page_indices.back() < count &&
-        std::adjacent_find(input.page_indices.begin(), input.page_indices.end(),
-            [](UINT a, UINT b) { return a >= b; }) == input.page_indices.end();
-    if (result.page_indices.size() > 1 || (host_pages && input.page_indices.size() > 1)) {
-        candidate_width = (std::max)(1, inner_width - action_space - pager_width - gap);
-        result.page_indices = paginate(candidate_width);
-    }
-    // ITfCandidateListUIElement permits the host to choose page boundaries.
-    // Preserve those boundaries in the popup and keyboard mapping as well.
-    if (host_pages) result.page_indices = input.page_indices;
-    result.paging_visible = result.page_indices.size() > 1;
-
-    const size_t selection = (std::min)(input.selected_index, count - 1);
-    const auto next_page = std::upper_bound(result.page_indices.begin(), result.page_indices.end(), selection);
-    result.current_page = static_cast<size_t>(next_page - result.page_indices.begin() - 1);
-    result.has_previous_page = result.current_page > 0;
-    result.has_next_page = result.current_page + 1 < result.page_indices.size();
-    const size_t begin = result.page_indices[result.current_page];
-    const size_t end = result.has_next_page ? result.page_indices[result.current_page + 1] : count;
-    int page_used = 0;
-    for (size_t i = begin; i < end; ++i) page_used += item_widths[i] + (i > begin ? gap : 0);
-    const int visible_width = (std::min)(candidate_width, page_used);
-    const int label_measured = input.composition_text_width_px > 0 ? input.composition_text_width_px :
-        estimate_candidate_text_width_px(input.composition_text, result.composition_font_px);
-    const int content_width = (std::max)(
-        visible_width + (result.paging_visible ? gap + pager_width : 0) + action_space,
-        (std::min)(label_measured + item_pad, inner_width));
-    const int panel_width = (std::min)(max_width,
-        (std::max)(padding_x * 2 + content_width, (std::min)(scale_dip(kMinimumPanelWidthDip, dpi), max_width)));
-
-    result.visible = true;
-    result.shadow_margin_px = margin;
-    result.width = panel_width + margin * 2;
-    result.height = panel_height + margin * 2;
-    result.panel_rect = RECT{margin, margin, margin + panel_width, margin + panel_height};
-    result.panel_padding_px = padding_x;
-    result.item_gap_px = gap;
-    result.row_gap_px = 0;
-    result.corner_radius = scale_dip(8, dpi);
-    result.selected_corner_radius = scale_dip(6, dpi);
-    result.show_hint = false;
-    result.reserves_action_icon_space = input.settings_button;
-    result.action_button_visible = input.settings_button;
-    result.action_button_size_px = input.settings_button ? button : 0;
-    result.action_button_gap_px = input.settings_button ? gap : 0;
-
-    const int left = margin + padding_x;
-    const int right = margin + panel_width - padding_x;
-    const int top = margin + padding_y;
-    const int composition_bottom = (std::min)(top + composition_row, margin + panel_height);
-    const int candidate_top = (std::min)(composition_bottom + row_gap, margin + panel_height);
-    const int candidate_bottom = (std::max)(candidate_top, margin + panel_height - padding_y);
-    // The pinyin aligns with the first candidate's number.
-    result.composition_rect = RECT{left + item_pad, top, right, composition_bottom};
-    const int controls_right = right - action_space;
-    const int pager_left = controls_right - (result.paging_visible ? pager_width : 0);
-    result.candidate_area_rect = RECT{left, candidate_top,
-        result.paging_visible ? (std::max)(left, pager_left - gap) : (std::max)(left, controls_right), candidate_bottom};
-    const int button_top = candidate_top + (candidate_bottom - candidate_top - button) / 2;
-    if (result.paging_visible) {
-        result.previous_page_rect = RECT{pager_left, button_top, pager_left + button, button_top + button};
-        result.next_page_rect = RECT{pager_left + button + gap, button_top, controls_right, button_top + button};
-    }
-    result.page_indicator_rect = RECT{};
-    result.action_button_rect = input.settings_button ? RECT{right - button, button_top, right, button_top + button} : RECT{};
-    result.hint_rect = RECT{};
-
-    const int available = (std::max)(1, static_cast<int>(result.candidate_area_rect.right - left));
-    int x = left;
-    for (size_t i = begin; i < end; ++i) {
-        CandidateItemLayout item;
-        item.candidate_index = i;
-        item.page_number = i - begin + 1;
-        item.selected = i == selection;
-        item.display_text = input.candidate_texts[i];
-        const int item_width = page_used <= available ? item_widths[i] :
-            (std::max)(0, (available - gap * static_cast<int>(end - begin - 1)) / static_cast<int>(end - begin));
-        const int number_width = (std::min)(number_widths[i], (std::max)(0, item_width - item_pad * 2));
-        const int text_left = (std::min)(x + item_width, x + item_pad + number_width + number_gap);
-        const int text_right = (std::max)(text_left, x + item_width - item_pad);
-        item.bounds = RECT{x, candidate_top, x + item_width, candidate_bottom};
-        item.number_bounds = RECT{x + (std::min)(item_pad, item_width), candidate_top,
-            x + (std::min)(item_pad, item_width) + number_width, candidate_bottom};
-        item.text_bounds = RECT{text_left, candidate_top, text_right, candidate_bottom};
-        item.number_text_width_px = number_widths[i];
-        item.candidate_text_width_px = text_widths[i];
-        item.text_available_width_px = text_right - text_left;
-        item.horizontal_padding_px = item_pad;
-        item.number_gap_px = number_gap;
-        item.truncated = text_widths[i] > item.text_available_width_px;
-        result.items.push_back(std::move(item));
-        x += item_width + gap;
-    }
-
-    // The panel (not its shadow) is placed against the caret: the pinyin
-    // starts under the caret, below it when there is room, otherwise above.
-    const int placement_gap = scale_dip(4, dpi);
-    const int desired_x = input.caret_rect.left - padding_x - item_pad;
-    const int panel_x = clamp_int(desired_x, input.work_area.left, input.work_area.right - panel_width);
-    const int below_y = input.caret_rect.bottom + placement_gap;
-    const int above_y = input.caret_rect.top - panel_height - placement_gap;
-    result.placement = CandidatePlacement::Below;
-    int desired_y = below_y;
-    if (below_y + panel_height > input.work_area.bottom &&
-        (above_y >= input.work_area.top || above_y - input.work_area.top >= input.work_area.bottom - below_y)) {
-        result.placement = CandidatePlacement::Above;
-        desired_y = above_y;
-    }
-    const int panel_y = clamp_int(desired_y, input.work_area.top, input.work_area.bottom - panel_height);
-    result.rect_clamped = panel_x != desired_x || panel_y != desired_y;
-    result.panel_screen_rect = RECT{panel_x, panel_y, panel_x + panel_width, panel_y + panel_height};
-    result.window_rect = RECT{panel_x - margin, panel_y - margin,
-                              panel_x + panel_width + margin, panel_y + panel_height + margin};
-    return result;
 }
 
 }  // namespace localpinyin

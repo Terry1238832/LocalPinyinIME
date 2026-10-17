@@ -40,6 +40,7 @@ std::wstring g_diagnostic_log_path;
 
 struct PeInfo {
     bool is_x64 = false;
+    bool is_x86 = false;
     bool is_pe32_plus = false;
     bool is_dll = false;
 };
@@ -216,6 +217,7 @@ HRESULT inspect_pe(const std::wstring& path, PeInfo& info) {
 
     CloseHandle(file);
     info.is_x64 = file_header.Machine == IMAGE_FILE_MACHINE_AMD64;
+    info.is_x86 = file_header.Machine == IMAGE_FILE_MACHINE_I386;
     info.is_pe32_plus = optional_magic == IMAGE_NT_OPTIONAL_HDR64_MAGIC;
     info.is_dll = (file_header.Characteristics & IMAGE_FILE_DLL) != 0;
     return S_OK;
@@ -236,10 +238,20 @@ bool validate_dll_path(const std::wstring& dll_path) {
     const HRESULT hr = inspect_pe(dll_path, info);
     std::wcout << L"DLL PE inspection HRESULT: " << hresult_hex(hr) << L"\n"
                << L"DLL machine x64: " << bool_text(info.is_x64) << L"\n"
+               << L"DLL machine x86: " << bool_text(info.is_x86) << L"\n"
                << L"DLL PE32+: " << bool_text(info.is_pe32_plus) << L"\n"
                << L"DLL file type is DLL: " << bool_text(info.is_dll) << L"\n";
-    if (FAILED(hr) || !info.is_x64 || !info.is_pe32_plus || !info.is_dll) {
-        std::wcerr << L"error: DLL is not a valid x64 PE32+ DLL\n";
+    // This tool registers a DLL of its own architecture: the 64-bit build the
+    // x64 input method, the 32-bit build (x86\) the one 32-bit apps load.
+#ifdef _WIN64
+    const bool matches = info.is_x64 && info.is_pe32_plus;
+    constexpr wchar_t kExpected[] = L"x64 PE32+";
+#else
+    const bool matches = info.is_x86 && !info.is_pe32_plus;
+    constexpr wchar_t kExpected[] = L"x86 PE32";
+#endif
+    if (FAILED(hr) || !matches || !info.is_dll) {
+        std::wcerr << L"error: DLL is not a valid " << kExpected << L" DLL\n";
         return false;
     }
     return true;
@@ -300,7 +312,7 @@ HRESULT call_dll_entry(const std::wstring& dll_path, const char* export_name) {
 
 bool key_exists(HKEY root, const std::wstring& subkey) {
     HKEY key = nullptr;
-    const LSTATUS status = RegOpenKeyExW(root, subkey.c_str(), 0, KEY_READ | KEY_WOW64_64KEY, &key);
+    const LSTATUS status = RegOpenKeyExW(root, subkey.c_str(), 0, KEY_READ | localpinyin::kRegistryView, &key);
     if (status == ERROR_SUCCESS) {
         RegCloseKey(key);
         return true;
@@ -311,7 +323,7 @@ bool key_exists(HKEY root, const std::wstring& subkey) {
 localpinyin::setup::InprocServerReadResult read_inproc_server() {
     const std::wstring subkey = std::wstring(L"CLSID\\") + kClsidText + L"\\InprocServer32";
     HKEY key = nullptr;
-    LSTATUS status = RegOpenKeyExW(HKEY_CLASSES_ROOT, subkey.c_str(), 0, KEY_READ | KEY_WOW64_64KEY, &key);
+    LSTATUS status = RegOpenKeyExW(HKEY_CLASSES_ROOT, subkey.c_str(), 0, KEY_READ | localpinyin::kRegistryView, &key);
     if (status != ERROR_SUCCESS) {
         return {HRESULT_FROM_WIN32(status), L""};
     }

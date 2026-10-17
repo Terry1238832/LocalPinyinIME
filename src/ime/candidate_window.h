@@ -3,10 +3,13 @@
 #include "candidate_ui.h"
 #include "../engine/candidate.h"
 #include "../settings/modern_renderer.h"
+#include "candidate_styles/paint_core.h"
 
 #include <windows.h>
 
+#include <array>
 #include <cstdint>
+#include <optional>
 #include <string>
 #include <functional>
 #include <vector>
@@ -131,6 +134,9 @@ public:
     // Called after Windows switches light/dark or high contrast.
     void set_theme_changed_callback(std::function<void()> callback) { theme_changed_callback_ = std::move(callback); }
     void set_prediction_mode(bool enabled) noexcept { prediction_mode_ = enabled; }
+    // The query bar shows the pinyin, or "联想" for suggestions after a commit
+    // (the focus row's hint keycap then reads Tab).
+    [[nodiscard]] std::wstring query_text() const { return prediction_mode_ ? L"\u8054\u60F3" : composition_text_; }
 
 private:
     friend class CandidateWindowCapture;
@@ -144,6 +150,9 @@ private:
     void maybe_recover_from_shell_cloak();
     void reload_options();
     void update_fonts(int dpi);
+    // The layout input for the current state; shared by the IME and the
+    // capture tool so both measure and lay out identically.
+    CandidateLayoutInput layout_input(int dpi, const RECT& work_area);
     bool rebuild_layout(int dpi);
     void apply_options_changed();
     // The popup is a per-pixel alpha layered window: present() renders the
@@ -152,11 +161,15 @@ private:
     void redraw();
     void render(HDC hdc);
     void render_layered(HDC dc, std::uint8_t* pixels, int width, int height);
-    void draw_content();
-    void draw_page_button(int direction);
-    void draw_settings_button();
+    // Paints the panel in the current style (src/ime/candidate_styles).
+    void paint_content();
+    // Moves the style's focus marker toward its target: eased over a few
+    // frames, or at once when `snap`, on first show, or when Windows has
+    // animations turned off.
+    void update_motion(bool snap);
+    void stop_motion() noexcept;
     [[nodiscard]] bool settings_button_at_point(POINT point) const noexcept;
-    void composite_shadow(std::uint8_t* pixels, int width, int height) const;
+    void composite_shadow(std::uint8_t* pixels, int width, int height);
     [[nodiscard]] std::wstring fitted_composition_text(int available_px);
     int page_direction_at_point(POINT point) const noexcept;
     void update_pointer_hot(POINT point);
@@ -199,6 +212,25 @@ private:
     std::function<void()> layout_retry_callback_;
     bool show_requested_ = false;
     bool prediction_mode_ = false;
+    std::wstring focus_hint_ = L"\u7A7A\u683C";
+    // Adaptive Flow's form while the popup stays up (hysteresis).
+    std::optional<CandidateFlowForm> flow_form_memory_;
+    // The style's moving focus (and Cursor Rail's page segment).
+    struct Motion {
+        RECT from{};
+        RECT to{};
+        RECT current{};
+        bool valid = false;
+    };
+    Motion marker_motion_;
+    Motion track_motion_;
+    ULONGLONG motion_start_ = 0;
+    bool motion_active_ = false;
+    bool snap_motion_ = true;
+    UINT_PTR motion_timer_ = 0;
+    // The blurred shadow depends only on the panel geometry: kept between frames.
+    std::vector<float> shadow_cache_;
+    std::array<int, 11> shadow_key_{};
     bool paint_seen_ = false;
     unsigned int shell_cloak_recovery_attempts_ = 0;
     CandidateImeWinEventState ime_win_event_state_;

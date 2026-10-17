@@ -184,6 +184,9 @@ CandidateWindowOptions SettingsStore::load_candidate_options() const {
     const std::wstring theme = setting_value(text, L"theme");
     const std::wstring text_size = setting_value(text, L"textSize");
     const std::wstring show_key_hints = setting_value(text, L"showKeyHints");
+    // Settings saved before 0.12 have no style: those users get the default,
+    // and an unknown value (from a newer version) falls back to it as well.
+    options.style = parse_candidate_style(setting_value(text, L"style"));
     if (!theme.empty()) {
         options.theme_mode = parse_candidate_theme_mode(theme);
     }
@@ -210,6 +213,17 @@ InputModeOptions SettingsStore::load_input_mode_options() const {
     // 0.8 renamed the persisted key: 0.7 always saved predictionEnabled=true,
     // and that old automatic default must not keep suggestions enabled.
     options.prediction_enabled = parse_bool(setting_value(text, L"nextWordPrediction"), false);
+    // Added in 0.13; missing keys keep the defaults (correction and mixed
+    // input on, no fuzzy pairs, full pinyin).
+    options.engine.typo_correction = parse_bool(setting_value(text, L"typoCorrection"), options.engine.typo_correction);
+    options.engine.mixed_english = parse_bool(setting_value(text, L"mixedEnglish"), options.engine.mixed_english);
+    options.engine.fuzzy = parse_fuzzy_pinyin(setting_value(text, L"fuzzyPinyin"));
+    options.engine.double_pinyin = parse_double_pinyin(setting_value(text, L"doublePinyin"));
+    // Added in 0.14.2; missing keys keep both helpers on.
+    options.digit_period = parse_bool(setting_value(text, L"digitPeriod"), options.digit_period);
+    options.code_punctuation = parse_bool(setting_value(text, L"codePunctuation"), options.code_punctuation);
+    // Added in 0.14: no usage scene until the user chooses some.
+    options.engine.domains = parse_usage_domains(setting_value(text, L"usageDomains"));
     return options;
 }
 
@@ -257,13 +271,25 @@ bool SettingsStore::save_options(const CandidateWindowOptions& candidate_options
     text += L"    \"showKeyHints\": ";
     text += candidate_options.show_key_hints ? L"true" : L"false";
     text += L",\n";
-    text += L"    \"textSize\": \"" + candidate_text_size_to_string(candidate_options.text_size) + L"\"\n";
+    text += L"    \"textSize\": \"" + candidate_text_size_to_string(candidate_options.text_size) + L"\",\n";
+    text += L"    \"style\": \"" + candidate_style_to_string(candidate_options.style) + L"\"\n";
     text += L"  },\n";
     text += L"  \"inputMode\": {\n";
     text += L"    \"shiftToggleEnabled\": ";
     text += input_mode_options.shift_toggle_enabled ? L"true" : L"false";
     text += L",\n    \"nextWordPrediction\": ";
     text += input_mode_options.prediction_enabled ? L"true" : L"false";
+    text += L",\n    \"typoCorrection\": ";
+    text += input_mode_options.engine.typo_correction ? L"true" : L"false";
+    text += L",\n    \"mixedEnglish\": ";
+    text += input_mode_options.engine.mixed_english ? L"true" : L"false";
+    text += L",\n    \"fuzzyPinyin\": \"" + fuzzy_pinyin_to_string(input_mode_options.engine.fuzzy) + L"\"";
+    text += L",\n    \"doublePinyin\": \"" + double_pinyin_to_string(input_mode_options.engine.double_pinyin) + L"\"";
+    text += L",\n    \"usageDomains\": \"" + usage_domains_to_string(input_mode_options.engine.domains) + L"\"";
+    text += L",\n    \"digitPeriod\": ";
+    text += input_mode_options.digit_period ? L"true" : L"false";
+    text += L",\n    \"codePunctuation\": ";
+    text += input_mode_options.code_punctuation ? L"true" : L"false";
     text += L"\n";
     text += L"  }\n";
     text += L"}\n";

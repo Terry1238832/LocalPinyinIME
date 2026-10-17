@@ -90,14 +90,17 @@ int main() {
     REQUIRE_TRUE(std::filesystem::exists(missing_user_path));
     REQUIRE_TRUE(layer_named(missing_user, L"local_user").created);
 
-    // A reference layer supplies new homophones and sentence priors without
-    // overwriting project scores; an explicit user score overrides both.
+    // A reference layer supplies new homophones and sentence priors. Its
+    // frequency is a floor for a lower project score (project weights are
+    // coarse bands) while a higher project score is kept; an explicit user
+    // score overrides both.
     const auto standard_path = root / L"standard.tsv";
     const auto standard_user_path = root / L"standard_user.tsv";
     write_utf8_text(standard_path,
                     L"shared\t\u5171\u4EAB\t6200\n"
                     L"shared\t\u5206\u4EAB\t6900\n"
                     L"xin\t\u65B0\t6600\n"
+                    L"localonly\t\u5185\u7F6E\t300\n"
                     L"bad\tinvalid\tbroken\n");
     write_utf8_text(standard_user_path, L"shared\t\u5171\u4EAB\t9100\n");
     localpinyin::Dictionary reference(localpinyin::DictionaryLoadMode::Empty);
@@ -112,6 +115,8 @@ int main() {
     REQUIRE_EQ(reference.lookup(L"xin").front().decoding_frequency, 6600);
     REQUIRE_EQ(reference.lookup(L"shared").front().base_score, 9100);
     REQUIRE_EQ(reference.lookup(L"shared").front().decoding_frequency, 9100);
+    REQUIRE_EQ(reference.lookup(L"localonly").front().base_score, 700);
+    REQUIRE_EQ(reference.lookup(L"localonly").front().decoding_frequency, 300);
     const auto old_time = std::filesystem::last_write_time(standard_user_path);
     write_utf8_text(standard_user_path, L"# cleared\n");
     std::filesystem::last_write_time(standard_user_path, old_time + std::chrono::seconds(1));
@@ -121,7 +126,7 @@ int main() {
         return candidate.text == L"\u5171\u4EAB";
     });
     REQUIRE_TRUE(original != restored.end());
-    REQUIRE_EQ(original->base_score, 800);
+    REQUIRE_EQ(original->base_score, 6200);
     REQUIRE_EQ(original->decoding_frequency, 6200);
     REQUIRE_EQ(reference.lookup(L"xin").front().decoding_frequency, 6600);
 

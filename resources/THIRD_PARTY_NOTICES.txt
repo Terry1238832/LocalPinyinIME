@@ -231,6 +231,10 @@ The 4-gram language model used to rank candidates by the preceding text contains
 - Tatoeba Mandarin sentences, https://tatoeba.org, licensed CC BY 2.0 FR (https://creativecommons.org/licenses/by/2.0/fr/), by the Tatoeba contributors;
 - Chinese Wikinews (zh.wikinews.org) article dump of 2026-10-01, licensed CC BY 2.5 / CC BY 4.0 (https://creativecommons.org/licenses/by/2.5/), by the Wikinews contributors;
 - Mozilla Common Voice zh-CN and zh-TW sentence text, released under CC0 1.0 (https://github.com/common-voice/common-voice, commit 7015419eb71f82ac8121f91d3f4c5338b83d6844);
+- KdConv dialogue utterances (https://github.com/thu-coai/KdConv, commit 653db76432de09a004ba708a68f8bbd5500e6bec) and
+  CrossWOZ dialogue utterances (https://github.com/thu-coai/CrossWOZ, commit df82c9fdff91b9b130f2d6b89110d3870ba6260e),
+  both by the Tsinghua University CoAI group and licensed under the Apache License 2.0 (full text above);
+  only n-gram statistics derived from the utterances are included, no utterance text;
 - internal n-grams of the bundled dictionary words.
 Text was converted to simplified Chinese with OpenCC (Apache-2.0), which is used at authoring time only.
 Sources, downloads and checksums: resources/dictionary/authoring/context_lm_sources.json and resources/dictionary/context_zh.lm.metadata.json in the source repository.

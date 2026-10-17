@@ -17,12 +17,19 @@ from pathlib import Path
 import subprocess
 
 ROOT = Path(__file__).resolve().parent.parent
+# Name -> (case file, extra engine flags). The same word cases without their
+# preceding text measure the order of a word typed on its own (start of a
+# field, or an application that does not expose its text).
 SETS = {
-    "逐词输入·参考前文": "heldout_context.tsv",
-    "留出整句": "heldout_sentences.tsv",
-    "项目留出": "typing_holdout.tsv",
-    "新增用例": "typing_fresh.tsv",
-    "独立用例": "typing_independent.tsv",
+    "逐词输入·参考前文": ("heldout_context.tsv", []),
+    "逐词输入·无前文": ("heldout_context.tsv", ["--no-context"]),
+    "留出整句": ("heldout_sentences.tsv", []),
+    # Everyday dialogue (KdConv, CrossWOZ): only clauses absent from training.
+    "口语对话·整句": ("heldout_dialogue_sentences.tsv", []),
+    "口语对话·逐词": ("heldout_dialogue_context.tsv", []),
+    "项目留出": ("typing_holdout.tsv", []),
+    "新增用例": ("typing_fresh.tsv", []),
+    "独立用例": ("typing_independent.tsv", []),
 }
 
 
@@ -33,8 +40,8 @@ def main() -> int:
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
     report = {}
-    for name, filename in SETS.items():
-        result = subprocess.run([str(args.engine), str(args.resources), str(ROOT / "tests/data" / filename)],
+    for name, (filename, flags) in SETS.items():
+        result = subprocess.run([str(args.engine), str(args.resources), str(ROOT / "tests/data" / filename), *flags],
                                 capture_output=True, check=True)
         ranks = [json.loads(line)["expected_rank"] for line in result.stdout.decode("utf-8").splitlines()
                  if line.startswith("{")]

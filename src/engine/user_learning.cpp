@@ -14,7 +14,7 @@
 namespace localpinyin {
 namespace {
 
-constexpr size_t kMaxLearningRecords = 2048;
+constexpr size_t kMaxLearningRecords = UserLearning::kCapacity;
 constexpr int kMaxSelectionCount = 100000;
 
 std::wstring key_for(const std::wstring& pinyin, const std::wstring& word) {
