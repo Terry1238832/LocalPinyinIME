@@ -292,6 +292,56 @@
         }
       ],
       "created_date": "2026-10-12"
+    },
+    {
+      "file": "daily_chat.txt",
+      "rights": "MIT; original first-party authored chat text",
+      "license": "MIT",
+      "author": "LocalPinyinIME contributors",
+      "source_type": "first_party_original",
+      "permission_confirmed": true,
+      "purpose": "Instant-messaging register for character-context training: short replies, sentence-final particles, questions, teasing, plans, delivery and payment chat, work-group chat and internet slang",
+      "full_sentence_dictionary_entries": false,
+      "runtime_use": "Only 1-4 character counts are derived; text is not installed as sentence candidates",
+      "lines": 809,
+      "han_characters": 4930,
+      "utf8_bytes": 18054,
+      "sha256": "db3ef798a080eff39936fb4e432b3a7db80392a20c15e88cf7a428d155d62815",
+      "categories": {
+        "打招呼与寒暄": 48,
+        "约见面与等人": 60,
+        "吃饭与外卖": 60,
+        "下班、上学与日程": 40,
+        "路上与出行": 40,
+        "网购、快递与付款": 37,
+        "家里与家人": 35,
+        "身体与关心": 28,
+        "夸人、谢谢与道歉": 28,
+        "吐槽、抱怨与情绪": 36,
+        "开玩笑与斗嘴": 38,
+        "网络用语与口头禅": 53,
+        "游戏、追剧与娱乐": 33,
+        "工作群与同事": 34,
+        "学习、考试与作业": 28,
+        "手机、电脑与网络问题": 26,
+        "天气与季节": 15,
+        "节日、红包与祝福": 18,
+        "问路、问事与确认": 29,
+        "简短回复与语气词": 123
+      },
+      "writing_principles": [
+        "Each line was written as a plausible message to a friend, relative or coworker, across twenty everyday situations.",
+        "No copied chats, articles, dictionary sentence imports or template expansion.",
+        "Lines equal to a held-out colloquial test line (tests/data/colloquial_test.tsv), or containing one of four or more characters, were rephrased so that set stays held out."
+      ],
+      "test_exact_overlap": [],
+      "verified_case_files": [
+        {
+          "file": "tests/data/colloquial_test.tsv",
+          "sha256": "5c237b24d927d46670521c09cd52e6114fa2f382959b8a5e673a7187b9c4e515"
+        }
+      ],
+      "created_date": "2026-10-17"
     }
   ],
   "fetch_failures": [

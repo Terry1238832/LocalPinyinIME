@@ -30,6 +30,10 @@ SETS = {
     "项目留出": ("typing_holdout.tsv", []),
     "新增用例": ("typing_fresh.tsv", []),
     "独立用例": ("typing_independent.tsv", []),
+    # Project-authored everyday chat lines (0.16): the development half guided
+    # changes; the held-out half was written first and only scored.
+    "日常口语·开发": ("colloquial_dev.tsv", []),
+    "日常口语·留出": ("colloquial_test.tsv", []),
 }
 
 
