@@ -113,7 +113,10 @@ private:
     HRESULT commit_punctuation(ITfContext* context, wchar_t punctuation);
     // A code-editor punctuation key that types ASCII (not the pinyin separator).
     [[nodiscard]] wchar_t code_punctuation_for_key(WPARAM wparam, bool shift) const;
-    [[nodiscard]] bool digit_before_caret(ITfContext* context);
+    // What the document has right before the caret, for the punctuation
+    // helpers; when it cannot be read, what the key typed before was.
+    struct CaretNeighbor { bool digit = false; bool letter = false; };
+    [[nodiscard]] CaretNeighbor neighbor_before_caret(ITfContext* context);
     HRESULT cancel_composition(ITfContext* context);
     bool candidate_anchor_rect(ITfContext* context, RECT* rect);
     CandidateWindowOwnerInfo candidate_owner_info(ITfContext* context) const;
@@ -162,6 +165,22 @@ private:
     // than once, so a key counts as new only after its key-up.
     WPARAM tested_key_ = 0;
     bool tested_key_digit_ = false;
+    bool previous_key_letter_ = false;
+    bool tested_key_letter_ = false;
+    // 造词: picks committed one right after another, with nothing else typed
+    // and the caret unmoved, remembered as one phrase from the second on.
+    struct PhraseRun {
+        std::wstring typed;
+        std::wstring text;
+        std::wstring preceding;
+        size_t pieces = 0;
+        ULONGLONG last_tick = 0;
+        std::uintptr_t context = 0;
+    };
+    PhraseRun phrase_run_;
+    void extend_phrase_run(ITfContext* context, const std::wstring& typed, const std::wstring& committed,
+                           const std::wstring& preceding);
+    void end_phrase_run() noexcept { phrase_run_ = PhraseRun{}; }
     bool previous_key_digit_ = false;
     bool opening_double_quote_ = true;
     bool opening_single_quote_ = true;

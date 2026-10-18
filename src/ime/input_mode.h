@@ -17,10 +17,14 @@ struct InputModeOptions {
     // Next-word suggestions after a commit are opt-in. Context always ranks
     // the candidates of newly typed pinyin regardless of this option.
     bool prediction_enabled = false;
-    // Helpers (辅助功能), both on by default: after a digit . , / : are ASCII
-    // (3.14, 1,000, 1/2, 12:30), and code editors, IDEs and terminals get
-    // ASCII punctuation (<({[!?,).
+    // Helpers (辅助功能). After a digit the period key types "." (3.14), and
+    // , / : stay ASCII too (1,000, 1/2, 12:30); both on by default. After an
+    // English letter every punctuation key types ASCII (Hello, world.); off
+    // by default, as it would also end 我用Python with "." instead of 。.
+    // Code editors, IDEs and terminals get ASCII punctuation (<({[!?,).
     bool digit_period = true;
+    bool digit_punctuation = true;
+    bool letter_punctuation = false;
     bool code_punctuation = true;
     // Fuzzy pinyin, spelling correction, Chinese-English mixing, double pinyin.
     EngineInputOptions engine;

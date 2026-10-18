@@ -30,9 +30,9 @@ int main() {
     REQUIRE_EQ(ascii_punctuation_for_key(L'9', false), wchar_t(0));
     REQUIRE_EQ(ascii_punctuation_for_key(L'A', true), wchar_t(0));
     using localpinyin::is_digit_punctuation;
-    REQUIRE_TRUE(is_digit_punctuation(L'。') && is_digit_punctuation(L'，') && is_digit_punctuation(L'、') &&
-                 is_digit_punctuation(L'：'));
-    REQUIRE_TRUE(!is_digit_punctuation(L'？') && !is_digit_punctuation(L'《'));
+    // The period has a switch of its own; , / : share the other one.
+    REQUIRE_TRUE(is_digit_punctuation(L'，') && is_digit_punctuation(L'、') && is_digit_punctuation(L'：'));
+    REQUIRE_TRUE(!is_digit_punctuation(L'。') && !is_digit_punctuation(L'？') && !is_digit_punctuation(L'《'));
     using localpinyin::is_code_application;
     REQUIRE_TRUE(is_code_application(L"Code.exe"));
     REQUIRE_TRUE(is_code_application(L"devenv.exe"));

@@ -95,7 +95,7 @@ class SettingsBridgeContract(unittest.TestCase):
         }), encoding="utf-8")
         for theme, size, shift in (("dark", "7", "true"), ("system", "1", "false"), ("light", "4", "true")):
             expected = {"theme": theme, "textSize": int(size), "candidateStyle": "flow",
-                        "shiftToggleEnabled": shift == "true", "predictionEnabled": False, "typoCorrection": True, "mixedEnglish": True, "fuzzyPinyin": [], "doublePinyin": "none", "usageDomains": [], "digitPeriod": True, "codePunctuation": True}
+                        "shiftToggleEnabled": shift == "true", "predictionEnabled": False, "typoCorrection": True, "mixedEnglish": True, "fuzzyPinyin": [], "doublePinyin": "none", "usageDomains": [], "digitPeriod": True, "digitPunctuation": True, "letterPunctuation": False, "codePunctuation": True}
             self.assertEqual(self.call("save-settings", theme, size, shift), {"settings": expected})
             self.assertEqual(self.call("state")["settings"], expected)
             self.assertFalse(json.loads(settings.read_text(encoding="utf-8"))["candidateWindow"]["showKeyHints"])
@@ -111,11 +111,11 @@ class SettingsBridgeContract(unittest.TestCase):
             "inputMode": {"shiftToggleEnabled": False, "nextWordPrediction": True},
         }), encoding="utf-8")
         self.assertEqual(self.call("state")["settings"], {"theme": "dark", "textSize": 6, "candidateStyle": "flow",
-                                                          "shiftToggleEnabled": False, "predictionEnabled": True, "typoCorrection": True, "mixedEnglish": True, "fuzzyPinyin": [], "doublePinyin": "none", "usageDomains": [], "digitPeriod": True, "codePunctuation": True})
+                                                          "shiftToggleEnabled": False, "predictionEnabled": True, "typoCorrection": True, "mixedEnglish": True, "fuzzyPinyin": [], "doublePinyin": "none", "usageDomains": [], "digitPeriod": True, "digitPunctuation": True, "letterPunctuation": False, "codePunctuation": True})
         for style in ("rail", "type", "glass", "flow"):
             saved = self.call("save-settings", "dark", "6", "false", "true", style)["settings"]
             self.assertEqual(saved, {"theme": "dark", "textSize": 6, "candidateStyle": style,
-                                     "shiftToggleEnabled": False, "predictionEnabled": True, "typoCorrection": True, "mixedEnglish": True, "fuzzyPinyin": [], "doublePinyin": "none", "usageDomains": [], "digitPeriod": True, "codePunctuation": True})
+                                     "shiftToggleEnabled": False, "predictionEnabled": True, "typoCorrection": True, "mixedEnglish": True, "fuzzyPinyin": [], "doublePinyin": "none", "usageDomains": [], "digitPeriod": True, "digitPunctuation": True, "letterPunctuation": False, "codePunctuation": True})
             self.assertEqual(self.call("state")["settings"], saved)
             stored = json.loads(settings.read_text(encoding="utf-8"))["candidateWindow"]
             self.assertEqual(stored["style"], style)
@@ -225,6 +225,20 @@ class SettingsBridgeContract(unittest.TestCase):
         self.assertEqual(settings.read_bytes(), before)
         self.call("save-settings", "light", "4", "false", "false", "flow", "digitPeriod=true")
         self.assertEqual(self.call("state")["settings"]["digitPeriod"], True)
+        # The three punctuation helpers save on their own (0.17): the period
+        # after a digit, , / : after a digit, and everything after a letter.
+        state = self.call("state")["settings"]
+        # Saved once already, digitPunctuation is its own value now (the old
+        # digitPeriod only stands in while the key is missing).
+        self.assertEqual((state["digitPunctuation"], state["letterPunctuation"]), (True, False))
+        saved = self.call("save-settings", "light", "4", "false", "false", "flow",
+                          "digitPunctuation=true", "letterPunctuation=true")["settings"]
+        self.assertEqual((saved["digitPeriod"], saved["digitPunctuation"], saved["letterPunctuation"]), (True, True, True))
+        stored = json.loads(settings.read_text(encoding="utf-8"))["inputMode"]
+        self.assertEqual((stored["digitPunctuation"], stored["letterPunctuation"]), (True, True))
+        before = settings.read_bytes()
+        self.call("save-settings", "light", "4", "false", "false", "flow", "letterPunctuation=on", success=False)
+        self.assertEqual(settings.read_bytes(), before)
 
     def test_context_preview_and_prediction_persistence(self) -> None:
         before = self.snapshot()
@@ -340,7 +354,7 @@ class SettingsBridgeContract(unittest.TestCase):
         self.assertEqual(self.call("state")["learning"], {"count": 0, "capacity": 2048})
         self.assertEqual(self.call("user-list"), personal)
         self.assertEqual(self.call("state")["settings"], {"theme": "dark", "textSize": 5, "candidateStyle": "flow",
-                                                          "shiftToggleEnabled": True, "predictionEnabled": False, "typoCorrection": True, "mixedEnglish": True, "fuzzyPinyin": [], "doublePinyin": "none", "usageDomains": [], "digitPeriod": True, "codePunctuation": True})
+                                                          "shiftToggleEnabled": True, "predictionEnabled": False, "typoCorrection": True, "mixedEnglish": True, "fuzzyPinyin": [], "doublePinyin": "none", "usageDomains": [], "digitPeriod": True, "digitPunctuation": True, "letterPunctuation": False, "codePunctuation": True})
         self.assertEqual(self.call("clear-learning"), {"cleared": True})
 
     def test_valid_runtime_status_is_reported_and_not_rewritten(self) -> None:

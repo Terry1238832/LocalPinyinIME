@@ -92,6 +92,41 @@ std::vector<std::pair<std::wstring, int>> UserLearning::selected_texts() const {
     return result;
 }
 
+const std::vector<std::wstring>& UserLearning::words_for(const std::wstring& pinyin) const {
+    static const std::vector<std::wstring> none;
+    const auto found = words_by_pinyin_.find(pinyin);
+    return found == words_by_pinyin_.end() ? none : found->second;
+}
+
+std::vector<std::wstring> UserLearning::phrase_keys_at(const std::wstring& input, size_t offset) const {
+    std::vector<std::wstring> keys;
+    if (phrase_keys_.empty() || offset >= input.size()) return keys;
+    for (size_t length = std::min(longest_phrase_key_, input.size() - offset); length > 0; --length) {
+        std::wstring key = input.substr(offset, length);
+        if (phrase_keys_.contains(key)) keys.push_back(std::move(key));
+    }
+    return keys;
+}
+
+void UserLearning::reindex() {
+    words_by_pinyin_.clear();
+    phrase_keys_.clear();
+    longest_phrase_key_ = 0;
+    for (const auto& [key, record] : records_) {
+        const auto tab = key.find(L'\t');
+        if (tab == std::wstring::npos) continue;
+        auto pinyin = key.substr(0, tab);
+        const auto word = key.substr(tab + 1);
+        // Two or more characters (a surrogate pair is one).
+        const auto characters = std::count_if(word.begin(), word.end(), [](wchar_t ch) { return ch < 0xDC00 || ch > 0xDFFF; });
+        if (characters >= 2) {
+            longest_phrase_key_ = std::max(longest_phrase_key_, pinyin.size());
+            phrase_keys_[pinyin] = true;
+        }
+        words_by_pinyin_[std::move(pinyin)].push_back(word);
+    }
+}
+
 bool UserLearning::record_selection(const std::wstring& pinyin, const std::wstring& word) {
     if (storage_path_.empty() || !valid_selection(pinyin, word)) return false;
     LearningFileLock lock(storage_path_);
@@ -100,6 +135,7 @@ bool UserLearning::record_selection(const std::wstring& pinyin, const std::wstri
     record.selection_count = std::min(kMaxSelectionCount, record.selection_count + 1);
     record.last_selected_time = static_cast<long long>(std::time(nullptr));
     prune();
+    reindex();
     const bool saved = flush();
     if (saved) remember_write_time();
     return saved;
@@ -110,6 +146,7 @@ bool UserLearning::clear() {
     LearningFileLock lock(storage_path_);
     if (!lock.acquired()) return false;
     records_.clear();
+    reindex();
     ++revision_;
     const bool saved = flush();
     if (saved) remember_write_time();
@@ -175,6 +212,7 @@ bool UserLearning::load() {
         records_[key_for(pinyin, word)] = Record{std::min(count, kMaxSelectionCount), time};
     }
     prune();
+    reindex();
     remember_write_time();
     return true;
 }

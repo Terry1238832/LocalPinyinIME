@@ -65,6 +65,30 @@ int main() {
         REQUIRE_TRUE(clearer.open((root / L"user_learning.tsv").wstring()));
         REQUIRE_TRUE(clearer.clear());
     }
+    // 造词: a phrase built by choosing 量, 甲 and 成 one after another is
+    // offered first for liangjiacheng, also after a restart and as part of a
+    // longer input; a phrase the engine already offers first is not stored.
+    {
+        localpinyin::PinyinEngine engine(localpinyin::DictionaryLoadMode::Empty);
+        REQUIRE_TRUE(engine.load_dictionary_resource_directory(resources.wstring(), user));
+        REQUIRE_TRUE(rank_of(engine.lookup(L"liangjiacheng"), L"量甲成") != 1);
+        REQUIRE_TRUE(engine.learn_phrase(L"liang'jia'cheng", L"量甲成"));
+        REQUIRE_EQ(rank_of(engine.lookup(L"liangjiacheng"), L"量甲成"), 1);
+        REQUIRE_EQ(rank_of(engine.lookup(L"liangjiacheng", L"我们找"), L"量甲成"), 1);
+        REQUIRE_TRUE(!engine.learn_phrase(L"nihaoshijie", L"你好世界"));
+        localpinyin::UserLearning reader;
+        REQUIRE_TRUE(reader.open((root / L"user_learning.tsv").wstring()));
+        REQUIRE_TRUE(reader.frequency(L"nihaoshijie", L"你好世界") == 0);
+        REQUIRE_TRUE(reader.words_for(L"liangjiacheng").size() == 1);
+        localpinyin::PinyinEngine reopened(localpinyin::DictionaryLoadMode::Empty);
+        REQUIRE_TRUE(reopened.load_dictionary_resource_directory(resources.wstring(), user));
+        REQUIRE_EQ(rank_of(reopened.lookup(L"liangjiacheng"), L"量甲成"), 1);
+        const auto longer = reopened.lookup(L"liangjiachenggongsi");
+        REQUIRE_TRUE(std::any_of(longer.begin(), longer.end(), [](const auto& c) {
+            return c.text.rfind(L"量甲成", 0) == 0;
+        }));
+        REQUIRE_TRUE(reader.clear());
+    }
     std::filesystem::remove_all(root);
     return passed ? 0 : 1;
 }

@@ -491,6 +491,10 @@ int wmain(int argc, wchar_t** argv) {
             for (int i = 0; i < 9; ++i)
                 core << "ceshi\t这是用于单行分页完整上屏验证的很长候选文字" << i + 1 << "\t" << 9000 - i * 100 << "\n";
             core << "fenye\t分页\t9000\n";
+            // Pieces for building a phrase one pick at a time, each behind a
+            // more common homophone.
+            core << "liang\t两\t9000\nliang\t量\t8000\njia\t家\t9000\njia\t甲\t8000\n"
+                    "cheng\t称\t9000\ncheng\t成\t8000\nyi\t一\t9000\nyi\t以\t8000\n";
             require(static_cast<bool>(core), "write isolated core fixture");
             for (const auto* name : {L"local_core_zh_pinyin.tsv", L"standard_zh_pinyin.tsv", L"context_zh.tsv"}) {
                 std::ofstream empty(native / L"dictionary" / name, std::ios::binary | std::ios::trunc);
@@ -690,7 +694,84 @@ int wmain(int argc, wchar_t** argv) {
             s.store->host_replace(before_digit + L"1");
             s.key(VK_OEM_2);
             require(s.store->text == before_digit + L"1/", "a slash after a digit is ASCII");
+            // The three punctuation helpers switch separately.
+            write_settings("{\"inputMode\":{\"nextWordPrediction\":true,\"digitPeriod\":false,\"digitPunctuation\":true,\"letterPunctuation\":true}}");
+            s.store->host_replace(L"3");
+            s.key(VK_OEM_PERIOD);
+            require(s.store->text == L"3\u3002", "with its switch off, the period after a digit stays Chinese");
+            s.store->host_replace(L"1");
+            s.key(VK_OEM_COMMA);
+            require(s.store->text == L"1,", "the comma after a digit follows its own switch");
+            s.store->host_replace(L"Hello");
+            s.key(VK_OEM_COMMA);
+            require(s.store->text == L"Hello,", "after a letter the comma is ASCII");
+            s.key(VK_OEM_COMMA);
+            require(s.store->text == L"Hello,\uFF0C", "after ASCII punctuation the next one is Chinese again");
+            s.store->host_replace(L"OK");
+            s.modifier_keys[VK_SHIFT] = true;
+            s.key(L'1');
+            s.modifier_keys[VK_SHIFT] = false;
+            require(s.store->text == L"OK!", "after a letter the exclamation mark is ASCII");
+            s.store->host_replace(L"wait");
+            s.key(VK_OEM_PERIOD);
+            require(s.store->text == L"wait.", "after a letter the period is ASCII");
+            // Defaults: the digit helpers on, letters off; an old file with only
+            // digitPeriod=false keeps , / : Chinese as well.
+            write_settings("{\"inputMode\":{\"nextWordPrediction\":true}}");
+            s.store->host_replace(L"Hello");
+            s.key(VK_OEM_COMMA);
+            require(s.store->text == L"Hello\uFF0C", "letters are off by default");
+            s.store->host_replace(L"3");
+            s.key(VK_OEM_PERIOD);
+            require(s.store->text == L"3.", "the digit period is on by default");
+            write_settings("{\"inputMode\":{\"nextWordPrediction\":true,\"digitPeriod\":false}}");
+            s.store->host_replace(L"1");
+            s.key(VK_OEM_COMMA);
+            require(s.store->text == L"1\uFF0C", "an old combined switch turned off keeps , after a digit Chinese");
+            write_settings("{\"inputMode\":{\"nextWordPrediction\":true}}");
             s.store->host_replace(before_digit);
+            // 造词: 量, 甲 and 成 picked one at a time, with nothing in between,
+            // come back as one phrase for liangjiacheng; a punctuation mark
+            // between two picks keeps them apart.
+            {
+                const auto pick = [&](const std::wstring& keys, const std::wstring& word) {
+                    for (const auto letter : keys) s.key(letter);
+                    const auto pages = s.pages();
+                    ComPtr<ITfCandidateListUIElement> list;
+                    check(s.adapter->current_element.As(&list), "candidate list for a pick");
+                    UINT count = 0;
+                    check(list->GetCount(&count), "candidate count for a pick");
+                    const UINT first_page = pages.size() > 1 ? pages[1] : count;
+                    for (UINT slot = 0; slot < first_page; ++slot) {
+                        if (s.candidate(slot) == word) {
+                            s.key(static_cast<WPARAM>(L'1' + slot));
+                            return;
+                        }
+                    }
+                    std::wcerr << L"pick " << keys << L" text=" << s.store->text << L" page:";
+                    for (UINT slot = 0; slot < first_page; ++slot) std::wcerr << L' ' << s.candidate(slot);
+                    std::wcerr << std::endl;
+                    require(false, "the piece is on the first page");
+                };
+                s.store->host_replace(L"");
+                pick(L"LIANG", L"\u91CF");
+                pick(L"JIA", L"\u7532");
+                pick(L"CHENG", L"\u6210");
+                require(s.store->text == L"\u91CF\u7532\u6210", "pieces picked one at a time");
+                s.store->host_replace(L"");
+                for (const auto letter : std::wstring(L"LIANGJIACHENG")) s.key(letter);
+                require(s.first_candidate() == L"\u91CF\u7532\u6210", "the built phrase comes first next time");
+                s.key(VK_ESCAPE);
+                s.store->host_replace(L"");
+                pick(L"LIANG", L"\u91CF");
+                s.key(VK_OEM_COMMA);
+                pick(L"YI", L"\u4EE5");
+                s.store->host_replace(L"");
+                for (const auto letter : std::wstring(L"LIANGYI")) s.key(letter);
+                require(s.first_candidate() != L"\u91CF\u4EE5", "punctuation between picks keeps them apart");
+                s.key(VK_ESCAPE);
+                s.store->host_replace(before_digit);
+            }
             // Switching to English keeps the letters typed so far.
             BOOL toggle_eaten = FALSE;
             for (const auto letter : std::wstring(L"HELLO")) s.key(letter);

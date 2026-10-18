@@ -127,6 +127,8 @@ std::string settings_json(const SettingsStore& store) {
            ",\"doublePinyin\":" + json_string(double_pinyin_to_string(input.engine.double_pinyin)) +
            ",\"usageDomains\":" + ids_json(usage_domains_to_string(input.engine.domains)) +
            ",\"digitPeriod\":" + (input.digit_period ? "true" : "false") +
+           ",\"digitPunctuation\":" + (input.digit_punctuation ? "true" : "false") +
+           ",\"letterPunctuation\":" + (input.letter_punctuation ? "true" : "false") +
            ",\"codePunctuation\":" + (input.code_punctuation ? "true" : "false") + '}';
 }
 
@@ -215,7 +217,8 @@ std::string run(const std::vector<std::wstring>& args) {
             const size_t equals = args[index].find(L'=');
             require(equals != std::wstring::npos, L"请求参数格式不正确。");
             const auto key = args[index].substr(0, equals), value = args[index].substr(equals + 1);
-            if (key == L"typoCorrection" || key == L"mixedEnglish" || key == L"digitPeriod" || key == L"codePunctuation")
+            if (key == L"typoCorrection" || key == L"mixedEnglish" || key == L"digitPeriod" || key == L"digitPunctuation" ||
+                key == L"letterPunctuation" || key == L"codePunctuation")
                 require(value == L"true" || value == L"false", L"开关选项必须是 true 或 false。");
             else if (key == L"doublePinyin")
                 require(value == L"none" || value == L"xiaohe" || value == L"ziranma", L"双拼方案必须是 none、xiaohe 或 ziranma。");
@@ -244,6 +247,8 @@ std::string run(const std::vector<std::wstring>& args) {
             else if (key == L"fuzzyPinyin") input.engine.fuzzy = parse_fuzzy_pinyin(value);
             else if (key == L"usageDomains") input.engine.domains = parse_usage_domains(value);
             else if (key == L"digitPeriod") input.digit_period = value == L"true";
+            else if (key == L"digitPunctuation") input.digit_punctuation = value == L"true";
+            else if (key == L"letterPunctuation") input.letter_punctuation = value == L"true";
             else if (key == L"codePunctuation") input.code_punctuation = value == L"true";
         }
         require(store.save_options(candidate, input), L"无法保存设置，请检查文件权限。");

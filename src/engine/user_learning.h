@@ -22,6 +22,12 @@ public:
     void refresh_if_changed();
     [[nodiscard]] size_t revision() const noexcept { return revision_; }
     [[nodiscard]] std::vector<std::pair<std::wstring, int>> selected_texts() const;
+    // Every word learned for exactly this pinyin, including phrases built from
+    // separately chosen pieces (造词) that the dictionary does not have.
+    [[nodiscard]] const std::vector<std::wstring>& words_for(const std::wstring& pinyin) const;
+    // Pinyin of learned phrases (two or more characters) that `input` spells
+    // from `offset`, so a sentence can use them as tokens.
+    [[nodiscard]] std::vector<std::wstring> phrase_keys_at(const std::wstring& input, size_t offset) const;
 
 private:
     struct Record {
@@ -33,9 +39,13 @@ private:
     bool load();
     void prune();
     void remember_write_time();
+    void reindex();
 
     std::wstring storage_path_;
     std::unordered_map<std::wstring, Record> records_;
+    std::unordered_map<std::wstring, std::vector<std::wstring>> words_by_pinyin_;
+    std::unordered_map<std::wstring, bool> phrase_keys_;
+    size_t longest_phrase_key_ = 0;
     std::filesystem::file_time_type write_time_{};
     bool has_write_time_ = false;
     size_t revision_ = 0;

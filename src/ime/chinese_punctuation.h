@@ -45,10 +45,10 @@ inline wchar_t ascii_punctuation_for_key(WPARAM key, bool shift) noexcept {
     }
 }
 
-// Chinese punctuation that follows a digit as ASCII: 。，、： become . , / :
-// (3.14, 1,000, 1/2, 12:30).
+// Chinese punctuation that follows a digit as ASCII besides the period
+// (which has its own switch): ，、： become , / : (1,000, 1/2, 12:30).
 inline bool is_digit_punctuation(wchar_t punctuation) noexcept {
-    return punctuation == L'。' || punctuation == L'，' || punctuation == L'、' || punctuation == L'：';
+    return punctuation == L'，' || punctuation == L'、' || punctuation == L'：';
 }
 
 // Code editors, IDEs and terminals, by executable file name (any case).

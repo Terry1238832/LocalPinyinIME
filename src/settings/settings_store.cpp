@@ -222,6 +222,10 @@ InputModeOptions SettingsStore::load_input_mode_options() const {
     // Added in 0.14.2; missing keys keep both helpers on.
     options.digit_period = parse_bool(setting_value(text, L"digitPeriod"), options.digit_period);
     options.code_punctuation = parse_bool(setting_value(text, L"codePunctuation"), options.code_punctuation);
+    // Split from digitPeriod in 0.17: until saved on its own, , / : after a
+    // digit follow the old combined switch.
+    options.digit_punctuation = parse_bool(setting_value(text, L"digitPunctuation"), options.digit_period);
+    options.letter_punctuation = parse_bool(setting_value(text, L"letterPunctuation"), options.letter_punctuation);
     // Added in 0.14: no usage scene until the user chooses some.
     options.engine.domains = parse_usage_domains(setting_value(text, L"usageDomains"));
     return options;
@@ -288,6 +292,10 @@ bool SettingsStore::save_options(const CandidateWindowOptions& candidate_options
     text += L",\n    \"usageDomains\": \"" + usage_domains_to_string(input_mode_options.engine.domains) + L"\"";
     text += L",\n    \"digitPeriod\": ";
     text += input_mode_options.digit_period ? L"true" : L"false";
+    text += L",\n    \"digitPunctuation\": ";
+    text += input_mode_options.digit_punctuation ? L"true" : L"false";
+    text += L",\n    \"letterPunctuation\": ";
+    text += input_mode_options.letter_punctuation ? L"true" : L"false";
     text += L",\n    \"codePunctuation\": ";
     text += input_mode_options.code_punctuation ? L"true" : L"false";
     text += L"\n";

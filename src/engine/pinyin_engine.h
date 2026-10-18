@@ -51,6 +51,11 @@ public:
     // (wo'yong python xie'dai'ma).
     [[nodiscard]] std::wstring display_input(const std::wstring& typed) const;
     void learn(const std::wstring& typed, const std::wstring& selected_word);
+    // 造词: a phrase the user built by choosing its pieces one after another
+    // (量 + 甲 + 成 for liang, jia, cheng) is remembered for the whole typed
+    // pinyin, unless the engine would already offer it first there. Returns
+    // whether it was learned.
+    bool learn_phrase(const std::wstring& typed, const std::wstring& phrase, const std::wstring& preceding_text = L"");
 
 private:
     void open_learning(const std::wstring& user_lexicon_path);

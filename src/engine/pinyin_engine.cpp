@@ -27,6 +27,9 @@ constexpr int kFuzzyPenalty = 600;
 // everyday word the news-heavy context model underrates (其实 after 题), not
 // enough to override clear context (直到 stays 直到 with 知道 chosen).
 constexpr int kDomainBonus = 1000;
+// A phrase the user built from separately chosen pieces reads as a common
+// word wherever its pinyin appears.
+constexpr int kLearnedPhraseFrequency = 9000;
 // English terms inside pinyin: a modest prior, so Chinese wins any span both
 // can read (they are only decoded when Chinese cannot read the whole input).
 constexpr int kEnglishBase = -2600;
@@ -242,6 +245,13 @@ std::vector<std::vector<SegmentPath>> decode(const Dictionary& dictionary, const
             const size_t length = key.size();
             parts.emplace_back(std::move(key), length);
         }
+        // Learned phrases (造词) whose pinyin is not a dictionary key.
+        for (auto& key : learning.phrase_keys_at(pinyin, offset)) {
+            if (std::none_of(parts.begin(), parts.end(), [&](const auto& part) { return part.first == key; })) {
+                const size_t length = key.size();
+                parts.emplace_back(std::move(key), length);
+            }
+        }
         const size_t literal_parts = parts.size();
         for (auto& match : dictionary.fuzzy_matches_at(pinyin, offset, input.boundaries, options.fuzzy))
             parts.push_back(std::move(match));
@@ -250,6 +260,16 @@ std::vector<std::vector<SegmentPath>> decode(const Dictionary& dictionary, const
             const bool fuzzy = part >= literal_parts;
             auto part_candidates = dictionary.lookup(part_pinyin);
             if (options.domains) options.domains->apply(part_pinyin, part_candidates);
+            if (!fuzzy) {
+                for (const auto& phrase : learning.words_for(part_pinyin)) {
+                    if (character_count(phrase) < 2 || std::any_of(part_candidates.begin(), part_candidates.end(),
+                            [&](const Candidate& candidate) { return candidate.text == phrase; })) continue;
+                    Candidate learned;
+                    learned.text = phrase;
+                    learned.base_score = kLearnedPhraseFrequency;
+                    part_candidates.push_back(std::move(learned));
+                }
+            }
             ranker.apply_learning(part_pinyin, part_candidates, &learning);
             if (part_candidates.empty()) {
                 continue;
@@ -920,6 +940,13 @@ UserLexiconRefreshResult PinyinEngine::refresh_user_lexicon_if_needed(bool compo
     auto result = dictionary_.refresh_user_lexicon_if_changed(composition_active);
     if (result.reloaded) rebuild_context_model(context_path_);
     return result;
+}
+
+bool PinyinEngine::learn_phrase(const std::wstring& typed, const std::wstring& phrase, const std::wstring& preceding_text) {
+    const auto offered = lookup(typed, preceding_text);
+    if (!offered.empty() && offered.front().text == phrase) return false;
+    learn(typed, phrase);
+    return true;
 }
 
 void PinyinEngine::learn(const std::wstring& typed, const std::wstring& selected_word) {

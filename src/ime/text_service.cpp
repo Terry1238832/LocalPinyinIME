@@ -877,10 +877,14 @@ HRESULT TextService::OnTestKeyDown(ITfContext* context, WPARAM wparam, LPARAM, B
     const unsigned long key = static_cast<unsigned long>(wparam);
     if (wparam != tested_key_) {
         previous_key_digit_ = tested_key_digit_;
+        previous_key_letter_ = tested_key_letter_;
         tested_key_ = wparam;
     }
     tested_key_digit_ = composing_.empty() && !modifiers.shift &&
                         ((wparam >= L'0' && wparam <= L'9') || (wparam >= VK_NUMPAD0 && wparam <= VK_NUMPAD9));
+    // A letter that goes into the document as typed (CapsLock, Shift), not
+    // into a pinyin composition.
+    tested_key_letter_ = composing_.empty() && wparam >= L'A' && wparam <= L'Z' && letter_is_literal();
     const bool ctrl_space_relevant_key = is_ctrl_space_key(key);
     if (ctrl_space_relevant_key) {
         ctrl_space_chord_on_key_down(ctrl_space_toggle_, key);
@@ -1122,6 +1126,7 @@ HRESULT TextService::OnUninitDocumentMgr(ITfDocumentMgr*) {
 }
 HRESULT TextService::OnSetFocus(ITfDocumentMgr* focus, ITfDocumentMgr*) {
     forget_committed_text();
+    end_phrase_run();
     if (prediction_active_) {
         ITfDocumentMgr* prediction_document = nullptr;
         if (!composition_context_ || FAILED(composition_context_->GetDocumentMgr(&prediction_document)) ||
@@ -1199,6 +1204,7 @@ void TextService::publish_runtime_input_mode_status(const wchar_t* source, bool 
 }
 
 HRESULT TextService::toggle_input_mode(ITfContext* context, const wchar_t* reason) {
+    end_phrase_run();
     if (prediction_active_) dismiss_prediction(reason ? reason : L"mode_toggle");
     if (!composing_.empty()) {
         // Letters typed before noticing the Chinese mode stay as typed
@@ -1290,10 +1296,20 @@ bool TextService::handle_chinese_key(ITfContext* context, WPARAM wparam, BOOL* e
     }
     wchar_t punctuation = chinese_punctuation_for_key(wparam, modifiers.shift, !composing_.empty(),
         opening_double_quote_, opening_single_quote_);
-    // After a digit . , / and : are ASCII: 3.14, 1,000, 1/2, 12:30.
-    if (composing_.empty() && is_digit_punctuation(punctuation) &&
-        settings_store_.load_input_mode_options().digit_period && digit_before_caret(context))
-        punctuation = ascii_punctuation_for_key(wparam, modifiers.shift);
+    // Helpers (辅助功能): after a digit the period (3.14) and , / : (1,000,
+    // 1/2, 12:30) are ASCII; after an English letter every punctuation key is
+    // (Hello, world.). Each has its own switch.
+    if (composing_.empty() && punctuation) {
+        const auto options = settings_store_.load_input_mode_options();
+        const bool digit_rule = (punctuation == L'。' && options.digit_period) ||
+                                (is_digit_punctuation(punctuation) && options.digit_punctuation);
+        if (digit_rule || options.letter_punctuation) {
+            const auto neighbor = neighbor_before_caret(context);
+            if ((digit_rule && neighbor.digit) || (options.letter_punctuation && neighbor.letter)) {
+                if (const wchar_t ascii = ascii_punctuation_for_key(wparam, modifiers.shift)) punctuation = ascii;
+            }
+        }
+    }
     if (punctuation) {
         const HRESULT hr = commit_punctuation(context, punctuation);
         if (FAILED(hr)) log_status(L"composition", L"punctuation failed " + hresult_hex(hr));
@@ -1754,6 +1770,7 @@ HRESULT TextService::commit_selected(ITfContext* context) {
         return hr;
     }
     engine_.learn(learned_pinyin, committed);
+    extend_phrase_run(context, learned_pinyin, committed, preceding_committed_text_);
     remember_committed_text(context, committed);
     reset_transient_input_state(L"commit");
     if (!suffix.empty()) {
@@ -1796,17 +1813,56 @@ wchar_t TextService::code_punctuation_for_key(WPARAM wparam, bool shift) const {
     return ascii && settings_store_.load_input_mode_options().code_punctuation ? ascii : 0;
 }
 
-bool TextService::digit_before_caret(ITfContext* context) {
+TextService::CaretNeighbor TextService::neighbor_before_caret(ITfContext* context) {
     if (!secure_mode_) {
         std::wstring before;
-        if (composition_.read_preceding_text(context, client_id_, &before) == S_OK && !before.empty())
-            return before.back() >= L'0' && before.back() <= L'9';
+        if (composition_.read_preceding_text(context, client_id_, &before) == S_OK && !before.empty()) {
+            const wchar_t last = before.back();
+            return {last >= L'0' && last <= L'9', (last >= L'a' && last <= L'z') || (last >= L'A' && last <= L'Z')};
+        }
     }
     // The document cannot be read: go by the key typed before.
-    return previous_key_digit_;
+    return {previous_key_digit_, previous_key_letter_};
+}
+
+void TextService::extend_phrase_run(ITfContext* context, const std::wstring& typed, const std::wstring& committed,
+                                    const std::wstring& preceding) {
+    constexpr ULONGLONG kGapMs = 20000;
+    constexpr size_t kMaxCharacters = 8;
+    const bool chinese = !committed.empty() && std::all_of(committed.begin(), committed.end(),
+                                                           [](wchar_t ch) { return ch >= 0x3400 && ch <= 0x9FFF; });
+    if (secure_mode_ || !chinese || typed.empty()) {
+        end_phrase_run();
+        return;
+    }
+    const ULONGLONG now = GetTickCount64();
+    const auto identity = reinterpret_cast<std::uintptr_t>(context);
+    bool continues = phrase_run_.pieces > 0 && phrase_run_.context == identity && now - phrase_run_.last_tick <= kGapMs &&
+                     phrase_run_.text.size() + committed.size() <= kMaxCharacters;
+    // The document must still end with the run and this piece: the caret
+    // did not move and nothing else was typed in between.
+    if (continues) {
+        std::wstring before;
+        if (composition_.read_preceding_text(context, client_id_, &before) == S_OK && !before.empty()) {
+            const std::wstring expected = phrase_run_.text + committed;
+            continues = before.size() >= expected.size() &&
+                        before.compare(before.size() - expected.size(), expected.size(), expected) == 0;
+        }
+    }
+    if (!continues) {
+        phrase_run_ = PhraseRun{typed, committed, preceding, 1, now, identity};
+        return;
+    }
+    phrase_run_.typed += typed;
+    phrase_run_.text += committed;
+    ++phrase_run_.pieces;
+    phrase_run_.last_tick = now;
+    if (engine_.learn_phrase(phrase_run_.typed, phrase_run_.text, phrase_run_.preceding))
+        log_status(L"learning", L"phrase built from " + std::to_wstring(phrase_run_.pieces) + L" pieces");
 }
 
 HRESULT TextService::commit_punctuation(ITfContext* context, wchar_t punctuation) {
+    end_phrase_run();
     // A prefix candidate may leave an unresolved suffix. Finish it before placing
     // punctuation so the document never loses the remainder of typed pinyin.
     for (size_t attempt = 0; !composing_.empty() && attempt < 256; ++attempt) {
@@ -1831,6 +1887,7 @@ HRESULT TextService::commit_raw_composition(ITfContext* context) {
     if (composing_.empty()) {
         return S_FALSE;
     }
+    end_phrase_run();
     const std::wstring committed = composing_;
     const HRESULT hr = composition_.commit_text(context, client_id_, committed);
     if (FAILED(hr)) {
@@ -1857,6 +1914,16 @@ void TextService::remember_committed_text(ITfContext* context, const std::wstrin
 }
 
 void TextService::note_unhandled_key(unsigned long key) {
+    // Any key the application handles itself (a space, Enter, an arrow,
+    // Backspace) ends a phrase being built; modifier keys do not.
+    switch (key) {
+        case VK_SHIFT: case VK_LSHIFT: case VK_RSHIFT: case VK_CONTROL: case VK_LCONTROL: case VK_RCONTROL:
+        case VK_MENU: case VK_LMENU: case VK_RMENU: case VK_CAPITAL:
+            break;
+        default:
+            end_phrase_run();
+            break;
+    }
     if (recent_committed_text_.empty()) return;
     switch (key) {
         case VK_SHIFT: case VK_LSHIFT: case VK_RSHIFT: case VK_CONTROL: case VK_LCONTROL: case VK_RCONTROL:
