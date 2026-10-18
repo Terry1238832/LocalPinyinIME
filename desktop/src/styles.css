@@ -362,6 +362,27 @@ input[type="range"]:disabled { opacity: .5; }
 .data-copy { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .data-copy p { font-size: var(--size-caption); color: var(--text-3); }
 .data-path { font-family: var(--font-mono); font-size: 12px; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; user-select: text; }
+/* 软件更新 on the About page. */
+.update-panel { display: flex; flex-direction: column; gap: 12px; padding: 16px 18px; border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--glass); }
+.update-top { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.update-copy { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.update-headline { display: flex; align-items: center; gap: 8px; font-size: var(--size-body); color: var(--text); }
+.update-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--text-3); }
+.update-dot.current { background: var(--success); }
+.update-dot.available { background: var(--accent-fg); box-shadow: 0 0 0 4px var(--accent-soft); }
+.update-dot.error { background: var(--danger); }
+.update-actions { flex: none; display: flex; align-items: center; gap: 8px; }
+.update-progress { display: flex; align-items: center; gap: 10px; min-width: 220px; font-size: var(--size-caption); color: var(--text-2); font-variant-numeric: tabular-nums; }
+.update-progress .meter { flex: 1; }
+.update-started, .update-ready { font-size: var(--size-caption); color: var(--text-2); }
+.update-notes { display: flex; flex-direction: column; gap: 6px; padding: 10px 12px; border-radius: var(--radius-md); background: var(--surface-sunken); }
+.update-notes ul { display: flex; flex-direction: column; gap: 3px; margin: 0; padding-left: 18px; font-size: var(--size-caption); color: var(--text-2); }
+.update-notes .text-button { align-self: flex-start; margin-left: -8px; }
+.update-meta { font-size: var(--size-caption); color: var(--text-3); }
+.update-auto { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-top: 12px; border-top: 1px solid var(--border); }
+.update-auto strong { font-size: var(--size-body); font-weight: 600; }
+.update-auto p { margin-top: 2px; font-size: var(--size-caption); color: var(--text-2); }
+.nav-badge { margin-left: auto; padding: 1px 7px; border-radius: var(--radius-pill); background: var(--accent-fg); color: var(--on-accent); font-size: 10.5px; font-weight: 600; line-height: 16px; }
 .credits { display: flex; flex-direction: column; gap: 8px; max-width: 760px; }
 .credits p { color: var(--text-3); font-size: var(--size-caption); line-height: 1.8; }
 

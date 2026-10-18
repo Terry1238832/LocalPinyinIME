@@ -3,6 +3,8 @@ import { execFile } from 'node:child_process';
 import { mkdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { candidateStyleIds, type AppState } from '../src/types';
+import { checkForUpdate, downloadUpdate, initUpdates, installUpdate, releasePage, scheduleAutoCheck, setAutoCheck,
+  updateStatus } from './updates';
 
 protocol.registerSchemesAsPrivileged([{ scheme: 'app', privileges: { standard: true, secure: true, supportFetchAPI: true } }]);
 app.setName('本地拼音设置');
@@ -77,7 +79,8 @@ function installHandlers() {
     if (!Array.isArray(fuzzy) || fuzzy.some(id => typeof id !== 'string' || !fuzzyIds.includes(id)) ||
         !Array.isArray(domains) || domains.some(id => typeof id !== 'string' || !domainIds.includes(id)) ||
         typeof settings.typoCorrection !== 'boolean' || typeof settings.mixedEnglish !== 'boolean' ||
-        typeof settings.digitPeriod !== 'boolean' || typeof settings.codePunctuation !== 'boolean' ||
+        typeof settings.digitPeriod !== 'boolean' || typeof settings.digitPunctuation !== 'boolean' ||
+        typeof settings.letterPunctuation !== 'boolean' || typeof settings.codePunctuation !== 'boolean' ||
         !['none', 'xiaohe', 'ziranma'].includes(String(settings.doublePinyin)))
       throw new Error('设置选项无效。');
     if (!['system', 'light', 'dark'].includes(String(settings.theme)) ||
@@ -92,7 +95,8 @@ function installHandlers() {
       await bridge('save-settings', [String(settings.theme), String(settings.textSize), String(settings.shiftToggleEnabled),
         String(settings.predictionEnabled), String(settings.candidateStyle), `typoCorrection=${settings.typoCorrection}`,
         `mixedEnglish=${settings.mixedEnglish}`, `fuzzyPinyin=${pairs}`, `doublePinyin=${settings.doublePinyin}`,
-        `usageDomains=${scenes}`, `digitPeriod=${settings.digitPeriod}`, `codePunctuation=${settings.codePunctuation}`]);
+        `usageDomains=${scenes}`, `digitPeriod=${settings.digitPeriod}`, `digitPunctuation=${settings.digitPunctuation}`,
+        `letterPunctuation=${settings.letterPunctuation}`, `codePunctuation=${settings.codePunctuation}`]);
       return state();
     });
   });
@@ -120,6 +124,15 @@ function installHandlers() {
     await mkdir(current.dataDirectory, { recursive: true });
     const error = await shell.openPath(current.dataDirectory);
     if (error) throw new Error('无法打开数据目录。');
+  });
+  handle('update-status', () => updateStatus());
+  handle('update-check', () => checkForUpdate());
+  handle('update-download', () => downloadUpdate());
+  handle('update-install', () => installUpdate(() => app.quit()));
+  handle('update-auto', (enabled) => setAutoCheck(enabled));
+  handle('update-page', async () => {
+    if (process.env.LOCALPINYINIME_UPDATE_FEED) return;
+    await shell.openExternal(releasePage());
   });
   handle('window', (action) => {
     if (action === 'minimize') window?.minimize();
@@ -172,8 +185,11 @@ else {
     window.webContents.on('will-attach-webview', event => event.preventDefault());
     window.on('closed', () => { window = null; });
     installHandlers();
+    await initUpdates(status => window?.webContents.send('localpinyin:update-status', status));
     window.once('ready-to-show', () => { if (!hidden) window?.show(); });
     await window.loadURL('app://local/index.html');
+    // Measurements of the packaged app (QA headless without a test feed) stay offline.
+    if (!hidden || process.env.LOCALPINYINIME_UPDATE_FEED) scheduleAutoCheck();
   }).catch(error => { console.error('Settings startup failed:', error.message); app.quit(); });
 }
 app.on('window-all-closed', () => app.quit());

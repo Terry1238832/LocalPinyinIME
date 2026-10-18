@@ -1,5 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron';
-import type { AppState, Settings, UserEntry } from '../src/types';
+import type { AppState, Settings, UpdateStatus, UserEntry } from '../src/types';
 
 const initialState = ipcRenderer.sendSync('localpinyin:bootstrap') as AppState | null;
 contextBridge.exposeInMainWorld('localPinyin', Object.freeze({
@@ -14,4 +14,15 @@ contextBridge.exposeInMainWorld('localPinyin', Object.freeze({
   domainWords: () => ipcRenderer.invoke('localpinyin:domain-words'),
   openDataDirectory: () => ipcRenderer.invoke('localpinyin:open-data'),
   windowControl: (action: 'minimize' | 'maximize' | 'close') => ipcRenderer.invoke('localpinyin:window', action),
+  getUpdateStatus: (): Promise<UpdateStatus> => ipcRenderer.invoke('localpinyin:update-status'),
+  checkForUpdate: (): Promise<UpdateStatus> => ipcRenderer.invoke('localpinyin:update-check'),
+  downloadUpdate: (): Promise<UpdateStatus> => ipcRenderer.invoke('localpinyin:update-download'),
+  installUpdate: (): Promise<{ started: boolean }> => ipcRenderer.invoke('localpinyin:update-install'),
+  setAutoUpdateCheck: (enabled: boolean): Promise<UpdateStatus> => ipcRenderer.invoke('localpinyin:update-auto', enabled),
+  openReleasePage: (): Promise<void> => ipcRenderer.invoke('localpinyin:update-page'),
+  onUpdateStatus: (listener: (status: UpdateStatus) => void) => {
+    const forward = (_event: unknown, status: UpdateStatus) => listener(status);
+    ipcRenderer.on('localpinyin:update-status', forward);
+    return () => { ipcRenderer.removeListener('localpinyin:update-status', forward); };
+  },
 }));

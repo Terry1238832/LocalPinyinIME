@@ -22,6 +22,8 @@ export interface Settings {
   usageDomains: UsageDomain[];
   // Helpers (on by default): 3. after a digit, ASCII punctuation in code editors.
   digitPeriod: boolean;
+  digitPunctuation: boolean;
+  letterPunctuation: boolean;
   codePunctuation: boolean;
   shiftToggleEnabled: boolean;
   predictionEnabled: boolean;
@@ -47,9 +49,28 @@ export interface AppState {
   userLexiconCount: number;
 }
 
+// The settings app's view of updates (electron/updates.ts).
+export interface UpdateStatus {
+  state: 'idle' | 'checking' | 'current' | 'available' | 'downloading' | 'ready' | 'error';
+  current: string;
+  autoCheck: boolean;
+  checkedAt?: string;
+  latest?: { version: string; notes: string; published: string; size: number; downloadable: boolean };
+  // 0..1 while downloading.
+  progress?: number;
+  error?: string;
+}
 export interface LocalPinyinApi {
   readonly initialState: AppState | null;
   getState(): Promise<AppState>;
+  getUpdateStatus(): Promise<UpdateStatus>;
+  checkForUpdate(): Promise<UpdateStatus>;
+  downloadUpdate(): Promise<UpdateStatus>;
+  installUpdate(): Promise<{ started: boolean }>;
+  setAutoUpdateCheck(enabled: boolean): Promise<UpdateStatus>;
+  openReleasePage(): Promise<void>;
+  // Returns a function that stops listening.
+  onUpdateStatus(listener: (status: UpdateStatus) => void): () => void;
   saveSettings(settings: Settings): Promise<AppState>;
   listUserLexicon(): Promise<{ entries: UserEntry[] }>;
   upsertUserEntry(entry: UserEntry, previous?: UserEntry): Promise<{ entries: UserEntry[] }>;

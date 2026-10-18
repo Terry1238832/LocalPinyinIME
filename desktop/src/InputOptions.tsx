@@ -178,10 +178,21 @@ export function InputOptions({ settings: saved, saving, onChange: save }: Props)
       </SettingRow>
     </SettingsGroup>
     <SettingsGroup id="group-helpers" title="辅助功能">
-      <SettingRow title="数字后使用英文标点" description="数字后面的句号、逗号、斜杠和冒号输入英文半角：3.14、1,000、1/2、12:30。其他地方仍是中文标点。"
+      <SettingRow title="数字后打。变成 ." description="数字后面按句号键，打出英文句点：3.14、v1.2、192.168.1.1。其他地方仍是“。”。"
         demo={<KeyDemo before="π ≈ 3" keys={['。']} output=".14" />}>
-        <Switch checked={settings.digitPeriod} disabled={saving} label="数字后使用英文标点"
+        <Switch checked={settings.digitPeriod} disabled={saving} label="数字后打。变成 ."
           onChange={digitPeriod => onChange({ ...settings, digitPeriod })} />
+      </SettingRow>
+      <SettingRow title="数字后使用英文标点" description="数字后面的逗号、斜杠和冒号输入英文半角：1,000、1/2、12:30。其他地方仍是中文标点。"
+        demo={<KeyDemo before="开会时间 12" keys={['：']} output=":30" />}>
+        <Switch checked={settings.digitPunctuation} disabled={saving} label="数字后使用英文标点"
+          onChange={digitPunctuation => onChange({ ...settings, digitPunctuation })} />
+      </SettingRow>
+      <SettingRow title="字母后使用英文标点"
+        description="英文字母后面的标点都输入英文半角：Hello, world.、don't、OK!。默认关闭：开启后，“我用 Python。”结尾的句号也会变成英文句点。"
+        demo={<KeyDemo before="Hello" keys={['，']} output=", world" />}>
+        <Switch checked={settings.letterPunctuation} disabled={saving} label="字母后使用英文标点"
+          onChange={letterPunctuation => onChange({ ...settings, letterPunctuation })} />
       </SettingRow>
       <SettingRow title="编程软件中使用英文标点"
         description="在 VS Code、Cursor、Visual Studio、JetBrains 系列、Android Studio、Sublime Text、Notepad++ 和终端里，标点按英文半角输入：< ( { [ ! ? , 等。编辑器自己的括号自动配对照常工作。"

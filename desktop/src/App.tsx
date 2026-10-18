@@ -4,7 +4,7 @@ import { asError, ErrorNotice } from './components';
 import { AppearancePage, InputPage, LearningPage, AboutPage } from './pages';
 import { DictionaryPage } from './dictionary';
 import { CommandPalette, requestPageCommand, type Command } from './CommandPalette';
-import type { AppState, Settings, Theme, UserEntry } from './types';
+import type { AppState, Settings, Theme, UserEntry , UpdateStatus } from './types';
 
 type PageId = 'appearance' | 'input' | 'dictionary' | 'learning' | 'about';
 const navigation: { id: PageId; label: string; icon: IconName; keywords: string }[] = [
@@ -28,6 +28,15 @@ export default function App() {
   const [systemDark, setSystemDark] = useState(() => window.matchMedia('(prefers-color-scheme: dark)').matches);
   const content = useRef<HTMLElement>(null);
   const nav = useRef<HTMLElement>(null);
+  // Updates: the main process checks on its own and reports every change.
+  const [update, setUpdate] = useState<UpdateStatus | null>(null);
+  useEffect(() => {
+    let alive = true;
+    void window.localPinyin.getUpdateStatus().then(status => { if (alive) setUpdate(status); }).catch(() => undefined);
+    const stop = window.localPinyin.onUpdateStatus(status => setUpdate(status));
+    return () => { alive = false; stop(); };
+  }, []);
+  const updateWaiting = update?.state === 'available' || update?.state === 'downloading' || update?.state === 'ready';
   const [indicator, setIndicator] = useState<{ top: number; height: number } | null>(null);
   const savePending = useRef(false);
 
@@ -161,6 +170,7 @@ export default function App() {
           <button key={item.id} className={`nav-item${page === item.id ? ' selected' : ''}`} aria-current={page === item.id ? 'page' : undefined}
             onClick={() => go(item.id)}>
             <Icon name={item.icon} size={17} /><span>{item.label}</span>
+            {item.id === 'about' && updateWaiting && <span className="nav-badge">新版本</span>}
           </button>)}
       </nav>
       <div className="sidebar-footer">
@@ -168,7 +178,7 @@ export default function App() {
           <span className="status-dot" aria-hidden="true" />
           <span className="runtime-label">{runtimeLabel}</span>
         </div>
-        <span className="sidebar-version">完全离线 · {state ? `v${state.version}` : 'Local Pinyin'}</span>
+        <span className="sidebar-version">离线输入 · {state ? `v${state.version}` : 'Local Pinyin'}</span>
       </div>
     </aside>
     <div className="main-column">
@@ -186,7 +196,7 @@ export default function App() {
           <section id="page-input" className="page" hidden={page !== 'input'}><InputPage state={state} saving={saving} saveSettings={saveSettings} /></section>
           <section id="page-dictionary" className="page" hidden={page !== 'dictionary'}><DictionaryPage state={state} entries={entries} onEntries={updateEntries} loadError={lexiconError} notify={setNotice} /></section>
           <section id="page-learning" className="page" hidden={page !== 'learning'}><LearningPage state={state} onState={setState} notify={setNotice} /></section>
-          <section id="page-about" className="page" hidden={page !== 'about'}><AboutPage state={state} /></section>
+          <section id="page-about" className="page" hidden={page !== 'about'}><AboutPage state={state} update={update} /></section>
         </div>}
       </main>
     </div>

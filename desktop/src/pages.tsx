@@ -6,7 +6,8 @@ import { BrandMark, Icon, type IconName } from './icons';
 import { asError, Badge, ErrorNotice, formatNumber, InfoButton, Keys, Meter, MiniCandidates, Modal, PageHeader, SaveStatus, SettingRow, SettingStatus, SettingsGroup, Switch } from './components';
 import { KeyDemo, TypingDemo } from './FeatureDemo';
 import { usePageCommand } from './CommandPalette';
-import type { AppState, CandidateStyle, Settings, Theme } from './types';
+import type { AppState, CandidateStyle, Settings, Theme, UpdateStatus } from './types';
+import { UpdatePanel } from './Updates';
 
 const fontSizes = [14, 16, 17, 18, 20, 22, 24];
 type SettingsPageProps = { state: AppState; saving: boolean; saveSettings: (settings: Settings) => Promise<void> };
@@ -178,7 +179,7 @@ export function LearningPage({ state, onState, notify }: { state: AppState; onSt
   </>;
 }
 
-export function AboutPage({ state }: { state: AppState }) {
+export function AboutPage({ state, update }: { state: AppState; update: UpdateStatus | null }) {
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const activeSession = state.runtime.available && state.runtime.active;
@@ -198,7 +199,7 @@ export function AboutPage({ state }: { state: AppState }) {
       <div className="about-identity">
         <h2>本地拼音</h2>
         <p>Local Pinyin · 版本 {state.version}</p>
-        <div className="about-badges"><Badge tone="success" icon="shield">完全离线</Badge><Badge icon="keyboard">Windows TSF</Badge></div>
+        <div className="about-badges"><Badge tone="success" icon="shield">离线输入</Badge><Badge icon="keyboard">Windows TSF</Badge></div>
       </div>
     </section>
     <div className="about-details">
@@ -215,6 +216,7 @@ export function AboutPage({ state }: { state: AppState }) {
     </div>
     <ErrorNotice message={error} />
     </div>
+    <UpdatePanel status={update} />
     <section className="credits">
       <h2 className="block-title">致谢</h2>
       <p>前文语言模型的统计数据来自 Tatoeba（CC BY 2.0 FR）、中文维基新闻（CC BY 2.5）、Mozilla Common Voice 句子（CC0）和项目原创语料；只包含字词组合的统计数据，不包含原文。标准词库源自 Rime 拼音词库（Apache-2.0），常用词与字参考了 jieba 词频表（MIT）与 Unicode Unihan 数据。设置界面使用 Electron 与 React（MIT）。</p>

@@ -6,6 +6,8 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const zlib = require('node:zlib');
+const http = require('node:http');
+const crypto = require('node:crypto');
 const { spawnSync } = require('node:child_process');
 
 const cli = Object.fromEntries(process.argv.slice(2).reduce((items, value, index, args) => {
@@ -314,7 +316,37 @@ async function collectCandidatePages(label, selector, snapshots) {
   return result;
 }
 
+const feed = { version: null, installer: Buffer.alloc(0), checksum: '', requests: [] };
+const sha256 = buffer => crypto.createHash('sha256').update(buffer).digest('hex');
+const feedServer = http.createServer((request, response) => {
+  feed.requests.push(request.url);
+  const base = `http://127.0.0.1:${feedServer.address().port}`;
+  if (request.url.startsWith('/releases')) {
+    const releases = [{ tag_name: `v${expectedVersion}`, draft: false, html_url: `${base}/release/v${expectedVersion}`, body: '',
+      published_at: '2026-10-18T00:00:00Z', assets: [] }];
+    if (feed.version) releases.unshift({ tag_name: `v${feed.version}`, draft: false, prerelease: true,
+      html_url: `${base}/release/v${feed.version}`, published_at: '2026-10-20T08:00:00Z',
+      body: '## 测试版本\n\n- **新功能**：自动检测更新\n- 修复若干问题',
+      assets: [{ name: `LocalPinyinIME-${feed.version}-x64.exe`, size: feed.installer.length, browser_download_url: `${base}/download/installer.exe` },
+        { name: `LocalPinyinIME-${feed.version}-x64.exe.sha256`, size: 97, browser_download_url: `${base}/download/installer.exe.sha256` }] });
+    response.writeHead(200, { 'Content-Type': 'application/json' });
+    response.end(JSON.stringify(releases));
+  } else if (request.url === '/download/installer.exe') {
+    response.writeHead(200, { 'Content-Type': 'application/octet-stream', 'Content-Length': feed.installer.length });
+    response.end(feed.installer);
+  } else if (request.url === '/download/installer.exe.sha256') {
+    response.writeHead(200, { 'Content-Type': 'text/plain' });
+    response.end(`${feed.checksum}  LocalPinyinIME-${feed.version}-x64.exe\n`);
+  } else {
+    response.writeHead(404);
+    response.end();
+  }
+});
+
 async function run() {
+  await new Promise(resolve => feedServer.listen(0, '127.0.0.1', resolve));
+  process.env.LOCALPINYINIME_UPDATE_FEED = `http://127.0.0.1:${feedServer.address().port}/releases?per_page=30`;
+  process.env.LOCALPINYINIME_UPDATE_DRY_RUN = '1';
   await launch();
   await check('Real native state and preview', async () => {
     const initial = await state();
@@ -341,7 +373,9 @@ async function run() {
     assert.equal(exposed.require, 'undefined');
     assert.equal(exposed.process, 'undefined');
     assert.equal(exposed.frozen, true);
-    assert.deepEqual(exposed.api, ['clearLearning', 'deleteUserEntry', 'domainWords', 'getState', 'initialState', 'listUserLexicon', 'openDataDirectory', 'saveSettings', 'searchDictionary', 'upsertUserEntry', 'windowControl'].sort());
+    assert.deepEqual(exposed.api, ['checkForUpdate', 'clearLearning', 'deleteUserEntry', 'domainWords', 'downloadUpdate', 'getState',
+      'getUpdateStatus', 'initialState', 'installUpdate', 'listUserLexicon', 'onUpdateStatus', 'openDataDirectory', 'openReleasePage',
+      'saveSettings', 'searchDictionary', 'setAutoUpdateCheck', 'upsertUserEntry', 'windowControl'].sort());
     assert.equal(await page.evaluate(() => typeof window.localPinyin.initialState), 'object');
     assert.equal(await page.evaluate(() => window.localPinyin.initialState.version), expectedVersion);
     const preferences = await app.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows()[0].webContents.getLastWebPreferences());
@@ -698,28 +732,27 @@ async function run() {
   await check('Typing helpers switch off and on and persist for the IME', async () => {
     await navigate(pages[1]);
     const before = await state();
-    assert.deepEqual([before.settings.digitPeriod, before.settings.codePunctuation], [true, true], 'Both helpers are on by default.');
+    const helpers = [['digitPeriod', '数字后打。变成 .', true], ['digitPunctuation', '数字后使用英文标点', true],
+      ['letterPunctuation', '字母后使用英文标点', false], ['codePunctuation', '编程软件中使用英文标点', true]];
+    assert.deepEqual(helpers.map(([key]) => before.settings[key]), helpers.map(([, , on]) => on),
+      'Digit and code helpers are on by default, letters off.');
     const idle = () => page.waitForFunction(() => !document.querySelector('.segmented input')?.disabled);
-    const digit = page.getByRole('switch', { name: '数字后使用英文标点', exact: true });
-    const code = page.getByRole('switch', { name: '编程软件中使用英文标点', exact: true });
-    await digit.scrollIntoViewIfNeeded();
-    await digit.click();
-    await waitState(value => value.settings.digitPeriod === false);
-    await idle();
-    await code.click();
-    const off = await waitState(value => value.settings.codePunctuation === false);
-    assert.deepEqual({ ...off.settings, digitPeriod: true, codePunctuation: true }, before.settings, 'A helper changed another setting.');
-    const stored = native('state').settings;
-    assert.deepEqual([stored.digitPeriod, stored.codePunctuation], [false, false]);
-    await screenshot('input-helpers');
-    await idle();
-    await digit.click();
-    await waitState(value => value.settings.digitPeriod === true);
-    await idle();
-    await code.click();
-    await waitState(value => value.settings.codePunctuation === true);
+    // Each switch saves on its own and only changes its own setting.
+    for (const [key, label, on] of helpers) {
+      const toggle = page.getByRole('switch', { name: label, exact: true });
+      await toggle.scrollIntoViewIfNeeded();
+      await idle();
+      await toggle.click();
+      const changed = await waitState(value => value.settings[key] === !on);
+      assert.deepEqual({ ...changed.settings, [key]: on }, before.settings, `${key} changed another setting.`);
+      assert.equal(native('state').settings[key], !on, `${key} is saved for the IME.`);
+      if (key === 'letterPunctuation') await screenshot('input-helpers');
+      await idle();
+      await toggle.click();
+      await waitState(value => value.settings[key] === on);
+    }
     assert.deepEqual((await state()).settings, before.settings);
-    report.typingHelpers = { toggled: ['digitPeriod', 'codePunctuation'], restored: true };
+    report.typingHelpers = { toggled: helpers.map(([key]) => key), restored: true };
   });
   await check('Setting explanations stay closed until their details button opens them', async () => {
     await navigate(pages[1]);
@@ -911,6 +944,62 @@ async function run() {
     assert.equal((await api('listUserLexicon')).entries.length, 0);
     assert.deepEqual(savedFiles(before.dataDirectory), filesBefore, 'Rejected IPC calls altered personal files.');
   });
+  await check('Updates: a newer release is found, downloaded, verified and handed to its installer', async () => {
+    await navigate(pages[4]);
+    const panelText = () => page.locator('.update-panel').textContent();
+    const waitPanel = pattern => page.waitForFunction(source =>
+      new RegExp(source).test(document.querySelector('.update-panel')?.textContent ?? ''), pattern.source);
+    // The check when settings opened found nothing newer.
+    await waitPanel(/已是最新版本/);
+    assert.equal(await page.locator('.nav-badge').count(), 0);
+    // A newer release: found, shown with its notes, flagged in the sidebar.
+    feed.installer = crypto.randomBytes(3 * 1024 * 1024);
+    feed.checksum = sha256(feed.installer);
+    feed.version = '99.0.0';
+    await page.getByRole('button', { name: '检查更新', exact: true }).click();
+    await waitPanel(/发现新版本 99\.0\.0/);
+    assert.match(await panelText(), /自动检测更新/);
+    assert.match(await panelText(), /3\.0 MB/);
+    assert.equal(await page.locator('.nav-badge').textContent(), '新版本');
+    await screenshot('update-available');
+    // Downloaded, checked against its SHA-256 file and kept for the installer.
+    await page.getByRole('button', { name: '下载新版本', exact: true }).click();
+    await waitPanel(/已下载并通过 SHA-256 校验/);
+    const updates = path.join(data, 'LocalPinyinIME', 'updates');
+    const downloaded = path.join(updates, 'LocalPinyinIME-99.0.0-x64.exe');
+    assert.equal(sha256(fs.readFileSync(downloaded)), feed.checksum);
+    assert(!fs.existsSync(downloaded + '.partial'));
+    await screenshot('update-ready');
+    await page.getByRole('button', { name: '立即安装', exact: true }).click();
+    await page.getByText('安装程序已启动，按提示完成安装', { exact: true }).waitFor();
+    // A tampered installer is refused and removed.
+    feed.version = '99.0.1';
+    feed.installer = crypto.randomBytes(1024 * 1024);
+    feed.checksum = sha256(Buffer.from('not the installer'));
+    // (A newer version on screen offers only the next step; check through the API.)
+    await page.evaluate(() => window.localPinyin.checkForUpdate());
+    await waitPanel(/发现新版本 99\.0\.1/);
+    await page.getByRole('button', { name: '下载新版本', exact: true }).click();
+    await waitPanel(/校验失败/);
+    assert(!fs.existsSync(path.join(updates, 'LocalPinyinIME-99.0.1-x64.exe')));
+    assert(!fs.existsSync(path.join(updates, 'LocalPinyinIME-99.0.1-x64.exe.partial')));
+    // Automatic checks can be turned off, and the choice is kept.
+    const auto = page.getByRole('switch', { name: '自动检查更新', exact: true });
+    assert.equal(await auto.getAttribute('aria-checked'), 'true');
+    await auto.click();
+    await page.waitForFunction(() => document.querySelector('[aria-label="自动检查更新"]')?.getAttribute('aria-checked') === 'false');
+    const preferences = JSON.parse(fs.readFileSync(path.join(data, 'LocalPinyinIME', 'desktop', 'update.json'), 'utf8'));
+    assert.equal(preferences.autoCheck, false);
+    await auto.click();
+    await page.waitForFunction(() => document.querySelector('[aria-label="自动检查更新"]')?.getAttribute('aria-checked') === 'true');
+    // Back to no newer release for the checks that follow.
+    feed.version = null;
+    await page.getByRole('button', { name: '重试', exact: true }).click();
+    await waitPanel(/已是最新版本/);
+    assert.equal(await page.locator('.nav-badge').count(), 0);
+    assert(feed.requests.every(url => url.startsWith('/releases') || url.startsWith('/download/')), 'Only the update feed was asked.');
+    report.updates = { found: '99.0.0', verified: true, tamperedRefused: true, autoCheckToggle: true, requests: feed.requests.length };
+  });
   await check('External navigation and windows are denied', async () => {
     const url = page.url();
     const count = app.windows().length;
@@ -934,5 +1023,6 @@ run().catch(async error => {
   try { if (app) await app.close(); } catch {}
   process.exitCode = 1;
 }).finally(() => {
+  feedServer.close();
   fs.writeFileSync(path.join(output, 'verification.json'), JSON.stringify(report, null, 2) + '\n');
 });
