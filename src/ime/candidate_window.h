@@ -16,6 +16,10 @@
 
 namespace localpinyin {
 
+// Starts the settings app beside the input method DLL with `arguments`
+// (it is single-instance: a running one gets them).
+bool launch_settings_app(const std::wstring& arguments = L"");
+
 struct CandidateWindowOwnerInfo {
     HWND context_hwnd = nullptr;
     HWND root_hwnd = nullptr;
@@ -127,6 +131,11 @@ public:
                                unsigned int attempt,
                                UINT delay_ms);
     void cancel_layout_retry();
+    // A one-shot check of where the popup is anchored, while it is shown
+    // (rescheduling replaces a pending one; hiding cancels it).
+    bool schedule_anchor_check(std::function<void()> callback, UINT delay_ms);
+    void cancel_anchor_check();
+    [[nodiscard]] const RECT& anchor_rect() const noexcept { return caret_rect_; }
     [[nodiscard]] bool is_visible() const noexcept;
     void set_selection_callback(std::function<void(size_t)> callback);
     void set_page_callback(std::function<void(int)> callback) { page_callback_ = std::move(callback); }
@@ -134,6 +143,28 @@ public:
     // Called after Windows switches light/dark or high contrast.
     void set_theme_changed_callback(std::function<void()> callback) { theme_changed_callback_ = std::move(callback); }
     void set_prediction_mode(bool enabled) noexcept { prediction_mode_ = enabled; }
+    // A short message instead of candidates: `title` in the query bar (no
+    // caret) and `body` as the one row, without a commit-key hint. Hidden
+    // after `hide_after_ms` (0: until hidden), and by the next show().
+    void show_notice(const std::wstring& title, const std::wstring& body, const RECT& caret_rect,
+                     const CandidateWindowOwnerInfo& owner_info, UINT hide_after_ms);
+    [[nodiscard]] bool showing_notice() const noexcept { return notice_mode_ && is_visible(); }
+    // A background thread posts async_message() to async_target() with a
+    // value; the window's own thread hands it to the callback.
+    void set_async_callback(std::function<void(WPARAM)> callback) { async_callback_ = std::move(callback); }
+    [[nodiscard]] HWND async_target();
+    [[nodiscard]] HWND window() const noexcept { return hwnd_; }
+    // Runs `callback` once after `delay_ms` on this window's thread. Each slot
+    // is its own timer; scheduling a slot again replaces it.
+    static constexpr int kTaskSlots = 4;
+    bool schedule_task(int slot, UINT delay_ms, std::function<void()> callback);
+    void cancel_task(int slot);
+    // WM_COPYDATA sent to this window (the tool panel's text); returns
+    // whether it was accepted.
+    void set_copydata_callback(std::function<bool(const COPYDATASTRUCT&)> callback) {
+        copydata_callback_ = std::move(callback);
+    }
+    [[nodiscard]] static UINT async_message() noexcept { return WM_APP + 0x31; }
     // The query bar shows the pinyin, or "联想" for suggestions after a commit
     // (the focus row's hint keycap then reads Tab).
     [[nodiscard]] std::wstring query_text() const { return prediction_mode_ ? L"\u8054\u60F3" : composition_text_; }
@@ -210,8 +241,15 @@ private:
     UINT_PTR layout_retry_timer_ = 0;
     unsigned int layout_retry_attempt_ = 0;
     std::function<void()> layout_retry_callback_;
+    UINT_PTR anchor_check_timer_ = 0;
+    std::function<void()> anchor_check_callback_;
     bool show_requested_ = false;
     bool prediction_mode_ = false;
+    bool notice_mode_ = false;
+    bool notice_request_ = false;
+    std::function<void(WPARAM)> async_callback_;
+    std::function<void()> task_callbacks_[kTaskSlots];
+    std::function<bool(const COPYDATASTRUCT&)> copydata_callback_;
     std::wstring focus_hint_ = L"\u7A7A\u683C";
     // Adaptive Flow's form while the popup stays up (hysteresis).
     std::optional<CandidateFlowForm> flow_form_memory_;
@@ -224,6 +262,7 @@ private:
     };
     Motion marker_motion_;
     Motion track_motion_;
+    float marker_progress_ = 1.0f;
     ULONGLONG motion_start_ = 0;
     bool motion_active_ = false;
     bool snap_motion_ = true;
@@ -236,6 +275,8 @@ private:
     bool reveal_active_ = false;
     // Offline capture only: paint the reveal frozen this long after it began.
     std::optional<ULONGLONG> reveal_frozen_ms_;
+    // Capture only: the focus partway through a move, from here and how far along.
+    std::optional<std::pair<RECT, float>> motion_frozen_;
     // The blurred shadow depends only on the panel geometry: kept between frames.
     std::vector<float> shadow_cache_;
     std::array<int, 11> shadow_key_{};

@@ -100,7 +100,7 @@ bool process_elevated() {
 
 // Opens a file through the desktop (Explorer), so it runs as the signed-in
 // user rather than inheriting the installer's elevation.
-bool open_as_desktop_user(const std::wstring& file, const std::wstring& directory) {
+bool open_as_desktop_user(const std::wstring& file, const std::wstring& directory, const std::wstring& parameters = L"") {
     using Microsoft::WRL::ComPtr;
     ComPtr<IShellWindows> windows;
     if (FAILED(CoCreateInstance(CLSID_ShellWindows, nullptr, CLSCTX_LOCAL_SERVER, IID_PPV_ARGS(&windows)))) return false;
@@ -130,7 +130,7 @@ bool open_as_desktop_user(const std::wstring& file, const std::wstring& director
         return variant;
     };
     BSTR path = SysAllocString(file.c_str());
-    VARIANT arguments = text(L""), folder = text(directory), verb = text(L""), show{};
+    VARIANT arguments = text(parameters), folder = text(directory), verb = text(L""), show{};
     show.vt = VT_I4;
     show.lVal = SW_SHOWNORMAL;
     const HRESULT result = shell->ShellExecute(path, arguments, folder, verb, show);
@@ -245,9 +245,10 @@ private:
     bool waiting_for_elevation() const {
         return stage_ == Stage::Installing && !preview_ && !preparing_ && !elevated_at_ && !setup_finished_ && target_progress_ <= 0;
     }
-    void open(const std::wstring& file, const std::wstring& directory) const {
-        if (elevated_ && open_as_desktop_user(file, directory)) return;
-        ShellExecuteW(nullptr, L"open", file.c_str(), nullptr, directory.empty() ? nullptr : directory.c_str(), SW_SHOWNORMAL);
+    void open(const std::wstring& file, const std::wstring& directory, const std::wstring& parameters = L"") const {
+        if (elevated_ && open_as_desktop_user(file, directory, parameters)) return;
+        ShellExecuteW(nullptr, L"open", file.c_str(), parameters.empty() ? nullptr : parameters.c_str(),
+                      directory.empty() ? nullptr : directory.c_str(), SW_SHOWNORMAL);
     }
     bool has_primary() const { return stage_ != Stage::Installing; }
     bool has_secondary() const {
@@ -286,7 +287,7 @@ private:
         switch (stage_) {
             case Stage::Welcome:
                 title = L"本地拼音";
-                subtitle = std::wstring(L"完全离线的中文拼音输入法 · 版本 ") + LOCALPINYINIME_VERSION_NUMERIC_STRING;
+                subtitle = std::wstring(L"离线的中文拼音输入法 · 版本 ") + LOCALPINYINIME_VERSION_NUMERIC_STRING;
                 primary = L"立即安装";
                 break;
             case Stage::Installing:
@@ -550,6 +551,12 @@ private:
         if (setup_finished_ && shown_progress_ > 0.995) {
             shown_progress_ = 1.0;
             stage_ = Stage::Done;
+            if (!preview_) {
+                // The new clipboard recorder takes over from a running one, and
+                // the settings ask about clipboard history if not yet answered.
+                open(install_dir() + L"\\LocalPinyinClipboard.exe", install_dir(), L"--replace");
+                open(install_dir() + L"\\LocalPinyinSettings.exe", install_dir(), L"--first-run");
+            }
             KillTimer(hwnd_, kTimer);
             EnableMenuItem(GetSystemMenu(hwnd_, FALSE), SC_CLOSE, MF_ENABLED);
         }

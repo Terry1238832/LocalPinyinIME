@@ -31,7 +31,7 @@ RECT candidate_marker_target(const CandidateLayoutResult& layout, std::optional<
         case CandidateStyle::SplitFlap: return candidate_styles::marker_split_flap(layout, hovered);
         case CandidateStyle::Highlighter: return candidate_styles::marker_highlighter(layout, hovered);
         case CandidateStyle::AdaptiveFlow:
-        default: return RECT{};
+        default: return candidate_styles::marker_adaptive_flow(layout, hovered);
     }
 }
 
@@ -41,7 +41,22 @@ RECT candidate_track_target(const CandidateLayoutResult& layout) {
 }
 
 bool candidate_style_reveals(CandidateStyle style) noexcept {
-    return style == CandidateStyle::SplitFlap || style == CandidateStyle::Highlighter;
+    return style == CandidateStyle::SplitFlap || style == CandidateStyle::Highlighter ||
+           style == CandidateStyle::AdaptiveFlow;
+}
+
+ULONGLONG candidate_style_motion_ms(CandidateStyle style) noexcept {
+    // Flow's drop needs the time to stretch out and gather again.
+    return style == CandidateStyle::AdaptiveFlow ? 380 : 140;
+}
+
+RECT candidate_marker_frame(CandidateStyle style, const RECT& from, const RECT& to, float t) noexcept {
+    t = std::clamp(t, 0.0f, 1.0f);
+    if (style == CandidateStyle::AdaptiveFlow) return candidate_styles::flow_drop_frame(from, to, t);
+    // Ease out: quick to leave, precise to arrive; no overshoot.
+    const float eased = 1.0f - (1.0f - t) * (1.0f - t) * (1.0f - t);
+    const auto mix = [eased](LONG a, LONG b) { return static_cast<LONG>(std::lround(a + (b - a) * eased)); };
+    return RECT{mix(from.left, to.left), mix(from.top, to.top), mix(from.right, to.right), mix(from.bottom, to.bottom)};
 }
 
 namespace candidate_paint {

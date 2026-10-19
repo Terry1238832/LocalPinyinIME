@@ -71,7 +71,7 @@ $devScriptX86 = Join-Path $buildRoot 'build-x86.cmd'
     'if errorlevel 1 exit /b 1',
     'set VSLANG=1033',
     "`"$CMakePath`" -S `"$sourceRoot`" -B `"$buildRootX86`" -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=cl.exe `"-DCMAKE_MAKE_PROGRAM=$ninjaPath`" `"-DLOCALPINYINIME_PYTHON_EXECUTABLE=$PythonPath`" -DLOCALPINYIN_INNER_INSTALLER= -DLOCALPINYIN_PAYLOAD_BYTES= || exit /b 1",
-    "`"$CMakePath`" --build `"$buildRootX86`" --config Release --parallel $Jobs || exit /b 1",
+    "`"$CMakePath`" --build `"$buildRootX86`" --config Release --parallel $Jobs --clean-first || exit /b 1",
     "`"$ctestPath`" --test-dir `"$buildRootX86`" -C Release --output-on-failure || exit /b 1"
 ) | Set-Content -LiteralPath $devScriptX86 -Encoding ASCII
 & cmd.exe /d /c $devScriptX86
@@ -83,7 +83,10 @@ if ($LASTEXITCODE -ne 0) { throw 'Failed to initialize C++ build tools' }
 $env:VSLANG = '1033'
 $ninjaPath = Find-Tool '' 'ninja.exe' @((Join-Path $vsRoots[0] 'Common7\IDE\CommonExtensions\Microsoft\CMake\Ninja\ninja.exe'))
 Invoke-Checked $CMakePath @('-S', $sourceRoot, '-B', $buildRoot, '-G', 'Ninja', '-DCMAKE_BUILD_TYPE=Release', '-DCMAKE_CXX_COMPILER=cl.exe', '-DCMAKE_CXX_FLAGS_DEBUG=/Z7 /Ob0 /Od /RTC1', "-DCMAKE_MAKE_PROGRAM=$ninjaPath", "-DLOCALPINYINIME_PYTHON_EXECUTABLE=$PythonPath", '-DLOCALPINYIN_INNER_INSTALLER=', '-DLOCALPINYIN_PAYLOAD_BYTES=')
-Invoke-Checked $CMakePath @('--build', $buildRoot, '--config', 'Release', '--parallel', "$Jobs")
+# Release builds start clean: with a localized compiler Ninja can miss the
+# headers an object includes, and a changed header would leave stale objects
+# (a class laid out two ways in one DLL).
+Invoke-Checked $CMakePath @('--build', $buildRoot, '--config', 'Release', '--parallel', "$Jobs", '--clean-first')
 Invoke-Checked $ctestPath @('--test-dir', $buildRoot, '-C', 'Release', '--output-on-failure')
 
 # Build the isolated React interface and the Electron shell. The native TSF
@@ -106,7 +109,7 @@ if (Test-Path -LiteralPath $stageRoot) {
 New-Item -ItemType Directory -Path (Join-Path $stageRoot 'bin\dictionary') -Force | Out-Null
 New-Item -ItemType Directory -Path $outputRoot -Force | Out-Null
 Get-ChildItem -LiteralPath $desktopPackage -Force | Copy-Item -Destination (Join-Path $stageRoot 'bin') -Recurse -Force
-foreach ($binary in @('LocalPinyinIME.dll', 'LocalPinyinSettingsBridge.exe', 'LocalPinyinImeSetup.exe')) {
+foreach ($binary in @('LocalPinyinIME.dll', 'LocalPinyinSettingsBridge.exe', 'LocalPinyinClipboard.exe', 'LocalPinyinImeSetup.exe')) {
     Copy-Item -LiteralPath (Join-Path $buildRoot "bin\$binary") -Destination (Join-Path $stageRoot 'bin')
 }
 # The 32-bit input method and its setup tool; it reads the dictionary above.

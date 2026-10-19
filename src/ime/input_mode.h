@@ -26,6 +26,18 @@ struct InputModeOptions {
     bool digit_punctuation = true;
     bool letter_punctuation = false;
     bool code_punctuation = true;
+    // Tab translates what was just typed into English, online (off by
+    // default). Tab then belongs to it, so next-word suggestions stay off.
+    bool tab_translate = false;
+    // The tool panel (symbols, emoji, clipboard...): Tab twice opens it; it
+    // closes ten idle minutes after use unless kept ready in the background.
+    bool panel_double_tab = true;
+    bool panel_resident = false;
+    // Clipboard history: undecided until the user is asked (after installing
+    // or updating), then on or off; kept this many days (0: for good).
+    enum class ClipboardHistory { Ask, On, Off };
+    ClipboardHistory clipboard_history = ClipboardHistory::Ask;
+    unsigned long clipboard_retention_days = 7;
     // Fuzzy pinyin, spelling correction, Chinese-English mixing, double pinyin.
     EngineInputOptions engine;
 };

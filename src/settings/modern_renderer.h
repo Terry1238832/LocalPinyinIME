@@ -36,6 +36,15 @@ public:
     void ellipse(float x, float y, float rx, float ry, COLORREF color);
     // A filled polygon at partial opacity (a marker stroke, a turning flap).
     void polygon(const std::vector<D2D1_POINT_2F>& points, COLORREF color, float opacity = 1.0f);
+    // A filled polygon shading from `top` at `top_y` to `bottom` at `bottom_y`.
+    void polygon_gradient(const std::vector<D2D1_POINT_2F>& points, COLORREF top, COLORREF bottom,
+                          float top_y, float bottom_y, float opacity = 1.0f);
+    // What is drawn until the matching pop_layer shows only inside `shape`
+    // (everywhere when it is empty), at `opacity`.
+    void push_layer(const std::vector<D2D1_POINT_2F>& shape, float opacity = 1.0f);
+    // The same, showing only what lies in `area` outside `hole`.
+    void push_layer_outside(const std::vector<D2D1_POINT_2F>& hole, const RECT& area);
+    void pop_layer();
     void line(float x1, float y1, float x2, float y2, COLORREF color, float stroke = 1.5f);
     // `family` defaults to Microsoft YaHei UI.
     void text(std::wstring_view text, const RECT& bounds, COLORREF color, float size,
@@ -61,6 +70,7 @@ private:
     };
     bool initialize(bool premultiplied_alpha);
     void color(COLORREF color);
+    Microsoft::WRL::ComPtr<ID2D1PathGeometry> path(const std::vector<D2D1_POINT_2F>& points);
     IDWriteTextFormat* format(float size, int weight, std::wstring_view family = {});
 
     Microsoft::WRL::ComPtr<ID2D1Factory> factory_;
@@ -71,6 +81,8 @@ private:
     Microsoft::WRL::ComPtr<ID2D1StrokeStyle> stroke_style_;
     std::map<std::tuple<int, int, std::wstring>, Microsoft::WRL::ComPtr<IDWriteTextFormat>> formats_;
     std::map<std::tuple<int, int, std::wstring>, float> baselines_;
+    // Open layers and their masks, kept alive until popped.
+    std::vector<std::pair<Microsoft::WRL::ComPtr<ID2D1Layer>, Microsoft::WRL::ComPtr<ID2D1PathGeometry>>> layers_;
     bool drawing_ = false;
 };
 

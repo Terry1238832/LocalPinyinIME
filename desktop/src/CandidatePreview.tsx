@@ -10,12 +10,33 @@ import type { CandidateStyle } from './types';
 
 type Page = { start: number; end: number };
 export type FlowForm = 'compact' | 'balanced' | 'expanded';
+// Adaptive Flow's drop, in the candidate row: its insets, where the row's
+// items sit (for the white copy of the text inside it) and how each edge
+// moves this time.
+type Drop = { left: number; top: number; right: number; bottom: number; inkLeft: number; inkTop: number; inkWidth: number;
+  timing: { left: string; top: string; right: string; bottom: string } };
+
+// As adaptive_flow.cpp moves its drop: the edges moving the way it travels
+// run ahead, a little past and back; the others follow later.
+const dropLead = '240ms cubic-bezier(.3, 1.45, .55, 1)';
+const dropTrail = '400ms cubic-bezier(.7, 0, .3, 1) 60ms';
+function dropTiming(from: Drop | null, to: Omit<Drop, 'timing'>) {
+  const all = { left: dropLead, top: dropLead, right: dropLead, bottom: dropLead };
+  if (!from) return all;
+  // Centers in the row, from the insets (left/right and top/bottom).
+  const travelX = (to.left - to.right) - (from.left - from.right);
+  const travelY = (to.top - to.bottom) - (from.top - from.bottom);
+  if (Math.abs(travelX) >= Math.abs(travelY) && Math.abs(travelX) > 1)
+    return { ...all, left: travelX > 0 ? dropTrail : dropLead, right: travelX > 0 ? dropLead : dropTrail };
+  if (Math.abs(travelY) > 1) return { ...all, top: travelY > 0 ? dropTrail : dropLead, bottom: travelY > 0 ? dropLead : dropTrail };
+  return all;
+}
 
 export const candidateStyles: { value: CandidateStyle; name: string; english: string; description: string }[] = [
   { value: 'rail', name: '光标轨道', english: 'Cursor Rail', description: '候选排在一条轨道上，焦点线随指针滑动；紧凑精准，适合高频输入。' },
   { value: 'type', name: '现代活字', english: 'Modern Type', description: '让汉字做主角：字号、字重和一道朱红短线区分主次，没有按钮感。' },
   { value: 'glass', name: '悬浮晶体', english: 'Floating Glass', description: '分层的悬浮面板，当前候选是一枚陶瓷质感的实体键帽。' },
-  { value: 'flow', name: '自适应流体', english: 'Adaptive Flow', description: '按候选长短在紧凑、平衡、展开三种形态间自动切换。' },
+  { value: 'flow', name: '自适应流体', english: 'Adaptive Flow', description: '当前候选是一滴流动的液体：换候选时拉长、收腰、再聚拢流过去；窗口按候选长短在紧凑、平衡、展开三种形态间切换。' },
   { value: 'capsule', name: '胶囊', english: 'Capsule', description: '整个窗口是一条圆角长条：拼音在左，候选随后，当前候选是一枚实心胶囊。窗口最矮。' },
   { value: 'column', name: '竖排列表', english: 'Column List', description: '候选一行一个，像菜单一样从上往下读；长词和整句都能完整显示。' },
   { value: 'flap', name: '翻牌', english: 'Split-Flap', description: '机场航班牌：每个字一块翻页牌，当前候选是一排琥珀色牌；候选变化时，变了的字一块接一块翻过来。' },
@@ -98,6 +119,9 @@ export function CandidatePreview({ candidateStyle: style, words, pinyin, fontSiz
   const [form, setForm] = useState<FlowForm>('balanced');
   const [hovered, setHovered] = useState<number | null>(null);
   const [marker, setMarker] = useState<{ left: number; width: number; top?: number; height?: number } | null>(null);
+  const [drop, setDrop] = useState<Drop | null>(null);
+  const [sloshes, setSloshes] = useState(0);
+  const lastDrop = useRef<{ key: string; drop: Drop } | null>(null);
   const [ticks, setTicks] = useState<number[]>([]);
   const listKey = JSON.stringify(words);
 
@@ -198,6 +222,42 @@ export function CandidatePreview({ candidateStyle: style, words, pinyin, fontSiz
     }
   }, [hovered, currentPage, listKey, fontSize, style, pages]);
 
+  // Adaptive Flow's drop rests on the current choice, hugging its text, and
+  // in Compact and Expanded flows to the candidate under the pointer. A new
+  // page or list pours it in from its left end.
+  const dropKey = `${listKey}:${currentPage}:${form}`;
+  useLayoutEffect(() => {
+    const line = row.current;
+    const items = line?.querySelector<HTMLElement>('.paged-candidate-items');
+    if (style !== 'flow' || !line || !items || !shown.length) { setDrop(null); lastDrop.current = null; return; }
+    const slot = form !== 'balanced' && hovered !== null ? hovered : 0;
+    const item = items.querySelector<HTMLElement>(`[data-slot="${slot}"]`);
+    const word = item?.querySelector<HTMLElement>('.candidate-word');
+    const number = item?.querySelector<HTMLElement>('.candidate-number');
+    if (!item || !word || !number) { setDrop(null); return; }
+    const base = line.getBoundingClientRect();
+    const box = item.getBoundingClientRect();
+    const text = document.createRange();
+    text.selectNodeContents(word);
+    const lead = number.getBoundingClientRect().left - box.left;
+    const right = Math.min(box.right, Math.max(text.getBoundingClientRect().right + lead + 2, box.left + box.height * 1.5));
+    const rest = { left: box.left - base.left, top: box.top - base.top, right: base.right - right, bottom: base.bottom - box.bottom,
+      inkLeft: items.offsetLeft - (box.left - base.left), inkTop: items.offsetTop - (box.top - base.top), inkWidth: items.offsetWidth };
+    const previous = lastDrop.current?.key === dropKey ? lastDrop.current.drop : null;
+    const next = { ...rest, timing: dropTiming(previous, rest) };
+    if (previous && ['left', 'top', 'right', 'bottom'].every(edge =>
+      Math.abs(previous[edge as 'left'] - next[edge as 'left']) < 0.5)) return;
+    lastDrop.current = { key: dropKey, drop: next };
+    setSloshes(count => count + 1);
+    if (previous) { setDrop(next); return; }
+    // Poured in: first a round drop at the left end, then the full length.
+    const height = box.height;
+    setDrop({ ...next, right: base.right - (box.left + height), timing: { ...next.timing, right: '0s' } });
+    // Not cancelled on a re-run: the next run sees the full drop as current.
+    requestAnimationFrame(() => setDrop(current => current && lastDrop.current?.drop === next
+      ? { ...next, timing: { ...next.timing, right: '340ms cubic-bezier(.3, 1.35, .5, 1)' } } : current));
+  }, [hovered, currentPage, listKey, fontSize, style, pages, form]);
+
   const move = (direction: number) => {
     setPage(current => Math.max(0, Math.min(pages.length - 1, current + direction)));
   };
@@ -213,9 +273,12 @@ export function CandidatePreview({ candidateStyle: style, words, pinyin, fontSiz
   // turn over one after another from the left.
   const tileStarts = shown.reduce<number[]>((starts, word, index) =>
     [...starts, index ? starts[index - 1] + Array.from(shown[index - 1]).length : 0], []);
+  // Adaptive Flow: where the current choice is while the drop is away.
+  const traced = (slot: number) => style === 'flow' && form !== 'balanced' && slot === 0 && hovered !== null && hovered !== 0;
   const candidate = (word: string, slot: number, focus: boolean, extra?: ReactNode, measure = false) =>
-    <span className={`preview-candidate ${focus ? 'focus' : 'chip'}${style === 'marker' && !measure && slot === (hovered ?? 0) ? ' marked' : ''}`}
+    <span className={`preview-candidate ${focus ? 'focus' : 'chip'}${style === 'marker' && !measure && slot === (hovered ?? 0) ? ' marked' : ''}${!measure && traced(slot) ? ' traced' : ''}`}
       key={`${word}-${slot}`} title={word} data-slot={measure ? undefined : slot}
+      style={style === 'flow' ? { '--slot': slot } as CSSProperties : undefined}
       onMouseEnter={measure ? undefined : () => setHovered(slot)}
       onMouseLeave={measure ? undefined : () => setHovered(current => current === slot ? null : current)}>
       <span className="candidate-number">{slot + 1}</span>
@@ -227,12 +290,15 @@ export function CandidatePreview({ candidateStyle: style, words, pinyin, fontSiz
     </span>;
   const hint = <span className="focus-hint" aria-hidden="true">空格</span>;
 
-  let body: ReactNode;
-  if (style === 'flow' && form === 'balanced')
-    body = <>{candidate(shown[0], 0, true, hint)}{shown.length > 1 && <div className="palette-chips">{shown.slice(1).map((word, index) => candidate(word, index + 1, false))}</div>}</>;
-  else if (style === 'flow' && form === 'expanded')
-    body = shown.map((word, index) => candidate(word, index, index === 0, index === 0 ? hint : undefined));
-  else body = shown.map((word, index) => candidate(word, index, index === 0));
+  // `copy`: the same candidates, passive, for the white text inside the drop.
+  const items = (copy = false): ReactNode => {
+    if (style === 'flow' && form === 'balanced')
+      return <>{candidate(shown[0], 0, true, hint, copy)}{shown.length > 1 && <div className="palette-chips">{shown.slice(1).map((word, index) => candidate(word, index + 1, false, undefined, copy))}</div>}</>;
+    if (style === 'flow' && form === 'expanded')
+      return shown.map((word, index) => candidate(word, index, index === 0, index === 0 ? hint : undefined, copy));
+    return shown.map((word, index) => candidate(word, index, index === 0, undefined, copy));
+  };
+  const body = items();
 
   const pager = <div className="candidate-pager" hidden={!paging}>
     <button type="button" aria-label={`${label}上一页`} disabled={currentPage === 0} onClick={() => move(-1)}><Icon name="chevron" size={13} className="page-chevron-left" /></button>
@@ -248,7 +314,7 @@ export function CandidatePreview({ candidateStyle: style, words, pinyin, fontSiz
   return <div className="ime-preview" ref={popup} data-cand-style={style} data-arrangement={arrangement} data-form={style === 'flow' ? form : undefined}>
     <div className="paged-candidates candidate-preview" aria-label={label} aria-live="polite" style={{ fontSize: `${fontSize}px` }}>
       <div className="palette-query">
-        {style === 'flow' && <span className="palette-mark" aria-hidden="true">拼</span>}
+        {style === 'flow' && <span className="palette-mark" aria-hidden="true" />}
         {style === 'type' && <span className="type-mark" aria-hidden="true" />}
         <PinyinRow text={pinyin} />
         {style === 'capsule' && <span className="capsule-divider" aria-hidden="true" />}
@@ -262,6 +328,13 @@ export function CandidatePreview({ candidateStyle: style, words, pinyin, fontSiz
           style={style === 'column' ? { '--rows': rows } as CSSProperties : undefined}>{body}</div>
         {style === 'rail' && words.length > 0 && <span className="rail-line" aria-hidden="true" />}
         {style === 'rail' && words.length > 0 && ticks.map(left => <i key={left} className="rail-tick" aria-hidden="true" style={{ left }} />)}
+        {drop && <span className="flow-drop" aria-hidden="true" key={dropKey}
+          style={{ left: drop.left, top: drop.top, right: drop.right, bottom: drop.bottom,
+            transition: `left ${drop.timing.left}, top ${drop.timing.top}, right ${drop.timing.right}, bottom ${drop.timing.bottom}` }}>
+          <span className="flow-drop-ink" style={{ left: drop.inkLeft, top: drop.inkTop, width: drop.inkWidth,
+            transition: `left ${drop.timing.left}, top ${drop.timing.top}` }}>{items(true)}</span>
+          <i className="flow-sheen" key={sloshes} />
+        </span>}
         {marker && <span className={style === 'rail' ? 'rail-marker' : style === 'marker' ? 'marker-stroke' : 'type-rule'} aria-hidden="true"
           key={style === 'marker' ? `${listKey}:${currentPage}` : undefined}
           style={{ left: marker.left, width: marker.width, top: marker.top, height: marker.height }} />}
@@ -277,22 +350,14 @@ export function CandidatePreview({ candidateStyle: style, words, pinyin, fontSiz
 // structure and palette as the real window, at thumbnail scale.
 export function StyleThumbnail({ candidateStyle: style, tone }: { candidateStyle: CandidateStyle; tone?: 'light' | 'dark' }) {
   const words = ['你好', '拟好', '你'];
-  const query = <span className="thumb-query">{style === 'flow' && <b className="thumb-mark">拼</b>}{style === 'type' && <b className="thumb-seal" />}ni'hao<i /></span>;
-  let body: ReactNode;
-  if (style === 'flow') {
-    // Adaptive Flow: three forms, from short words to a sentence.
-    body = <span className="thumb-forms">
-      <span className="thumb-form compact"><i className="on" /><i /><i /></span>
-      <span className="thumb-form balanced"><i className="on" /><span><i /><i /></span></span>
-      <span className="thumb-form expanded"><i className="on" /><i /><i /></span>
-    </span>;
-  } else {
-    body = <span className={style === 'column' ? 'thumb-list' : 'thumb-row'}>{words.map((word, index) =>
-      <span key={word} className={`thumb-word${index === 0 ? ' on' : ''}`}><small>{index + 1}</small>
-        {style === 'flap' ? Array.from(word).map((character, tile) => <b key={tile} className="thumb-tile">{character}</b>) : word}</span>)}
-      {style === 'rail' && <span className="thumb-rail"><i /></span>}
-    </span>;
-  }
+  const query = <span className="thumb-query">{style === 'flow' && <b className="thumb-mark" />}{style === 'type' && <b className="thumb-seal" />}ni'hao<i /></span>;
+  // Adaptive Flow's drop is drawn mid-flow: a droplet still drawing away from it.
+  const body = <span className={style === 'column' ? 'thumb-list' : 'thumb-row'}>{words.map((word, index) =>
+    <span key={word} className={`thumb-word${index === 0 ? ' on' : ''}`}><small>{index + 1}</small>
+      {style === 'flap' ? Array.from(word).map((character, tile) => <b key={tile} className="thumb-tile">{character}</b>)
+        : style === 'marker' && index === 0 ? <i className="thumb-ink">{word}</i> : word}</span>)}
+    {style === 'rail' && <span className="thumb-rail"><i /></span>}
+  </span>;
   return <span className="style-thumb" data-cand-style={style} data-cand-tone={tone} aria-hidden="true">
     <span className="thumb-panel">{query}{style === 'capsule' && <span className="thumb-divider" />}{body}</span>
   </span>;

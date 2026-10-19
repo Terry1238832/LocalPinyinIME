@@ -65,6 +65,14 @@ async function launch() {
   await page.waitForFunction(() => !!window.localPinyin && document.querySelector('#page-appearance'));
   await page.getByRole('heading', { name: '外观', exact: true }).waitFor();
   await page.evaluate(() => window.localPinyin.getState());
+  // Fresh data: the clipboard question comes first, once.
+  const question = page.getByRole('dialog', { name: '要记住复制过的内容吗？', exact: true });
+  if (await question.isVisible()) {
+    report.clipboardQuestionShown = (report.clipboardQuestionShown ?? 0) + 1;
+    await screenshot('clipboard-question');
+    await question.getByRole('button', { name: '不用了', exact: true }).click();
+    await question.waitFor({ state: 'detached' });
+  }
 }
 
 async function state() { return page.evaluate(() => window.localPinyin.getState()); }
@@ -94,6 +102,8 @@ const pages = [
   { id: 'dictionary', label: '词库', heading: '词库' },
   { id: 'learning', label: '学习', heading: '学习' },
   { id: 'about', label: '关于', heading: '关于' },
+  // Third in the sidebar; last here so the indexes above stay put.
+  { id: 'panel', label: '工具面板', heading: '工具面板' },
 ];
 
 // PNG decoding stays in the test, so no image package is required to reject blank captures.
@@ -347,7 +357,14 @@ async function run() {
   await new Promise(resolve => feedServer.listen(0, '127.0.0.1', resolve));
   process.env.LOCALPINYINIME_UPDATE_FEED = `http://127.0.0.1:${feedServer.address().port}/releases?per_page=30`;
   process.env.LOCALPINYINIME_UPDATE_DRY_RUN = '1';
+  process.env.LOCALPINYINIME_QA_BACKUP_FILE = path.join(output, 'backup.lpbackup');
+  process.env.LOCALPINYINIME_NO_AUTOSTART = '1';
+  fs.rmSync(process.env.LOCALPINYINIME_QA_BACKUP_FILE, { force: true });
   await launch();
+  await check('The clipboard question is asked once on a fresh install and answered', async () => {
+    assert.equal(report.clipboardQuestionShown, 1);
+    assert.equal((await state()).settings.clipboardHistory, 'off');
+  });
   await check('Real native state and preview', async () => {
     const initial = await state();
     assert.equal(initial.version, expectedVersion);
@@ -373,8 +390,10 @@ async function run() {
     assert.equal(exposed.require, 'undefined');
     assert.equal(exposed.process, 'undefined');
     assert.equal(exposed.frozen, true);
-    assert.deepEqual(exposed.api, ['checkForUpdate', 'clearLearning', 'deleteUserEntry', 'domainWords', 'downloadUpdate', 'getState',
-      'getUpdateStatus', 'initialState', 'installUpdate', 'listUserLexicon', 'onUpdateStatus', 'openDataDirectory', 'openReleasePage',
+    assert.deepEqual(exposed.api, ['addPhrase', 'checkForUpdate', 'chooseBackupFile', 'clearClipboard', 'clearLearning', 'clipboardSummary',
+      'deleteEmojiCandidate', 'deletePhrase', 'deleteUserEntry', 'domainWords', 'downloadUpdate', 'exportBackup', 'getState',
+      'getUpdateStatus', 'importBackup', 'initialState', 'inspectBackup', 'installUpdate', 'listEmojiCandidates', 'listPhrases',
+      'listUserLexicon', 'onSettingsChanged', 'onUpdateStatus', 'openDataDirectory', 'openReleasePage',
       'saveSettings', 'searchDictionary', 'setAutoUpdateCheck', 'upsertUserEntry', 'windowControl'].sort());
     assert.equal(await page.evaluate(() => typeof window.localPinyin.initialState), 'object');
     assert.equal(await page.evaluate(() => window.localPinyin.initialState.version), expectedVersion);
@@ -401,7 +420,7 @@ async function run() {
       const shell = document.querySelector('#root')?.firstElementChild;
       const nav = document.querySelector('nav');
       const sections = Array.from(document.querySelectorAll('section[id^="page-"]'));
-      const expected = ['appearance', 'input', 'dictionary', 'learning', 'about'];
+      const expected = ['appearance', 'input', 'panel', 'dictionary', 'learning', 'about'];
       const buttons = Array.from(nav.querySelectorAll('button'));
       const failures = [];
       let frames = 0;
@@ -410,7 +429,7 @@ async function run() {
         requestAnimationFrame(() => { clearTimeout(timeout); resolve(); });
       });
       for (let iteration = 0; iteration < 80; iteration++) {
-        const index = iteration % 5;
+        const index = iteration % 6;
         buttons[index].click();
         await nextFrame(); await nextFrame();
         frames += 2;
@@ -424,7 +443,7 @@ async function run() {
       return { failures, frames, sections: sections.length, samePreview: document.querySelector('.ime-preview-pinyin')?.textContent === "sui'bian" };
     });
     assert.deepEqual(observations.failures, []);
-    assert.equal(observations.sections, 5);
+    assert.equal(observations.sections, 6);
     assert.equal(observations.samePreview, true);
     assert.equal(navigationCount, beforeNavigation, 'Clicking sidebar reloaded the document.');
     report.navigationFrames = observations.frames;
@@ -600,14 +619,15 @@ async function run() {
       const view = document.querySelector('.style-viewport').getBoundingClientRect();
       return card && card.left >= view.left - 1 && card.right <= view.right + 1;
     });
-    // Cursor Rail, Modern Type and the Highlighter move their mark to the candidate under the pointer.
-    for (const [style, selector] of [['rail', '.rail-marker'], ['type', '.type-rule'], ['marker', '.marker-stroke']]) {
+    // Cursor Rail, Modern Type, the Highlighter and Adaptive Flow's drop move
+    // their mark to the candidate under the pointer.
+    for (const [style, selector] of [['rail', '.rail-marker'], ['type', '.type-rule'], ['marker', '.marker-stroke'], ['flow', '.flow-drop']]) {
       await chooseStyle(style);
       const marker = page.locator(selector);
       await marker.waitFor();
       const rest = await marker.boundingBox();
       await page.locator('.paged-candidate-items [data-slot="2"]').hover();
-      // The mark glides (140 ms) and settles under the hovered candidate.
+      // The mark glides (Flow's drop flows, ~0.5 s) and settles under the hovered candidate.
       await page.waitForFunction(selector => {
         const mark = document.querySelector(selector).getBoundingClientRect();
         const target = document.querySelector('.paged-candidate-items [data-slot="2"]').getBoundingClientRect();
@@ -800,6 +820,28 @@ async function run() {
     assert.equal(await page.getByRole('switch', { name: '联想下一个词', exact: true }).getAttribute('aria-checked'), 'false');
     assert.deepEqual((await state()).settings, original);
     report.predictionSetting = { disabledRestartVerified: true, enabledRestartVerified: true };
+  });
+  await check('Tab to English is off by default, saves for the IME and takes Tab from suggestions', async () => {
+    await navigate(pages[1]);
+    const original = (await state()).settings;
+    assert.equal(original.tabTranslate, false);
+    const translate = page.getByRole('switch', { name: 'Tab 键翻译成英文', exact: true });
+    const prediction = page.getByRole('switch', { name: '联想下一个词', exact: true });
+    assert.equal(await prediction.isDisabled(), false);
+    await translate.scrollIntoViewIfNeeded();
+    await translate.click();
+    const on = await waitState(value => value.settings.tabTranslate === true);
+    assert.deepEqual(on.settings, { ...original, tabTranslate: true }, 'Only the translation setting changed.');
+    assert.equal(native('state').settings.tabTranslate, true, 'Saved for the IME.');
+    // Tab now translates: the suggestion switch shows off and cannot be turned on.
+    await page.waitForFunction(() => document.querySelector('[aria-label="联想下一个词"]')?.disabled === true);
+    assert.equal(await prediction.getAttribute('aria-checked'), 'false');
+    await screenshot('tab-translate');
+    await translate.click();
+    await waitState(value => value.settings.tabTranslate === false);
+    await page.waitForFunction(() => document.querySelector('[aria-label="联想下一个词"]')?.disabled === false);
+    assert.deepEqual((await state()).settings, original);
+    report.tabTranslate = { offByDefault: true, saved: true, suggestionsYield: true };
   });
   await check('Personal words add/edit/search/delete and restart', async () => {
     await navigate(pages[2]);
@@ -999,6 +1041,59 @@ async function run() {
     assert.equal(await page.locator('.nav-badge').count(), 0);
     assert(feed.requests.every(url => url.startsWith('/releases') || url.startsWith('/download/')), 'Only the update feed was asked.');
     report.updates = { found: '99.0.0', verified: true, tamperedRefused: true, autoCheckToggle: true, requests: feed.requests.length };
+  });
+  await check('工具面板 settings save for the IME', async () => {
+    await navigate(pages.find(item => item.id === 'panel'));
+    const doubleTab = page.getByRole('switch', { name: '连按两下 Tab 打开工具面板', exact: true });
+    assert.equal(await doubleTab.getAttribute('aria-checked'), 'true');
+    await doubleTab.click();
+    await waitState(value => value.settings.panelDoubleTab === false);
+    await doubleTab.click();
+    await waitState(value => value.settings.panelDoubleTab === true);
+    await page.getByRole('switch', { name: '面板在后台待命', exact: true }).click();
+    await waitState(value => value.settings.panelResident === true);
+    await page.getByRole('switch', { name: '面板在后台待命', exact: true }).click();
+    await waitState(value => value.settings.panelResident === false);
+    await page.getByRole('radiogroup', { name: '剪贴板保存时间' }).locator('label', { hasText: '30 天' }).click();
+    await waitState(value => value.settings.clipboardRetentionDays === 30);
+    await page.getByRole('radiogroup', { name: '剪贴板保存时间' }).locator('label', { hasText: '永久' }).click();
+    await waitState(value => value.settings.clipboardRetentionDays === 0);
+    assert.equal(native('state').settings.clipboardRetentionDays, 0);
+    await page.getByRole('switch', { name: '用过的表情出现在候选', exact: true }).click();
+    await waitState(value => value.settings.emojiCandidates === false);
+    await page.getByRole('switch', { name: '用过的表情出现在候选', exact: true }).click();
+    await waitState(value => value.settings.emojiCandidates === true);
+    await screenshot('panel-settings');
+  });
+  await check('输入习惯 are added and deleted in settings and drive the IME', async () => {
+    await navigate(pages.find(item => item.id === 'learning'));
+    await page.getByLabel('内容', { exact: true }).fill('$');
+    await page.getByLabel('短语', { exact: true }).fill('美元，美刀');
+    await page.locator('.habit-form').getByRole('button', { name: '添加', exact: true }).click();
+    await page.locator('.habits .lexicon-table tbody tr').nth(1).waitFor();
+    assert.equal(native('lookup', ['meiyuan']).candidates[0], '$');
+    assert.equal(native('lookup', ['meidao']).candidates[0], '$');
+    await screenshot('habits');
+    await page.getByRole('button', { name: '删除短语 美刀', exact: true }).click();
+    await page.waitForFunction(() => document.querySelectorAll('.habits .lexicon-table tbody tr').length === 1);
+    assert.notEqual(native('lookup', ['meidao']).candidates[0], '$');
+  });
+  await check('User data is exported, then imported part by part', async () => {
+    await navigate(pages.find(item => item.id === 'about'));
+    await page.getByRole('button', { name: '快速导出', exact: true }).click();
+    await page.locator('.toast', { hasText: '已导出' }).waitFor();
+    assert(fs.statSync(process.env.LOCALPINYINIME_QA_BACKUP_FILE).size > 100);
+    native('phrases-delete', ['meiyuan', '$']);
+    assert.notEqual(native('lookup', ['meiyuan']).candidates[0], '$');
+    await page.getByRole('button', { name: '从备份导入…', exact: true }).click();
+    const dialog = page.getByRole('dialog', { name: '导入哪些内容？', exact: true });
+    await dialog.waitFor();
+    await dialog.getByRole('radiogroup', { name: '设置的导入方式', exact: true }).locator('label', { hasText: '跳过' }).click();
+    await screenshot('import-choices');
+    await dialog.getByRole('button', { name: /^导入 \d+ 项$/ }).click();
+    await page.locator('.toast', { hasText: '已导入' }).or(dialog.locator('.error-notice')).first().waitFor();
+    assert.equal(await dialog.locator('.error-notice').count(), 0, await dialog.locator('.error-notice').allInnerTexts().then(texts => texts.join(' ')));
+    assert.equal(native('lookup', ['meiyuan']).candidates[0], '$');
   });
   await check('External navigation and windows are denied', async () => {
     const url = page.url();

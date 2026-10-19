@@ -3,13 +3,15 @@ import { BrandMark, Icon, type IconName } from './icons';
 import { asError, ErrorNotice } from './components';
 import { AppearancePage, InputPage, LearningPage, AboutPage } from './pages';
 import { DictionaryPage } from './dictionary';
+import { ClipboardQuestion, PanelPage } from './PanelPage';
 import { CommandPalette, requestPageCommand, type Command } from './CommandPalette';
 import type { AppState, Settings, Theme, UserEntry , UpdateStatus } from './types';
 
-type PageId = 'appearance' | 'input' | 'dictionary' | 'learning' | 'about';
+type PageId = 'appearance' | 'input' | 'panel' | 'dictionary' | 'learning' | 'about';
 const navigation: { id: PageId; label: string; icon: IconName; keywords: string }[] = [
   { id: 'appearance', label: '外观', icon: 'appearance', keywords: 'waiguan wg 主题 zhuti 字号 theme appearance' },
   { id: 'input', label: '输入', icon: 'input', keywords: 'shuru sr 切换 联想 快捷键 input shortcut' },
+  { id: 'panel', label: '工具面板', icon: 'panel', keywords: 'gongju mianban gj 符号 表情 颜文字 剪贴板 jianqieban tab panel clipboard emoji' },
   { id: 'dictionary', label: '词库', icon: 'dictionary', keywords: 'ciku ck 个人词语 dictionary words' },
   { id: 'learning', label: '学习', icon: 'learning', keywords: 'xuexi xx 记录 learning history' },
   { id: 'about', label: '关于', icon: 'about', keywords: 'guanyu gy 版本 数据 about version' },
@@ -25,6 +27,8 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [notice, setNotice] = useState<string | null>(null);
   const [palette, setPalette] = useState(false);
+  // The clipboard question, once per launch until answered.
+  const [askClipboard, setAskClipboard] = useState(true);
   const [systemDark, setSystemDark] = useState(() => window.matchMedia('(prefers-color-scheme: dark)').matches);
   const content = useRef<HTMLElement>(null);
   const nav = useRef<HTMLElement>(null);
@@ -57,6 +61,10 @@ export default function App() {
   };
 
   useEffect(() => { void refresh(); }, []);
+  // The panel answered the clipboard question.
+  useEffect(() => window.localPinyin.onSettingsChanged(() => {
+    void window.localPinyin.getState().then(setState).catch(() => undefined);
+  }), []);
   useEffect(() => {
     const media = window.matchMedia('(prefers-color-scheme: dark)');
     const update = () => setSystemDark(media.matches);
@@ -85,7 +93,7 @@ export default function App() {
 
   const go = (id: PageId) => { setPage(id); content.current?.scrollTo({ top: 0 }); };
 
-  // Ctrl+K opens the command palette; Ctrl+1–5 switch pages.
+  // Ctrl+K opens the command palette; Ctrl+1–6 switch pages.
   useEffect(() => {
     const keydown = (event: KeyboardEvent) => {
       if (!event.ctrlKey || event.altKey || event.metaKey || event.shiftKey) return;
@@ -141,6 +149,12 @@ export default function App() {
         keywords: 'shift qiehuan zhongyingwen 切换', run: () => void saveSettings({ ...settings, shiftToggleEnabled: !settings.shiftToggleEnabled }) },
       { id: 'toggle-prediction', group: '设置', icon: 'spark', title: `${settings.predictionEnabled ? '关闭' : '开启'}“联想下一个词”`,
         keywords: 'lianxiang prediction 联想', run: () => void saveSettings({ ...settings, predictionEnabled: !settings.predictionEnabled }) },
+      { id: 'toggle-translate', group: '设置', icon: 'spark', title: `${settings.tabTranslate ? '关闭' : '开启'}“Tab 键翻译成英文”`,
+        keywords: 'fanyi yingwen translate english tab 翻译', run: () => void saveSettings({ ...settings, tabTranslate: !settings.tabTranslate }) },
+      { id: 'toggle-panel', group: '设置', icon: 'panel', title: `${settings.panelDoubleTab ? '关闭' : '开启'}“连按两下 Tab 打开工具面板”`,
+        keywords: 'gongju mianban tab panel 工具面板', run: () => void saveSettings({ ...settings, panelDoubleTab: !settings.panelDoubleTab }) },
+      { id: 'toggle-clipboard', group: '设置', icon: 'clipboard', title: `${settings.clipboardHistory === 'on' ? '关闭' : '开启'}剪贴板记录`,
+        keywords: 'jianqieban clipboard history 剪贴板', run: () => void saveSettings({ ...settings, clipboardHistory: settings.clipboardHistory === 'on' ? 'off' : 'on' }) },
       { id: 'add-word', group: '操作', icon: 'plus', title: '添加个人词语…', keywords: 'tianjia ciyu add word 词库',
         run: () => { go('dictionary'); requestPageCommand('add-word'); } },
       { id: 'browse', group: '操作', icon: 'search', title: '查找内置词库…', keywords: 'chazhao neizhi ciku search dictionary',
@@ -194,13 +208,16 @@ export default function App() {
           <div className="global-message"><ErrorNotice message={error} /></div>
           <section id="page-appearance" className="page" hidden={page !== 'appearance'}><AppearancePage state={state} saving={saving} saveSettings={saveSettings} /></section>
           <section id="page-input" className="page" hidden={page !== 'input'}><InputPage state={state} saving={saving} saveSettings={saveSettings} /></section>
+          <section id="page-panel" className="page" hidden={page !== 'panel'}><PanelPage state={state} saving={saving} saveSettings={saveSettings} notify={setNotice} /></section>
           <section id="page-dictionary" className="page" hidden={page !== 'dictionary'}><DictionaryPage state={state} entries={entries} onEntries={updateEntries} loadError={lexiconError} notify={setNotice} /></section>
           <section id="page-learning" className="page" hidden={page !== 'learning'}><LearningPage state={state} onState={setState} notify={setNotice} /></section>
-          <section id="page-about" className="page" hidden={page !== 'about'}><AboutPage state={state} update={update} /></section>
+          <section id="page-about" className="page" hidden={page !== 'about'}><AboutPage state={state} update={update} notify={setNotice} /></section>
         </div>}
       </main>
     </div>
     {palette && state && <CommandPalette commands={commands} onClose={() => setPalette(false)} />}
+    {state && state.settings.clipboardHistory === 'ask' && askClipboard && !palette &&
+      <ClipboardQuestion settings={state.settings} saveSettings={saveSettings} onClose={() => setAskClipboard(false)} />}
     {notice && <div className="toast" role="status"><Icon name="check" size={15} />{notice}</div>}
   </div>;
 }

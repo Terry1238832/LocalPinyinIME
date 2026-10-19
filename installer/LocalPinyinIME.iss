@@ -48,6 +48,11 @@ Source: "{#MyAppPackageDir}\LICENSE"; DestDir: "{app}"; Flags: ignoreversion
 [Run]
 Filename: "{app}\LocalPinyinSettings.exe"; Description: "打开本地拼音设置"; WorkingDir: "{app}"; Flags: postinstall nowait skipifsilent runasoriginaluser
 
+[UninstallRun]
+; The clipboard recorder leaves and stops starting at sign-in; its saved
+; history stays with the rest of the user's data.
+Filename: "{app}\LocalPinyinClipboard.exe"; Parameters: "--uninstall"; Flags: runhidden waituntilterminated; RunOnceId: "LocalPinyinClipboardQuit"
+
 [Icons]
 Name: "{group}\本地拼音设置"; Filename: "{app}\LocalPinyinSettings.exe"; WorkingDir: "{app}"; IconFilename: "{app}\LocalPinyinSettings.exe"
 Name: "{group}\卸载本地拼音"; Filename: "{uninstallexe}"; IconFilename: "{app}\LocalPinyinSettings.exe"
@@ -83,6 +88,96 @@ UninstallStatusLabel=正在卸载，请稍候。
 [Code]
 const
   LocalPinyinClsid = '{7C0B4B75-80B0-4E1F-A4A5-4D49A5440D8A}';
+  GENERIC_WRITE = $40000000;
+  OPEN_EXISTING = 3;
+
+function CreateFileW(FileName: String; DesiredAccess, ShareMode, SecurityAttributes,
+  CreationDisposition, FlagsAndAttributes, TemplateFile: Cardinal): Longint;
+  external 'CreateFileW@kernel32.dll stdcall';
+function CloseHandle(Handle: Longint): Boolean;
+  external 'CloseHandle@kernel32.dll stdcall';
+
+var
+  // Files of an earlier installation of this same version that were in use
+  // and moved aside, and the names they were moved to.
+  MovedFrom: TArrayOfString;
+  MovedTo: TArrayOfString;
+  InstallFinished: Boolean;
+
+// Reinstalling the version that is already installed (a repair, or a newer
+// build of the same version) replaces files running programs still hold:
+// every program with a text box has LocalPinyinIME.dll loaded, and an open
+// settings window maps its own files. Windows will not overwrite or delete
+// those, but lets them be renamed. So they are moved aside, to be deleted at
+// the next restart: running programs keep their copy, programs started
+// after this load the new one. Upgrades install into a new version folder
+// and never get here.
+function FileInUse(Path: String): Boolean;
+var
+  Handle: Longint;
+begin
+  Handle := CreateFileW(Path, GENERIC_WRITE, 0, 0, OPEN_EXISTING, 0, 0);
+  Result := Handle = -1;
+  if not Result then
+    CloseHandle(Handle);
+end;
+
+function IsMovedAside(Name: String): Boolean;
+begin
+  Result := (Length(Name) > 4) and (CompareText(Copy(Name, Length(Name) - 3, 4), '.old') = 0);
+end;
+
+procedure MoveAsideFilesInUse(Dir: String; Stamp: String);
+var
+  Found: TFindRec;
+  Path, Aside: String;
+  Count: Integer;
+begin
+  if not FindFirst(Dir + '\*', Found) then
+    Exit;
+  try
+    repeat
+      Path := Dir + '\' + Found.Name;
+      if (Found.Name = '.') or (Found.Name = '..') then
+        Continue;
+      if (Found.Attributes and FILE_ATTRIBUTE_DIRECTORY) <> 0 then
+        MoveAsideFilesInUse(Path, Stamp)
+      else if (CompareText(Copy(Found.Name, 1, 5), 'unins') <> 0) and not IsMovedAside(Found.Name) and
+              FileInUse(Path) then
+      begin
+        Aside := Path + '.' + Stamp + '.old';
+        if RenameFile(Path, Aside) then
+        begin
+          Count := GetArrayLength(MovedFrom);
+          SetArrayLength(MovedFrom, Count + 1);
+          SetArrayLength(MovedTo, Count + 1);
+          MovedFrom[Count] := Path;
+          MovedTo[Count] := Aside;
+          Log('LocalPinyinIME moved a file in use aside: ' + Path + ' -> ' + Aside);
+          try
+            RestartReplace(Aside, '');
+          except
+            Log('LocalPinyinIME could not schedule deleting it at restart: ' + GetExceptionMessage);
+          end;
+        end
+        else
+          Log('LocalPinyinIME could not move a file in use aside: ' + Path);
+      end;
+    until not FindNext(Found);
+  finally
+    FindClose(Found);
+  end;
+end;
+
+// An installation that did not finish puts the moved files back.
+procedure RestoreMovedFiles();
+var
+  Index: Integer;
+begin
+  for Index := 0 to GetArrayLength(MovedFrom) - 1 do
+    if not FileExists(MovedFrom[Index]) and RenameFile(MovedTo[Index], MovedFrom[Index]) then
+      Log('LocalPinyinIME restored a moved file: ' + MovedFrom[Index]);
+end;
 
 function QuoteArg(Value: String): String;
 begin
@@ -349,6 +444,10 @@ var
   CurrentDll: String;
   NewDll: String;
 begin
+  if (CurStep = ssInstall) and DirExists(ExpandConstant('{app}')) then
+    MoveAsideFilesInUse(ExpandConstant('{app}'), GetDateTimeString('yyyymmddhhnnss', #0, #0));
+  if CurStep = ssDone then
+    InstallFinished := True;
   if CurStep = ssPostInstall then
   begin
     NewDll := InstalledDllPath();
@@ -360,6 +459,12 @@ begin
     RunRegisterAndVerify(NewDll, CurrentDll);
     RunEnableAndVerify(NewDll, CurrentDll);
   end;
+end;
+
+procedure DeinitializeSetup();
+begin
+  if not InstallFinished then
+    RestoreMovedFiles();
 end;
 
 procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
@@ -386,7 +491,7 @@ end;
 procedure InitializeWizard();
 begin
   WizardForm.WelcomeLabel1.Caption := '本地拼音 {#MyAppVersion}';
-  WizardForm.WelcomeLabel2.Caption := '完全离线的中文拼音输入法。' + #13#10 + #13#10 +
+  WizardForm.WelcomeLabel2.Caption := '离线的中文拼音输入法。' + #13#10 + #13#10 +
     '根据前文排列候选，越用越懂你的选词习惯。' + #13#10 +
     '输入内容和学习记录只保存在这台电脑。';
   WizardForm.FinishedHeadingLabel.Caption := '安装完成';

@@ -30,14 +30,15 @@ float jitter(const std::wstring& text, unsigned salt) noexcept {
 }
 
 // A chisel-tip stroke filling `band`, drawn to `reach` of its length.
-void stroke(ModernRenderer& canvas, const RECT& band, float reach, COLORREF color, float opacity,
-            const std::wstring& seed) {
+// Returns its outline (empty when nothing was drawn).
+std::vector<D2D1_POINT_2F> stroke(ModernRenderer& canvas, const RECT& band, float reach, COLORREF color, float opacity,
+                                  const std::wstring& seed) {
     const float left = static_cast<float>(band.left);
     const float top = static_cast<float>(band.top);
     const float bottom = static_cast<float>(band.bottom);
     const float height = bottom - top;
     const float right = left + (static_cast<float>(band.right) - left) * std::clamp(reach, 0.0f, 1.0f);
-    if (right - left < 2.0f || height < 2.0f) return;
+    if (right - left < 2.0f || height < 2.0f) return {};
     const float slant = height * 0.22f;
     const float wobble = height * 0.05f;
     const float middle = (left + right) / 2.0f;
@@ -61,6 +62,7 @@ void stroke(ModernRenderer& canvas, const RECT& band, float reach, COLORREF colo
         {left - slant * 0.1f, bottom - lift * 0.4f + wobble * jitter(seed, 10)},
     };
     canvas.polygon(overlap, color, opacity * 0.35f);
+    return outline;
 }
 
 }  // namespace
@@ -196,8 +198,10 @@ void paint_highlighter(const CandidatePaintContext& context) {
                     palette.divider, 1.0f);
     }
 
-    // A near-opaque swipe in both themes; the word under it turns to dark ink.
+    // A near-opaque swipe in both themes; the part of the word under it turns
+    // to dark ink, the rest (above the swipe) stays in the page's ink.
     constexpr float opacity = 0.86f;
+    std::vector<D2D1_POINT_2F> swipe;
     for (const auto& item : layout.items) {
         if (state.pressed == item.candidate_index && !item.featured)
             stroke(canvas, marker_highlighter(layout, item.candidate_index), 1.0f, palette.focus_background,
@@ -214,7 +218,7 @@ void paint_highlighter(const CandidatePaintContext& context) {
             reach = 1.0f - (1.0f - t) * (1.0f - t);
         }
         const CandidateItemLayout* under = state.hovered ? candidate_paint::item_for(layout, *state.hovered) : chosen;
-        stroke(canvas, band, reach, palette.focus_background, opacity, under ? under->display_text : std::wstring());
+        swipe = stroke(canvas, band, reach, palette.focus_background, opacity, under ? under->display_text : std::wstring());
     }
 
     const float number_px = static_cast<float>(layout.number_font_px);
@@ -228,9 +232,22 @@ void paint_highlighter(const CandidatePaintContext& context) {
         canvas.text(std::to_wstring(item.page_number), item.number_bounds,
                     focused ? palette.focus_number_text : palette.number_text, number_px, FW_NORMAL,
                     DT_SINGLELINE | DT_VCENTER | DT_NOPREFIX);
-        canvas.text(item.display_text, item.text_bounds,
-                    under ? palette.focus_text : focused ? palette.text : palette.text_muted, size,
-                    focused || under ? kFocusWeight : FW_NORMAL, candidate_text_draw_flags(item.truncated));
+        const COLORREF ink = focused || under ? palette.text : palette.text_muted;
+        const int weight = focused || under ? kFocusWeight : FW_NORMAL;
+        if (!under || swipe.empty()) {
+            canvas.text(item.display_text, item.text_bounds, ink, size, weight, candidate_text_draw_flags(item.truncated));
+            continue;
+        }
+        // The page's ink outside the stroke, dark ink inside it, so neither
+        // shows through the other's edges.
+        RECT area = item.text_bounds;
+        InflateRect(&area, static_cast<int>(size), static_cast<int>(size));
+        canvas.push_layer_outside(swipe, area);
+        canvas.text(item.display_text, item.text_bounds, ink, size, weight, candidate_text_draw_flags(item.truncated));
+        canvas.pop_layer();
+        canvas.push_layer(swipe);
+        canvas.text(item.display_text, item.text_bounds, palette.focus_text, size, weight, candidate_text_draw_flags(item.truncated));
+        canvas.pop_layer();
     }
 }
 

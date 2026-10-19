@@ -92,7 +92,7 @@ export function UpdatePanel({ status }: { status: UpdateStatus | null }) {
     <ErrorNotice message={error} />
     <div className="update-auto">
       <div><strong>自动检查更新</strong>
-        <p>打开设置时检查 GitHub 上有没有新版本，最多每 12 小时一次。只读取版本信息，不上传任何内容；输入法本身始终不联网。</p></div>
+        <p>打开设置时检查 GitHub 上有没有新版本，最多每 12 小时一次。只读取版本信息，不上传任何内容；打字本身不联网（开启“Tab 键翻译成英文”后，按 Tab 时会联网翻译）。</p></div>
       <Switch checked={status.autoCheck} disabled={busy} label="自动检查更新"
         onChange={enabled => void run(() => api.setAutoUpdateCheck(enabled))} />
     </div>

@@ -47,6 +47,14 @@ int main() {
     REQUIRE_EQ(loaded.text_size, CandidateTextSize::Level6);
     REQUIRE_EQ(loaded.style, kDefaultCandidateStyle);
     REQUIRE_TRUE(!store.load_input_mode_options().shift_toggle_enabled);
+    // Tab to English is off until turned on, and round-trips.
+    REQUIRE_TRUE(!store.load_input_mode_options().tab_translate);
+    input_options.tab_translate = true;
+    REQUIRE_TRUE(store.save_options(options, input_options));
+    REQUIRE_TRUE(store.load_input_mode_options().tab_translate);
+    input_options.tab_translate = false;
+    REQUIRE_TRUE(store.save_options(options, input_options));
+    REQUIRE_TRUE(!store.load_input_mode_options().tab_translate);
 
     // The style is saved on its own and leaves every other option alone.
     for (const auto style : kCandidateStyles) {

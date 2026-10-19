@@ -1,5 +1,8 @@
 #include "../common/utf_utils.h"
 #include "../common/win32_utils.h"
+#include "../clipboard/clipboard_store.h"
+#include "../engine/custom_phrases.h"
+#include "../engine/input_tools.h"
 #include "../engine/pinyin_engine.h"
 #include "../engine/user_lexicon.h"
 #include "../settings/dictionary_catalog.h"
@@ -7,8 +10,15 @@
 #include "localpinyin_version.h"
 
 #include <windows.h>
+#include <shlobj.h>
+#include <wincodec.h>
+#include <wrl/client.h>
 
 #include <algorithm>
+#include <cstdint>
+#include <cstring>
+#include <ctime>
+#include <fstream>
 #include <filesystem>
 #include <iostream>
 #include <stdexcept>
@@ -129,7 +139,15 @@ std::string settings_json(const SettingsStore& store) {
            ",\"digitPeriod\":" + (input.digit_period ? "true" : "false") +
            ",\"digitPunctuation\":" + (input.digit_punctuation ? "true" : "false") +
            ",\"letterPunctuation\":" + (input.letter_punctuation ? "true" : "false") +
-           ",\"codePunctuation\":" + (input.code_punctuation ? "true" : "false") + '}';
+           ",\"codePunctuation\":" + (input.code_punctuation ? "true" : "false") +
+           ",\"tabTranslate\":" + (input.tab_translate ? "true" : "false") +
+           ",\"panelDoubleTab\":" + (input.panel_double_tab ? "true" : "false") +
+           ",\"panelResident\":" + (input.panel_resident ? "true" : "false") +
+           ",\"emojiCandidates\":" + (input.engine.emoji_candidates ? "true" : "false") +
+           ",\"clipboardHistory\":" + json_string(
+               input.clipboard_history == InputModeOptions::ClipboardHistory::On ? L"on"
+               : input.clipboard_history == InputModeOptions::ClipboardHistory::Off ? L"off" : L"ask") +
+           ",\"clipboardRetentionDays\":" + std::to_string(input.clipboard_retention_days) + '}';
 }
 
 UserLexiconLoadResult read_user_lexicon(const std::wstring& path) {
@@ -160,6 +178,229 @@ UserLexiconEntry validated_entry(const std::wstring& pinyin, const std::wstring&
     const auto validation = validate_user_lexicon_entry(pinyin, word, frequency, &entry);
     if (!validation.valid) throw BridgeError{validation.message};
     return entry;
+}
+
+// The tool panel hands text to the input method in the application it was
+// opened from (WM_COPYDATA to its window, which inserts at the caret).
+constexpr ULONG_PTR kPanelInsertMessage = 0x4C50494E;  // 'LPIN'
+
+HWND window_argument(const std::wstring& text) {
+    require(!text.empty() && text.size() <= 20 && text.find_first_not_of(L"0123456789") == std::wstring::npos,
+            L"窗口参数无效。");
+    return reinterpret_cast<HWND>(static_cast<std::uintptr_t>(std::stoull(text)));
+}
+
+// Back to the application's window, where the text or picture goes.
+void return_to(HWND host) {
+    if (!host || !IsWindow(host)) return;
+    if (IsIconic(host)) ShowWindow(host, SW_RESTORE);
+    SetForegroundWindow(host);
+    for (int attempt = 0; attempt < 20 && GetForegroundWindow() != host; ++attempt) Sleep(10);
+}
+
+// The pinyin a phrase is typed with: the dictionary's reading of the whole
+// word, else each character's most common reading.
+std::wstring phrase_pinyin(const DictionaryCatalog& catalog, const std::wstring& phrase) {
+    std::wstring letters;
+    for (wchar_t ch : phrase) {
+        if (ch >= L'A' && ch <= L'Z') letters += static_cast<wchar_t>(ch - L'A' + L'a');
+        else if (ch >= L'a' && ch <= L'z') letters += ch;
+        else { letters.clear(); break; }
+    }
+    if (!letters.empty()) return letters;
+    const DictionaryCatalogEntry* best = nullptr;
+    for (const auto& entry : catalog.entries())
+        if (entry.word == phrase && (!best || entry.weight > best->weight)) best = &entry;
+    if (best) return best->pinyin;
+    std::wstring pinyin;
+    for (wchar_t ch : phrase) {
+        const DictionaryCatalogEntry* reading = nullptr;
+        for (const auto& entry : catalog.entries())
+            if (entry.word.size() == 1 && entry.word[0] == ch && (!reading || entry.weight > reading->weight)) reading = &entry;
+        if (!reading) return {};
+        pinyin += reading->pinyin;
+    }
+    return pinyin;
+}
+
+std::string phrases_json(const std::wstring& path) {
+    std::string result = "{\"phrases\":[";
+    bool first = true;
+    for (const auto& phrase : CustomPhrases::read(path)) {
+        if (!first) result += ',';
+        first = false;
+        result += "{\"pinyin\":" + json_string(phrase.pinyin) + ",\"text\":" + json_string(phrase.text) +
+                  ",\"label\":" + json_string(phrase.label) + ",\"created\":" + std::to_string(phrase.created) + '}';
+    }
+    return result + "]}";
+}
+
+// A picture on the clipboard as a file (CF_HDROP: chat apps send GIFs whole)
+// and as a bitmap, marked so clipboard histories leave it out.
+void put_picture_on_clipboard(const std::wstring& file, bool keep_out_of_history = true) {
+    using Microsoft::WRL::ComPtr;
+    std::vector<std::uint8_t> dib;
+    {
+        ComPtr<IWICImagingFactory> factory;
+        ComPtr<IWICBitmapDecoder> decoder;
+        ComPtr<IWICBitmapFrameDecode> frame;
+        ComPtr<IWICFormatConverter> converter;
+        UINT width = 0, height = 0;
+        if (SUCCEEDED(CoCreateInstance(CLSID_WICImagingFactory, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&factory))) &&
+            SUCCEEDED(factory->CreateDecoderFromFilename(file.c_str(), nullptr, GENERIC_READ, WICDecodeMetadataCacheOnDemand, &decoder)) &&
+            SUCCEEDED(decoder->GetFrame(0, &frame)) && SUCCEEDED(factory->CreateFormatConverter(&converter)) &&
+            SUCCEEDED(converter->Initialize(frame.Get(), GUID_WICPixelFormat32bppBGRA, WICBitmapDitherTypeNone, nullptr, 0,
+                                            WICBitmapPaletteTypeCustom)) &&
+            SUCCEEDED(converter->GetSize(&width, &height)) && width && height && width <= 8192 && height <= 8192) {
+            BITMAPINFOHEADER header{};
+            header.biSize = sizeof(header);
+            header.biWidth = static_cast<LONG>(width);
+            header.biHeight = -static_cast<LONG>(height);
+            header.biPlanes = 1;
+            header.biBitCount = 32;
+            header.biCompression = BI_RGB;
+            const UINT stride = width * 4;
+            dib.resize(sizeof(header) + static_cast<size_t>(stride) * height);
+            std::memcpy(dib.data(), &header, sizeof(header));
+            if (FAILED(converter->CopyPixels(nullptr, stride, stride * height, dib.data() + sizeof(header)))) dib.clear();
+        }
+    }
+    require(OpenClipboard(nullptr) != FALSE, L"剪贴板正被占用，请稍后重试。");
+    EmptyClipboard();
+    const auto put = [](UINT format, const void* data, size_t size) {
+        HGLOBAL memory = GlobalAlloc(GMEM_MOVEABLE, size ? size : 1);
+        if (!memory) return;
+        if (size) {
+            void* target = GlobalLock(memory);
+            std::memcpy(target, data, size);
+            GlobalUnlock(memory);
+        }
+        if (!SetClipboardData(format, memory)) GlobalFree(memory);
+    };
+    std::vector<std::uint8_t> drop(sizeof(DROPFILES) + (file.size() + 2) * sizeof(wchar_t), 0);
+    auto* files = reinterpret_cast<DROPFILES*>(drop.data());
+    files->pFiles = sizeof(DROPFILES);
+    files->fWide = TRUE;
+    std::memcpy(drop.data() + sizeof(DROPFILES), file.c_str(), file.size() * sizeof(wchar_t));
+    put(CF_HDROP, drop.data(), drop.size());
+    if (!dib.empty()) put(CF_DIB, dib.data(), dib.size());
+    std::ifstream source(std::filesystem::path(file), std::ios::binary);
+    const std::vector<char> bytes((std::istreambuf_iterator<char>(source)), std::istreambuf_iterator<char>());
+    const auto extension = std::filesystem::path(file).extension().wstring();
+    if (!bytes.empty() && (extension == L".png" || extension == L".PNG"))
+        put(RegisterClipboardFormatW(L"PNG"), bytes.data(), bytes.size());
+    if (!bytes.empty() && (extension == L".gif" || extension == L".GIF"))
+        put(RegisterClipboardFormatW(L"GIF"), bytes.data(), bytes.size());
+    if (keep_out_of_history) put(RegisterClipboardFormatW(L"ExcludeClipboardContentFromMonitorProcessing"), nullptr, 0);
+    CloseClipboard();
+}
+
+void put_text_on_clipboard(const std::wstring& text) {
+    require(OpenClipboard(nullptr) != FALSE, L"剪贴板正被占用，请稍后重试。");
+    EmptyClipboard();
+    const size_t size = (text.size() + 1) * sizeof(wchar_t);
+    if (HGLOBAL memory = GlobalAlloc(GMEM_MOVEABLE, size)) {
+        std::memcpy(GlobalLock(memory), text.c_str(), size);
+        GlobalUnlock(memory);
+        if (!SetClipboardData(CF_UNICODETEXT, memory)) GlobalFree(memory);
+    }
+    CloseClipboard();
+}
+
+// A lock another process takes for the same file: its name's prefix and the
+// file path, lowercased and hashed the way the input method does.
+class NamedFileLock {
+public:
+    NamedFileLock(const wchar_t* prefix, const std::wstring& path) {
+        unsigned long long hash = 1469598103934665603ULL;
+        for (wchar_t ch : path) {
+            if (ch >= L'A' && ch <= L'Z') ch = ch - L'A' + L'a';
+            hash = (hash ^ static_cast<unsigned long long>(ch)) * 1099511628211ULL;
+        }
+        handle_ = CreateMutexW(nullptr, FALSE, (std::wstring(prefix) + std::to_wstring(hash)).c_str());
+        if (handle_) {
+            const DWORD result = WaitForSingleObject(handle_, 5000);
+            acquired_ = result == WAIT_OBJECT_0 || result == WAIT_ABANDONED;
+        }
+    }
+    ~NamedFileLock() {
+        if (acquired_) ReleaseMutex(handle_);
+        if (handle_) CloseHandle(handle_);
+    }
+    NamedFileLock(const NamedFileLock&) = delete;
+    NamedFileLock& operator=(const NamedFileLock&) = delete;
+    bool acquired() const { return acquired_; }
+private:
+    HANDLE handle_ = nullptr;
+    bool acquired_ = false;
+};
+
+bool replace_file(const std::wstring& source, const std::wstring& target) {
+    std::error_code error;
+    std::filesystem::create_directories(std::filesystem::path(target).parent_path(), error);
+    return MoveFileExW(source.c_str(), target.c_str(), MOVEFILE_REPLACE_EXISTING | MOVEFILE_COPY_ALLOWED) != FALSE;
+}
+
+// The clipboard recorder: LocalPinyinClipboard.exe beside this bridge,
+// started at sign-in through the user's Run key while history is on.
+constexpr wchar_t kRunKey[] = L"Software\\Microsoft\\Windows\\CurrentVersion\\Run";
+constexpr wchar_t kRunValue[] = L"LocalPinyinClipboard";
+constexpr wchar_t kAgentWindowClass[] = L"LocalPinyinIME.ClipboardAgent";
+
+std::wstring clipboard_agent_path() { return (resource_directory() / L"LocalPinyinClipboard.exe").wstring(); }
+
+void start_clipboard_agent() {
+    const auto path = clipboard_agent_path();
+    require(std::filesystem::is_regular_file(std::filesystem::path(path)), L"找不到剪贴板记录程序，请重新安装本地拼音。");
+    wchar_t skip[8]{};
+    if (GetEnvironmentVariableW(L"LOCALPINYINIME_NO_AUTOSTART", skip, 8) == 0 || std::wstring(skip) != L"1") {
+        const std::wstring command = L"\"" + path + L"\"";
+        RegSetKeyValueW(HKEY_CURRENT_USER, kRunKey, kRunValue, REG_SZ, command.c_str(),
+                        static_cast<DWORD>((command.size() + 1) * sizeof(wchar_t)));
+    }
+    if (FindWindowExW(HWND_MESSAGE, nullptr, kAgentWindowClass, nullptr)) return;
+    std::wstring command = L"\"" + path + L"\"";
+    STARTUPINFOW startup{sizeof(startup)};
+    PROCESS_INFORMATION process{};
+    // Out of the settings app's job, so it keeps running when the app leaves.
+    if (!CreateProcessW(path.c_str(), command.data(), nullptr, nullptr, FALSE, CREATE_BREAKAWAY_FROM_JOB | DETACHED_PROCESS,
+                        nullptr, nullptr, &startup, &process) &&
+        !CreateProcessW(path.c_str(), command.data(), nullptr, nullptr, FALSE, DETACHED_PROCESS, nullptr, nullptr, &startup, &process))
+        require(false, L"无法启动剪贴板记录程序。");
+    CloseHandle(process.hThread);
+    CloseHandle(process.hProcess);
+}
+
+void stop_clipboard_agent() {
+    RegDeleteKeyValueW(HKEY_CURRENT_USER, kRunKey, kRunValue);
+    HWND window = nullptr;
+    while ((window = FindWindowExW(HWND_MESSAGE, window, kAgentWindowClass, nullptr)) != nullptr)
+        PostMessageW(window, WM_CLOSE, 0, 0);
+}
+
+std::string clipboard_summary_json(const ClipboardStore& store) {
+    size_t items = 0, images = 0;
+    unsigned long long bytes = 0;
+    for (const auto& item : store.read()) {
+        ++items;
+        if (item.image) ++images;
+    }
+    std::error_code error;
+    for (const auto& entry : std::filesystem::directory_iterator(std::filesystem::path(store.directory()), error))
+        if (entry.is_regular_file(error)) bytes += entry.file_size(error);
+    return "{\"items\":" + std::to_string(items) + ",\"images\":" + std::to_string(images) + ",\"bytes\":" + std::to_string(bytes) + '}';
+}
+
+void press_paste() {
+    INPUT keys[4]{};
+    for (auto& key : keys) key.type = INPUT_KEYBOARD;
+    keys[0].ki.wVk = VK_CONTROL;
+    keys[1].ki.wVk = 'V';
+    keys[2].ki.wVk = 'V';
+    keys[2].ki.dwFlags = KEYEVENTF_KEYUP;
+    keys[3].ki.wVk = VK_CONTROL;
+    keys[3].ki.dwFlags = KEYEVENTF_KEYUP;
+    SendInput(4, keys, sizeof(INPUT));
 }
 
 DictionaryCatalog read_catalog() {
@@ -218,8 +459,14 @@ std::string run(const std::vector<std::wstring>& args) {
             require(equals != std::wstring::npos, L"请求参数格式不正确。");
             const auto key = args[index].substr(0, equals), value = args[index].substr(equals + 1);
             if (key == L"typoCorrection" || key == L"mixedEnglish" || key == L"digitPeriod" || key == L"digitPunctuation" ||
-                key == L"letterPunctuation" || key == L"codePunctuation")
+                key == L"letterPunctuation" || key == L"codePunctuation" || key == L"tabTranslate" ||
+                key == L"panelDoubleTab" || key == L"panelResident" || key == L"emojiCandidates")
                 require(value == L"true" || value == L"false", L"开关选项必须是 true 或 false。");
+            else if (key == L"clipboardHistory")
+                require(value == L"ask" || value == L"on" || value == L"off", L"剪贴板记录选项无效。");
+            else if (key == L"clipboardRetentionDays")
+                require(value == L"0" || value == L"1" || value == L"7" || value == L"30" || value == L"90" || value == L"365",
+                        L"剪贴板保存时间无效。");
             else if (key == L"doublePinyin")
                 require(value == L"none" || value == L"xiaohe" || value == L"ziranma", L"双拼方案必须是 none、xiaohe 或 ziranma。");
             else if (key == L"fuzzyPinyin")
@@ -250,6 +497,15 @@ std::string run(const std::vector<std::wstring>& args) {
             else if (key == L"digitPunctuation") input.digit_punctuation = value == L"true";
             else if (key == L"letterPunctuation") input.letter_punctuation = value == L"true";
             else if (key == L"codePunctuation") input.code_punctuation = value == L"true";
+            else if (key == L"tabTranslate") input.tab_translate = value == L"true";
+            else if (key == L"panelDoubleTab") input.panel_double_tab = value == L"true";
+            else if (key == L"panelResident") input.panel_resident = value == L"true";
+            else if (key == L"emojiCandidates") input.engine.emoji_candidates = value == L"true";
+            else if (key == L"clipboardHistory")
+                input.clipboard_history = value == L"on" ? InputModeOptions::ClipboardHistory::On
+                                        : value == L"off" ? InputModeOptions::ClipboardHistory::Off
+                                                          : InputModeOptions::ClipboardHistory::Ask;
+            else if (key == L"clipboardRetentionDays") input.clipboard_retention_days = std::stoul(value);
         }
         require(store.save_options(candidate, input), L"无法保存设置，请检查文件权限。");
         notify_options_changed();
@@ -346,6 +602,176 @@ std::string run(const std::vector<std::wstring>& args) {
             result += ']';
         }
         return result + "}}";
+    }
+    if (command == L"tools") {
+        // The typing tools for the panel's 工具 page: a sum, a number, a date,
+        // or sj/rq/xq.
+        require_count(args, 2);
+        require(args[1].size() <= 128, L"内容过长。");
+        std::tm now{};
+        const std::time_t clock = std::time(nullptr);
+        localtime_s(&now, &clock);
+        std::wstring input = args[1];
+        if (!input.empty() && (input[0] == L'v' || input[0] == L'V') && is_tool_text(input.substr(1))) input.erase(0, 1);
+        auto results = is_tool_text(input) ? tool_results(input, now) : time_shortcuts(input, now);
+        std::string result = "{\"results\":[";
+        for (size_t index = 0; index < results.size(); ++index) result += (index ? "," : "") + json_string(results[index]);
+        return result + "]}";
+    }
+    if (command == L"phrases-list") {
+        require_count(args, 1);
+        return phrases_json(store.data_dir() + L"\\custom_phrases.tsv");
+    }
+    if (command == L"phrase-pinyin") {
+        require_count(args, 2);
+        require(!args[1].empty() && args[1].size() <= 32, L"短语应为 1 到 32 个字。");
+        const auto pinyin = phrase_pinyin(read_catalog(), args[1]);
+        require(!pinyin.empty(), L"读不出这个短语的拼音，请换一个写法。");
+        return "{\"pinyin\":" + json_string(pinyin) + '}';
+    }
+    if (command == L"phrases-add") {
+        // phrases-add <text> <label> [pinyin]: typing the label offers the text.
+        require(args.size() == 3 || args.size() == 4, L"请求参数数量不正确。");
+        CustomPhrase phrase{args.size() == 4 ? args[3] : L"", args[1], args[2], 0};
+        if (phrase.pinyin.empty()) phrase.pinyin = phrase_pinyin(read_catalog(), phrase.label);
+        require(!phrase.pinyin.empty(), L"读不出这个短语的拼音，请换一个写法。");
+        require(CustomPhrases::valid(phrase), L"短语或内容无效：短语最多 32 个字，内容最多 64 个字符，不能有换行。");
+        require(store.ensure_data_dir(), L"无法创建数据目录。");
+        require(CustomPhrases::add(store.data_dir() + L"\\custom_phrases.tsv", phrase), L"无法保存短语，请稍后重试。");
+        return phrases_json(store.data_dir() + L"\\custom_phrases.tsv");
+    }
+    if (command == L"phrases-delete") {
+        require_count(args, 3);
+        require(CustomPhrases::remove(store.data_dir() + L"\\custom_phrases.tsv", args[1], args[2]), L"无法删除短语，请稍后重试。");
+        return phrases_json(store.data_dir() + L"\\custom_phrases.tsv");
+    }
+    if (command == L"emoji-learn") {
+        // emoji-learn <emoji> <name>...: the panel confirmed it; typing a
+        // name later offers it third.
+        require(args.size() >= 3 && args.size() <= 6, L"请求参数数量不正确。");
+        require(!args[1].empty() && args[1].size() <= 32, L"表情无效。");
+        require(store.ensure_data_dir(), L"无法创建数据目录。");
+        const auto catalog = read_catalog();
+        for (size_t index = 2; index < args.size(); ++index) {
+            const auto pinyin = phrase_pinyin(catalog, args[index]);
+            if (pinyin.empty()) continue;
+            CustomPhrases::remember(store.data_dir() + L"\\emoji_candidates.tsv", CustomPhrase{pinyin, args[1], args[index], 0}, 3000);
+        }
+        return "{\"learned\":true}";
+    }
+    if (command == L"emoji-list") {
+        require_count(args, 1);
+        return phrases_json(store.data_dir() + L"\\emoji_candidates.tsv");
+    }
+    if (command == L"emoji-delete") {
+        require_count(args, 3);
+        require(CustomPhrases::remove(store.data_dir() + L"\\emoji_candidates.tsv", args[1], args[2]), L"无法删除，请稍后重试。");
+        return phrases_json(store.data_dir() + L"\\emoji_candidates.tsv");
+    }
+    if (command == L"clipboard-agent") {
+        require_count(args, 2);
+        require(args[1] == L"start" || args[1] == L"stop", L"参数无效。");
+        if (args[1] == L"start") start_clipboard_agent(); else stop_clipboard_agent();
+        return std::string("{\"running\":") + (args[1] == L"start" ? "true" : "false") + '}';
+    }
+    if (command == L"clipboard-summary" || command == L"clipboard-clear") {
+        require_count(args, 1);
+        const ClipboardStore clipboard(store.data_dir() + L"\\clipboard");
+        if (command == L"clipboard-clear") require(clipboard.clear(), L"剪贴板记录正被使用，请稍后重试。");
+        return clipboard_summary_json(clipboard);
+    }
+    if (command == L"clipboard-delete") {
+        require_count(args, 2);
+        const std::string id = wide_to_utf8(args[1]);
+        require(ClipboardStore::valid_id(id), L"剪贴板记录不存在。");
+        require(ClipboardStore(store.data_dir() + L"\\clipboard").remove(id), L"剪贴板记录正被使用，请稍后重试。");
+        return "{\"deleted\":true}";
+    }
+    if (command == L"clipboard-paste") {
+        // clipboard-paste <application window> <id>: back on the clipboard
+        // (and to the top of the history), pasted with Ctrl+V.
+        require_count(args, 3);
+        const std::string id = wide_to_utf8(args[2]);
+        require(ClipboardStore::valid_id(id), L"剪贴板记录不存在。");
+        const ClipboardStore clipboard(store.data_dir() + L"\\clipboard");
+        bool image = false, found = false;
+        for (const auto& item : clipboard.read()) if (item.id == id) { found = true; image = item.image; break; }
+        require(found, L"剪贴板记录不存在。");
+        if (image) {
+            CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
+            put_picture_on_clipboard(clipboard.picture_path(id), false);
+        } else {
+            std::wstring text;
+            require(clipboard.full_text(id, &text), L"剪贴板记录不存在。");
+            put_text_on_clipboard(text);
+        }
+        return_to(window_argument(args[1]));
+        Sleep(60);
+        press_paste();
+        return "{\"pasted\":true}";
+    }
+    if (command == L"replace-data") {
+        // replace-data <part> <file>: an imported file into place, under the
+        // lock its writers take; the file is moved, not copied.
+        require_count(args, 3);
+        const auto& kind = args[1];
+        const auto& source = args[2];
+        require(std::filesystem::is_regular_file(std::filesystem::path(source)), L"导入的文件不存在。");
+        require(store.ensure_data_dir(), L"无法创建数据目录。");
+        bool placed = false;
+        if (kind == L"settings") {
+            BridgeFileLock lock(store.settings_path());
+            require(lock.acquired(), L"设置正在保存，请稍后重试。");
+            placed = replace_file(source, store.settings_path());
+            if (placed) notify_options_changed();
+        } else if (kind == L"lexicon") {
+            const auto path = default_user_lexicon_path();
+            BridgeFileLock lock(path);
+            require(lock.acquired(), L"个人词库正在保存，请稍后重试。");
+            placed = replace_file(source, path);
+        } else if (kind == L"learning") {
+            const auto path = store.data_dir() + L"\\user_learning.tsv";
+            NamedFileLock lock(L"Local\\LocalPinyinIME.Learning.", path);
+            require(lock.acquired(), L"选词记录正被使用，请稍后重试。");
+            placed = replace_file(source, path);
+        } else if (kind == L"phrases" || kind == L"emoji") {
+            const auto path = store.data_dir() + (kind == L"phrases" ? L"\\custom_phrases.tsv" : L"\\emoji_candidates.tsv");
+            NamedFileLock lock(L"Local\\LocalPinyinIME.Phrases.", path);
+            require(lock.acquired(), L"输入习惯正被使用，请稍后重试。");
+            placed = replace_file(source, path);
+        } else if (kind == L"clipboard") {
+            placed = ClipboardStore(store.data_dir() + L"\\clipboard").replace_index(source);
+        } else {
+            require(false, L"未知的数据类型。");
+        }
+        require(placed, L"无法写入导入的数据，请检查文件权限。");
+        return "{\"replaced\":true}";
+    }
+    if (command == L"panel-insert") {
+        // panel-insert <input method window> <application window> <token> <text>
+        require_count(args, 5);
+        require(!args[4].empty() && args[4].size() <= 4096, L"内容过长。");
+        const HWND ime = window_argument(args[1]);
+        require(IsWindow(ime) != FALSE, L"原来的输入框已经关闭。");
+        return_to(window_argument(args[2]));
+        const std::wstring payload = args[3] + L"\n" + args[4];
+        COPYDATASTRUCT data{kPanelInsertMessage, static_cast<DWORD>((payload.size() + 1) * sizeof(wchar_t)),
+                            const_cast<wchar_t*>(payload.c_str())};
+        DWORD_PTR accepted = 0;
+        require(SendMessageTimeoutW(ime, WM_COPYDATA, 0, reinterpret_cast<LPARAM>(&data), SMTO_ABORTIFHUNG, 3000, &accepted) &&
+                accepted == 1, L"输入法没有接收，请回到输入框后重试。");
+        return "{\"inserted\":true}";
+    }
+    if (command == L"panel-paste") {
+        // panel-paste <application window> <picture>: pasted with Ctrl+V.
+        require_count(args, 3);
+        require(std::filesystem::is_regular_file(std::filesystem::path(args[2])), L"图片不存在。");
+        CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
+        put_picture_on_clipboard(args[2]);
+        return_to(window_argument(args[1]));
+        Sleep(60);
+        press_paste();
+        return "{\"pasted\":true}";
     }
     if (command == L"clear-learning") {
         require_count(args, 1);

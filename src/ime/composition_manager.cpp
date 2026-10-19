@@ -4,6 +4,7 @@
 #include "../common/logging.h"
 #include "../common/win32_utils.h"
 
+#include <algorithm>
 #include <new>
 #include <utility>
 #include <initguid.h>
@@ -156,8 +157,10 @@ private:
 class CompositionSurroundingTextEditSession final : public ITfEditSession {
 public:
     CompositionSurroundingTextEditSession(CompositionManager* manager, ITfContext* context,
-        std::wstring* text, ITfRange** caret, ITfRange* expected)
-        : manager_(manager), context_(context), text_(text), caret_(caret), expected_(expected) { dll_add_ref(); }
+        std::wstring* text, ITfRange** caret, ITfRange* expected, size_t max_units)
+        : manager_(manager), context_(context), text_(text), caret_(caret), expected_(expected), max_units_(max_units) {
+        dll_add_ref();
+    }
     HRESULT STDMETHODCALLTYPE QueryInterface(REFIID iid, void** out) override {
         if (!out) return E_POINTER;
         *out = nullptr;
@@ -167,7 +170,7 @@ public:
     ULONG STDMETHODCALLTYPE AddRef() override { return InterlockedIncrement(&refs_); }
     ULONG STDMETHODCALLTYPE Release() override { const long n = InterlockedDecrement(&refs_); if (!n) delete this; return n; }
     HRESULT STDMETHODCALLTYPE DoEditSession(TfEditCookie cookie) override {
-        return manager_->do_read_preceding_text(cookie, context_.Get(), text_, caret_, expected_.Get());
+        return manager_->do_read_preceding_text(cookie, context_.Get(), text_, caret_, expected_.Get(), max_units_);
     }
 private:
     ~CompositionSurroundingTextEditSession() { dll_release(); }
@@ -177,6 +180,34 @@ private:
     std::wstring* text_;
     ITfRange** caret_;
     Microsoft::WRL::ComPtr<ITfRange> expected_;
+    size_t max_units_;
+};
+
+class CompositionReplaceEditSession final : public ITfEditSession {
+public:
+    CompositionReplaceEditSession(CompositionManager* manager, ITfContext* context, std::wstring expected,
+                                  std::wstring replacement)
+        : manager_(manager), context_(context), expected_(std::move(expected)), replacement_(std::move(replacement)) {
+        dll_add_ref();
+    }
+    HRESULT STDMETHODCALLTYPE QueryInterface(REFIID iid, void** out) override {
+        if (!out) return E_POINTER;
+        *out = nullptr;
+        if (iid != IID_IUnknown && iid != __uuidof(ITfEditSession)) return E_NOINTERFACE;
+        *out = static_cast<ITfEditSession*>(this); AddRef(); return S_OK;
+    }
+    ULONG STDMETHODCALLTYPE AddRef() override { return InterlockedIncrement(&refs_); }
+    ULONG STDMETHODCALLTYPE Release() override { const long n = InterlockedDecrement(&refs_); if (!n) delete this; return n; }
+    HRESULT STDMETHODCALLTYPE DoEditSession(TfEditCookie cookie) override {
+        return manager_->do_replace_preceding_text(cookie, context_.Get(), expected_, replacement_);
+    }
+private:
+    ~CompositionReplaceEditSession() { dll_release(); }
+    long refs_ = 1;
+    CompositionManager* manager_;
+    Microsoft::WRL::ComPtr<ITfContext> context_;
+    std::wstring expected_;
+    std::wstring replacement_;
 };
 
 namespace {
@@ -321,11 +352,12 @@ HRESULT CompositionManager::caret_rect(ITfContext* context, TfClientId client_id
 }
 
 HRESULT CompositionManager::read_preceding_text(ITfContext* context, TfClientId client_id,
-    std::wstring* text, ITfRange** caret, ITfRange* expected_caret) {
+    std::wstring* text, ITfRange** caret, ITfRange* expected_caret, size_t max_units) {
     if (!context || !text) return E_POINTER;
     text->clear();
     if (caret) *caret = nullptr;
-    auto* session = new (std::nothrow) CompositionSurroundingTextEditSession(this, context, text, caret, expected_caret);
+    auto* session = new (std::nothrow) CompositionSurroundingTextEditSession(this, context, text, caret, expected_caret,
+                                                                              (std::max)(size_t{1}, max_units));
     if (!session) return E_OUTOFMEMORY;
     last_edit_session_result_ = request_readonly_session(context, client_id, session);
     session->Release();
@@ -333,7 +365,7 @@ HRESULT CompositionManager::read_preceding_text(ITfContext* context, TfClientId 
 }
 
 HRESULT CompositionManager::do_read_preceding_text(TfEditCookie cookie, ITfContext* context,
-    std::wstring* text, ITfRange** caret, ITfRange* expected_caret) {
+    std::wstring* text, ITfRange** caret, ITfRange* expected_caret, size_t max_units) {
     using Microsoft::WRL::ComPtr;
     TF_STATUS status{};
     HRESULT hr = context->GetStatus(&status);
@@ -358,41 +390,83 @@ HRESULT CompositionManager::do_read_preceding_text(TfEditCookie cookie, ITfConte
     }
     // Input scope is supplied by the host through the real TSF property. Do
     // not inspect preceding characters before checking for protected fields.
+    // Some hosts cannot report a scope at all (RichEdit answers E_FAIL): they
+    // are read, as password fields put TSF in secure mode anyway.
     ComPtr<ITfReadOnlyProperty> property;
-    hr = context->GetAppProperty(GUID_PROP_INPUTSCOPE, &property);
-    if (FAILED(hr)) return hr;
-    if (property) {
+    if (SUCCEEDED(context->GetAppProperty(GUID_PROP_INPUTSCOPE, &property)) && property) {
         VARIANT value; VariantInit(&value);
-        hr = property->GetValue(cookie, range.Get(), &value);
         bool protected_input = false;
-        if (SUCCEEDED(hr) && value.vt == VT_UNKNOWN && value.punkVal) {
+        if (SUCCEEDED(property->GetValue(cookie, range.Get(), &value)) && value.vt == VT_UNKNOWN && value.punkVal) {
             ComPtr<ITfInputScope> scope;
-            hr = value.punkVal->QueryInterface(IID_PPV_ARGS(&scope));
-            if (SUCCEEDED(hr)) {
+            if (SUCCEEDED(value.punkVal->QueryInterface(IID_PPV_ARGS(&scope)))) {
                 InputScope* values = nullptr; UINT count = 0;
-                hr = scope->GetInputScopes(&values, &count);
-                if (SUCCEEDED(hr)) for (UINT i = 0; i < count; ++i)
+                if (SUCCEEDED(scope->GetInputScopes(&values, &count))) for (UINT i = 0; i < count; ++i)
                     if (values[i] == IS_PASSWORD || values[i] == IS_NUMERIC_PASSWORD) protected_input = true;
                 CoTaskMemFree(values);
             }
         }
         VariantClear(&value);
-        if (FAILED(hr)) return hr;
         if (protected_input) return S_FALSE;
     }
     ComPtr<ITfRange> caret_copy;
     if (caret) { hr = range->Clone(&caret_copy); if (FAILED(hr)) return hr; }
     LONG shifted = 0;
-    hr = range->ShiftStart(cookie, -32, &shifted, nullptr);
+    hr = range->ShiftStart(cookie, -static_cast<LONG>(max_units), &shifted, nullptr);
     if (FAILED(hr)) return hr;
-    wchar_t buffer[32]{}; ULONG copied = 0;
-    hr = range->GetText(cookie, 0, buffer, 32, &copied);
+    std::wstring buffer(max_units, L'\0'); ULONG copied = 0;
+    hr = range->GetText(cookie, 0, buffer.data(), static_cast<ULONG>(max_units), &copied);
     if (FAILED(hr)) return hr;
-    text->assign(buffer, copied);
-    // A 32-unit range may start halfway through an emoji's surrogate pair.
+    text->assign(buffer.data(), copied);
+    // A bounded range may start halfway through an emoji's surrogate pair.
     if (!text->empty() && text->front() >= 0xDC00 && text->front() <= 0xDFFF) text->erase(0, 1);
     if (caret) *caret = caret_copy.Detach();
     return S_OK;
+}
+
+HRESULT CompositionManager::replace_preceding_text(ITfContext* context, TfClientId client_id,
+    const std::wstring& expected, const std::wstring& replacement) {
+    if (!context || expected.empty()) return E_INVALIDARG;
+    auto* session = new (std::nothrow) CompositionReplaceEditSession(this, context, expected, replacement);
+    if (!session) return E_OUTOFMEMORY;
+    last_edit_session_result_ = request_session(context, client_id, session);
+    session->Release();
+    return last_edit_session_result_.effective_hr();
+}
+
+HRESULT CompositionManager::do_replace_preceding_text(TfEditCookie cookie, ITfContext* context,
+    const std::wstring& expected, const std::wstring& replacement) {
+    using Microsoft::WRL::ComPtr;
+    if (composition_) return S_FALSE;
+    TF_SELECTION selection{};
+    ULONG fetched = 0;
+    HRESULT hr = context->GetSelection(cookie, TF_DEFAULT_SELECTION, 1, &selection, &fetched);
+    ComPtr<ITfRange> range;
+    range.Attach(selection.range);
+    if (FAILED(hr)) return hr;
+    if (fetched != 1 || !range) return S_FALSE;
+    BOOL empty = FALSE;
+    hr = range->IsEmpty(cookie, &empty);
+    if (FAILED(hr)) return hr;
+    if (!empty) return S_FALSE;
+    const LONG length = static_cast<LONG>(expected.size());
+    LONG shifted = 0;
+    hr = range->ShiftStart(cookie, -length, &shifted, nullptr);
+    if (FAILED(hr)) return hr;
+    if (shifted != -length) return S_FALSE;
+    std::wstring actual(expected.size() + 1, L'\0');
+    ULONG copied = 0;
+    hr = range->GetText(cookie, 0, actual.data(), static_cast<ULONG>(actual.size()), &copied);
+    if (FAILED(hr)) return hr;
+    actual.resize(copied);
+    if (actual != expected) return S_FALSE;
+    hr = range->SetText(cookie, 0, replacement.c_str(), static_cast<LONG>(replacement.size()));
+    if (FAILED(hr)) return hr;
+    hr = range->Collapse(cookie, TF_ANCHOR_END);
+    if (FAILED(hr)) return hr;
+    TF_SELECTION caret{};
+    caret.range = range.Get();
+    caret.style.ase = TF_AE_NONE;
+    return context->SetSelection(cookie, 1, &caret);
 }
 
 HRESULT CompositionManager::do_set_text(TfEditCookie cookie, ITfContext* context, ITfCompositionSink* sink, const std::wstring& text) {

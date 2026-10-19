@@ -1,6 +1,7 @@
 #include "pinyin_engine.h"
 
 #include "double_pinyin.h"
+#include "input_tools.h"
 #include "pinyin_spelling.h"
 #include "typo_correction.h"
 
@@ -9,6 +10,7 @@
 #include <iterator>
 #include <filesystem>
 #include <cmath>
+#include <ctime>
 #include <unordered_map>
 #include <unordered_set>
 
@@ -446,6 +448,56 @@ void PinyinEngine::open_learning(const std::wstring& user_lexicon_path) {
     if (user_lexicon_path.empty()) return;
     const auto parent = std::filesystem::path(user_lexicon_path).parent_path();
     learning_.open((parent / L"user_learning.tsv").wstring());
+    phrases_.open((parent / L"custom_phrases.tsv").wstring());
+    emoji_.open((parent / L"emoji_candidates.tsv").wstring());
+}
+
+bool PinyinEngine::is_tool_input(const std::wstring& typed) {
+    return typed.size() >= 2 && (typed[0] == L'v' || typed[0] == L'V') && is_tool_text(typed.substr(1));
+}
+
+void PinyinEngine::place_phrases(const std::wstring& pinyin, std::vector<Candidate>& ranked) const {
+    phrases_.refresh_if_changed();
+    const auto& phrases = phrases_.for_pinyin(pinyin);
+    if (phrases.empty()) return;
+    const long long now = static_cast<long long>(std::time(nullptr));
+    // When each phrase was last chosen (or added), latest first.
+    std::vector<std::pair<long long, std::wstring>> latest;
+    for (const auto& phrase : phrases)
+        latest.emplace_back(std::max(phrase.created, learning_.last_selected(pinyin, phrase.text)), phrase.text);
+    std::stable_sort(latest.begin(), latest.end(), [](const auto& left, const auto& right) { return left.first > right.first; });
+    ranked.erase(std::remove_if(ranked.begin(), ranked.end(), [&](const Candidate& candidate) {
+        return std::any_of(latest.begin(), latest.end(), [&](const auto& phrase) { return phrase.second == candidate.text; });
+    }), ranked.end());
+    // The leading candidate holds first place only if chosen after the phrase.
+    const long long leading = !ranked.empty() && learning_.faded_steps(pinyin, ranked.front().text, now) >= 0
+                                  ? learning_.last_selected(pinyin, ranked.front().text) : 0;
+    size_t slot = 0;
+    for (const auto& [time, text] : latest) {
+        const size_t at = std::min(slot == 0 && leading > time ? size_t{1} : slot, ranked.size());
+        Candidate candidate{text, kLearnedPhraseFrequency, 0};
+        ranked.insert(ranked.begin() + static_cast<std::ptrdiff_t>(at), std::move(candidate));
+        slot = at + 1;
+    }
+    if (ranked.size() > kMaxCandidateCount) ranked.resize(kMaxCandidateCount);
+}
+
+void PinyinEngine::place_emoji(const std::wstring& pinyin, std::vector<Candidate>& ranked) const {
+    if (!options_.emoji_candidates || ranked.empty()) return;
+    emoji_.refresh_if_changed();
+    auto emoji = emoji_.for_pinyin(pinyin);
+    if (emoji.empty()) return;
+    std::stable_sort(emoji.begin(), emoji.end(), [](const CustomPhrase& left, const CustomPhrase& right) {
+        return left.created > right.created;
+    });
+    size_t at = std::min<size_t>(2, ranked.size());
+    for (size_t index = 0; index < emoji.size() && index < 2; ++index) {
+        if (std::any_of(ranked.begin(), ranked.end(), [&](const Candidate& candidate) { return candidate.text == emoji[index].text; }))
+            continue;
+        ranked.insert(ranked.begin() + static_cast<std::ptrdiff_t>(at), Candidate{emoji[index].text, kFallbackScore + 1, 0});
+        ++at;
+    }
+    if (ranked.size() > kMaxCandidateCount) ranked.resize(kMaxCandidateCount);
 }
 
 bool PinyinEngine::load_dictionary(const std::wstring& path) {
@@ -542,7 +594,30 @@ std::wstring PinyinEngine::full_pinyin(const std::wstring& typed) const {
 }
 
 std::vector<Candidate> PinyinEngine::lookup(const std::wstring& typed, const std::wstring& preceding_text) const {
-    if (options_.double_pinyin == DoublePinyinScheme::None) return lookup_pinyin(typed, preceding_text, options_);
+    std::tm now{};
+    const std::time_t clock = std::time(nullptr);
+    localtime_s(&now, &clock);
+    if (options_.double_pinyin == DoublePinyinScheme::None) {
+        if (is_tool_input(typed)) {
+            std::vector<Candidate> results;
+            for (const auto& text : tool_results(typed.substr(1), now)) results.push_back(Candidate{text, kFallbackScore + 1, 0});
+            if (results.empty()) results.push_back(Candidate{typed, kFallbackScore, 0});
+            if (results.size() > kMaxCandidateCount) results.resize(kMaxCandidateCount);
+            return results;
+        }
+        auto candidates = lookup_pinyin(typed, preceding_text, options_);
+        const auto key = normalize_input(typed);
+        place_phrases(key, candidates);
+        place_emoji(key, candidates);
+        // sj, rq, xq: the time, date or weekday second, after the usual word.
+        const auto shortcuts = time_shortcuts(key, now);
+        for (size_t index = 0; index < shortcuts.size(); ++index) {
+            const size_t at = std::min(index + 1, candidates.size());
+            candidates.insert(candidates.begin() + static_cast<std::ptrdiff_t>(at), Candidate{shortcuts[index], kFallbackScore + 1, 0});
+        }
+        if (candidates.size() > kMaxCandidateCount) candidates.resize(kMaxCandidateCount);
+        return candidates;
+    }
     // Double pinyin: each key pair is one syllable. Letters mean other things
     // there, so English terms and keyboard corrections stay off; fuzzy pinyin
     // applies to the converted syllables.
@@ -555,6 +630,8 @@ std::vector<Candidate> PinyinEngine::lookup(const std::wstring& typed, const std
         if (candidate.consumed_pinyin)
             candidate.consumed_pinyin = conversion.raw_end[std::min(candidate.consumed_pinyin, conversion.raw_end.size() - 1)];
     }
+    place_phrases(normalize_input(conversion.pinyin), candidates);
+    place_emoji(normalize_input(conversion.pinyin), candidates);
     return candidates;
 }
 
@@ -891,6 +968,7 @@ std::wstring PinyinEngine::display_pinyin(const std::wstring& typed) {
 
 std::wstring PinyinEngine::display_input(const std::wstring& typed) const {
     if (options_.double_pinyin != DoublePinyinScheme::None) return convert_double_pinyin(typed, options_.double_pinyin).pinyin;
+    if (is_tool_input(typed) || (typed == L"v" || typed == L"V")) return typed;
     const std::wstring plain = display_pinyin(typed);
     if (!options_.mixed_english || english_.empty() || plain.find(L'\'') != std::wstring::npos ||
         std::any_of(typed.begin(), typed.end(), [](wchar_t ch) { return ch >= L'A' && ch <= L'Z'; })) return plain;

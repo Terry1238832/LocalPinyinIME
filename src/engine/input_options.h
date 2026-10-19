@@ -49,6 +49,8 @@ struct EngineInputOptions {
     bool mixed_english = true;
     DoublePinyinScheme double_pinyin = DoublePinyinScheme::None;
     unsigned domains = 0;
+    // Emoji used from the tool panel come up third for their names.
+    bool emoji_candidates = true;
 
     friend bool operator==(const EngineInputOptions&, const EngineInputOptions&) = default;
 };

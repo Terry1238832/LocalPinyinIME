@@ -83,7 +83,7 @@ target_link_libraries(pinyin_common PUBLIC user32 gdi32 shell32 shlwapi ole32)
 add_library(pinyin_engine STATIC src/engine/pinyin_engine.cpp src/engine/dictionary.cpp
     src/engine/user_lexicon.cpp src/engine/candidate_ranker.cpp src/engine/user_learning.cpp src/engine/context_model.cpp src/engine/continuation_model.cpp
     src/engine/double_pinyin.cpp src/engine/fuzzy_pinyin.cpp src/engine/english_terms.cpp src/engine/typo_correction.cpp
-    src/engine/domain_lexicon.cpp)
+    src/engine/domain_lexicon.cpp src/engine/custom_phrases.cpp src/engine/input_tools.cpp)
 target_link_libraries(pinyin_engine PUBLIC pinyin_common)
 add_library(pinyin_ui STATIC src/ime/candidate_ui.cpp src/settings/settings_store.cpp src/settings/modern_renderer.cpp
     src/ime/candidate_styles/layout_core.cpp src/ime/candidate_styles/paint_core.cpp
@@ -96,17 +96,27 @@ add_library(pinyin_settings STATIC src/settings/dictionary_catalog.cpp)
 target_link_libraries(pinyin_settings PUBLIC pinyin_ui pinyin_engine comctl32 advapi32)
 add_library(pinyin_service STATIC src/ime/text_service.cpp src/ime/composition_manager.cpp
     src/ime/candidate_ui_element.cpp src/ime/candidate_window.cpp src/ime/runtime_diagnostics.cpp
-    src/ime/language_bar.cpp src/ime/input_mode.cpp src/ime/guids.cpp src/ime/globals.cpp)
-target_link_libraries(pinyin_service PUBLIC pinyin_engine pinyin_ui oleaut32 uuid advapi32)
+    src/ime/language_bar.cpp src/ime/input_mode.cpp src/ime/guids.cpp src/ime/globals.cpp
+    src/ime/online_translation.cpp)
+target_link_libraries(pinyin_service PUBLIC pinyin_engine pinyin_ui oleaut32 uuid advapi32 winhttp)
 add_library(LocalPinyinIME SHARED src/ime/dllmain.cpp src/ime/exports.cpp src/ime/class_factory.cpp
     src/ime/registration.cpp src/ime/LocalPinyinIME.def src/ime/LocalPinyinIME.rc)
 target_link_libraries(LocalPinyinIME PRIVATE pinyin_service)
 localpinyin_add_version_resource(LocalPinyinIME "本地拼音" "LocalPinyinIME.dll" "VFT_DLL")
 localpinyin_copy_dictionary_resource(LocalPinyinIME)
+# The clipboard history shared by its recorder and the settings bridge.
+add_library(pinyin_clipboard STATIC src/clipboard/clipboard_store.cpp)
+target_link_libraries(pinyin_clipboard PUBLIC pinyin_common bcrypt)
 add_executable(LocalPinyinSettingsBridge src/tools/settings_bridge.cpp)
-target_link_libraries(LocalPinyinSettingsBridge PRIVATE pinyin_settings)
+target_link_libraries(LocalPinyinSettingsBridge PRIVATE pinyin_settings pinyin_clipboard windowscodecs ole32 advapi32)
 localpinyin_add_version_resource(LocalPinyinSettingsBridge "本地拼音设置服务" "LocalPinyinSettingsBridge.exe" "VFT_APP")
 localpinyin_copy_dictionary_resource(LocalPinyinSettingsBridge)
+# Records copies for the tool panel while clipboard history is on; reads the
+# words in pictures with Windows.Media.Ocr (C++/WinRT from the Windows SDK).
+add_executable(LocalPinyinClipboard WIN32 src/clipboard/clipboard_agent.cpp)
+target_link_libraries(LocalPinyinClipboard PRIVATE pinyin_clipboard pinyin_ui windowscodecs ole32 shlwapi windowsapp)
+target_compile_options(LocalPinyinClipboard PRIVATE /bigobj /EHsc)
+localpinyin_add_version_resource(LocalPinyinClipboard "本地拼音剪贴板记录" "LocalPinyinClipboard.exe" "VFT_APP")
 add_executable(LocalPinyinImeSetup src/setup/main.cpp src/setup/verify_expected_dll.cpp src/ime/guids.cpp)
 target_link_libraries(LocalPinyinImeSetup PRIVATE ole32 uuid advapi32 shell32)
 localpinyin_add_version_resource(LocalPinyinImeSetup "本地拼音安装工具" "LocalPinyinImeSetup.exe" "VFT_APP")
@@ -158,6 +168,8 @@ if(BUILD_TESTING)
         pinyin_test(${name} pinyin_service)
     endforeach()
     pinyin_test(test_logging pinyin_common)
+    pinyin_test(test_online_translation pinyin_service)
+    pinyin_test(test_clipboard_store pinyin_clipboard)
     pinyin_test(test_chinese_punctuation pinyin_common)
     pinyin_test(test_verify_expected_dll pinyin_common)
     target_sources(test_verify_expected_dll PRIVATE src/setup/verify_expected_dll.cpp)
@@ -208,7 +220,7 @@ if(BUILD_TESTING)
     set_tests_properties(${pinyin_tests} PROPERTIES
         ENVIRONMENT "TEMP=${CMAKE_BINARY_DIR}/test-tmp;TMP=${CMAKE_BINARY_DIR}/test-tmp;LOCALPINYINIME_LOCALAPPDATA=${CMAKE_BINARY_DIR}/test-data")
 endif()
-install(TARGETS LocalPinyinIME LocalPinyinSettingsBridge LocalPinyinImeSetup RUNTIME DESTINATION .)
+install(TARGETS LocalPinyinIME LocalPinyinSettingsBridge LocalPinyinClipboard LocalPinyinImeSetup RUNTIME DESTINATION .)
 install(FILES resources/dictionary/core_zh_pinyin.tsv resources/dictionary/local_core_zh_pinyin.tsv resources/dictionary/context_zh.tsv resources/dictionary/context_zh.lm resources/dictionary/standard_zh_pinyin.tsv resources/dictionary/continuations_zh.tsv resources/dictionary/english_terms.tsv DESTINATION dictionary)
 install(FILES ${localpinyin_domain_sources} DESTINATION dictionary/domains)
 install(FILES resources/THIRD_PARTY_NOTICES.txt DESTINATION .)

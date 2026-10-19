@@ -382,8 +382,8 @@ int main() {
     REQUIRE_EQ(three.panel_rect.top, three.shadow_margin_px);
     REQUIRE_TRUE(three.panel_padding_px == scale_dip(6, three.dpi));
     REQUIRE_TRUE(three.corner_radius == scale_dip(14, three.dpi));
-    REQUIRE_TRUE(three.selected_corner_radius == scale_dip(10, three.dpi));
-    REQUIRE_TRUE(three.chip_corner_radius == scale_dip(7, three.dpi));
+    REQUIRE_TRUE(three.selected_corner_radius == scale_dip(12, three.dpi));
+    REQUIRE_TRUE(three.chip_corner_radius == scale_dip(9, three.dpi));
     REQUIRE_EQ(three.composition_font_px, scale_dip(14, three.dpi));
     REQUIRE_EQ(three.candidate_font_px, scale_dip(18, three.dpi));
     REQUIRE_TRUE(three.candidate_font_px > three.composition_font_px);
@@ -809,7 +809,7 @@ int main() {
             REQUIRE_TRUE(!item.truncated && is_inside(item.bounds, item.text_bounds));
         }
         REQUIRE_TRUE(candidate_paint::is_empty(candidate_marker_target(flap, flap.items[2].candidate_index)));
-        REQUIRE_TRUE(candidate_style_reveals(CandidateStyle::SplitFlap) && !candidate_style_reveals(CandidateStyle::AdaptiveFlow));
+        REQUIRE_TRUE(candidate_style_reveals(CandidateStyle::SplitFlap) && !candidate_style_reveals(CandidateStyle::CursorRail));
         // A long candidate shows fewer tiles and is marked cut.
         const auto long_flap = layout_for({std::wstring(60, L'长'), L"你好"}, middle, make_rect(0, 0, 500, 400), 96, options);
         REQUIRE_TRUE(long_flap.items.front().truncated);
@@ -872,9 +872,52 @@ int main() {
         for (const auto* layout : {&compact, &balanced, &expanded}) {
             REQUIRE_EQ(layout->panel_screen_rect.left + (layout->composition_rect.left - layout->shadow_margin_px), caret.left);
             REQUIRE_EQ(layout->panel_screen_rect.top, balanced.panel_screen_rect.top);
-            REQUIRE_TRUE(candidate_paint::is_empty(candidate_marker_target(*layout, std::nullopt)));
+            // The drop rests on the current choice, hugging its text.
+            const RECT drop = candidate_marker_target(*layout, std::nullopt);
+            const auto& first = layout->items.front();
+            REQUIRE_TRUE(first.featured && !candidate_paint::is_empty(drop) && is_inside(first.bounds, drop));
+            REQUIRE_TRUE(drop.left == first.bounds.left && drop.right > first.text_bounds.left);
         }
         REQUIRE_TRUE(compact.height < balanced.height);
+        // Balanced's large row is longer than its short word: the drop ends
+        // after the text, not at the row's end.
+        {
+            const auto short_first = layout_for({L"你好", L"你好世界啊", L"拟好"}, caret, work);
+            if (short_first.flow_form == CandidateFlowForm::Balanced) {
+                const RECT drop = candidate_marker_target(short_first, std::nullopt);
+                REQUIRE_TRUE(drop.right < short_first.items.front().bounds.right);
+            }
+        }
+        // Compact and Expanded: the drop flows to the candidate under the
+        // pointer; Balanced keeps it on its large row.
+        REQUIRE_TRUE(is_inside(compact.items[2].bounds, candidate_marker_target(compact, compact.items[2].candidate_index)));
+        REQUIRE_TRUE(is_inside(expanded.items[1].bounds, candidate_marker_target(expanded, expanded.items[1].candidate_index)));
+        const RECT balanced_hovered = candidate_marker_target(balanced, balanced.items[2].candidate_index);
+        const RECT balanced_rest = candidate_marker_target(balanced, std::nullopt);
+        REQUIRE_TRUE(EqualRect(&balanced_hovered, &balanced_rest));
+        REQUIRE_TRUE(candidate_style_reveals(CandidateStyle::AdaptiveFlow));
+        REQUIRE_TRUE(candidate_style_motion_ms(CandidateStyle::AdaptiveFlow) > candidate_style_motion_ms(CandidateStyle::CursorRail));
+        // On its way the drop's leading edge runs ahead of an even glide and
+        // its trailing edge behind, so it is longer than either end; it
+        // arrives exactly, from where it started.
+        {
+            const RECT from = make_rect(100, 50, 160, 80);
+            const RECT to = make_rect(260, 50, 300, 80);
+            const RECT start = candidate_marker_frame(CandidateStyle::AdaptiveFlow, from, to, 0.0f);
+            REQUIRE_TRUE(EqualRect(&start, &from));
+            const RECT end = candidate_marker_frame(CandidateStyle::AdaptiveFlow, from, to, 1.0f);
+            REQUIRE_TRUE(EqualRect(&end, &to));
+            const RECT mid = candidate_marker_frame(CandidateStyle::AdaptiveFlow, from, to, 0.35f);
+            REQUIRE_TRUE(mid.right > 160 + (300 - 160) * 35 / 100 && mid.left < 100 + (260 - 100) * 35 / 100);
+            REQUIRE_TRUE(width(mid) > width(from) && width(mid) > width(to));
+            REQUIRE_TRUE(mid.top == 50 && mid.bottom == 80);
+            // Moving left, the left edge leads.
+            const RECT back = candidate_marker_frame(CandidateStyle::AdaptiveFlow, to, from, 0.35f);
+            REQUIRE_TRUE(back.left < 260 - (260 - 100) * 35 / 100 && back.right > 300 - (300 - 160) * 35 / 100);
+            // Other styles glide, both edges together: never longer than either end.
+            const RECT glide = candidate_marker_frame(CandidateStyle::Capsule, from, to, 0.35f);
+            REQUIRE_TRUE(width(glide) <= (std::max)(width(from), width(to)) && width(glide) >= (std::min)(width(from), width(to)));
+        }
     }
 
     // Styles are saved by id; anything unknown falls back to the default.
@@ -894,7 +937,9 @@ int main() {
     REQUIRE_EQ(dark_palette.text, tokens::candidate_flow_dark::kText);
     REQUIRE_EQ(dark_palette.focus_background, tokens::candidate_flow_dark::kFocus);
     REQUIRE_EQ(dark_palette.caret, tokens::candidate_flow_dark::kCaret);
-    REQUIRE_EQ(dark_palette.focus_number_text, RGB(255,255,255));
+    REQUIRE_EQ(dark_palette.focus_number_text, tokens::candidate_flow_dark::kFocusNumber);
+    // Flow's text on its drop is white.
+    REQUIRE_EQ(dark_palette.focus_text, RGB(255, 255, 255));
     const auto light_palette = make_candidate_palette(CandidateThemeMode::Light, false);
     REQUIRE_EQ(light_palette.focus_background, tokens::candidate_flow_light::kFocus);
     REQUIRE_EQ(light_palette.chip_background, tokens::candidate_flow_light::kChip);
@@ -916,8 +961,11 @@ int main() {
         std::sort(backgrounds.begin(), backgrounds.end());
         REQUIRE_TRUE(std::adjacent_find(backgrounds.begin(), backgrounds.end()) == backgrounds.end());
     }
-    // The focus is a tint, edged and marked by the brand caret, not a fill.
-    REQUIRE_TRUE(light_palette.focus_background != light_palette.focus_keycap);
+    // The focus is a drop: a fill shading down to the focus color under white
+    // text, and a light trace where the current choice is while it is away.
+    REQUIRE_TRUE(light_palette.focus_top != light_palette.focus_background);
+    REQUIRE_EQ(light_palette.focus_text, RGB(255, 255, 255));
+    REQUIRE_TRUE(light_palette.focus_border != light_palette.background);
     REQUIRE_TRUE(light_palette.focus_border != light_palette.focus_background);
     REQUIRE_EQ(light_palette.focus_bar, light_palette.caret);
     REQUIRE_EQ(dark_palette.focus_bar, dark_palette.caret);

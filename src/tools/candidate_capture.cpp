@@ -29,6 +29,10 @@ public:
         // A moment of the new-content animation (turning tiles, a swipe being
         // drawn), as if the popup had just appeared from nothing.
         std::optional<ULONGLONG> reveal_ms;
+        // The focus partway (0 to 1, in time) through a move from this page
+        // slot to where it rests (the hovered slot, or the current choice).
+        std::optional<size_t> move_from;
+        float move_t = 1.0f;
     };
 
     // Shows the real layered popup for a moment and copies that screen area,
@@ -90,6 +94,10 @@ public:
             window.selected_index_ = window.layout_.page_indices.back();
             window.page_indices_ = window.layout_.page_indices;
             window.layout_ = make_candidate_layout(window.layout_input(scene.dpi, work));
+        }
+        if (scene.move_from && *scene.move_from < window.layout_.items.size()) {
+            const RECT from = candidate_marker_target(window.layout_, window.layout_.items[*scene.move_from].candidate_index);
+            window.motion_frozen_ = std::make_pair(from, scene.move_t);
         }
         if (scene.hover && *scene.hover < window.layout_.items.size())
             window.candidate_pointer_.move(window.layout_.items[*scene.hover].candidate_index);
@@ -215,6 +223,16 @@ int wmain(int argc, wchar_t** argv) {
             for (const ULONGLONG ms : {60, 120, 200}) {
                 scenes.push_back({name + L"-reveal-" + std::to_wstring(ms), style, false, 144, 4, 1920, false,
                                   L"ni'hao'shi'jie", sentence, false, std::nullopt, ms});
+            }
+        }
+        if (style == CandidateStyle::AdaptiveFlow) {
+            // The drop on its way: along a row of short words, and down the rows of sentences.
+            for (const float t : {0.15f, 0.3f, 0.5f, 0.75f}) {
+                const std::wstring at = std::to_wstring(static_cast<int>(t * 100));
+                scenes.push_back({name + L"-move-row-" + at, style, false, 144, 4, 1920, false, L"ni", single, false,
+                                  size_t{4}, std::nullopt, size_t{0}, t});
+                scenes.push_back({name + L"-move-rows-" + at, style, true, 144, 4, 1920, false,
+                                  L"ce'shi'yi'ge'hen'chang'de'pin'yin", long_list, false, size_t{3}, std::nullopt, size_t{0}, t});
             }
         }
     }

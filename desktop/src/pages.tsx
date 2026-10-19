@@ -8,6 +8,8 @@ import { KeyDemo, TypingDemo } from './FeatureDemo';
 import { usePageCommand } from './CommandPalette';
 import type { AppState, CandidateStyle, Settings, Theme, UpdateStatus } from './types';
 import { UpdatePanel } from './Updates';
+import { Habits } from './PanelPage';
+import { BackupSection } from './Backup';
 
 const fontSizes = [14, 16, 17, 18, 20, 22, 24];
 type SettingsPageProps = { state: AppState; saving: boolean; saveSettings: (settings: Settings) => Promise<void> };
@@ -43,7 +45,6 @@ export function AppearancePage({ state, saving, saveSettings }: SettingsPageProp
   };
   return <>
     <PageHeader kicker="wai'guan" title="外观" description="候选窗口的样子，所见即所得。" action={<SaveStatus saving={saving} />} />
-    <StyleGallery value={candidateStyle} disabled={saving} onChoose={chooseStyle} />
     <section className="studio" aria-label="候选窗口">
       <div className="stage">
         <div className="stage-scene">
@@ -80,6 +81,7 @@ export function AppearancePage({ state, saving, saveSettings }: SettingsPageProp
         </div>
       </div>
     </section>
+    <StyleGallery value={candidateStyle} disabled={saving} onChoose={chooseStyle} />
   </>;
 }
 
@@ -106,10 +108,18 @@ export function InputPage({ state, saving, saveSettings }: SettingsPageProps) {
         demo={<KeyDemo before="hello" keys={['Ctrl', 'Space']} modes={['中', '英']} />}><SettingStatus>始终开启</SettingStatus></SettingRow>
     </SettingsGroup>
     <SettingsGroup id="group-candidates" title="候选">
-      <SettingRow title="联想下一个词" description="词语上屏后显示接下来可能输入的词：Tab 接受，Esc 关闭。"
+      <SettingRow title="联想下一个词" description={settings.tabTranslate
+          ? 'Tab 键现在用来翻译，联想不显示；关掉下面的“Tab 键翻译成英文”后恢复。'
+          : '词语上屏后显示接下来可能输入的词：Tab 接受，Esc 关闭。'}
         demo={<TypingDemo before="你好" keys="" candidates={['世界', '朋友', '呀']} after="世界" />}>
-        <Switch checked={settings.predictionEnabled} disabled={saving} label="联想下一个词"
-          onChange={predictionEnabled => void saveSettings({ ...settings, predictionEnabled })} />
+        <Switch checked={settings.predictionEnabled && !settings.tabTranslate} disabled={saving || settings.tabTranslate}
+          label="联想下一个词" onChange={predictionEnabled => void saveSettings({ ...settings, predictionEnabled })} />
+      </SettingRow>
+      <SettingRow title="Tab 键翻译成英文"
+        description="按 Tab，把刚打出的中文翻译成英文并替换原文；还在打拼音时按 Tab，先上屏再翻译。需要联网：只在按 Tab 时把这段文字发给谷歌翻译，其余输入始终只在本机。密码框里不翻译。"
+        demo={<KeyDemo before="我想吃饭" keys={['Tab']} output=" → I want to eat" />}>
+        <Switch checked={settings.tabTranslate} disabled={saving} label="Tab 键翻译成英文"
+          onChange={tabTranslate => void saveSettings({ ...settings, tabTranslate })} />
       </SettingRow>
       <SettingRow title="根据前文排列候选" description="参考光标前的文字为同音词排序，例如“他跑”之后输入 de，首选是“得”。"
         demo={<TypingDemo before="他跑" keys="de" candidates={['得', '的', '地']} after="得" />}>
@@ -162,7 +172,7 @@ export function LearningPage({ state, onState, notify }: { state: AppState; onSt
         </li>
         <li>
           <span className="flow-memory" aria-hidden="true"><Icon name="history" size={18} /><b>annui → 按钮</b></span>
-          <strong><span className="flow-step">2</span>记住这次选择</strong><span>最近选过的最优先，其次看次数</span>
+          <strong><span className="flow-step">2</span>记住这次选择</strong><span>不常用会慢慢往后，隔一段时间又用记得更久</span>
         </li>
         <li>
           <MiniCandidates pinyin="annui" words={['按钮', '安徽']} selected={0} />
@@ -170,6 +180,7 @@ export function LearningPage({ state, onState, notify }: { state: AppState; onSt
         </li>
       </ol>
     </section>
+    <Habits notify={notify} />
     <section className="danger-zone">
       <div><h3>清除学习记录<InfoButton label="清除学习记录" open={resetInfo} controls={resetInfoId} onToggle={setResetInfo} /></h3>
         <p id={resetInfoId} hidden={!resetInfo}>候选顺序恢复到初始状态，个人词库会保留。清除后，正在运行的程序需要重新打开。</p></div>
@@ -179,7 +190,7 @@ export function LearningPage({ state, onState, notify }: { state: AppState; onSt
   </>;
 }
 
-export function AboutPage({ state, update }: { state: AppState; update: UpdateStatus | null }) {
+export function AboutPage({ state, update, notify }: { state: AppState; update: UpdateStatus | null; notify: (message: string) => void }) {
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const activeSession = state.runtime.available && state.runtime.active;
@@ -210,16 +221,17 @@ export function AboutPage({ state, update }: { state: AppState; update: UpdateSt
       <div><dt>学习记录</dt><dd>{formatNumber(state.learning.count)}<span>条</span></dd></div>
     </dl>
     <section className="data-location about-data-footer">
-      <div className="data-copy"><span className="eyebrow"><Icon name="folder" size={14} />数据位置</span><span className="data-path" title={state.dataDirectory}>{state.dataDirectory}</span><p>个人词库、设置与学习记录都保存在这个文件夹。</p></div>
+      <div className="data-copy"><span className="eyebrow"><Icon name="folder" size={14} />数据位置</span><span className="data-path" title={state.dataDirectory}>{state.dataDirectory}</span><p>个人词库、设置、学习记录、表情包和剪贴板记录都保存在这个文件夹。</p></div>
       <button className="button secondary" disabled={pending} onClick={() => void openFolder()}><Icon name="folder" size={15} />{pending ? '正在打开…' : '打开数据文件夹'}</button>
     </section>
     </div>
     <ErrorNotice message={error} />
     </div>
+    <BackupSection notify={notify} />
     <UpdatePanel status={update} />
     <section className="credits">
       <h2 className="block-title">致谢</h2>
-      <p>前文语言模型的统计数据来自 Tatoeba（CC BY 2.0 FR）、中文维基新闻（CC BY 2.5）、Mozilla Common Voice 句子（CC0）和项目原创语料；只包含字词组合的统计数据，不包含原文。标准词库源自 Rime 拼音词库（Apache-2.0），常用词与字参考了 jieba 词频表（MIT）与 Unicode Unihan 数据。设置界面使用 Electron 与 React（MIT）。</p>
+      <p>前文语言模型的统计数据来自 Tatoeba（CC BY 2.0 FR）、中文维基新闻（CC BY 2.5）、Mozilla Common Voice 句子（CC0）和项目原创语料；只包含字词组合的统计数据，不包含原文。标准词库源自 Rime 拼音词库（Apache-2.0），常用词与字参考了 jieba 词频表（MIT）与 Unicode Unihan 数据。工具面板的表情、符号中文名来自 Unicode CLDR 与 Unicode 表情数据（Unicode License v3），颜文字来自 emoticon-data（MIT）。设置界面使用 Electron 与 React（MIT）。</p>
     </section>
   </>;
 }

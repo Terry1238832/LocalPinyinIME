@@ -226,8 +226,21 @@ InputModeOptions SettingsStore::load_input_mode_options() const {
     // digit follow the old combined switch.
     options.digit_punctuation = parse_bool(setting_value(text, L"digitPunctuation"), options.digit_period);
     options.letter_punctuation = parse_bool(setting_value(text, L"letterPunctuation"), options.letter_punctuation);
+    // Added in 0.18; off until the user turns it on.
+    options.tab_translate = parse_bool(setting_value(text, L"tabTranslate"), false);
+    // Added in 0.19.
+    options.panel_double_tab = parse_bool(setting_value(text, L"panelDoubleTab"), true);
+    options.panel_resident = parse_bool(setting_value(text, L"panelResident"), false);
+    const std::wstring clipboard = setting_value(text, L"clipboardHistory");
+    options.clipboard_history = clipboard == L"on" ? InputModeOptions::ClipboardHistory::On
+                              : clipboard == L"off" ? InputModeOptions::ClipboardHistory::Off
+                                                    : InputModeOptions::ClipboardHistory::Ask;
+    options.clipboard_retention_days = std::min<unsigned long>(
+        parse_ulong(setting_value(text, L"clipboardRetentionDays"), 7), 3650);
     // Added in 0.14: no usage scene until the user chooses some.
     options.engine.domains = parse_usage_domains(setting_value(text, L"usageDomains"));
+    // Added in 0.19.
+    options.engine.emoji_candidates = parse_bool(setting_value(text, L"emojiCandidates"), true);
     return options;
 }
 
@@ -290,6 +303,8 @@ bool SettingsStore::save_options(const CandidateWindowOptions& candidate_options
     text += L",\n    \"fuzzyPinyin\": \"" + fuzzy_pinyin_to_string(input_mode_options.engine.fuzzy) + L"\"";
     text += L",\n    \"doublePinyin\": \"" + double_pinyin_to_string(input_mode_options.engine.double_pinyin) + L"\"";
     text += L",\n    \"usageDomains\": \"" + usage_domains_to_string(input_mode_options.engine.domains) + L"\"";
+    text += L",\n    \"emojiCandidates\": ";
+    text += input_mode_options.engine.emoji_candidates ? L"true" : L"false";
     text += L",\n    \"digitPeriod\": ";
     text += input_mode_options.digit_period ? L"true" : L"false";
     text += L",\n    \"digitPunctuation\": ";
@@ -298,6 +313,16 @@ bool SettingsStore::save_options(const CandidateWindowOptions& candidate_options
     text += input_mode_options.letter_punctuation ? L"true" : L"false";
     text += L",\n    \"codePunctuation\": ";
     text += input_mode_options.code_punctuation ? L"true" : L"false";
+    text += L",\n    \"tabTranslate\": ";
+    text += input_mode_options.tab_translate ? L"true" : L"false";
+    text += L",\n    \"panelDoubleTab\": ";
+    text += input_mode_options.panel_double_tab ? L"true" : L"false";
+    text += L",\n    \"panelResident\": ";
+    text += input_mode_options.panel_resident ? L"true" : L"false";
+    text += L",\n    \"clipboardHistory\": \"";
+    text += input_mode_options.clipboard_history == InputModeOptions::ClipboardHistory::On ? L"on"
+          : input_mode_options.clipboard_history == InputModeOptions::ClipboardHistory::Off ? L"off" : L"ask";
+    text += L"\",\n    \"clipboardRetentionDays\": " + std::to_wstring(input_mode_options.clipboard_retention_days);
     text += L"\n";
     text += L"  }\n";
     text += L"}\n";

@@ -54,6 +54,7 @@ bool ModernRenderer::begin(HDC dc, const RECT& bounds, bool premultiplied_alpha)
 
 void ModernRenderer::finish() {
     if (!drawing_) return;
+    while (!layers_.empty()) pop_layer();
     drawing_ = false;
     const HRESULT result = active_->target->EndDraw();
     if (result == D2DERR_RECREATE_TARGET) {
@@ -112,19 +113,80 @@ void ModernRenderer::ellipse(float x, float y, float rx, float ry, COLORREF valu
     color(value);
     active_->target->FillEllipse(D2D1::Ellipse(D2D1::Point2F(x, y), rx, ry), active_->brush.Get());
 }
-void ModernRenderer::polygon(const std::vector<D2D1_POINT_2F>& points, COLORREF value, float opacity) {
-    if (points.size() < 3) return;
-    Microsoft::WRL::ComPtr<ID2D1PathGeometry> path;
+Microsoft::WRL::ComPtr<ID2D1PathGeometry> ModernRenderer::path(const std::vector<D2D1_POINT_2F>& points) {
+    Microsoft::WRL::ComPtr<ID2D1PathGeometry> geometry;
     Microsoft::WRL::ComPtr<ID2D1GeometrySink> sink;
-    if (FAILED(factory_->CreatePathGeometry(&path)) || FAILED(path->Open(&sink))) return;
+    if (points.size() < 3 || FAILED(factory_->CreatePathGeometry(&geometry)) || FAILED(geometry->Open(&sink))) return {};
     sink->BeginFigure(points.front(), D2D1_FIGURE_BEGIN_FILLED);
     sink->AddLines(points.data() + 1, static_cast<UINT32>(points.size() - 1));
     sink->EndFigure(D2D1_FIGURE_END_CLOSED);
-    if (FAILED(sink->Close())) return;
+    if (FAILED(sink->Close())) return {};
+    return geometry;
+}
+void ModernRenderer::polygon(const std::vector<D2D1_POINT_2F>& points, COLORREF value, float opacity) {
+    const auto geometry = path(points);
+    if (!geometry) return;
     color(value);
     active_->brush->SetOpacity(opacity);
-    active_->target->FillGeometry(path.Get(), active_->brush.Get());
+    active_->target->FillGeometry(geometry.Get(), active_->brush.Get());
     active_->brush->SetOpacity(1.0f);
+}
+void ModernRenderer::polygon_gradient(const std::vector<D2D1_POINT_2F>& points, COLORREF top, COLORREF bottom,
+                                      float top_y, float bottom_y, float opacity) {
+    const auto geometry = path(points);
+    if (!geometry) return;
+    const auto rgba = [](COLORREF value) {
+        return D2D1::ColorF(GetRValue(value) / 255.0f, GetGValue(value) / 255.0f, GetBValue(value) / 255.0f, 1.0f);
+    };
+    const D2D1_GRADIENT_STOP stops[] = {{0.0f, rgba(top)}, {1.0f, rgba(bottom)}};
+    Microsoft::WRL::ComPtr<ID2D1GradientStopCollection> collection;
+    Microsoft::WRL::ComPtr<ID2D1LinearGradientBrush> brush;
+    if (FAILED(active_->target->CreateGradientStopCollection(stops, 2, &collection)) ||
+        FAILED(active_->target->CreateLinearGradientBrush(
+            D2D1::LinearGradientBrushProperties(D2D1::Point2F(0, top_y), D2D1::Point2F(0, bottom_y)),
+            collection.Get(), &brush))) {
+        polygon(points, bottom, opacity);
+        return;
+    }
+    brush->SetOpacity(opacity);
+    active_->target->FillGeometry(geometry.Get(), brush.Get());
+}
+void ModernRenderer::push_layer(const std::vector<D2D1_POINT_2F>& shape, float opacity) {
+    Microsoft::WRL::ComPtr<ID2D1Layer> layer;
+    if (FAILED(active_->target->CreateLayer(nullptr, &layer))) return;
+    auto mask = shape.empty() ? Microsoft::WRL::ComPtr<ID2D1PathGeometry>{} : path(shape);
+    active_->target->PushLayer(D2D1::LayerParameters(D2D1::InfiniteRect(), mask.Get(), D2D1_ANTIALIAS_MODE_PER_PRIMITIVE,
+                                                     D2D1::IdentityMatrix(), std::clamp(opacity, 0.0f, 1.0f)),
+                               layer.Get());
+    layers_.emplace_back(std::move(layer), std::move(mask));
+}
+void ModernRenderer::push_layer_outside(const std::vector<D2D1_POINT_2F>& hole, const RECT& area) {
+    Microsoft::WRL::ComPtr<ID2D1PathGeometry> mask;
+    Microsoft::WRL::ComPtr<ID2D1GeometrySink> sink;
+    Microsoft::WRL::ComPtr<ID2D1Layer> layer;
+    if (hole.size() < 3 || FAILED(factory_->CreatePathGeometry(&mask)) || FAILED(mask->Open(&sink)) ||
+        FAILED(active_->target->CreateLayer(nullptr, &layer))) return;
+    // Two figures filled alternately: the area with the hole cut out.
+    sink->SetFillMode(D2D1_FILL_MODE_ALTERNATE);
+    const D2D1_POINT_2F corners[] = {{static_cast<float>(area.left), static_cast<float>(area.top)},
+                                     {static_cast<float>(area.right), static_cast<float>(area.top)},
+                                     {static_cast<float>(area.right), static_cast<float>(area.bottom)},
+                                     {static_cast<float>(area.left), static_cast<float>(area.bottom)}};
+    sink->BeginFigure(corners[0], D2D1_FIGURE_BEGIN_FILLED);
+    sink->AddLines(corners + 1, 3);
+    sink->EndFigure(D2D1_FIGURE_END_CLOSED);
+    sink->BeginFigure(hole.front(), D2D1_FIGURE_BEGIN_FILLED);
+    sink->AddLines(hole.data() + 1, static_cast<UINT32>(hole.size() - 1));
+    sink->EndFigure(D2D1_FIGURE_END_CLOSED);
+    if (FAILED(sink->Close())) return;
+    active_->target->PushLayer(D2D1::LayerParameters(D2D1::InfiniteRect(), mask.Get(), D2D1_ANTIALIAS_MODE_PER_PRIMITIVE),
+                               layer.Get());
+    layers_.emplace_back(std::move(layer), std::move(mask));
+}
+void ModernRenderer::pop_layer() {
+    if (layers_.empty()) return;
+    active_->target->PopLayer();
+    layers_.pop_back();
 }
 void ModernRenderer::line(float x1, float y1, float x2, float y2, COLORREF value, float stroke) {
     color(value);

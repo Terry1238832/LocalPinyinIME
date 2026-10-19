@@ -33,6 +33,12 @@ struct CandidatePaintState {
     // Where the style's moving focus is drawn this frame (animated by the
     // window from one candidate_marker_target to the next).
     RECT marker{};
+    // The move that frame belongs to, for styles that shape their focus
+    // along the way (Flow's drop stretches): from, to, and how far along,
+    // 0 to 1 in time (1 at rest).
+    RECT marker_from{};
+    RECT marker_to{};
+    float marker_progress = 1.0f;
     // Cursor Rail's page segment, animated the same way.
     RECT track_marker{};
     // How long ago the visible candidates changed, and what each slot showed
@@ -59,6 +65,12 @@ RECT candidate_marker_target(const CandidateLayoutResult& layout, std::optional<
 RECT candidate_track_target(const CandidateLayoutResult& layout);
 // Whether the style animates new content (the window then runs its clock).
 bool candidate_style_reveals(CandidateStyle style) noexcept;
+// How long the style's focus takes to move to a new target.
+ULONGLONG candidate_style_motion_ms(CandidateStyle style) noexcept;
+// The rect the moving focus covers `t` (0 to 1, in time) into a move: an
+// eased step for most styles; Flow's leading edge runs ahead of its trailing
+// one. A move retargeted midway starts from here.
+RECT candidate_marker_frame(CandidateStyle style, const RECT& from, const RECT& to, float t) noexcept;
 
 namespace candidate_paint {
 
@@ -101,6 +113,9 @@ void paint_column_list(const CandidatePaintContext& context);
 void paint_split_flap(const CandidatePaintContext& context);
 void paint_highlighter(const CandidatePaintContext& context);
 
+RECT marker_adaptive_flow(const CandidateLayoutResult& layout, std::optional<size_t> hovered);
+// Flow's drop `t` into a move from `from` to `to`.
+RECT flow_drop_frame(const RECT& from, const RECT& to, float t) noexcept;
 RECT marker_cursor_rail(const CandidateLayoutResult& layout, std::optional<size_t> hovered);
 RECT marker_modern_type(const CandidateLayoutResult& layout, std::optional<size_t> hovered);
 RECT marker_floating_glass(const CandidateLayoutResult& layout, std::optional<size_t> hovered);

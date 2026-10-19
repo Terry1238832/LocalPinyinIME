@@ -205,16 +205,15 @@ kbd { display: inline-grid; place-items: center; min-width: 24px; height: 24px; 
 .mini-candidates { display: inline-flex; flex-direction: column; gap: 3px; padding: 0 4px 4px; border: 1px solid var(--cand-border); border-radius: 10px; background: var(--cand-background); box-shadow: inset 0 0 0 1px var(--cand-inner-edge), var(--shadow-sm); font-size: 13px; line-height: 1; }
 .mini-candidates:not(:has(.mini-query)) { padding-top: 4px; }
 .mini-query { display: flex; align-items: center; gap: 5px; height: 21px; padding: 0 3px; color: var(--cand-composition); font: 11px/1 var(--font-sans); letter-spacing: .02em; }
-.mini-mark { display: grid; place-items: center; width: 12px; height: 12px; border-radius: 3px; background: var(--cand-mark); color: #fff; font: 700 8px/1 var(--font-sans); letter-spacing: 0; }
+.mini-mark { position: relative; width: 9px; height: 9px; margin: 2px 2px 0; border-radius: 50% 0 50% 50%; background: linear-gradient(45deg, var(--cand-mark), var(--cand-focus-top)); transform: rotate(-45deg); }
 .mini-pinyin { display: inline-flex; align-items: center; }
 .mini-pinyin i { width: 1.5px; height: 10px; margin-left: 2px; background: var(--cand-caret); }
-.mini-focus { position: relative; display: flex; align-items: center; gap: 6px; padding: 5px 12px 5px 8px; border-radius: 6px; background: var(--cand-focus); box-shadow: inset 0 0 0 1px var(--cand-focus-edge); color: var(--cand-text); font-size: 15px; white-space: nowrap; }
-.mini-focus::before { content: ""; position: absolute; left: 1px; top: 28%; bottom: 28%; width: 2px; border-radius: 1px; background: var(--cand-focus-bar); }
+.mini-focus { display: flex; align-items: center; gap: 6px; padding: 5px 12px 5px 8px; border-radius: 9px; background: linear-gradient(180deg, var(--cand-focus-top), var(--cand-focus)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .3), 0 4px 10px -5px var(--cand-focus); color: var(--cand-focus-text); font-size: 15px; white-space: nowrap; }
 .mini-chips { display: flex; gap: 3px; }
-.mini-chip { display: inline-flex; align-items: center; gap: 4px; padding: 3px 7px 3px 3px; border-radius: 5px; background: var(--cand-chip); box-shadow: inset 0 0 0 1px var(--cand-chip-edge); color: var(--cand-text); white-space: nowrap; }
-.mini-chip.chosen { background: var(--cand-focus); box-shadow: inset 0 0 0 1.5px var(--cand-focus-bar); }
-.mini-candidates b { display: inline-grid; place-items: center; width: 13px; height: 13px; border-radius: 3px; background: var(--cand-keycap); color: var(--cand-number); font: 500 9px/1 var(--font-sans); }
-.mini-focus b { background: var(--cand-focus-keycap); color: var(--cand-focus-number); }
+.mini-chip { display: inline-flex; align-items: center; gap: 4px; padding: 3px 7px 3px 3px; border-radius: 7px; color: var(--cand-text); white-space: nowrap; }
+.mini-chip.chosen { background: var(--cand-focus-edge); box-shadow: inset 0 0 0 1.5px var(--cand-focus-bar); }
+.mini-candidates b { display: inline-grid; place-items: center; width: 13px; height: 13px; color: var(--cand-number); font: 600 9px/1 var(--font-sans); }
+.mini-focus b { color: var(--cand-focus-number); }
 
 /* ── 外观: a lit stage with an inspector ───────────────────────────────────
    Below 1180 px of content the inspector docks under the stage; wider, it

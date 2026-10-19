@@ -8,7 +8,9 @@ import brandSmall from '../../assets/branding/icon/small/LocalPinyinIME-40.png';
 export type IconName = 'appearance' | 'input' | 'dictionary' | 'learning' | 'about' | 'sun' | 'moon' | 'monitor'
   | 'chevron' | 'search' | 'plus' | 'edit' | 'trash' | 'folder' | 'check' | 'close' | 'minimize' | 'maximize'
   | 'shield' | 'arrow' | 'keyboard' | 'spark' | 'reset' | 'warning' | 'text' | 'context' | 'switch' | 'database'
-  | 'info' | 'command' | 'layers' | 'user' | 'gear' | 'enter' | 'history' | 'cursor';
+  | 'info' | 'command' | 'layers' | 'user' | 'gear' | 'enter' | 'history' | 'cursor'
+  | 'tools' | 'clipboard' | 'omega' | 'kaomoji' | 'smile' | 'sticker' | 'star' | 'pin' | 'image' | 'calendar' | 'upload'
+  | 'download' | 'panel';
 
 const paths: Record<IconName, ReactNode> = {
   appearance: <><circle cx="12" cy="12" r="8.25" /><path d="M12 3.75a8.25 8.25 0 0 1 0 16.5Z" fill="currentColor" stroke="none" /></>,
@@ -47,6 +49,19 @@ const paths: Record<IconName, ReactNode> = {
   enter: <><path d="M19.5 5.5v6a3 3 0 0 1-3 3H5" /><path d="m9 10.5-4 4 4 4" /></>,
   history: <><path d="M3.75 12a8.25 8.25 0 1 0 2.5-5.9" /><path d="M3.75 4.5v3.75H7.5" /><path d="M12 8v4.25l2.75 1.75" /></>,
   cursor: <><path d="M12 5v14M9 5h6M9 19h6" /></>,
+  tools: <><rect x="4.5" y="3.5" width="15" height="17" rx="2.5" /><path d="M8 7.5h8M8 11.5h.01M12 11.5h.01M16 11.5h.01M8 15h.01M12 15h.01M8 17.5h.01M12 17.5h.01M16 15v2.5" /></>,
+  clipboard: <><path d="M9 4.5H7.25A2.25 2.25 0 0 0 5 6.75v11.5a2.25 2.25 0 0 0 2.25 2.25h9.5A2.25 2.25 0 0 0 19 18.25V6.75a2.25 2.25 0 0 0-2.25-2.25H15" /><rect x="9" y="3" width="6" height="3.25" rx="1.1" /><path d="M8.75 11h6.5M8.75 14.5h4.5" /></>,
+  omega: <path d="M5 19.25h4.25v-2.1A6.25 6.25 0 0 1 12 5.25a6.25 6.25 0 0 1 2.75 11.9v2.1H19" />,
+  kaomoji: <><path d="M6.25 5.5C4.5 7.25 3.75 9.5 3.75 12s.75 4.75 2.5 6.5M17.75 5.5c1.75 1.75 2.5 4 2.5 6.5s-.75 4.75-2.5 6.5" /><path d="m8.25 10 1.5 1.25-1.5 1.25M15.75 10l-1.5 1.25 1.5 1.25M10.5 15.25c1 .75 2 .75 3 0" /></>,
+  smile: <><circle cx="12" cy="12" r="8.25" /><path d="M8.5 14c.9 1.4 2.1 2.1 3.5 2.1s2.6-.7 3.5-2.1" /><circle cx="9" cy="10" r=".95" fill="currentColor" stroke="none" /><circle cx="15" cy="10" r=".95" fill="currentColor" stroke="none" /></>,
+  sticker: <><path d="M20.25 12.5V6.25a2.5 2.5 0 0 0-2.5-2.5H6.25a2.5 2.5 0 0 0-2.5 2.5v11.5a2.5 2.5 0 0 0 2.5 2.5h6.25Z" /><path d="M20.25 12.5h-5.25a2.5 2.5 0 0 0-2.5 2.5v5.25" /><circle cx="9" cy="9.5" r=".95" fill="currentColor" stroke="none" /><circle cx="15" cy="9.5" r=".95" fill="currentColor" stroke="none" /></>,
+  star: <path d="m12 3.75 2.5 5.1 5.6.8-4.05 3.95.95 5.6L12 16.55 7 19.2l.95-5.6L3.9 9.65l5.6-.8Z" />,
+  pin: <><path d="M9.25 3.75h5.5M10 3.75v5.5L7 13h10l-3-3.75v-5.5" /><path d="M12 13v7.25" /></>,
+  image: <><rect x="3.75" y="4.75" width="16.5" height="14.5" rx="2.5" /><circle cx="9" cy="9.75" r="1.5" /><path d="m4.5 17 4.75-4.25 3.5 3 2.75-2.25 4.25 3.5" /></>,
+  calendar: <><rect x="3.75" y="5" width="16.5" height="15" rx="2.5" /><path d="M3.75 9.75h16.5M8 3v4M16 3v4" /></>,
+  upload: <><path d="M12 15.5V4.5m-4.25 4.25L12 4.5l4.25 4.25" /><path d="M4.5 14.5v2.75a2.25 2.25 0 0 0 2.25 2.25h10.5a2.25 2.25 0 0 0 2.25-2.25V14.5" /></>,
+  download: <><path d="M12 4.5v11m-4.25-4.25L12 15.5l4.25-4.25" /><path d="M4.5 14.5v2.75a2.25 2.25 0 0 0 2.25 2.25h10.5a2.25 2.25 0 0 0 2.25-2.25V14.5" /></>,
+  panel: <><rect x="3" y="4.5" width="18" height="15" rx="2.75" /><path d="M8.5 4.5v15M11.5 9h6M11.5 12.5h6M11.5 16h3.5" /></>,
 };
 
 export function Icon({ name, size = 20, style, className }: { name: IconName; size?: number; style?: CSSProperties; className?: string }) {

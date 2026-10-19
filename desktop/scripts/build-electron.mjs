@@ -1,4 +1,4 @@
 import { build } from 'esbuild';
-await build({ entryPoints: ['electron/main.ts', 'electron/preload.ts'], outdir: 'electron',
+await build({ entryPoints: ['electron/main.ts', 'electron/preload.ts', 'electron/panel-preload.ts'], outdir: 'electron',
   outExtension: { '.js': '.cjs' }, bundle: true, platform: 'node', format: 'cjs',
   target: 'node22', external: ['electron'], minify: true, sourcemap: false });

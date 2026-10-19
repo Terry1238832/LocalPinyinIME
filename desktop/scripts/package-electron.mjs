@@ -17,7 +17,7 @@ await rm(stage, { recursive: true, force: true });
 await mkdir(stage, { recursive: true });
 await cp(path.join(desktop, 'dist'), path.join(stage, 'dist'), { recursive: true });
 await mkdir(path.join(stage, 'electron'), { recursive: true });
-for (const name of ['main.cjs','preload.cjs']) await cp(path.join(desktop, 'electron', name), path.join(stage, 'electron', name));
+for (const name of ['main.cjs','preload.cjs','panel-preload.cjs']) await cp(path.join(desktop, 'electron', name), path.join(stage, 'electron', name));
 const meta = JSON.parse(await readFile(path.join(desktop, 'package.json'), 'utf8'));
 const checksums = JSON.parse(await readFile(path.join(desktop, 'node_modules/electron/checksums.json'), 'utf8'));
 const cache = path.join(workspace, '.build/electron-cache');

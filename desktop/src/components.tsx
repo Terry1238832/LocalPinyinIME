@@ -120,7 +120,7 @@ export function Meter({ value, max, label }: { value: number; max: number; label
 // user picked by number.
 export function MiniCandidates({ pinyin, words, selected = 0, className = '' }: { pinyin?: string; words: string[]; selected?: number; className?: string }) {
   return <span className={`mini-candidates${className ? ` ${className}` : ''}`} aria-hidden="true">
-    {pinyin !== undefined && <span className="mini-query"><span className="mini-mark">拼</span><span className="mini-pinyin">{pinyin}<i /></span></span>}
+    {pinyin !== undefined && <span className="mini-query"><span className="mini-mark" /><span className="mini-pinyin">{pinyin}<i /></span></span>}
     <span className="mini-focus"><b>1</b>{words[0]}</span>
     {words.length > 1 && <span className="mini-chips">{words.slice(1).map((word, index) =>
       <span key={`${word}-${index}`} className={`mini-chip${index + 1 === selected ? ' chosen' : ''}`}><b>{index + 2}</b>{word}</span>)}</span>}

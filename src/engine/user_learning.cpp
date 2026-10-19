@@ -82,6 +82,19 @@ long long UserLearning::last_selected(const std::wstring& pinyin, const std::wst
     return it == records_.end() ? 0 : it->second.last_selected_time;
 }
 
+long long UserLearning::stability(const std::wstring& pinyin, const std::wstring& word) const {
+    const auto it = records_.find(key_for(pinyin, word));
+    return it == records_.end() ? 0 : it->second.stability_seconds;
+}
+
+int UserLearning::faded_steps(const std::wstring& pinyin, const std::wstring& word, long long now) const {
+    const auto it = records_.find(key_for(pinyin, word));
+    if (it == records_.end() || it->second.selection_count <= 0) return -1;
+    const long long period = std::max(1LL, it->second.stability_seconds);
+    const long long steps = std::max(0LL, now - it->second.last_selected_time) / period;
+    return steps >= kFadeSteps ? -1 : static_cast<int>(steps);
+}
+
 std::vector<std::pair<std::wstring, int>> UserLearning::selected_texts() const {
     std::vector<std::pair<std::wstring, int>> result;
     result.reserve(records_.size());
@@ -127,13 +140,22 @@ void UserLearning::reindex() {
     }
 }
 
-bool UserLearning::record_selection(const std::wstring& pinyin, const std::wstring& word) {
+bool UserLearning::record_selection(const std::wstring& pinyin, const std::wstring& word, long long now) {
     if (storage_path_.empty() || !valid_selection(pinyin, word)) return false;
     LearningFileLock lock(storage_path_);
     if (!lock.acquired() || !load()) return false;
+    if (now <= 0) now = static_cast<long long>(std::time(nullptr));
     auto& record = records_[key_for(pinyin, word)];
+    if (record.selection_count <= 0 || record.stability_seconds <= 0) {
+        record.stability_seconds = kFirstStabilitySeconds;
+    } else if (now - record.last_selected_time >= kSpacedGapSeconds) {
+        // Chosen again after a break: remembered longer from now on. Picks
+        // in one sitting only renew it.
+        record.stability_seconds = std::min(kMaxStabilitySeconds,
+            static_cast<long long>(static_cast<double>(record.stability_seconds) * kSpacedGrowth));
+    }
     record.selection_count = std::min(kMaxSelectionCount, record.selection_count + 1);
-    record.last_selected_time = static_cast<long long>(std::time(nullptr));
+    record.last_selected_time = now;
     prune();
     reindex();
     const bool saved = flush();
@@ -205,11 +227,24 @@ bool UserLearning::load() {
         const auto word = wide.substr(first + 1, second - first - 1);
         if (!valid_selection(pinyin, word)) continue;
         const auto third = wide.find(L'\t', second + 1);
+        const auto fourth = third == std::wstring::npos ? std::wstring::npos : wide.find(L'\t', third + 1);
         int count = 0;
         long long time = 0;
+        long long stability = 0;
         if (!parse_number(wide.substr(second + 1, third == std::wstring::npos ? std::wstring::npos : third - second - 1), count) || count <= 0) continue;
-        if (third != std::wstring::npos && (!parse_number(wide.substr(third + 1), time) || time < 0)) continue;
-        records_[key_for(pinyin, word)] = Record{std::min(count, kMaxSelectionCount), time};
+        if (third != std::wstring::npos &&
+            (!parse_number(wide.substr(third + 1, fourth == std::wstring::npos ? std::wstring::npos : fourth - third - 1), time) ||
+             time < 0)) continue;
+        if (fourth != std::wstring::npos && (!parse_number(wide.substr(fourth + 1), stability) || stability < 0)) stability = 0;
+        count = std::min(count, kMaxSelectionCount);
+        if (stability <= 0) {
+            // Records from before 0.18.2: as if each of up to two repeat
+            // choices came after a break.
+            stability = kFirstStabilitySeconds;
+            for (int repeat = 1; repeat < std::min(count, 3); ++repeat)
+                stability = static_cast<long long>(static_cast<double>(stability) * kSpacedGrowth);
+        }
+        records_[key_for(pinyin, word)] = Record{count, time, std::min(stability, kMaxStabilitySeconds)};
     }
     prune();
     reindex();
@@ -227,7 +262,8 @@ bool UserLearning::flush() const {
         std::ofstream file(std::filesystem::path(temporary), std::ios::binary | std::ios::trunc);
         if (!file) return false;
         for (const auto& [key, record] : records_) {
-            file << wide_to_utf8(key) << '\t' << record.selection_count << '\t' << record.last_selected_time << '\n';
+            file << wide_to_utf8(key) << '\t' << record.selection_count << '\t' << record.last_selected_time << '\t'
+                 << record.stability_seconds << '\n';
         }
         file.flush();
         if (!file) {

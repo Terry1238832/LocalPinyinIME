@@ -7,12 +7,17 @@
 #include "../engine/candidate_selection.h"
 
 #include <algorithm>
+#include <array>
 #include <cwchar>
 #include <cwctype>
 #include <cstdint>
+#include <mutex>
 #include <oleauto.h>
+#include <optional>
+#include <random>
 #include <sstream>
 #include <string>
+#include <wrl/client.h>
 
 namespace localpinyin {
 namespace {
@@ -28,11 +33,62 @@ std::wstring host_executable_name() {
 }
 
 thread_local TextService* g_thread_keyboard_hook_service = nullptr;
+thread_local TextService* g_thread_mouse_hook_service = nullptr;
 // Remembered commits are a ranking hint only while the user keeps typing.
 constexpr ULONGLONG kRecentCommitLifetimeMs = 120000;
 
 const wchar_t* bool_text(bool value) noexcept {
     return value ? L"true" : L"false";
+}
+
+constexpr std::array<UINT, 3> kAnchorFollowDelaysMs{40, 120, 300};
+
+// Tab to English: a run ends after this long without typing, and holds at
+// most this much (the end of it is translated).
+constexpr ULONGLONG kTranslationRunLifetimeMs = 120000;
+constexpr size_t kMaxTranslationUnits = 500;
+// Stands for a character the application typed itself.
+constexpr wchar_t kAnyCharacter = 0xFFFF;
+// Said only when the answer takes longer than this.
+constexpr UINT kTranslationNoticeDelayMs = 350;
+// Tab twice within this opens the tool panel.
+constexpr ULONGLONG kDoubleTabMs = 300;
+constexpr int kTabTask = 0;
+constexpr int kPanelTask = 1;
+// WM_COPYDATA from the tool panel: the session token, a line break, the text.
+constexpr ULONG_PTR kPanelInsertMessage = 0x4C50494E;  // 'LPIN'
+constexpr UINT kTranslationErrorShownMs = 2600;
+// An application may take an edit into the input method's view of its
+// document and not onto the screen; it is checked again after this long.
+constexpr UINT kTranslationCheckMs = 250;
+
+bool is_modifier_key(unsigned long key) noexcept {
+    switch (key) {
+        case VK_SHIFT: case VK_LSHIFT: case VK_RSHIFT: case VK_CONTROL: case VK_LCONTROL: case VK_RCONTROL:
+        case VK_MENU: case VK_LMENU: case VK_RMENU: case VK_CAPITAL: case VK_LWIN: case VK_RWIN:
+            return true;
+        default:
+            return false;
+    }
+}
+
+bool is_han(wchar_t ch) noexcept {
+    return (ch >= 0x3400 && ch <= 0x9FFF) || (ch >= 0xF900 && ch <= 0xFAFF);
+}
+
+// Whether `before` (text before the caret) ends with `run`, where the run's
+// kAnyCharacter matches whatever the application typed.
+bool ends_with_run(const std::wstring& before, const std::wstring& run) noexcept {
+    if (before.size() < run.size()) return false;
+    const size_t start = before.size() - run.size();
+    for (size_t index = 0; index < run.size(); ++index) {
+        if (run[index] != kAnyCharacter && run[index] != before[start + index]) return false;
+    }
+    return true;
+}
+
+bool is_space(wchar_t ch) noexcept {
+    return ch == L' ' || ch == 0x3000 || ch == L'\t';
 }
 
 bool usable_anchor_rect(const RECT& rect) noexcept {
@@ -288,8 +344,51 @@ void read_open_close_compartment(ITfThreadMgr* thread_mgr, HRESULT* hr, bool* op
 
 }  // namespace
 
+// A translation on its way: the background thread fills in the result and
+// posts the serial to the candidate window, whose thread finishes it.
+struct TranslationJob {
+    unsigned long long serial = 0;
+    std::wstring source;
+    Translator translator;
+    HWND target = nullptr;
+    // Keeps this DLL loaded while the thread runs.
+    HMODULE module = nullptr;
+    std::mutex lock;
+    std::optional<TranslationResult> result;
+};
+
+namespace {
+
+void run_translation_job(const std::shared_ptr<TranslationJob>& job) {
+    TranslationResult result;
+    try {
+        result = job->translator(job->source);
+    } catch (...) {
+        result = TranslationResult{false, {}, L"翻译失败。"};
+    }
+    {
+        std::lock_guard<std::mutex> guard(job->lock);
+        job->result = std::move(result);
+    }
+    PostMessageW(job->target, CandidateWindow::async_message(), static_cast<WPARAM>(job->serial), 0);
+}
+
+DWORD WINAPI translation_thread(void* parameter) {
+    HMODULE module = nullptr;
+    {
+        std::unique_ptr<std::shared_ptr<TranslationJob>> job(static_cast<std::shared_ptr<TranslationJob>*>(parameter));
+        module = (*job)->module;
+        run_translation_job(*job);
+    }
+    FreeLibraryAndExitThread(module, 0);
+}
+
+}  // namespace
+
 TextService::TextService() {
     dll_add_ref();
+    candidate_window_.set_async_callback([this](WPARAM serial) { finish_translation(serial); });
+    candidate_window_.set_copydata_callback([this](const COPYDATASTRUCT& data) { return accept_panel_message(data); });
     candidate_window_.set_selection_callback([this](size_t index) { accept_candidate_from_ui(index); });
     candidate_window_.set_page_callback([this](int direction) {
         if (candidate_context_) change_candidate_page(candidate_context_, direction);
@@ -310,7 +409,8 @@ TextService::TextService() {
     });
     candidate_window_.set_theme_changed_callback([this]() { language_bar_.refresh_icon(); });
     candidate_window_.set_options_changed_callback([this]() {
-        if (prediction_active_ && !settings_store_.load_input_mode_options().prediction_enabled)
+        const auto options = settings_store_.load_input_mode_options();
+        if (prediction_active_ && (!options.prediction_enabled || options.tab_translate))
             dismiss_prediction(L"prediction_disabled");
         else if (candidate_context_) update_candidate_window(candidate_context_);
     });
@@ -323,6 +423,10 @@ void TextService::set_key_state_reader_for_testing(KeyStateReader reader,
 }
 
 TextService::~TextService() {
+    cancel_translation();
+    candidate_window_.set_async_callback({});
+    candidate_window_.set_copydata_callback({});
+    for (int slot = 0; slot < CandidateWindow::kTaskSlots; ++slot) candidate_window_.cancel_task(slot);
     candidate_window_.set_selection_callback({});
     candidate_window_.set_page_callback({});
     candidate_ui_element_session_.set_selection_changed_callback({});
@@ -339,6 +443,7 @@ TextService::~TextService() {
     language_bar_.clear_callbacks();
     language_bar_.unregister_item();
     uninstall_thread_keyboard_hook();
+    uninstall_thread_mouse_hook();
     unpreserve_ctrl_space_key();
     unadvise_key_event_sink();
     if (thread_mgr_) {
@@ -362,6 +467,8 @@ HRESULT TextService::QueryInterface(REFIID riid, void** object) {
         *object = static_cast<ITfThreadMgrEventSink*>(this);
     } else if (riid == __uuidof(ITfTextEditSink)) {
         *object = static_cast<ITfTextEditSink*>(this);
+    } else if (riid == __uuidof(ITfTextLayoutSink)) {
+        *object = static_cast<ITfTextLayoutSink*>(this);
     } else {
         return E_NOINTERFACE;
     }
@@ -446,6 +553,7 @@ HRESULT TextService::ActivateEx(ITfThreadMgr* thread_mgr, TfClientId client_id, 
     if (SUCCEEDED(result)) {
         advise_thread_events();
         const bool hook_installed = install_thread_keyboard_hook();
+        install_thread_mouse_hook();
         log_status(L"ctrl-space",
                    std::wstring(L"event=activate_hook_install_result hook_installed=") +
                        bool_text(hook_installed));
@@ -468,6 +576,8 @@ HRESULT TextService::ActivateEx(ITfThreadMgr* thread_mgr, TfClientId client_id, 
 
 HRESULT TextService::Deactivate() {
     forget_committed_text();
+    end_translation_run();
+    cancel_translation();
     ActivationFocusDiagnostics deactivation{};
     deactivation.deactivation_started = true;
     deactivation.text_service_activated = false;
@@ -485,6 +595,7 @@ HRESULT TextService::Deactivate() {
                                             ctrl_space_toggle_.pending_release,
                                             keyboard_hook_uninstall_failed_));
     uninstall_thread_keyboard_hook();
+    uninstall_thread_mouse_hook();
     unadvise_thread_events();
     const HRESULT unpreserve_hr = unpreserve_ctrl_space_key();
     language_bar_.clear_callbacks();
@@ -611,6 +722,41 @@ HRESULT TextService::unpreserve_ctrl_space_key() {
     }
     keystroke_mgr->Release();
     return hr;
+}
+
+LRESULT CALLBACK TextService::thread_mouse_hook_proc(int code, WPARAM wparam, LPARAM lparam) {
+    if (code == HC_ACTION && g_thread_mouse_hook_service) {
+        switch (wparam) {
+            case WM_LBUTTONDOWN: case WM_RBUTTONDOWN: case WM_MBUTTONDOWN: case WM_XBUTTONDOWN:
+            case WM_NCLBUTTONDOWN: case WM_NCRBUTTONDOWN: case WM_NCMBUTTONDOWN: case WM_NCXBUTTONDOWN: {
+                const auto* info = reinterpret_cast<const MOUSEHOOKSTRUCT*>(lparam);
+                g_thread_mouse_hook_service->note_mouse_press(info ? info->hwnd : nullptr);
+                break;
+            }
+            default:
+                break;
+        }
+    }
+    return CallNextHookEx(nullptr, code, wparam, lparam);
+}
+
+void TextService::install_thread_mouse_hook() {
+    if (mouse_hook_) return;
+    mouse_hook_ = SetWindowsHookExW(WH_MOUSE, thread_mouse_hook_proc, nullptr, GetCurrentThreadId());
+    if (mouse_hook_) g_thread_mouse_hook_service = this;
+}
+
+void TextService::uninstall_thread_mouse_hook() {
+    if (mouse_hook_) UnhookWindowsHookEx(mouse_hook_);
+    mouse_hook_ = nullptr;
+    if (g_thread_mouse_hook_service == this) g_thread_mouse_hook_service = nullptr;
+}
+
+void TextService::note_mouse_press(HWND window) {
+    // Clicking a candidate in the popup is typing, not moving the caret.
+    if (window && window == candidate_window_.window()) return;
+    end_translation_run();
+    cancel_translation();
 }
 
 LRESULT CALLBACK TextService::thread_keyboard_hook_proc(int code, WPARAM wparam, LPARAM lparam) {
@@ -820,6 +966,8 @@ bool TextService::handle_ctrl_space_keyup_fallback(ITfContext* context,
 HRESULT TextService::OnSetFocus(BOOL foreground) {
     if (!foreground && prediction_active_) dismiss_prediction(L"focus_lost");
     forget_committed_text();
+    end_translation_run();
+    cancel_translation();
     ITfDocumentMgr* focus_document_mgr = nullptr;
     ITfContext* top_context = nullptr;
     HRESULT focus_hr = E_UNEXPECTED;
@@ -864,11 +1012,29 @@ HRESULT TextService::OnSetFocus(BOOL foreground) {
     return S_OK;
 }
 
-HRESULT TextService::OnTestKeyDown(ITfContext* context, WPARAM wparam, LPARAM, BOOL* eaten) {
+HRESULT TextService::OnTestKeyDown(ITfContext* context, WPARAM wparam, LPARAM lparam, BOOL* eaten) {
     if (!eaten) {
         return E_POINTER;
     }
     *eaten = FALSE;
+    key_repeat_ = (lparam & (1 << 30)) != 0;
+    const HRESULT hr = test_key_down(context, wparam, eaten);
+    if (SUCCEEDED(hr) && !*eaten && composing_.empty()) note_key_left_to_application(static_cast<unsigned long>(wparam), lparam);
+    return hr;
+}
+
+void TextService::note_key_left_to_application(unsigned long key, LPARAM lparam) {
+    if (is_modifier_key(key) || key == noted_key_) return;
+    noted_key_ = key;
+    // Bit 30: the key was already down, a repeat of a held key.
+    if ((lparam & (1 << 30)) != 0) {
+        end_translation_run();
+        end_phrase_run();
+    }
+    note_unhandled_key(key);
+}
+
+HRESULT TextService::test_key_down(ITfContext* context, WPARAM wparam, BOOL* eaten) {
     prediction_passthrough_key_ = 0;
     prepare_context_for_key(context);
     const CtrlSpaceRuntimeState ctrl_space_state =
@@ -896,6 +1062,7 @@ HRESULT TextService::OnTestKeyDown(ITfContext* context, WPARAM wparam, LPARAM, B
         return S_OK;
     }
     ctrl_space_key_down_.accepted_by_test_key_down = false;
+    if (!is_modifier_key(key)) cancel_translation();
     if (prediction_active_) {
         if (!prediction_still_valid(context)) dismiss_prediction(L"prediction_caret_changed");
         else if ((wparam == VK_LEFT || wparam == VK_RIGHT) && candidate_page_indices_.size() > 1 &&
@@ -914,6 +1081,24 @@ HRESULT TextService::OnTestKeyDown(ITfContext* context, WPARAM wparam, LPARAM, B
                 prediction_passthrough_key_ = key; return S_OK;
             }
         }
+    }
+    if (wparam == VK_TAB && !modifiers.shift && !modifiers.ctrl && !modifiers.alt && !modifiers.win &&
+        mode_ == InputMode::Chinese) {
+        if (pass_next_tab_ || key_repeat_) return S_OK;
+        const auto options = settings_store_.load_input_mode_options();
+        if (options.panel_double_tab) {
+            *eaten = TRUE;
+            return S_OK;
+        }
+        // While typing pinyin Tab commits it first, then translates.
+        if (options.tab_translate && (!composing_.empty() || !translation_source(context).text.empty())) {
+            *eaten = TRUE;
+            return S_OK;
+        }
+    }
+    if (!composing_.empty() && tool_key_character(wparam, modifiers.shift)) {
+        *eaten = TRUE;
+        return S_OK;
     }
     if (can_start_shift_toggle(static_cast<unsigned long>(wparam), modifiers, shift_toggle_enabled())) {
         *eaten = TRUE;
@@ -962,13 +1147,23 @@ HRESULT TextService::OnTestKeyDown(ITfContext* context, WPARAM wparam, LPARAM, B
     return S_OK;
 }
 
-HRESULT TextService::OnKeyDown(ITfContext* context, WPARAM wparam, LPARAM, BOOL* eaten) {
+HRESULT TextService::OnKeyDown(ITfContext* context, WPARAM wparam, LPARAM lparam, BOOL* eaten) {
     if (!eaten) {
         return E_POINTER;
     }
     *eaten = FALSE;
+    key_repeat_ = (lparam & (1 << 30)) != 0;
+    // A key while a single Tab waits: the Tab's tab character goes first.
+    const unsigned long pressed = static_cast<unsigned long>(wparam);
+    if (tab_tap_.pending && pressed != VK_TAB && !is_modifier_key(pressed)) {
+        const bool replay = tab_tap_.replay;
+        tab_tap_ = TabTap{};
+        candidate_window_.cancel_task(kTabTask);
+        translation_hold_until_ = 0;
+        if (replay && context) composition_.insert_text(context, client_id_, L"\t");
+    }
     const HRESULT hr = handle_key_down(context, wparam, eaten);
-    if (SUCCEEDED(hr) && !*eaten && composing_.empty()) note_unhandled_key(static_cast<unsigned long>(wparam));
+    if (SUCCEEDED(hr) && !*eaten && composing_.empty()) note_key_left_to_application(static_cast<unsigned long>(wparam), lparam);
     return hr;
 }
 
@@ -980,6 +1175,12 @@ HRESULT TextService::handle_key_down(ITfContext* context, WPARAM wparam, BOOL* e
             current_modifier_key_state(key_state_reader_, key_state_reader_context_))) {
         return S_OK;
     }
+    // The Tab this service sent after a single tap belongs to the
+    // application. Documents that skip the key test (RichEdit) bring it here.
+    if (wparam == VK_TAB && pass_next_tab_) {
+        pass_next_tab_ = false;
+        return S_OK;
+    }
     prepare_context_for_key(context);
 
     const CtrlSpaceRuntimeState ctrl_space_state =
@@ -987,6 +1188,7 @@ HRESULT TextService::handle_key_down(ITfContext* context, WPARAM wparam, BOOL* e
     const ModifierKeyState modifiers = ctrl_space_state.modifiers;
     const bool shift_enabled = shift_toggle_enabled();
     const unsigned long key = static_cast<unsigned long>(wparam);
+    if (!is_modifier_key(key)) cancel_translation();
     if (prediction_active_) {
         if (!prediction_still_valid(context)) dismiss_prediction(L"prediction_caret_changed");
         else if ((key == VK_LEFT || key == VK_RIGHT) && candidate_page_indices_.size() > 1 &&
@@ -1003,6 +1205,43 @@ HRESULT TextService::handle_key_down(ITfContext* context, WPARAM wparam, BOOL* e
             if (!(key >= L'A' && key <= L'Z') && !is_ctrl_space(key, modifiers) &&
                 !can_start_shift_toggle(key, modifiers, shift_enabled)) return S_OK;
         }
+    }
+    if (key == VK_TAB && !modifiers.shift && !modifiers.ctrl && !modifiers.alt && !modifiers.win &&
+        mode_ == InputMode::Chinese && !pass_next_tab_ && !key_repeat_) {
+        const auto options = settings_store_.load_input_mode_options();
+        const ULONGLONG now = GetTickCount64();
+        if (options.panel_double_tab && tab_tap_.pending && now - tab_tap_.tick <= kDoubleTabMs) {
+            // The second Tab: the first one's translation or tab is dropped.
+            tab_tap_ = TabTap{};
+            candidate_window_.cancel_task(kTabTask);
+            translation_hold_until_ = 0;
+            cancel_translation();
+            open_panel(context);
+            *eaten = TRUE;
+            return S_OK;
+        }
+        bool handled = false;
+        if (options.tab_translate) {
+            const bool was_typing = !composing_.empty();
+            if (was_typing) {
+                const HRESULT hr = commit_whole_composition(context);
+                if (FAILED(hr)) return hr;
+            }
+            const auto source = translation_source(context);
+            if (!source.text.empty()) {
+                start_translation(context, source);
+                if (options.panel_double_tab) translation_hold_until_ = now + kDoubleTabMs;
+            }
+            handled = was_typing || !source.text.empty();
+        }
+        if (options.panel_double_tab) {
+            tab_tap_ = TabTap{true, now, !handled};
+            candidate_window_.schedule_task(kTabTask, static_cast<UINT>(kDoubleTabMs), [this]() { finish_tab_tap(); });
+            *eaten = TRUE;
+            return S_OK;
+        }
+        *eaten = handled ? TRUE : FALSE;
+        if (*eaten) return S_OK;
     }
     if (is_ctrl_space_key(key)) {
         ctrl_space_chord_on_key_down(ctrl_space_toggle_, key);
@@ -1039,6 +1278,8 @@ HRESULT TextService::OnTestKeyUp(ITfContext*, WPARAM wparam, LPARAM, BOOL* eaten
         return E_POINTER;
     }
     if (wparam == tested_key_) tested_key_ = 0;
+    if (static_cast<unsigned long>(wparam) == noted_key_) noted_key_ = 0;
+    if (wparam == VK_TAB && pass_next_tab_ && !tab_tap_.pending) pass_next_tab_ = false;
     *eaten = is_shift_key(static_cast<unsigned long>(wparam)) && shift_toggle_.pending ? TRUE : FALSE;
     return S_OK;
 }
@@ -1048,7 +1289,9 @@ HRESULT TextService::OnKeyUp(ITfContext* context, WPARAM wparam, LPARAM lparam, 
         return E_POINTER;
     }
     *eaten = FALSE;
+    if (wparam == VK_TAB && pass_next_tab_ && !tab_tap_.pending) pass_next_tab_ = false;
     const unsigned long key = static_cast<unsigned long>(wparam);
+    if (key == noted_key_) noted_key_ = 0;
     ctrl_space_key_down_.accepted_by_test_key_down = false;
     const CtrlSpaceRuntimeState ctrl_space_state =
         current_ctrl_space_runtime_state(key_state_reader_, key_state_reader_context_);
@@ -1127,6 +1370,8 @@ HRESULT TextService::OnUninitDocumentMgr(ITfDocumentMgr*) {
 HRESULT TextService::OnSetFocus(ITfDocumentMgr* focus, ITfDocumentMgr*) {
     forget_committed_text();
     end_phrase_run();
+    end_translation_run();
+    cancel_translation();
     if (prediction_active_) {
         ITfDocumentMgr* prediction_document = nullptr;
         if (!composition_context_ || FAILED(composition_context_->GetDocumentMgr(&prediction_document)) ||
@@ -1143,6 +1388,11 @@ HRESULT TextService::OnPopContext(ITfContext*) {
     if (prediction_active_) dismiss_prediction(L"context_popped");
     return S_OK;
 }
+HRESULT TextService::OnLayoutChange(ITfContext* context, TfLayoutCode code, ITfContextView*) {
+    if (context && context == candidate_context_ && code != TF_LC_DESTROY) schedule_anchor_follow(0);
+    return S_OK;
+}
+
 HRESULT TextService::OnEndEdit(ITfContext* context, TfEditCookie, ITfEditRecord* record) {
     if (!prediction_active_ || context != composition_context_ || !record) return S_OK;
     BOOL changed = FALSE;
@@ -1287,6 +1537,14 @@ bool TextService::handle_chinese_key(ITfContext* context, WPARAM wparam, BOOL* e
     }
 
     const auto modifiers = current_modifier_key_state(key_state_reader_, key_state_reader_context_);
+    if (const wchar_t tool = tool_key_character(wparam, modifiers.shift); tool && !composing_.empty()) {
+        composing_.push_back(tool);
+        selected_index_ = 0;
+        refresh_candidates();
+        update_composition(context);
+        *eaten = TRUE;
+        return true;
+    }
     if (const wchar_t ascii = code_punctuation_for_key(wparam, modifiers.shift)) {
         if (composing_.empty()) return false;
         const HRESULT hr = commit_punctuation(context, ascii);
@@ -1515,8 +1773,7 @@ void TextService::update_candidate_window(ITfContext* context) {
     if (prediction_active_ && !settings_store_.load_input_mode_options().prediction_enabled) {
         dismiss_prediction(L"prediction_disabled"); return;
     }
-    const std::wstring display_label = prediction_active_ ? L"联想 · Tab" :
-        composition_has_literal_letters() ? composing_ : engine_.display_input(composing_);
+    const std::wstring display_label = candidate_display_label();
     const bool logical_show_requested =
         mode_ == InputMode::Chinese && !display_label.empty() && !candidates_.empty();
     if (logical_show_requested) {
@@ -1536,7 +1793,16 @@ void TextService::update_candidate_window(ITfContext* context) {
     RECT anchor_rect{};
     bool anchor_available = false;
     if (logical_show_requested) {
-        anchor_available = candidate_anchor_rect(context, &anchor_rect);
+        bool layout_pending = false;
+        anchor_available = candidate_anchor_rect(context, &anchor_rect, &layout_pending);
+        // The app is still laying out the text just typed: a popup that is
+        // not up yet waits briefly for its layout notification instead of
+        // appearing at a fallback caret (the retry below shows it at the
+        // fallback if the app stays silent).
+        if (anchor_available && layout_pending && !candidate_window_.is_visible() &&
+            candidate_layout_retry_attempts_ == 0) {
+            anchor_available = false;
+        }
     }
     // The page model exists before host UI negotiation and without a caret HWND.
     RECT layout_anchor = anchor_rect;
@@ -1628,7 +1894,12 @@ void TextService::update_candidate_window(ITfContext* context) {
     }
     candidate_layout_retry_attempts_ = 0;
     const CandidateWindowOwnerInfo owner_info = candidate_owner_info(context);
+    const bool appearing = !candidate_window_.is_visible();
     candidate_window_.show(display_label, candidates_, selected_index_, anchor_rect, owner_info, candidate_page_indices_);
+    if (appearing && candidate_window_.is_visible()) {
+        anchor_follow_step_ = 0;
+        schedule_anchor_follow(kAnchorFollowDelaysMs[0]);
+    }
     candidate_ui_element_session_.set_self_draw_enabled(true);
     candidate_ui_element_session_.set_window_visible(candidate_window_.is_visible());
     const bool begin_failed =
@@ -1654,9 +1925,38 @@ void TextService::refresh_candidate_window_from_host() {
         !candidate_window_.is_visible() || !candidate_context_) return;
     RECT anchor{};
     if (!candidate_anchor_rect(candidate_context_, &anchor)) return;
-    const std::wstring label = prediction_active_ ? L"联想 · Tab" :
+    candidate_window_.show(candidate_display_label(), candidates_, selected_index_, anchor,
+        candidate_owner_info(candidate_context_), candidate_page_indices_);
+}
+
+std::wstring TextService::candidate_display_label() {
+    return prediction_active_ ? L"联想 · Tab" :
         composition_has_literal_letters() ? composing_ : engine_.display_input(composing_);
-    candidate_window_.show(label, candidates_, selected_index_, anchor,
+}
+
+void TextService::schedule_anchor_follow(UINT delay_ms) {
+    candidate_window_.schedule_anchor_check([this]() {
+        follow_candidate_anchor();
+        if (++anchor_follow_step_ < kAnchorFollowDelaysMs.size() && candidate_window_.is_visible())
+            schedule_anchor_follow(kAnchorFollowDelaysMs[anchor_follow_step_]);
+    }, delay_ms);
+}
+
+void TextService::follow_candidate_anchor() {
+    if (!candidate_context_ || mode_ != InputMode::Chinese || candidates_.empty() ||
+        (composing_.empty() && !prediction_active_)) return;
+    if (candidate_ui_element_session_.active() && candidate_ui_element_session_.host_managed()) return;
+    // Still waiting for a first layout: show it now that there is one.
+    if (!candidate_window_.is_visible()) {
+        update_candidate_window(candidate_context_);
+        return;
+    }
+    RECT anchor{};
+    if (!candidate_anchor_rect(candidate_context_, &anchor) || EqualRect(&anchor, &candidate_window_.anchor_rect())) return;
+    log_status(L"candidate-ui", L"anchor_followed left=" + std::to_wstring(anchor.left) + L" top=" + std::to_wstring(anchor.top) +
+        L" from_left=" + std::to_wstring(candidate_window_.anchor_rect().left) +
+        L" from_top=" + std::to_wstring(candidate_window_.anchor_rect().top));
+    candidate_window_.show(candidate_display_label(), candidates_, selected_index_, anchor,
         candidate_owner_info(candidate_context_), candidate_page_indices_);
 }
 
@@ -1686,8 +1986,10 @@ bool TextService::prediction_still_valid(ITfContext* context) {
 }
 
 void TextService::start_prediction(ITfContext* context) {
-    if (!context || secure_mode_ || mode_ != InputMode::Chinese || composition_.active() ||
-        !composing_.empty() || !settings_store_.load_input_mode_options().prediction_enabled) return;
+    if (!context || secure_mode_ || mode_ != InputMode::Chinese || composition_.active() || !composing_.empty()) return;
+    // With Tab to English on, Tab belongs to translation: no suggestions.
+    const auto options = settings_store_.load_input_mode_options();
+    if (!options.prediction_enabled || options.tab_translate) return;
     std::wstring before; ITfRange* caret = nullptr;
     if (composition_.read_preceding_text(context, client_id_, &before, &caret) != S_OK) return;
     auto predictions = engine_.predict(before);
@@ -1861,10 +2163,9 @@ void TextService::extend_phrase_run(ITfContext* context, const std::wstring& typ
         log_status(L"learning", L"phrase built from " + std::to_wstring(phrase_run_.pieces) + L" pieces");
 }
 
-HRESULT TextService::commit_punctuation(ITfContext* context, wchar_t punctuation) {
-    end_phrase_run();
-    // A prefix candidate may leave an unresolved suffix. Finish it before placing
-    // punctuation so the document never loses the remainder of typed pinyin.
+HRESULT TextService::commit_whole_composition(ITfContext* context) {
+    // A prefix candidate may leave an unresolved suffix: commit until nothing
+    // of the typed pinyin is left.
     for (size_t attempt = 0; !composing_.empty() && attempt < 256; ++attempt) {
         const size_t before = composing_.size();
         suppress_prediction_ = true;
@@ -1873,7 +2174,15 @@ HRESULT TextService::commit_punctuation(ITfContext* context, wchar_t punctuation
         if (FAILED(hr)) return hr;
         if (!composing_.empty() && composing_.size() >= before) return E_UNEXPECTED;
     }
-    if (!composing_.empty()) return E_UNEXPECTED;
+    return composing_.empty() ? S_OK : E_UNEXPECTED;
+}
+
+HRESULT TextService::commit_punctuation(ITfContext* context, wchar_t punctuation) {
+    end_phrase_run();
+    // Finish the typed pinyin before placing punctuation so the document
+    // never loses its remainder.
+    const HRESULT committed = commit_whole_composition(context);
+    if (FAILED(committed)) return committed;
     const HRESULT hr = composition_.insert_text(context, client_id_, std::wstring(1, punctuation));
     if (SUCCEEDED(hr)) {
         remember_committed_text(context, std::wstring(1, punctuation));
@@ -1904,6 +2213,7 @@ HRESULT TextService::commit_raw_composition(ITfContext* context) {
 
 void TextService::remember_committed_text(ITfContext* context, const std::wstring& text) {
     if (secure_mode_ || !context || text.empty()) return;
+    extend_translation_run(context, text);
     const auto identity = reinterpret_cast<std::uintptr_t>(context);
     if (identity != recent_committed_context_ || GetTickCount64() - recent_committed_tick_ > kRecentCommitLifetimeMs)
         recent_committed_text_.clear();
@@ -1924,6 +2234,26 @@ void TextService::note_unhandled_key(unsigned long key) {
             end_phrase_run();
             break;
     }
+    if (!translation_run_.text.empty() && !is_modifier_key(key)) {
+        const auto modifiers = current_modifier_key_state(key_state_reader_, key_state_reader_context_);
+        const bool typed = key == VK_SPACE || (key >= L'0' && key <= L'9') || (key >= L'A' && key <= L'Z') ||
+                           (key >= VK_OEM_1 && key <= VK_OEM_8);
+        if (key == VK_BACK) {
+            translation_run_.text.pop_back();
+        } else if (typed && !modifiers.ctrl && !modifiers.alt && !modifiers.win) {
+            // The character the key typed, from the keyboard layout (without
+            // disturbing its dead-key state).
+            BYTE state[256]{};
+            wchar_t typed_text[4]{};
+            int count = 0;
+            if (GetKeyboardState(state))
+                count = ToUnicodeEx(key, MapVirtualKeyW(key, MAPVK_VK_TO_VSC), state, typed_text, 4, 0x4, GetKeyboardLayout(0));
+            translation_run_.text += count == 1 ? typed_text[0] : kAnyCharacter;
+            translation_run_.last_tick = GetTickCount64();
+        } else {
+            end_translation_run();
+        }
+    }
     if (recent_committed_text_.empty()) return;
     switch (key) {
         case VK_SHIFT: case VK_LSHIFT: case VK_RSHIFT: case VK_CONTROL: case VK_LCONTROL: case VK_RCONTROL:
@@ -1942,6 +2272,320 @@ void TextService::note_unhandled_key(unsigned long key) {
     // movement and editing shortcuts make the remembered text unreliable.
     if (printable && !modifiers.ctrl && !modifiers.alt && !modifiers.win) recent_committed_text_ += L' ';
     else forget_committed_text();
+}
+
+void TextService::extend_translation_run(ITfContext* context, const std::wstring& text) {
+    if (!tab_translate_enabled()) {
+        end_translation_run();
+        return;
+    }
+    const auto identity = reinterpret_cast<std::uintptr_t>(context);
+    const ULONGLONG now = GetTickCount64();
+    if (translation_run_.context != identity || now - translation_run_.last_tick > kTranslationRunLifetimeMs)
+        translation_run_ = TranslationRun{};
+    // The run goes on only while the document still has it right before
+    // this text: a click elsewhere starts a new one.
+    if (!translation_run_.text.empty() && !transitory_context(context)) {
+        std::wstring before;
+        const std::wstring expected = translation_run_.text + text;
+        if (composition_.read_preceding_text(context, client_id_, &before, nullptr, nullptr, expected.size()) != S_OK ||
+            !ends_with_run(before, expected))
+            translation_run_ = TranslationRun{};
+    }
+    translation_run_.context = identity;
+    translation_run_.last_tick = now;
+    translation_run_.text += text;
+    if (translation_run_.text.size() > kMaxTranslationUnits)
+        translation_run_.text.erase(0, translation_run_.text.size() - kMaxTranslationUnits);
+}
+
+bool TextService::transitory_context(ITfContext* context) {
+    TF_STATUS status{};
+    return context && SUCCEEDED(context->GetStatus(&status)) && (status.dwStaticFlags & TF_SS_TRANSITORY) != 0;
+}
+
+bool TextService::tab_translate_enabled() const {
+    return settings_store_.load_input_mode_options().tab_translate;
+}
+
+TextService::TranslationSource TextService::translation_source(ITfContext* context) {
+    const auto& run = translation_run_;
+    if (!context || secure_mode_ || run.text.empty() || run.context != reinterpret_cast<std::uintptr_t>(context) ||
+        GetTickCount64() - run.last_tick > kTranslationRunLifetimeMs ||
+        std::none_of(run.text.begin(), run.text.end(), is_han))
+        return {};
+    // Many applications show the input method only what is being typed
+    // (older Win32 programs through Windows' compatibility layer): go by the
+    // run, which a click, a caret key or a shortcut would have ended.
+    if (transitory_context(context)) {
+        if (run.text.find(kAnyCharacter) != std::wstring::npos) return {};
+        return {run.text, false};
+    }
+    // Elsewhere the document must still end with what was typed: nothing
+    // was pasted or deleted in between.
+    std::wstring before;
+    if (composition_.read_preceding_text(context, client_id_, &before, nullptr, nullptr, run.text.size()) != S_OK ||
+        !ends_with_run(before, run.text))
+        return {};
+    return {before.substr(before.size() - run.text.size()), true};
+}
+
+void TextService::start_translation(ITfContext* context, const TranslationSource& source) {
+    cancel_translation();
+    auto job = std::make_shared<TranslationJob>();
+    job->serial = ++translation_serial_;
+    job->source = source.text;
+    translation_source_read_ = source.read;
+    job->translator = translator_ ? translator_ : Translator(translate_with_google);
+    job->target = candidate_window_.async_target();
+    if (!job->target || !GetModuleHandleExW(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS,
+                                            reinterpret_cast<LPCWSTR>(&translation_thread), &job->module)) {
+        log_status(L"translation", L"could not start");
+        return;
+    }
+    auto* parameter = new std::shared_ptr<TranslationJob>(job);
+    HANDLE thread = CreateThread(nullptr, 0, translation_thread, parameter, 0, nullptr);
+    if (!thread) {
+        delete parameter;
+        FreeLibrary(job->module);
+        log_status(L"translation", L"thread failed " + std::to_wstring(GetLastError()));
+        return;
+    }
+    CloseHandle(thread);
+    pending_translation_ = job;
+    context->AddRef();
+    translation_context_ = context;
+    candidate_window_.schedule_anchor_check([this, serial = job->serial]() {
+        if (pending_translation_ && pending_translation_->serial == serial)
+            show_translation_notice(L"翻译中…", pending_translation_->source, 0);
+    }, kTranslationNoticeDelayMs);
+}
+
+void TextService::finish_translation(unsigned long long serial) {
+    const auto job = pending_translation_;
+    if (!job || job->serial != serial) return;
+    std::optional<TranslationResult> result;
+    {
+        std::lock_guard<std::mutex> guard(job->lock);
+        result = job->result;
+    }
+    if (!result) return;
+    // A first Tab's translation lands once a second Tab can no longer come.
+    if (GetTickCount64() < translation_hold_until_) return;
+    pending_translation_.reset();
+    candidate_window_.cancel_anchor_check();
+    if (!result->ok || result->text.empty()) {
+        show_translation_notice(L"翻译失败", result->error.empty() ? L"翻译失败。" : result->error,
+                                kTranslationErrorShownMs);
+    } else {
+        // The spaces around the original stay where they were.
+        const std::wstring& source = job->source;
+        size_t first = 0, last = source.size();
+        while (first < last && is_space(source[first])) ++first;
+        while (last > first && is_space(source[last - 1])) --last;
+        const std::wstring replacement = source.substr(0, first) + result->text + source.substr(last);
+        // In place through the document where the application allows it.
+        HRESULT hr = composition_.replace_preceding_text(translation_context_, client_id_, source, replacement);
+        bool replaced = hr == S_OK;
+        if (!replaced && transitory_context(translation_context_)) {
+            // A document that shows only what is being typed (it may have
+            // shown the source just after it was committed) gets the
+            // translation typed.
+            end_translation_run();
+            replaced = type_replacement(source, replacement);
+        }
+        if (replaced) {
+            end_translation_run();
+            end_phrase_run();
+            forget_committed_text();
+            if (candidate_window_.showing_notice()) candidate_window_.hide(L"translated");
+            log_status(L"translation", L"replaced " + std::to_wstring(source.size()) + L" units" +
+                                           (hr == S_OK ? L"" : L" by typing"));
+            if (hr == S_OK && replacement != source) {
+                // Still the original once the application has settled: it
+                // did not take the edit, so type the translation instead.
+                Microsoft::WRL::ComPtr<ITfContext> context(translation_context_);
+                translation_check_pending_ = true;
+                candidate_window_.schedule_anchor_check([this, context, source, replacement]() {
+                    if (!translation_check_pending_) return;
+                    translation_check_pending_ = false;
+                    const auto ends_with = [](const std::wstring& text, const std::wstring& tail) {
+                        return text.size() >= tail.size() && text.compare(text.size() - tail.size(), tail.size(), tail) == 0;
+                    };
+                    std::wstring before;
+                    if (composition_.read_preceding_text(context.Get(), client_id_, &before, nullptr, nullptr,
+                                                         (std::max)(source.size(), replacement.size())) == S_OK &&
+                        ends_with(before, source) && !ends_with(before, replacement) &&
+                        type_replacement(source, replacement))
+                        log_status(L"translation", L"application kept the original; typed instead");
+                }, kTranslationCheckMs);
+            }
+        } else {
+            show_translation_notice(L"没有替换", L"原文已经改动，或者已经离开这个输入框。", kTranslationErrorShownMs);
+            log_status(L"translation", L"replace failed " + hresult_hex(hr));
+        }
+    }
+    if (translation_context_) {
+        translation_context_->Release();
+        translation_context_ = nullptr;
+    }
+}
+
+bool TextService::type_replacement(const std::wstring& source, const std::wstring& replacement) {
+    // Typed keys go to the window with the keyboard focus: it must be this
+    // thread's, where the source was typed.
+    GUITHREADINFO info{};
+    info.cbSize = sizeof(info);
+    if (!GetGUIThreadInfo(0, &info) || !info.hwndFocus ||
+        GetWindowThreadProcessId(info.hwndFocus, nullptr) != GetCurrentThreadId())
+        return false;
+    std::vector<INPUT> inputs;
+    const auto key = [&inputs](WORD vk, wchar_t ch, bool up) {
+        INPUT input{};
+        input.type = INPUT_KEYBOARD;
+        input.ki.wVk = vk;
+        input.ki.wScan = ch;
+        input.ki.dwFlags = (ch ? KEYEVENTF_UNICODE : 0) | (up ? KEYEVENTF_KEYUP : 0);
+        inputs.push_back(input);
+    };
+    // One Backspace per character (a surrogate pair is one).
+    for (size_t index = 0; index < source.size(); ++index) {
+        if (source[index] >= 0xDC00 && source[index] <= 0xDFFF && index > 0) continue;
+        key(VK_BACK, 0, false);
+        key(VK_BACK, 0, true);
+    }
+    for (const wchar_t ch : replacement) {
+        key(0, ch, false);
+        key(0, ch, true);
+    }
+    return SendInput(static_cast<UINT>(inputs.size()), inputs.data(), sizeof(INPUT)) == inputs.size();
+}
+
+wchar_t TextService::tool_key_character(WPARAM wparam, bool shift) const {
+    // Only after a leading v (and nothing but tool characters since) in full pinyin.
+    if (composing_.empty() || composing_[0] != L'v' || engine_.input_options().double_pinyin != DoublePinyinScheme::None)
+        return 0;
+    if (composing_.size() > 1 && !std::all_of(composing_.begin() + 1, composing_.end(), [](wchar_t ch) {
+            return std::wstring(L"0123456789.+-*/()^%").find(ch) != std::wstring::npos;
+        })) return 0;
+    if (!shift && wparam >= L'0' && wparam <= L'9') return static_cast<wchar_t>(wparam);
+    if (wparam >= VK_NUMPAD0 && wparam <= VK_NUMPAD9) return static_cast<wchar_t>(L'0' + (wparam - VK_NUMPAD0));
+    if (shift) {
+        switch (wparam) {
+            case VK_OEM_PLUS: return L'+';
+            case L'8': return L'*';
+            case L'9': return L'(';
+            case L'0': return L')';
+            case L'6': return L'^';
+            case L'5': return L'%';
+            default: return 0;
+        }
+    }
+    switch (wparam) {
+        case VK_OEM_PERIOD: case VK_DECIMAL: return L'.';
+        case VK_OEM_MINUS: case VK_SUBTRACT: return L'-';
+        case VK_ADD: return L'+';
+        case VK_MULTIPLY: return L'*';
+        case VK_OEM_2: case VK_DIVIDE: return L'/';
+        default: return 0;
+    }
+}
+
+void TextService::finish_tab_tap() {
+    const bool replay = tab_tap_.pending && tab_tap_.replay;
+    tab_tap_ = TabTap{};
+    translation_hold_until_ = 0;
+    // Only into this application: the keys go to whatever is in front.
+    const HWND foreground = GetForegroundWindow();
+    DWORD foreground_process = 0;
+    if (foreground) GetWindowThreadProcessId(foreground, &foreground_process);
+    if (replay && foreground_process == GetCurrentProcessId()) {
+        // The application gets its Tab, passed over by this service.
+        pass_next_tab_ = true;
+        INPUT keys[2]{};
+        keys[0].type = keys[1].type = INPUT_KEYBOARD;
+        keys[0].ki.wVk = keys[1].ki.wVk = VK_TAB;
+        keys[1].ki.dwFlags = KEYEVENTF_KEYUP;
+        if (SendInput(2, keys, sizeof(INPUT)) != 2) pass_next_tab_ = false;
+    }
+    if (pending_translation_) finish_translation(pending_translation_->serial);
+}
+
+void TextService::open_panel(ITfContext* context) {
+    if (secure_mode_) return;
+    // A fresh token for this opening: only the panel started with it may
+    // type through this window.
+    std::random_device random;
+    wchar_t token[40]{};
+    swprintf_s(token, L"%08x%08x%08x%08x", random(), random(), random(), random());
+    panel_token_ = token;
+    const HWND target = candidate_window_.async_target();
+    const auto owner = candidate_owner_info(context);
+    const HWND host = owner.root_valid ? owner.root_hwnd : GetForegroundWindow();
+    RECT anchor{};
+    if (!context || !candidate_anchor_rect(context, &anchor)) {
+        POINT cursor{};
+        GetCursorPos(&cursor);
+        anchor = RECT{cursor.x, cursor.y, cursor.x + 1, cursor.y + 1};
+    }
+    const std::wstring arguments = L"--panel --ime=" + std::to_wstring(reinterpret_cast<std::uintptr_t>(target)) +
+        L" --host=" + std::to_wstring(reinterpret_cast<std::uintptr_t>(host)) + L" --token=" + panel_token_ +
+        L" --anchor=" + std::to_wstring(anchor.left) + L"," + std::to_wstring(anchor.top) + L"," + std::to_wstring(anchor.bottom);
+    if (!launch_settings_app(arguments)) log_status(L"panel", L"could not start the settings app");
+}
+
+bool TextService::accept_panel_message(const COPYDATASTRUCT& data) {
+    if (data.dwData != kPanelInsertMessage || !data.lpData || data.cbData < 2 * sizeof(wchar_t) ||
+        data.cbData > 64 * 1024 || panel_token_.empty() || secure_mode_) return false;
+    std::wstring payload(static_cast<const wchar_t*>(data.lpData), data.cbData / sizeof(wchar_t));
+    while (!payload.empty() && payload.back() == L'\0') payload.pop_back();
+    const auto line = payload.find(L'\n');
+    if (line == std::wstring::npos || payload.compare(0, line, panel_token_) != 0) return false;
+    pending_panel_text_ = payload.substr(line + 1);
+    panel_insert_attempts_ = 0;
+    // Inserted once the application has its focus back, outside this message.
+    candidate_window_.schedule_task(kPanelTask, 10, [this]() { insert_panel_text(); });
+    return !pending_panel_text_.empty();
+}
+
+void TextService::insert_panel_text() {
+    if (pending_panel_text_.empty() || !thread_mgr_) return;
+    ITfDocumentMgr* document = nullptr;
+    ITfContext* context = nullptr;
+    const HWND foreground = GetForegroundWindow();
+    DWORD foreground_process = 0;
+    if (foreground) GetWindowThreadProcessId(foreground, &foreground_process);
+    const bool ours = foreground_process == GetCurrentProcessId();
+    if (ours && SUCCEEDED(thread_mgr_->GetFocus(&document)) && document) document->GetTop(&context);
+    if (document) document->Release();
+    if (!context) {
+        if (++panel_insert_attempts_ < 60) candidate_window_.schedule_task(kPanelTask, 50, [this]() { insert_panel_text(); });
+        else pending_panel_text_.clear();
+        return;
+    }
+    const std::wstring text = std::move(pending_panel_text_);
+    pending_panel_text_.clear();
+    if (!composing_.empty()) commit_whole_composition(context);
+    if (SUCCEEDED(composition_.insert_text(context, client_id_, text))) remember_committed_text(context, text);
+    context->Release();
+}
+
+void TextService::cancel_translation() {
+    translation_check_pending_ = false;
+    if (!pending_translation_) return;
+    pending_translation_.reset();
+    candidate_window_.cancel_anchor_check();
+    if (candidate_window_.showing_notice()) candidate_window_.hide(L"translation_cancelled");
+    if (translation_context_) {
+        translation_context_->Release();
+        translation_context_ = nullptr;
+    }
+}
+
+void TextService::show_translation_notice(const std::wstring& title, const std::wstring& body, UINT hide_after_ms) {
+    RECT anchor{};
+    if (!translation_context_ || !candidate_anchor_rect(translation_context_, &anchor)) return;
+    candidate_window_.show_notice(title, body, anchor, candidate_owner_info(translation_context_), hide_after_ms);
 }
 
 void TextService::forget_committed_text() noexcept {
@@ -1986,9 +2630,28 @@ void TextService::set_candidate_context(ITfContext* context) {
         context->AddRef();
     }
     if (candidate_context_) {
+        if (layout_sink_cookie_ != TF_INVALID_COOKIE) {
+            ITfSource* source = nullptr;
+            if (SUCCEEDED(candidate_context_->QueryInterface(IID_PPV_ARGS(&source)))) {
+                source->UnadviseSink(layout_sink_cookie_);
+                source->Release();
+            }
+            layout_sink_cookie_ = TF_INVALID_COOKIE;
+        }
         candidate_context_->Release();
     }
     candidate_context_ = context;
+    candidate_window_.cancel_anchor_check();
+    if (context) {
+        ITfSource* source = nullptr;
+        if (SUCCEEDED(context->QueryInterface(IID_PPV_ARGS(&source)))) {
+            if (FAILED(source->AdviseSink(__uuidof(ITfTextLayoutSink), static_cast<ITfTextLayoutSink*>(this),
+                                          &layout_sink_cookie_))) {
+                layout_sink_cookie_ = TF_INVALID_COOKIE;
+            }
+            source->Release();
+        }
+    }
 }
 
 void TextService::clear_transient_contexts() {
@@ -2044,7 +2707,8 @@ void TextService::prepare_context_for_key(ITfContext* context) {
     reset_transient_input_state(L"context_changed");
 }
 
-bool TextService::candidate_anchor_rect(ITfContext* context, RECT* rect) {
+bool TextService::candidate_anchor_rect(ITfContext* context, RECT* rect, bool* layout_pending) {
+    if (layout_pending) *layout_pending = false;
     if (!rect) {
         return false;
     }
@@ -2056,8 +2720,18 @@ bool TextService::candidate_anchor_rect(ITfContext* context, RECT* rect) {
             *rect = tsf_rect;
             last_caret_rect_ = tsf_rect;
             has_last_caret_rect_ = true;
+            last_caret_rect_from_text_ = true;
             return true;
         }
+        if (layout_pending) *layout_pending = hr == TF_E_NOLAYOUT;
+    }
+
+    // While the app lays out the key just typed, where it laid out this
+    // composition before is closer than the system caret, which some apps
+    // leave elsewhere (the layout notification then moves the popup on).
+    if (has_last_caret_rect_ && last_caret_rect_from_text_ && usable_anchor_rect(last_caret_rect_)) {
+        *rect = last_caret_rect_;
+        return true;
     }
 
     RECT gui_rect{};
@@ -2065,6 +2739,7 @@ bool TextService::candidate_anchor_rect(ITfContext* context, RECT* rect) {
         *rect = gui_rect;
         last_caret_rect_ = gui_rect;
         has_last_caret_rect_ = true;
+        last_caret_rect_from_text_ = false;
         return true;
     }
 
@@ -2099,7 +2774,7 @@ bool TextService::gui_caret_rect(RECT* rect) const {
 
     GUITHREADINFO info{};
     info.cbSize = sizeof(info);
-    if (!GetGUIThreadInfo(0, &info) || !info.hwndCaret) {
+    if (!GetGUIThreadInfo(GetCurrentThreadId(), &info) || !info.hwndCaret) {
         return false;
     }
 

@@ -1,8 +1,11 @@
-import { app, BrowserWindow, ipcMain, nativeTheme, protocol, session, shell } from 'electron';
+import { app, BrowserWindow, dialog, ipcMain, nativeTheme, protocol, session, shell } from 'electron';
 import { execFile } from 'node:child_process';
 import { mkdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
-import { candidateStyleIds, type AppState } from '../src/types';
+import { candidateStyleIds, clipboardRetentionChoices, type AppState, type Settings } from '../src/types';
+import { exportBackup, inspectBackup, importBackup } from './backup';
+import { clipboardFile, installClipboardHandlers } from './clipboard';
+import { Panel, panelArguments, type PanelTarget } from './panel';
 import { checkForUpdate, downloadUpdate, initUpdates, installUpdate, releasePage, scheduleAutoCheck, setAutoCheck,
   updateStatus } from './updates';
 
@@ -20,10 +23,12 @@ let bootstrap: AppState | null = null;
 let mutations: Promise<unknown> = Promise.resolve();
 const bridgePath = app.isPackaged ? path.join(path.dirname(process.execPath), 'LocalPinyinSettingsBridge.exe')
   : process.env.LOCALPINYINIME_BRIDGE_PATH || path.resolve(app.getAppPath(), '../.build/bin/LocalPinyinSettingsBridge.exe');
+const iconPath = app.isPackaged ? path.join(path.dirname(process.execPath), 'icon.ico')
+  : path.resolve(app.getAppPath(), '../assets/branding/icon/LocalPinyinIME.ico');
 function bridge<T>(command: string, args: string[] = []): Promise<T> {
   return new Promise((resolve, reject) => {
     execFile(bridgePath, [command, ...args], { windowsHide: true, encoding: 'utf8', timeout: 20_000,
-      maxBuffer: 4 * 1024 * 1024 }, (error, stdout) => {
+      maxBuffer: 16 * 1024 * 1024 }, (error, stdout) => {
       let result: T & { error?: string };
       try { result = JSON.parse(stdout); } catch { reject(new Error('本地服务暂时不可用，请使用完整安装包启动设置。')); return; }
       if (error || result.error) reject(new Error(result.error || '本地操作失败，请重试。'));
@@ -51,24 +56,34 @@ function entryArgs(value: unknown): string[] {
     throw new Error('词频应为0至1000000之间的整数。');
   return [text(entry.pinyin, 256), text(entry.word, 128), String(entry.frequency)];
 }
+function fromSettings(event: Electron.IpcMainInvokeEvent | Electron.IpcMainEvent) {
+  return !!window && event.sender === window.webContents && event.senderFrame === window.webContents.mainFrame &&
+    event.senderFrame?.url === 'app://local/index.html';
+}
 function handle(channel: string, callback: (...args: unknown[]) => unknown) {
   ipcMain.handle('localpinyin:' + channel, (event, ...args) => {
-    if (!window || event.sender !== window.webContents || event.senderFrame !== window.webContents.mainFrame ||
-        event.senderFrame?.url !== 'app://local/index.html') throw new Error('请求来源无效。');
+    if (!fromSettings(event)) throw new Error('请求来源无效。');
     return callback(...args);
   });
 }
+// The settings the panel and the background behavior follow, kept from the
+// last read so opening the panel does not wait for one.
+let latestSettings: Settings | null = null;
 async function state(): Promise<AppState> {
   const result = await bridge<AppState>('state');
+  latestSettings = result.settings;
   nativeTheme.themeSource = result.settings.theme;
   window?.setBackgroundColor(nativeTheme.shouldUseDarkColors ? '#0f1012' : '#eceef1');
+  panel?.window?.setBackgroundColor(nativeTheme.shouldUseDarkColors ? '#16181c' : '#f6f7f9');
   return result;
 }
+async function currentSettings(): Promise<Settings> {
+  if (latestSettings) { void state().catch(() => undefined); return latestSettings; }
+  return (await state()).settings;
+}
+const dataDirectory = () => bootstrap?.dataDirectory ?? path.join(dataRoot, 'LocalPinyinIME');
 function installHandlers() {
-  ipcMain.on('localpinyin:bootstrap', event => {
-    event.returnValue = window && event.sender === window.webContents &&
-      event.senderFrame === window.webContents.mainFrame && event.senderFrame?.url === 'app://local/index.html' ? bootstrap : null;
-  });
+  ipcMain.on('localpinyin:bootstrap', event => { event.returnValue = fromSettings(event) ? bootstrap : null; });
   handle('state', state);
   const fuzzyIds = ['z-zh', 'c-ch', 's-sh', 'n-l', 'f-h', 'r-l', 'an-ang', 'en-eng', 'in-ing', 'ian-iang', 'uan-uang'];
   const domainIds = ['coding', 'work', 'math', 'study', 'daily', 'games'];
@@ -81,6 +96,10 @@ function installHandlers() {
         typeof settings.typoCorrection !== 'boolean' || typeof settings.mixedEnglish !== 'boolean' ||
         typeof settings.digitPeriod !== 'boolean' || typeof settings.digitPunctuation !== 'boolean' ||
         typeof settings.letterPunctuation !== 'boolean' || typeof settings.codePunctuation !== 'boolean' ||
+        typeof settings.tabTranslate !== 'boolean' || typeof settings.panelDoubleTab !== 'boolean' ||
+        typeof settings.panelResident !== 'boolean' || typeof settings.emojiCandidates !== 'boolean' ||
+        !['ask', 'on', 'off'].includes(String(settings.clipboardHistory)) ||
+        !(clipboardRetentionChoices as readonly number[]).includes(settings.clipboardRetentionDays as number) ||
         !['none', 'xiaohe', 'ziranma'].includes(String(settings.doublePinyin)))
       throw new Error('设置选项无效。');
     if (!['system', 'light', 'dark'].includes(String(settings.theme)) ||
@@ -89,6 +108,7 @@ function installHandlers() {
         typeof settings.predictionEnabled !== 'boolean')
       throw new Error('设置选项无效。');
     return enqueue(async () => {
+      const before = latestSettings?.clipboardHistory;
       // Fuzzy pairs in the canonical order the native settings use.
       const pairs = fuzzyIds.filter(id => (fuzzy as string[]).includes(id)).join(',');
       const scenes = domainIds.filter(id => (domains as string[]).includes(id)).join(',');
@@ -96,7 +116,13 @@ function installHandlers() {
         String(settings.predictionEnabled), String(settings.candidateStyle), `typoCorrection=${settings.typoCorrection}`,
         `mixedEnglish=${settings.mixedEnglish}`, `fuzzyPinyin=${pairs}`, `doublePinyin=${settings.doublePinyin}`,
         `usageDomains=${scenes}`, `digitPeriod=${settings.digitPeriod}`, `digitPunctuation=${settings.digitPunctuation}`,
-        `letterPunctuation=${settings.letterPunctuation}`, `codePunctuation=${settings.codePunctuation}`]);
+        `letterPunctuation=${settings.letterPunctuation}`, `codePunctuation=${settings.codePunctuation}`,
+        `tabTranslate=${settings.tabTranslate}`, `panelDoubleTab=${settings.panelDoubleTab}`,
+        `panelResident=${settings.panelResident}`, `emojiCandidates=${settings.emojiCandidates}`,
+        `clipboardHistory=${settings.clipboardHistory}`, `clipboardRetentionDays=${settings.clipboardRetentionDays}`]);
+      // The recorder starts with the setting and leaves with it, also at sign-in.
+      if (settings.clipboardHistory !== before)
+        await bridge('clipboard-agent', [settings.clipboardHistory === 'on' ? 'start' : 'stop']).catch(() => undefined);
       return state();
     });
   });
@@ -119,6 +145,21 @@ function installHandlers() {
     return bridge('dictionary-search', [text(query, 256, true), String(limit)]);
   });
   handle('clear-learning', () => enqueue(() => bridge('clear-learning')));
+  handle('phrases', () => bridge('phrases-list'));
+  handle('phrase-add', (content, label) => enqueue(() => bridge('phrases-add', [text(content, 64), text(label, 32)])));
+  handle('phrase-delete', (pinyin, content) => enqueue(() => bridge('phrases-delete', [text(pinyin, 64), text(content, 64)])));
+  handle('emoji-candidates', () => bridge('emoji-list'));
+  handle('emoji-candidate-delete', (pinyin, content) => enqueue(() => bridge('emoji-delete', [text(pinyin, 64), text(content, 32)])));
+  handle('clipboard-clear', () => enqueue(() => bridge('clipboard-clear')));
+  handle('clipboard-summary', () => bridge('clipboard-summary'));
+  handle('backup-export', (parts, file) => exportBackup(backupContext(), parts, chosenFile(file)));
+  handle('backup-inspect', (file) => inspectBackup(chosenFile(file)));
+  handle('backup-import', (file, choices) => enqueue(async () => {
+    const result = await importBackup(backupContext(), chosenFile(file), choices);
+    await state();
+    return result;
+  }));
+  handle('backup-choose', (mode, name) => chooseBackupFile(mode, name));
   handle('open-data', async () => {
     const current = await bridge<AppState>('state');
     await mkdir(current.dataDirectory, { recursive: true });
@@ -141,27 +182,114 @@ function installHandlers() {
     else throw new Error('窗口操作无效。');
   });
 }
-const csp = "default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'; object-src 'none'";
+function backupContext() {
+  return { dataDirectory: dataDirectory(), userData: app.getPath('userData'), bridge, version: app.getVersion(),
+    reloadPanel: () => panel?.reloadState() };
+}
+// Backups are read and written only where the user pointed a file dialog.
+const chosenFiles = new Set<string>();
+function chosenFile(value: unknown): string {
+  if (typeof value !== 'string' || !chosenFiles.has(value)) throw new Error('请先选择备份文件。');
+  return value;
+}
+async function chooseBackupFile(mode: unknown, name: unknown): Promise<string | null> {
+  const chosen = await showBackupDialog(mode, name);
+  if (chosen) chosenFiles.add(chosen);
+  return chosen;
+}
+async function showBackupDialog(mode: unknown, name: unknown): Promise<string | null> {
+  if (!window) return null;
+  // The test suite has no one to click the file dialog.
+  if (hidden && process.env.LOCALPINYINIME_QA_BACKUP_FILE) return process.env.LOCALPINYINIME_QA_BACKUP_FILE;
+  const filters = [{ name: '本地拼音备份', extensions: ['lpbackup'] }];
+  if (mode === 'save') {
+    const result = await dialog.showSaveDialog(window, { title: '导出用户数据', filters,
+      defaultPath: path.join(app.getPath('documents'), typeof name === 'string' && /^[\w一-鿿.-]{1,80}$/.test(name) ? name : '本地拼音备份.lpbackup') });
+    return result.canceled ? null : result.filePath ?? null;
+  }
+  const result = await dialog.showOpenDialog(window, { title: '导入用户数据', filters, properties: ['openFile'] });
+  return result.canceled ? null : result.filePaths[0] ?? null;
+}
+const csp = "default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'; object-src 'none'";
+let panel: Panel | null = null;
+function nativeHandle(target: BrowserWindow | null | undefined) {
+  if (!target || target.isDestroyed()) return '';
+  const handle = target.getNativeWindowHandle();
+  return (handle.length >= 8 ? handle.readBigUInt64LE(0) : BigInt(handle.readUInt32LE(0))).toString();
+}
+function openPanel(target: PanelTarget) {
+  // Tab twice inside the panel or the settings window itself is ignored.
+  if ([nativeHandle(window), nativeHandle(panel?.window)].includes(target.host)) return;
+  void panel?.open(target).catch(error => console.error('Panel failed:', error.message));
+}
+async function openSettings() {
+  if (window) {
+    if (!hidden) { if (window.isMinimized()) window.restore(); window.show(); window.focus(); }
+    return;
+  }
+  bootstrap = await state().catch(() => bootstrap);
+  const created = new BrowserWindow({ width: 1160, height: 800, minWidth: 920, minHeight: 680,
+    frame: false, show: false, backgroundColor: nativeTheme.shouldUseDarkColors ? '#0f1012' : '#eceef1', title: '本地拼音设置',
+    icon: iconPath, webPreferences: {
+      preload: path.join(__dirname, 'preload.cjs'), contextIsolation: true, sandbox: true,
+      nodeIntegration: false, webSecurity: true, backgroundThrottling: !hidden, offscreen: hidden, spellcheck: false,
+      devTools: !app.isPackaged } });
+  window = created;
+  created.webContents.setWindowOpenHandler(() => ({ action: 'deny' }));
+  created.webContents.on('will-navigate', event => event.preventDefault());
+  created.webContents.on('will-attach-webview', event => event.preventDefault());
+  created.on('closed', () => {
+    if (window === created) window = null;
+    void panel?.settingsClosed();
+  });
+  created.once('ready-to-show', () => { if (!hidden) created.show(); });
+  await created.loadURL('app://local/index.html');
+}
+const mediaTypes: Record<string, string> = { '.png': 'image/png', '.gif': 'image/gif', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg',
+  '.webp': 'image/webp', '.bmp': 'image/bmp' };
+// Pictures the panel shows: the user's stickers and copied images.
+async function media(pathname: string): Promise<{ file: string; type: string } | null> {
+  const [, kind, name] = /^\/media\/(stickers|clipboard)\/([^/]+)$/.exec(pathname) ?? [];
+  if (kind === 'stickers') return panel ? panel.stickerFile(name) : null;
+  if (kind === 'clipboard') { const file = clipboardFile(dataDirectory(), name); return file ? { file, type: 'image/png' } : null; }
+  return null;
+}
 if (!app.requestSingleInstanceLock()) app.quit();
 else {
-  app.on('second-instance', () => { if (!hidden && window) { if (window.isMinimized()) window.restore(); window.show(); window.focus(); } });
+  const initialPanel = panelArguments(process.argv);
+  app.on('second-instance', (_event, argv) => {
+    const target = panelArguments(argv);
+    if (target) openPanel(target);
+    else if (argv.includes('--first-run')) { if (latestSettings?.clipboardHistory === 'ask') void openSettings(); }
+    else void openSettings();
+  });
   // Read the settings while Electron starts up rather than after it: the
   // window waits for them, and the two together are most of the launch.
   const initialState = bridge<AppState>('state');
   initialState.catch(() => undefined);
   app.whenReady().then(async () => {
     bootstrap = await initialState;
+    latestSettings = bootstrap.settings;
     nativeTheme.themeSource = bootstrap.settings.theme;
     const dist = path.join(app.getAppPath(), 'dist');
     protocol.handle('app', async request => {
       try {
         const url = new URL(request.url);
-        const filename = path.resolve(dist, '.' + decodeURIComponent(url.pathname));
+        if (url.host !== 'local' || !['GET', 'HEAD'].includes(request.method)) return new Response('', { status: 403 });
+        const pathname = decodeURIComponent(url.pathname);
+        if (pathname.startsWith('/media/')) {
+          const found = await media(pathname);
+          if (!found) return new Response('', { status: 404 });
+          const body = await readFile(found.file);
+          return new Response(request.method === 'HEAD' ? null : body, { headers: { 'Content-Type': found.type,
+            'X-Content-Type-Options': 'nosniff', 'Cache-Control': 'no-store' } });
+        }
+        const filename = path.resolve(dist, '.' + pathname);
         const relative = path.relative(dist, filename);
-        if (url.host !== 'local' || !relative || relative.startsWith('..') || path.isAbsolute(relative) ||
-            !['GET', 'HEAD'].includes(request.method)) return new Response('', { status: 403 });
+        if (!relative || relative.startsWith('..') || path.isAbsolute(relative)) return new Response('', { status: 403 });
         const mime: Record<string, string> = { '.html': 'text/html; charset=utf-8', '.js': 'application/javascript',
-          '.css': 'text/css', '.svg': 'image/svg+xml', '.png': 'image/png', '.woff2': 'font/woff2' };
+          '.css': 'text/css', '.svg': 'image/svg+xml', '.png': 'image/png', '.woff2': 'font/woff2', '.json': 'application/json',
+          ...mediaTypes };
         const body = await readFile(filename);
         return new Response(request.method === 'HEAD' ? null : body, { headers: {
           'Content-Type': mime[path.extname(filename)] || 'application/octet-stream',
@@ -171,25 +299,39 @@ else {
     session.defaultSession.setPermissionRequestHandler((_contents, _permission, callback) => callback(false));
     session.defaultSession.setPermissionCheckHandler(() => false);
     session.defaultSession.webRequest.onBeforeRequest((details, callback) => {
-      callback({ cancel: !details.url.startsWith('app://local/') && !details.url.startsWith('devtools://') });
+      callback({ cancel: !details.url.startsWith('app://local/') && !details.url.startsWith('devtools://') &&
+        !details.url.startsWith('blob:app://local/') });
     });
-    window = new BrowserWindow({ width: 1160, height: 800, minWidth: 920, minHeight: 680,
-      frame: false, show: false, backgroundColor: nativeTheme.shouldUseDarkColors ? '#0f1012' : '#eceef1', title: '本地拼音设置',
-      icon: app.isPackaged ? path.join(path.dirname(process.execPath), 'icon.ico')
-        : path.resolve(app.getAppPath(), '../assets/branding/icon/LocalPinyinIME.ico'), webPreferences: {
-        preload: path.join(__dirname, 'preload.cjs'), contextIsolation: true, sandbox: true,
-        nodeIntegration: false, webSecurity: true, backgroundThrottling: !hidden, offscreen: hidden, spellcheck: false,
-        devTools: !app.isPackaged } });
-    window.webContents.setWindowOpenHandler(() => ({ action: 'deny' }));
-    window.webContents.on('will-navigate', event => event.preventDefault());
-    window.webContents.on('will-attach-webview', event => event.preventDefault());
-    window.on('closed', () => { window = null; });
     installHandlers();
+    panel = new Panel({ dataDirectory: dataDirectory(), userData: app.getPath('userData'), bridge,
+      settings: currentSettings, preload: path.join(__dirname, 'panel-preload.cjs'), icon: iconPath, hidden,
+      settingsOpen: () => !!window, openSettings: () => void openSettings(), quit: () => app.quit() });
+    panel.resident = bootstrap.settings.panelResident;
+    panel.install();
+    installClipboardHandlers({ panel, dataDirectory, bridge, settings: currentSettings,
+      saveSettings: async (patch) => {
+        const current = await currentSettings();
+        const next = { ...current, ...patch };
+        await bridge('save-settings', [next.theme, String(next.textSize), String(next.shiftToggleEnabled), String(next.predictionEnabled),
+          next.candidateStyle, `clipboardHistory=${next.clipboardHistory}`, `clipboardRetentionDays=${next.clipboardRetentionDays}`]);
+        if (patch.clipboardHistory) await bridge('clipboard-agent', [patch.clipboardHistory === 'on' ? 'start' : 'stop']).catch(() => undefined);
+        window?.webContents.send('localpinyin:settings-changed');
+        return (await state()).settings;
+      } });
     await initUpdates(status => window?.webContents.send('localpinyin:update-status', status));
-    window.once('ready-to-show', () => { if (!hidden) window?.show(); });
-    await window.loadURL('app://local/index.html');
-    // Measurements of the packaged app (QA headless without a test feed) stay offline.
-    if (!hidden || process.env.LOCALPINYINIME_UPDATE_FEED) scheduleAutoCheck();
+    if (initialPanel) {
+      openPanel(initialPanel);
+    } else if (process.argv.includes('--first-run') && bootstrap.settings.clipboardHistory !== 'ask') {
+      // Started by the installer to ask about the clipboard: already answered.
+      if (!panel.keepsApp()) app.quit();
+    } else {
+      await openSettings();
+      // Measurements of the packaged app (QA headless without a test feed) stay offline.
+      if (!hidden || process.env.LOCALPINYINIME_UPDATE_FEED) scheduleAutoCheck();
+    }
+    if (bootstrap.settings.clipboardHistory === 'on') void bridge('clipboard-agent', ['start']).catch(() => undefined);
   }).catch(error => { console.error('Settings startup failed:', error.message); app.quit(); });
 }
-app.on('window-all-closed', () => app.quit());
+// Closing windows is handled above: the settings window may leave the panel
+// waiting in the background.
+app.on('window-all-closed', () => { if (!panel?.keepsApp()) app.quit(); });

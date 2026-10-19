@@ -9,11 +9,15 @@
 
 #include <algorithm>
 #include <array>
+#include <atomic>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
+#include <mutex>
+#include <optional>
 #include <stdexcept>
 #include <string>
+#include <vector>
 
 // This host uses Windows' real TSF context, ranges, compositions and edit sessions.
 // The DLL is loaded directly: no installation, registry writes or input injection.
@@ -110,7 +114,7 @@ public:
     HRESULT STDMETHODCALLTYPE GetStatus(TS_STATUS* status) override {
         if (!status) return E_POINTER;
         status->dwDynamicFlags = read_only ? TS_SD_READONLY : 0;
-        status->dwStaticFlags = TS_SS_NOHIDDENTEXT;
+        status->dwStaticFlags = TS_SS_NOHIDDENTEXT | (opaque ? TS_SS_TRANSITORY : 0);
         return S_OK;
     }
     HRESULT STDMETHODCALLTYPE QueryInsert(LONG start, LONG end, ULONG count, LONG* out_start, LONG* out_end) override {
@@ -134,6 +138,11 @@ public:
     HRESULT STDMETHODCALLTYPE GetText(LONG start, LONG end, WCHAR* plain, ULONG capacity,
         ULONG* copied, TS_RUNINFO* runs, ULONG run_capacity, ULONG* run_count, LONG* next) override {
         if (!copied || !run_count || !next) return E_POINTER;
+        if (opaque) {
+            // Shows the input method nothing, as older programs do.
+            *copied = 0; *run_count = 0; *next = start;
+            return S_OK;
+        }
         if (plain && capacity) ++plain_text_reads;
         if (end == -1) end = static_cast<LONG>(text.size());
         if (!valid(start, end)) return TS_E_INVALIDPOS;
@@ -219,8 +228,14 @@ public:
         *position = selection_.acpEnd;
         return S_OK;
     }
-    // This is a hidden test host; presentation requires separate desktop acceptance.
-    HRESULT STDMETHODCALLTYPE GetTextExt(TsViewCookie, LONG, LONG, RECT*, BOOL*) override { return TS_E_NOLAYOUT; }
+    // This hidden test host has no layout unless a test gives it one.
+    HRESULT STDMETHODCALLTYPE GetTextExt(TsViewCookie, LONG, LONG, RECT* rect, BOOL* clipped) override {
+        if (!layout) return TS_E_NOLAYOUT;
+        if (!rect || !clipped) return E_INVALIDARG;
+        *rect = *layout;
+        *clipped = FALSE;
+        return S_OK;
+    }
     HRESULT STDMETHODCALLTYPE GetScreenExt(TsViewCookie, RECT* rect) override {
         return rect && GetWindowRect(window_, rect) ? S_OK : E_INVALIDARG;
     }
@@ -261,6 +276,11 @@ public:
         password = value;
         const TS_ATTRID attribute = GUID_PROP_INPUTSCOPE;
         if (sink_) check(sink_->OnAttrsChange(0, static_cast<LONG>(text.size()), 1, &attribute), "host input scope change");
+    }
+    std::optional<RECT> layout;
+    bool opaque = false;
+    void layout_changed() {
+        if (sink_) check(sink_->OnLayoutChange(TS_LC_CHANGE, 1), "host layout change notification");
     }
     void set_read_only(bool value) {
         read_only = value;
@@ -341,7 +361,7 @@ public:
     HRESULT STDMETHODCALLTYPE SimulatePreservedKey(ITfContext*, REFGUID, BOOL*) override { return E_NOTIMPL; }
     HRESULT STDMETHODCALLTYPE BeginUIElement(ITfUIElement* element, BOOL* show, DWORD* id) override {
         if (!element || !show || !id) return E_POINTER;
-        current_element = element; *show = FALSE; *id = ++element_id_;
+        current_element = element; *show = self_draw ? TRUE : FALSE; *id = ++element_id_;
         if (synchronous_page_callback) {
             ComPtr<ITfCandidateListUIElementBehavior> behavior;
             if (SUCCEEDED(current_element.As(&behavior))) {
@@ -379,6 +399,8 @@ public:
     }
     ComPtr<ITfUIElement> current_element;
     bool synchronous_page_callback = false;
+    // The host lets the service draw its own candidate popup.
+    bool self_draw = false;
     unsigned int updates = 0;
 private:
     DWORD element_id_ = 0;
@@ -510,6 +532,13 @@ int wmain(int argc, wchar_t** argv) {
             require(static_cast<bool>(file), "write isolated continuation fixture");
         }
         {
+            // Tab twice (the tool panel) has its own section; elsewhere Tab is
+            // tested on its own.
+            std::filesystem::create_directories(isolated / L"LocalPinyinIME");
+            std::ofstream(isolated / L"LocalPinyinIME" / L"settings.json", std::ios::binary | std::ios::trunc)
+                << "{\"inputMode\":{\"panelDoubleTab\":false}}";
+        }
+        {
             Session s;
             check(CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED), "CoInitializeEx");
             s.com_initialized = true;
@@ -636,7 +665,7 @@ int wmain(int argc, wchar_t** argv) {
                 options << json;
             };
             // Next-word suggestions are opt-in; enable them for this section.
-            write_settings("{\"inputMode\":{\"nextWordPrediction\":true}}");
+            write_settings("{\"inputMode\":{\"panelDoubleTab\":false,\"nextWordPrediction\":true}}");
             s.store->host_replace(L"");
             for (const auto letter : std::wstring(L"FENYE")) s.key(letter);
             s.key(VK_SPACE);
@@ -695,7 +724,7 @@ int wmain(int argc, wchar_t** argv) {
             s.key(VK_OEM_2);
             require(s.store->text == before_digit + L"1/", "a slash after a digit is ASCII");
             // The three punctuation helpers switch separately.
-            write_settings("{\"inputMode\":{\"nextWordPrediction\":true,\"digitPeriod\":false,\"digitPunctuation\":true,\"letterPunctuation\":true}}");
+            write_settings("{\"inputMode\":{\"panelDoubleTab\":false,\"nextWordPrediction\":true,\"digitPeriod\":false,\"digitPunctuation\":true,\"letterPunctuation\":true}}");
             s.store->host_replace(L"3");
             s.key(VK_OEM_PERIOD);
             require(s.store->text == L"3\u3002", "with its switch off, the period after a digit stays Chinese");
@@ -717,18 +746,18 @@ int wmain(int argc, wchar_t** argv) {
             require(s.store->text == L"wait.", "after a letter the period is ASCII");
             // Defaults: the digit helpers on, letters off; an old file with only
             // digitPeriod=false keeps , / : Chinese as well.
-            write_settings("{\"inputMode\":{\"nextWordPrediction\":true}}");
+            write_settings("{\"inputMode\":{\"panelDoubleTab\":false,\"nextWordPrediction\":true}}");
             s.store->host_replace(L"Hello");
             s.key(VK_OEM_COMMA);
             require(s.store->text == L"Hello\uFF0C", "letters are off by default");
             s.store->host_replace(L"3");
             s.key(VK_OEM_PERIOD);
             require(s.store->text == L"3.", "the digit period is on by default");
-            write_settings("{\"inputMode\":{\"nextWordPrediction\":true,\"digitPeriod\":false}}");
+            write_settings("{\"inputMode\":{\"panelDoubleTab\":false,\"nextWordPrediction\":true,\"digitPeriod\":false}}");
             s.store->host_replace(L"1");
             s.key(VK_OEM_COMMA);
             require(s.store->text == L"1\uFF0C", "an old combined switch turned off keeps , after a digit Chinese");
-            write_settings("{\"inputMode\":{\"nextWordPrediction\":true}}");
+            write_settings("{\"inputMode\":{\"panelDoubleTab\":false,\"nextWordPrediction\":true}}");
             s.store->host_replace(before_digit);
             // 造词: 量, 甲 and 成 picked one at a time, with nothing in between,
             // come back as one phrase for liangjiacheng; a punctuation mark
@@ -936,7 +965,7 @@ int wmain(int argc, wchar_t** argv) {
             s.store->host_replace(L"");
             for (const auto letter : std::wstring(L"NIHAO")) s.key(letter);
             s.key(VK_SPACE);
-            write_settings("{\"inputMode\":{\"nextWordPrediction\":false}}");
+            write_settings("{\"inputMode\":{\"panelDoubleTab\":false,\"nextWordPrediction\":false}}");
             const UINT changed_message = RegisterWindowMessageW(L"LocalPinyinIME.CandidateOptionsChanged");
             EnumThreadWindows(GetCurrentThreadId(), [](HWND hwnd, LPARAM message) -> BOOL {
                 wchar_t name[64]{}; GetClassNameW(hwnd, name, 64);
@@ -950,7 +979,7 @@ int wmain(int argc, wchar_t** argv) {
             s.key(VK_SPACE);
             require(!s.adapter->current_element && s.store->text == L"你好", "disabled prediction preserves normal Chinese commit");
             s.key(VK_TAB, false);
-            write_settings("{\"inputMode\":{\"nextWordPrediction\":true}}");
+            write_settings("{\"inputMode\":{\"panelDoubleTab\":false,\"nextWordPrediction\":true}}");
 
             for (const auto modifier : {VK_SHIFT, VK_CONTROL, VK_MENU, VK_LWIN}) {
                 s.store->host_replace(L"");
@@ -962,7 +991,7 @@ int wmain(int argc, wchar_t** argv) {
                 require(s.store->text == L"你好" && !s.adapter->current_element,
                     "modified Tab passes through and closes prediction without inserting");
             }
-            write_settings("{\"inputMode\":{\"nextWordPrediction\":true,\"shiftToggleEnabled\":true}}");
+            write_settings("{\"inputMode\":{\"panelDoubleTab\":false,\"nextWordPrediction\":true,\"shiftToggleEnabled\":true}}");
             s.store->host_replace(L"");
             for (const auto letter : std::wstring(L"NIHAO")) s.key(letter);
             s.key(VK_SPACE);
@@ -975,7 +1004,7 @@ int wmain(int argc, wchar_t** argv) {
             s.modifier_keys[VK_SHIFT] = true;
             s.key(VK_SHIFT);
             s.modifier_keys[VK_SHIFT] = false;
-            write_settings("{\"inputMode\":{\"nextWordPrediction\":true}}");
+            write_settings("{\"inputMode\":{\"panelDoubleTab\":false,\"nextWordPrediction\":true}}");
 
             s.store->host_replace(L"");
             for (const auto letter : std::wstring(L"NIHAO")) s.key(letter);
@@ -1019,6 +1048,296 @@ int wmain(int argc, wchar_t** argv) {
             s.context = first_context;
             check(s.manager->SetFocus(s.document.Get()), "restore first document focus");
             check(other_document->Pop(TF_POPF_ALL), "pop second context");
+
+            // The self-drawn popup follows the app's text layout: an app that
+            // has not laid out the first key yet, its layout notification, a
+            // move it does not report, and the next key typed before layout.
+            {
+                s.adapter->self_draw = true;
+                const auto candidate_window = []() {
+                    HWND found = nullptr;
+                    EnumThreadWindows(GetCurrentThreadId(), [](HWND hwnd, LPARAM out) -> BOOL {
+                        wchar_t name[64]{}; GetClassNameW(hwnd, name, 64);
+                        if (std::wstring(name) != L"LocalPinyinCandidateWindow") return TRUE;
+                        *reinterpret_cast<HWND*>(out) = hwnd;
+                        return FALSE;
+                    }, reinterpret_cast<LPARAM>(&found));
+                    return found;
+                };
+                const auto pump = [](ULONGLONG ms) {
+                    const ULONGLONG until = GetTickCount64() + ms;
+                    MSG message{};
+                    while (GetTickCount64() < until) {
+                        while (PeekMessageW(&message, nullptr, 0, 0, PM_REMOVE)) {
+                            TranslateMessage(&message);
+                            DispatchMessageW(&message);
+                        }
+                        Sleep(2);
+                    }
+                };
+                const auto shown = [&]() {
+                    RECT rect{};
+                    const HWND popup = candidate_window();
+                    if (popup && IsWindowVisible(popup)) GetWindowRect(popup, &rect);
+                    return rect;
+                };
+                const auto hidden = [&]() { const RECT rect = shown(); return IsRectEmpty(&rect) != FALSE; };
+                RECT work{};
+                require(SystemParametersInfoW(SPI_GETWORKAREA, 0, &work, 0) != FALSE, "work area");
+                const LONG x = work.left + 240, y = work.top + 200;
+                s.store->host_replace(L"");
+                s.store->layout.reset();
+                s.key(L'N'); s.key(L'I');
+                pump(20);
+                require(hidden(), "no popup at a guessed place before the app's layout");
+                s.store->layout = RECT{x, y, x + 1, y + 20};
+                s.store->layout_changed();
+                pump(40);
+                const RECT first = shown();
+                require(!IsRectEmpty(&first), "the layout notification brings up the popup");
+                s.store->layout = RECT{x + 150, y + 90, x + 151, y + 110};
+                pump(600);
+                const RECT moved = shown();
+                if (moved.left - first.left != 150 || moved.top - first.top != 90)
+                    std::wcerr << L"popup at " << moved.left << L"," << moved.top << L" first " << first.left << L"," << first.top << L"\n";
+                require(moved.left - first.left == 150 && moved.top - first.top == 90, "the popup follows text the app moved silently");
+                s.store->layout = RECT{x + 40, y + 30, x + 41, y + 50};
+                s.store->layout_changed();
+                pump(40);
+                const RECT notified = shown();
+                require(notified.left - first.left == 40 && notified.top - first.top == 30, "a reported layout moves the popup at once");
+                s.store->layout.reset();
+                s.key(L'H');
+                const RECT typing = shown();
+                require(typing.left == notified.left && typing.top == notified.top,
+                    "the next key keeps the popup where the app laid out the text");
+                s.key(VK_ESCAPE);
+                require(hidden(), "Escape hides the popup");
+                s.adapter->self_draw = false;
+            }
+
+            // Tab to English: what was just typed is translated (here by a
+            // stand-in for the network) and put in its place.
+            {
+                auto* service = static_cast<localpinyin::TextService*>(s.service.Get());
+                std::mutex asked_lock;
+                std::vector<std::wstring> asked;
+                std::atomic<int> delay_ms{0};
+                service->set_translator_for_testing([&](const std::wstring& chinese) {
+                    Sleep(delay_ms.load());
+                    {
+                        std::lock_guard<std::mutex> guard(asked_lock);
+                        asked.push_back(chinese);
+                    }
+                    if (chinese == L"你好") return localpinyin::TranslationResult{true, L"Hello", {}};
+                    if (chinese == L"你好，天气") return localpinyin::TranslationResult{true, L"Hello, weather", {}};
+                    if (chinese == L"你好3") return localpinyin::TranslationResult{true, L"Hello 3", {}};
+                    return localpinyin::TranslationResult{false, {}, L"offline"};
+                });
+                const auto pump = [](ULONGLONG ms) {
+                    const ULONGLONG until = GetTickCount64() + ms;
+                    MSG message{};
+                    while (GetTickCount64() < until) {
+                        while (PeekMessageW(&message, nullptr, 0, 0, PM_REMOVE)) {
+                            TranslateMessage(&message);
+                            DispatchMessageW(&message);
+                        }
+                        Sleep(2);
+                    }
+                };
+                const auto becomes = [&](const std::wstring& text) {
+                    const ULONGLONG until = GetTickCount64() + 3000;
+                    while (s.store->text != text && GetTickCount64() < until) pump(10);
+                    if (s.store->text != text) std::wcerr << L"Host text: " << s.store->text << L"\n";
+                    return s.store->text == text;
+                };
+                const auto asked_count = [&]() {
+                    std::lock_guard<std::mutex> guard(asked_lock);
+                    return asked.size();
+                };
+                // Suggestions are on, but Tab now belongs to translation.
+                write_settings("{\"inputMode\":{\"panelDoubleTab\":false,\"nextWordPrediction\":true,\"tabTranslate\":true}}");
+                s.store->host_replace(L"");
+                s.key(VK_TAB, false);
+                require(asked_count() == 0, "with nothing typed Tab is the application's");
+                for (const auto letter : std::wstring(L"NIHAO")) s.key(letter);
+                s.key(VK_SPACE);
+                require(s.store->text == L"你好" && !s.adapter->current_element, "no suggestions while Tab translates");
+                s.key(VK_TAB);
+                require(becomes(L"Hello"), "Tab replaces what was typed with its translation");
+                // Translated text is not translated again: Tab goes on to the application.
+                s.key(VK_TAB, false);
+                require(asked_count() == 1, "the translation itself is not sent again");
+
+                // While typing pinyin, Tab commits it and translates.
+                s.store->host_replace(L"");
+                for (const auto letter : std::wstring(L"NIHAO")) s.key(letter);
+                s.key(VK_TAB);
+                require(becomes(L"Hello"), "Tab during pinyin commits and translates");
+
+                // Several commits and punctuation make one run.
+                s.store->host_replace(L"");
+                for (const auto letter : std::wstring(L"NIHAO")) s.key(letter);
+                s.key(VK_SPACE);
+                s.key(VK_OEM_COMMA);
+                for (const auto letter : std::wstring(L"TIANQI")) s.key(letter);
+                s.key(VK_TAB);
+                require(becomes(L"Hello, weather"), "a run of commits and punctuation is translated whole");
+
+                // A key the application typed itself belongs to the run.
+                s.store->host_replace(L"");
+                for (const auto letter : std::wstring(L"NIHAO")) s.key(letter);
+                s.key(VK_SPACE);
+                s.key(L'3', false);
+                s.store->host_replace(s.store->text + L"3");
+                s.key(VK_TAB);
+                require(becomes(L"Hello 3"), "characters the application typed are part of the run");
+
+                // Text changed behind the input method's back is left alone.
+                s.store->host_replace(L"");
+                for (const auto letter : std::wstring(L"NIHAO")) s.key(letter);
+                s.key(VK_SPACE);
+                s.store->host_replace(L"别的");
+                const auto before_moved = asked_count();
+                s.key(VK_TAB, false);
+                require(asked_count() == before_moved && s.store->text == L"别的", "a changed document is not translated");
+
+                // A failed translation leaves the text as it was.
+                s.store->host_replace(L"");
+                for (const auto letter : std::wstring(L"TIANQI")) s.key(letter);
+                s.key(VK_SPACE);
+                const auto before_failure = asked_count();
+                s.key(VK_TAB);
+                const ULONGLONG until = GetTickCount64() + 3000;
+                while (asked_count() == before_failure && GetTickCount64() < until) pump(10);
+                pump(50);
+                require(asked_count() == before_failure + 1 && s.store->text == L"天气", "a failed translation changes nothing");
+
+                // An application that shows the input method none of its text:
+                // Tab goes by what was typed (here the typed replacement cannot
+                // reach a window, so the text stays).
+                s.store->opaque = true;
+                s.store->host_replace(L"");
+                for (const auto letter : std::wstring(L"NIHAO")) s.key(letter);
+                s.key(VK_SPACE);
+                s.store->opaque = false;
+                require(s.store->text == L"你好", "typing works in an opaque application");
+                s.store->opaque = true;
+                const auto before_opaque = asked_count();
+                s.key(VK_TAB);
+                {
+                    const ULONGLONG until_opaque = GetTickCount64() + 3000;
+                    while (asked_count() == before_opaque && GetTickCount64() < until_opaque) pump(10);
+                }
+                pump(50);
+                s.store->opaque = false;
+                require(asked_count() == before_opaque + 1, "an application that shows no text is translated from what was typed");
+
+                // The next key cancels a translation still on its way.
+                delay_ms = 300;
+                s.store->host_replace(L"");
+                for (const auto letter : std::wstring(L"NIHAO")) s.key(letter);
+                s.key(VK_SPACE);
+                s.key(VK_TAB);
+                s.key(L'N');
+                s.key(VK_ESCAPE);
+                pump(700);
+                require(s.store->text == L"你好", "a key typed meanwhile cancels the translation");
+                delay_ms = 0;
+
+                // Turned off, Tab is the application's again.
+                write_settings("{\"inputMode\":{\"panelDoubleTab\":false,\"nextWordPrediction\":true}}");
+                const auto before_off = asked_count();
+                s.store->host_replace(L"");
+                for (const auto letter : std::wstring(L"SUIBIAN")) s.key(letter);
+                s.key(VK_SPACE);
+                s.key(VK_TAB, false);
+                require(asked_count() == before_off, "Tab does not translate when the option is off");
+                service->set_translator_for_testing({});
+            }
+
+            // Tab twice opens the tool panel: a single Tab's translation lands
+            // only once a second Tab can no longer come, two Tabs drop it, and
+            // a key typed during the wait gets the Tab's tab character first.
+            {
+                auto* service = static_cast<localpinyin::TextService*>(s.service.Get());
+                service->set_translator_for_testing([](const std::wstring& chinese) {
+                    return chinese == L"你好" ? localpinyin::TranslationResult{true, L"Hello", {}}
+                                              : localpinyin::TranslationResult{false, {}, L"offline"};
+                });
+                const auto pump = [](ULONGLONG ms) {
+                    const ULONGLONG until = GetTickCount64() + ms;
+                    MSG message{};
+                    while (GetTickCount64() < until) {
+                        while (PeekMessageW(&message, nullptr, 0, 0, PM_REMOVE)) {
+                            TranslateMessage(&message);
+                            DispatchMessageW(&message);
+                        }
+                        Sleep(2);
+                    }
+                };
+                write_settings("{\"inputMode\":{\"panelDoubleTab\":true,\"tabTranslate\":true}}");
+                s.store->host_replace(L"");
+                for (const auto letter : std::wstring(L"NIHAO")) s.key(letter);
+                s.key(VK_SPACE);
+                s.key(VK_TAB);
+                pump(120);
+                require(s.store->text == L"你好", "a single Tab's translation waits for a second Tab");
+                pump(600);
+                require(s.store->text == L"Hello", "then the translation lands");
+
+                s.store->host_replace(L"");
+                for (const auto letter : std::wstring(L"NIHAO")) s.key(letter);
+                s.key(VK_SPACE);
+                s.key(VK_TAB);
+                s.key(VK_TAB);
+                pump(700);
+                require(s.store->text == L"你好", "Tab twice opens the panel and drops the translation");
+
+                s.store->host_replace(L"");
+                s.key(VK_TAB);
+                s.key(L'N');
+                require(s.store->text.size() >= 1 && s.store->text.front() == L'	', "a key during the wait comes after the Tab");
+                s.key(VK_ESCAPE);
+                require(s.store->text == L"	", "the Tab's tab character stays");
+                pump(400);
+                require(s.store->text == L"	", "and is not typed twice");
+
+                // The Tab sent after a single tap reaches documents that skip
+                // the key test (RichEdit) as OnKeyDown alone: the application's,
+                // once; later Tabs are the input method's again.
+                s.store->host_replace(L"");
+                service->pass_next_tab_for_testing();
+                BOOL replayed_eaten = TRUE;
+                check(s.keys->OnKeyDown(s.context.Get(), VK_TAB, 0, &replayed_eaten), "replayed Tab");
+                require(replayed_eaten == FALSE, "the replayed Tab goes to the application");
+                check(s.keys->OnKeyUp(s.context.Get(), VK_TAB, 0, &replayed_eaten), "replayed Tab up");
+                s.key(VK_TAB);
+                s.key(VK_TAB);
+                pump(400);
+                require(s.store->text.empty(), "two Tabs after it open the panel again");
+
+                write_settings("{\"inputMode\":{\"panelDoubleTab\":false,\"nextWordPrediction\":true}}");
+                service->set_translator_for_testing({});
+            }
+
+            // Typing tools: v and a sum, number or date; sj gives the time second.
+            {
+                s.store->host_replace(L"");
+                for (const auto key : std::vector<WPARAM>{L'V', L'5', L'5'}) s.key(key);
+                s.modifier_keys[VK_SHIFT] = true;
+                s.key(VK_OEM_PLUS);
+                s.modifier_keys[VK_SHIFT] = false;
+                for (const auto key : std::vector<WPARAM>{L'1', L'5'}) s.key(key);
+                require(s.first_candidate() == L"70", "v55+15 offers 70");
+                s.key(VK_SPACE);
+                require(s.store->text == L"70", "Space types the result");
+                s.store->host_replace(L"");
+                for (const auto key : std::vector<WPARAM>{L'V', L'1', L'2', L'3'}) s.key(key);
+                require(s.first_candidate() == L"壹佰贰拾叁", "v123 offers the amount in words");
+                s.key(VK_ESCAPE);
+                s.store->host_replace(L"");
+            }
 
             s.store->host_replace(L"");
             for (const auto letter : std::wstring(L"NIHAO")) s.key(letter);

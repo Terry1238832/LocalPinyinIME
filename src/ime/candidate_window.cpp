@@ -23,8 +23,11 @@ constexpr wchar_t kEllipsis[] = L"…";
 constexpr wchar_t kSettingsExecutableName[] = L"LocalPinyinSettings.exe";
 constexpr UINT_PTR kLayoutRetryTimerId = 1;
 constexpr UINT_PTR kMotionTimerId = 2;
-// The focus marker eases out over this long; a frame every 15 ms meanwhile.
-constexpr ULONGLONG kMotionMs = 140;
+constexpr UINT_PTR kAnchorCheckTimerId = 3;
+constexpr UINT_PTR kNoticeTimerId = 4;
+constexpr UINT_PTR kFirstTaskTimerId = 100;
+// A frame every 15 ms while the focus moves (for as long as the style's
+// candidate_style_motion_ms) or new content animates in.
 constexpr UINT kMotionFrameMs = 15;
 constexpr UINT kDwmAttributeCloaked = 14;
 constexpr DWORD kDwmCloakedShell = 0x00000002;
@@ -126,11 +129,6 @@ bool high_contrast_enabled() noexcept {
            (contrast.dwFlags & HCF_HIGHCONTRASTON);
 }
 
-RECT lerp_rect(const RECT& from, const RECT& to, float t) noexcept {
-    const auto mix = [t](LONG a, LONG b) { return static_cast<LONG>(std::lround(a + (b - a) * t)); };
-    return RECT{mix(from.left, to.left), mix(from.top, to.top), mix(from.right, to.right), mix(from.bottom, to.bottom)};
-}
-
 bool rect_empty(const RECT& rect) noexcept {
     return rect.right <= rect.left || rect.bottom <= rect.top;
 }
@@ -138,24 +136,35 @@ bool rect_empty(const RECT& rect) noexcept {
 // The settings app sits beside the input method DLL. It is single-instance,
 // so a second launch only brings the open window forward.
 void open_settings_app() {
+    launch_settings_app();
+}
+
+}  // namespace
+
+bool launch_settings_app(const std::wstring& arguments) {
     const std::wstring path = install_file_path(g_instance, kSettingsExecutableName);
     const std::wstring directory = path.substr(0, path.find_last_of(L'\\') + 1);
     if (path.empty()) {
         log_status(L"candidate-ui", L"settings_open=false reason=settings_exe_not_found");
-        return;
+        return false;
     }
-    std::wstring command_line = L"\"" + path + L"\"";
+    std::wstring command_line = L"\"" + path + L"\"" + (arguments.empty() ? L"" : L" " + arguments);
     STARTUPINFOW startup{};
     startup.cb = sizeof(startup);
     PROCESS_INFORMATION process{};
     if (!CreateProcessW(path.c_str(), command_line.data(), nullptr, nullptr, FALSE, 0, nullptr,
                         directory.c_str(), &startup, &process)) {
         log_status(L"candidate-ui", L"settings_open=false create_process_last_error=" + std::to_wstring(GetLastError()));
-        return;
+        return false;
     }
+    // The new process may bring its window to the front.
+    AllowSetForegroundWindow(process.dwProcessId);
     CloseHandle(process.hThread);
     CloseHandle(process.hProcess);
+    return true;
 }
+
+namespace {
 
 void notify_candidate_ime_win_event(DWORD event,
                                     HWND hwnd,
@@ -261,6 +270,10 @@ HWND CandidateWindow::create_replacement_hwnd(HWND requested_owner, HWND origina
     if (created_hwnd) {
         hwnd_ = created_hwnd;
         owner_hwnd_ = create_config.parent;
+        // The tool panel (an ordinary process) hands text over with
+        // WM_COPYDATA, also into applications running as administrator;
+        // the message carries the token of the panel opened from here.
+        ChangeWindowMessageFilterEx(created_hwnd, WM_COPYDATA, MSGFLT_ALLOW, nullptr);
     } else {
         log_status(L"candidate-ui",
                    L"CreateWindowEx failed last_error=" + std::to_wstring(create_error));
@@ -284,6 +297,8 @@ void CandidateWindow::destroy_hwnd_for_recreate() {
     motion_timer_ = 0;
     motion_active_ = false;
     snap_motion_ = true;
+    anchor_check_timer_ = 0;
+    anchor_check_callback_ = {};
 }
 
 void CandidateWindow::reset_window_lifecycle_state() noexcept {
@@ -314,6 +329,9 @@ void CandidateWindow::show(const std::wstring& composition_text,
                            const CandidateWindowOwnerInfo& owner_info,
                            const std::vector<UINT>& page_indices) {
     const bool continuing_session = has_cached_show_state_;
+    notice_mode_ = notice_request_;
+    notice_request_ = false;
+    if (!notice_mode_ && hwnd_) KillTimer(hwnd_, kNoticeTimerId);
     cancel_pointer_interaction();
     reset_presentation_state();
     if (!continuing_session) {
@@ -383,9 +401,41 @@ CandidateLayoutResult CandidateWindow::prepare_layout(const std::wstring& compos
     return layout_;
 }
 
+void CandidateWindow::show_notice(const std::wstring& title, const std::wstring& body, const RECT& caret_rect,
+                                  const CandidateWindowOwnerInfo& owner_info, UINT hide_after_ms) {
+    prediction_mode_ = false;
+    notice_request_ = true;
+    show(title, {Candidate{body, 1, 0}}, 0, caret_rect, owner_info);
+    if (hwnd_ && notice_mode_ && hide_after_ms) SetTimer(hwnd_, kNoticeTimerId, hide_after_ms, nullptr);
+}
+
+bool CandidateWindow::schedule_task(int slot, UINT delay_ms, std::function<void()> callback) {
+    if (slot < 0 || slot >= kTaskSlots || !callback || !create()) return false;
+    task_callbacks_[slot] = std::move(callback);
+    if (!SetTimer(hwnd_, kFirstTaskTimerId + slot, delay_ms, nullptr)) {
+        task_callbacks_[slot] = {};
+        return false;
+    }
+    return true;
+}
+
+void CandidateWindow::cancel_task(int slot) {
+    if (slot < 0 || slot >= kTaskSlots) return;
+    if (hwnd_) KillTimer(hwnd_, kFirstTaskTimerId + slot);
+    task_callbacks_[slot] = {};
+}
+
+HWND CandidateWindow::async_target() {
+    create();
+    return hwnd_;
+}
+
 void CandidateWindow::hide(const wchar_t*) {
     cancel_pointer_interaction();
     stop_motion();
+    cancel_anchor_check();
+    notice_mode_ = false;
+    if (hwnd_) KillTimer(hwnd_, kNoticeTimerId);
     // The next popup starts fresh: no motion from stale positions, and
     // Adaptive Flow chooses its form anew.
     snap_motion_ = true;
@@ -427,6 +477,20 @@ void CandidateWindow::cancel_layout_retry() {
     layout_retry_timer_ = 0;
     layout_retry_attempt_ = 0;
     layout_retry_callback_ = {};
+}
+
+bool CandidateWindow::schedule_anchor_check(std::function<void()> callback, UINT delay_ms) {
+    if (!callback || !hwnd_) return false;
+    anchor_check_callback_ = std::move(callback);
+    anchor_check_timer_ = SetTimer(hwnd_, kAnchorCheckTimerId, delay_ms, nullptr);
+    if (!anchor_check_timer_) anchor_check_callback_ = {};
+    return anchor_check_timer_ != 0;
+}
+
+void CandidateWindow::cancel_anchor_check() {
+    if (hwnd_ && anchor_check_timer_) KillTimer(hwnd_, kAnchorCheckTimerId);
+    anchor_check_timer_ = 0;
+    anchor_check_callback_ = {};
 }
 
 bool CandidateWindow::is_visible() const noexcept {
@@ -552,6 +616,14 @@ LRESULT CALLBACK CandidateWindow::window_proc(HWND hwnd, UINT message, WPARAM wp
 }
 
 LRESULT CandidateWindow::handle_message(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) {
+    if (message == async_message()) {
+        if (async_callback_) async_callback_(wparam);
+        return 0;
+    }
+    if (message == WM_COPYDATA) {
+        const auto* data = reinterpret_cast<const COPYDATASTRUCT*>(lparam);
+        return data && copydata_callback_ && copydata_callback_(*data) ? TRUE : FALSE;
+    }
     if (message == candidate_options_changed_message()) {
         apply_options_changed();
         return 0;
@@ -572,6 +644,26 @@ LRESULT CandidateWindow::handle_message(HWND hwnd, UINT message, WPARAM wparam, 
                 if (callback) {
                     callback();
                 }
+                return 0;
+            }
+            if (wparam >= kFirstTaskTimerId && wparam < kFirstTaskTimerId + kTaskSlots) {
+                KillTimer(hwnd_, wparam);
+                auto callback = std::move(task_callbacks_[wparam - kFirstTaskTimerId]);
+                task_callbacks_[wparam - kFirstTaskTimerId] = {};
+                if (callback) callback();
+                return 0;
+            }
+            if (wparam == kNoticeTimerId) {
+                KillTimer(hwnd_, kNoticeTimerId);
+                if (notice_mode_) hide(L"notice_done");
+                return 0;
+            }
+            if (wparam == kAnchorCheckTimerId && anchor_check_timer_) {
+                KillTimer(hwnd_, kAnchorCheckTimerId);
+                anchor_check_timer_ = 0;
+                auto callback = std::move(anchor_check_callback_);
+                anchor_check_callback_ = {};
+                if (callback) callback();
                 return 0;
             }
             break;
@@ -744,7 +836,7 @@ CandidateLayoutInput CandidateWindow::layout_input(int dpi, const RECT& work_are
     input.dpi = dpi;
     input.options = options_;
     // Space commits the current choice; Tab accepts a suggestion.
-    focus_hint_ = prediction_mode_ ? L"Tab" : L"\u7A7A\u683C";
+    focus_hint_ = notice_mode_ ? L"" : prediction_mode_ ? L"Tab" : L"\u7A7A\u683C";
     input.focus_hint = focus_hint_;
     // Each style measures in the sizes, weights and faces it draws with.
     input.measure = [this](const std::wstring& text, int font_px, int weight, CandidateFontFace face) {
@@ -862,9 +954,17 @@ void CandidateWindow::paint_content() {
     const RECT& label = layout_.composition_rect;
     const int caret_space = (std::max)(4, scale_dip(4, layout_.dpi));
     state.query = fitted_composition_text(label.right - label.left - caret_space);
-    state.show_caret = !prediction_mode_;
+    state.show_caret = !prediction_mode_ && !notice_mode_;
     state.focus_hint = focus_hint_;
     state.marker = marker_motion_.current;
+    state.marker_from = marker_motion_.from;
+    state.marker_to = marker_motion_.to;
+    state.marker_progress = marker_progress_;
+    if (motion_frozen_) {
+        state.marker_from = motion_frozen_->first;
+        state.marker_progress = motion_frozen_->second;
+        state.marker = candidate_marker_frame(layout_.style, state.marker_from, state.marker_to, state.marker_progress);
+    }
     state.track_marker = track_motion_.current;
     if (reveal_frozen_ms_) {
         state.reveal_ms = *reveal_frozen_ms_;
@@ -915,16 +1015,17 @@ void CandidateWindow::update_motion(bool snap) {
         motion_active_ = true;
     }
     if (motion_active_ && !instant) {
-        const float t = (std::min)(1.0f, static_cast<float>(now - motion_start_) / static_cast<float>(kMotionMs));
-        // Ease out: quick to leave, precise to arrive; no overshoot.
-        const float eased = 1.0f - (1.0f - t) * (1.0f - t) * (1.0f - t);
-        marker_motion_.current = lerp_rect(marker_motion_.from, marker_motion_.to, eased);
-        track_motion_.current = lerp_rect(track_motion_.from, track_motion_.to, eased);
+        const float t = (std::min)(1.0f, static_cast<float>(now - motion_start_) /
+                                             static_cast<float>(candidate_style_motion_ms(layout_.style)));
+        marker_motion_.current = candidate_marker_frame(layout_.style, marker_motion_.from, marker_motion_.to, t);
+        track_motion_.current = candidate_marker_frame(CandidateStyle::CursorRail, track_motion_.from, track_motion_.to, t);
+        marker_progress_ = t;
         if (t >= 1.0f) motion_active_ = false;
     } else {
         motion_active_ = false;
         marker_motion_.current = marker_motion_.to;
         track_motion_.current = track_motion_.to;
+        marker_progress_ = 1.0f;
     }
     if ((motion_active_ || reveal_active_) && hwnd_ && !motion_timer_)
         motion_timer_ = SetTimer(hwnd_, kMotionTimerId, kMotionFrameMs, nullptr);

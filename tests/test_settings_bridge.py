@@ -95,7 +95,7 @@ class SettingsBridgeContract(unittest.TestCase):
         }), encoding="utf-8")
         for theme, size, shift in (("dark", "7", "true"), ("system", "1", "false"), ("light", "4", "true")):
             expected = {"theme": theme, "textSize": int(size), "candidateStyle": "flow",
-                        "shiftToggleEnabled": shift == "true", "predictionEnabled": False, "typoCorrection": True, "mixedEnglish": True, "fuzzyPinyin": [], "doublePinyin": "none", "usageDomains": [], "digitPeriod": True, "digitPunctuation": True, "letterPunctuation": False, "codePunctuation": True}
+                        "shiftToggleEnabled": shift == "true", "predictionEnabled": False, "typoCorrection": True, "mixedEnglish": True, "fuzzyPinyin": [], "doublePinyin": "none", "usageDomains": [], "digitPeriod": True, "digitPunctuation": True, "letterPunctuation": False, "codePunctuation": True, "tabTranslate": False, "panelDoubleTab": True, "panelResident": False, "emojiCandidates": True, "clipboardHistory": "ask", "clipboardRetentionDays": 7}
             self.assertEqual(self.call("save-settings", theme, size, shift), {"settings": expected})
             self.assertEqual(self.call("state")["settings"], expected)
             self.assertFalse(json.loads(settings.read_text(encoding="utf-8"))["candidateWindow"]["showKeyHints"])
@@ -111,11 +111,11 @@ class SettingsBridgeContract(unittest.TestCase):
             "inputMode": {"shiftToggleEnabled": False, "nextWordPrediction": True},
         }), encoding="utf-8")
         self.assertEqual(self.call("state")["settings"], {"theme": "dark", "textSize": 6, "candidateStyle": "flow",
-                                                          "shiftToggleEnabled": False, "predictionEnabled": True, "typoCorrection": True, "mixedEnglish": True, "fuzzyPinyin": [], "doublePinyin": "none", "usageDomains": [], "digitPeriod": True, "digitPunctuation": True, "letterPunctuation": False, "codePunctuation": True})
+                                                          "shiftToggleEnabled": False, "predictionEnabled": True, "typoCorrection": True, "mixedEnglish": True, "fuzzyPinyin": [], "doublePinyin": "none", "usageDomains": [], "digitPeriod": True, "digitPunctuation": True, "letterPunctuation": False, "codePunctuation": True, "tabTranslate": False, "panelDoubleTab": True, "panelResident": False, "emojiCandidates": True, "clipboardHistory": "ask", "clipboardRetentionDays": 7})
         for style in ("rail", "type", "glass", "flow"):
             saved = self.call("save-settings", "dark", "6", "false", "true", style)["settings"]
             self.assertEqual(saved, {"theme": "dark", "textSize": 6, "candidateStyle": style,
-                                     "shiftToggleEnabled": False, "predictionEnabled": True, "typoCorrection": True, "mixedEnglish": True, "fuzzyPinyin": [], "doublePinyin": "none", "usageDomains": [], "digitPeriod": True, "digitPunctuation": True, "letterPunctuation": False, "codePunctuation": True})
+                                     "shiftToggleEnabled": False, "predictionEnabled": True, "typoCorrection": True, "mixedEnglish": True, "fuzzyPinyin": [], "doublePinyin": "none", "usageDomains": [], "digitPeriod": True, "digitPunctuation": True, "letterPunctuation": False, "codePunctuation": True, "tabTranslate": False, "panelDoubleTab": True, "panelResident": False, "emojiCandidates": True, "clipboardHistory": "ask", "clipboardRetentionDays": 7})
             self.assertEqual(self.call("state")["settings"], saved)
             stored = json.loads(settings.read_text(encoding="utf-8"))["candidateWindow"]
             self.assertEqual(stored["style"], style)
@@ -239,6 +239,15 @@ class SettingsBridgeContract(unittest.TestCase):
         before = settings.read_bytes()
         self.call("save-settings", "light", "4", "false", "false", "flow", "letterPunctuation=on", success=False)
         self.assertEqual(settings.read_bytes(), before)
+        # Tab to English (0.18) is off until turned on, and saves on its own.
+        self.assertEqual(self.call("state")["settings"]["tabTranslate"], False)
+        saved = self.call("save-settings", "light", "4", "false", "true", "flow", "tabTranslate=true")["settings"]
+        self.assertEqual((saved["tabTranslate"], saved["predictionEnabled"], saved["letterPunctuation"]), (True, True, True))
+        self.assertEqual(json.loads(settings.read_text(encoding="utf-8"))["inputMode"]["tabTranslate"], True)
+        before = settings.read_bytes()
+        self.call("save-settings", "light", "4", "false", "true", "flow", "tabTranslate=yes", success=False)
+        self.assertEqual(settings.read_bytes(), before)
+        self.call("save-settings", "light", "4", "false", "false", "flow", "tabTranslate=false")
 
     def test_context_preview_and_prediction_persistence(self) -> None:
         before = self.snapshot()
@@ -354,7 +363,7 @@ class SettingsBridgeContract(unittest.TestCase):
         self.assertEqual(self.call("state")["learning"], {"count": 0, "capacity": 2048})
         self.assertEqual(self.call("user-list"), personal)
         self.assertEqual(self.call("state")["settings"], {"theme": "dark", "textSize": 5, "candidateStyle": "flow",
-                                                          "shiftToggleEnabled": True, "predictionEnabled": False, "typoCorrection": True, "mixedEnglish": True, "fuzzyPinyin": [], "doublePinyin": "none", "usageDomains": [], "digitPeriod": True, "digitPunctuation": True, "letterPunctuation": False, "codePunctuation": True})
+                                                          "shiftToggleEnabled": True, "predictionEnabled": False, "typoCorrection": True, "mixedEnglish": True, "fuzzyPinyin": [], "doublePinyin": "none", "usageDomains": [], "digitPeriod": True, "digitPunctuation": True, "letterPunctuation": False, "codePunctuation": True, "tabTranslate": False, "panelDoubleTab": True, "panelResident": False, "emojiCandidates": True, "clipboardHistory": "ask", "clipboardRetentionDays": 7})
         self.assertEqual(self.call("clear-learning"), {"cleared": True})
 
     def test_valid_runtime_status_is_reported_and_not_rewritten(self) -> None:
@@ -393,6 +402,59 @@ class SettingsBridgeContract(unittest.TestCase):
         self.call("user-upsert", "xin", "新", "5000", success=False)
         self.call("user-delete", "baoliu", "保留", success=False)
         self.assertEqual(self.snapshot(), before)
+
+    def test_panel_tools_phrases_and_emoji_candidates(self) -> None:
+        self.assertEqual(self.call("tools", "55+15")["results"][:2], ["70", "55+15=70"])
+        self.assertEqual(self.call("tools", "123")["results"][0], "壹佰贰拾叁")
+        self.assertEqual(self.call("tools", "nothing"), {"results": []})
+        phrases = self.call("phrases-add", "$", "美元")["phrases"]
+        self.assertEqual([(item["pinyin"], item["text"], item["label"]) for item in phrases], [("meiyuan", "$", "美元")])
+        self.call("phrases-add", "$", "美刀")
+        self.assertEqual(self.call("lookup", "meiyuan")["candidates"][0], "$")
+        self.assertEqual(self.call("lookup", "meidao")["candidates"][0], "$")
+        self.call("phrases-add", "$", "bad\tlabel", success=False)
+        self.assertEqual(len(self.call("phrases-delete", "meiyuan", "$")["phrases"]), 1)
+        self.assertNotEqual(self.call("lookup", "meiyuan")["candidates"][0], "$")
+        # Emoji confirmed in the panel come up third for their names.
+        self.call("emoji-learn", "😄", "开心", "大笑")
+        listed = self.call("emoji-list")["phrases"]
+        self.assertEqual({(item["pinyin"], item["text"]) for item in listed}, {("kaixin", "😄"), ("daxiao", "😄")})
+        self.assertEqual(self.call("lookup", "kaixin")["candidates"][2], "😄")
+        self.assertEqual(len(self.call("emoji-delete", "kaixin", "😄")["phrases"]), 1)
+        self.assertNotIn("😄", self.call("lookup", "kaixin")["candidates"])
+        settings = self.call("state")["settings"]
+        self.call("save-settings", settings["theme"], str(settings["textSize"]), "false", "false", settings["candidateStyle"],
+                  "emojiCandidates=false")
+        self.assertNotIn("😄", self.call("lookup", "daxiao")["candidates"])
+
+    def test_clipboard_history_delete_clear_and_import(self) -> None:
+        folder = self.data / "clipboard"
+        folder.mkdir(parents=True)
+        rows = [
+            {"id": "0123456789abcdef", "kind": "text", "time": 1700000000000, "text": "第一条", "hash": "a"},
+            {"id": "fedcba9876543210", "kind": "image", "time": 1700000001000, "w": 2, "h": 2, "ocr": "图里的字",
+             "ocrDone": True, "hash": "b"},
+        ]
+        (folder / "history.jsonl").write_text("".join(json.dumps(row, ensure_ascii=False) + "\n" for row in rows), encoding="utf-8")
+        (folder / "fedcba9876543210.png").write_bytes(b"png")
+        self.assertEqual(self.call("clipboard-summary")["items"], 2)
+        self.call("clipboard-delete", "fedcba9876543210")
+        self.assertFalse((folder / "fedcba9876543210.png").exists())
+        remaining = [json.loads(line) for line in (folder / "history.jsonl").read_text(encoding="utf-8").splitlines()]
+        self.assertEqual([(row["id"], row["text"]) for row in remaining], [("0123456789abcdef", "第一条")])
+        self.call("clipboard-delete", "not-an-id", success=False)
+        # An import puts a whole index in place.
+        imported = self.root / "import.jsonl"
+        imported.write_text(json.dumps(rows[1], ensure_ascii=False) + "\n", encoding="utf-8")
+        self.call("replace-data", "clipboard", str(imported))
+        self.assertFalse(imported.exists())
+        self.assertEqual(self.call("clipboard-summary")["images"], 1)
+        self.assertEqual(self.call("clipboard-clear"), {"items": 0, "images": 0, "bytes": 0})
+        self.call("replace-data", "unknown", str(self.lexicon), success=False)
+        phrases = self.root / "phrases.tsv"
+        phrases.write_text("meiyuan\t$\t美元\t1700000000\n", encoding="utf-8")
+        self.call("replace-data", "phrases", str(phrases))
+        self.assertEqual(self.call("lookup", "meiyuan")["candidates"][0], "$")
 
 
 if __name__ == "__main__":

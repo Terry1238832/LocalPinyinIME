@@ -1,7 +1,6 @@
-// Adaptive Flow: the layout follows the candidates. Every form shares the
-// query bar (brand mark, pinyin, pager, gear), so the pinyin stays under the
-// caret whatever the form, and one focus treatment (tint, edge, brand caret
-// bar, accent keycap):
+// Adaptive Flow: the layout follows the candidates, and the current choice
+// is a drop of liquid. Every form shares the query bar (a drop mark, pinyin,
+// pager, gear), so the pinyin stays under the caret whatever the form:
 //   Compact   one row of chips, the current choice first: short words.
 //   Balanced  the current choice on its own, larger, row with the commit key;
 //             one row of chips below: mid-length or uneven candidates.
@@ -9,11 +8,20 @@
 //             sentences.
 // decide_candidate_flow_form chooses with hysteresis from measured widths,
 // so the popup does not flip shape on every key.
+//
+// The drop sits behind the current choice, hugging its text, and turns the
+// text it covers white. It flows: moving to another candidate (the pointer,
+// the arrow keys, a new first choice as you type), its leading edge runs
+// ahead and a little past while the trailing edge follows, so it stretches
+// out, draws in at the middle and gathers again, its surface sloshing. A new
+// popup pours it in from the left, and candidates that changed rise into
+// place one after another.
 #include "layout_core.h"
 #include "paint_core.h"
 
 #include <algorithm>
 #include <cmath>
+#include <vector>
 
 namespace localpinyin {
 
@@ -51,8 +59,139 @@ namespace {
 
 constexpr float kLineEm = 1.32f;
 constexpr size_t kExpandedRows = 5;
+constexpr float kPi = 3.14159265f;
+// The drop pours in from its left end when the popup appears.
+constexpr float kPourMs = 340.0f;
+// Changed candidates rise into place, the next one this much later.
+constexpr float kRiseMs = 220.0f;
+constexpr float kRiseStaggerMs = 26.0f;
+
+// Leading edges arrive in the first 60% of a move, a little past the target
+// and back; trailing edges set off later and ease in and out, so the drop
+// stretches out and gathers itself again.
+float lead_ease(float t) noexcept {
+    const float x = std::clamp(t / 0.6f, 0.0f, 1.0f) - 1.0f;
+    constexpr float overshoot = 1.2f;
+    return 1.0f + (overshoot + 1.0f) * x * x * x + overshoot * x * x;
+}
+
+float trail_ease(float t) noexcept {
+    const float x = std::clamp((t - 0.18f) / 0.82f, 0.0f, 1.0f);
+    return x < 0.5f ? 4.0f * x * x * x : 1.0f - std::pow(2.0f - 2.0f * x, 3.0f) / 2.0f;
+}
+
+struct DropEdges {
+    float left = 0, top = 0, right = 0, bottom = 0;
+};
+
+DropEdges rest_edges(const RECT& rect) noexcept {
+    return DropEdges{static_cast<float>(rect.left), static_cast<float>(rect.top), static_cast<float>(rect.right),
+                     static_cast<float>(rect.bottom)};
+}
+
+// The edge on the side the drop travels toward leads, the one behind it
+// trails (both lead when it only grows or shrinks about its middle).
+DropEdges drop_edges(const RECT& from, const RECT& to, float t) noexcept {
+    const float travel_x = (to.left + to.right - from.left - from.right) / 2.0f;
+    const float travel_y = (to.top + to.bottom - from.top - from.bottom) / 2.0f;
+    const auto edge = [t](LONG a, LONG b, bool leads) {
+        return static_cast<float>(a) + static_cast<float>(b - a) * (leads ? lead_ease(t) : trail_ease(t));
+    };
+    const bool still_x = std::abs(travel_x) < 0.5f, still_y = std::abs(travel_y) < 0.5f;
+    DropEdges e{edge(from.left, to.left, still_x || travel_x < 0.0f), edge(from.top, to.top, still_y || travel_y < 0.0f),
+                edge(from.right, to.right, still_x || travel_x > 0.0f), edge(from.bottom, to.bottom, still_y || travel_y > 0.0f)};
+    e.right = (std::max)(e.right, e.left + 2.0f);
+    e.bottom = (std::max)(e.bottom, e.top + 2.0f);
+    return e;
+}
+
+// A rounded bar whose long sides draw in toward the middle by `pinch`: the
+// neck of a stretched drop (none at rest).
+std::vector<D2D1_POINT_2F> drop_outline(const DropEdges& e, float radius, float pinch, bool vertical) {
+    const float r = (std::max)(0.0f, (std::min)({radius, (e.right - e.left) / 2.0f, (e.bottom - e.top) / 2.0f}));
+    std::vector<D2D1_POINT_2F> points;
+    points.reserve(96);
+    const auto arc = [&](float cx, float cy, float start) {
+        for (int k = 0; k <= 6; ++k) {
+            const float a = start + kPi / 2.0f * static_cast<float>(k) / 6.0f;
+            points.push_back(D2D1::Point2F(cx + r * std::cos(a), cy + r * std::sin(a)));
+        }
+    };
+    const auto side = [&](float x0, float y0, float x1, float y1, float nx, float ny, bool pinched) {
+        constexpr int kSteps = 16;
+        for (int k = 1; k < kSteps; ++k) {
+            const float along = static_cast<float>(k) / kSteps;
+            const float wave = std::sin(kPi * along);
+            const float in = pinched ? pinch * wave * wave : 0.0f;
+            points.push_back(D2D1::Point2F(x0 + (x1 - x0) * along + nx * in, y0 + (y1 - y0) * along + ny * in));
+        }
+    };
+    arc(e.left + r, e.top + r, kPi);
+    side(e.left + r, e.top, e.right - r, e.top, 0.0f, 1.0f, !vertical);
+    arc(e.right - r, e.top + r, 1.5f * kPi);
+    side(e.right, e.top + r, e.right, e.bottom - r, -1.0f, 0.0f, vertical);
+    arc(e.right - r, e.bottom - r, 0.0f);
+    side(e.right - r, e.bottom, e.left + r, e.bottom, 0.0f, -1.0f, !vertical);
+    arc(e.left + r, e.bottom - r, 0.5f * kPi);
+    side(e.left, e.bottom - r, e.left, e.top + r, 1.0f, 0.0f, vertical);
+    return points;
+}
+
+// Where the drop rests on a candidate: from the row's left edge to a little
+// past the end of its text, and at least a round pill.
+RECT drop_rest(const CandidateLayoutResult& layout, const CandidateItemLayout& item) noexcept {
+    RECT rest = item.bounds;
+    const LONG lead = (std::max)(LONG{0}, item.number_bounds.left - item.bounds.left);
+    const LONG text = (std::min)(static_cast<LONG>(item.candidate_text_width_px), item.text_bounds.right - item.text_bounds.left);
+    const LONG hug = item.text_bounds.left + text + lead + scale_dip(2, layout.dpi);
+    const LONG pill = rest.left + (rest.bottom - rest.top) * 3 / 2;
+    rest.right = (std::min)(rest.right, (std::max)(hug, pill));
+    return rest;
+}
+
+// The brand mark: a drop on its tip, shaded like the focus, with a glint.
+void drop_mark(ModernRenderer& canvas, const RECT& box, const CandidateThemePalette& palette) {
+    const float size = static_cast<float>((std::min)(box.right - box.left, box.bottom - box.top));
+    const float r = size * 0.48f;
+    const float cx = (box.left + box.right) / 2.0f;
+    const float top = box.top + (box.bottom - box.top - 2.0f * r) / 2.0f;
+    std::vector<D2D1_POINT_2F> points;
+    for (int k = 0; k < 40; ++k) {
+        const float a = 2.0f * kPi * static_cast<float>(k) / 40.0f;
+        points.push_back(D2D1::Point2F(cx + r * std::sin(a) * std::sin(a / 2.0f), top + r * (1.0f - std::cos(a))));
+    }
+    if (palette.high_contrast) {
+        canvas.polygon(points, palette.mark);
+        return;
+    }
+    canvas.polygon_gradient(points, palette.focus_top, palette.mark, top, top + 2.0f * r);
+    const auto at = [](float v) { return static_cast<LONG>(std::lround(v)); };
+    canvas.rounded_fill(RECT{at(cx - 0.42f * r), at(top + 1.02f * r), at(cx - 0.14f * r), at(top + 1.30f * r)}, 0.14f * r,
+                        RGB(255, 255, 255), 0.6f);
+}
 
 }  // namespace
+
+RECT marker_adaptive_flow(const CandidateLayoutResult& layout, std::optional<size_t> hovered) {
+    // Balanced gives the current choice its own, larger row: the drop stays
+    // there. Elsewhere it flows to the candidate under the pointer.
+    const CandidateItemLayout* item = nullptr;
+    if (hovered && layout.flow_form != CandidateFlowForm::Balanced) item = candidate_paint::item_for(layout, *hovered);
+    if (!item) {
+        for (const auto& candidate : layout.items) {
+            if (candidate.featured) item = &candidate;
+        }
+    }
+    if (!item) item = candidate_paint::selected_item(layout);
+    return item ? drop_rest(layout, *item) : RECT{};
+}
+
+RECT flow_drop_frame(const RECT& from, const RECT& to, float t) noexcept {
+    if (candidate_paint::is_empty(from) || candidate_paint::is_empty(to) || t >= 1.0f) return to;
+    const DropEdges e = drop_edges(from, to, t);
+    return RECT{static_cast<LONG>(std::floor(e.left)), static_cast<LONG>(std::floor(e.top)),
+                static_cast<LONG>(std::ceil(e.right)), static_cast<LONG>(std::ceil(e.bottom))};
+}
 
 CandidateLayoutResult layout_adaptive_flow(const CandidateLayoutInput& input) {
     CandidateLayoutResult result;
@@ -209,8 +348,9 @@ CandidateLayoutResult layout_adaptive_flow(const CandidateLayoutInput& input) {
     result.row_gap_px = form == CandidateFlowForm::Balanced ? (has_chips ? row_gap : 0)
                       : form == CandidateFlowForm::Expanded ? expanded_row_gap : 0;
     result.corner_radius = f.dip(14);
-    result.selected_corner_radius = f.dip(10);
-    result.chip_corner_radius = f.dip(7);
+    // The drop: as round as its height allows, up to this.
+    result.selected_corner_radius = f.dip(12);
+    result.chip_corner_radius = f.dip(9);
 
     const RECT& panel = result.panel_rect;
     const int left = panel.left + padding;
@@ -369,9 +509,11 @@ void paint_adaptive_flow(const CandidatePaintContext& context) {
     const float u = candidate_paint::unit(layout);
     const RECT& panel = layout.panel_rect;
     const float radius = static_cast<float>(layout.corner_radius);
+    // High contrast: system colors, a plain drop, no sheen or glow.
+    const bool plain = palette.high_contrast;
 
     canvas.rounded(panel, radius, palette.background, palette.background);
-    if (palette.highlight != palette.background && !palette.high_contrast) {
+    if (palette.highlight != palette.background && !plain) {
         // Raised edge: a lighter line just inside the top border.
         const float y = panel.top + 1.5f;
         canvas.line(panel.left + radius * 0.7f, y, panel.right - radius * 0.7f, y, palette.highlight, 1.0f);
@@ -381,60 +523,161 @@ void paint_adaptive_flow(const CandidatePaintContext& context) {
     InflateRect(&inner, -1, -1);
     canvas.outline(inner, (std::max)(1.0f, radius - 1.0f), palette.inner_edge, 1.0f);
 
-    // Brand mark: the product's "拼" on an accent tile, like a search field's icon.
-    const RECT& mark = layout.mark_rect;
-    if (!candidate_paint::is_empty(mark)) {
-        canvas.rounded(mark, 5.0f * u, palette.mark, palette.mark);
-        canvas.text(L"拼", mark, palette.high_contrast ? palette.focus_number_text : RGB(255, 255, 255), 11.0f * u,
-                    FW_BOLD, DT_SINGLELINE | DT_CENTER | DT_VCENTER | DT_NOPREFIX);
-    }
+    if (!candidate_paint::is_empty(layout.mark_rect)) drop_mark(canvas, layout.mark_rect, palette);
     candidate_paint::query_text(context, layout.composition_rect, static_cast<float>(layout.composition_font_px),
                                 FW_NORMAL, palette.composition_text, palette.separator_text, palette.caret);
     candidate_paint::page_controls(context, 6.0f * u, palette.caret);
     candidate_paint::settings_gear(context, 6.0f * u);
 
+    // Where the drop is this frame: at rest on its target, partway through a
+    // move, or pouring in on a popup that has just appeared.
+    const RECT target = candidate_paint::is_empty(state.marker_to) ? candidate_marker_target(layout, state.hovered)
+                                                                    : state.marker_to;
+    RECT from = state.marker_from;
+    float t = state.marker_progress;
+    if (t >= 1.0f && !plain && state.previous_texts.empty() && state.reveal_ms < kRevealAtRestMs) {
+        const float pour = static_cast<float>(state.reveal_ms) / kPourMs;
+        if (pour < 1.0f) {
+            from = RECT{target.left, target.top, target.left + (target.bottom - target.top), target.bottom};
+            t = pour;
+        }
+    }
+    const bool moving = t < 1.0f && !candidate_paint::is_empty(from) && !EqualRect(&from, &target);
+    DropEdges drop = moving ? drop_edges(from, target, t) : rest_edges(target);
+    float pinch = 0.0f;
+    bool vertical = false;
+    if (moving) {
+        // Stretched past both ends' own length, the middle draws in.
+        const float travel_x = std::abs((target.left + target.right - from.left - from.right) / 2.0f);
+        const float travel_y = std::abs((target.top + target.bottom - from.top - from.bottom) / 2.0f);
+        vertical = travel_y > travel_x;
+        const float extent = vertical ? drop.bottom - drop.top : drop.right - drop.left;
+        const float at_rest = static_cast<float>(vertical
+            ? (std::max)(from.bottom - from.top, target.bottom - target.top)
+            : (std::max)(from.right - from.left, target.right - target.left));
+        const float thickness = static_cast<float>((std::max)(LONG{1}, (std::min)(target.right - target.left,
+                                                                                  target.bottom - target.top)));
+        pinch = thickness * 0.22f * std::clamp((extent - at_rest) / (thickness * 1.4f), 0.0f, 1.0f);
+    }
+    // Pressed, the drop gives a little.
+    if (state.pressed) {
+        const auto* pressed = candidate_paint::item_for(layout, *state.pressed);
+        if (pressed) {
+            const RECT rest = drop_rest(layout, *pressed);
+            if (EqualRect(&rest, &target)) {
+                drop.left += 1.5f * u; drop.right -= 1.5f * u; drop.top += u; drop.bottom -= u;
+            }
+        }
+    }
+    const float drop_radius = (std::min)(static_cast<float>(layout.selected_corner_radius),
+                                         static_cast<float>(target.bottom - target.top) / 2.0f);
+    const bool has_drop = !candidate_paint::is_empty(target);
+    const auto outline = has_drop ? drop_outline(drop, drop_radius, pinch, vertical) : std::vector<D2D1_POINT_2F>{};
+
+    // Candidates that changed rise into place, one after another.
+    struct Look { float alpha = 1.0f; float rise = 0.0f; };
+    std::vector<Look> looks(layout.items.size());
+    if (state.reveal_ms < kRevealAtRestMs && !plain) {
+        for (size_t k = 0; k < layout.items.size(); ++k) {
+            const auto& item = layout.items[k];
+            const size_t slot = item.page_number - 1;
+            if (slot < state.previous_texts.size() && state.previous_texts[slot] == item.display_text) continue;
+            const float p = std::clamp((static_cast<float>(state.reveal_ms) - static_cast<float>(k) * kRiseStaggerMs) / kRiseMs,
+                                       0.0f, 1.0f);
+            const float eased = 1.0f - (1.0f - p) * (1.0f - p) * (1.0f - p);
+            looks[k] = Look{eased, (1.0f - eased) * 6.0f * u};
+        }
+    }
     const float number_px = static_cast<float>(layout.number_font_px);
-    const float keycap_radius = (std::max)(3.0f, 4.0f * u);
     const bool expanded = layout.flow_form == CandidateFlowForm::Expanded;
+    const auto draw_items = [&](bool on_drop) {
+        for (size_t k = 0; k < layout.items.size(); ++k) {
+            const auto& item = layout.items[k];
+            const Look& look = looks[k];
+            if (look.alpha <= 0.01f) continue;
+            const LONG rise = static_cast<LONG>(std::lround(look.rise));
+            RECT number = item.number_bounds;
+            RECT text = item.text_bounds;
+            OffsetRect(&number, 0, rise);
+            OffsetRect(&text, 0, rise);
+            const bool faded = look.alpha < 0.999f;
+            if (faded) canvas.push_layer({}, look.alpha);
+            canvas.text(std::to_wstring(item.page_number), number, on_drop ? palette.focus_number_text : palette.number_text,
+                        number_px, FW_SEMIBOLD, DT_SINGLELINE | DT_CENTER | DT_VCENTER | DT_NOPREFIX);
+            // Two-line rows in Expanded wrap; everything else is one line.
+            const bool wraps = expanded && item.text_bounds.bottom - item.text_bounds.top >
+                                           static_cast<LONG>(layout.candidate_font_px * kLineEm * 1.5f);
+            const UINT flags = wraps ? (DT_VCENTER | DT_END_ELLIPSIS | DT_NOPREFIX) : candidate_text_draw_flags(item.truncated);
+            const bool large = item.featured && layout.flow_form == CandidateFlowForm::Balanced;
+            canvas.text(item.display_text, text, on_drop ? palette.focus_text : palette.text,
+                        static_cast<float>(large ? layout.focus_font_px : layout.candidate_font_px), FW_NORMAL, flags);
+            if (faded) canvas.pop_layer();
+        }
+    };
+
+    // Under the text: where the current choice is while the drop is away
+    // (a faint trace), and the pointer over a candidate the drop leaves be.
+    const float chip_radius = static_cast<float>(layout.chip_corner_radius);
     for (const auto& item : layout.items) {
+        const RECT rest = drop_rest(layout, item);
+        if (EqualRect(&rest, &target)) continue;
         const bool hovered = state.hovered == item.candidate_index;
         const bool pressed = state.pressed == item.candidate_index;
-        const RECT& row = item.bounds;
-        // Two-line rows in Expanded wrap; everything else is one line.
-        const bool wraps = expanded && item.text_bounds.bottom - item.text_bounds.top >
-                                       static_cast<LONG>(layout.candidate_font_px * 1.32f * 1.5f);
-        const UINT flags = wraps ? (DT_VCENTER | DT_END_ELLIPSIS | DT_NOPREFIX) : candidate_text_draw_flags(item.truncated);
-        if (item.featured) {
-            // The current choice: tinted, edged, the brand caret at its left
-            // edge, an accent keycap, and in Balanced larger text.
-            const float row_radius = static_cast<float>(layout.flow_form == CandidateFlowForm::Compact
-                                                            ? layout.chip_corner_radius : layout.selected_corner_radius);
-            canvas.rounded(row, row_radius, pressed ? palette.pressed_background : palette.focus_background,
-                           palette.focus_border);
-            const int height = row.bottom - row.top;
-            const int inset = expanded ? (std::min)(height / 4, static_cast<int>(layout.candidate_font_px * 0.4f)) : height / 4;
-            const int bar = (std::max)(2, scale_dip(3, layout.dpi));
-            const int bar_top = expanded ? item.number_bounds.top : row.top + inset;
-            const int bar_bottom = expanded ? item.number_bounds.bottom : row.bottom - inset;
-            canvas.rounded(RECT{row.left + 1, bar_top, row.left + 1 + bar, bar_bottom}, bar / 2.0f,
-                           palette.focus_bar, palette.focus_bar);
-            candidate_paint::keycap(canvas, item.number_bounds, std::to_wstring(item.page_number), palette.focus_keycap,
-                                    palette.focus_number_text, number_px, keycap_radius);
-            canvas.text(item.display_text, item.text_bounds, palette.focus_text, static_cast<float>(layout.focus_font_px),
-                        FW_NORMAL, flags);
-            if (layout.show_hint) {
-                candidate_paint::keycap(canvas, layout.hint_rect, state.focus_hint, palette.keycap, palette.hint_text,
-                                        static_cast<float>(layout.hint_font_px), keycap_radius);
-            }
-        } else {
-            const COLORREF fill = pressed ? palette.pressed_background : hovered ? palette.hover_background
-                                                                                  : palette.chip_background;
-            canvas.rounded(row, static_cast<float>(layout.chip_corner_radius), fill, palette.chip_border);
-            candidate_paint::keycap(canvas, item.number_bounds, std::to_wstring(item.page_number), palette.keycap,
-                                    palette.number_text, number_px, keycap_radius);
-            canvas.text(item.display_text, item.text_bounds, palette.text, static_cast<float>(layout.candidate_font_px),
-                        FW_NORMAL, flags);
+        if (pressed || hovered) {
+            canvas.rounded_fill(rest, chip_radius, pressed ? palette.pressed_background : palette.hover_background, 1.0f);
+        } else if (item.featured && !plain) {
+            canvas.rounded_fill(rest, chip_radius, palette.focus_border, 1.0f);
         }
+    }
+    draw_items(false);
+
+    if (has_drop) {
+        if (plain) {
+            canvas.polygon(outline, palette.focus_background);
+        } else {
+            // A glow of the drop's own color beneath it, in its own shape.
+            if (palette.focus_shadow_alpha > 0) {
+                const float strength = static_cast<float>(palette.focus_shadow_alpha) / 255.0f;
+                const struct { float spread, fall, opacity; } glow[] = {{0.0f, 2.0f, 0.5f}, {2.0f, 4.0f, 0.24f}, {4.5f, 6.5f, 0.1f}};
+                for (const auto& layer : glow) {
+                    const float spread = layer.spread * u, fall = layer.fall * u;
+                    const DropEdges halo{drop.left - spread, drop.top - spread + fall, drop.right + spread, drop.bottom + spread + fall};
+                    canvas.polygon(drop_outline(halo, drop_radius + spread, pinch, vertical), palette.focus_background,
+                                   strength * layer.opacity);
+                }
+            }
+            canvas.polygon_gradient(outline, palette.focus_top, palette.focus_background, drop.top, drop.bottom);
+        }
+        canvas.push_layer(outline);
+        if (!plain) {
+            // The surface: a sheen over the upper half whose lower edge is a
+            // slow wave, sloshing while the drop moves, and a bright line
+            // just under the top.
+            const float h = drop.bottom - drop.top;
+            const float slosh = moving ? std::sin(kPi * t) : 0.0f;
+            const float amplitude = h * (0.025f + 0.09f * slosh);
+            const float wavelength = (std::max)(h * 2.4f, 36.0f * u);
+            const float phase = moving ? 2.0f * kPi * 1.3f * t : 0.0f;
+            const float level = drop.top + h * 0.46f;
+            std::vector<D2D1_POINT_2F> sheen{D2D1::Point2F(drop.left - 1.0f, drop.top - 1.0f),
+                                             D2D1::Point2F(drop.right + 1.0f, drop.top - 1.0f)};
+            for (int k = 24; k >= 0; --k) {
+                const float x = drop.left - 1.0f + (drop.right - drop.left + 2.0f) * static_cast<float>(k) / 24.0f;
+                sheen.push_back(D2D1::Point2F(x, level + amplitude * std::sin(2.0f * kPi * (x - drop.left) / wavelength + phase)));
+            }
+            canvas.polygon(sheen, RGB(255, 255, 255), palette.dark ? 0.12f : 0.17f);
+            const LONG line_top = static_cast<LONG>(std::lround(drop.top + u));
+            canvas.rounded_fill(RECT{static_cast<LONG>(std::floor(drop.left)), line_top, static_cast<LONG>(std::ceil(drop.right)),
+                                     line_top + (std::max)(LONG{1}, static_cast<LONG>(std::lround(u)))},
+                                0.0f, RGB(255, 255, 255), palette.dark ? 0.22f : 0.32f);
+        }
+        draw_items(true);
+        canvas.pop_layer();
+    }
+
+    if (layout.show_hint) {
+        candidate_paint::keycap(canvas, layout.hint_rect, state.focus_hint, palette.keycap, palette.hint_text,
+                                static_cast<float>(layout.hint_font_px), (std::max)(3.0f, 4.0f * u));
     }
 }
 

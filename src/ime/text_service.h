@@ -5,6 +5,7 @@
 #include "composition_manager.h"
 #include "input_mode.h"
 #include "language_bar.h"
+#include "online_translation.h"
 #include "preserved_key.h"
 #include "runtime_diagnostics.h"
 #include "../engine/pinyin_engine.h"
@@ -12,16 +13,20 @@
 
 #include <msctf.h>
 
+#include <memory>
 #include <string>
 #include <vector>
 
 namespace localpinyin {
 
+struct TranslationJob;
+
 class TextService final : public ITfTextInputProcessorEx,
                           public ITfKeyEventSink,
                           public ITfCompositionSink,
                           public ITfThreadMgrEventSink,
-                          public ITfTextEditSink {
+                          public ITfTextEditSink,
+                          public ITfTextLayoutSink {
 public:
     using KeyStateReader = bool (*)(int virtual_key, void* context) noexcept;
 
@@ -29,6 +34,10 @@ public:
 
     // Internal test seam. COM-created instances leave this unset and use Win32 key state.
     void set_key_state_reader_for_testing(KeyStateReader reader, void* context) noexcept;
+    // Internal test seam: Tab translations come from here, not the network.
+    void set_translator_for_testing(Translator translator) { translator_ = std::move(translator); }
+    // As if this service had just sent the application a single tap's Tab.
+    void pass_next_tab_for_testing() { pass_next_tab_ = true; }
 
     HRESULT STDMETHODCALLTYPE QueryInterface(REFIID riid, void** object) override;
     ULONG STDMETHODCALLTYPE AddRef() override;
@@ -52,6 +61,7 @@ public:
     HRESULT STDMETHODCALLTYPE OnPushContext(ITfContext* context) override;
     HRESULT STDMETHODCALLTYPE OnPopContext(ITfContext* context) override;
     HRESULT STDMETHODCALLTYPE OnEndEdit(ITfContext* context, TfEditCookie cookie, ITfEditRecord* record) override;
+    HRESULT STDMETHODCALLTYPE OnLayoutChange(ITfContext* context, TfLayoutCode code, ITfContextView* view) override;
 
 private:
     ~TextService();
@@ -64,6 +74,35 @@ private:
     HRESULT preserve_ctrl_space_key();
     HRESULT unpreserve_ctrl_space_key();
     static LRESULT CALLBACK thread_keyboard_hook_proc(int code, WPARAM wparam, LPARAM lparam);
+    // A click in the application ends the run Tab would translate: the caret
+    // may have moved where the input method cannot see it.
+    static LRESULT CALLBACK thread_mouse_hook_proc(int code, WPARAM wparam, LPARAM lparam);
+    void install_thread_mouse_hook();
+    // Tool panel. Tab twice opens it: the first Tab waits kDoubleTabMs for a
+    // second. A translation it starts runs meanwhile but lands after the
+    // wait; a plain Tab is played back to the application after it (another
+    // key in between gets a tab character first, keeping the order).
+    struct TabTap {
+        bool pending = false;
+        ULONGLONG tick = 0;
+        bool replay = false;
+    };
+    TabTap tab_tap_;
+    bool pass_next_tab_ = false;
+    bool key_repeat_ = false;
+    ULONGLONG translation_hold_until_ = 0;
+    std::wstring panel_token_;
+    std::wstring pending_panel_text_;
+    int panel_insert_attempts_ = 0;
+    void finish_tab_tap();
+    void open_panel(ITfContext* context);
+    bool accept_panel_message(const COPYDATASTRUCT& data);
+    void insert_panel_text();
+    // v and a sum, number or date: the typing tools (full pinyin only).
+    [[nodiscard]] wchar_t tool_key_character(WPARAM wparam, bool shift) const;
+    void uninstall_thread_mouse_hook();
+    void note_mouse_press(HWND window);
+    HHOOK mouse_hook_ = nullptr;
     bool install_thread_keyboard_hook();
     void uninstall_thread_keyboard_hook();
     bool handle_thread_keyboard_hook(int code, unsigned long key, LPARAM lparam);
@@ -88,6 +127,13 @@ private:
     // only in memory and is dropped on focus changes and caret movement.
     void remember_committed_text(ITfContext* context, const std::wstring& text);
     void note_unhandled_key(unsigned long key);
+    // Many hosts (older programs through Windows' compatibility layer) only
+    // test a key they will type themselves and never send OnKeyDown for it,
+    // and some test one press more than once: a press is noted once, from
+    // either call, until its key-up. A held key's repeats cannot be counted.
+    void note_key_left_to_application(unsigned long key, LPARAM lparam);
+    unsigned long noted_key_ = 0;
+    HRESULT test_key_down(ITfContext* context, WPARAM wparam, BOOL* eaten);
     void forget_committed_text() noexcept;
     [[nodiscard]] std::wstring recent_committed_text(ITfContext* context) const;
     bool shift_toggle_enabled() const;
@@ -101,6 +147,13 @@ private:
     HRESULT update_composition(ITfContext* context);
     void update_candidate_window(ITfContext* context);
     void refresh_candidate_window_from_host();
+    // Apps often lay out new composition text only after the key that typed
+    // it, so a popup can first be placed from a fallback caret. It follows
+    // the text once the app reports its layout, and checks a few times
+    // right after it appears for apps that never report.
+    void follow_candidate_anchor();
+    void schedule_anchor_follow(UINT delay_ms);
+    [[nodiscard]] std::wstring candidate_display_label();
     void end_candidate_ui_element(const wchar_t* reason);
     HRESULT commit_selected(ITfContext* context);
     void start_prediction(ITfContext* context);
@@ -118,7 +171,9 @@ private:
     struct CaretNeighbor { bool digit = false; bool letter = false; };
     [[nodiscard]] CaretNeighbor neighbor_before_caret(ITfContext* context);
     HRESULT cancel_composition(ITfContext* context);
-    bool candidate_anchor_rect(ITfContext* context, RECT* rect);
+    // `layout_pending` is set when the app reported that its layout is not
+    // ready yet and the rect is a fallback (the system caret or the last one).
+    bool candidate_anchor_rect(ITfContext* context, RECT* rect, bool* layout_pending = nullptr);
     CandidateWindowOwnerInfo candidate_owner_info(ITfContext* context) const;
     bool gui_caret_rect(RECT* rect) const;
     void prepare_context_for_key(ITfContext* context);
@@ -181,6 +236,47 @@ private:
     void extend_phrase_run(ITfContext* context, const std::wstring& typed, const std::wstring& committed,
                            const std::wstring& preceding);
     void end_phrase_run() noexcept { phrase_run_ = PhraseRun{}; }
+    // Tab to English (online, opt-in): what was typed since the caret was
+    // last placed, translated and put in its place. The run holds this
+    // service's text as committed and the characters of keys the application
+    // typed itself (a digit, a space; kAnyCharacter when unknown); Backspace
+    // takes one off, anything else that may move the caret ends it.
+    struct TranslationRun {
+        std::uintptr_t context = 0;
+        std::wstring text;
+        ULONGLONG last_tick = 0;
+    };
+    TranslationRun translation_run_;
+    std::shared_ptr<TranslationJob> pending_translation_;
+    ITfContext* translation_context_ = nullptr;
+    unsigned long long translation_serial_ = 0;
+    Translator translator_;
+    void extend_translation_run(ITfContext* context, const std::wstring& text);
+    void end_translation_run() noexcept { translation_run_ = TranslationRun{}; }
+    [[nodiscard]] bool tab_translate_enabled() const;
+    // The text Tab would translate. When the application shows its text,
+    // as the document has it (`read`), and nothing when the document no
+    // longer ends with what was typed; when it does not, the run itself.
+    struct TranslationSource {
+        std::wstring text;
+        bool read = false;
+    };
+    [[nodiscard]] TranslationSource translation_source(ITfContext* context);
+    // A document that shows only what is being typed (TF_SS_TRANSITORY: older
+    // programs through Windows' compatibility layer).
+    [[nodiscard]] static bool transitory_context(ITfContext* context);
+    bool translation_source_read_ = false;
+    // A replacement through the document waits to be checked on screen.
+    bool translation_check_pending_ = false;
+    void start_translation(ITfContext* context, const TranslationSource& source);
+    // Replaces the source by typing: Backspace for each of its characters,
+    // then the translation. Only while this thread has the keyboard.
+    bool type_replacement(const std::wstring& source, const std::wstring& replacement);
+    void finish_translation(unsigned long long serial);
+    void cancel_translation();
+    void show_translation_notice(const std::wstring& title, const std::wstring& body, UINT hide_after_ms);
+    // Commits everything being typed, the selected candidates in turn.
+    HRESULT commit_whole_composition(ITfContext* context);
     bool previous_key_digit_ = false;
     bool opening_double_quote_ = true;
     bool opening_single_quote_ = true;
@@ -195,9 +291,14 @@ private:
     CandidateUIElementSession candidate_ui_element_session_;
     RECT last_caret_rect_{};
     bool has_last_caret_rect_ = false;
+    // The last rect came from the app's text layout, not the system caret.
+    bool last_caret_rect_from_text_ = false;
     ITfContext* composition_context_ = nullptr;
     ITfContext* candidate_context_ = nullptr;
     unsigned int candidate_layout_retry_attempts_ = 0;
+    // The text layout sink is advised on the candidate context.
+    DWORD layout_sink_cookie_ = TF_INVALID_COOKIE;
+    unsigned int anchor_follow_step_ = 0;
 };
 
 }  // namespace localpinyin

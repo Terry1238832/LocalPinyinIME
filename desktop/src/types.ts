@@ -8,6 +8,10 @@ export type FuzzyPair = 'z-zh' | 'c-ch' | 's-sh' | 'n-l' | 'f-h' | 'r-l' | 'an-a
 export type DoublePinyin = 'none' | 'xiaohe' | 'ziranma';
 // Usage scenes (常用场景): word packs that rank higher while chosen.
 export type UsageDomain = 'coding' | 'work' | 'math' | 'study' | 'daily' | 'games';
+// Clipboard history: asked once after installing or updating, then on or off.
+export type ClipboardHistory = 'ask' | 'on' | 'off';
+// Days copies are kept; 0 keeps them until deleted.
+export const clipboardRetentionChoices = [1, 7, 30, 90, 365, 0] as const;
 
 export interface Settings {
   theme: Theme;
@@ -25,8 +29,33 @@ export interface Settings {
   digitPunctuation: boolean;
   letterPunctuation: boolean;
   codePunctuation: boolean;
+  // Tab translates what was just typed into English (online, opt-in).
+  tabTranslate: boolean;
+  // The tool panel: Tab twice opens it; it may wait in the background
+  // instead of leaving ten minutes after its last use. Emoji used from it
+  // are offered among the candidates for their names.
+  panelDoubleTab: boolean;
+  panelResident: boolean;
+  emojiCandidates: boolean;
+  clipboardHistory: ClipboardHistory;
+  clipboardRetentionDays: number;
   shiftToggleEnabled: boolean;
   predictionEnabled: boolean;
+}
+
+// 输入习惯: typing `label` (read as `pinyin`) offers `text` first.
+export interface Phrase { pinyin: string; text: string; label: string; created: number }
+
+// Parts of the user's data that export and import handle one by one.
+export const backupParts = ['settings', 'lexicon', 'learning', 'phrases', 'panel', 'stickers', 'clipboard'] as const;
+export type BackupPart = (typeof backupParts)[number];
+export type BackupMode = 'merge' | 'overwrite';
+export interface BackupSummary {
+  file: string;
+  created: string;
+  version: string;
+  // Present parts with a short description of what each holds.
+  parts: Partial<Record<BackupPart, { files: number; bytes: number; items: number }>>;
 }
 
 export interface UserEntry {
@@ -79,6 +108,19 @@ export interface LocalPinyinApi {
   clearLearning(): Promise<{ cleared: boolean }>;
   // The words of every usage-scene pack.
   domainWords(): Promise<{ domains: Record<UsageDomain, string[]> }>;
+  listPhrases(): Promise<{ phrases: Phrase[] }>;
+  addPhrase(text: string, label: string): Promise<{ phrases: Phrase[] }>;
+  deletePhrase(pinyin: string, text: string): Promise<{ phrases: Phrase[] }>;
+  listEmojiCandidates(): Promise<{ phrases: Phrase[] }>;
+  deleteEmojiCandidate(pinyin: string, text: string): Promise<{ phrases: Phrase[] }>;
+  clipboardSummary(): Promise<{ items: number; images: number; bytes: number }>;
+  clearClipboard(): Promise<{ items: number; images: number; bytes: number }>;
+  chooseBackupFile(mode: 'save' | 'open', name?: string): Promise<string | null>;
+  exportBackup(parts: BackupPart[], file: string): Promise<BackupSummary>;
+  inspectBackup(file: string): Promise<BackupSummary>;
+  importBackup(file: string, choices: Partial<Record<BackupPart, BackupMode>>): Promise<{ imported: BackupPart[] }>;
+  // The panel changed a setting (the clipboard question): read them again.
+  onSettingsChanged(listener: () => void): () => void;
   openDataDirectory(): Promise<void>;
   windowControl(action: 'minimize' | 'maximize' | 'close'): Promise<void>;
 }

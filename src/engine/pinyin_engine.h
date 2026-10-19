@@ -5,6 +5,7 @@
 #include "dictionary.h"
 #include "user_learning.h"
 #include "context_model.h"
+#include "custom_phrases.h"
 #include "continuation_model.h"
 #include "domain_lexicon.h"
 #include "english_terms.h"
@@ -39,7 +40,10 @@ public:
                                                size_t limit = kMaxCandidateCount) const;
     // Candidates for the typed keys (full pinyin, or double pinyin keys when
     // that scheme is on). A prefix candidate's consumed_pinyin counts typed
-    // characters, whatever the scheme.
+    // characters, whatever the scheme. With full pinyin, v and a sum, number
+    // or date gives the typing tools' results instead (v55+15 → 70), and the
+    // user's phrases (输入习惯) and sj/rq/xq (time, date, weekday) join in.
+    [[nodiscard]] static bool is_tool_input(const std::wstring& typed);
     [[nodiscard]] std::vector<Candidate> lookup(const std::wstring& typed,
                                                const std::wstring& preceding_text = L"") const;
     UserLexiconRefreshResult refresh_user_lexicon_if_needed(bool composition_active);
@@ -59,6 +63,11 @@ public:
 
 private:
     void open_learning(const std::wstring& user_lexicon_path);
+    // The user's phrases for the whole typed key: first, or second when
+    // another candidate there was chosen since the phrase last was.
+    void place_phrases(const std::wstring& pinyin, std::vector<Candidate>& ranked) const;
+    // Emoji used from the tool panel, third for their names (latest first).
+    void place_emoji(const std::wstring& pinyin, std::vector<Candidate>& ranked) const;
     void rebuild_context_model(const std::wstring& context_path);
     void refresh_learning() const;
     [[nodiscard]] std::vector<Candidate> lookup_pinyin(const std::wstring& pinyin, const std::wstring& preceding_text,
@@ -70,6 +79,8 @@ private:
     Dictionary dictionary_;
     CandidateRanker ranker_;
     mutable UserLearning learning_;
+    mutable CustomPhrases phrases_;
+    mutable CustomPhrases emoji_;
     mutable ContextModel context_model_;
     mutable ContinuationModel continuation_model_;
     mutable size_t learning_revision_ = static_cast<size_t>(-1);
