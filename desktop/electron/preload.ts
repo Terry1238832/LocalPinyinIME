@@ -23,6 +23,10 @@ contextBridge.exposeInMainWorld('localPinyin', Object.freeze({
   exportBackup: (parts: BackupPart[], file: string) => ipcRenderer.invoke('localpinyin:backup-export', parts, file),
   inspectBackup: (file: string) => ipcRenderer.invoke('localpinyin:backup-inspect', file),
   importBackup: (file: string, choices: Partial<Record<BackupPart, BackupMode>>) => ipcRenderer.invoke('localpinyin:backup-import', file, choices),
+  vaultStatus: () => ipcRenderer.invoke('localpinyin:vault-status'),
+  vaultCreate: (password: string) => ipcRenderer.invoke('localpinyin:vault-create', password),
+  vaultChangePassword: (current: string, next: string) => ipcRenderer.invoke('localpinyin:vault-password', current, next),
+  vaultDestroy: () => ipcRenderer.invoke('localpinyin:vault-destroy'),
   onSettingsChanged: (listener: () => void) => {
     const forward = () => listener();
     ipcRenderer.on('localpinyin:settings-changed', forward);

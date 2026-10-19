@@ -62,23 +62,34 @@ foreach(id IN ITEMS coding work math study daily games)
     list(APPEND localpinyin_domain_sources "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/domains/${id}.tsv")
     list(APPEND localpinyin_domain_outputs "${localpinyin_dictionary_output_dir}/domains/${id}.tsv")
 endforeach()
+# The small tool panel's symbols, emoji and kaomoji (tools/generate_panel_data.py).
+set(localpinyin_panel_sources)
+set(localpinyin_panel_outputs)
+foreach(name IN ITEMS symbols emoji kaomoji)
+    list(APPEND localpinyin_panel_sources "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/panel/${name}.tsv")
+    list(APPEND localpinyin_panel_outputs "${localpinyin_dictionary_output_dir}/panel/${name}.tsv")
+endforeach()
 # A single dependency owns the shared files. Parallel DLL/bridge builds must
 # never copy into the same dictionary directory concurrently. Explicit outputs
 # also refresh data-only edits and restore deleted output files without relinking.
-add_custom_command(OUTPUT ${localpinyin_dictionary_outputs} ${localpinyin_domain_outputs}
+add_custom_command(OUTPUT ${localpinyin_dictionary_outputs} ${localpinyin_domain_outputs} ${localpinyin_panel_outputs}
     COMMAND "${CMAKE_COMMAND}" -E make_directory "${localpinyin_dictionary_output_dir}/domains"
+    COMMAND "${CMAKE_COMMAND}" -E make_directory "${localpinyin_dictionary_output_dir}/panel"
     COMMAND "${CMAKE_COMMAND}" -E copy_if_different ${localpinyin_dictionary_sources}
         "${localpinyin_dictionary_output_dir}"
     COMMAND "${CMAKE_COMMAND}" -E copy_if_different ${localpinyin_domain_sources}
         "${localpinyin_dictionary_output_dir}/domains"
-    DEPENDS ${localpinyin_dictionary_sources} ${localpinyin_domain_sources} VERBATIM)
-add_custom_target(localpinyin_dictionary_resources ALL DEPENDS ${localpinyin_dictionary_outputs} ${localpinyin_domain_outputs})
+    COMMAND "${CMAKE_COMMAND}" -E copy_if_different ${localpinyin_panel_sources}
+        "${localpinyin_dictionary_output_dir}/panel"
+    DEPENDS ${localpinyin_dictionary_sources} ${localpinyin_domain_sources} ${localpinyin_panel_sources} VERBATIM)
+add_custom_target(localpinyin_dictionary_resources ALL DEPENDS ${localpinyin_dictionary_outputs} ${localpinyin_domain_outputs}
+    ${localpinyin_panel_outputs})
 function(localpinyin_copy_dictionary_resource target)
     add_dependencies(${target} localpinyin_dictionary_resources)
 endfunction()
 # One copy of shared code is compiled for the product and all regression tests.
 add_library(pinyin_common STATIC src/common/logging.cpp src/common/utf_utils.cpp src/common/win32_utils.cpp
-    src/engine/input_options.cpp)
+    src/common/json_lite.cpp src/engine/input_options.cpp)
 target_link_libraries(pinyin_common PUBLIC user32 gdi32 shell32 shlwapi ole32)
 add_library(pinyin_engine STATIC src/engine/pinyin_engine.cpp src/engine/dictionary.cpp
     src/engine/user_lexicon.cpp src/engine/candidate_ranker.cpp src/engine/user_learning.cpp src/engine/context_model.cpp src/engine/continuation_model.cpp
@@ -91,24 +102,30 @@ add_library(pinyin_ui STATIC src/ime/candidate_ui.cpp src/settings/settings_stor
     src/ime/candidate_styles/modern_type.cpp src/ime/candidate_styles/floating_glass.cpp
     src/ime/candidate_styles/capsule.cpp src/ime/candidate_styles/column_list.cpp
     src/ime/candidate_styles/split_flap.cpp src/ime/candidate_styles/highlighter.cpp)
-target_link_libraries(pinyin_ui PUBLIC pinyin_common d2d1 dwrite)
+target_link_libraries(pinyin_ui PUBLIC pinyin_common d2d1 dwrite windowscodecs)
 add_library(pinyin_settings STATIC src/settings/dictionary_catalog.cpp)
 target_link_libraries(pinyin_settings PUBLIC pinyin_ui pinyin_engine comctl32 advapi32)
+# The clipboard history shared by its recorder and the settings bridge.
+add_library(pinyin_clipboard STATIC src/clipboard/clipboard_store.cpp)
+target_link_libraries(pinyin_clipboard PUBLIC pinyin_common bcrypt)
+# 记录 (encrypted with Windows CNG and DPAPI) and the tool panel's lists.
+add_library(pinyin_vault STATIC src/vault/vault.cpp)
+target_link_libraries(pinyin_vault PUBLIC pinyin_common bcrypt crypt32)
+add_library(pinyin_panel STATIC src/panel/panel_data.cpp)
+target_link_libraries(pinyin_panel PUBLIC pinyin_common)
 add_library(pinyin_service STATIC src/ime/text_service.cpp src/ime/composition_manager.cpp
     src/ime/candidate_ui_element.cpp src/ime/candidate_window.cpp src/ime/runtime_diagnostics.cpp
     src/ime/language_bar.cpp src/ime/input_mode.cpp src/ime/guids.cpp src/ime/globals.cpp
-    src/ime/online_translation.cpp)
-target_link_libraries(pinyin_service PUBLIC pinyin_engine pinyin_ui oleaut32 uuid advapi32 winhttp)
+    src/ime/online_translation.cpp src/ime/tool_panel.cpp src/ime/tool_panel_window.cpp)
+target_link_libraries(pinyin_service PUBLIC pinyin_engine pinyin_ui pinyin_clipboard pinyin_vault pinyin_panel oleaut32 uuid advapi32
+    winhttp windowscodecs)
 add_library(LocalPinyinIME SHARED src/ime/dllmain.cpp src/ime/exports.cpp src/ime/class_factory.cpp
     src/ime/registration.cpp src/ime/LocalPinyinIME.def src/ime/LocalPinyinIME.rc)
 target_link_libraries(LocalPinyinIME PRIVATE pinyin_service)
 localpinyin_add_version_resource(LocalPinyinIME "本地拼音" "LocalPinyinIME.dll" "VFT_DLL")
 localpinyin_copy_dictionary_resource(LocalPinyinIME)
-# The clipboard history shared by its recorder and the settings bridge.
-add_library(pinyin_clipboard STATIC src/clipboard/clipboard_store.cpp)
-target_link_libraries(pinyin_clipboard PUBLIC pinyin_common bcrypt)
 add_executable(LocalPinyinSettingsBridge src/tools/settings_bridge.cpp)
-target_link_libraries(LocalPinyinSettingsBridge PRIVATE pinyin_settings pinyin_clipboard windowscodecs ole32 advapi32)
+target_link_libraries(LocalPinyinSettingsBridge PRIVATE pinyin_settings pinyin_clipboard pinyin_vault windowscodecs ole32 advapi32)
 localpinyin_add_version_resource(LocalPinyinSettingsBridge "本地拼音设置服务" "LocalPinyinSettingsBridge.exe" "VFT_APP")
 localpinyin_copy_dictionary_resource(LocalPinyinSettingsBridge)
 # Records copies for the tool panel while clipboard history is on; reads the
@@ -170,6 +187,10 @@ if(BUILD_TESTING)
     pinyin_test(test_logging pinyin_common)
     pinyin_test(test_online_translation pinyin_service)
     pinyin_test(test_clipboard_store pinyin_clipboard)
+    pinyin_test(test_json_lite pinyin_common)
+    pinyin_test(test_vault pinyin_vault)
+    pinyin_test(test_tool_panel pinyin_service)
+    localpinyin_copy_dictionary_resource(test_tool_panel)
     pinyin_test(test_chinese_punctuation pinyin_common)
     pinyin_test(test_verify_expected_dll pinyin_common)
     target_sources(test_verify_expected_dll PRIVATE src/setup/verify_expected_dll.cpp)
@@ -223,5 +244,6 @@ endif()
 install(TARGETS LocalPinyinIME LocalPinyinSettingsBridge LocalPinyinClipboard LocalPinyinImeSetup RUNTIME DESTINATION .)
 install(FILES resources/dictionary/core_zh_pinyin.tsv resources/dictionary/local_core_zh_pinyin.tsv resources/dictionary/context_zh.tsv resources/dictionary/context_zh.lm resources/dictionary/standard_zh_pinyin.tsv resources/dictionary/continuations_zh.tsv resources/dictionary/english_terms.tsv DESTINATION dictionary)
 install(FILES ${localpinyin_domain_sources} DESTINATION dictionary/domains)
+install(FILES ${localpinyin_panel_sources} DESTINATION dictionary/panel)
 install(FILES resources/THIRD_PARTY_NOTICES.txt DESTINATION .)
 install(FILES LICENSE DESTINATION .)

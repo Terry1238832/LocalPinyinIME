@@ -1,18 +1,23 @@
 #include "../common/utf_utils.h"
 #include "../common/win32_utils.h"
 #include "../clipboard/clipboard_store.h"
+#include "../common/json_lite.h"
 #include "../engine/custom_phrases.h"
 #include "../engine/input_tools.h"
 #include "../engine/pinyin_engine.h"
 #include "../engine/user_lexicon.h"
 #include "../settings/dictionary_catalog.h"
 #include "../settings/settings_store.h"
+#include "../vault/vault.h"
 #include "localpinyin_version.h"
 
 #include <windows.h>
 #include <shlobj.h>
 #include <wincodec.h>
 #include <wrl/client.h>
+
+#include <fcntl.h>
+#include <io.h>
 
 #include <algorithm>
 #include <cstdint>
@@ -403,6 +408,49 @@ void press_paste() {
     SendInput(4, keys, sizeof(INPUT));
 }
 
+// A request with secrets (passwords, records) comes on stdin as JSON, so it
+// never shows in the process list.
+JsonValue read_request() {
+    _setmode(_fileno(stdin), _O_BINARY);
+    std::string text((std::istreambuf_iterator<char>(std::cin)), std::istreambuf_iterator<char>());
+    auto value = parse_json(text);
+    if (!text.empty()) SecureZeroMemory(text.data(), text.size());
+    require(value && value->is_object(), L"请求内容无效。");
+    return std::move(*value);
+}
+
+std::string vault_status_json(const Vault& vault) {
+    return std::string("{\"exists\":") + (vault.exists() ? "true" : "false") + ",\"password\":" + (vault.has_password() ? "true" : "false") + '}';
+}
+
+std::string vault_open_json(const Vault& vault, const std::wstring& password) {
+    std::vector<VaultItem> items;
+    require(vault.open(password, &items), vault.exists() ? L"密码不对。" : L"还没有创建记录。");
+    std::stable_sort(items.begin(), items.end(), [](const VaultItem& left, const VaultItem& right) { return left.updated > right.updated; });
+    return "{\"items\":" + vault_items_json(items) + '}';
+}
+
+// A record from the settings app, checked before it is kept.
+VaultItem vault_item(const JsonValue& value) {
+    require(value.is_object(), L"记录内容无效。");
+    VaultItem item;
+    item.id = value.text(L"id");
+    item.kind = value.text(L"kind", L"other");
+    if (item.kind != L"password" && item.kind != L"address") item.kind = L"other";
+    item.title = value.text(L"title");
+    require(!item.title.empty() && item.title.size() <= 100, L"标题应为 1 到 100 个字。");
+    if (const auto* fields = value.find(L"fields"); fields && fields->is_array()) {
+        require(fields->array.size() <= 32, L"一条记录最多 32 项。");
+        for (const auto& entry : fields->array) {
+            VaultField field{entry.text(L"name"), entry.text(L"value"), entry.flag(L"secret")};
+            require(!field.name.empty() && field.name.size() <= 32, L"每一项都要有名字，最多 32 个字。");
+            require(field.value.size() <= 4000, L"一项内容最多 4000 个字。");
+            item.fields.push_back(std::move(field));
+        }
+    }
+    return item;
+}
+
 DictionaryCatalog read_catalog() {
     DictionaryCatalog catalog;
     require(catalog.load((resource_directory() / L"dictionary").wstring()), L"无法读取内置词库，请重新安装本地拼音。");
@@ -645,6 +693,99 @@ std::string run(const std::vector<std::wstring>& args) {
         require(CustomPhrases::remove(store.data_dir() + L"\\custom_phrases.tsv", args[1], args[2]), L"无法删除短语，请稍后重试。");
         return phrases_json(store.data_dir() + L"\\custom_phrases.tsv");
     }
+    if (command == L"vault") {
+        // vault <status|create|open|save|delete|password|destroy>, secrets on stdin.
+        require_count(args, 2);
+        require(store.ensure_data_dir(), L"无法创建数据目录。");
+        const Vault vault(store.data_dir() + L"\\vault.json");
+        const std::wstring& operation = args[1];
+        if (operation == L"status") return vault_status_json(vault);
+        if (operation == L"destroy") {
+            require(vault.destroy(), L"无法删除记录文件，请稍后重试。");
+            return vault_status_json(vault);
+        }
+        JsonValue request = read_request();
+        std::wstring password = request.text(L"password");
+        require(password.size() <= 128, L"密码最多 128 个字符。");
+        std::string result;
+        if (operation == L"create") {
+            require(!vault.exists(), L"记录已经创建过了。");
+            require(vault.create(password), L"无法创建记录文件。");
+            result = vault_status_json(vault);
+        } else if (operation == L"open") {
+            result = vault_open_json(vault, password);
+        } else if (operation == L"save" || operation == L"delete") {
+            std::vector<VaultItem> items;
+            require(vault.open(password, &items), L"密码不对。");
+            const long long now = static_cast<long long>(std::time(nullptr));
+            if (operation == L"save") {
+                const auto* value = request.find(L"item");
+                require(value != nullptr, L"记录内容无效。");
+                VaultItem item = vault_item(*value);
+                const auto same = std::find_if(items.begin(), items.end(), [&](const VaultItem& entry) { return !item.id.empty() && entry.id == item.id; });
+                item.updated = now;
+                if (same != items.end()) {
+                    item.created = same->created;
+                    *same = std::move(item);
+                } else {
+                    require(items.size() < Vault::kMaxItems, L"记录已满。");
+                    item.id = Vault::new_id();
+                    item.created = now;
+                    items.push_back(std::move(item));
+                }
+            } else {
+                const std::wstring id = request.text(L"id");
+                items.erase(std::remove_if(items.begin(), items.end(), [&](const VaultItem& entry) { return entry.id == id; }), items.end());
+            }
+            require(vault.save(password, items), L"无法保存记录，请稍后重试。");
+            result = vault_open_json(vault, password);
+        } else if (operation == L"password") {
+            const std::wstring next = request.text(L"newPassword");
+            require(next.size() <= 128, L"密码最多 128 个字符。");
+            require(vault.change_password(password, next), vault.has_password() ? L"原来的密码不对。" : L"无法修改密码。");
+            result = vault_status_json(vault);
+        } else {
+            require(false, L"未知的记录操作。");
+        }
+        SecureZeroMemory(password.data(), password.size() * sizeof(wchar_t));
+        return result;
+    }
+    if (command == L"copy-secret") {
+        // A record copied for pasting: kept out of clipboard histories.
+        require_count(args, 1);
+        JsonValue request = read_request();
+        std::wstring text = request.text(L"text");
+        require(!text.empty() && text.size() <= 4000, L"内容无效。");
+        require(OpenClipboard(nullptr) != FALSE, L"剪贴板正被占用，请稍后重试。");
+        EmptyClipboard();
+        const auto put = [](UINT format, const void* data, size_t size) {
+            HGLOBAL memory = GlobalAlloc(GMEM_MOVEABLE, size ? size : 1);
+            if (!memory) return;
+            if (size) {
+                std::memcpy(GlobalLock(memory), data, size);
+                GlobalUnlock(memory);
+            }
+            if (!SetClipboardData(format, memory)) GlobalFree(memory);
+        };
+        put(CF_UNICODETEXT, text.c_str(), (text.size() + 1) * sizeof(wchar_t));
+        const DWORD no = 0;
+        put(RegisterClipboardFormatW(L"ExcludeClipboardContentFromMonitorProcessing"), nullptr, 0);
+        put(RegisterClipboardFormatW(L"CanIncludeInClipboardHistory"), &no, sizeof(no));
+        put(RegisterClipboardFormatW(L"CanUploadToCloudClipboard"), &no, sizeof(no));
+        CloseClipboard();
+        SecureZeroMemory(text.data(), text.size() * sizeof(wchar_t));
+        return "{\"sequence\":" + std::to_string(GetClipboardSequenceNumber()) + '}';
+    }
+    if (command == L"clear-secret") {
+        // clear-secret <sequence>: empties the clipboard if it still holds that copy.
+        require_count(args, 2);
+        const bool same = std::to_wstring(GetClipboardSequenceNumber()) == args[1];
+        if (same && OpenClipboard(nullptr)) {
+            EmptyClipboard();
+            CloseClipboard();
+        }
+        return std::string("{\"cleared\":") + (same ? "true" : "false") + '}';
+    }
     if (command == L"emoji-learn") {
         // emoji-learn <emoji> <name>...: the panel confirmed it; typing a
         // name later offers it third.
@@ -741,6 +882,8 @@ std::string run(const std::vector<std::wstring>& args) {
             placed = replace_file(source, path);
         } else if (kind == L"clipboard") {
             placed = ClipboardStore(store.data_dir() + L"\\clipboard").replace_index(source);
+        } else if (kind == L"vault") {
+            placed = replace_file(source, store.data_dir() + L"\\vault.json");
         } else {
             require(false, L"未知的数据类型。");
         }

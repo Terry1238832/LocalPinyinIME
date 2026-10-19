@@ -1,5 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron';
-import type { ClipQuery, PanelApi, PanelKind, Pick } from '../src/panel/types';
+import type { ClipQuery, PanelApi, PanelKind, Pick, VaultItem } from '../src/panel/types';
 
 const invoke = (channel: string, ...args: unknown[]) => ipcRenderer.invoke('localpinyin:panel:' + channel, ...args);
 
@@ -25,6 +25,14 @@ const api: PanelApi = {
   clipboardPaste: (id: string) => invoke('clipboard-paste', id),
   clipboardDelete: (id: string) => invoke('clipboard-delete', id),
   clipboardConsent: (on: boolean) => invoke('clipboard-consent', on),
+  vaultStatus: () => invoke('vault-status'),
+  vaultCreate: (password: string) => invoke('vault-create', password),
+  vaultUnlock: (password: string) => invoke('vault-unlock', password),
+  vaultItems: () => invoke('vault-items'),
+  vaultSave: (item: VaultItem) => invoke('vault-save', item),
+  vaultDelete: (id: string) => invoke('vault-delete', id),
+  vaultLock: () => invoke('vault-lock'),
+  vaultCopy: (text: string) => invoke('vault-copy', text),
   onOpen: (listener: () => void) => {
     const forward = () => listener();
     ipcRenderer.on('localpinyin:panel-open', forward);

@@ -1,5 +1,7 @@
 #include "modern_renderer.h"
 
+#include <wincodec.h>
+
 #include <algorithm>
 #include <cmath>
 
@@ -60,6 +62,7 @@ void ModernRenderer::finish() {
     if (result == D2DERR_RECREATE_TARGET) {
         active_->brush.Reset();
         active_->target.Reset();
+        (active_ == &alpha_ ? alpha_images_ : opaque_images_).clear();
     }
 }
 
@@ -227,8 +230,10 @@ void ModernRenderer::text(std::wstring_view value, const RECT& bounds, COLORREF 
         }
     }
     color(value_color);
+    // Color fonts draw emoji in color (Segoe UI Emoji) in candidates and the panel.
     active_->target->DrawTextLayout(D2D1::Point2F(static_cast<float>(bounds.left), static_cast<float>(bounds.top)),
-                             layout.Get(), active_->brush.Get(), D2D1_DRAW_TEXT_OPTIONS_CLIP);
+                             layout.Get(), active_->brush.Get(),
+                             D2D1_DRAW_TEXT_OPTIONS_CLIP | D2D1_DRAW_TEXT_OPTIONS_ENABLE_COLOR_FONT);
 }
 
 float ModernRenderer::text_runs(std::wstring_view value, const RECT& bounds, COLORREF base,
@@ -319,6 +324,51 @@ void ModernRenderer::icon(int kind, const RECT& bounds, COLORREF value, float st
         box(6, 6, 18, 18, 6); seg(12, 2, 12, 5); seg(12, 19, 12, 22);
         seg(2, 12, 5, 12); seg(19, 12, 22, 12);
     }
+}
+
+bool ModernRenderer::image(const std::wstring& file, const RECT& bounds) {
+    if (!drawing_ || file.empty() || bounds.right <= bounds.left || bounds.bottom <= bounds.top) return false;
+    auto& cache = active_ == &alpha_ ? alpha_images_ : opaque_images_;
+    auto found = cache.find(file);
+    if (found == cache.end()) {
+        if (cache.size() >= 96) cache.clear();
+        using Microsoft::WRL::ComPtr;
+        ComPtr<IWICImagingFactory> factory;
+        ComPtr<IWICBitmapDecoder> decoder;
+        ComPtr<IWICBitmapFrameDecode> frame;
+        ComPtr<IWICBitmapScaler> scaler;
+        ComPtr<IWICFormatConverter> converter;
+        ComPtr<ID2D1Bitmap> bitmap;
+        UINT width = 0, height = 0;
+        if (SUCCEEDED(CoCreateInstance(CLSID_WICImagingFactory, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&factory))) &&
+            SUCCEEDED(factory->CreateDecoderFromFilename(file.c_str(), nullptr, GENERIC_READ, WICDecodeMetadataCacheOnDemand, &decoder)) &&
+            SUCCEEDED(decoder->GetFrame(0, &frame)) && SUCCEEDED(frame->GetSize(&width, &height)) && width && height) {
+            // Small pictures in the panel: decode at most 320 pixels across.
+            IWICBitmapSource* source = frame.Get();
+            const UINT longest = std::max(width, height);
+            if (longest > 320 && SUCCEEDED(factory->CreateBitmapScaler(&scaler)) &&
+                SUCCEEDED(scaler->Initialize(frame.Get(), std::max(1u, width * 320 / longest), std::max(1u, height * 320 / longest),
+                                             WICBitmapInterpolationModeFant)))
+                source = scaler.Get();
+            if (SUCCEEDED(factory->CreateFormatConverter(&converter)) &&
+                SUCCEEDED(converter->Initialize(source, GUID_WICPixelFormat32bppPBGRA, WICBitmapDitherTypeNone, nullptr, 0,
+                                                WICBitmapPaletteTypeCustom)))
+                active_->target->CreateBitmapFromWicBitmap(converter.Get(), nullptr, &bitmap);
+        }
+        found = cache.emplace(file, bitmap).first;
+    }
+    if (!found->second) return false;
+    const D2D1_SIZE_F size = found->second->GetSize();
+    if (size.width <= 0 || size.height <= 0) return false;
+    const float box_width = static_cast<float>(bounds.right - bounds.left);
+    const float box_height = static_cast<float>(bounds.bottom - bounds.top);
+    const float scale = std::min(box_width / size.width, box_height / size.height);
+    const float drawn_width = size.width * scale, drawn_height = size.height * scale;
+    const float left = static_cast<float>(bounds.left) + (box_width - drawn_width) / 2;
+    const float top = static_cast<float>(bounds.top) + (box_height - drawn_height) / 2;
+    active_->target->DrawBitmap(found->second.Get(), D2D1::RectF(left, top, left + drawn_width, top + drawn_height), 1.0f,
+                                D2D1_BITMAP_INTERPOLATION_MODE_LINEAR);
+    return true;
 }
 
 ModernRenderer* active_modern_renderer() noexcept { return current_renderer; }

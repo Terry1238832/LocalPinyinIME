@@ -6,10 +6,11 @@ import { BrowserWindow, ipcMain, nativeTheme, screen, type IpcMainInvokeEvent } 
 import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { randomUUID } from 'node:crypto';
 import path from 'node:path';
-import type { PanelData, PanelKind, PanelState, Sticker } from '../src/panel/types';
+import { panelPages, type PanelData, type PanelKind, type PanelPageId, type PanelState, type Sticker } from '../src/panel/types';
 import type { Settings } from '../src/types';
 
-export type PanelTarget = { ime: string; host: string; token: string; anchor: { x: number; y: number; bottom: number } };
+export type PanelTarget = { ime: string; host: string; token: string; anchor: { x: number; y: number; bottom: number };
+  page: PanelPageId | null };
 
 export type Bridge = <T>(command: string, args?: string[]) => Promise<T>;
 
@@ -30,7 +31,9 @@ export function panelArguments(argv: string[]): PanelTarget | null {
   const anchor = value('anchor').split(',').map(Number);
   if (!/^\d{1,20}$/.test(ime) || !/^\d{1,20}$/.test(host) || !/^[0-9a-f]{32}$/.test(token) ||
       anchor.length !== 3 || anchor.some(number => !Number.isFinite(number))) return null;
-  return { ime, host, token, anchor: { x: anchor[0], y: anchor[1], bottom: anchor[2] } };
+  const page = value('page');
+  return { ime, host, token, anchor: { x: anchor[0], y: anchor[1], bottom: anchor[2] },
+    page: (panelPages as readonly string[]).includes(page) ? page as PanelPageId : null };
 }
 
 export class Panel {
@@ -101,6 +104,8 @@ export class Panel {
 
   async open(target: PanelTarget) {
     this.target = target;
+    // The small panel may have changed favorites and recents since.
+    this.loaded = false;
     await this.loadState();
     if (this.idle) { clearTimeout(this.idle); this.idle = null; }
     const settings = await this.options.settings().catch(() => null);
@@ -208,7 +213,7 @@ export class Panel {
       value === 'symbol' || value === 'kaomoji' || value === 'emoji' ? value : undefined;
     handle('data', async (): Promise<PanelData> => {
       await this.loadState();
-      return { state: this.state, stickers: await this.stickers(), dark: nativeTheme.shouldUseDarkColors };
+      return { state: this.state, stickers: await this.stickers(), dark: nativeTheme.shouldUseDarkColors, page: this.target?.page ?? null };
     });
     handle('close', () => this.hide());
     handle('insert', async (value, picks) => {

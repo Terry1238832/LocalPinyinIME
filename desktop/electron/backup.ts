@@ -29,6 +29,7 @@ const NAMES: Record<BackupPart, RegExp> = {
   panel: /^panel\.json$/,
   stickers: /^(index\.json|[0-9a-f-]{36}\.(png|jpe?g|gif|webp|bmp))$/,
   clipboard: /^(history\.jsonl|[0-9a-f]{16}\.(png|txt))$/,
+  records: /^vault\.json$/,
 };
 
 // Where each part lives; single-file parts list their files.
@@ -41,6 +42,7 @@ function location(context: Context, part: BackupPart): { directory: string; name
     case 'phrases': return { directory: data, names, listed: ['custom_phrases.tsv', 'emoji_candidates.tsv'] };
     case 'panel': return { directory: context.userData, names, listed: ['panel.json'] };
     case 'stickers': return { directory: path.join(data, 'stickers'), names };
+    case 'records': return { directory: data, names, listed: ['vault.json'] };
     case 'clipboard': return { directory: path.join(data, 'clipboard'), names };
   }
 }
@@ -66,6 +68,7 @@ function count(part: BackupPart, files: Files) {
     case 'phrases': return lines('custom_phrases.tsv') + lines('emoji_candidates.tsv');
     case 'stickers': return Object.keys(files).filter(name => name !== 'index.json').length;
     case 'clipboard': return lines('history.jsonl');
+    case 'records': return Object.keys(files).length;
   }
 }
 
@@ -233,6 +236,9 @@ export async function importBackup(context: Context, file: string, value: unknow
         const added = theirs.filter(item => !known.has(item.id));
         for (const item of added) await writeFile(path.join(directory, item.id + item.ext), imported[item.id + item.ext]);
         await writeFile(path.join(directory, 'index.json'), JSON.stringify([...mine, ...added], null, 2) + '\n');
+      } else if (part === 'records') {
+        // Encrypted as a whole: it replaces what is here (merging would need both passwords).
+        if (imported['vault.json']) await place('vault', imported['vault.json']);
       } else if (part === 'clipboard') {
         const directory = location(context, part).directory;
         if (!merge) await context.bridge('clipboard-clear');

@@ -13,7 +13,10 @@ Sources (see resources/THIRD_PARTY_NOTICES.txt):
   emoticons.json   https://github.com/w33ble/emoticon-data (MIT, (c) 2014 Joe Fleming)
 
 Symbols come from this Python's Unicode database; nothing is downloaded.
-Writes desktop/src/panel/data/{symbols,emoji,kaomoji}.json.
+Writes desktop/src/panel/data/{symbols,emoji,kaomoji}.json for the panel
+window and resources/dictionary/panel/{symbols,emoji,kaomoji}.tsv for the
+input method's own small panel: one item per line, group id, group name,
+section, text, name and keywords (joined by |).
 """
 from __future__ import annotations
 
@@ -25,6 +28,7 @@ import unicodedata
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "desktop" / "src" / "panel" / "data"
+NATIVE_OUT = ROOT / "resources" / "dictionary" / "panel"
 
 # Windows 11's Segoe UI Emoji draws these; newer emoji would show as boxes.
 MAX_EMOJI_VERSION = 15.0
@@ -288,6 +292,21 @@ def kaomoji(source: Path) -> dict:
     return {"groups": groups}
 
 
+def tsv(value: dict) -> str:
+    def clean(text: str) -> str:
+        return text.replace("\t", " ").replace("\n", " ")
+    lines = []
+    for group in value["groups"]:
+        sections = group.get("sections") or [{"name": "", "items": group["items"]}]
+        for section in sections:
+            for item in section["items"]:
+                entry = item if isinstance(item, dict) else {"c": item, "n": group["name"]}
+                keywords = "|".join(clean(word) for word in entry.get("k", []) if "|" not in word)
+                lines.append("\t".join([group["id"], group["name"], clean(section.get("name", "")), clean(entry["c"]),
+                                        clean(entry.get("n", "")), keywords]))
+    return "\n".join(lines) + "\n"
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--emoji-test", type=Path, required=True)
@@ -296,6 +315,7 @@ def main() -> int:
     parser.add_argument("--kaomoji", type=Path, required=True)
     args = parser.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
+    NATIVE_OUT.mkdir(parents=True, exist_ok=True)
     outputs = {
         "symbols.json": symbols(json.loads(args.annotations.read_text(encoding="utf-8"))["annotations"]["annotations"]),
         "emoji.json": emoji(args.emoji_test, args.annotations, args.derived),
@@ -304,6 +324,7 @@ def main() -> int:
     for name, value in outputs.items():
         path = OUT / name
         path.write_text(json.dumps(value, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
+        (NATIVE_OUT / name.replace(".json", ".tsv")).write_text(tsv(value), encoding="utf-8", newline="\n")
         counts = [len(g.get("items", [])) or sum(len(s["items"]) for s in g.get("sections", [])) for g in value["groups"]]
         print(f"{name}: {path.stat().st_size} bytes, {sum(counts)} items in {len(counts)} groups {counts}")
     return 0

@@ -10,7 +10,7 @@ export type IconName = 'appearance' | 'input' | 'dictionary' | 'learning' | 'abo
   | 'shield' | 'arrow' | 'keyboard' | 'spark' | 'reset' | 'warning' | 'text' | 'context' | 'switch' | 'database'
   | 'info' | 'command' | 'layers' | 'user' | 'gear' | 'enter' | 'history' | 'cursor'
   | 'tools' | 'clipboard' | 'omega' | 'kaomoji' | 'smile' | 'sticker' | 'star' | 'pin' | 'image' | 'calendar' | 'upload'
-  | 'download' | 'panel';
+  | 'download' | 'panel' | 'lock';
 
 const paths: Record<IconName, ReactNode> = {
   appearance: <><circle cx="12" cy="12" r="8.25" /><path d="M12 3.75a8.25 8.25 0 0 1 0 16.5Z" fill="currentColor" stroke="none" /></>,
@@ -62,6 +62,7 @@ const paths: Record<IconName, ReactNode> = {
   upload: <><path d="M12 15.5V4.5m-4.25 4.25L12 4.5l4.25 4.25" /><path d="M4.5 14.5v2.75a2.25 2.25 0 0 0 2.25 2.25h10.5a2.25 2.25 0 0 0 2.25-2.25V14.5" /></>,
   download: <><path d="M12 4.5v11m-4.25-4.25L12 15.5l4.25-4.25" /><path d="M4.5 14.5v2.75a2.25 2.25 0 0 0 2.25 2.25h10.5a2.25 2.25 0 0 0 2.25-2.25V14.5" /></>,
   panel: <><rect x="3" y="4.5" width="18" height="15" rx="2.75" /><path d="M8.5 4.5v15M11.5 9h6M11.5 12.5h6M11.5 16h3.5" /></>,
+  lock: <><rect x="4.5" y="10.5" width="15" height="10" rx="2.5" /><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5M12 14.5v2.5" /></>,
 };
 
 export function Icon({ name, size = 20, style, className }: { name: IconName; size?: number; style?: CSSProperties; className?: string }) {

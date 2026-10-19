@@ -83,7 +83,8 @@ async function main() {
 
   app = await _electron.launch({
     executablePath: executable,
-    args: [...(cli.packaged ? [] : [desktop]), '--panel', '--ime=1', '--host=2', `--token=${'a1'.repeat(16)}`, '--anchor=300,240,262'],
+    args: [...(cli.packaged ? [] : [desktop]), '--panel', '--ime=1', '--host=2', `--token=${'a1'.repeat(16)}`, '--anchor=300,240,262',
+      '--page=symbol'],
     cwd: desktop,
     env: { ...environment, LOCALPINYINIME_BRIDGE_PATH: bridge, LOCALPINYINIME_QA_HEADLESS: '1' },
     timeout: 30000,
@@ -95,7 +96,7 @@ async function main() {
   await page.setViewportSize({ width: 780, height: 480 });
 
   await check('opens on 符号 with 常用数学符号 before 常规标点', async () => {
-    assert.deepEqual(await page.locator('.rail-item span').allInnerTexts(), ['工具', '剪贴板', '符号', '颜文字', '表情', '表情包', '设置']);
+    assert.deepEqual(await page.locator('.rail-item span').allInnerTexts(), ['工具', '剪贴板', '符号', '颜文字', '表情', '表情包', '记录', '设置']);
     await page.locator('.cell.symbol').first().waitFor();
     const categories = await page.locator('.category').allInnerTexts();
     assert(categories.indexOf('常用数学符号') >= 0 && categories.indexOf('常用数学符号') < categories.indexOf('常规标点'), categories.join(' '));
@@ -203,6 +204,58 @@ async function main() {
     await page.getByRole('button', { name: /^删除 / }).first().click();
     await page.locator('.sticker-confirm').getByRole('button', { name: '删除', exact: true }).click();
     await page.waitForFunction(() => document.querySelectorAll('.sticker').length === 1);
+  });
+
+  await check('记录: a password first, then items are added, renamed, shown and locked', async () => {
+    await page.getByRole('button', { name: '记录', exact: true }).click();
+    await page.getByRole('heading', { name: '第一次使用记录' }).waitFor();
+    await shot('panel-records-setup.png');
+    await page.getByLabel('设置密码', { exact: true }).fill('开门123');
+    await page.getByLabel('再输入一次密码', { exact: true }).fill('开门12');
+    await page.getByRole('button', { name: '设置密码', exact: true }).click();
+    await page.locator('.field-problem', { hasText: '不一样' }).waitFor();
+    await page.getByLabel('再输入一次密码', { exact: true }).fill('开门123');
+    await page.getByRole('button', { name: '设置密码', exact: true }).click();
+    await page.getByRole('button', { name: '添加', exact: true }).waitFor();
+    assert.deepEqual(callBridge('vault', 'status'), { exists: true, password: true });
+    await page.getByRole('button', { name: '添加', exact: true }).click();
+    const editor = page.getByRole('dialog', { name: '添加记录' });
+    await editor.getByPlaceholder(/例如 QQ 邮箱/).fill('QQ 邮箱');
+    await editor.getByLabel('邮箱/账号', { exact: true }).fill('me@qq.com');
+    await editor.getByLabel('密码', { exact: true }).fill('p@ss');
+    await shot('panel-records-editor.png');
+    await editor.getByRole('button', { name: '保存', exact: true }).click();
+    await page.locator('.record-row', { hasText: 'QQ 邮箱' }).waitFor();
+    assert.equal(await page.locator('.record-field dd.masked').count(), 1);
+    // An address, then the email renamed.
+    await page.getByRole('button', { name: '添加', exact: true }).click();
+    const address = page.getByRole('dialog', { name: '添加记录' });
+    await address.getByRole('radio', { name: '地址' }).click();
+    await address.getByPlaceholder(/例如 QQ 邮箱/).fill('家');
+    await address.getByLabel('地址', { exact: true }).fill('北京市海淀区中关村大街 1 号');
+    await address.getByRole('button', { name: '保存', exact: true }).click();
+    await page.locator('.record-row', { hasText: '家' }).waitFor();
+    await page.locator('.record-row', { hasText: 'QQ 邮箱' }).click();
+    await page.getByRole('button', { name: '编辑 QQ 邮箱' }).click();
+    await page.getByRole('dialog', { name: '编辑记录' }).getByPlaceholder(/例如 QQ 邮箱/).fill('工作邮箱');
+    await page.getByRole('dialog', { name: '编辑记录' }).getByRole('button', { name: '保存', exact: true }).click();
+    await page.locator('.record-row', { hasText: '工作邮箱' }).waitFor();
+    await page.getByRole('tab', { name: '地址' }).click();
+    assert.equal(await page.locator('.record-row').count(), 1);
+    await page.getByRole('tab', { name: '全部' }).click();
+    await shot('panel-records.png');
+    const disk = fs.readFileSync(path.join(data, 'LocalPinyinIME', 'vault.json'), 'utf8');
+    assert(!disk.includes('me@qq.com') && !disk.includes('工作邮箱'), 'records are encrypted on disk');
+    // Locked: the password again.
+    await page.getByRole('button', { name: '锁定', exact: true }).click();
+    await page.getByRole('heading', { name: '记录已加密' }).waitFor();
+    await page.getByLabel('记录密码', { exact: true }).fill('不对');
+    await page.getByRole('button', { name: '打开', exact: true }).click();
+    await page.locator('.toast.error', { hasText: '密码不对' }).waitFor();
+    await page.getByLabel('记录密码', { exact: true }).fill('开门123');
+    await page.getByRole('button', { name: '打开', exact: true }).click();
+    await page.locator('.record-row', { hasText: '工作邮箱' }).waitFor();
+    assert.equal(await page.locator('.record-row').count(), 2);
   });
 
   await check('dark theme', async () => {

@@ -394,7 +394,8 @@ async function run() {
       'deleteEmojiCandidate', 'deletePhrase', 'deleteUserEntry', 'domainWords', 'downloadUpdate', 'exportBackup', 'getState',
       'getUpdateStatus', 'importBackup', 'initialState', 'inspectBackup', 'installUpdate', 'listEmojiCandidates', 'listPhrases',
       'listUserLexicon', 'onSettingsChanged', 'onUpdateStatus', 'openDataDirectory', 'openReleasePage',
-      'saveSettings', 'searchDictionary', 'setAutoUpdateCheck', 'upsertUserEntry', 'windowControl'].sort());
+      'saveSettings', 'searchDictionary', 'setAutoUpdateCheck', 'upsertUserEntry', 'vaultChangePassword', 'vaultCreate', 'vaultDestroy',
+      'vaultStatus', 'windowControl'].sort());
     assert.equal(await page.evaluate(() => typeof window.localPinyin.initialState), 'object');
     assert.equal(await page.evaluate(() => window.localPinyin.initialState.version), expectedVersion);
     const preferences = await app.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows()[0].webContents.getLastWebPreferences());
@@ -1050,9 +1051,9 @@ async function run() {
     await waitState(value => value.settings.panelDoubleTab === false);
     await doubleTab.click();
     await waitState(value => value.settings.panelDoubleTab === true);
-    await page.getByRole('switch', { name: '面板在后台待命', exact: true }).click();
+    await page.getByRole('switch', { name: '大窗口在后台待命', exact: true }).click();
     await waitState(value => value.settings.panelResident === true);
-    await page.getByRole('switch', { name: '面板在后台待命', exact: true }).click();
+    await page.getByRole('switch', { name: '大窗口在后台待命', exact: true }).click();
     await waitState(value => value.settings.panelResident === false);
     await page.getByRole('radiogroup', { name: '剪贴板保存时间' }).locator('label', { hasText: '30 天' }).click();
     await waitState(value => value.settings.clipboardRetentionDays === 30);
@@ -1077,6 +1078,38 @@ async function run() {
     await page.getByRole('button', { name: '删除短语 美刀', exact: true }).click();
     await page.waitForFunction(() => document.querySelectorAll('.habits .lexicon-table tbody tr').length === 1);
     assert.notEqual(native('lookup', ['meidao']).candidates[0], '$');
+  });
+  await check('记录 passwords are set, changed, removed and the records deleted in settings', async () => {
+    await navigate(pages.find(item => item.id === 'panel'));
+    const group = page.locator('section[aria-labelledby="group-records"]');
+    await group.getByRole('button', { name: '设置密码', exact: true }).click();
+    let dialog = page.getByRole('dialog', { name: '设置记录密码', exact: true });
+    await dialog.getByLabel('新密码', { exact: true }).fill('一二三');
+    await dialog.getByLabel('再输入一次', { exact: true }).fill('一二三');
+    await dialog.getByRole('button', { name: '确定', exact: true }).click();
+    await page.locator('.toast', { hasText: '已设置记录密码' }).waitFor();
+    assert.deepEqual(native('vault', ['status']), { exists: true, password: true });
+    await group.getByRole('button', { name: '修改密码', exact: true }).click();
+    dialog = page.getByRole('dialog', { name: '修改记录密码', exact: true });
+    await dialog.getByLabel('现在的密码', { exact: true }).fill('不对');
+    await dialog.getByLabel('新密码', { exact: true }).fill('四五六');
+    await dialog.getByLabel('再输入一次', { exact: true }).fill('四五六');
+    await dialog.getByRole('button', { name: '确定', exact: true }).click();
+    await dialog.locator('.error-notice', { hasText: '原来的密码不对' }).waitFor();
+    await dialog.getByLabel('现在的密码', { exact: true }).fill('一二三');
+    await dialog.getByRole('button', { name: '确定', exact: true }).click();
+    await page.locator('.toast', { hasText: '已修改记录密码' }).waitFor();
+    await screenshot('records-settings');
+    await group.getByRole('button', { name: '取消密码', exact: true }).click();
+    dialog = page.getByRole('dialog', { name: '取消记录密码', exact: true });
+    await dialog.getByLabel('现在的密码', { exact: true }).fill('四五六');
+    await dialog.getByRole('button', { name: '确定', exact: true }).click();
+    await page.locator('.toast', { hasText: '已取消记录密码' }).waitFor();
+    assert.deepEqual(native('vault', ['status']), { exists: true, password: false });
+    await group.getByRole('button', { name: '删除全部记录', exact: true }).click();
+    await page.getByRole('dialog', { name: '删除全部记录？', exact: true }).getByRole('button', { name: '删除全部记录', exact: true }).click();
+    await page.locator('.toast', { hasText: '已删除全部记录' }).waitFor();
+    assert.deepEqual(native('vault', ['status']), { exists: false, password: false });
   });
   await check('User data is exported, then imported part by part', async () => {
     await navigate(pages.find(item => item.id === 'about'));

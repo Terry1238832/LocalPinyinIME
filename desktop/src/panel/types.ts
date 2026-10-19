@@ -1,7 +1,11 @@
 // What the tool panel and its main-process side exchange.
-import type { ClipboardHistory, Phrase } from '../types';
+import type { ClipboardHistory, Phrase, VaultField, VaultItem, VaultStatus } from '../types';
 
-export type { Phrase };
+export type { Phrase, VaultField, VaultItem, VaultStatus };
+
+// The pages, as the input method's small panel names them (--page=).
+export const panelPages = ['tools', 'clipboard', 'symbol', 'kaomoji', 'emoji', 'stickers', 'records'] as const;
+export type PanelPageId = (typeof panelPages)[number];
 
 export type PanelKind = 'symbol' | 'kaomoji' | 'emoji';
 
@@ -14,7 +18,8 @@ export type PanelState = {
 
 export type Sticker = { id: string; ext: string; name: string; added: number };
 
-export type PanelData = { state: PanelState; stickers: Sticker[]; dark: boolean };
+// `page`: where the small panel was when it opened this one.
+export type PanelData = { state: PanelState; stickers: Sticker[]; dark: boolean; page: PanelPageId | null };
 
 // One copy in the clipboard history. Text longer than the preview is kept
 // whole in a file of its own (`long`); pictures carry the text read from
@@ -65,6 +70,14 @@ export type PanelApi = {
   clipboardPaste(id: string): Promise<void>;
   clipboardDelete(id: string): Promise<void>;
   clipboardConsent(on: boolean): Promise<void>;
+  vaultStatus(): Promise<VaultStatus>;
+  vaultCreate(password: string): Promise<VaultItem[]>;
+  vaultUnlock(password: string): Promise<VaultItem[]>;
+  vaultItems(): Promise<VaultItem[]>;
+  vaultSave(item: VaultItem): Promise<VaultItem[]>;
+  vaultDelete(id: string): Promise<VaultItem[]>;
+  vaultLock(): Promise<void>;
+  vaultCopy(text: string): Promise<void>;
   onOpen(listener: () => void): () => void;
 };
 

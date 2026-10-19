@@ -5,12 +5,14 @@
 #include "../common/logging.h"
 #include "../common/win32_utils.h"
 #include "../engine/candidate_selection.h"
+#include "../engine/dictionary.h"
 
 #include <algorithm>
 #include <array>
 #include <cwchar>
 #include <cwctype>
 #include <cstdint>
+#include <filesystem>
 #include <mutex>
 #include <oleauto.h>
 #include <optional>
@@ -55,6 +57,9 @@ constexpr UINT kTranslationNoticeDelayMs = 350;
 constexpr ULONGLONG kDoubleTabMs = 300;
 constexpr int kTabTask = 0;
 constexpr int kPanelTask = 1;
+constexpr int kSecretTask = 2;
+// A copied record leaves the clipboard after this long, if still there.
+constexpr UINT kSecretClipboardMs = 45 * 1000;
 // WM_COPYDATA from the tool panel: the session token, a line break, the text.
 constexpr ULONG_PTR kPanelInsertMessage = 0x4C50494E;  // 'LPIN'
 constexpr UINT kTranslationErrorShownMs = 2600;
@@ -575,6 +580,7 @@ HRESULT TextService::ActivateEx(ITfThreadMgr* thread_mgr, TfClientId client_id, 
 }
 
 HRESULT TextService::Deactivate() {
+    hide_tool_panel();
     forget_committed_text();
     end_translation_run();
     cancel_translation();
@@ -754,7 +760,8 @@ void TextService::uninstall_thread_mouse_hook() {
 
 void TextService::note_mouse_press(HWND window) {
     // Clicking a candidate in the popup is typing, not moving the caret.
-    if (window && window == candidate_window_.window()) return;
+    if (window && (window == candidate_window_.window() || window == tool_panel_window_.window())) return;
+    hide_tool_panel();
     end_translation_run();
     cancel_translation();
 }
@@ -965,6 +972,7 @@ bool TextService::handle_ctrl_space_keyup_fallback(ITfContext* context,
 
 HRESULT TextService::OnSetFocus(BOOL foreground) {
     if (!foreground && prediction_active_) dismiss_prediction(L"focus_lost");
+    if (!foreground) hide_tool_panel();
     forget_committed_text();
     end_translation_run();
     cancel_translation();
@@ -1062,6 +1070,13 @@ HRESULT TextService::test_key_down(ITfContext* context, WPARAM wparam, BOOL* eat
         return S_OK;
     }
     ctrl_space_key_down_.accepted_by_test_key_down = false;
+    if (tool_panel_open() && !is_modifier_key(key)) {
+        if (ToolPanel::takes_key(key, modifiers.ctrl, modifiers.alt)) {
+            *eaten = TRUE;
+            return S_OK;
+        }
+        hide_tool_panel();
+    }
     if (!is_modifier_key(key)) cancel_translation();
     if (prediction_active_) {
         if (!prediction_still_valid(context)) dismiss_prediction(L"prediction_caret_changed");
@@ -1188,6 +1203,16 @@ HRESULT TextService::handle_key_down(ITfContext* context, WPARAM wparam, BOOL* e
     const ModifierKeyState modifiers = ctrl_space_state.modifiers;
     const bool shift_enabled = shift_toggle_enabled();
     const unsigned long key = static_cast<unsigned long>(wparam);
+    if (tool_panel_open() && !is_modifier_key(key)) {
+        // Shift+Tab is not a Shift tap: no switch to English on release.
+        shift_toggle_on_key_down(shift_toggle_, key, modifiers, shift_enabled);
+        if (ToolPanel::takes_key(key, modifiers.ctrl, modifiers.alt)) {
+            handle_tool_panel_key(context, key, modifiers.shift, modifiers.ctrl);
+            *eaten = TRUE;
+            return S_OK;
+        }
+        hide_tool_panel();
+    }
     if (!is_modifier_key(key)) cancel_translation();
     if (prediction_active_) {
         if (!prediction_still_valid(context)) dismiss_prediction(L"prediction_caret_changed");
@@ -1216,7 +1241,7 @@ HRESULT TextService::handle_key_down(ITfContext* context, WPARAM wparam, BOOL* e
             candidate_window_.cancel_task(kTabTask);
             translation_hold_until_ = 0;
             cancel_translation();
-            open_panel(context);
+            show_tool_panel(context);
             *eaten = TRUE;
             return S_OK;
         }
@@ -1368,6 +1393,7 @@ HRESULT TextService::OnUninitDocumentMgr(ITfDocumentMgr*) {
     return S_OK;
 }
 HRESULT TextService::OnSetFocus(ITfDocumentMgr* focus, ITfDocumentMgr*) {
+    hide_tool_panel();
     forget_committed_text();
     end_phrase_run();
     end_translation_run();
@@ -2511,7 +2537,7 @@ void TextService::finish_tab_tap() {
     if (pending_translation_) finish_translation(pending_translation_->serial);
 }
 
-void TextService::open_panel(ITfContext* context) {
+void TextService::open_panel(ITfContext* context, const wchar_t* page) {
     if (secure_mode_) return;
     // A fresh token for this opening: only the panel started with it may
     // type through this window.
@@ -2530,8 +2556,193 @@ void TextService::open_panel(ITfContext* context) {
     }
     const std::wstring arguments = L"--panel --ime=" + std::to_wstring(reinterpret_cast<std::uintptr_t>(target)) +
         L" --host=" + std::to_wstring(reinterpret_cast<std::uintptr_t>(host)) + L" --token=" + panel_token_ +
-        L" --anchor=" + std::to_wstring(anchor.left) + L"," + std::to_wstring(anchor.top) + L"," + std::to_wstring(anchor.bottom);
+        L" --anchor=" + std::to_wstring(anchor.left) + L"," + std::to_wstring(anchor.top) + L"," + std::to_wstring(anchor.bottom) +
+        (page ? std::wstring(L" --page=") + page : std::wstring());
     if (!launch_settings_app(arguments)) log_status(L"panel", L"could not start the settings app");
+}
+
+ToolPanel& TextService::tool_panel() {
+    if (!tool_panel_) {
+        ToolPanel::Services services;
+        services.data_dir = settings_store_.data_dir();
+        services.resource_dir = std::filesystem::path(Dictionary::default_resource_path()).parent_path().wstring();
+        // Pinyin typed in the panel searches by the words it spells.
+        services.words = [this](const std::wstring& pinyin) {
+            std::vector<std::wstring> words;
+            for (const auto& candidate : engine_.lookup(pinyin, L"")) {
+                if (candidate.text.empty() || candidate.text == pinyin) continue;
+                words.push_back(candidate.text);
+                if (words.size() >= 5) break;
+            }
+            return words;
+        };
+        services.clipboard_on = [this] {
+            return settings_store_.load_input_mode_options().clipboard_history == InputModeOptions::ClipboardHistory::On;
+        };
+        tool_panel_ = std::make_unique<ToolPanel>(std::move(services));
+        tool_panel_window_.set_click_callback([this](const PanelHit& hit) {
+            if (!tool_panel_open()) return;
+            ITfDocumentMgr* document = nullptr;
+            ITfContext* context = nullptr;
+            if (thread_mgr_ && SUCCEEDED(thread_mgr_->GetFocus(&document)) && document) document->GetTop(&context);
+            if (document) document->Release();
+            handle_tool_panel_action(tool_panel().click(hit), context);
+            if (context) context->Release();
+        });
+    }
+    return *tool_panel_;
+}
+
+bool TextService::tool_panel_open() const noexcept {
+    return tool_panel_ && tool_panel_->is_open();
+}
+
+void TextService::show_tool_panel(ITfContext* context) {
+    if (secure_mode_) return;
+    if (context && !composing_.empty()) commit_whole_composition(context);
+    if (prediction_active_) dismiss_prediction(L"tool_panel");
+    candidate_window_.hide(L"tool_panel");
+    const auto owner = candidate_owner_info(context);
+    tool_panel_host_ = owner.root_valid ? owner.root_hwnd : GetForegroundWindow();
+    RECT anchor{};
+    if (!context || !candidate_anchor_rect(context, &anchor)) {
+        if (has_last_caret_rect_) {
+            anchor = last_caret_rect_;
+        } else {
+            POINT cursor{};
+            GetCursorPos(&cursor);
+            anchor = RECT{cursor.x, cursor.y, cursor.x + 1, cursor.y + 1};
+        }
+    }
+    auto& panel = tool_panel();
+    panel.open();
+    tool_panel_window_.show(panel.view(), anchor, owner);
+}
+
+void TextService::hide_tool_panel() {
+    if (!tool_panel_open()) return;
+    tool_panel_->close();
+    tool_panel_window_.hide();
+}
+
+void TextService::handle_tool_panel_key(ITfContext* context, unsigned long key, bool shift, bool ctrl) {
+    PanelKey panel_key{static_cast<UINT>(key), 0, shift, ctrl};
+    if (!ctrl) {
+        // The character the key types with the keyboard layout and Shift/CapsLock.
+        BYTE state[256]{};
+        wchar_t typed[4]{};
+        if (GetKeyboardState(state) &&
+            ToUnicode(static_cast<UINT>(key), MapVirtualKeyW(static_cast<UINT>(key), MAPVK_VK_TO_VSC), state, typed, 4, 0x4) == 1 &&
+            typed[0] >= 0x20)
+            panel_key.ch = typed[0];
+    }
+    handle_tool_panel_action(tool_panel().key(panel_key), context);
+}
+
+void TextService::handle_tool_panel_action(const PanelAction& action, ITfContext* context) {
+    switch (action.kind) {
+        case PanelAction::Kind::None:
+            return;
+        case PanelAction::Kind::Redraw:
+            tool_panel_window_.update(tool_panel().view());
+            return;
+        case PanelAction::Kind::Close:
+            hide_tool_panel();
+            return;
+        case PanelAction::Kind::Insert:
+            hide_tool_panel();
+            if (context && !action.text.empty()) {
+                if (!composing_.empty()) commit_whole_composition(context);
+                if (SUCCEEDED(composition_.insert_text(context, client_id_, action.text))) remember_committed_text(context, action.text);
+            }
+            for (const auto& [emoji, names] : action.learn_emoji) {
+                std::vector<std::wstring> arguments{L"emoji-learn", emoji};
+                arguments.insert(arguments.end(), names.begin(), names.end());
+                run_bridge(arguments);
+            }
+            return;
+        case PanelAction::Kind::PasteSticker:
+            hide_tool_panel();
+            run_bridge({L"panel-paste", std::to_wstring(reinterpret_cast<std::uintptr_t>(tool_panel_host_)), action.file});
+            return;
+        case PanelAction::Kind::PasteClip:
+            hide_tool_panel();
+            run_bridge({L"clipboard-paste", std::to_wstring(reinterpret_cast<std::uintptr_t>(tool_panel_host_)),
+                        std::wstring(action.clip_id.begin(), action.clip_id.end())});
+            return;
+        case PanelAction::Kind::CopySecret:
+            hide_tool_panel();
+            copy_secret(action.text);
+            return;
+        case PanelAction::Kind::Expand: {
+            const wchar_t* page = panel_page_id(tool_panel().page());
+            hide_tool_panel();
+            open_panel(context, page);
+            return;
+        }
+    }
+}
+
+void TextService::run_bridge(const std::vector<std::wstring>& arguments) {
+    const std::wstring path = install_file_path(g_instance, L"LocalPinyinSettingsBridge.exe");
+    if (path.empty()) {
+        log_status(L"panel", L"settings bridge not found");
+        return;
+    }
+    // Quoted the way CommandLineToArgvW reads arguments back.
+    const auto quote = [](const std::wstring& value) {
+        std::wstring quoted = L"\"";
+        size_t backslashes = 0;
+        for (wchar_t ch : value) {
+            if (ch == L'\\') { ++backslashes; continue; }
+            if (ch == L'"') quoted.append(backslashes * 2 + 1, L'\\');
+            else quoted.append(backslashes, L'\\');
+            backslashes = 0;
+            quoted += ch;
+        }
+        quoted.append(backslashes * 2, L'\\');
+        return quoted + L"\"";
+    };
+    std::wstring command = quote(path);
+    for (const auto& argument : arguments) command += L" " + quote(argument);
+    STARTUPINFOW startup{};
+    startup.cb = sizeof(startup);
+    PROCESS_INFORMATION process{};
+    if (!CreateProcessW(path.c_str(), command.data(), nullptr, nullptr, FALSE, CREATE_NO_WINDOW, nullptr, nullptr, &startup, &process)) {
+        log_status(L"panel", L"settings bridge did not start last_error=" + std::to_wstring(GetLastError()));
+        return;
+    }
+    // It may bring the application forward to paste into it.
+    AllowSetForegroundWindow(process.dwProcessId);
+    CloseHandle(process.hThread);
+    CloseHandle(process.hProcess);
+}
+
+void TextService::copy_secret(const std::wstring& text) {
+    if (text.empty() || !OpenClipboard(candidate_window_.async_target())) return;
+    EmptyClipboard();
+    const auto put = [](UINT format, const void* data, size_t size) {
+        HGLOBAL memory = GlobalAlloc(GMEM_MOVEABLE, size ? size : 1);
+        if (!memory) return;
+        if (size) {
+            std::memcpy(GlobalLock(memory), data, size);
+            GlobalUnlock(memory);
+        }
+        if (!SetClipboardData(format, memory)) GlobalFree(memory);
+    };
+    put(CF_UNICODETEXT, text.c_str(), (text.size() + 1) * sizeof(wchar_t));
+    // Not into clipboard histories (ours, Windows' own) or the cloud.
+    const DWORD no = 0;
+    put(RegisterClipboardFormatW(L"ExcludeClipboardContentFromMonitorProcessing"), nullptr, 0);
+    put(RegisterClipboardFormatW(L"CanIncludeInClipboardHistory"), &no, sizeof(no));
+    put(RegisterClipboardFormatW(L"CanUploadToCloudClipboard"), &no, sizeof(no));
+    CloseClipboard();
+    secret_clipboard_sequence_ = GetClipboardSequenceNumber();
+    candidate_window_.schedule_task(kSecretTask, kSecretClipboardMs, [this] {
+        if (GetClipboardSequenceNumber() != secret_clipboard_sequence_ || !OpenClipboard(candidate_window_.async_target())) return;
+        EmptyClipboard();
+        CloseClipboard();
+    });
 }
 
 bool TextService::accept_panel_message(const COPYDATASTRUCT& data) {

@@ -6,6 +6,7 @@ import { candidateStyleIds, clipboardRetentionChoices, type AppState, type Setti
 import { exportBackup, inspectBackup, importBackup } from './backup';
 import { clipboardFile, installClipboardHandlers } from './clipboard';
 import { Panel, panelArguments, type PanelTarget } from './panel';
+import { bridgeWithInput, VaultSession } from './vault';
 import { checkForUpdate, downloadUpdate, initUpdates, installUpdate, releasePage, scheduleAutoCheck, setAutoCheck,
   updateStatus } from './updates';
 
@@ -23,6 +24,8 @@ let bootstrap: AppState | null = null;
 let mutations: Promise<unknown> = Promise.resolve();
 const bridgePath = app.isPackaged ? path.join(path.dirname(process.execPath), 'LocalPinyinSettingsBridge.exe')
   : process.env.LOCALPINYINIME_BRIDGE_PATH || path.resolve(app.getAppPath(), '../.build/bin/LocalPinyinSettingsBridge.exe');
+// 记录: kept unlocked for a few minutes between uses (electron/vault.ts).
+const vault = new VaultSession(bridgeWithInput(bridgePath));
 const iconPath = app.isPackaged ? path.join(path.dirname(process.execPath), 'icon.ico')
   : path.resolve(app.getAppPath(), '../assets/branding/icon/LocalPinyinIME.ico');
 function bridge<T>(command: string, args: string[] = []): Promise<T> {
@@ -152,6 +155,10 @@ function installHandlers() {
   handle('emoji-candidate-delete', (pinyin, content) => enqueue(() => bridge('emoji-delete', [text(pinyin, 64), text(content, 32)])));
   handle('clipboard-clear', () => enqueue(() => bridge('clipboard-clear')));
   handle('clipboard-summary', () => bridge('clipboard-summary'));
+  handle('vault-status', () => vault.status());
+  handle('vault-create', (password) => enqueue(async () => { await vault.create(password); return vault.status(); }));
+  handle('vault-password', (current, next) => enqueue(() => vault.changePassword(current, next)));
+  handle('vault-destroy', () => enqueue(() => vault.destroy()));
   handle('backup-export', (parts, file) => exportBackup(backupContext(), parts, chosenFile(file)));
   handle('backup-inspect', (file) => inspectBackup(chosenFile(file)));
   handle('backup-import', (file, choices) => enqueue(async () => {
@@ -308,6 +315,14 @@ else {
       settingsOpen: () => !!window, openSettings: () => void openSettings(), quit: () => app.quit() });
     panel.resident = bootstrap.settings.panelResident;
     panel.install();
+    panel.handle('vault-status', () => vault.status());
+    panel.handle('vault-create', (password) => enqueue(() => vault.create(password)));
+    panel.handle('vault-unlock', (password) => vault.unlock(password));
+    panel.handle('vault-items', () => vault.items());
+    panel.handle('vault-save', (item) => enqueue(() => vault.save(item)));
+    panel.handle('vault-delete', (id) => enqueue(() => vault.remove(id)));
+    panel.handle('vault-lock', () => vault.lock());
+    panel.handle('vault-copy', (value) => vault.copy(value));
     installClipboardHandlers({ panel, dataDirectory, bridge, settings: currentSettings,
       saveSettings: async (patch) => {
         const current = await currentSettings();

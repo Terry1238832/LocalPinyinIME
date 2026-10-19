@@ -190,3 +190,6 @@
   .backup-actions, .backup-parts { grid-template-columns: minmax(0, 1fr); }
   .habit-form { flex-wrap: wrap; }
 }
+.row-buttons { display: inline-flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+.password-form { display: flex; flex-direction: column; gap: 10px; }
+.password-form label { display: grid; grid-template-columns: 84px minmax(0, 1fr); align-items: center; gap: 10px; color: var(--text-2); font-size: var(--size-body-sm); }

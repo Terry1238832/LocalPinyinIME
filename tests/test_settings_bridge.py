@@ -427,6 +427,51 @@ class SettingsBridgeContract(unittest.TestCase):
                   "emojiCandidates=false")
         self.assertNotIn("😄", self.call("lookup", "daxiao")["candidates"])
 
+    def vault(self, operation: str, request: dict | None = None, success: bool = True) -> dict:
+        result = subprocess.run(
+            [str(BRIDGE), "vault", operation], env=self.env, capture_output=True, encoding="utf-8",
+            input=json.dumps(request or {}, ensure_ascii=False), timeout=30, check=False,
+        )
+        value = json.loads(result.stdout)
+        self.assertEqual(result.returncode == 0, success, value)
+        if not success:
+            self.assertTrue(value.get("error"))
+        return value
+
+    def test_vault_records_are_encrypted_and_follow_their_password(self) -> None:
+        self.assertEqual(self.call("vault", "status"), {"exists": False, "password": False})
+        self.vault("create", {"password": "开门 123"})
+        self.assertEqual(self.call("vault", "status"), {"exists": True, "password": True})
+        self.vault("create", {"password": "again"}, success=False)
+        self.assertEqual(self.vault("open", {"password": "开门 123"}), {"items": []})
+        self.vault("open", {"password": "wrong"}, success=False)
+        item = {"kind": "password", "title": "QQ 邮箱", "fields": [
+            {"name": "邮箱", "value": "me@qq.com", "secret": False}, {"name": "密码", "value": "p@ss", "secret": True}]}
+        items = self.vault("save", {"password": "开门 123", "item": item})["items"]
+        self.assertEqual(len(items), 1)
+        self.assertRegex(items[0]["id"], r"^[0-9a-f]{16}$")
+        self.assertEqual(items[0]["fields"][1], {"name": "密码", "value": "p@ss", "secret": True})
+        # Renaming keeps the item and when it was made.
+        renamed = dict(items[0], title="工作邮箱")
+        items = self.vault("save", {"password": "开门 123", "item": renamed})["items"]
+        self.assertEqual([entry["title"] for entry in items], ["工作邮箱"])
+        self.assertEqual(items[0]["created"], renamed["created"])
+        self.vault("save", {"password": "开门 123", "item": {"kind": "other", "title": "", "fields": []}}, success=False)
+        self.vault("save", {"password": "wrong", "item": item}, success=False)
+        # Nothing readable on disk, and the password never on the command line.
+        disk = (self.data / "vault.json").read_text(encoding="utf-8")
+        self.assertNotIn("me@qq.com", disk)
+        self.assertNotIn("工作邮箱", disk)
+        # Change, remove and set the password again; the items stay.
+        self.vault("password", {"password": "wrong", "newPassword": "x"}, success=False)
+        self.assertEqual(self.vault("password", {"password": "开门 123", "newPassword": "新密码"}), {"exists": True, "password": True})
+        self.vault("open", {"password": "开门 123"}, success=False)
+        self.assertEqual(self.vault("password", {"password": "新密码", "newPassword": ""}), {"exists": True, "password": False})
+        self.assertEqual(len(self.vault("open", {"password": ""})["items"]), 1)
+        self.assertEqual(self.vault("delete", {"password": "", "id": items[0]["id"]}), {"items": []})
+        self.assertEqual(self.call("vault", "destroy"), {"exists": False, "password": False})
+        self.call("vault", "unknown", success=False)
+
     def test_clipboard_history_delete_clear_and_import(self) -> None:
         folder = self.data / "clipboard"
         folder.mkdir(parents=True)

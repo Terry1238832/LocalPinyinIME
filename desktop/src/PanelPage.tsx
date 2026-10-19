@@ -6,7 +6,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { asError, ErrorNotice, formatNumber, Modal, PageHeader, SaveStatus, SettingRow, SettingsGroup, Switch } from './components';
 import { KeyDemo } from './FeatureDemo';
 import { Icon } from './icons';
-import { clipboardRetentionChoices, type AppState, type Phrase, type Settings } from './types';
+import { clipboardRetentionChoices, type AppState, type Phrase, type Settings, type VaultStatus } from './types';
 
 type Props = { state: AppState; saving: boolean; saveSettings: (settings: Settings) => Promise<void>; notify: (message: string) => void };
 
@@ -33,15 +33,15 @@ export function PanelPage({ state, saving, saveSettings, notify }: Props) {
   return <>
     <PageHeader kicker="gong'ju" title="工具面板" description="连按两下 Tab 打开：符号、颜文字、表情、表情包、剪贴板和计算等小工具。" action={<SaveStatus saving={saving} />} />
     <SettingsGroup id="group-panel" title="打开方式">
-      <SettingRow title="连按两下 Tab 打开工具面板" description="在输入框里快速按两次 Tab 打开面板，选好的内容会输入到原来的位置。只按一次 Tab 还是普通的 Tab（或翻译）。"
+      <SettingRow title="连按两下 Tab 打开工具面板" description="在输入框里快速按两次 Tab，光标旁出现一个小面板，全部可以用键盘操作：Tab 换页、方向键移动、数字键选择、Enter 输入、Esc 关闭，直接打拼音就能搜索。点右上角的放大图标（或 Shift+Enter）换成大窗口。只按一次 Tab 还是普通的 Tab（或翻译）。"
         demo={<KeyDemo before="你好" keys={['Tab', 'Tab']} output=" → 工具面板" />}>
         <Switch checked={settings.panelDoubleTab} disabled={saving} label="连按两下 Tab 打开工具面板"
           onChange={panelDoubleTab => void saveSettings({ ...settings, panelDoubleTab })} />
       </SettingRow>
-      <SettingRow title="面板在后台待命" description={settings.panelResident
-          ? '面板一直在后台准备好，打开更快，会多占用一些内存。'
-          : '默认在最后一次使用 10 分钟后自动退出，不占内存；开启后一直在后台，打开更快。'}>
-        <Switch checked={settings.panelResident} disabled={saving} label="面板在后台待命"
+      <SettingRow title="大窗口在后台待命" description={settings.panelResident
+          ? '大窗口（小面板右上角的放大图标打开）一直在后台准备好，打开更快，会多占用一些内存。小面板不受影响，总是立刻出现。'
+          : '大窗口（小面板右上角的放大图标打开）默认在最后一次使用 10 分钟后自动退出，不占内存；开启后一直在后台，打开更快。'}>
+        <Switch checked={settings.panelResident} disabled={saving} label="大窗口在后台待命"
           onChange={panelResident => void saveSettings({ ...settings, panelResident })} />
       </SettingRow>
       <SettingRow title="用过的表情出现在候选" description="在面板里用过的表情，之后打它的名字时排在第三个候选，例如 kaixin → 😄。可以在“学习 › 输入习惯”里逐个删掉。">
@@ -69,12 +69,95 @@ export function PanelPage({ state, saving, saveSettings, notify }: Props) {
           <Icon name="trash" size={15} />清空记录</button>
       </SettingRow>
     </SettingsGroup>
+    <RecordsSettings notify={notify} />
     {clearing && <Modal title="清空剪贴板记录？" description="所有保存的文字和图片都会删除，无法恢复。" busy={pending} onClose={() => setClearing(false)}>
       <div className="modal-body"><ErrorNotice message={error} /></div>
       <footer className="modal-footer"><button className="button secondary" disabled={pending} onClick={() => setClearing(false)}>取消</button>
         <button className="button danger" disabled={pending} onClick={() => void clear()}>{pending ? '正在清空…' : '清空'}</button></footer>
     </Modal>}
   </>;
+}
+
+// 记录's password: set one, change it, remove it, or delete everything (a
+// forgotten password cannot be recovered).
+type PasswordTask = 'set' | 'change' | 'remove' | 'destroy';
+function RecordsSettings({ notify }: { notify: (message: string) => void }) {
+  const [status, setStatus] = useState<VaultStatus | null>(null);
+  const [task, setTask] = useState<PasswordTask | null>(null);
+  useEffect(() => { window.localPinyin.vaultStatus().then(setStatus).catch(() => setStatus(null)); }, []);
+  if (!status) return null;
+  const description = !status.exists ? '还没有创建记录。在工具面板（连按两下 Tab）的“记录”里第一次打开时创建，也可以先在这里设一个密码。'
+    : status.password ? '已设密码：打开记录前要先输入它。忘记密码就无法找回，只能删除全部记录。'
+    : '没设密码：记录只用这台电脑的 Windows 账户保护，打开时不用输入。';
+  return <SettingsGroup id="group-records" title="记录">
+    <SettingRow title="记录密码" description={description}>
+      <span className="row-buttons">
+        {(!status.exists || !status.password) && <button className="button secondary" onClick={() => setTask('set')}>设置密码</button>}
+        {status.exists && status.password && <>
+          <button className="button secondary" onClick={() => setTask('change')}>修改密码</button>
+          <button className="button secondary" onClick={() => setTask('remove')}>取消密码</button>
+        </>}
+        {status.exists && <button className="button secondary danger-text" onClick={() => setTask('destroy')}>删除全部记录</button>}
+      </span>
+    </SettingRow>
+    {task && <PasswordDialog task={task} status={status} onClose={() => setTask(null)} onDone={(next, message) => {
+      setStatus(next);
+      setTask(null);
+      notify(message);
+    }} />}
+  </SettingsGroup>;
+}
+
+function PasswordDialog({ task, status, onClose, onDone }: {
+  task: PasswordTask; status: VaultStatus; onClose: () => void; onDone: (status: VaultStatus, message: string) => void;
+}) {
+  const [current, setCurrent] = useState('');
+  const [next, setNext] = useState('');
+  const [again, setAgain] = useState('');
+  const [pending, setPending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const needsCurrent = status.exists && status.password && task !== 'destroy';
+  const needsNext = task === 'set' || task === 'change';
+  const titles: Record<PasswordTask, string> = { set: '设置记录密码', change: '修改记录密码', remove: '取消记录密码', destroy: '删除全部记录？' };
+  const descriptions: Record<PasswordTask, string> = {
+    set: '设置后，打开记录前要先输入这个密码。忘记密码就无法找回。',
+    change: '先输入现在的密码，再设新的密码。',
+    remove: '取消后，记录只用这台电脑的 Windows 账户保护，打开时不用再输入密码。',
+    destroy: '所有记录都会删除，无法恢复。忘记密码时只能这样重新开始。',
+  };
+  const submit = async () => {
+    if (needsNext && next !== again) { setError('两次输入的新密码不一样。'); return; }
+    setPending(true); setError(null);
+    try {
+      let result: VaultStatus;
+      let message: string;
+      if (task === 'destroy') { result = await window.localPinyin.vaultDestroy(); message = '已删除全部记录'; }
+      else if (task === 'set' && !status.exists) { result = await window.localPinyin.vaultCreate(next); message = '已设置记录密码'; }
+      else {
+        result = await window.localPinyin.vaultChangePassword(current, task === 'remove' ? '' : next);
+        message = task === 'remove' ? '已取消记录密码' : task === 'set' ? '已设置记录密码' : '已修改记录密码';
+      }
+      onDone(result, message);
+    } catch (failure) { setError(asError(failure)); setPending(false); }
+  };
+  const ready = task === 'destroy' || ((!needsCurrent || current) && (!needsNext || next));
+  return <Modal title={titles[task]} description={descriptions[task]} busy={pending} onClose={onClose}>
+    <form className="modal-body password-form" onSubmit={event => { event.preventDefault(); if (ready) void submit(); }}>
+      {needsCurrent && <label><span>现在的密码</span><input className="input-field" type="password" value={current} maxLength={128}
+        data-autofocus onChange={event => setCurrent(event.target.value)} /></label>}
+      {needsNext && <label><span>新密码</span><input className="input-field" type="password" value={next} maxLength={128}
+        data-autofocus={needsCurrent ? undefined : true} onChange={event => setNext(event.target.value)} /></label>}
+      {needsNext && <label><span>再输入一次</span><input className="input-field" type="password" value={again} maxLength={128}
+        onChange={event => setAgain(event.target.value)} /></label>}
+      <ErrorNotice message={error} />
+      <button type="submit" hidden />
+    </form>
+    <footer className="modal-footer">
+      <button className="button secondary" disabled={pending} onClick={onClose}>取消</button>
+      <button className={task === 'destroy' ? 'button danger' : 'button primary'} disabled={pending || !ready} onClick={() => void submit()}>
+        {pending ? '请稍候…' : task === 'destroy' ? '删除全部记录' : '确定'}</button>
+    </footer>
+  </Modal>;
 }
 
 // 输入习惯: words tied to text in the panel (美元 → $), and emoji offered for

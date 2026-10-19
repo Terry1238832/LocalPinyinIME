@@ -1293,6 +1293,16 @@ int wmain(int argc, wchar_t** argv) {
                 s.key(VK_TAB);
                 pump(700);
                 require(s.store->text == L"你好", "Tab twice opens the panel and drops the translation");
+                // The small panel is up: keys go to it (a letter searches),
+                // Esc clears the search, a second Esc puts the panel away.
+                s.key(L'N');
+                require(s.store->text == L"你好", "keys go to the panel while it is up");
+                s.key(VK_ESCAPE);
+                s.key(VK_ESCAPE);
+                s.key(L'N');
+                require(!s.first_candidate().empty(), "after Esc keys are typing again");
+                s.key(VK_ESCAPE);
+                require(s.store->text == L"你好", "and nothing went into the text");
 
                 s.store->host_replace(L"");
                 s.key(VK_TAB);
@@ -1316,6 +1326,7 @@ int wmain(int argc, wchar_t** argv) {
                 s.key(VK_TAB);
                 pump(400);
                 require(s.store->text.empty(), "two Tabs after it open the panel again");
+                s.key(VK_ESCAPE);
 
                 write_settings("{\"inputMode\":{\"panelDoubleTab\":false,\"nextWordPrediction\":true}}");
                 service->set_translator_for_testing({});

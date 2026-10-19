@@ -7,11 +7,12 @@ import { Icon, type IconName } from '../icons';
 import { Browse } from './Browse';
 import { emojiNames, loadCatalog, type Item } from './catalog';
 import { Clipboard } from './Clipboard';
+import { Records } from './Records';
 import { Stickers } from './Stickers';
 import { Tools } from './Tools';
 import type { PanelData, PanelKind, Phrase, Pick } from './types';
 
-type Page = 'tools' | 'clipboard' | PanelKind | 'stickers';
+type Page = 'tools' | 'clipboard' | PanelKind | 'stickers' | 'records';
 const PAGES: { id: Page; label: string; icon: IconName; search?: string }[] = [
   { id: 'tools', label: '工具', icon: 'tools' },
   { id: 'clipboard', label: '剪贴板', icon: 'clipboard', search: '搜索复制过的文字，也能搜图片里的字' },
@@ -19,6 +20,7 @@ const PAGES: { id: Page; label: string; icon: IconName; search?: string }[] = [
   { id: 'kaomoji', label: '颜文字', icon: 'kaomoji', search: '搜索颜文字，如 开心、生气、猫' },
   { id: 'emoji', label: '表情', icon: 'smile', search: '搜索表情，如 笑、爱心、猫' },
   { id: 'stickers', label: '表情包', icon: 'sticker', search: '按名字搜索表情包' },
+  { id: 'records', label: '记录', icon: 'lock', search: '搜索记录的标题或内容' },
 ];
 const TRAY_LIMIT = 64;
 const api = () => window.localPinyinPanel;
@@ -52,7 +54,13 @@ export default function Panel() {
     toastTimer.current = window.setTimeout(() => setToast(null), error ? 4200 : 2200);
   }, []);
   const fail = useCallback((error: unknown) => notify(message(error), true), [notify]);
-  const reload = useCallback(() => { api().data().then(setData).catch(fail); }, [fail]);
+  // Opened from the small panel's ⤢: on the page it was showing.
+  const reload = useCallback(() => {
+    api().data().then(next => {
+      setData(next);
+      if (next.page) setPage(next.page);
+    }).catch(fail);
+  }, [fail]);
 
   useEffect(() => {
     reload();
@@ -152,6 +160,7 @@ export default function Panel() {
           {page === 'tools' && <Tools focusKey={opened} onInsert={value => void confirm(value, [])} />}
           {page === 'clipboard' && <Clipboard search={search} refreshKey={opened} onError={message => notify(message, true)} onNotice={notify} />}
           {browsing && data && <Browse kind={page} state={data.state} search={search} onPick={pick(page)} onFavorite={favorite(page)} />}
+          {page === 'records' && <Records search={search} onError={fail} onNotice={notify} />}
           {page === 'stickers' && data && <Stickers stickers={data.stickers} search={search}
             onChange={stickers => setData(current => current && { ...current, stickers })} onError={message => notify(message, true)} onNotice={notify} />}
         </div>

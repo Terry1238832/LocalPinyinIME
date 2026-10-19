@@ -62,6 +62,9 @@ public:
                     float size, int weight = 400, UINT flags = DT_SINGLELINE | DT_VCENTER,
                     std::wstring_view family = {});
     void icon(int kind, const RECT& bounds, COLORREF color, float stroke = 1.6f);
+    // A picture file (PNG, JPG, GIF's first frame…) fitted inside `bounds`,
+    // centered and uncropped. Decoded pictures are kept for later frames.
+    bool image(const std::wstring& file, const RECT& bounds);
 
 private:
     struct Target {
@@ -81,6 +84,9 @@ private:
     Microsoft::WRL::ComPtr<ID2D1StrokeStyle> stroke_style_;
     std::map<std::tuple<int, int, std::wstring>, Microsoft::WRL::ComPtr<IDWriteTextFormat>> formats_;
     std::map<std::tuple<int, int, std::wstring>, float> baselines_;
+    // Decoded pictures per target (bitmaps belong to the target that made them).
+    std::map<std::wstring, Microsoft::WRL::ComPtr<ID2D1Bitmap>> opaque_images_;
+    std::map<std::wstring, Microsoft::WRL::ComPtr<ID2D1Bitmap>> alpha_images_;
     // Open layers and their masks, kept alive until popped.
     std::vector<std::pair<Microsoft::WRL::ComPtr<ID2D1Layer>, Microsoft::WRL::ComPtr<ID2D1PathGeometry>>> layers_;
     bool drawing_ = false;

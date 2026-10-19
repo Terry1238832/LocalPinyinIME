@@ -46,8 +46,21 @@ export interface Settings {
 // 输入习惯: typing `label` (read as `pinyin`) offers `text` first.
 export interface Phrase { pinyin: string; text: string; label: string; created: number }
 
+// 记录: what the user keeps to type again, encrypted (src/vault). Passwords
+// and addresses have their own fields; anything else is "other".
+export interface VaultField { name: string; value: string; secret: boolean }
+export interface VaultItem {
+  id: string;
+  kind: 'password' | 'address' | 'other';
+  title: string;
+  fields: VaultField[];
+  created: number;
+  updated: number;
+}
+export interface VaultStatus { exists: boolean; password: boolean; unlocked: boolean }
+
 // Parts of the user's data that export and import handle one by one.
-export const backupParts = ['settings', 'lexicon', 'learning', 'phrases', 'panel', 'stickers', 'clipboard'] as const;
+export const backupParts = ['settings', 'lexicon', 'learning', 'phrases', 'panel', 'stickers', 'clipboard', 'records'] as const;
 export type BackupPart = (typeof backupParts)[number];
 export type BackupMode = 'merge' | 'overwrite';
 export interface BackupSummary {
@@ -119,6 +132,11 @@ export interface LocalPinyinApi {
   exportBackup(parts: BackupPart[], file: string): Promise<BackupSummary>;
   inspectBackup(file: string): Promise<BackupSummary>;
   importBackup(file: string, choices: Partial<Record<BackupPart, BackupMode>>): Promise<{ imported: BackupPart[] }>;
+  vaultStatus(): Promise<VaultStatus>;
+  vaultCreate(password: string): Promise<VaultStatus>;
+  // An empty new password removes it; setting one on a vault without passes ''.
+  vaultChangePassword(current: string, next: string): Promise<VaultStatus>;
+  vaultDestroy(): Promise<VaultStatus>;
   // The panel changed a setting (the clipboard question): read them again.
   onSettingsChanged(listener: () => void): () => void;
   openDataDirectory(): Promise<void>;

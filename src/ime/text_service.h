@@ -8,6 +8,8 @@
 #include "online_translation.h"
 #include "preserved_key.h"
 #include "runtime_diagnostics.h"
+#include "tool_panel.h"
+#include "tool_panel_window.h"
 #include "../engine/pinyin_engine.h"
 #include "../settings/settings_store.h"
 
@@ -95,7 +97,24 @@ private:
     std::wstring pending_panel_text_;
     int panel_insert_attempts_ = 0;
     void finish_tab_tap();
-    void open_panel(ITfContext* context);
+    // The settings app's large panel, on `page` (the small one's ⤢).
+    void open_panel(ITfContext* context, const wchar_t* page = nullptr);
+    // The small panel Tab twice opens at the caret; keys go to it while up.
+    void show_tool_panel(ITfContext* context);
+    void hide_tool_panel();
+    [[nodiscard]] bool tool_panel_open() const noexcept;
+    void handle_tool_panel_key(ITfContext* context, unsigned long key, bool shift, bool ctrl);
+    void handle_tool_panel_action(const PanelAction& action, ITfContext* context);
+    ToolPanel& tool_panel();
+    // Runs the settings bridge beside this DLL without waiting (pastes, emoji).
+    void run_bridge(const std::vector<std::wstring>& arguments);
+    // A record copied for pasting elsewhere: kept out of clipboard history and
+    // cleared after a while.
+    void copy_secret(const std::wstring& text);
+    std::unique_ptr<ToolPanel> tool_panel_;
+    ToolPanelWindow tool_panel_window_;
+    HWND tool_panel_host_ = nullptr;
+    DWORD secret_clipboard_sequence_ = 0;
     bool accept_panel_message(const COPYDATASTRUCT& data);
     void insert_panel_text();
     // v and a sum, number or date: the typing tools (full pinyin only).

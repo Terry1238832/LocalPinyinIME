@@ -1,6 +1,7 @@
 #include "../ime/candidate_window.h"
 #include "../ime/globals.h"
 #include "../ime/language_bar.h"
+#include "../ime/tool_panel_window.h"
 #include <gdiplus.h>
 #include <filesystem>
 #include <iostream>
@@ -142,9 +143,99 @@ public:
 };
 }
 
+namespace localpinyin {
+// The small tool panel's pages with sample data, drawn by its real window
+// code without showing it, light and dark.
+bool capture_panel(const std::filesystem::path& directory) {
+    const auto data = directory / L"panel-data";
+    std::error_code error;
+    std::filesystem::remove_all(data, error);
+    std::filesystem::create_directories(data);
+    wchar_t module[MAX_PATH]{};
+    GetModuleFileNameW(nullptr, module, MAX_PATH);
+    const long long now = 1'800'000'000;
+    ClipboardStore clipboard((data / L"clipboard").wstring());
+    clipboard.add_text(L"https://github.com/Terry1238832/LocalPinyinIME", (now - 7200) * 1000);
+    clipboard.add_text(L"明天上午十点在三楼会议室开会，记得带电脑和投影转接头。", (now - 600) * 1000);
+    clipboard.add_text(L"收货地址：北京市海淀区中关村大街 1 号", now * 1000);
+    const Vault vault((data / L"vault.json").wstring());
+    vault.create(L"");
+    vault.save(L"", {VaultItem{L"0000000000000001", L"password", L"QQ 邮箱",
+                               {{L"邮箱", L"terry@qq.com", false}, {L"密码", L"secret", true}}, now, now},
+                     VaultItem{L"0000000000000002", L"address", L"家",
+                               {{L"收件人", L"田先生", false}, {L"电话", L"138 0000 0000", false},
+                                {L"地址", L"北京市海淀区中关村大街 1 号", false}}, now, now - 10},
+                     VaultItem{L"0000000000000003", L"other", L"工资卡", {{L"卡号", L"6222 0000 1234 5678", true}}, now, now - 20}});
+    ToolPanel::Services services;
+    services.data_dir = data.wstring();
+    services.resource_dir = (std::filesystem::path(module).parent_path() / L"dictionary").wstring();
+    services.words = [](const std::wstring& pinyin) -> std::vector<std::wstring> {
+        if (pinyin == L"kaixin") return {L"开心"};
+        if (pinyin == L"meiyuan") return {L"美元"};
+        return {};
+    };
+    services.clipboard_on = [] { return true; };
+    services.now = [&] { return now; };
+    ToolPanel panel(services);
+    struct Shot {
+        const wchar_t* name;
+        PanelPage page;
+        std::wstring typed;
+        std::vector<UINT> keys;
+    };
+    const std::vector<Shot> shots = {
+        {L"symbol", PanelPage::Symbol, L"", {L'9', VK_RIGHT, VK_SPACE, VK_DOWN}},
+        {L"symbol-search", PanelPage::Symbol, L"meiyuan", {}},
+        {L"emoji", PanelPage::Emoji, L"", {VK_DOWN, VK_RIGHT}},
+        {L"kaomoji", PanelPage::Kaomoji, L"", {}},
+        {L"tools", PanelPage::Tools, L"", {}},
+        {L"tools-sum", PanelPage::Tools, L"55+15", {}},
+        {L"clipboard", PanelPage::Clipboard, L"", {VK_DOWN}},
+        {L"stickers", PanelPage::Stickers, L"", {}},
+        {L"records", PanelPage::Records, L"", {}},
+        {L"records-fields", PanelPage::Records, L"", {VK_RETURN}},
+    };
+    bool ok = true;
+    for (const bool dark : {false, true}) {
+        const auto palette = make_candidate_palette(dark ? CandidateThemeMode::Dark : CandidateThemeMode::Light, dark,
+                                                    kDefaultCandidateStyle);
+        for (const auto& shot : shots) {
+            panel.open(shot.page);
+            for (wchar_t ch : shot.typed) {
+                PanelKey key{static_cast<UINT>(ch >= L'a' && ch <= L'z' ? ch - L'a' + L'A' : ch), ch, false, false};
+                if (ch == L'+') key = PanelKey{VK_OEM_PLUS, ch, true, false};
+                panel.key(key);
+            }
+            for (UINT vk : shot.keys) panel.key(PanelKey{vk, 0, false, false});
+            ToolPanelWindow window;
+            std::vector<std::uint8_t> pixels;
+            SIZE size{};
+            if (!window.render_offline(panel.view(), 120, palette, &pixels, &size)) { ok = false; continue; }
+            panel.close();
+            // Over a desktop-like backdrop, opaque.
+            const COLORREF backdrop = dark ? RGB(24, 26, 30) : RGB(236, 239, 244);
+            for (size_t index = 0; index + 3 < pixels.size(); index += 4) {
+                const float keep = 1.0f - pixels[index + 3] / 255.0f;
+                pixels[index] = static_cast<std::uint8_t>(pixels[index] + GetBValue(backdrop) * keep);
+                pixels[index + 1] = static_cast<std::uint8_t>(pixels[index + 1] + GetGValue(backdrop) * keep);
+                pixels[index + 2] = static_cast<std::uint8_t>(pixels[index + 2] + GetRValue(backdrop) * keep);
+                pixels[index + 3] = 255;
+            }
+            Gdiplus::Bitmap bitmap(size.cx, size.cy, size.cx * 4, PixelFormat32bppARGB, pixels.data());
+            const CLSID png{0x557cf406, 0x1a04, 0x11d3, {0x9a, 0x73, 0x00, 0x00, 0xf8, 0x1e, 0xf3, 0x2e}};
+            const auto file = directory / (std::wstring(L"panel-") + shot.name + (dark ? L"-dark.png" : L"-light.png"));
+            ok = bitmap.Save(file.c_str(), &png, nullptr) == Gdiplus::Ok && ok;
+            std::wcout << file.filename().wstring() << L" " << size.cx << L"x" << size.cy << L"\n";
+        }
+    }
+    return ok;
+}
+}
+
 int wmain(int argc, wchar_t** argv) {
-    if (argc != 2 && !(argc == 3 && (std::wstring(argv[2]) == L"--live" || std::wstring(argv[2]) == L"--icons"))) {
-        std::cerr << "Usage: LocalPinyinCandidateCapture <output directory> [--live|--icons]\n";
+    if (argc != 2 && !(argc == 3 && (std::wstring(argv[2]) == L"--live" || std::wstring(argv[2]) == L"--icons" ||
+                                     std::wstring(argv[2]) == L"--panel"))) {
+        std::cerr << "Usage: LocalPinyinCandidateCapture <output directory> [--live|--icons|--panel]\n";
         return 2;
     }
     CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
@@ -154,6 +245,12 @@ int wmain(int argc, wchar_t** argv) {
     if (Gdiplus::GdiplusStartup(&token, &startup, nullptr) != Gdiplus::Ok) return 1;
     const std::filesystem::path output(argv[1]);
     std::filesystem::create_directories(output);
+    if (argc == 3 && std::wstring(argv[2]) == L"--panel") {
+        const bool captured = localpinyin::capture_panel(output);
+        Gdiplus::GdiplusShutdown(token);
+        CoUninitialize();
+        return captured ? 0 : 1;
+    }
     if (argc == 3 && std::wstring(argv[2]) == L"--icons") {
         // Taskbar mode glyphs at every small-icon size on dark and light bars.
         const int sizes[] = {16, 20, 24, 32, 40, 48};

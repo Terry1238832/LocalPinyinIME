@@ -14,6 +14,7 @@ const PARTS: Record<BackupPart, { title: string; detail: string }> = {
   panel: { title: '面板收藏', detail: '符号、颜文字、表情的收藏和最近使用' },
   stickers: { title: '表情包', detail: '上传的图片和动图' },
   clipboard: { title: '剪贴板记录', detail: '复制过的文字和图片，可能较大' },
+  records: { title: '记录', detail: '加密的地址、账号密码等' },
 };
 const MERGE_HINT: Record<BackupPart, string> = {
   settings: '合并：备份里的选项覆盖这里的同名选项',
@@ -23,6 +24,7 @@ const MERGE_HINT: Record<BackupPart, string> = {
   panel: '合并：两边的收藏和最近使用都保留',
   stickers: '合并：添加这里没有的表情包',
   clipboard: '合并：添加这里没有的记录',
+  records: '记录是加密的，只能覆盖：设了密码的用原来的密码打开；没设密码的只能在原来那台电脑上打开',
 };
 
 const size = (bytes: number) => bytes < 1024 ? `${bytes} B` : bytes < 1024 * 1024 ? `${Math.round(bytes / 1024)} KB` : `${(bytes / 1024 / 1024).toFixed(1)} MB`;
@@ -112,7 +114,7 @@ function ExportChooser({ busy, onClose, onExport }: { busy: boolean; onClose: ()
 function ImportChooser({ summary, onClose, onDone }: { summary: BackupSummary; onClose: () => void; onDone: (parts: BackupPart[]) => void }) {
   const present = backupParts.filter(part => summary.parts[part]);
   const [choices, setChoices] = useState<Partial<Record<BackupPart, BackupMode | 'skip'>>>(
-    () => Object.fromEntries(present.map(part => [part, 'merge'])));
+    () => Object.fromEntries(present.map(part => [part, part === 'records' ? 'skip' : 'merge'])));
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const chosen = present.filter(part => choices[part] && choices[part] !== 'skip');
@@ -134,9 +136,10 @@ function ImportChooser({ summary, onClose, onDone }: { summary: BackupSummary; o
         return <li key={part} className={mode === 'skip' ? 'skipped' : undefined}>
           <div className="import-part-title"><strong>{PARTS[part].title}</strong>
             <small>{part === 'settings' || part === 'panel' ? size(info.bytes) : `${formatNumber(info.items)} 条 · ${size(info.bytes)}`}</small>
-            <small className="import-hint">{mode === 'overwrite' ? '覆盖：用备份替换这里现有的内容' : mode === 'merge' ? MERGE_HINT[part] : '不导入'}</small></div>
+            <small className="import-hint">{part === 'records' && mode !== 'skip' ? MERGE_HINT.records
+              : mode === 'overwrite' ? '覆盖：用备份替换这里现有的内容' : mode === 'merge' ? MERGE_HINT[part] : '不导入'}</small></div>
           <div className="segmented" role="radiogroup" aria-label={`${PARTS[part].title}的导入方式`}>
-            {(['merge', 'overwrite', 'skip'] as const).map(value =>
+            {(part === 'records' ? ['overwrite', 'skip'] as const : ['merge', 'overwrite', 'skip'] as const).map(value =>
               <label key={value} className={mode === value ? 'active' : undefined}>
                 <input type="radio" name={`import-${part}`} checked={mode === value} disabled={pending}
                   onChange={() => setChoices(current => ({ ...current, [part]: value }))} />

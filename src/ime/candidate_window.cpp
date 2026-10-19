@@ -39,16 +39,6 @@ struct DwmSnapshot {
     DWORD cloaked = 0;
 };
 
-// Windows Store (immersive) processes: the shell cloaks unowned top-level
-// windows, so the popup must be owned by the text input's window there.
-bool immersive_process() noexcept {
-    using IsImmersiveProcessFn = BOOL(WINAPI*)(HANDLE);
-    static const auto function = reinterpret_cast<IsImmersiveProcessFn>(
-        GetProcAddress(GetModuleHandleW(L"user32.dll"), "IsImmersiveProcess"));
-    static const bool immersive = function && function(GetCurrentProcess());
-    return immersive;
-}
-
 bool rect_valid(const RECT& rect) noexcept {
     return rect.right > rect.left && rect.bottom > rect.top;
 }
@@ -74,6 +64,48 @@ DwmSnapshot query_dwm_snapshot(HWND hwnd) {
 UINT candidate_options_changed_message() {
     static const UINT message = RegisterWindowMessageW(kCandidateOptionsChangedMessageName);
     return message;
+}
+
+COLORREF blend_color(COLORREF from, COLORREF to, int percent_to) {
+    const int keep = 100 - percent_to;
+    return RGB((GetRValue(from) * keep + GetRValue(to) * percent_to) / 100,
+               (GetGValue(from) * keep + GetGValue(to) * percent_to) / 100,
+               (GetBValue(from) * keep + GetBValue(to) * percent_to) / 100);
+}
+
+HFONT create_candidate_font(int height_px, LONG weight) {
+    return CreateFontW(-height_px, 0, 0, 0, weight, FALSE, FALSE, FALSE,
+                       DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
+                       CLEARTYPE_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Microsoft YaHei UI");
+}
+
+// Windows' "Animation effects" setting (also off for Remote Desktop and
+// some accessibility setups): when off, the popup changes without motion.
+bool client_animations_enabled() noexcept {
+    BOOL enabled = TRUE;
+    return !SystemParametersInfoW(SPI_GETCLIENTAREAANIMATION, 0, &enabled, 0) || enabled != FALSE;
+}
+
+bool rect_empty(const RECT& rect) noexcept {
+    return rect.right <= rect.left || rect.bottom <= rect.top;
+}
+
+// The settings app sits beside the input method DLL. It is single-instance,
+// so a second launch only brings the open window forward.
+void open_settings_app() {
+    launch_settings_app();
+}
+
+}  // namespace
+
+// Windows Store (immersive) processes: the shell cloaks unowned top-level
+// windows, so the popup must be owned by the text input's window there.
+bool immersive_process() noexcept {
+    using IsImmersiveProcessFn = BOOL(WINAPI*)(HANDLE);
+    static const auto function = reinterpret_cast<IsImmersiveProcessFn>(
+        GetProcAddress(GetModuleHandleW(L"user32.dll"), "IsImmersiveProcess"));
+    static const bool immersive = function && function(GetCurrentProcess());
+    return immersive;
 }
 
 bool windows_apps_use_dark_theme() {
@@ -102,44 +134,12 @@ RECT monitor_work_area_for(const RECT& rect) {
     return work;
 }
 
-COLORREF blend_color(COLORREF from, COLORREF to, int percent_to) {
-    const int keep = 100 - percent_to;
-    return RGB((GetRValue(from) * keep + GetRValue(to) * percent_to) / 100,
-               (GetGValue(from) * keep + GetGValue(to) * percent_to) / 100,
-               (GetBValue(from) * keep + GetBValue(to) * percent_to) / 100);
-}
-
-HFONT create_candidate_font(int height_px, LONG weight) {
-    return CreateFontW(-height_px, 0, 0, 0, weight, FALSE, FALSE, FALSE,
-                       DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
-                       CLEARTYPE_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Microsoft YaHei UI");
-}
-
-// Windows' "Animation effects" setting (also off for Remote Desktop and
-// some accessibility setups): when off, the popup changes without motion.
-bool client_animations_enabled() noexcept {
-    BOOL enabled = TRUE;
-    return !SystemParametersInfoW(SPI_GETCLIENTAREAANIMATION, 0, &enabled, 0) || enabled != FALSE;
-}
-
 bool high_contrast_enabled() noexcept {
     HIGHCONTRASTW contrast{};
     contrast.cbSize = sizeof(contrast);
     return SystemParametersInfoW(SPI_GETHIGHCONTRAST, sizeof(contrast), &contrast, 0) &&
            (contrast.dwFlags & HCF_HIGHCONTRASTON);
 }
-
-bool rect_empty(const RECT& rect) noexcept {
-    return rect.right <= rect.left || rect.bottom <= rect.top;
-}
-
-// The settings app sits beside the input method DLL. It is single-instance,
-// so a second launch only brings the open window forward.
-void open_settings_app() {
-    launch_settings_app();
-}
-
-}  // namespace
 
 bool launch_settings_app(const std::wstring& arguments) {
     const std::wstring path = install_file_path(g_instance, kSettingsExecutableName);

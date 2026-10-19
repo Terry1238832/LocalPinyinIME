@@ -20,6 +20,13 @@ namespace localpinyin {
 // (it is single-instance: a running one gets them).
 bool launch_settings_app(const std::wstring& arguments = L"");
 
+// Shared with the tool panel's window. Store (immersive) apps need popups
+// owned by the input's window; the rest is the theme and the screen.
+bool immersive_process() noexcept;
+bool windows_apps_use_dark_theme();
+RECT monitor_work_area_for(const RECT& rect);
+bool high_contrast_enabled() noexcept;
+
 struct CandidateWindowOwnerInfo {
     HWND context_hwnd = nullptr;
     HWND root_hwnd = nullptr;
