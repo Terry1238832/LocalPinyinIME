@@ -38,10 +38,42 @@
       "review_status": "approved",
       "included_in_release": true,
       "note": "Only weighted word counts are packaged. One sentence in forty (by SHA-256 of its text) is held out; 2,000 of them are tests/data/english_heldout_sentences.txt."
+    },
+    {
+      "name": "Tatoeba English sentences",
+      "url": "https://downloads.tatoeba.org/exports/per_language/eng/eng_sentences.tsv.bz2",
+      "sha256": "bb3dcc28a8984a26dc466ee14eb53c4210b0dd9bb111b9d686d1efc83ecf091c",
+      "retrieved": "2026-10-20",
+      "export": "2026-10-17 (the per-language export is renewed weekly)",
+      "weight": 2,
+      "license": "CC BY 2.0 FR",
+      "attribution": "Tatoeba contributors, https://tatoeba.org",
+      "commercial_use": true,
+      "share_alike": false,
+      "review_status": "approved",
+      "included_in_release": true,
+      "note": "Only weighted word counts are packaged. One sentence in forty is held out; 2,000 of them are tests/data/english_heldout_tatoeba.txt."
+    },
+    {
+      "name": "English Wikinews article dump",
+      "url": "https://dumps.wikimedia.org/enwikinews/20261001/enwikinews-20261001-pages-articles.xml.bz2",
+      "sha256": "2fb488c718b176bebf6f8c5ca7378731d29758f21ad7c9147dd78e558d600ad7",
+      "retrieved": "2026-10-20",
+      "weight": 1,
+      "license": "CC BY 2.5 / CC BY 4.0",
+      "attribution": "Wikinews contributors, https://en.wikinews.org",
+      "commercial_use": true,
+      "share_alike": false,
+      "review_status": "approved",
+      "included_in_release": true,
+      "note": "Main-namespace articles, wikitext stripped, split into sentences. Only weighted word counts are packaged. One sentence in forty is held out; 2,000 of them are tests/data/english_heldout_wikinews.txt."
     }
   ],
   "evaluation": {
     "tests/data/english_misspellings.tsv": "Project-authored misspellings, slips and words that must stay (MIT).",
-    "tests/data/english_heldout_sentences.txt": "Held-out Common Voice English sentences (CC0 1.0), never counted."
-  }
+    "tests/data/english_heldout_sentences.txt": "Held-out Common Voice English sentences (CC0 1.0), never counted.",
+    "tests/data/english_heldout_tatoeba.txt": "Held-out Tatoeba English sentences (CC BY 2.0 FR, Tatoeba contributors), never counted.",
+    "tests/data/english_heldout_wikinews.txt": "Held-out English Wikinews sentences (CC BY 2.5 / 4.0, Wikinews contributors), never counted."
+  },
+  "normalization": "Weighted counts are scaled to 17,339,963 words (the Common Voice-only total) so the speller's count thresholds keep their meaning."
 }

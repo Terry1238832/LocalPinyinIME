@@ -90,6 +90,7 @@ function installHandlers() {
   handle('state', state);
   const fuzzyIds = ['z-zh', 'c-ch', 's-sh', 'n-l', 'f-h', 'r-l', 'an-ang', 'en-eng', 'in-ing', 'ian-iang', 'uan-uang'];
   const domainIds = ['coding', 'work', 'math', 'study', 'daily', 'games'];
+  const imeSwitchKeys = ['alt+capslock', 'ctrl+capslock', 'ctrl+alt+space', 'off'];
   handle('save-settings', (value) => {
     const settings = record(value);
     const fuzzy = settings.fuzzyPinyin;
@@ -101,7 +102,8 @@ function installHandlers() {
         typeof settings.letterPunctuation !== 'boolean' || typeof settings.codePunctuation !== 'boolean' ||
         typeof settings.tabTranslate !== 'boolean' || typeof settings.panelDoubleTab !== 'boolean' ||
         typeof settings.panelResident !== 'boolean' || typeof settings.emojiCandidates !== 'boolean' ||
-        typeof settings.englishAutocorrect !== 'boolean' ||
+        typeof settings.englishAutocorrect !== 'boolean' || typeof settings.englishSentence !== 'boolean' ||
+        !imeSwitchKeys.includes(String(settings.imeSwitchKey)) ||
         !['ask', 'on', 'off'].includes(String(settings.clipboardHistory)) ||
         !(clipboardRetentionChoices as readonly number[]).includes(settings.clipboardRetentionDays as number) ||
         !['none', 'xiaohe', 'ziranma'].includes(String(settings.doublePinyin)))
@@ -123,7 +125,8 @@ function installHandlers() {
         `letterPunctuation=${settings.letterPunctuation}`, `codePunctuation=${settings.codePunctuation}`,
         `tabTranslate=${settings.tabTranslate}`, `panelDoubleTab=${settings.panelDoubleTab}`,
         `panelResident=${settings.panelResident}`, `emojiCandidates=${settings.emojiCandidates}`,
-        `englishAutocorrect=${settings.englishAutocorrect}`,
+        `englishAutocorrect=${settings.englishAutocorrect}`, `englishSentence=${settings.englishSentence}`,
+        `imeSwitchKey=${settings.imeSwitchKey}`,
         `clipboardHistory=${settings.clipboardHistory}`, `clipboardRetentionDays=${settings.clipboardRetentionDays}`]);
       // The recorder starts with the setting and leaves with it, also at sign-in.
       if (settings.clipboardHistory !== before)

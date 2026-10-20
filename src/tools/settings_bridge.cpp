@@ -152,6 +152,8 @@ std::string settings_json(const SettingsStore& store) {
            ",\"panelResident\":" + (input.panel_resident ? "true" : "false") +
            ",\"emojiCandidates\":" + (input.engine.emoji_candidates ? "true" : "false") +
            ",\"englishAutocorrect\":" + (input.english_autocorrect ? "true" : "false") +
+           ",\"englishSentence\":" + (input.english_sentence ? "true" : "false") +
+           ",\"imeSwitchKey\":" + json_string(input.ime_switch_key) +
            ",\"clipboardHistory\":" + json_string(
                input.clipboard_history == InputModeOptions::ClipboardHistory::On ? L"on"
                : input.clipboard_history == InputModeOptions::ClipboardHistory::Off ? L"off" : L"ask") +
@@ -529,8 +531,11 @@ std::string run(const std::vector<std::wstring>& args) {
             if (key == L"typoCorrection" || key == L"mixedEnglish" || key == L"digitPeriod" || key == L"digitPunctuation" ||
                 key == L"letterPunctuation" || key == L"codePunctuation" || key == L"tabTranslate" ||
                 key == L"panelDoubleTab" || key == L"panelResident" || key == L"emojiCandidates" ||
-                key == L"englishAutocorrect")
+                key == L"englishAutocorrect" || key == L"englishSentence")
                 require(value == L"true" || value == L"false", L"开关选项必须是 true 或 false。");
+            else if (key == L"imeSwitchKey")
+                require(value == L"alt+capslock" || value == L"ctrl+capslock" || value == L"ctrl+alt+space" || value == L"off",
+                        L"切换输入法的快捷键无效。");
             else if (key == L"clipboardHistory")
                 require(value == L"ask" || value == L"on" || value == L"off", L"剪贴板记录选项无效。");
             else if (key == L"clipboardRetentionDays")
@@ -571,6 +576,8 @@ std::string run(const std::vector<std::wstring>& args) {
             else if (key == L"panelResident") input.panel_resident = value == L"true";
             else if (key == L"emojiCandidates") input.engine.emoji_candidates = value == L"true";
             else if (key == L"englishAutocorrect") input.english_autocorrect = value == L"true";
+            else if (key == L"englishSentence") input.english_sentence = value == L"true";
+            else if (key == L"imeSwitchKey") input.ime_switch_key = value;
             else if (key == L"clipboardHistory")
                 input.clipboard_history = value == L"on" ? InputModeOptions::ClipboardHistory::On
                                         : value == L"off" ? InputModeOptions::ClipboardHistory::Off

@@ -39,6 +39,11 @@ export interface Settings {
   emojiCandidates: boolean;
   // 本地英文: Space puts in the correction of a misspelled word (on by default).
   englishAutocorrect: boolean;
+  // 本地英文: a sentence is typed whole (Space is a space, Space twice puts it
+  // in); off, Space puts in each word.
+  englishSentence: boolean;
+  // Switching between 本地拼音 and 本地英文.
+  imeSwitchKey: 'alt+capslock' | 'ctrl+capslock' | 'ctrl+alt+space' | 'off';
   clipboardHistory: ClipboardHistory;
   clipboardRetentionDays: number;
   shiftToggleEnabled: boolean;

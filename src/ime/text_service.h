@@ -90,6 +90,13 @@ private:
     void unadvise_prediction_edits();
     HRESULT preserve_ctrl_space_key();
     HRESULT unpreserve_ctrl_space_key();
+    // The switch key (imeSwitchKey): preserved as set, again when it changes.
+    HRESULT preserve_switch_key();
+    HRESULT unpreserve_switch_key();
+    // To the other of this service's two input methods, for the session as
+    // Win + Space does; a CapsLock in the key is put back once released.
+    void switch_profile(ITfContext* context);
+    void restore_caps_after_switch();
     static LRESULT CALLBACK thread_keyboard_hook_proc(int code, WPARAM wparam, LPARAM lparam);
     // A click in the application ends the run Tab would translate: the caret
     // may have moved where the input method cannot see it.
@@ -244,6 +251,12 @@ private:
     ITfRange* prediction_caret_ = nullptr;
     std::wstring prediction_before_;
     bool ctrl_space_preserved_ = false;
+    bool switch_key_preserved_ = false;
+    TF_PRESERVEDKEY switch_key_{};
+    std::wstring switch_key_setting_;
+    // CapsLock's on/off before the switch key's press, to put back.
+    bool switch_caps_pending_ = false;
+    bool switch_caps_before_ = false;
     HHOOK keyboard_hook_ = nullptr;
     DWORD keyboard_hook_thread_id_ = 0;
     bool keyboard_hook_uninstall_failed_ = false;
@@ -271,8 +284,19 @@ private:
         Punctuation,  // the first candidate and `character` (, . ! ?)
         RawThen,      // the word as typed and `character` (0, a keypad digit)
         Commit,       // Tab: the first candidate
-        Page          // ← →
+        Page,         // ← →
+        SentenceSpace // sentence mode: a space; the second in a row puts the sentence in
     };
+    // Sentence mode (englishSentence): the whole sentence is typed before it
+    // goes in, corrected as a whole.
+    [[nodiscard]] bool english_sentence_mode() const;
+    // The words the first candidate's sentence spells differently, as typed.
+    std::vector<std::wstring> english_sentence_spelling_;
+    // Whether the text before the word ends a sentence (or is empty), and
+    // whether the word is joined to it (an address): from the document, or
+    // where it cannot be read, from what this service put in last.
+    bool english_sentence_start_ = true;
+    bool english_joined_ = false;
     [[nodiscard]] EnglishKey english_key(ITfContext* context, WPARAM wparam, const ModifierKeyState& modifiers,
                                          wchar_t* character);
     bool handle_english_key(ITfContext* context, WPARAM wparam, BOOL* eaten);
@@ -288,6 +312,9 @@ private:
         std::wstring typed;
         std::wstring committed;
         ULONGLONG tick = 0;
+        // A sentence: taken back, these words (spelled differently) are learned.
+        bool sentence = false;
+        std::vector<std::wstring> learn;
     };
     EnglishCorrection english_correction_;
     // Whether the document still ends with the correction just made.

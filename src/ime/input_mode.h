@@ -40,6 +40,13 @@ struct InputModeOptions {
     // 本地英文: Space puts in the correction of a misspelled word (teh →
     // the); off, it puts in the word as typed and offers the correction.
     bool english_autocorrect = true;
+    // 本地英文: the whole sentence is typed before it goes in. Space is only a
+    // space, Space twice puts the sentence in (corrected); off, Space puts in
+    // each word on its own.
+    bool english_sentence = true;
+    // The key that switches between 本地拼音 and 本地英文: alt+capslock,
+    // ctrl+capslock, ctrl+alt+space or off.
+    std::wstring ime_switch_key = L"alt+capslock";
     // Clipboard history: undecided until the user is asked (after installing
     // or updating), then on or off; kept this many days (0: for good).
     enum class ClipboardHistory { Ask, On, Off };

@@ -237,6 +237,7 @@ void EnglishSpeller::open_user_words(const std::filesystem::path& path) {
 }
 
 void EnglishSpeller::read_user_words() {
+    spelled_.clear();
     std::error_code error;
     if (user_path_.empty()) return;
     const auto time = std::filesystem::last_write_time(user_path_, error);
@@ -271,6 +272,7 @@ void EnglishSpeller::refresh_user_words_if_changed() {
 
 bool EnglishSpeller::learn(std::string_view word) {
     if (!is_spelling(word)) return false;
+    spelled_.clear();
     const std::string key = lowercase(word);
     if (const auto found = user_words_.find(key); found != user_words_.end() && found->second == word) return false;
     if (const size_t index = find(key); index != npos && form(index) == word) return false;
@@ -288,6 +290,7 @@ bool EnglishSpeller::learn(std::string_view word) {
 
 bool EnglishSpeller::forget(std::string_view word) {
     if (user_words_.erase(lowercase(word)) == 0) return false;
+    spelled_.clear();
     if (user_path_.empty()) return true;
     std::vector<std::string> words;
     words.reserve(user_words_.size());
@@ -560,6 +563,150 @@ EnglishSpeller::Result EnglishSpeller::lookup(std::string_view typed) const {
         if (result.candidates.size() > before) ++others;
     }
     add_completions();
+    return result;
+}
+
+const std::string& EnglishSpeller::spelled(const std::string& word) const {
+    if (const auto found = spelled_.find(word); found != spelled_.end()) return found->second;
+    if (spelled_.size() > 4096) spelled_.clear();
+    const Result result = lookup(word);
+    std::string text = result.corrects && !result.candidates.empty() ? result.candidates.front().text : word;
+    return spelled_.emplace(word, std::move(text)).first->second;
+}
+
+namespace {
+
+struct Piece {
+    std::string text;
+    bool word = false;
+};
+
+bool ascii_letter(char ch) { return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z'); }
+
+std::string lower(std::string_view text) {
+    std::string result(text);
+    for (char& ch : result) if (ch >= 'A' && ch <= 'Z') ch = static_cast<char>(ch - 'A' + 'a');
+    return result;
+}
+
+bool all_lower(std::string_view text) {
+    return std::none_of(text.begin(), text.end(), [](char ch) { return ch >= 'A' && ch <= 'Z'; });
+}
+
+// Joins a word to what comes before it: part of an address, a path or a name.
+bool joining(char ch) {
+    return ascii_letter(ch) || (ch >= '0' && ch <= '9') || std::string_view(".@-_/\\:#~+=&%").find(ch) != std::string_view::npos;
+}
+
+// Where a sentence ends: . ! ? not after an abbreviation (Mr. Smith, e.g.).
+bool ends_sentence(const std::vector<Piece>& pieces, size_t gap) {
+    if (gap == 0) return false;
+    const std::string& before = pieces[gap - 1].text;
+    if (pieces[gap - 1].word || before.empty()) return false;
+    const auto mark = before.find_first_of(".!?");
+    if (mark == std::string::npos || before.find_first_not_of(".!?\"')]") < mark) return false;
+    // A space after it (example.com is an address, not two sentences).
+    if (before.find_first_of(" \t\r\n", mark) == std::string::npos) return false;
+    if (before[mark] != '.' || gap < 2 || !pieces[gap - 2].word) return true;
+    static const char* const kAbbreviations[] = {"mr", "mrs", "ms", "dr", "prof", "sr", "jr", "st", "vs", "etc", "eg", "ie",
+                                                 "e", "g", "i", "no", "fig", "approx", "dept", "inc", "ltd", "co", "mt"};
+    const std::string word = lower(pieces[gap - 2].text);
+    return std::none_of(std::begin(kAbbreviations), std::end(kAbbreviations), [&](const char* item) { return word == item; });
+}
+
+std::string with_case_of(std::string_view model, std::string text) {
+    if (!model.empty() && model[0] >= 'A' && model[0] <= 'Z' && !text.empty() && text[0] >= 'a' && text[0] <= 'z')
+        text[0] = static_cast<char>(text[0] - 'a' + 'A');
+    return text;
+}
+
+}  // namespace
+
+std::string EnglishSpeller::correct_sentence(std::string_view typed, bool sentence_start, bool joined,
+                                             std::vector<std::string>* spelling) const {
+    // Words (letters and apostrophes) and what lies between them.
+    std::vector<Piece> pieces;
+    for (size_t at = 0; at < typed.size();) {
+        const bool word = ascii_letter(typed[at]);
+        size_t end = at;
+        while (end < typed.size() && (word ? (ascii_letter(typed[end]) || typed[end] == '\'') : !ascii_letter(typed[end]))) ++end;
+        pieces.push_back({std::string(typed.substr(at, end - at)), word});
+        at = end;
+    }
+    // Spelling, word by word, as Space would put each in.
+    for (size_t index = 0; index < pieces.size(); ++index) {
+        if (!pieces[index].word) continue;
+        const bool attached = index == 0 ? joined : !pieces[index - 1].text.empty() && joining(pieces[index - 1].text.back());
+        if (attached) continue;
+        const std::string& fixed = spelled(pieces[index].text);
+        if (fixed != pieces[index].text) {
+            if (spelling && lower(fixed) != lower(pieces[index].text)) spelling->push_back(pieces[index].text);
+            pieces[index].text = fixed;
+        }
+    }
+    // The next word after the gap at `index`, or npos; whether only spaces lie between.
+    const auto next_word = [&](size_t index, bool* spaced) {
+        if (index + 2 < pieces.size() && pieces[index + 1].text.find_first_not_of(' ') == std::string::npos) {
+            if (spaced) *spaced = true;
+            return index + 2;
+        }
+        return static_cast<size_t>(-1);
+    };
+    for (size_t index = 0; index < pieces.size(); ++index) {
+        if (!pieces[index].word) continue;
+        const std::string word = lower(pieces[index].text);
+        bool spaced = false;
+        const size_t next = next_word(index, &spaced);
+        const std::string following = next == static_cast<size_t>(-1) ? std::string() : lower(pieces[next].text);
+        if (next == static_cast<size_t>(-1)) {
+            if (word == "alot") pieces[index].text = with_case_of(pieces[index].text, "a lot");
+            continue;
+        }
+        // Fixed phrases.
+        if ((word == "could" || word == "should" || word == "would" || word == "must" || word == "might") && following == "of")
+            pieces[next].text = "have";
+        else if (word == "your" && following == "welcome")
+            pieces[index].text = with_case_of(pieces[index].text, "you're");
+        else if (word == "its") {
+            static const char* const kAfter[] = {"a", "an", "been", "not", "going", "time", "ok", "okay", "so", "just", "really", "very", "the"};
+            if (std::any_of(std::begin(kAfter), std::end(kAfter), [&](const char* item) { return following == item; }))
+                pieces[index].text = with_case_of(pieces[index].text, "it's");
+        } else if (word == "alot") {
+            pieces[index].text = with_case_of(pieces[index].text, "a lot");
+        }
+        // A short word typed twice (the the).
+        static const char* const kDoubled[] = {"the", "a", "an", "to", "of", "and", "in", "is", "for", "on", "with", "as", "at", "by", "from"};
+        if (word == following && std::any_of(std::begin(kDoubled), std::end(kDoubled), [&](const char* item) { return word == item; })) {
+            pieces[index + 1].text.clear();
+            pieces[next].text.clear();
+            pieces[next].word = false;
+            continue;
+        }
+        // a / an by the sound the next word starts with; u and h words and
+        // capitals (an FBI agent) are left as typed.
+        if ((word == "a" || word == "an") && !following.empty() && ascii_letter(following[0]) && all_lower(pieces[next].text.substr(1))) {
+            static const char* const kSilentH[] = {"hour", "honest", "honor", "honour", "heir"};
+            static const char* const kConsonantSound[] = {"one", "once", "eu", "ewe"};
+            const char first = following[0];
+            const auto starts = [&](const char* const* list, size_t count) {
+                return std::any_of(list, list + count, [&](const char* item) { return following.rfind(item, 0) == 0; });
+            };
+            const bool vowel = (std::string_view("aeio").find(first) != std::string_view::npos &&
+                                !starts(kConsonantSound, std::size(kConsonantSound))) ||
+                               starts(kSilentH, std::size(kSilentH));
+            const bool consonant = std::string_view("bcdfgjklmnpqrstvwxyz").find(first) != std::string_view::npos;
+            if (word == "a" && vowel) pieces[index].text = with_case_of(pieces[index].text, "an");
+            else if (word == "an" && consonant) pieces[index].text = with_case_of(pieces[index].text, "a");
+        }
+    }
+    // Capitals where a sentence starts.
+    for (size_t index = 0; index < pieces.size(); ++index) {
+        if (!pieces[index].word || pieces[index].text.empty() || !all_lower(pieces[index].text)) continue;
+        const bool starts = index == 0 ? sentence_start && !joined : ends_sentence(pieces, index);
+        if (starts) pieces[index].text[0] = static_cast<char>(pieces[index].text[0] - 'a' + 'A');
+    }
+    std::string result;
+    for (const auto& piece : pieces) result += piece.text;
     return result;
 }
 

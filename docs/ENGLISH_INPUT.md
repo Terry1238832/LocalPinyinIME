@@ -1,13 +1,45 @@
-# 本地英文（0.21.0）
+# 本地英文（0.21.0；0.22.0 起整句输入）
 
 安装后系统里有两个输入法，都在“中文(简体)”下面，按 Win + 空格切换：
 
 | 输入法 | 图标 | Shift / Ctrl + Space 切换 |
 | --- | --- | --- |
-| 本地拼音 | 蓝底“中” | 中（拼音）↔ 英（直接输入） |
+| 本地拼音 | 本地拼音原来的图标 | 中（拼音）↔ 英（直接输入） |
 | 本地英文 | 蓝底“英” | 辅（辅助拼写）↔ 英（直接输入） |
 
 两个都挂在中文下，任务栏才显示我们自己画的“中 / 英 / 辅”图标；切换它们只换输入法，不换系统的输入语言。按 Shift 切换要先在“输入”页打开“按 Shift 切换中英文”（两个输入法共用这一项），Ctrl + Space 始终可用。
+
+**Alt + CapsLock**（0.22.0 起，默认）在本地拼音和本地英文之间直接切换，和 Win + 空格一样对所有程序生效；CapsLock 的大小写状态不变（Windows 按下时会切换一次，松开后输入法再按一次换回来）。“设置 › 输入 › 本地英文”里可以改成 Ctrl + CapsLock、Ctrl + Alt + 空格，或者不用（`inputMode.imeSwitchKey`：`alt+capslock`、`ctrl+capslock`、`ctrl+alt+space`、`off`）。别的输入法已经占用这个组合时，这个快捷键不起作用。
+
+## 整句输入（0.22.0 起默认）
+
+“辅”状态下打的是一整句：按一下空格只是空格，句子接着打，在输入框里带下划线；**连按两下空格**才把整句放进去，同时把拼写、句首大写、a / an 等改好。候选窗口列出：
+
+1. 第一个：连按两下空格放进去的那句（改好的；关闭“自动纠正拼写”时是原样）；
+2. 原样；
+3. 正在打一个单词时，把这个单词换成它的其他改法或更长的词的整句（beautif → … beautiful）。
+
+| 键 | 作用 |
+| --- | --- |
+| 字母、撇号、标点、数字 | 加进句子 |
+| 空格 | 加一个空格，句子接着打 |
+| 连按两下空格（第二下紧跟在空格后面） | 放进第一个候选，再加一个空格 |
+| 1–9 | 紧跟在字母后面时放进对应候选，再加一个空格；其他时候就是数字（I have 3 cats） |
+| Enter | 整句原样放进去，不改 |
+| Tab | 放进第一个候选，不加空格；连按两下打开工具面板 |
+| Backspace | 删一个字符；**刚放进去的整句紧接着按一下退格，换回原样**，其中被改了拼写的词以后不再改 |
+| Esc | 清掉整句 |
+| ← → | 翻页 |
+
+整句里这样改：
+
+- **拼写**：每个单词按下一节的规则改（teh → the、beautifule → beautiful、dont → don't、i → I）。紧跟在字母、数字或 . @ - _ / 等后面的单词不改（john.smith@example.com）。
+- **句首大写**：文档开头、. ! ? 和空格之后的第一个词首字母大写；Mr.、Dr.、e.g. 等缩写之后不算，example.com 这种点后面没有空格的也不算。
+- **a / an**：a apple → an apple、an book → a book、a hour → an hour；u 开头（a university / an umbrella）、h 开头（a house / an hour 以外）和全大写缩写（an FBI agent）不改。
+- **连打两遍的短词**：the the → the（the、a、an、to、of、and、in、is、for、on、with、as、at、by、from）。
+- **固定搭配**：could / should / would / must / might of → have，your welcome → you're welcome，its a / its not / its been 等 → it's，alot → a lot。
+
+句子最长 240 个字符，再打就先把这句（改好的）放进去。关闭“整句输入”回到逐词：按空格就把当前单词放进去（下一节的按键）。
 
 ## 辅助拼写怎么用
 
@@ -18,7 +50,7 @@
 3. 其他可能的改法，最多两个；
 4. 以它开头的更长的词，最多三个（beautif → beautiful）。
 
-按键和拼音一致：
+逐词输入（关闭“整句输入”时）的按键和拼音一致：
 
 | 键 | 作用 |
 | --- | --- |
@@ -44,7 +76,7 @@
 - **按到相邻键、两键颠倒、多按、漏按**，以及元音写错（seperate）、双写辅音（occured、untill）：在词表里找“改动最少、又常用”的词。改动越大、词越生僻越不改；第一名要比第二名可能性高约 4.5 倍才改，否则只列在候选里。
 - **漏了撇号**：dont → don't、im → I'm。cant、wont 本身也是英文词，但缩写常用得多（30 倍以上）时也改；ill、its、were 这种两种写法都常用的不改。
 - **大小写**：i → I、monday → Monday、english → English，以及 JavaScript、GitHub、iPhone 这类技术词按它们的写法。其他人名、地名（john、london）保持原样，大写形式作为候选，避免改坏邮箱和用户名。HEL 这样全大写打的，候选也全大写；NASA 这种全大写的词不改。
-- **不改**：一两个字母的词；首字母大写的生词（多半是人名，如 Pantanal），除非只差一处很小的失误（Teh）或改成常见的名字（Febuary → February）；紧跟在非空格字符后面的词（john.smith@、v2.example、well-known 的后半），因为它多半是地址、路径或名字的一部分。
+- **不改**：一两个字母的词；首字母大写的生词（多半是人名，如 Pantanal），除非只差一处很小的失误（Teh）或改成常见的名字（Febuary → February）；紧跟在字母、数字或 . @ - _ / 等字符后面的词（john.smith@、v2.example、well-known 的后半），因为它多半是地址、路径或名字的一部分；紧跟在汉字或中文标点后面的词照样改（说法beautifule → 说法beautiful，0.22.0 起）。前面的文字读得到时按读到的算（刚发出消息、输入框清空了，就是从头开始）；读不到时才按输入法上一次放进去的文字推断。
 - 英式、加拿大、澳大利亚拼写（colour）和较生僻的词照样接受，不会被改成美式或常见词，但不出现在候选里。
 
 ## 学习
@@ -62,6 +94,8 @@
 | 设置 | 键 | 默认 |
 | --- | --- | --- |
 | 自动纠正拼写 | `inputMode.englishAutocorrect` | 开 |
+| 整句输入 | `inputMode.englishSentence` | 开 |
+| 在本地拼音和本地英文之间切换 | `inputMode.imeSwitchKey` | Alt + CapsLock |
 
 关闭后按空格总是原样，改法仍在候选里，可以用数字选。
 
@@ -70,10 +104,14 @@
 `resources/dictionary/english_words.tsv`（约 13.2 万个词，其中 87,849 个可作为候选，其余只接受不推荐）由 `tools/build_english_lexicon.py` 生成：
 
 - **哪些拼写是单词**：SCOWL 2020.12.07（Kevin Atkinson 等，允许使用、修改、分发和出售，保留版权声明即可；声明原文附在 `resources/THIRD_PARTY_NOTICES.txt`）。english、american、special 三类 60 级以内作为候选；英式、加拿大、澳大利亚拼写 60 级以内和各类 70 级的词只接受；SCOWL 标为粗俗、冒犯的词不出现在候选里。所有格（dog's）不收，引擎对任何词加 's 都接受。
-- **每个词有多常用**：Mozilla Common Voice 英文句子（CC0 1.0）里出现的次数。Sentence Collector 部分（书里的叙述和对话）权重 8，维基百科摘句权重 1，免得 I'm、hello 这类日常词显得生僻。每 40 句留出 1 句不参与统计；安装包里只有词和次数，没有句子。
+- **每个词有多常用**（0.22.0 起三份句子）：
+  - Mozilla Common Voice 英文句子（CC0 1.0）：Sentence Collector 部分（书里的叙述和对话）权重 8，维基百科摘句权重 1，免得 I'm、hello 这类日常词显得生僻；
+  - Tatoeba 英文句子（CC BY 2.0 FR，Tatoeba 贡献者；2026-10-17 的导出，约 204 万句日常短句）权重 2；
+  - 英文维基新闻（CC BY 2.5 / 4.0，维基新闻贡献者；2026-10-01 的文章转储，约 38 万句）权重 1。
+  - 每份来源每 40 句留出 1 句不参与统计。加了数据后总次数会变大，而引擎有几处按次数定的门槛（至少出现 3 次才能作为改正目标，用户自己的词按 200 次算），所以最后把次数按比例缩回只用 Common Voice 时的总量（1,734 万），新数据只改变哪些词更常用。安装包里只有词和次数，没有句子。
 - 来源、下载地址和 SHA-256 记在 `resources/dictionary/authoring/english_lexicon_sources.json`。
 
-这两份来源都只要求署名（CC0 连署名也不要求），可以商用。重新生成：
+这些来源都允许商用、不要求相同方式共享，只要求署名（CC0 连署名也不要求），署名写在 `resources/THIRD_PARTY_NOTICES.txt`。重新生成：
 
 ```powershell
 python tools/build_english_lexicon.py --work <临时目录> --write-eval tests/data
@@ -81,15 +119,21 @@ python tools/build_english_lexicon.py --work <临时目录> --write-eval tests/d
 
 ## 测量
 
-`LocalPinyinEnglishEval <dictionary 目录> tests/data/english_misspellings.tsv tests/data/english_heldout_sentences.txt`，留出的 2,000 句从未参与统计：
+`LocalPinyinEnglishEval <dictionary 目录> tests/data/english_misspellings.tsv <留出句子>`。留出句子从未参与统计，三份各约 2,000 句：`english_heldout_sentences.txt`（Common Voice，多是维基百科式的句子）、`english_heldout_tatoeba.txt`（日常短句）、`english_heldout_wikinews.txt`（新闻）。
 
-| 测试 | 结果 |
-| --- | --- |
-| 项目自写的 164 条用例（常见错拼、误触、漏撇号、大小写、必须保持原样的词） | 151 条对（92.1%） |
-| 留出句里每个三个字母以上的词随机打错一处（相邻键、颠倒、漏按、多按），共 11,355 个 | 空格改对 87.6%，改成别的词 2.1%，不改 10.3%；正确的词出现在候选里 97.7% |
-| 留出句里不在词表的词（大多是人名地名），690 个 | 被空格改动 6.1% |
-| 留出句里在词表的词，20,373 个 | 被空格改动 0.01%（只有大小写和撇号） |
-| 查一次的耗时 | 平均 0.6 毫秒，最慢约 10 毫秒（同一台 Linux 机器） |
+| 测试 | 只用 Common Voice（0.21.0） | 加 Tatoeba 和维基新闻（0.22.0） |
+| --- | --- | --- |
+| 项目自写的 164 条用例（常见错拼、误触、漏撇号、大小写、必须保持原样的词） | 151 条对 | 152 条对（92.7%） |
+| 每个三个字母以上的词随机打错一处（相邻键、颠倒、漏按、多按），按空格改对 / 改成别的词 | | |
+| — Common Voice 留出句，11,355 个 | 87.6% / 2.1% | 86.6% / 2.5% |
+| — Tatoeba 留出句，8,483 个 | 84.5% / 2.8% | 86.0% / 2.4% |
+| — 维基新闻留出句，21,159 个 | 87.9% / 2.3% | 88.0% / 2.2% |
+| 正确的词出现在候选里（三份） | 97.7% / 97.4% / 98.1% | 97.4% / 97.6% / 98.1% |
+| 不在词表的词（大多是人名地名）被空格改动（三份） | 6.1% / 2.1% / 11.5% | 5.9% / 2.5% / 11.1% |
+| 在词表的词被空格改动 | 0.01%（只有大小写和撇号） | 0.01% |
+| 查一次的耗时 | 平均约 0.5 毫秒，最慢约 20 毫秒 | 同左 |
+
+加入新数据后，日常短句和新闻里改得更准，维基百科式的句子略差（原来的词频正是按这种文本统计的）。三份平均，改对率高 0.2 个百分点，改错率持平。试过 Tatoeba 权重 1、4、8 和维基新闻权重 0、2：Tatoeba 越重，日常句子越好、维基百科式句子越差；2 和 1 的组合三份最均衡。
 
 打错的词是按同一套键盘失误模型生成的，结果偏乐观；真实的错拼更难（用例里 helo、wierd、definatly 还改不对，因为只看单词本身、不看前后文）。
 
@@ -101,6 +145,6 @@ python tools/build_english_lexicon.py --work <临时目录> --write-eval tests/d
 
 ## 还没做
 
-- 看前后文改词（form / from、there / their）和预测下一个词。
-- 灰色的行内补全、句首自动大写、连按两下空格变句号。
+- 看前后文挑同音、形近的词（form / from、there / their）和预测下一个词。
+- 灰色的行内补全。
 - 非美式键盘布局：标点按美式键位理解。

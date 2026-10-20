@@ -62,6 +62,7 @@ constexpr int kTabTask = 0;
 constexpr int kPanelTask = 1;
 constexpr int kSecretTask = 2;
 constexpr int kPasteTask = 3;
+constexpr int kSwitchCapsTask = 4;
 // A copied record leaves the clipboard after this long, if still there.
 constexpr UINT kSecretClipboardMs = 45 * 1000;
 // WM_COPYDATA from the tool panel: the session token, a line break, the text.
@@ -74,6 +75,7 @@ constexpr UINT kTranslationCheckMs = 250;
 constexpr ULONGLONG kEnglishUndoMs = 30000;
 // A word longer than this is put in as typed before the next letter.
 constexpr size_t kMaxEnglishWord = 48;
+constexpr size_t kMaxEnglishSentence = 240;
 
 // The English speller, shared by this process's text services (one per UI
 // thread) and loaded on the first English word: the word list alone takes a
@@ -161,13 +163,26 @@ bool is_space(wchar_t ch) noexcept {
     return ch == L' ' || ch == 0x3000 || ch == L'\t';
 }
 
-// A word right after this (no space between) is part of an address, a path
-// or a name (john.smith@, v2.example, well-known): Space keeps it as typed.
+// A word right after a letter, a digit or what joins words in addresses,
+// paths and names (john.smith@, v2.example, well-known) is part of them:
+// Space keeps it as typed. After a Chinese character or punctuation, a space
+// or a bracket it is a word of its own (说法beautifule → 说法beautiful).
 bool joins_previous_text(const std::wstring& before) noexcept {
     if (before.empty()) return false;
     const wchar_t last = before.back();
-    return !is_space(last) && last != L'\n' && last != L'\r' &&
-           std::wstring_view(L"\"'([{\u201C\u2018").find(last) == std::wstring_view::npos;
+    if ((last >= L'a' && last <= L'z') || (last >= L'A' && last <= L'Z') || (last >= L'0' && last <= L'9') ||
+        (last >= 0x00C0 && last <= 0x024F))
+        return true;
+    return std::wstring_view(L".@-_/\\:#~+=&%").find(last) != std::wstring_view::npos;
+}
+
+// Whether a sentence starts after this: nothing, or . ! ? (。！？) and spaces,
+// or a new line.
+bool sentence_starts_after(const std::wstring& before) noexcept {
+    size_t end = before.size();
+    while (end > 0 && (before[end - 1] == L' ' || before[end - 1] == L'\t' || before[end - 1] == 0x3000)) --end;
+    if (end == 0) return true;
+    return std::wstring_view(L".!?\r\n\u3002\uFF01\uFF1F").find(before[end - 1]) != std::wstring_view::npos;
 }
 
 bool usable_anchor_rect(const RECT& rect) noexcept {
@@ -489,6 +504,7 @@ TextService::TextService() {
     candidate_window_.set_theme_changed_callback([this]() { language_bar_.refresh_icon(); });
     candidate_window_.set_options_changed_callback([this]() {
         const auto options = settings_store_.load_input_mode_options();
+        if (options.ime_switch_key != switch_key_setting_) preserve_switch_key();
         if (prediction_active_ && (!options.prediction_enabled || options.tab_translate))
             dismiss_prediction(L"prediction_disabled");
         else if (candidate_context_) update_candidate_window(candidate_context_);
@@ -517,6 +533,7 @@ TextService::~TextService() {
     unadvise_prediction_edits();
     unadvise_thread_events();
     unadvise_profile_activation();
+    unpreserve_switch_key();
     if (prediction_caret_) prediction_caret_->Release();
     end_candidate_ui_element(L"teardown");
     clear_transient_contexts();
@@ -636,6 +653,8 @@ HRESULT TextService::ActivateEx(ITfThreadMgr* thread_mgr, TfClientId client_id, 
     HRESULT preserve_hr = S_OK;
     if (SUCCEEDED(hr)) {
         preserve_hr = preserve_ctrl_space_key();
+        // Not having it (another input method holds the key) is no failure.
+        if (SUCCEEDED(preserve_hr)) preserve_switch_key();
     }
     const HRESULT result = FAILED(hr) ? hr : preserve_hr;
     if (SUCCEEDED(result)) {
@@ -689,6 +708,7 @@ HRESULT TextService::Deactivate() {
     unadvise_thread_events();
     unadvise_profile_activation();
     english_correction_ = EnglishCorrection{};
+    unpreserve_switch_key();
     const HRESULT unpreserve_hr = unpreserve_ctrl_space_key();
     language_bar_.clear_callbacks();
     const HRESULT langbar_hr = language_bar_.unregister_item();
@@ -790,6 +810,83 @@ HRESULT TextService::preserve_ctrl_space_key() {
     }
     keystroke_mgr->Release();
     return hr;
+}
+
+HRESULT TextService::preserve_switch_key() {
+    if (!thread_mgr_) return S_OK;
+    const std::wstring setting = settings_store_.load_input_mode_options().ime_switch_key;
+    if (switch_key_preserved_ && setting == switch_key_setting_) return S_OK;
+    unpreserve_switch_key();
+    switch_key_setting_ = setting;
+    TF_PRESERVEDKEY key{};
+    if (!ime_switch_preserved_key(setting, &key)) return S_OK;
+    ITfKeystrokeMgr* keystroke_mgr = nullptr;
+    HRESULT hr = thread_mgr_->QueryInterface(IID_PPV_ARGS(&keystroke_mgr));
+    if (FAILED(hr)) return hr;
+    static constexpr wchar_t kDescription[] = L"LocalPinyinIME switch between its two input methods";
+    hr = keystroke_mgr->PreserveKey(client_id_, GUID_LocalPinyinSwitchProfilePreservedKey, &key, kDescription,
+                                    static_cast<ULONG>(std::wcslen(kDescription)));
+    if (SUCCEEDED(hr)) {
+        switch_key_preserved_ = true;
+        switch_key_ = key;
+    }
+    log_status(L"tsf", L"PreserveKey switch " + setting + L" " + hresult_hex(hr));
+    keystroke_mgr->Release();
+    return hr;
+}
+
+HRESULT TextService::unpreserve_switch_key() {
+    if (!thread_mgr_ || !switch_key_preserved_) return S_OK;
+    ITfKeystrokeMgr* keystroke_mgr = nullptr;
+    HRESULT hr = thread_mgr_->QueryInterface(IID_PPV_ARGS(&keystroke_mgr));
+    if (FAILED(hr)) return hr;
+    hr = keystroke_mgr->UnpreserveKey(GUID_LocalPinyinSwitchProfilePreservedKey, &switch_key_);
+    switch_key_preserved_ = false;
+    keystroke_mgr->Release();
+    return hr;
+}
+
+void TextService::switch_profile(ITfContext* context) {
+    if (switch_key_.uVKey == VK_CAPITAL) {
+        // Windows switches CapsLock on the press: its state before the press
+        // is the other one when the thread already counted the key as down.
+        const SHORT state = GetKeyState(VK_CAPITAL);
+        const bool on = (state & 1) != 0;
+        switch_caps_before_ = (state & 0x8000) != 0 ? !on : on;
+        switch_caps_pending_ = true;
+        candidate_window_.schedule_task(kSwitchCapsTask, 40, [this] { restore_caps_after_switch(); });
+    }
+    ITfInputProcessorProfileMgr* profiles = nullptr;
+    HRESULT hr = CoCreateInstance(CLSID_TF_InputProcessorProfiles, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&profiles));
+    const bool to_english = !english_profile_;
+    if (SUCCEEDED(hr)) {
+        hr = profiles->ActivateProfile(TF_PROFILETYPE_INPUTPROCESSOR, MAKELANGID(LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED),
+                                       CLSID_LocalPinyinTextService,
+                                       to_english ? GUID_LocalPinyinEnglishProfile : GUID_LocalPinyinProfile, nullptr,
+                                       TF_IPPMF_FORSESSION | TF_IPPMF_DONTCARECURRENTINPUTLANGUAGE);
+        profiles->Release();
+    }
+    log_status(L"mode", std::wstring(L"switch key to ") + (to_english ? L"English" : L"Pinyin") + L" profile " + hresult_hex(hr));
+    // OnActivated follows; should it not, this input method follows anyway.
+    if (SUCCEEDED(hr)) use_profile(context, to_english, L"switch_key");
+}
+
+void TextService::restore_caps_after_switch() {
+    if (!switch_caps_pending_) return;
+    if ((GetAsyncKeyState(VK_CAPITAL) & 0x8000) != 0) {
+        candidate_window_.schedule_task(kSwitchCapsTask, 40, [this] { restore_caps_after_switch(); });
+        return;
+    }
+    switch_caps_pending_ = false;
+    if (((GetKeyState(VK_CAPITAL) & 1) != 0) == switch_caps_before_) return;
+    DWORD process = 0;
+    GetWindowThreadProcessId(GetForegroundWindow(), &process);
+    if (process != GetCurrentProcessId()) return;
+    INPUT keys[2]{};
+    keys[0].type = keys[1].type = INPUT_KEYBOARD;
+    keys[0].ki.wVk = keys[1].ki.wVk = VK_CAPITAL;
+    keys[1].ki.dwFlags = KEYEVENTF_KEYUP;
+    SendInput(2, keys, sizeof(INPUT));
 }
 
 HRESULT TextService::unpreserve_ctrl_space_key() {
@@ -1471,9 +1568,13 @@ HRESULT TextService::OnPreservedKey(ITfContext* context, REFGUID guid, BOOL* eat
         return E_POINTER;
     }
     *eaten = FALSE;
-    if (preserved_key_action_for_guid(guid) == PreservedKeyAction::ToggleInputMode) {
+    const PreservedKeyAction action = preserved_key_action_for_guid(guid);
+    if (action == PreservedKeyAction::ToggleInputMode) {
         ctrl_space_key_down_.accepted_by_test_key_down = false;
         handle_ctrl_space_toggle(context, L"ctrl_space_preserved_key");
+        *eaten = TRUE;
+    } else if (action == PreservedKeyAction::SwitchProfile) {
+        switch_profile(context);
         *eaten = TRUE;
     }
     return S_OK;
@@ -1886,6 +1987,10 @@ bool TextService::english_assist_active() const noexcept {
     return mode_ == InputMode::Assisted && !secure_mode_ && !code_application_;
 }
 
+bool TextService::english_sentence_mode() const {
+    return english_assist_active() && settings_store_.load_input_mode_options().english_sentence;
+}
+
 bool TextService::english_autocorrect_enabled() const {
     return settings_store_.load_input_mode_options().english_autocorrect;
 }
@@ -1905,7 +2010,9 @@ TextService::EnglishKey TextService::english_key(ITfContext* context, WPARAM wpa
             return english_undo_available(context) ? EnglishKey::Undo : EnglishKey::PassThrough;
         case VK_ESCAPE: return typing ? EnglishKey::Cancel : EnglishKey::PassThrough;
         case VK_RETURN: return typing ? EnglishKey::Raw : EnglishKey::PassThrough;
-        case VK_SPACE: return typing ? EnglishKey::Space : EnglishKey::PassThrough;
+        case VK_SPACE:
+            if (!typing) return EnglishKey::PassThrough;
+            return english_sentence_mode() ? EnglishKey::SentenceSpace : EnglishKey::Space;
         case VK_TAB: return typing ? EnglishKey::Commit : EnglishKey::PassThrough;
         case VK_LEFT:
         case VK_RIGHT:
@@ -1920,12 +2027,18 @@ TextService::EnglishKey TextService::english_key(ITfContext* context, WPARAM wpa
     if (!typed) return EnglishKey::PassThrough;
     *character = typed;
     if (typed == L'\'') return EnglishKey::Apostrophe;
+    // In sentence mode digits and punctuation are part of the sentence; a
+    // digit right after a letter still chooses a candidate.
+    const bool sentence = english_sentence_mode();
+    const wchar_t last = composing_.back();
+    const bool after_letter = (last >= L'a' && last <= L'z') || (last >= L'A' && last <= L'Z');
     // Digits choose candidates, as in 本地拼音: mp, Enter, 3 types mp3.
-    if (wparam >= L'1' && wparam <= L'9' && !modifiers.shift) {
+    if (wparam >= L'1' && wparam <= L'9' && !modifiers.shift && (!sentence || after_letter)) {
         return can_select_candidate_by_digit(static_cast<unsigned long>(wparam), current_candidate_page_count(), true,
                                              candidate_window_.is_visible() || candidate_ui_element_session_.host_managed())
-                   ? EnglishKey::Select : EnglishKey::RawThen;
+                   ? EnglishKey::Select : sentence ? EnglishKey::Letter : EnglishKey::RawThen;
     }
+    if (sentence) return EnglishKey::Letter;
     if (typed >= L'0' && typed <= L'9') return EnglishKey::RawThen;
     return EnglishKey::Punctuation;
 }
@@ -1943,8 +2056,9 @@ bool TextService::handle_english_key(ITfContext* context, WPARAM wparam, BOOL* e
     switch (action) {
         case EnglishKey::Letter:
         case EnglishKey::Apostrophe:
-            if (composing_.size() >= kMaxEnglishWord) {
-                hr = commit_english_raw(context, L"");
+            if (english_sentence_mode() ? composing_.size() >= kMaxEnglishSentence : composing_.size() >= kMaxEnglishWord) {
+                // A sentence this long goes in corrected; a word, as typed.
+                hr = english_sentence_mode() ? commit_english(context, selected_index_, L"", true) : commit_english_raw(context, L"");
                 if (FAILED(hr)) break;
             }
             if (composing_.empty()) {
@@ -1954,6 +2068,11 @@ bool TextService::handle_english_key(ITfContext* context, WPARAM wparam, BOOL* e
                 preceding_committed_text_.clear();
                 const HRESULT read = composition_.read_preceding_text(context, client_id_, &preceding_committed_text_);
                 if (read != S_OK) preceding_committed_text_.clear();
+                // The document as read, even empty (a message box just sent);
+                // where it cannot be read, what this service put in last.
+                const std::wstring before = read == S_OK ? preceding_committed_text_ : recent_committed_text(context);
+                english_sentence_start_ = sentence_starts_after(before);
+                english_joined_ = joins_previous_text(before);
                 if (FAILED(read) || (read == S_OK && preceding_committed_text_.empty()))
                     preceding_committed_text_ = recent_committed_text(context);
             }
@@ -2000,6 +2119,16 @@ bool TextService::handle_english_key(ITfContext* context, WPARAM wparam, BOOL* e
         case EnglishKey::Page:
             change_candidate_page(context, wparam == VK_LEFT ? -1 : 1);
             break;
+        case EnglishKey::SentenceSpace:
+            // Space is a space; Space again puts the sentence in, and a space.
+            if (composing_.back() == L' ') {
+                hr = commit_english(context, selected_index_, L" ", true);
+            } else {
+                composing_.push_back(L' ');
+                refresh_candidates();
+                hr = update_composition(context);
+            }
+            break;
         case EnglishKey::PassThrough:
             break;
     }
@@ -2010,7 +2139,48 @@ bool TextService::handle_english_key(ITfContext* context, WPARAM wparam, BOOL* e
 
 void TextService::refresh_english_candidates() {
     candidates_.clear();
+    english_sentence_spelling_.clear();
     if (composing_.empty()) return;
+    if (english_sentence_mode()) {
+        // The sentence corrected and as typed; while a word is being typed,
+        // the sentence with that word's other spellings and longer words.
+        const std::string typed = wide_to_utf8(composing_);
+        std::string corrected = typed;
+        std::vector<std::string> spelling, variants;
+        {
+            auto& shared = shared_speller();
+            std::lock_guard<std::mutex> guard(shared.lock);
+            if (english_speller_ready(shared)) {
+                if (composing_.size() == 1) shared.speller.refresh_user_words_if_changed();
+                const bool start = english_sentence_start_;
+                const bool joined = english_joined_;
+                corrected = shared.speller.correct_sentence(typed, start, joined, &spelling);
+                size_t word = typed.size();
+                const auto letter = [](char ch) { return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || ch == '\''; };
+                while (word > 0 && letter(typed[word - 1])) --word;
+                if (word < typed.size()) {
+                    for (const auto& suggestion : shared.speller.lookup(std::string_view(typed).substr(word)).candidates) {
+                        if (variants.size() >= 4) break;
+                        variants.push_back(shared.speller.correct_sentence(typed.substr(0, word) + suggestion.text, start, joined));
+                    }
+                }
+            }
+        }
+        for (const auto& item : spelling) english_sentence_spelling_.push_back(utf8_to_wide(item));
+        const std::wstring fixed = utf8_to_wide(corrected);
+        const auto add = [&](const std::wstring& text, bool correction) {
+            if (text.empty() || std::any_of(candidates_.begin(), candidates_.end(),
+                                            [&](const Candidate& candidate) { return candidate.text == text; }))
+                return;
+            Candidate candidate{text, 1, 0};
+            candidate.correction = correction;
+            candidates_.push_back(std::move(candidate));
+        };
+        if (english_autocorrect_enabled()) { add(fixed, fixed != composing_); add(composing_, false); }
+        else { add(composing_, false); add(fixed, fixed != composing_); }
+        for (const auto& variant : variants) add(utf8_to_wide(variant), true);
+        return;
+    }
     EnglishSpeller::Result result;
     {
         auto& shared = shared_speller();
@@ -2032,7 +2202,7 @@ void TextService::refresh_english_candidates() {
     }
     // With corrections off, or inside an address, Space puts in the word as
     // typed; the correction stays on offer.
-    if (result.corrects && (!english_autocorrect_enabled() || joins_previous_text(preceding_committed_text_))) {
+    if (result.corrects && (!english_autocorrect_enabled() || english_joined_)) {
         const auto typed = std::find_if(candidates_.begin(), candidates_.end(),
                                         [&](const Candidate& candidate) { return candidate.text == composing_; });
         if (typed != candidates_.end()) std::rotate(candidates_.begin(), typed, typed + 1);
@@ -2042,11 +2212,18 @@ void TextService::refresh_english_candidates() {
 HRESULT TextService::commit_english(ITfContext* context, size_t index, const std::wstring& suffix, bool automatic) {
     if (candidates_.empty()) return commit_english_raw(context, suffix);
     index = (std::min)(index, candidates_.size() - 1);
-    const std::wstring typed = composing_;
-    const std::wstring word = candidates_[index].text;
-    const bool corrected = automatic && word != typed && candidates_[index].correction;
+    const bool sentence = english_sentence_mode();
+    std::wstring typed = composing_;
+    std::wstring word = candidates_[index].text;
     // The word as typed chosen over a correction offered first: kept from now on.
     const bool kept = word == typed && index > 0 && candidates_.front().correction;
+    // A sentence goes in without the space typed after it (the suffix is one).
+    if (sentence) {
+        while (!word.empty() && word.back() == L' ') word.pop_back();
+        while (!typed.empty() && typed.back() == L' ') typed.pop_back();
+    }
+    const bool corrected = automatic && word != typed && candidates_[index].correction;
+    const std::vector<std::wstring> spelling = english_sentence_spelling_;
     const std::wstring committed = word + suffix;
     const HRESULT hr = composition_.commit_text(context, client_id_, committed);
     if (FAILED(hr)) {
@@ -2056,10 +2233,14 @@ HRESULT TextService::commit_english(ITfContext* context, size_t index, const std
     }
     remember_committed_text(context, committed);
     reset_transient_input_state(L"english_commit");
-    if (kept) learn_english_word(typed);
+    if (kept) {
+        if (sentence) for (const auto& item : spelling) learn_english_word(item);
+        else learn_english_word(typed);
+    }
     // Programs that show only what is being typed cannot have it put back.
     if (corrected && !transitory_context(context))
-        english_correction_ = EnglishCorrection{reinterpret_cast<std::uintptr_t>(context), typed, committed, GetTickCount64()};
+        english_correction_ = EnglishCorrection{reinterpret_cast<std::uintptr_t>(context), typed, committed, GetTickCount64(),
+                                                sentence, sentence ? spelling : std::vector<std::wstring>{}};
     return S_OK;
 }
 
@@ -2098,7 +2279,8 @@ HRESULT TextService::undo_english_correction(ITfContext* context) {
     const HRESULT hr = composition_.replace_preceding_text(context, client_id_, correction.committed, correction.typed);
     if (hr == S_OK) {
         forget_committed_text();
-        learn_english_word(correction.typed);
+        if (correction.sentence) for (const auto& item : correction.learn) learn_english_word(item);
+        else learn_english_word(correction.typed);
         log_status(L"english", L"correction taken back");
     } else {
         log_status(L"english", L"correction not taken back " + hresult_hex(hr));

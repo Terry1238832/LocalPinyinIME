@@ -196,6 +196,16 @@ int main() {
                localpinyin::PreservedKeyAction::ToggleInputMode);
     REQUIRE_EQ(localpinyin::preserved_key_action_for_guid(GUID_NULL),
                localpinyin::PreservedKeyAction::Ignore);
+    REQUIRE_EQ(localpinyin::preserved_key_action_for_guid(localpinyin::GUID_LocalPinyinSwitchProfilePreservedKey),
+               localpinyin::PreservedKeyAction::SwitchProfile);
+    {
+        TF_PRESERVEDKEY key{};
+        REQUIRE_TRUE(localpinyin::ime_switch_preserved_key(L"alt+capslock", &key));
+        REQUIRE_TRUE(key.uVKey == VK_CAPITAL && key.uModifiers == TF_MOD_ALT);
+        REQUIRE_TRUE(localpinyin::ime_switch_preserved_key(L"ctrl+alt+space", &key));
+        REQUIRE_TRUE(key.uVKey == VK_SPACE && key.uModifiers == (TF_MOD_CONTROL | TF_MOD_ALT));
+        REQUIRE_TRUE(!localpinyin::ime_switch_preserved_key(L"off", &key));
+    }
 
     REQUIRE_EQ(localpinyin::toggled_input_mode(localpinyin::InputMode::Chinese), localpinyin::InputMode::English);
     REQUIRE_EQ(localpinyin::toggled_input_mode(localpinyin::InputMode::English), localpinyin::InputMode::Chinese);

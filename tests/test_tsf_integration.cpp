@@ -1404,6 +1404,8 @@ int wmain(int argc, wchar_t** argv) {
                 "text service activation for 本地英文");
             s.service_active = true;
             static_cast<localpinyin::TextService*>(s.service.Get())->use_english_profile_for_testing(true);
+            // Word by word first: Space puts each word in.
+            write_settings("{\"inputMode\":{\"panelDoubleTab\":false,\"englishSentence\":false}}");
             s.store->host_replace(L"");
             for (const auto letter : std::wstring(L"TEH")) s.key(letter);
             require(s.store->text == L"teh", "English letters are composed as typed");
@@ -1417,6 +1419,16 @@ int wmain(int argc, wchar_t** argv) {
             for (const auto letter : std::wstring(L"TEH")) s.key(letter);
             s.key(VK_SPACE);
             require(s.store->text == L"teh ", "a correction taken back is not made again");
+            // Right after a Chinese character the word is a word of its own;
+            // after a dot it is part of an address and stays as typed.
+            s.store->host_replace(L"\u8BF4\u6CD5");
+            for (const auto letter : std::wstring(L"HELPP")) s.key(letter);
+            s.key(VK_SPACE);
+            require(s.store->text == L"\u8BF4\u6CD5help ", "a word after Chinese is corrected");
+            s.store->host_replace(L"v2.");
+            for (const auto letter : std::wstring(L"HELPP")) s.key(letter);
+            s.key(VK_SPACE);
+            require(s.store->text == L"v2.helpp ", "a word inside an address stays as typed");
             s.store->host_replace(L"");
             s.key(L'T'); s.key(L'H');
             s.key(L'1');
@@ -1444,7 +1456,7 @@ int wmain(int argc, wchar_t** argv) {
             require(s.store->composition_starts == s.store->composition_ends, "English compositions ended");
             // 辅 has the tool panel too: Tab puts the word in at once (no
             // space), a second Tab opens the panel, which takes the keys.
-            write_settings("{\"inputMode\":{\"panelDoubleTab\":true}}");
+            write_settings("{\"inputMode\":{\"panelDoubleTab\":true,\"englishSentence\":false}}");
             s.store->host_replace(L"");
             for (const auto letter : std::wstring(L"HELP")) s.key(letter);
             s.key(VK_TAB);
@@ -1459,6 +1471,36 @@ int wmain(int argc, wchar_t** argv) {
             require(s.store->text == L"helpa", "after Esc letters are composed again");
             s.key(VK_ESCAPE);
             require(s.store->text == L"help", "and nothing else went into the text");
+            // Sentence mode: Space is a space, Space twice puts the sentence
+            // in, corrected as a whole; Backspace right after takes it back.
+            write_settings("{\"inputMode\":{\"panelDoubleTab\":false,\"englishSentence\":true}}");
+            s.store->host_replace(L"");
+            for (const auto letter : std::wstring(L"HELP")) s.key(letter);
+            s.key(VK_SPACE);
+            require(s.store->text == L"help ", "one Space is a space and the sentence goes on");
+            for (const auto letter : std::wstring(L"HELPP")) s.key(letter);
+            s.key(VK_SPACE);
+            s.key(L'A');
+            s.key(VK_SPACE);
+            for (const auto letter : std::wstring(L"APPLE")) s.key(letter);
+            s.modifier_keys[VK_SHIFT] = true;
+            s.key(L'1');
+            s.modifier_keys[VK_SHIFT] = false;
+            require(s.store->text == L"help helpp a apple!", "punctuation is part of the sentence");
+            require(s.first_candidate() == L"Help help an apple!", "the sentence is offered corrected");
+            s.key(VK_SPACE);
+            require(s.store->composition_starts != s.store->composition_ends, "still typing after one Space");
+            s.key(VK_SPACE);
+            require(s.store->text == L"Help help an apple! ", "Space twice puts the corrected sentence in");
+            require(s.store->composition_starts == s.store->composition_ends, "the sentence went in");
+            s.key(VK_BACK);
+            require(s.store->text == L"help helpp a apple!", "Backspace right after takes the sentence back");
+            s.key(VK_BACK, false);
+            s.store->host_replace(L"");
+            for (const auto letter : std::wstring(L"HELPP")) s.key(letter);
+            require(s.first_candidate() == L"Helpp", "a word taken back is no longer spelled differently");
+            s.key(VK_RETURN);
+            require(s.store->text == L"helpp", "Enter keeps the sentence as typed");
             write_settings("{\"inputMode\":{\"panelDoubleTab\":false,\"nextWordPrediction\":true}}");
             check(s.service->Deactivate(), "text service deactivation for 本地英文");
             s.service_active = false;

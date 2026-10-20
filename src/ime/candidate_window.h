@@ -163,7 +163,7 @@ public:
     [[nodiscard]] HWND window() const noexcept { return hwnd_; }
     // Runs `callback` once after `delay_ms` on this window's thread. Each slot
     // is its own timer; scheduling a slot again replaces it.
-    static constexpr int kTaskSlots = 4;
+    static constexpr int kTaskSlots = 5;
     bool schedule_task(int slot, UINT delay_ms, std::function<void()> callback);
     void cancel_task(int slot);
     // WM_COPYDATA sent to this window (the tool panel's text); returns

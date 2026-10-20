@@ -58,6 +58,17 @@ public:
     [[nodiscard]] bool knows(std::string_view typed) const;
     // Candidates for the letters typed, best first.
     [[nodiscard]] Result lookup(std::string_view typed) const;
+    // A sentence typed whole (本地英文's sentence mode) as Space twice puts it
+    // in: each word as lookup() would put it in with Space, except a word
+    // joined to what comes before by a letter, a digit or an address
+    // character; then a capital where a sentence starts, a / an before the
+    // next word's sound, a short word typed twice once, and a few fixed
+    // phrases (could of → could have, your welcome → you're welcome).
+    // `sentence_start`: what comes before ends a sentence, or nothing does;
+    // `joined`: the first word continues what comes before (an address).
+    // `spelling` gets the words lookup() spelled differently, as typed.
+    [[nodiscard]] std::string correct_sentence(std::string_view typed, bool sentence_start, bool joined,
+                                               std::vector<std::string>* spelling = nullptr) const;
 
 private:
     struct Word {
@@ -89,6 +100,10 @@ private:
     // don't), or npos.
     [[nodiscard]] size_t apostrophe_variant(std::string_view key) const;
     void read_user_words();
+    // What lookup() puts in for a word: kept while a sentence is typed, so
+    // each key looks up only the word it changes. Emptied as words are learned.
+    [[nodiscard]] const std::string& spelled(const std::string& word) const;
+    mutable std::unordered_map<std::string, std::string> spelled_;
 
     std::string keys_;
     std::vector<Word> words_;

@@ -18,8 +18,9 @@ constexpr wchar_t kDisplayName[] = L"本地拼音";
 constexpr wchar_t kEnglishDisplayName[] = L"本地英文";
 constexpr LANGID kLangId = MAKELANGID(LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED);
 // Profile icons are this DLL's icon resources by index, in resource ID order:
-// 1 is the blue 中 tile (IDI_MODE_ZH), 2 the blue 英 tile (IDI_MODE_EN).
-constexpr ULONG kProfileIconIndex = 1;
+// 0 is the app's own icon, kept for 本地拼音 as it always was; 2 the blue 英
+// tile (IDI_MODE_EN) for 本地英文.
+constexpr ULONG kProfileIconIndex = 0;
 constexpr ULONG kEnglishProfileIconIndex = 2;
 
 std::wstring g_last_registration_diagnostic;

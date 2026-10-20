@@ -7,6 +7,7 @@
 
 #include <array>
 #include <cstddef>
+#include <vector>
 
 namespace {
 
@@ -122,8 +123,12 @@ public:
             return E_POINTER;
         }
         preserved_tid = tid;
-        preserved_guid = guid;
-        preserved_key = *key;
+        if (preserve_count == 0) {
+            preserved_guid = guid;
+            preserved_key = *key;
+        }
+        preserved_guids.push_back(guid);
+        preserved_keys.push_back(*key);
         preserved_description_length = description_length;
         ++preserve_count;
         return preserve_result;
@@ -162,6 +167,8 @@ public:
     BOOL advised_foreground = FALSE;
     GUID preserved_guid = GUID_NULL;
     GUID unpreserved_guid = GUID_NULL;
+    std::vector<GUID> preserved_guids;
+    std::vector<TF_PRESERVEDKEY> preserved_keys;
     TF_PRESERVEDKEY preserved_key{};
     TF_PRESERVEDKEY unpreserved_key{};
     ULONG preserved_description_length = 0;
@@ -332,7 +339,12 @@ int main() {
     REQUIRE_EQ(thread_mgr.keystroke_mgr.advised_tid, kClientId);
     REQUIRE_TRUE(thread_mgr.keystroke_mgr.advised_sink != nullptr);
     REQUIRE_EQ(thread_mgr.keystroke_mgr.advised_foreground, TRUE);
-    REQUIRE_EQ(thread_mgr.keystroke_mgr.preserve_count, 1);
+    // Ctrl+Space first, then the key that switches to 本地英文 (Alt+CapsLock).
+    REQUIRE_EQ(thread_mgr.keystroke_mgr.preserve_count, 2);
+    REQUIRE_TRUE(localpinyin::same_guid(thread_mgr.keystroke_mgr.preserved_guids[1],
+                                        localpinyin::GUID_LocalPinyinSwitchProfilePreservedKey));
+    REQUIRE_TRUE(thread_mgr.keystroke_mgr.preserved_keys[1].uVKey == VK_CAPITAL &&
+                 thread_mgr.keystroke_mgr.preserved_keys[1].uModifiers == TF_MOD_ALT);
     REQUIRE_EQ(thread_mgr.keystroke_mgr.preserved_tid, kClientId);
     REQUIRE_TRUE(localpinyin::same_guid(thread_mgr.keystroke_mgr.preserved_guid,
                                         localpinyin::GUID_LocalPinyinCtrlSpacePreservedKey));
@@ -441,7 +453,7 @@ int main() {
     REQUIRE_EQ(service->Deactivate(), S_OK);
     REQUIRE_EQ(thread_mgr.remove_item_count, 1);
     REQUIRE_EQ(thread_mgr.removed_item, thread_mgr.added_item);
-    REQUIRE_EQ(thread_mgr.keystroke_mgr.unpreserve_count, 1);
+    REQUIRE_EQ(thread_mgr.keystroke_mgr.unpreserve_count, 2);
     REQUIRE_EQ(thread_mgr.keystroke_mgr.unadvise_count, 1);
     REQUIRE_EQ(thread_mgr.keystroke_mgr.unadvised_tid, kClientId);
     REQUIRE_TRUE(localpinyin::same_guid(thread_mgr.keystroke_mgr.unpreserved_guid,

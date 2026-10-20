@@ -247,6 +247,11 @@ InputModeOptions SettingsStore::load_input_mode_options() const {
     options.engine.emoji_candidates = parse_bool(setting_value(text, L"emojiCandidates"), true);
     // Added in 0.21 (本地英文).
     options.english_autocorrect = parse_bool(setting_value(text, L"englishAutocorrect"), true);
+    // Added in 0.22.
+    options.english_sentence = parse_bool(setting_value(text, L"englishSentence"), true);
+    const std::wstring switch_key = setting_value(text, L"imeSwitchKey");
+    if (switch_key == L"alt+capslock" || switch_key == L"ctrl+capslock" || switch_key == L"ctrl+alt+space" || switch_key == L"off")
+        options.ime_switch_key = switch_key;
     return options;
 }
 
@@ -327,6 +332,11 @@ bool SettingsStore::save_options(const CandidateWindowOptions& candidate_options
     text += input_mode_options.panel_resident ? L"true" : L"false";
     text += L",\n    \"englishAutocorrect\": ";
     text += input_mode_options.english_autocorrect ? L"true" : L"false";
+    text += L",\n    \"englishSentence\": ";
+    text += input_mode_options.english_sentence ? L"true" : L"false";
+    text += L",\n    \"imeSwitchKey\": \"";
+    text += input_mode_options.ime_switch_key;
+    text += L"\"";
     text += L",\n    \"clipboardHistory\": \"";
     text += input_mode_options.clipboard_history == InputModeOptions::ClipboardHistory::On ? L"on"
           : input_mode_options.clipboard_history == InputModeOptions::ClipboardHistory::Off ? L"off" : L"ask";

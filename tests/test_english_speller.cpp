@@ -113,6 +113,27 @@ int main(int argc, char** argv) {
     REQUIRE_TRUE(!speller.knows("Tencent"));
     std::filesystem::remove_all(root);
 
+    // A sentence typed whole: each word spelled as Space would, a capital
+    // where a sentence starts, a / an, a doubled short word, fixed phrases;
+    // addresses and words joined to the text before stay as typed.
+    {
+        std::vector<std::string> spelling;
+        REQUIRE_EQ(speller.correct_sentence("i think teh weather is beautifule today", true, false, &spelling),
+                   std::string("I think the weather is beautiful today"));
+        REQUIRE_TRUE(spelling.size() == 2 && spelling[0] == "teh" && spelling[1] == "beautifule");
+        REQUIRE_EQ(speller.correct_sentence("she ate a apple and an banana. then she left", true, false),
+                   std::string("She ate an apple and a banana. Then she left"));
+        REQUIRE_EQ(speller.correct_sentence("an hour, a university, a one-off, an FBI agent", false, false),
+                   std::string("an hour, a university, a one-off, an FBI agent"));
+        REQUIRE_EQ(speller.correct_sentence("go to the the store", false, false), std::string("go to the store"));
+        REQUIRE_EQ(speller.correct_sentence("you could of asked. your welcome. its a test", false, false),
+                   std::string("you could have asked. You're welcome. It's a test"));
+        REQUIRE_EQ(speller.correct_sentence("mail john.smith@example.com or visit example.com now", false, false),
+                   std::string("mail john.smith@example.com or visit example.com now"));
+        REQUIRE_EQ(speller.correct_sentence("Mr. smith said hi", false, false), std::string("Mr. smith said hi"));
+        REQUIRE_EQ(speller.correct_sentence("teh end", true, true), std::string("teh end"));
+    }
+
     std::cout << "test_english_speller passed\n";
     return 0;
 }
