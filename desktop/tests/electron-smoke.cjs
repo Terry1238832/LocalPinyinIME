@@ -891,6 +891,30 @@ async function run() {
     await page.keyboard.press('Escape');
     await dialog.waitFor({ state: 'hidden' });
   });
+  await check('The sidebar is a candidate list in the chosen style; the palette commits with digits', async () => {
+    await navigate(pages[0]);
+    const nav = page.locator('nav');
+    // Numbered like candidates (Ctrl+1–7); the numbers stay out of the names.
+    assert.deepEqual(await nav.locator('.nav-item').evaluateAll(items => items.map(item => item.dataset.number)), ['1', '2', '3', '4', '5', '6', '7']);
+    assert.equal(await nav.getByRole('button', { name: '输入', exact: true }).count(), 1);
+    for (const style of ['capsule', 'marker', 'flow']) {
+      await chooseStyle(style);
+      await page.waitForFunction(value => document.querySelector('nav')?.dataset.candStyle === value, style);
+      if (style === 'marker') await screenshot('navigation-marker');
+    }
+    // Ctrl+K, pinyin, then a digit runs that result, as in the candidate window.
+    await page.keyboard.press('Control+k');
+    const palette = page.getByRole('dialog', { name: '命令面板', exact: true });
+    await palette.waitFor();
+    await page.keyboard.type('ciku');
+    await palette.locator('.palette-item').first().waitFor();
+    assert.match(await palette.locator('.palette-item').first().textContent(), /词库/);
+    await screenshot('palette-digits');
+    await page.keyboard.press('1');
+    await palette.waitFor({ state: 'detached' });
+    await page.getByRole('heading', { name: '词库', exact: true }).waitFor();
+    assert.equal(await page.locator('#page-dictionary').isVisible(), true);
+  });
   await check('Keyboard navigation and dialog focus', async () => {
     const appearance = page.locator('nav').getByRole('button', { name: '外观', exact: true });
     await appearance.focus();

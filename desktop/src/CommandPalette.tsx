@@ -30,6 +30,8 @@ export function usePageCommand(command: PageCommand, handler: () => void) {
   }, [command]);
 }
 
+// The palette works like the candidate window: what you type is pinyin or
+// words, the first nine results are numbered, and a digit runs that one.
 export function CommandPalette({ commands, onClose }: { commands: Command[]; onClose: () => void }) {
   const [query, setQuery] = useState('');
   const [active, setActive] = useState(0);
@@ -71,6 +73,9 @@ export function CommandPalette({ commands, onClose }: { commands: Command[]; onC
       onClose();
     } else if (event.key === 'Tab') {
       event.preventDefault();
+    } else if (/^[1-9]$/.test(event.key) && !event.ctrlKey && !event.altKey && !event.metaKey && results[Number(event.key) - 1]) {
+      event.preventDefault();
+      run(results[Number(event.key) - 1]);
     }
   };
   let previousGroup = '';
@@ -92,6 +97,7 @@ export function CommandPalette({ commands, onClose }: { commands: Command[]; onC
             <div id={`palette-${command.id}`} data-index={index} role="option" aria-selected={index === active}
               className={`palette-item${index === active ? ' active' : ''}`}
               onMouseMove={() => setActive(index)} onClick={() => run(command)}>
+              <span className="palette-number" aria-hidden="true">{index < 9 ? index + 1 : ''}</span>
               <span className="palette-icon"><Icon name={command.icon} size={16} /></span>
               <span className="palette-title">{command.title}</span>
               {command.hint && <span className="palette-hint">{command.hint}</span>}
@@ -101,7 +107,7 @@ export function CommandPalette({ commands, onClose }: { commands: Command[]; onC
         })}
         {!results.length && <div className="palette-empty"><Icon name="search" size={20} /><span>没有找到“{query.trim()}”</span></div>}
       </div>
-      <footer className="palette-footer"><span><kbd>↑</kbd><kbd>↓</kbd>选择</span><span><kbd>Enter</kbd>执行</span><span className="palette-brand">本地拼音</span></footer>
+      <footer className="palette-footer"><span><kbd>1</kbd>–<kbd>9</kbd>直接执行</span><span><kbd>↑</kbd><kbd>↓</kbd>选择</span><span><kbd>Enter</kbd>执行</span><span className="palette-brand">本地拼音</span></footer>
     </div>
   </div>;
 }

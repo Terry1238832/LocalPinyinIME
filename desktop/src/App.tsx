@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { Fragment, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { BrandMark, Icon, type IconName } from './icons';
 import { asError, ErrorNotice } from './components';
 import { AppearancePage, InputPage, LearningPage, AboutPage } from './pages';
@@ -9,11 +9,13 @@ import { CommandPalette, requestPageCommand, type Command } from './CommandPalet
 import type { AppState, Settings, Theme, UserEntry , UpdateStatus } from './types';
 
 type PageId = 'appearance' | 'input' | 'english' | 'panel' | 'dictionary' | 'learning' | 'about';
-const navigation: { id: PageId; label: string; icon: IconName; keywords: string }[] = [
-  { id: 'appearance', label: '外观', icon: 'appearance', keywords: 'waiguan wg 主题 zhuti 字号 theme appearance' },
+// The sidebar is a candidate list: pages are numbered in this order (Ctrl+1–7
+// choose them, as digits choose candidates) and grouped under a caption.
+const navigation: { id: PageId; label: string; icon: IconName; keywords: string; group?: string }[] = [
+  { id: 'appearance', label: '外观', icon: 'appearance', keywords: 'waiguan wg 主题 zhuti 字号 theme appearance', group: '输入法' },
   { id: 'input', label: '输入', icon: 'input', keywords: 'shuru sr 切换 联想 快捷键 input shortcut' },
   { id: 'english', label: '英文', icon: 'english', keywords: 'yingwen yw 本地英文 english 整句 拼写 纠错 capslock 快捷键' },
-  { id: 'panel', label: '工具面板', icon: 'panel', keywords: 'gongju mianban gj 符号 表情 颜文字 剪贴板 jianqieban tab panel clipboard emoji' },
+  { id: 'panel', label: '工具面板', icon: 'panel', keywords: 'gongju mianban gj 符号 表情 颜文字 剪贴板 jianqieban tab panel clipboard emoji', group: '收藏与记录' },
   { id: 'dictionary', label: '词库', icon: 'dictionary', keywords: 'ciku ck 个人词语 dictionary words' },
   { id: 'learning', label: '学习', icon: 'learning', keywords: 'xuexi xx 记录 learning history' },
   { id: 'about', label: '关于', icon: 'about', keywords: 'guanyu gy 版本 数据 about version' },
@@ -43,7 +45,7 @@ export default function App() {
     return () => { alive = false; stop(); };
   }, []);
   const updateWaiting = update?.state === 'available' || update?.state === 'downloading' || update?.state === 'ready';
-  const [indicator, setIndicator] = useState<{ top: number; height: number } | null>(null);
+  const [indicator, setIndicator] = useState<{ top: number; height: number; labelLeft: number; labelWidth: number } | null>(null);
   const savePending = useRef(false);
 
   const refresh = async () => {
@@ -82,11 +84,14 @@ export default function App() {
     return () => window.clearTimeout(timeout);
   }, [notice]);
 
-  // The selection pill slides between navigation items.
+  // The current page's mark slides between navigation items; styles that
+  // mark the word itself (a rule, a highlighter stroke) need where it is.
   useLayoutEffect(() => {
     const measure = () => {
       const selected = nav.current?.querySelector<HTMLElement>('[aria-current="page"]');
-      if (selected) setIndicator({ top: selected.offsetTop, height: selected.offsetHeight });
+      const label = selected?.querySelector<HTMLElement>('.nav-label');
+      if (selected) setIndicator({ top: selected.offsetTop, height: selected.offsetHeight,
+        labelLeft: label?.offsetLeft ?? 0, labelWidth: label ? Math.min(label.scrollWidth, label.offsetWidth) : 0 });
     };
     measure();
     window.addEventListener('resize', measure);
@@ -175,30 +180,34 @@ export default function App() {
   const runtimeActive = !!state && state.runtime.available && state.runtime.active;
   const runtimeLabel = !state ? '正在连接' : runtimeActive ? (state.runtime.mode.toLowerCase() === 'english' ? '正在输入 · 英文' : '正在输入 · 中文') : '输入法未在使用';
 
+  const english = !!state && state.runtime.mode.toLowerCase() === 'english';
   return <div className="app-shell">
-    <div className="ambient" aria-hidden="true" />
+    <a className="skip-link" href="#app-content" onClick={event => { event.preventDefault(); content.current?.focus(); }}>跳到内容</a>
     <aside className="sidebar" id="app-sidebar">
       <div className="sidebar-head"><BrandMark size={26} /><div><strong>本地拼音</strong><span>Local Pinyin</span></div></div>
       <button className="command-trigger" onClick={() => setPalette(true)} disabled={!state}>
         <Icon name="search" size={15} /><span>搜索设置</span><span className="command-hint">Ctrl K</span>
       </button>
-      <nav aria-label="设置导航" ref={nav}>
-        {indicator && <span className="nav-indicator" aria-hidden="true" style={{ transform: `translateY(${indicator.top}px)`, height: indicator.height }}>
-          <span className="nav-caret" key={page} />
-        </span>}
-        {navigation.map(item =>
-          <button key={item.id} className={`nav-item${page === item.id ? ' selected' : ''}`} aria-current={page === item.id ? 'page' : undefined}
-            onClick={() => go(item.id)}>
-            <Icon name={item.icon} size={17} /><span>{item.label}</span>
+      <nav aria-label="设置导航" ref={nav} data-cand-style={state?.settings.candidateStyle ?? 'flow'}>
+        {indicator && <span className="nav-indicator" aria-hidden="true" style={{ transform: `translateY(${indicator.top}px)`, height: indicator.height,
+          '--label-left': `${indicator.labelLeft}px`, '--label-width': `${indicator.labelWidth}px` } as React.CSSProperties} />}
+        {navigation.map((item, index) => <Fragment key={item.id}>
+          {item.group && <span className="nav-group" aria-hidden="true">{item.group}</span>}
+          <button className={`nav-item${page === item.id ? ' selected' : ''}${item.id === 'about' ? ' nav-about' : ''}`} aria-current={page === item.id ? 'page' : undefined}
+            data-number={index + 1} title={`Ctrl+${index + 1}`} onClick={() => go(item.id)}>
+            <span className="nav-label">{item.label}</span>
             {item.id === 'about' && updateWaiting && <span className="nav-badge">新版本</span>}
-          </button>)}
+          </button>
+        </Fragment>)}
       </nav>
       <div className="sidebar-footer">
         <div className={`runtime-status${runtimeActive ? ' active' : ''}`}>
-          <span className="status-dot" aria-hidden="true" />
-          <span className="runtime-label">{runtimeLabel}</span>
+          <span className="mode-tile" aria-hidden="true">{runtimeActive && english ? '英' : '中'}</span>
+          <span className="runtime-copy">
+            <span className="runtime-label">{runtimeLabel}</span>
+            <span className="sidebar-version">{state ? `v${state.version} · 离线输入` : 'Local Pinyin'}</span>
+          </span>
         </div>
-        <span className="sidebar-version">离线输入 · {state ? `v${state.version}` : 'Local Pinyin'}</span>
       </div>
     </aside>
     <div className="main-column">
@@ -209,7 +218,7 @@ export default function App() {
           <button className="window-close" aria-label="关闭窗口" onClick={() => void controlWindow('close')}><Icon name="close" size={15} /></button>
         </div>
       </div>
-      <main className="main-content" ref={content} id="app-content" aria-busy={loading}>
+      <main className="main-content" ref={content} id="app-content" tabIndex={-1} aria-busy={loading}>
         {!state ? <div className="connection-state"><span className="connection-icon"><Icon name="keyboard" size={26} /></span><h1>{loading ? '正在打开设置' : '暂时无法打开设置'}</h1><p>{loading ? '正在读取本机设置与词库。' : '本地输入引擎没有响应，请重试。'}</p><ErrorNotice message={error} />{!loading && <button className="button primary" onClick={() => void refresh()}>重新连接</button>}</div> : <div className="page-frame">
           <div className="global-message"><ErrorNotice message={error} /></div>
           <section id="page-appearance" className="page" hidden={page !== 'appearance'}><AppearancePage state={state} saving={saving} saveSettings={saveSettings} /></section>
