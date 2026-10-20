@@ -1,7 +1,8 @@
 // 表情包: the user's own pictures, still or animated. Drop pictures on the
-// page from a folder or a chat (WeChat and the like), paste a copied one with
-// Ctrl+V, or click the box to choose; clicking one pastes it where the panel
-// was opened.
+// page from a folder, a chat (WeChat and the like) or a web page, paste a
+// copied one with Ctrl+V, or click the box to choose; clicking one pastes it
+// where the panel was opened. A picture from a web page is fetched again by
+// its address, since what is copied is only its first frame.
 import { useEffect, useRef, useState, type DragEvent } from 'react';
 import { Icon } from '../icons';
 import type { Sticker } from './types';
@@ -10,14 +11,19 @@ const ACCEPT = ['image/png', 'image/jpeg', 'image/gif', 'image/webp', 'image/bmp
 // What a drag from another program may carry a picture as.
 const PICTURE_DRAG_TYPES =['Files', 'text/uri-list', 'text/html'];
 
-// file:// links and data: pictures in a drag's link list or HTML.
+// The pictures an HTML copy or drag shows.
+function htmlPictures(html: string) {
+  return html ? [...new DOMParser().parseFromString(html, 'text/html').querySelectorAll('img[src]')]
+    .map(image => image.getAttribute('src') ?? '').filter(Boolean) : [];
+}
+
+// Links in a drag's link list and HTML: file://, http(s) and data: pictures.
 function droppedLinks(data: DataTransfer) {
   const links = data.getData('text/uri-list').split(/\r?\n/).map(line => line.trim()).filter(line => line && !line.startsWith('#'));
-  const html = data.getData('text/html');
-  if (html) for (const image of new DOMParser().parseFromString(html, 'text/html').querySelectorAll('img[src]'))
-    links.push(image.getAttribute('src') ?? '');
-  return [...new Set(links)];
+  return [...new Set([...links, ...htmlPictures(data.getData('text/html'))])];
 }
+
+const isWeb = (link: string) => /^https?:\/\//i.test(link);
 
 function dataPicture(link: string, index: number) {
   const comma = link.indexOf(',');
@@ -39,22 +45,33 @@ export function Stickers({ stickers, search, onChange, onError, onNotice }: {
   const shown = query ? stickers.filter(sticker => sticker.name.toLowerCase().includes(query)) : stickers;
 
   const fail = (error: unknown) => onError(error instanceof Error ? error.message.replace(/^Error invoking remote method '[^']+': (Error: )?/, '') : String(error));
-  const adding = async (work: () => Promise<Sticker[]>) => {
+  // `note` replaces the usual notice (e.g. only the still frame was added).
+  const adding = async (work: (note: (text: string) => void) => Promise<Sticker[]>) => {
     setBusy(true);
+    let notice = '';
     try {
       const before = stickers.length;
-      const list = await work();
+      const list = await work(text => { notice = text; });
       onChange(list);
-      onNotice(`已添加 ${Math.max(1, list.length - before)} 张表情包`);
+      onNotice(notice || `已添加 ${Math.max(1, list.length - before)} 张表情包`);
     } catch (error) { fail(error); } finally { setBusy(false); }
   };
+  const payload = (files: File[]) => Promise.all(files.slice(0, 50).map(async file =>
+    ({ name: file.name, data: new Uint8Array(await file.arrayBuffer()) })));
+  // A web picture's original by its address; failing that, the copied frame.
+  const fromWeb = (link: string, frames: File[]) => adding(async note => {
+    try { return await window.localPinyinPanel.addStickerFromUrl(link); } catch (error) {
+      if (!frames.length) throw error;
+      note('没能取到原图，已添加静态的一帧');
+      return window.localPinyinPanel.addStickers(await payload(frames));
+    }
+  });
   // Files are checked by their content where they are saved, so a picture
   // from a chat program's cache counts even without a picture's name.
   const add = (files: File[]) => {
     const pictures = files.filter(file => !file.type || ACCEPT.includes(file.type) || /\.(png|jpe?g|gif|webp|bmp|dat)$/i.test(file.name));
     if (!pictures.length) { onError('只能添加 PNG、JPG、GIF、WebP 或 BMP 图片。'); return; }
-    void adding(async () => window.localPinyinPanel.addStickers(await Promise.all(pictures.slice(0, 50).map(async file =>
-      ({ name: file.name, data: new Uint8Array(await file.arrayBuffer()) })))));
+    void adding(async () => window.localPinyinPanel.addStickers(await payload(pictures)));
   };
   const choose = () => picker.current?.click();
   const drop = (event: DragEvent) => {
@@ -65,8 +82,10 @@ export function Stickers({ stickers, search, onChange, onError, onNotice }: {
     const links = droppedLinks(event.dataTransfer);
     const local = links.filter(link => link.startsWith('file:'));
     const inline = links.filter(link => /^data:image\//.test(link));
+    const web = links.filter(isWeb);
     if (local.length) void adding(() => window.localPinyinPanel.addStickerLinks(local.slice(0, 50)));
     else if (inline.length) void adding(() => window.localPinyinPanel.addStickers(inline.slice(0, 50).map(dataPicture)));
+    else if (web.length) void fromWeb(web[0], []);
     else onError('没有拿到这张图片。可以在聊天里右键图片选“复制”，再回到这里按 Ctrl+V。');
   };
   // Ctrl+V: a copied picture or picture file; copied text still goes to the search box.
@@ -75,9 +94,13 @@ export function Stickers({ stickers, search, onChange, onError, onNotice }: {
       const data = event.clipboardData;
       if (!data) return;
       const files = [...data.files];
-      if (files.length) { event.preventDefault(); add(files); return; }
-      if (data.types.includes('text/plain')) return;
+      if (!files.length && data.types.includes('text/plain')) return;
       event.preventDefault();
+      // "复制图片" in a browser: the first frame, and the page's HTML for it.
+      const [source] = htmlPictures(data.getData('text/html'));
+      if (source && isWeb(source)) { void fromWeb(source, files); return; }
+      if (source && /^data:image\//.test(source)) { void adding(() => window.localPinyinPanel.addStickers([dataPicture(source, 0)])); return; }
+      if (files.length) { add(files); return; }
       void adding(() => window.localPinyinPanel.addStickerFromClipboard());
     };
     window.addEventListener('paste', paste);

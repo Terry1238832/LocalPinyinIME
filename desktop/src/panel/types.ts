@@ -65,6 +65,8 @@ export type PanelApi = {
   // Pictures dropped as file:// links, or copied (Ctrl+V).
   addStickerLinks(links: string[]): Promise<Sticker[]>;
   addStickerFromClipboard(): Promise<Sticker[]>;
+  // The original of a picture copied or dragged from a web page, by its address.
+  addStickerFromUrl(url: string): Promise<Sticker[]>;
   keepOpen(on: boolean): Promise<void>;
   openSettings(): Promise<void>;
   clipboard(query: ClipQuery): Promise<ClipList>;

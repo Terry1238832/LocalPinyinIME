@@ -19,6 +19,7 @@ const api: PanelApi = {
   deleteSticker: (id: string) => invoke('sticker-delete', id),
   addStickerLinks: (links: string[]) => invoke('sticker-add-links', links),
   addStickerFromClipboard: () => invoke('sticker-clipboard'),
+  addStickerFromUrl: (url: string) => invoke('sticker-add-url', url),
   keepOpen: (on: boolean) => invoke('keep-open', on),
   openSettings: () => invoke('settings'),
   clipboard: (query: ClipQuery) => invoke('clipboard', query),

@@ -2,7 +2,7 @@
 // opens when Tab is pressed twice. It lists symbols, kaomoji, emoji, the
 // user's stickers, the clipboard history and the typing tools; what the user
 // confirms goes back to the input method in the application it came from.
-import { BrowserWindow, ipcMain, nativeTheme, screen, type IpcMainInvokeEvent } from 'electron';
+import { BrowserWindow, ipcMain, nativeTheme, screen, session, type IpcMainInvokeEvent, type Session } from 'electron';
 import { mkdir, readFile, rm, stat, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { randomUUID } from 'node:crypto';
@@ -34,6 +34,47 @@ function pictureType(data: Uint8Array): string | null {
     if (data.length > at + bytes.length && bytes.every((byte, index) => data[at + index] === byte) &&
         (ext !== '.webp' || (data[0] === 0x52 && data[1] === 0x49))) return ext;
   return null;
+}
+
+// A picture copied or dragged from a web page arrives as its first frame;
+// its address gives the original (a GIF keeps moving). Fetched only when the
+// user adds it, in a session of its own that keeps no cookies or cache and
+// reaches nothing but http(s); the Referer is the picture's own site, which
+// sites that refuse pictures shown elsewhere accept.
+let pictureNetwork: Session | null = null;
+function pictureSession() {
+  if (pictureNetwork) return pictureNetwork;
+  const network = session.fromPartition('localpinyin-pictures', { cache: false });
+  network.webRequest.onBeforeRequest((details, callback) => callback({ cancel: !/^https?:\/\//i.test(details.url) }));
+  network.webRequest.onBeforeSendHeaders((details, callback) => {
+    callback({ requestHeaders: { ...details.requestHeaders, Referer: new URL(details.url).origin + '/' } });
+  });
+  network.setPermissionRequestHandler((_contents, _permission, callback) => callback(false));
+  pictureNetwork = network;
+  return network;
+}
+
+async function downloadPicture(link: string): Promise<{ name: string; data: Uint8Array }> {
+  let url: URL;
+  try { url = new URL(link); } catch { throw new Error('图片地址无效。'); }
+  if (url.protocol !== 'https:' && url.protocol !== 'http:') throw new Error('图片地址无效。');
+  const response = await pictureSession().fetch(url.href, { headers: { Accept: 'image/*,*/*;q=0.5' }, signal: AbortSignal.timeout(20_000) })
+    .catch(() => { throw new Error('没能连上图片所在的网站。'); });
+  if (!response.ok || !response.body) throw new Error(`没能取到原图（网站返回 ${response.status}）。`);
+  if (Number(response.headers.get('content-length') ?? 0) > STICKER_MAX_BYTES) throw new Error('图片太大（最大 20 MB）。');
+  const reader = response.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let size = 0;
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    size += value.byteLength;
+    if (size > STICKER_MAX_BYTES) { await reader.cancel(); throw new Error('图片太大（最大 20 MB）。'); }
+    chunks.push(value);
+  }
+  let name = '';
+  try { name = decodeURIComponent(path.posix.basename(url.pathname)); } catch { /* keep it unnamed */ }
+  return { name: name || '网上的图片', data: Buffer.concat(chunks) };
 }
 
 // WeChat keeps received pictures as .dat files: the picture with every byte
@@ -330,6 +371,10 @@ export class Panel {
         return fileURLToPath(link);
       });
       return addStickers(await readPictures(paths));
+    });
+    handle('sticker-add-url', async (link) => {
+      if (typeof link !== 'string' || !link || link.length > 4096) throw new Error('图片地址无效。');
+      return addStickers([await downloadPicture(link)]);
     });
     // Ctrl+V on the 表情包 page: a copied picture file (keeps a GIF moving),
     // else the copied picture itself, which the bridge saves to a file.

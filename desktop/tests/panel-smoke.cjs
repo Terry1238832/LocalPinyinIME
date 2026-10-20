@@ -237,11 +237,43 @@ async function main() {
       const saved = fs.readFileSync(path.join(data, 'LocalPinyinIME', 'stickers', sticker.id + sticker.ext));
       assert.ok(saved.equals(sticker.ext === '.gif' ? gif : png(48, 48, [60, 120, 220])));
     }
+    // "复制图片" in a browser: the first frame, and HTML with the picture's
+    // address. The original is fetched (a GIF keeps moving); when it cannot
+    // be, the frame is added and the notice says so.
+    const moving = Buffer.concat([gif.subarray(0, gif.length - 1), Buffer.from([0x21, 0xfe, 0x02, 0x68, 0x69, 0x00, 0x3b])]);
+    const referers = [];
+    const server = require('node:http').createServer((request, response) => {
+      referers.push(request.headers.referer);
+      if (request.url === '/pics/chick.gif') { response.writeHead(200, { 'Content-Type': 'image/gif' }); response.end(moving); }
+      else { response.writeHead(404); response.end(); }
+    });
+    await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+    const site = `http://127.0.0.1:${server.address().port}`;
+    const pasteCopy = address => page.evaluate(({ address, frame }) => {
+      const transfer = new DataTransfer();
+      transfer.setData('text/html', `<meta charset="utf-8"><img src="${address}" alt="小鸡">`);
+      transfer.items.add(new File([new Uint8Array(frame)], 'image.png', { type: 'image/png' }));
+      window.dispatchEvent(new ClipboardEvent('paste', { clipboardData: transfer, bubbles: true, cancelable: true }));
+    }, { address, frame: [...png(32, 32, [240, 200, 40])] });
+    try {
+      await pasteCopy(`${site}/pics/chick.gif`);
+      await page.locator('.sticker').nth(4).waitFor();
+      let list = JSON.parse(fs.readFileSync(path.join(data, 'LocalPinyinIME', 'stickers', 'index.json'), 'utf8'));
+      assert.equal(list[0].ext, '.gif');
+      assert.equal(list[0].name, 'chick');
+      assert.ok(fs.readFileSync(path.join(data, 'LocalPinyinIME', 'stickers', list[0].id + '.gif')).equals(moving));
+      assert.equal(referers[0], site + '/');
+      await pasteCopy(`${site}/pics/gone.gif`);
+      await page.locator('.toast', { hasText: '已添加静态的一帧' }).waitFor();
+      await page.locator('.sticker').nth(5).waitFor();
+      list = JSON.parse(fs.readFileSync(path.join(data, 'LocalPinyinIME', 'stickers', 'index.json'), 'utf8'));
+      assert.equal(list[0].ext, '.png');
+    } finally { server.close(); }
     await shot('panel-stickers.png');
     await page.locator('.sticker').first().hover();
     await page.getByRole('button', { name: /^删除 / }).first().click();
     await page.locator('.sticker-confirm').getByRole('button', { name: '删除', exact: true }).click();
-    await page.waitForFunction(() => document.querySelectorAll('.sticker').length === 3);
+    await page.waitForFunction(() => document.querySelectorAll('.sticker').length === 5);
   });
 
   await check('记录: a password first, then items are added, renamed, shown and locked', async () => {
