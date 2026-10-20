@@ -11,10 +11,15 @@
 | 常用场景 | `usageDomains`（如 `"coding,daily"`） | 不选 |
 | 数字后使用英文标点 | `digitPeriod` | 开 |
 | 编程软件中使用英文标点 | `codePunctuation` | 开 |
+| 本地英文：自动纠正拼写 | `englishAutocorrect` | 开 |
 
 ![“输入”页的拼写与输入方案设置](images/input-options.png)
 
 旧版本保存的设置没有这些键，按默认值处理；无法识别的值（例如新版本写入的方案）也回退到默认。设置程序与输入法读写同一份设置文件，设置页的改动在下一次按键时生效。代码在 `src/engine/`：`typo_correction`、`fuzzy_pinyin`、`english_terms`、`double_pinyin`，由 `pinyin_engine.cpp` 统一调用。
+
+## 本地英文（0.21.0）
+
+安装后多一个离线英文输入法“本地英文”，和本地拼音一样挂在“中文(简体)”下，Win + 空格切换。它的“辅”状态把正在打的单词放进组合，候选是改正后的词、原样和补全；空格或标点放进第一个候选，拼错时就是改正后的词，紧接着按退格换回原样。按键与拼音一致（数字选词、Enter 原样上屏、左右翻页、Esc 清掉）。规则、学习、数据来源与测量见 [ENGLISH_INPUT](ENGLISH_INPUT.md)。
 
 ## 常用场景（0.14.0）
 

@@ -163,6 +163,8 @@ int main() {
 
     REQUIRE_EQ(std::wstring(input_mode_label(InputMode::Chinese)), std::wstring(L"\u4E2D"));
     REQUIRE_EQ(std::wstring(input_mode_label(InputMode::English)), std::wstring(L"\u82F1"));
+    REQUIRE_EQ(std::wstring(input_mode_label(InputMode::Assisted)), std::wstring(L"\u8F85"));
+    REQUIRE_TRUE(std::wstring(input_mode_tooltip(InputMode::Assisted)).find(L"\u8F85\u52A9\u62FC\u5199") != std::wstring::npos);
     REQUIRE_TRUE(std::wstring(input_mode_tooltip(InputMode::Chinese)).find(L"\u4E2D\u6587\u6A21\u5F0F") != std::wstring::npos);
     REQUIRE_TRUE(std::wstring(input_mode_tooltip(InputMode::English)).find(L"\u82F1\u6587\u76F4\u8F93\u6A21\u5F0F") != std::wstring::npos);
 

@@ -127,6 +127,21 @@ bool is_abbreviation(std::string_view form) noexcept {
     return std::count_if(form.begin(), form.end(), is_upper) >= 2 && std::none_of(form.begin(), form.end(), is_lower);
 }
 
+// Words whose capitals Space puts in by itself: I and its contractions, days,
+// months and the commonest languages and nationalities. Other names may be
+// part of an address or user name (john.smith), so they are only offered.
+bool always_capitalized(std::string_view key) noexcept {
+    static constexpr std::string_view kWords[] = {
+        "i", "i'm", "i've", "i'd", "i'll",
+        "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday",
+        "january", "february", "april", "june", "july", "august", "september", "october", "november", "december",
+        "english", "chinese", "japanese", "korean", "french", "german", "spanish", "italian", "russian",
+        "portuguese", "arabic", "american", "british", "canadian", "australian", "european", "asian", "african",
+        "christmas", "internet",
+    };
+    return std::find(std::begin(kWords), std::end(kWords), key) != std::end(kWords);
+}
+
 bool starts_with(std::string_view text, std::string_view prefix) noexcept {
     return text.size() >= prefix.size() && text.compare(0, prefix.size(), prefix) == 0;
 }
@@ -139,6 +154,7 @@ bool EnglishSpeller::load(const std::filesystem::path& words_path, const std::fi
         std::string written;
         std::uint32_t count = 0;
         bool offered = true;
+        bool term = false;
     };
     std::vector<Entry> entries;
     const auto read_lines = [](const std::filesystem::path& path, auto&& on_fields) {
@@ -179,20 +195,29 @@ bool EnglishSpeller::load(const std::filesystem::path& words_path, const std::fi
         read_lines(terms_path, [&](const std::vector<std::string_view>& fields) {
             // key, written form, weight (1-100)
             if (fields.size() < 3 || !is_spelling(fields[1]) || lowercase(fields[1]) != fields[0] || fields[1] == fields[0]) return;
-            entries.push_back({std::string(fields[0]), std::string(fields[1]), std::min<std::uint32_t>(number(fields[2]), 100), true});
+            entries.push_back({std::string(fields[0]), std::string(fields[1]), std::min<std::uint32_t>(number(fields[2]), 100), true, true});
         });
     }
-    // One word per key: the dictionary's own spelling wins over a term's.
+    // One word per key, the dictionary's. A term of the same key gives a word
+    // written with capitals (JavaScript) the term's, which Space then puts
+    // in; an everyday word (rust, word, python) stays lowercase.
     std::stable_sort(entries.begin(), entries.end(), [](const Entry& left, const Entry& right) { return left.key < right.key; });
     keys_.clear();
     words_.clear();
     forms_.clear();
     for (const auto& entry : entries) {
-        if (!words_.empty() && key(words_.size() - 1) == entry.key) continue;
+        if (!words_.empty() && key(words_.size() - 1) == entry.key) {
+            if (entry.term && forms_.count(static_cast<std::uint32_t>(words_.size() - 1))) {
+                words_.back().capitalize = true;
+                forms_.insert_or_assign(static_cast<std::uint32_t>(words_.size() - 1), entry.written);
+            }
+            continue;
+        }
         Word word;
         word.offset = static_cast<std::uint32_t>(keys_.size());
         word.length = static_cast<std::uint8_t>(entry.key.size());
         word.offered = entry.offered;
+        word.capitalize = entry.term || always_capitalized(entry.key);
         word.count = entry.count;
         keys_ += entry.key;
         if (entry.written != entry.key) forms_.emplace(static_cast<std::uint32_t>(words_.size()), entry.written);
@@ -458,6 +483,7 @@ EnglishSpeller::Result EnglishSpeller::lookup(std::string_view typed) const {
     std::string known;
     std::uint32_t known_count = 0;
     bool possessive = false;
+    bool capitalize = true;
     size_t abbreviation = npos;
     if (const auto user = user_words_.find(wanted); user != user_words_.end()) {
         known = user->second;
@@ -465,6 +491,7 @@ EnglishSpeller::Result EnglishSpeller::lookup(std::string_view typed) const {
     } else if (const size_t index = find(wanted); index != npos && (shouting || !is_abbreviation(form(index)))) {
         known = form(index);
         known_count = words_[index].count;
+        capitalize = words_[index].capitalize;
     } else if (index != npos) {
         // Typed in lowercase, an abbreviation (OK, NAD) is offered but not put
         // in: nad is far more likely and.
@@ -478,6 +505,12 @@ EnglishSpeller::Result EnglishSpeller::lookup(std::string_view typed) const {
     }
     if (!known.empty()) {
         std::string head = with_case(known, typed);
+        // john stays john; John is offered.
+        std::string capitals;
+        if (!capitalize && lowercase(head) == wanted && head != as_typed && std::none_of(typed.begin(), typed.end(), is_upper)) {
+            capitals = head;
+            head = as_typed;
+        }
         if (!shouting && !possessive) {
             const size_t contraction = apostrophe_variant(wanted);
             if (contraction != npos && words_[contraction].count >= kContractionRatio * std::max<std::uint32_t>(known_count, 1))
@@ -486,6 +519,7 @@ EnglishSpeller::Result EnglishSpeller::lookup(std::string_view typed) const {
         result.corrects = head != as_typed;
         add(head, result.corrects ? Kind::Correction : Kind::AsTyped);
         add(as_typed, Kind::AsTyped);
+        if (!capitals.empty()) add(capitals, Kind::Correction);
         add_completions();
         return result;
     }

@@ -64,6 +64,9 @@ private:
         std::uint32_t offset = 0;  // into keys_
         std::uint8_t length = 0;
         bool offered = true;
+        // Typed in lowercase, Space still puts in its capitals (I'm, Monday,
+        // JavaScript). Other names (john) only offer theirs.
+        bool capitalize = false;
         std::uint32_t count = 0;
     };
     struct Scored {

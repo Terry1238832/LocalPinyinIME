@@ -518,6 +518,10 @@ int wmain(int argc, wchar_t** argv) {
             core << "liang\t两\t9000\nliang\t量\t8000\njia\t家\t9000\njia\t甲\t8000\n"
                     "cheng\t称\t9000\ncheng\t成\t8000\nyi\t一\t9000\nyi\t以\t8000\n";
             require(static_cast<bool>(core), "write isolated core fixture");
+            // 本地英文's words: the slip teh is two keys swapped from the.
+            std::ofstream english(native / L"dictionary" / L"english_words.tsv", std::ios::binary | std::ios::trunc);
+            english << "the\t1000\tS\nten\t20\tS\nmp\t5\tS\nhello\t200\tS\nhelp\t300\tS\n";
+            require(static_cast<bool>(english), "write isolated English fixture");
             for (const auto* name : {L"local_core_zh_pinyin.tsv", L"standard_zh_pinyin.tsv", L"context_zh.tsv"}) {
                 std::ofstream empty(native / L"dictionary" / name, std::ios::binary | std::ios::trunc);
                 empty << "# Isolated TSF fixture\n";
@@ -1392,7 +1396,55 @@ int wmain(int argc, wchar_t** argv) {
             check(s.service->Deactivate(), "text service deactivation in a code editor");
             s.service_active = false;
             SetEnvironmentVariableW(L"LOCALPINYINIME_TEST_HOST_EXECUTABLE", nullptr);
-            std::cout << "PASS: single-line candidate pages, page-relative digit/Space commits, host page boundaries/selection, cross-page prediction Tab, DLL COM creation, real TSF edit sessions, context-ranked pinyin, bounded/private preceding text, Tab prediction, host-managed selection, edit/focus/context invalidation, ordinary key passthrough and composition regressions.\n"
+
+            // 本地英文: each word is composed, Space puts in its correction and
+            // Backspace right after takes it back for good; digits choose a
+            // candidate and Enter keeps the letters as typed (mp, Enter, 3).
+            check(s.service->Activate(static_cast<ITfThreadMgr*>(s.adapter.Get()), service_client),
+                "text service activation for 本地英文");
+            s.service_active = true;
+            static_cast<localpinyin::TextService*>(s.service.Get())->use_english_profile_for_testing(true);
+            s.store->host_replace(L"");
+            for (const auto letter : std::wstring(L"TEH")) s.key(letter);
+            require(s.store->text == L"teh", "English letters are composed as typed");
+            require(s.first_candidate() == L"the", "a slip offers its correction first");
+            s.key(VK_SPACE);
+            require(s.store->text == L"the ", "Space puts in the correction and a space");
+            s.key(VK_BACK);
+            require(s.store->text == L"teh", "Backspace right after takes the correction back");
+            s.key(VK_BACK, false);
+            s.store->host_replace(L"");
+            for (const auto letter : std::wstring(L"TEH")) s.key(letter);
+            s.key(VK_SPACE);
+            require(s.store->text == L"teh ", "a correction taken back is not made again");
+            s.store->host_replace(L"");
+            s.key(L'T'); s.key(L'H');
+            s.key(L'1');
+            require(s.store->text == L"th ", "a digit chooses its candidate and adds a space");
+            s.store->host_replace(L"");
+            s.key(L'M'); s.key(L'P'); s.key(VK_RETURN);
+            require(s.store->text == L"mp", "Enter keeps the letters as typed");
+            s.key(L'3', false);
+            s.store->host_replace(L"");
+            s.modifier_keys[VK_SHIFT] = true;
+            s.key(L'H');
+            s.modifier_keys[VK_SHIFT] = false;
+            s.key(L'E'); s.key(L'L');
+            s.key(VK_OEM_COMMA);
+            require(s.store->text == L"Hel,", "punctuation ends a word with the word first");
+            s.key(VK_OEM_COMMA, false);
+            s.store->host_replace(L"");
+            check(s.keys->OnPreservedKey(s.context.Get(), kCtrlSpace, &eaten), "plain typing in 本地英文");
+            s.key(L'A', false);
+            s.key(VK_SPACE, false);
+            check(s.keys->OnPreservedKey(s.context.Get(), kCtrlSpace, &eaten), "spelling help again");
+            s.key(L'A');
+            s.key(VK_ESCAPE);
+            require(s.store->text.empty(), "Esc drops the word being typed");
+            require(s.store->composition_starts == s.store->composition_ends, "English compositions ended");
+            check(s.service->Deactivate(), "text service deactivation for 本地英文");
+            s.service_active = false;
+            std::cout << "PASS: 本地英文 corrections, take-back, digits, Enter and punctuation, single-line candidate pages, page-relative digit/Space commits, host page boundaries/selection, cross-page prediction Tab, DLL COM creation, real TSF edit sessions, context-ranked pinyin, bounded/private preceding text, Tab prediction, host-managed selection, edit/focus/context invalidation, ordinary key passthrough and composition regressions.\n"
                 << "Scope: key-sink registration is in memory; OS profile loading/key routing and candidate presentation require desktop acceptance.\n";
         }
         std::filesystem::remove_all(isolated);

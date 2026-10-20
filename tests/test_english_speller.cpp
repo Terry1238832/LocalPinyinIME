@@ -63,7 +63,12 @@ int main(int argc, char** argv) {
     // Capitals: I, names and terms keep theirs; typed capitals carry over.
     REQUIRE_EQ(first("i"), std::string("I"));
     REQUIRE_EQ(first("english"), std::string("English"));
+    REQUIRE_EQ(first("monday"), std::string("Monday"));
     REQUIRE_EQ(first("javascript"), std::string("JavaScript"));
+    // Other names keep what was typed (an address, a user name) and offer capitals.
+    REQUIRE_EQ(first("london"), std::string("london"));
+    REQUIRE_TRUE(has("london", "London"));
+    REQUIRE_EQ(first("London"), std::string("London"));
     REQUIRE_EQ(first("Teh"), std::string("The"));
     REQUIRE_EQ(first("Hell"), std::string("Hell"));
     REQUIRE_TRUE(has("Hell", "Hello"));

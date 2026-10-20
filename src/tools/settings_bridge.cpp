@@ -151,6 +151,7 @@ std::string settings_json(const SettingsStore& store) {
            ",\"panelDoubleTab\":" + (input.panel_double_tab ? "true" : "false") +
            ",\"panelResident\":" + (input.panel_resident ? "true" : "false") +
            ",\"emojiCandidates\":" + (input.engine.emoji_candidates ? "true" : "false") +
+           ",\"englishAutocorrect\":" + (input.english_autocorrect ? "true" : "false") +
            ",\"clipboardHistory\":" + json_string(
                input.clipboard_history == InputModeOptions::ClipboardHistory::On ? L"on"
                : input.clipboard_history == InputModeOptions::ClipboardHistory::Off ? L"off" : L"ask") +
@@ -498,7 +499,8 @@ std::string run(const std::vector<std::wstring>& args) {
                std::to_string(learning.selected_texts().size()) + ",\"capacity\":" +
                std::to_string(UserLearning::kCapacity) + "},\"runtime\":{\"active\":" +
                (runtime.active ? "true" : "false") + ",\"mode\":" +
-               json_string(runtime.mode == InputMode::Chinese ? L"Chinese" : L"English") +
+               json_string(runtime.mode == InputMode::Chinese ? L"Chinese" :
+                           runtime.mode == InputMode::Assisted ? L"Assisted" : L"English") +
                ",\"available\":" + (runtime.available ? "true" : "false") +
                "},\"dataDirectory\":" + json_string(store.data_dir()) + ",\"userLexiconCount\":" +
                std::to_string(user.entries.size()) + '}';
@@ -526,7 +528,8 @@ std::string run(const std::vector<std::wstring>& args) {
             const auto key = args[index].substr(0, equals), value = args[index].substr(equals + 1);
             if (key == L"typoCorrection" || key == L"mixedEnglish" || key == L"digitPeriod" || key == L"digitPunctuation" ||
                 key == L"letterPunctuation" || key == L"codePunctuation" || key == L"tabTranslate" ||
-                key == L"panelDoubleTab" || key == L"panelResident" || key == L"emojiCandidates")
+                key == L"panelDoubleTab" || key == L"panelResident" || key == L"emojiCandidates" ||
+                key == L"englishAutocorrect")
                 require(value == L"true" || value == L"false", L"开关选项必须是 true 或 false。");
             else if (key == L"clipboardHistory")
                 require(value == L"ask" || value == L"on" || value == L"off", L"剪贴板记录选项无效。");
@@ -567,6 +570,7 @@ std::string run(const std::vector<std::wstring>& args) {
             else if (key == L"panelDoubleTab") input.panel_double_tab = value == L"true";
             else if (key == L"panelResident") input.panel_resident = value == L"true";
             else if (key == L"emojiCandidates") input.engine.emoji_candidates = value == L"true";
+            else if (key == L"englishAutocorrect") input.english_autocorrect = value == L"true";
             else if (key == L"clipboardHistory")
                 input.clipboard_history = value == L"on" ? InputModeOptions::ClipboardHistory::On
                                         : value == L"off" ? InputModeOptions::ClipboardHistory::Off

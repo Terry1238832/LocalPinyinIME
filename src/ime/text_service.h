@@ -10,6 +10,7 @@
 #include "runtime_diagnostics.h"
 #include "tool_panel.h"
 #include "tool_panel_window.h"
+#include "../engine/english_speller.h"
 #include "../engine/pinyin_engine.h"
 #include "../settings/settings_store.h"
 
@@ -28,7 +29,8 @@ class TextService final : public ITfTextInputProcessorEx,
                           public ITfCompositionSink,
                           public ITfThreadMgrEventSink,
                           public ITfTextEditSink,
-                          public ITfTextLayoutSink {
+                          public ITfTextLayoutSink,
+                          public ITfInputProcessorProfileActivationSink {
 public:
     using KeyStateReader = bool (*)(int virtual_key, void* context) noexcept;
 
@@ -64,6 +66,11 @@ public:
     HRESULT STDMETHODCALLTYPE OnPopContext(ITfContext* context) override;
     HRESULT STDMETHODCALLTYPE OnEndEdit(ITfContext* context, TfEditCookie cookie, ITfEditRecord* record) override;
     HRESULT STDMETHODCALLTYPE OnLayoutChange(ITfContext* context, TfLayoutCode code, ITfContextView* view) override;
+    // Switching between 本地拼音 and 本地英文, two profiles of this service.
+    HRESULT STDMETHODCALLTYPE OnActivated(DWORD profile_type, LANGID langid, REFCLSID clsid, REFGUID category,
+                                          REFGUID profile, HKL layout, DWORD flags) override;
+    // Internal test seam: as if 本地英文 (or 本地拼音) had just become active.
+    void use_english_profile_for_testing(bool english) { use_profile(nullptr, english, L"test"); }
 
 private:
     ~TextService();
@@ -72,6 +79,14 @@ private:
     void unadvise_key_event_sink();
     void advise_thread_events();
     void unadvise_thread_events();
+    void advise_profile_activation();
+    void unadvise_profile_activation();
+    // Which of this service's profiles the thread has active (本地英文 or not).
+    [[nodiscard]] bool active_profile_is_english() const;
+    // 本地英文 types English words with spelling help (or plainly, after
+    // Shift); 本地拼音 types Chinese (or plain English). Each keeps the mode
+    // it was left in.
+    void use_profile(ITfContext* context, bool english, const wchar_t* reason);
     void unadvise_prediction_edits();
     HRESULT preserve_ctrl_space_key();
     HRESULT unpreserve_ctrl_space_key();
@@ -233,6 +248,53 @@ private:
     DWORD keyboard_hook_thread_id_ = 0;
     bool keyboard_hook_uninstall_failed_ = false;
     InputMode mode_ = InputMode::Chinese;
+    bool english_profile_ = false;
+    InputMode pinyin_mode_ = InputMode::Chinese;
+    InputMode english_mode_ = InputMode::Assisted;
+    DWORD profile_sink_cookie_ = TF_INVALID_COOKIE;
+    // ── 本地英文 ─────────────────────────────────────────────────────────
+    // Spelling help applies outside password fields, code editors and
+    // terminals; there 辅 types plainly.
+    [[nodiscard]] bool english_assist_active() const noexcept;
+    // What a key does to the English word being typed. Decided the same way
+    // when the key is tested and when it is pressed.
+    enum class EnglishKey {
+        PassThrough,  // the application's
+        Letter,       // into the word (`character` has its case)
+        Apostrophe,   // into the word (don't)
+        Back,         // one letter off
+        Undo,         // right after Space corrected a word: put back what was typed
+        Cancel,       // Esc: the word is dropped
+        Raw,          // Enter: the word as typed
+        Space,        // the first candidate and a space
+        Select,       // a digit: that candidate and a space
+        Punctuation,  // the first candidate and `character` (, . ! ?)
+        RawThen,      // the word as typed and `character` (0, a keypad digit)
+        Commit,       // Tab: the first candidate
+        Page          // ← →
+    };
+    [[nodiscard]] EnglishKey english_key(ITfContext* context, WPARAM wparam, const ModifierKeyState& modifiers,
+                                         wchar_t* character);
+    bool handle_english_key(ITfContext* context, WPARAM wparam, BOOL* eaten);
+    void refresh_english_candidates();
+    // Commits candidate `index` followed by `suffix` (a space, punctuation).
+    // `automatic`: the first candidate, put in by Space or punctuation, so a
+    // correction can be taken back with Backspace.
+    HRESULT commit_english(ITfContext* context, size_t index, const std::wstring& suffix, bool automatic = false);
+    HRESULT commit_english_raw(ITfContext* context, const std::wstring& suffix);
+    // The word Space (or punctuation) just corrected, until another key.
+    struct EnglishCorrection {
+        std::uintptr_t context = 0;
+        std::wstring typed;
+        std::wstring committed;
+        ULONGLONG tick = 0;
+    };
+    EnglishCorrection english_correction_;
+    // Whether the document still ends with the correction just made.
+    [[nodiscard]] bool english_undo_available(ITfContext* context);
+    HRESULT undo_english_correction(ITfContext* context);
+    // Whether Space puts in corrections (otherwise the word as typed).
+    [[nodiscard]] bool english_autocorrect_enabled() const;
     LanguageBarState language_bar_;
     CtrlSpaceToggleTracker ctrl_space_toggle_;
     CtrlSpaceKeyDownState ctrl_space_key_down_;

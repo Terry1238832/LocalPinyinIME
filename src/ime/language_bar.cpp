@@ -19,11 +19,11 @@ namespace localpinyin {
 namespace {
 
 const wchar_t* icon_variant(InputMode mode) noexcept {
-    return mode == InputMode::Chinese ? L"zh" : L"en";
+    return mode == InputMode::Chinese ? L"zh" : mode == InputMode::Assisted ? L"assisted" : L"en";
 }
 
 const wchar_t* input_mode_log_text(InputMode mode) noexcept {
-    return mode == InputMode::Chinese ? L"Chinese" : L"English";
+    return mode == InputMode::Chinese ? L"Chinese" : mode == InputMode::Assisted ? L"Assisted" : L"English";
 }
 
 const wchar_t* click_text(TfLBIClick click) noexcept {
@@ -37,6 +37,7 @@ const wchar_t* click_text(TfLBIClick click) noexcept {
     }
 }
 
+// The resource icons are fallbacks for the drawn glyph; 辅 has none of its own.
 int mode_icon_resource_id(InputMode mode) noexcept {
     return mode == InputMode::Chinese ? IDI_MODE_ZH : IDI_MODE_EN;
 }
@@ -175,7 +176,7 @@ COLORREF mode_icon_color() noexcept {
 
 HICON render_mode_icon(InputMode mode, int size, COLORREF color) noexcept {
     if (size < 8 || size > 256) return nullptr;
-    const wchar_t glyph = mode == InputMode::Chinese ? L'\u4E2D' : L'\u82F1';
+    const wchar_t glyph = mode == InputMode::Chinese ? L'\u4E2D' : mode == InputMode::Assisted ? L'\u8F85' : L'\u82F1';
     // Draw white on black with grayscale antialiasing into an oversized
     // canvas, then center the glyph's ink so it sits optically centered.
     const int canvas = size * 2;
@@ -270,13 +271,14 @@ HICON render_mode_icon(InputMode mode, int size, COLORREF color) noexcept {
 }
 
 const wchar_t* input_mode_label(InputMode mode) noexcept {
-    return mode == InputMode::Chinese ? L"\u4E2D" : L"\u82F1";
+    return mode == InputMode::Chinese ? L"\u4E2D" : mode == InputMode::Assisted ? L"\u8F85" : L"\u82F1";
 }
 
 const wchar_t* input_mode_tooltip(InputMode mode) noexcept {
-    return mode == InputMode::Chinese
-        ? L"LocalPinyinIME \u4E2D\u6587\u6A21\u5F0F"
-        : L"LocalPinyinIME \u82F1\u6587\u76F4\u8F93\u6A21\u5F0F";
+    // 中文模式 / 英文直输模式 / 英文辅助拼写模式
+    return mode == InputMode::Chinese ? L"LocalPinyinIME \u4E2D\u6587\u6A21\u5F0F"
+         : mode == InputMode::Assisted ? L"LocalPinyinIME \u82F1\u6587\u8F85\u52A9\u62FC\u5199\u6A21\u5F0F"
+                                       : L"LocalPinyinIME \u82F1\u6587\u76F4\u8F93\u6A21\u5F0F";
 }
 
 LanguageBarState::~LanguageBarState() {

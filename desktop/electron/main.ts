@@ -101,6 +101,7 @@ function installHandlers() {
         typeof settings.letterPunctuation !== 'boolean' || typeof settings.codePunctuation !== 'boolean' ||
         typeof settings.tabTranslate !== 'boolean' || typeof settings.panelDoubleTab !== 'boolean' ||
         typeof settings.panelResident !== 'boolean' || typeof settings.emojiCandidates !== 'boolean' ||
+        typeof settings.englishAutocorrect !== 'boolean' ||
         !['ask', 'on', 'off'].includes(String(settings.clipboardHistory)) ||
         !(clipboardRetentionChoices as readonly number[]).includes(settings.clipboardRetentionDays as number) ||
         !['none', 'xiaohe', 'ziranma'].includes(String(settings.doublePinyin)))
@@ -122,6 +123,7 @@ function installHandlers() {
         `letterPunctuation=${settings.letterPunctuation}`, `codePunctuation=${settings.codePunctuation}`,
         `tabTranslate=${settings.tabTranslate}`, `panelDoubleTab=${settings.panelDoubleTab}`,
         `panelResident=${settings.panelResident}`, `emojiCandidates=${settings.emojiCandidates}`,
+        `englishAutocorrect=${settings.englishAutocorrect}`,
         `clipboardHistory=${settings.clipboardHistory}`, `clipboardRetentionDays=${settings.clipboardRetentionDays}`]);
       // The recorder starts with the setting and leaves with it, also at sign-in.
       if (settings.clipboardHistory !== before)

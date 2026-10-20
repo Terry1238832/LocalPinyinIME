@@ -60,7 +60,7 @@ bool parse_bool(const std::wstring& text, bool fallback) {
 }
 
 std::wstring input_mode_to_string(InputMode mode) {
-    return mode == InputMode::Chinese ? L"Chinese" : L"English";
+    return mode == InputMode::Chinese ? L"Chinese" : mode == InputMode::Assisted ? L"Assisted" : L"English";
 }
 
 bool parse_input_mode_strict(const std::wstring& text, InputMode* mode) {
@@ -73,6 +73,10 @@ bool parse_input_mode_strict(const std::wstring& text, InputMode* mode) {
     }
     if (text == L"English") {
         *mode = InputMode::English;
+        return true;
+    }
+    if (text == L"Assisted") {
+        *mode = InputMode::Assisted;
         return true;
     }
     return false;
@@ -241,6 +245,8 @@ InputModeOptions SettingsStore::load_input_mode_options() const {
     options.engine.domains = parse_usage_domains(setting_value(text, L"usageDomains"));
     // Added in 0.19.
     options.engine.emoji_candidates = parse_bool(setting_value(text, L"emojiCandidates"), true);
+    // Added in 0.21 (本地英文).
+    options.english_autocorrect = parse_bool(setting_value(text, L"englishAutocorrect"), true);
     return options;
 }
 
@@ -319,6 +325,8 @@ bool SettingsStore::save_options(const CandidateWindowOptions& candidate_options
     text += input_mode_options.panel_double_tab ? L"true" : L"false";
     text += L",\n    \"panelResident\": ";
     text += input_mode_options.panel_resident ? L"true" : L"false";
+    text += L",\n    \"englishAutocorrect\": ";
+    text += input_mode_options.english_autocorrect ? L"true" : L"false";
     text += L",\n    \"clipboardHistory\": \"";
     text += input_mode_options.clipboard_history == InputModeOptions::ClipboardHistory::On ? L"on"
           : input_mode_options.clipboard_history == InputModeOptions::ClipboardHistory::Off ? L"off" : L"ask";

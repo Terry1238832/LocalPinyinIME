@@ -127,6 +127,16 @@ export function InputPage({ state, saving, saveSettings }: SettingsPageProps) {
       </SettingRow>
     </SettingsGroup>
     <InputOptions settings={settings} saving={saving} onChange={next => void saveSettings(next)} />
+    <SettingsGroup id="group-english" title="本地英文">
+      <SettingRow title="自动纠正拼写"
+        description="在“本地英文”输入法里，打错的单词按空格或标点时改成正确的（teh → the，dont → don't），紧接着按退格改回原样，以后不再改它。关闭后按空格保持原样，正确的写法仍在候选里。"
+        demo={<TypingDemo before="" keys="teh" candidates={['the', 'teh', 'ten']} after="the" />}>
+        <Switch checked={settings.englishAutocorrect} disabled={saving} label="自动纠正拼写"
+          onChange={englishAutocorrect => void saveSettings({ ...settings, englishAutocorrect })} />
+      </SettingRow>
+      <SettingRow title="切换辅助拼写" description="在“本地英文”里按 Shift（开启“按 Shift 切换中英文”时）或 Ctrl + Space，在“辅”（候选与纠错）和“英”（直接输入）之间切换。Win + 空格在“本地拼音”和“本地英文”之间切换。"
+        demo={<KeyDemo before="hello" keys={['Ctrl', 'Space']} modes={['辅', '英']} />}><SettingStatus>始终可用</SettingStatus></SettingRow>
+    </SettingsGroup>
     <section className="legend" aria-labelledby="legend-title">
       <h2 className="block-title" id="legend-title">快捷键<span>中文模式下可用</span></h2>
       <ul className="legend-grid">{shortcuts.map(item =>

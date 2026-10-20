@@ -1,9 +1,11 @@
 #include "text_service.h"
 
 #include "globals.h"
+#include "guids.h"
 #include "chinese_punctuation.h"
 #include "../common/logging.h"
 #include "../clipboard/picture_clipboard.h"
+#include "../common/utf_utils.h"
 #include "../common/win32_utils.h"
 #include "../engine/candidate_selection.h"
 #include "../engine/dictionary.h"
@@ -68,6 +70,67 @@ constexpr UINT kTranslationErrorShownMs = 2600;
 // An application may take an edit into the input method's view of its
 // document and not onto the screen; it is checked again after this long.
 constexpr UINT kTranslationCheckMs = 250;
+// Backspace puts back what Space corrected only this soon afterwards.
+constexpr ULONGLONG kEnglishUndoMs = 30000;
+// A word longer than this is put in as typed before the next letter.
+constexpr size_t kMaxEnglishWord = 48;
+
+// The English speller, shared by this process's text services (one per UI
+// thread) and loaded on the first English word: the word list alone takes a
+// few megabytes.
+struct SharedSpeller {
+    std::mutex lock;
+    EnglishSpeller speller;
+    bool attempted = false;
+};
+
+SharedSpeller& shared_speller() {
+    static SharedSpeller instance;
+    return instance;
+}
+
+// With the lock held: loads the words once; false when they are missing.
+bool english_speller_ready(SharedSpeller& shared) {
+    if (!shared.attempted) {
+        shared.attempted = true;
+        const auto resources = std::filesystem::path(Dictionary::default_resource_path()).parent_path();
+        if (shared.speller.load(resources / L"english_words.tsv", resources / L"english_terms.tsv")) {
+            shared.speller.open_user_words(std::filesystem::path(Dictionary::default_user_lexicon_path()).parent_path() /
+                                           L"english_user_words.txt");
+        }
+        log_status(L"english", L"words loaded " + std::to_wstring(shared.speller.size()));
+    }
+    return !shared.speller.empty();
+}
+
+// Remembers a word the user keeps as typed, so Space no longer corrects it.
+void learn_english_word(const std::wstring& word) {
+    auto& shared = shared_speller();
+    std::lock_guard<std::mutex> guard(shared.lock);
+    if (english_speller_ready(shared) && !shared.speller.knows(wide_to_utf8(word)) &&
+        shared.speller.learn(wide_to_utf8(word)))
+        log_status(L"english", L"word learned");
+}
+
+// What a key other than a letter types on a US keyboard, or 0.
+wchar_t us_key_character(WPARAM key, bool shift) noexcept {
+    if (key >= L'0' && key <= L'9') return shift ? L")!@#$%^&*("[key - L'0'] : static_cast<wchar_t>(key);
+    if (key >= VK_NUMPAD0 && key <= VK_NUMPAD9) return static_cast<wchar_t>(L'0' + (key - VK_NUMPAD0));
+    switch (key) {
+        case VK_OEM_1: return shift ? L':' : L';';
+        case VK_OEM_PLUS: return shift ? L'+' : L'=';
+        case VK_OEM_COMMA: return shift ? L'<' : L',';
+        case VK_OEM_MINUS: return shift ? L'_' : L'-';
+        case VK_OEM_PERIOD: return shift ? L'>' : L'.';
+        case VK_OEM_2: return shift ? L'?' : L'/';
+        case VK_OEM_3: return shift ? L'~' : L'`';
+        case VK_OEM_4: return shift ? L'{' : L'[';
+        case VK_OEM_5: return shift ? L'|' : L'\\';
+        case VK_OEM_6: return shift ? L'}' : L']';
+        case VK_OEM_7: return shift ? L'"' : L'\'';
+        default: return 0;
+    }
+}
 
 bool is_modifier_key(unsigned long key) noexcept {
     switch (key) {
@@ -96,6 +159,15 @@ bool ends_with_run(const std::wstring& before, const std::wstring& run) noexcept
 
 bool is_space(wchar_t ch) noexcept {
     return ch == L' ' || ch == 0x3000 || ch == L'\t';
+}
+
+// A word right after this (no space between) is part of an address, a path
+// or a name (john.smith@, v2.example, well-known): Space keeps it as typed.
+bool joins_previous_text(const std::wstring& before) noexcept {
+    if (before.empty()) return false;
+    const wchar_t last = before.back();
+    return !is_space(last) && last != L'\n' && last != L'\r' &&
+           std::wstring_view(L"\"'([{\u201C\u2018").find(last) == std::wstring_view::npos;
 }
 
 bool usable_anchor_rect(const RECT& rect) noexcept {
@@ -147,7 +219,7 @@ RouteThreadSnapshot current_route_thread_snapshot(DWORD hook_target_thread_id) n
 }
 
 const wchar_t* input_mode_text(InputMode mode) noexcept {
-    return mode == InputMode::Chinese ? L"Chinese" : L"English";
+    return mode == InputMode::Chinese ? L"Chinese" : mode == InputMode::Assisted ? L"Assisted" : L"English";
 }
 
 bool is_ctrl_space_key(unsigned long key) noexcept {
@@ -444,6 +516,7 @@ TextService::~TextService() {
     candidate_ui_element_session_.set_abort_callback({});
     unadvise_prediction_edits();
     unadvise_thread_events();
+    unadvise_profile_activation();
     if (prediction_caret_) prediction_caret_->Release();
     end_candidate_ui_element(L"teardown");
     clear_transient_contexts();
@@ -476,6 +549,8 @@ HRESULT TextService::QueryInterface(REFIID riid, void** object) {
         *object = static_cast<ITfTextEditSink*>(this);
     } else if (riid == __uuidof(ITfTextLayoutSink)) {
         *object = static_cast<ITfTextLayoutSink*>(this);
+    } else if (riid == __uuidof(ITfInputProcessorProfileActivationSink)) {
+        *object = static_cast<ITfInputProcessorProfileActivationSink*>(this);
     } else {
         return E_NOINTERFACE;
     }
@@ -517,7 +592,7 @@ HRESULT TextService::ActivateEx(ITfThreadMgr* thread_mgr, TfClientId client_id, 
     activation.thread_manager_identity = reinterpret_cast<std::uintptr_t>(thread_mgr);
     activation.client_id = client_id;
     activation.language_bar_update_requested = true;
-    activation.language_bar_state = mode_ == InputMode::Chinese ? L"Chinese" : L"English";
+    activation.language_bar_state = input_mode_text(mode_);
     read_open_close_compartment(thread_mgr, &activation.compartment_read_hr,
                                 &activation.compartment_open_close_state);
     log_status(L"ctrl-space",
@@ -535,6 +610,12 @@ HRESULT TextService::ActivateEx(ITfThreadMgr* thread_mgr, TfClientId client_id, 
     client_id_ = client_id;
     secure_mode_ = ((flags | activation.active_flags) & TF_TMAE_SECUREMODE) != 0;
     code_application_ = is_code_application(host_executable_name());
+    // Activated again as the same input method, it keeps the mode it had.
+    if (const bool english = active_profile_is_english(); english != english_profile_) {
+        (english_profile_ ? english_mode_ : pinyin_mode_) = mode_;
+        english_profile_ = english;
+        mode_ = english ? english_mode_ : pinyin_mode_;
+    }
     language_bar_.set_toggle_callback([this](const wchar_t* source) {
         return toggle_input_mode_from_language_bar(source ? source : L"mode_icon");
     });
@@ -559,6 +640,7 @@ HRESULT TextService::ActivateEx(ITfThreadMgr* thread_mgr, TfClientId client_id, 
     const HRESULT result = FAILED(hr) ? hr : preserve_hr;
     if (SUCCEEDED(result)) {
         advise_thread_events();
+        advise_profile_activation();
         const bool hook_installed = install_thread_keyboard_hook();
         install_thread_mouse_hook();
         log_status(L"ctrl-space",
@@ -605,6 +687,8 @@ HRESULT TextService::Deactivate() {
     uninstall_thread_keyboard_hook();
     uninstall_thread_mouse_hook();
     unadvise_thread_events();
+    unadvise_profile_activation();
+    english_correction_ = EnglishCorrection{};
     const HRESULT unpreserve_hr = unpreserve_ctrl_space_key();
     language_bar_.clear_callbacks();
     const HRESULT langbar_hr = language_bar_.unregister_item();
@@ -766,6 +850,7 @@ void TextService::note_mouse_press(HWND window) {
     hide_tool_panel();
     end_translation_run();
     cancel_translation();
+    english_correction_ = EnglishCorrection{};
 }
 
 LRESULT CALLBACK TextService::thread_keyboard_hook_proc(int code, WPARAM wparam, LPARAM lparam) {
@@ -1036,6 +1121,8 @@ HRESULT TextService::OnTestKeyDown(ITfContext* context, WPARAM wparam, LPARAM lp
 void TextService::note_key_left_to_application(unsigned long key, LPARAM lparam) {
     if (is_modifier_key(key) || key == noted_key_) return;
     noted_key_ = key;
+    // The application typed something after the word Space corrected.
+    english_correction_ = EnglishCorrection{};
     // Bit 30: the key was already down, a repeat of a held key.
     if ((lparam & (1 << 30)) != 0) {
         end_translation_run();
@@ -1127,6 +1214,12 @@ HRESULT TextService::test_key_down(ITfContext* context, WPARAM wparam, BOOL* eat
         return S_OK;
     }
     if (mode_ == InputMode::English || should_pass_through(wparam)) {
+        return S_OK;
+    }
+    if (mode_ == InputMode::Assisted) {
+        wchar_t character = 0;
+        *eaten = english_assist_active() &&
+                 english_key(context, wparam, modifiers, &character) != EnglishKey::PassThrough;
         return S_OK;
     }
     if (code_punctuation_for_key(wparam, modifiers.shift)) {
@@ -1222,6 +1315,8 @@ HRESULT TextService::handle_key_down(ITfContext* context, WPARAM wparam, BOOL* e
         hide_tool_panel();
     }
     if (!is_modifier_key(key)) cancel_translation();
+    // Only Backspace may still put back the word Space corrected.
+    if (!is_modifier_key(key) && key != VK_BACK) english_correction_ = EnglishCorrection{};
     if (prediction_active_) {
         if (!prediction_still_valid(context)) dismiss_prediction(L"prediction_caret_changed");
         else if ((key == VK_LEFT || key == VK_RIGHT) && candidate_page_indices_.size() > 1 &&
@@ -1305,6 +1400,10 @@ HRESULT TextService::handle_key_down(ITfContext* context, WPARAM wparam, BOOL* e
     }
 
     if (mode_ == InputMode::English || should_pass_through(wparam)) {
+        return S_OK;
+    }
+    if (mode_ == InputMode::Assisted) {
+        if (english_assist_active()) handle_english_key(context, wparam, eaten);
         return S_OK;
     }
     handle_chinese_key(context, wparam, eaten);
@@ -1409,6 +1508,7 @@ HRESULT TextService::OnUninitDocumentMgr(ITfDocumentMgr*) {
 }
 HRESULT TextService::OnSetFocus(ITfDocumentMgr* focus, ITfDocumentMgr*) {
     hide_tool_panel();
+    english_correction_ = EnglishCorrection{};
     forget_committed_text();
     end_phrase_run();
     end_translation_run();
@@ -1510,12 +1610,12 @@ HRESULT TextService::toggle_input_mode(ITfContext* context, const wchar_t* reaso
         candidate_window_.hide(reason);
     }
 
-    mode_ = toggled_input_mode(mode_);
+    english_correction_ = EnglishCorrection{};
+    mode_ = toggled_input_mode(mode_, english_profile_);
     language_bar_.set_mode(mode_);
     publish_runtime_input_mode_status(reason, true);
     std::wstringstream stream;
-    stream << (mode_ == InputMode::Chinese ? L"Chinese" : L"English")
-           << L" reason=" << (reason ? reason : L"unknown");
+    stream << input_mode_text(mode_) << L" reason=" << (reason ? reason : L"unknown");
     log_status(L"mode", stream.str());
     if (mode_ == InputMode::Chinese) {
         update_candidate_window(context);
@@ -1744,6 +1844,10 @@ void TextService::refresh_candidates() {
     candidate_page_indices_.clear();
     host_page_indices_ = false;
     selected_index_ = 0;
+    if (mode_ == InputMode::Assisted) {
+        refresh_english_candidates();
+        return;
+    }
     engine_.refresh_user_lexicon_if_needed(!composing_.empty());
     // Fuzzy pinyin, corrections, mixed input and double pinyin follow the
     // saved options on every key, like the candidate window's appearance.
@@ -1766,6 +1870,297 @@ void TextService::refresh_candidates() {
         return;
     }
     candidates_ = engine_.lookup(composing_, preceding_committed_text_);
+}
+
+bool TextService::english_assist_active() const noexcept {
+    return mode_ == InputMode::Assisted && !secure_mode_ && !code_application_;
+}
+
+bool TextService::english_autocorrect_enabled() const {
+    return settings_store_.load_input_mode_options().english_autocorrect;
+}
+
+TextService::EnglishKey TextService::english_key(ITfContext* context, WPARAM wparam, const ModifierKeyState& modifiers,
+                                                 wchar_t* character) {
+    *character = 0;
+    const bool typing = !composing_.empty();
+    if (wparam >= L'A' && wparam <= L'Z') {
+        const bool upper = modifiers.shift != caps_lock_on(key_state_reader_, key_state_reader_context_);
+        *character = upper ? static_cast<wchar_t>(wparam) : static_cast<wchar_t>(wparam - L'A' + L'a');
+        return EnglishKey::Letter;
+    }
+    switch (wparam) {
+        case VK_BACK:
+            if (typing) return EnglishKey::Back;
+            return english_undo_available(context) ? EnglishKey::Undo : EnglishKey::PassThrough;
+        case VK_ESCAPE: return typing ? EnglishKey::Cancel : EnglishKey::PassThrough;
+        case VK_RETURN: return typing ? EnglishKey::Raw : EnglishKey::PassThrough;
+        case VK_SPACE: return typing ? EnglishKey::Space : EnglishKey::PassThrough;
+        case VK_TAB: return typing ? EnglishKey::Commit : EnglishKey::PassThrough;
+        case VK_LEFT:
+        case VK_RIGHT:
+            return should_eat_candidate_navigation_key(static_cast<unsigned long>(wparam), typing, candidates_.size(),
+                                                       transient_context_matches(context))
+                       ? EnglishKey::Page : EnglishKey::PassThrough;
+        default:
+            break;
+    }
+    if (!typing) return EnglishKey::PassThrough;
+    const wchar_t typed = us_key_character(wparam, modifiers.shift);
+    if (!typed) return EnglishKey::PassThrough;
+    *character = typed;
+    if (typed == L'\'') return EnglishKey::Apostrophe;
+    // Digits choose candidates, as in 本地拼音: mp, Enter, 3 types mp3.
+    if (wparam >= L'1' && wparam <= L'9' && !modifiers.shift) {
+        return can_select_candidate_by_digit(static_cast<unsigned long>(wparam), current_candidate_page_count(), true,
+                                             candidate_window_.is_visible() || candidate_ui_element_session_.host_managed())
+                   ? EnglishKey::Select : EnglishKey::RawThen;
+    }
+    if (typed >= L'0' && typed <= L'9') return EnglishKey::RawThen;
+    return EnglishKey::Punctuation;
+}
+
+bool TextService::handle_english_key(ITfContext* context, WPARAM wparam, BOOL* eaten) {
+    if (!context || !eaten) return false;
+    const auto modifiers = current_modifier_key_state(key_state_reader_, key_state_reader_context_);
+    wchar_t character = 0;
+    const EnglishKey action = english_key(context, wparam, modifiers, &character);
+    if (action == EnglishKey::PassThrough) return false;
+    if (candidate_ui_element_session_.host_managed() &&
+        (action == EnglishKey::Space || action == EnglishKey::Punctuation || action == EnglishKey::Commit))
+        selected_index_ = candidate_ui_element_session_.selected_index();
+    HRESULT hr = S_OK;
+    switch (action) {
+        case EnglishKey::Letter:
+        case EnglishKey::Apostrophe:
+            if (composing_.size() >= kMaxEnglishWord) {
+                hr = commit_english_raw(context, L"");
+                if (FAILED(hr)) break;
+            }
+            if (composing_.empty()) {
+                set_composition_context(context);
+                // What comes right before the word decides whether Space may
+                // correct it (not inside an address or a path).
+                preceding_committed_text_.clear();
+                const HRESULT read = composition_.read_preceding_text(context, client_id_, &preceding_committed_text_);
+                if (read != S_OK) preceding_committed_text_.clear();
+                if (FAILED(read) || (read == S_OK && preceding_committed_text_.empty()))
+                    preceding_committed_text_ = recent_committed_text(context);
+            }
+            composing_.push_back(character);
+            refresh_candidates();
+            hr = update_composition(context);
+            break;
+        case EnglishKey::Back:
+            composing_.pop_back();
+            selected_index_ = 0;
+            if (composing_.empty()) {
+                cancel_composition(context);
+            } else {
+                refresh_candidates();
+                hr = update_composition(context);
+            }
+            break;
+        case EnglishKey::Undo:
+            hr = undo_english_correction(context);
+            break;
+        case EnglishKey::Cancel:
+            cancel_composition(context);
+            break;
+        case EnglishKey::Raw:
+            hr = commit_english_raw(context, L"");
+            break;
+        case EnglishKey::Space:
+            hr = commit_english(context, selected_index_, L" ", true);
+            break;
+        case EnglishKey::Select: {
+            const size_t first = candidate_page_indices_.empty() ? 0 : candidate_page_indices_[current_candidate_page()];
+            hr = commit_english(context, first + static_cast<size_t>(candidate_index_from_digit_key(static_cast<unsigned long>(wparam))), L" ");
+            break;
+        }
+        case EnglishKey::Punctuation:
+            hr = commit_english(context, selected_index_, std::wstring(1, character), true);
+            break;
+        case EnglishKey::RawThen:
+            hr = commit_english_raw(context, std::wstring(1, character));
+            break;
+        case EnglishKey::Commit:
+            hr = commit_english(context, selected_index_, L"", true);
+            break;
+        case EnglishKey::Page:
+            change_candidate_page(context, wparam == VK_LEFT ? -1 : 1);
+            break;
+        case EnglishKey::PassThrough:
+            break;
+    }
+    if (FAILED(hr)) log_status(L"english", L"key failed " + hresult_hex(hr));
+    *eaten = TRUE;
+    return true;
+}
+
+void TextService::refresh_english_candidates() {
+    candidates_.clear();
+    if (composing_.empty()) return;
+    EnglishSpeller::Result result;
+    {
+        auto& shared = shared_speller();
+        std::lock_guard<std::mutex> guard(shared.lock);
+        if (english_speller_ready(shared)) {
+            // Another program may have learned a word: checked as a word begins.
+            if (composing_.size() == 1) shared.speller.refresh_user_words_if_changed();
+            result = shared.speller.lookup(wide_to_utf8(composing_));
+        }
+    }
+    for (const auto& suggestion : result.candidates) {
+        Candidate candidate{utf8_to_wide(suggestion.text), 1, 0};
+        candidate.correction = suggestion.kind == EnglishSpeller::Candidate::Kind::Correction;
+        candidates_.push_back(std::move(candidate));
+    }
+    if (candidates_.empty()) {
+        candidates_.push_back(Candidate{composing_, 1, 0});
+        return;
+    }
+    // With corrections off, or inside an address, Space puts in the word as
+    // typed; the correction stays on offer.
+    if (result.corrects && (!english_autocorrect_enabled() || joins_previous_text(preceding_committed_text_))) {
+        const auto typed = std::find_if(candidates_.begin(), candidates_.end(),
+                                        [&](const Candidate& candidate) { return candidate.text == composing_; });
+        if (typed != candidates_.end()) std::rotate(candidates_.begin(), typed, typed + 1);
+    }
+}
+
+HRESULT TextService::commit_english(ITfContext* context, size_t index, const std::wstring& suffix, bool automatic) {
+    if (candidates_.empty()) return commit_english_raw(context, suffix);
+    index = (std::min)(index, candidates_.size() - 1);
+    const std::wstring typed = composing_;
+    const std::wstring word = candidates_[index].text;
+    const bool corrected = automatic && word != typed && candidates_[index].correction;
+    // The word as typed chosen over a correction offered first: kept from now on.
+    const bool kept = word == typed && index > 0 && candidates_.front().correction;
+    const std::wstring committed = word + suffix;
+    const HRESULT hr = composition_.commit_text(context, client_id_, committed);
+    if (FAILED(hr)) {
+        log_status(L"composition", L"english commit failed " + hresult_hex(hr));
+        if (!composition_.active()) reset_transient_input_state(L"english_commit_end_failed_after_clear");
+        return hr;
+    }
+    remember_committed_text(context, committed);
+    reset_transient_input_state(L"english_commit");
+    if (kept) learn_english_word(typed);
+    // Programs that show only what is being typed cannot have it put back.
+    if (corrected && !transitory_context(context))
+        english_correction_ = EnglishCorrection{reinterpret_cast<std::uintptr_t>(context), typed, committed, GetTickCount64()};
+    return S_OK;
+}
+
+HRESULT TextService::commit_english_raw(ITfContext* context, const std::wstring& suffix) {
+    if (composing_.empty()) return S_FALSE;
+    const std::wstring typed = composing_;
+    const HRESULT hr = composition_.commit_text(context, client_id_, typed + suffix);
+    if (FAILED(hr)) {
+        log_status(L"composition", L"english raw commit failed " + hresult_hex(hr));
+        if (!composition_.active()) reset_transient_input_state(L"english_raw_end_failed_after_clear");
+        return hr;
+    }
+    remember_committed_text(context, typed + suffix);
+    reset_transient_input_state(L"english_commit_raw");
+    // Enter keeps a word as typed: one of three letters or more is learned.
+    if (suffix.empty() && typed.size() >= 3) learn_english_word(typed);
+    return S_OK;
+}
+
+bool TextService::english_undo_available(ITfContext* context) {
+    const auto& correction = english_correction_;
+    if (correction.committed.empty() || !context || secure_mode_ ||
+        correction.context != reinterpret_cast<std::uintptr_t>(context) ||
+        GetTickCount64() - correction.tick > kEnglishUndoMs)
+        return false;
+    std::wstring before;
+    const size_t length = correction.committed.size();
+    return composition_.read_preceding_text(context, client_id_, &before, nullptr, nullptr, length) == S_OK &&
+           before.size() >= length && before.compare(before.size() - length, length, correction.committed) == 0;
+}
+
+HRESULT TextService::undo_english_correction(ITfContext* context) {
+    const EnglishCorrection correction = english_correction_;
+    english_correction_ = EnglishCorrection{};
+    // The space after it goes too, as Backspace would have removed it.
+    const HRESULT hr = composition_.replace_preceding_text(context, client_id_, correction.committed, correction.typed);
+    if (hr == S_OK) {
+        forget_committed_text();
+        learn_english_word(correction.typed);
+        log_status(L"english", L"correction taken back");
+    } else {
+        log_status(L"english", L"correction not taken back " + hresult_hex(hr));
+    }
+    return hr;
+}
+
+HRESULT TextService::OnActivated(DWORD profile_type, LANGID, REFCLSID clsid, REFGUID, REFGUID profile, HKL, DWORD flags) {
+    if (profile_type == TF_PROFILETYPE_INPUTPROCESSOR && (flags & TF_IPSINK_FLAG_ACTIVE) != 0 &&
+        IsEqualGUID(clsid, CLSID_LocalPinyinTextService))
+        use_profile(nullptr, IsEqualGUID(profile, GUID_LocalPinyinEnglishProfile) != FALSE, L"profile_activated");
+    return S_OK;
+}
+
+void TextService::advise_profile_activation() {
+    if (!thread_mgr_ || profile_sink_cookie_ != TF_INVALID_COOKIE) return;
+    ITfSource* source = nullptr;
+    if (SUCCEEDED(thread_mgr_->QueryInterface(IID_PPV_ARGS(&source)))) {
+        const HRESULT hr = source->AdviseSink(__uuidof(ITfInputProcessorProfileActivationSink),
+                                              static_cast<ITfInputProcessorProfileActivationSink*>(this),
+                                              &profile_sink_cookie_);
+        if (FAILED(hr)) {
+            profile_sink_cookie_ = TF_INVALID_COOKIE;
+            log_status(L"tsf", L"profile activation sink failed " + hresult_hex(hr));
+        }
+        source->Release();
+    }
+}
+
+void TextService::unadvise_profile_activation() {
+    if (!thread_mgr_ || profile_sink_cookie_ == TF_INVALID_COOKIE) return;
+    ITfSource* source = nullptr;
+    if (SUCCEEDED(thread_mgr_->QueryInterface(IID_PPV_ARGS(&source)))) {
+        source->UnadviseSink(profile_sink_cookie_);
+        source->Release();
+    }
+    profile_sink_cookie_ = TF_INVALID_COOKIE;
+}
+
+bool TextService::active_profile_is_english() const {
+    ITfInputProcessorProfileMgr* profiles = nullptr;
+    if (FAILED(CoCreateInstance(CLSID_TF_InputProcessorProfiles, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&profiles))))
+        return english_profile_;
+    TF_INPUTPROCESSORPROFILE profile{};
+    const HRESULT hr = profiles->GetActiveProfile(GUID_TFCAT_TIP_KEYBOARD, &profile);
+    profiles->Release();
+    if (FAILED(hr) || !IsEqualGUID(profile.clsid, CLSID_LocalPinyinTextService)) return english_profile_;
+    return IsEqualGUID(profile.guidProfile, GUID_LocalPinyinEnglishProfile) != FALSE;
+}
+
+void TextService::use_profile(ITfContext* context, bool english, const wchar_t* reason) {
+    if (english == english_profile_) return;
+    // What is being typed stays as typed.
+    end_phrase_run();
+    if (prediction_active_) dismiss_prediction(reason);
+    if (!composing_.empty()) {
+        ITfContext* target = context ? context : composition_context_;
+        if (!target || FAILED(commit_raw_composition(target))) cancel_composition(target);
+    } else {
+        candidates_.clear();
+        selected_index_ = 0;
+        end_candidate_ui_element(reason);
+        candidate_window_.hide(reason);
+    }
+    english_correction_ = EnglishCorrection{};
+    (english_profile_ ? english_mode_ : pinyin_mode_) = mode_;
+    english_profile_ = english;
+    mode_ = english ? english_mode_ : pinyin_mode_;
+    language_bar_.set_mode(mode_);
+    publish_runtime_input_mode_status(reason, true);
+    log_status(L"mode", std::wstring(english ? L"English profile " : L"Pinyin profile ") + input_mode_text(mode_) +
+                            L" reason=" + (reason ? reason : L"unknown"));
 }
 
 bool TextService::letter_is_literal() const noexcept {
@@ -1816,7 +2211,7 @@ void TextService::update_candidate_window(ITfContext* context) {
     }
     const std::wstring display_label = candidate_display_label();
     const bool logical_show_requested =
-        mode_ == InputMode::Chinese && !display_label.empty() && !candidates_.empty();
+        mode_ != InputMode::English && !display_label.empty() && !candidates_.empty();
     if (logical_show_requested) {
         if (candidate_context_ != context) {
             end_candidate_ui_element(L"candidate_context_changed");
@@ -1922,7 +2317,7 @@ void TextService::update_candidate_window(ITfContext* context) {
             candidate_layout_retry_attempts_ = retry.next_attempt;
             candidate_window_.schedule_layout_retry(
                 [this]() {
-                    if (candidate_context_ && mode_ == InputMode::Chinese &&
+                    if (candidate_context_ && mode_ != InputMode::English &&
                         (!composing_.empty() || prediction_active_) && !candidates_.empty()) {
                         update_candidate_window(candidate_context_);
                     }
@@ -1971,6 +2366,7 @@ void TextService::refresh_candidate_window_from_host() {
 }
 
 std::wstring TextService::candidate_display_label() {
+    if (mode_ == InputMode::Assisted) return composing_;
     return prediction_active_ ? L"联想 · Tab" :
         composition_has_literal_letters() ? composing_ : engine_.display_input(composing_);
 }
@@ -1984,7 +2380,7 @@ void TextService::schedule_anchor_follow(UINT delay_ms) {
 }
 
 void TextService::follow_candidate_anchor() {
-    if (!candidate_context_ || mode_ != InputMode::Chinese || candidates_.empty() ||
+    if (!candidate_context_ || mode_ == InputMode::English || candidates_.empty() ||
         (composing_.empty() && !prediction_active_)) return;
     if (candidate_ui_element_session_.active() && candidate_ui_element_session_.host_managed()) return;
     // Still waiting for a first layout: show it now that there is one.
@@ -2081,12 +2477,14 @@ HRESULT TextService::commit_prediction(ITfContext* context) {
 }
 
 void TextService::accept_candidate_from_ui(size_t index) {
-    if (mode_ != InputMode::Chinese || !candidate_context_ || index >= candidates_.size() ||
+    if (mode_ == InputMode::English || !candidate_context_ || index >= candidates_.size() ||
         (!prediction_active_ && (composing_.empty() || !composition_.active()))) return;
     ITfContext* context = candidate_context_;
     context->AddRef();
     selected_index_ = index;
-    const HRESULT hr = prediction_active_ ? commit_prediction(context) : commit_selected(context);
+    // A word clicked in 本地英文 goes in with a space, like one chosen by digit.
+    const HRESULT hr = mode_ == InputMode::Assisted ? commit_english(context, index, L" ")
+                     : prediction_active_ ? commit_prediction(context) : commit_selected(context);
     if (FAILED(hr)) log_status(L"candidate-ui", L"candidate accept failed " + hresult_hex(hr));
     context->Release();
 }
@@ -2171,6 +2569,19 @@ TextService::CaretNeighbor TextService::neighbor_before_caret(ITfContext* contex
 void TextService::forget_selected_candidate(ITfContext* context) {
     if (candidate_ui_element_session_.host_managed()) selected_index_ = candidate_ui_element_session_.selected_index();
     const std::wstring text = candidates_[std::min(selected_index_, candidates_.size() - 1)].text;
+    if (mode_ == InputMode::Assisted) {
+        // A word learned in 本地英文 is forgotten: Space corrects it again.
+        auto& shared = shared_speller();
+        bool forgotten = false;
+        {
+            std::lock_guard<std::mutex> guard(shared.lock);
+            forgotten = english_speller_ready(shared) && shared.speller.forget(wide_to_utf8(text));
+        }
+        log_status(L"learning", forgotten ? L"forgot an English word" : L"no English word to forget");
+        refresh_candidates();
+        update_composition(context);
+        return;
+    }
     const size_t forgotten = engine_.forget(text);
     log_status(L"learning", L"forgot " + std::to_wstring(forgotten) + L" choices");
     end_phrase_run();
@@ -2515,7 +2926,8 @@ bool TextService::type_replacement(const std::wstring& source, const std::wstrin
 
 wchar_t TextService::tool_key_character(WPARAM wparam, bool shift) const {
     // Only after a leading v (and nothing but tool characters since) in full pinyin.
-    if (composing_.empty() || composing_[0] != L'v' || engine_.input_options().double_pinyin != DoublePinyinScheme::None)
+    if (mode_ != InputMode::Chinese || composing_.empty() || composing_[0] != L'v' ||
+        engine_.input_options().double_pinyin != DoublePinyinScheme::None)
         return 0;
     if (composing_.size() > 1 && !std::all_of(composing_.begin() + 1, composing_.end(), [](wchar_t ch) {
             return std::wstring(L"0123456789.+-*/()^%").find(ch) != std::wstring::npos;
