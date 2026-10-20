@@ -146,6 +146,32 @@ int main() {
         REQUIRE_TRUE(order(now - 13 * day) == std::vector<std::wstring>({liang, bright, measure, cool}));
     }
 
+    // Forgetting: one word for one pinyin, or for every pinyin; the list is
+    // the latest first, and another instance sees the change.
+    {
+        localpinyin::UserLearning learning;
+        REQUIRE_TRUE(learning.open(file_path));
+        REQUIRE_TRUE(learning.clear());
+        REQUIRE_TRUE(learning.record_selection(L"zhege", L"这个", 1000));
+        REQUIRE_TRUE(learning.record_selection(L"zhege", L"这个设置", 3000));
+        REQUIRE_TRUE(learning.record_selection(L"zheg", L"这个设置", 2000));
+        const auto entries = learning.entries();
+        REQUIRE_EQ(entries.size(), size_t{3});
+        REQUIRE_EQ(entries[0].pinyin, std::wstring(L"zhege"));
+        REQUIRE_EQ(entries[0].word, std::wstring(L"这个设置"));
+        REQUIRE_EQ(entries[0].last_selected, 3000LL);
+        localpinyin::UserLearning other;
+        REQUIRE_TRUE(other.open(file_path));
+        REQUIRE_EQ(learning.forget(L"这个设置", L"zheg"), size_t{1});
+        REQUIRE_EQ(learning.frequency(L"zhege", L"这个设置"), 1);
+        REQUIRE_EQ(learning.forget(L"这个设置"), size_t{1});
+        REQUIRE_EQ(learning.forget(L"这个设置"), size_t{0});
+        REQUIRE_EQ(learning.frequency(L"zhege", L"这个"), 1);
+        REQUIRE_EQ(learning.words_for(L"zhege").size(), size_t{1});
+        other.refresh_if_changed();
+        REQUIRE_EQ(other.entries().size(), size_t{1});
+    }
+
     DeleteFileW(file_path);
     return 0;
 }

@@ -5,7 +5,7 @@ import path from 'node:path';
 import { candidateStyleIds, clipboardRetentionChoices, type AppState, type Settings } from '../src/types';
 import { exportBackup, inspectBackup, importBackup } from './backup';
 import { clipboardFile, installClipboardHandlers } from './clipboard';
-import { Panel, panelArguments, type PanelTarget } from './panel';
+import { linkArguments, Panel, panelArguments, type PanelTarget } from './panel';
 import { bridgeWithInput, VaultSession } from './vault';
 import { checkForUpdate, downloadUpdate, initUpdates, installUpdate, releasePage, scheduleAutoCheck, setAutoCheck,
   updateStatus } from './updates';
@@ -148,6 +148,8 @@ function installHandlers() {
     return bridge('dictionary-search', [text(query, 256, true), String(limit)]);
   });
   handle('clear-learning', () => enqueue(() => bridge('clear-learning')));
+  handle('learning-list', (query) => bridge('learning-list', [text(query, 64, true)]));
+  handle('learning-forget', (pinyin, word) => enqueue(() => bridge('learning-forget', [text(pinyin, 256), text(word, 128)])));
   handle('phrases', () => bridge('phrases-list'));
   handle('phrase-add', (content, label) => enqueue(() => bridge('phrases-add', [text(content, 64), text(label, 32)])));
   handle('phrase-delete', (pinyin, content) => enqueue(() => bridge('phrases-delete', [text(pinyin, 64), text(content, 64)])));
@@ -263,9 +265,9 @@ async function media(pathname: string): Promise<{ file: string; type: string } |
 }
 if (!app.requestSingleInstanceLock()) app.quit();
 else {
-  const initialPanel = panelArguments(process.argv);
+  const initialPanel = panelArguments(linkArguments(process.argv));
   app.on('second-instance', (_event, argv) => {
-    const target = panelArguments(argv);
+    const target = panelArguments(linkArguments(argv));
     if (target) openPanel(target);
     else if (argv.includes('--first-run')) { if (latestSettings?.clipboardHistory === 'ask') void openSettings(); }
     else void openSettings();

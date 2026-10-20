@@ -1,5 +1,7 @@
 #include "win32_utils.h"
 
+#include <aclapi.h>
+#include <sddl.h>
 #include <shlobj.h>
 
 #include <sstream>
@@ -27,6 +29,57 @@ std::wstring install_file_path(HINSTANCE instance, const std::wstring& name) {
         if (GetFileAttributesW(candidate.c_str()) != INVALID_FILE_ATTRIBUTES) return candidate;
     }
     return L"";
+}
+
+bool running_in_app_container() noexcept {
+    static const bool contained = [] {
+        HANDLE token = nullptr;
+        if (!OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &token)) return false;
+        DWORD value = 0, size = 0;
+        const bool result = GetTokenInformation(token, TokenIsAppContainer, &value, sizeof(value), &size) && value != 0;
+        CloseHandle(token);
+        return result;
+    }();
+    return contained;
+}
+
+bool share_with_store_apps(const std::wstring& folder) {
+    if (folder.empty() || GetFileAttributesW(folder.c_str()) == INVALID_FILE_ATTRIBUTES) return false;
+    // ALL APPLICATION PACKAGES: read and list, for the folder and all in it.
+    PSID packages = nullptr;
+    if (!ConvertStringSidToSidW(L"S-1-15-2-1", &packages)) return false;
+    PACL current = nullptr;
+    PSECURITY_DESCRIPTOR descriptor = nullptr;
+    bool done = false;
+    if (GetNamedSecurityInfoW(folder.c_str(), SE_FILE_OBJECT, DACL_SECURITY_INFORMATION, nullptr, nullptr, &current, nullptr,
+                              &descriptor) == ERROR_SUCCESS) {
+        constexpr DWORD kRead = FILE_GENERIC_READ | FILE_GENERIC_EXECUTE;
+        constexpr DWORD kInherit = OBJECT_INHERIT_ACE | CONTAINER_INHERIT_ACE;
+        for (WORD index = 0; current && index < current->AceCount && !done; ++index) {
+            ACE_HEADER* header = nullptr;
+            if (!GetAce(current, index, reinterpret_cast<void**>(&header)) || header->AceType != ACCESS_ALLOWED_ACE_TYPE) continue;
+            auto* ace = reinterpret_cast<ACCESS_ALLOWED_ACE*>(header);
+            done = EqualSid(&ace->SidStart, packages) && (ace->Mask & kRead) == kRead && (header->AceFlags & kInherit) == kInherit;
+        }
+        if (!done) {
+            EXPLICIT_ACCESSW access{};
+            access.grfAccessPermissions = kRead;
+            access.grfAccessMode = GRANT_ACCESS;
+            access.grfInheritance = SUB_CONTAINERS_AND_OBJECTS_INHERIT;
+            access.Trustee.TrusteeForm = TRUSTEE_IS_SID;
+            access.Trustee.TrusteeType = TRUSTEE_IS_WELL_KNOWN_GROUP;
+            access.Trustee.ptstrName = static_cast<LPWSTR>(packages);
+            PACL updated = nullptr;
+            if (SetEntriesInAclW(1, &access, current, &updated) == ERROR_SUCCESS) {
+                done = SetNamedSecurityInfoW(const_cast<LPWSTR>(folder.c_str()), SE_FILE_OBJECT, DACL_SECURITY_INFORMATION, nullptr,
+                                             nullptr, updated, nullptr) == ERROR_SUCCESS;
+                LocalFree(updated);
+            }
+        }
+        LocalFree(descriptor);
+    }
+    LocalFree(packages);
+    return done;
 }
 
 std::wstring local_app_data_path() {

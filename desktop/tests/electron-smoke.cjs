@@ -392,7 +392,7 @@ async function run() {
     assert.equal(exposed.frozen, true);
     assert.deepEqual(exposed.api, ['addPhrase', 'checkForUpdate', 'chooseBackupFile', 'clearClipboard', 'clearLearning', 'clipboardSummary',
       'deleteEmojiCandidate', 'deletePhrase', 'deleteUserEntry', 'domainWords', 'downloadUpdate', 'exportBackup', 'getState',
-      'getUpdateStatus', 'importBackup', 'initialState', 'inspectBackup', 'installUpdate', 'listEmojiCandidates', 'listPhrases',
+      'forgetLearning', 'getUpdateStatus', 'importBackup', 'initialState', 'inspectBackup', 'installUpdate', 'listEmojiCandidates', 'listLearning', 'listPhrases',
       'listUserLexicon', 'onSettingsChanged', 'onUpdateStatus', 'openDataDirectory', 'openReleasePage',
       'saveSettings', 'searchDictionary', 'setAutoUpdateCheck', 'upsertUserEntry', 'vaultChangePassword', 'vaultCreate', 'vaultDestroy',
       'vaultStatus', 'windowControl'].sort());
@@ -930,6 +930,20 @@ async function run() {
     await screenshot('learning-confirm');
     await confirmation.getByRole('button', { name: '取消', exact: true }).click();
     assert.equal(fs.readFileSync(learning, 'utf8'), learned);
+    // 学到的词: searched, and one choice forgotten.
+    const words = page.locator('section[aria-labelledby="learned-title"]');
+    const rows = () => page.locator('section[aria-labelledby="learned-title"] tbody tr').count();
+    await words.locator('tbody tr').nth(1).waitFor();
+    assert.equal(await rows(), 2);
+    await words.getByLabel('搜索学到的词').fill('sui');
+    await page.waitForFunction(() => document.querySelectorAll('section[aria-labelledby="learned-title"] tbody tr').length === 1);
+    await words.getByLabel('搜索学到的词').fill('');
+    await words.locator('tbody tr').nth(1).waitFor();
+    await words.getByRole('button', { name: '删除 nihao 你好', exact: true }).click();
+    await page.waitForFunction(() => document.querySelectorAll('section[aria-labelledby="learned-title"] tbody tr').length === 1);
+    assert.equal((await state()).learning.count, 1);
+    assert.ok(!fs.readFileSync(learning, 'utf8').includes('你好'));
+    await screenshot('learning-words');
     await page.getByRole('button', { name: '清除学习记录', exact: true }).click();
     await confirmation.getByRole('button', { name: '清除记录', exact: true }).click();
     await confirmation.waitFor({ state: 'hidden' });

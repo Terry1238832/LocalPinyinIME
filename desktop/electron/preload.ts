@@ -11,6 +11,8 @@ contextBridge.exposeInMainWorld('localPinyin', Object.freeze({
   deleteUserEntry: (entry: Pick<UserEntry, 'pinyin' | 'word'>) => ipcRenderer.invoke('localpinyin:user-delete', entry),
   searchDictionary: (query: string, limit = 100) => ipcRenderer.invoke('localpinyin:dictionary-search', query, limit),
   clearLearning: () => ipcRenderer.invoke('localpinyin:clear-learning'),
+  listLearning: (query: string) => ipcRenderer.invoke('localpinyin:learning-list', query),
+  forgetLearning: (pinyin: string, word: string) => ipcRenderer.invoke('localpinyin:learning-forget', pinyin, word),
   domainWords: () => ipcRenderer.invoke('localpinyin:domain-words'),
   listPhrases: () => ipcRenderer.invoke('localpinyin:phrases'),
   addPhrase: (text: string, label: string) => ipcRenderer.invoke('localpinyin:phrase-add', text, label),

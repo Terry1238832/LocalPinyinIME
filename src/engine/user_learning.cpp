@@ -175,6 +175,38 @@ bool UserLearning::clear() {
     return saved;
 }
 
+std::vector<UserLearning::Entry> UserLearning::entries() const {
+    std::vector<Entry> list;
+    list.reserve(records_.size());
+    for (const auto& [key, record] : records_) {
+        const auto tab = key.find(L'\t');
+        if (tab != std::wstring::npos) list.push_back(Entry{key.substr(0, tab), key.substr(tab + 1), record.selection_count, record.last_selected_time});
+    }
+    std::sort(list.begin(), list.end(), [](const Entry& left, const Entry& right) {
+        return left.last_selected != right.last_selected ? left.last_selected > right.last_selected : left.pinyin < right.pinyin;
+    });
+    return list;
+}
+
+size_t UserLearning::forget(const std::wstring& word, const std::wstring& pinyin) {
+    if (storage_path_.empty() || word.empty()) return 0;
+    LearningFileLock lock(storage_path_);
+    if (!lock.acquired() || !load()) return 0;
+    size_t forgotten = 0;
+    for (auto it = records_.begin(); it != records_.end();) {
+        const auto tab = it->first.find(L'\t');
+        const bool match = tab != std::wstring::npos && it->first.compare(tab + 1, std::wstring::npos, word) == 0 &&
+                           (pinyin.empty() || it->first.compare(0, tab, pinyin) == 0);
+        if (match) { it = records_.erase(it); ++forgotten; }
+        else ++it;
+    }
+    if (!forgotten) return 0;
+    reindex();
+    ++revision_;
+    if (flush()) remember_write_time();
+    return forgotten;
+}
+
 void UserLearning::remember_write_time() {
     std::error_code error;
     write_time_ = std::filesystem::last_write_time(std::filesystem::path(storage_path_), error);

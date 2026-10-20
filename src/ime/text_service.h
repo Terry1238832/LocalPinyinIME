@@ -104,6 +104,9 @@ private:
     void hide_tool_panel();
     [[nodiscard]] bool tool_panel_open() const noexcept;
     void handle_tool_panel_key(ITfContext* context, unsigned long key, bool shift, bool ctrl);
+    // Ctrl+Delete while typing: the highlighted candidate's learned choices
+    // are forgotten and the candidates shown again.
+    void forget_selected_candidate(ITfContext* context);
     // CapsLock while the panel is open is the panel's (it walks the
     // categories): eaten, and its on/off put back on release. True when the
     // key is dealt with; `route` sends it to the panel (the key-down, not the test).

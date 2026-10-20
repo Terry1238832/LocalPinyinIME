@@ -3,6 +3,7 @@
 #include "globals.h"
 #include "chinese_punctuation.h"
 #include "../common/logging.h"
+#include "../clipboard/picture_clipboard.h"
 #include "../common/win32_utils.h"
 #include "../engine/candidate_selection.h"
 #include "../engine/dictionary.h"
@@ -58,6 +59,7 @@ constexpr ULONGLONG kDoubleTabMs = 300;
 constexpr int kTabTask = 0;
 constexpr int kPanelTask = 1;
 constexpr int kSecretTask = 2;
+constexpr int kPasteTask = 3;
 // A copied record leaves the clipboard after this long, if still there.
 constexpr UINT kSecretClipboardMs = 45 * 1000;
 // WM_COPYDATA from the tool panel: the session token, a line break, the text.
@@ -1120,6 +1122,10 @@ HRESULT TextService::test_key_down(ITfContext* context, WPARAM wparam, BOOL* eat
         *eaten = TRUE;
         return S_OK;
     }
+    if (wparam == VK_DELETE && modifiers.ctrl && !modifiers.alt && !composing_.empty() && !candidates_.empty()) {
+        *eaten = TRUE;
+        return S_OK;
+    }
     if (mode_ == InputMode::English || should_pass_through(wparam)) {
         return S_OK;
     }
@@ -1289,6 +1295,11 @@ HRESULT TextService::handle_key_down(ITfContext* context, WPARAM wparam, BOOL* e
 
     shift_toggle_on_key_down(shift_toggle_, static_cast<unsigned long>(wparam), modifiers, shift_enabled);
     if (can_start_shift_toggle(static_cast<unsigned long>(wparam), modifiers, shift_enabled)) {
+        *eaten = TRUE;
+        return S_OK;
+    }
+    if (key == VK_DELETE && modifiers.ctrl && !modifiers.alt && !composing_.empty() && !candidates_.empty()) {
+        forget_selected_candidate(context);
         *eaten = TRUE;
         return S_OK;
     }
@@ -2157,6 +2168,17 @@ TextService::CaretNeighbor TextService::neighbor_before_caret(ITfContext* contex
     return {previous_key_digit_, previous_key_letter_};
 }
 
+void TextService::forget_selected_candidate(ITfContext* context) {
+    if (candidate_ui_element_session_.host_managed()) selected_index_ = candidate_ui_element_session_.selected_index();
+    const std::wstring text = candidates_[std::min(selected_index_, candidates_.size() - 1)].text;
+    const size_t forgotten = engine_.forget(text);
+    log_status(L"learning", L"forgot " + std::to_wstring(forgotten) + L" choices");
+    end_phrase_run();
+    selected_index_ = 0;
+    refresh_candidates();
+    update_composition(context);
+}
+
 void TextService::extend_phrase_run(ITfContext* context, const std::wstring& typed, const std::wstring& committed,
                                     const std::wstring& preceding) {
     constexpr ULONGLONG kGapMs = 20000;
@@ -2580,6 +2602,7 @@ ToolPanel& TextService::tool_panel() {
             }
             return words;
         };
+        services.sandboxed = running_in_app_container();
         services.clipboard_on = [this] {
             return settings_store_.load_input_mode_options().clipboard_history == InputModeOptions::ClipboardHistory::On;
         };
@@ -2709,6 +2732,14 @@ void TextService::handle_tool_panel_action(const PanelAction& action, ITfContext
             return;
         case PanelAction::Kind::PasteSticker:
             hide_tool_panel();
+            if (running_in_app_container()) {
+                // A store app's sandbox cannot start the bridge: the picture
+                // goes on the clipboard from here, and Ctrl+V once the key
+                // that chose it is up.
+                if (put_picture_on_clipboard(action.file))
+                    candidate_window_.schedule_task(kPasteTask, 80, [] { press_paste(); });
+                return;
+            }
             run_bridge({L"panel-paste", std::to_wstring(reinterpret_cast<std::uintptr_t>(tool_panel_host_)), action.file});
             return;
         case PanelAction::Kind::PasteClip:

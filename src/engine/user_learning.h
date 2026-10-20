@@ -38,6 +38,18 @@ public:
     // `now` (seconds since the epoch) is for tests; 0 is the current time.
     bool record_selection(const std::wstring& pinyin, const std::wstring& word, long long now = 0);
     bool clear();
+    // One learned choice, for the settings app's list.
+    struct Entry {
+        std::wstring pinyin;
+        std::wstring word;
+        int count = 0;
+        long long last_selected = 0;
+    };
+    // Every learned choice, the latest first.
+    [[nodiscard]] std::vector<Entry> entries() const;
+    // Forgets `word` as chosen for `pinyin`, or for any pinyin when `pinyin`
+    // is empty. Returns how many choices were forgotten.
+    size_t forget(const std::wstring& word, const std::wstring& pinyin = {});
     void refresh_if_changed();
     [[nodiscard]] size_t revision() const noexcept { return revision_; }
     [[nodiscard]] std::vector<std::pair<std::wstring, int>> selected_texts() const;

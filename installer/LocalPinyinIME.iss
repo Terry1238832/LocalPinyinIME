@@ -45,7 +45,26 @@ Source: "{#MyAppPackageDir}\bin\*"; DestDir: "{app}"; Flags: ignoreversion recur
 Source: "{#MyAppPackageDir}\THIRD_PARTY_NOTICES.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MyAppPackageDir}\LICENSE"; DestDir: "{app}"; Flags: ignoreversion
 
+[Registry]
+; localpinyin: links start the settings app. The input method uses them in
+; store apps, whose sandbox may not start programs itself; Windows asks once
+; which program opens them there, so the app is registered by name for that
+; question and for Default apps.
+Root: HKLM; Subkey: "Software\Classes\localpinyin"; ValueType: string; ValueName: ""; ValueData: "URL:本地拼音"; Flags: uninsdeletekey
+Root: HKLM; Subkey: "Software\Classes\localpinyin"; ValueType: string; ValueName: "URL Protocol"; ValueData: ""
+Root: HKLM; Subkey: "Software\Classes\localpinyin\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: """{app}\LocalPinyinSettings.exe"",0"
+Root: HKLM; Subkey: "Software\Classes\localpinyin\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\LocalPinyinSettings.exe"" ""%1"""
+Root: HKLM; Subkey: "Software\Classes\LocalPinyinIME.Link"; ValueType: string; ValueName: ""; ValueData: "本地拼音"; Flags: uninsdeletekey
+Root: HKLM; Subkey: "Software\Classes\LocalPinyinIME.Link\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: """{app}\LocalPinyinSettings.exe"",0"
+Root: HKLM; Subkey: "Software\Classes\LocalPinyinIME.Link\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\LocalPinyinSettings.exe"" ""%1"""
+Root: HKLM; Subkey: "Software\LocalPinyinIME\Capabilities"; ValueType: string; ValueName: "ApplicationName"; ValueData: "本地拼音设置"; Flags: uninsdeletekey
+Root: HKLM; Subkey: "Software\LocalPinyinIME\Capabilities"; ValueType: string; ValueName: "ApplicationDescription"; ValueData: "本地拼音输入法的设置和工具面板"
+Root: HKLM; Subkey: "Software\LocalPinyinIME\Capabilities\URLAssociations"; ValueType: string; ValueName: "localpinyin"; ValueData: "LocalPinyinIME.Link"
+Root: HKLM; Subkey: "Software\RegisteredApplications"; ValueType: string; ValueName: "LocalPinyinIME"; ValueData: "Software\LocalPinyinIME\Capabilities"; Flags: uninsdeletevalue
+
 [Run]
+; The stickers folder, readable by store apps, where the small panel shows them.
+Filename: "{app}\LocalPinyinSettingsBridge.exe"; Parameters: "share-stickers"; WorkingDir: "{app}"; Flags: runhidden runasoriginaluser waituntilterminated
 Filename: "{app}\LocalPinyinSettings.exe"; Description: "打开本地拼音设置"; WorkingDir: "{app}"; Flags: postinstall nowait skipifsilent runasoriginaluser
 
 [UninstallRun]

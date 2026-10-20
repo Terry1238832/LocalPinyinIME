@@ -300,6 +300,7 @@ input[type="range"]:disabled { opacity: .5; }
 .lexicon-table tbody tr:hover td { background: var(--fill-hover); }
 .word-cell { font-size: 15px !important; font-weight: 500; }
 .pinyin-cell { font-size: 13px !important; letter-spacing: .02em; color: var(--text-2); }
+.count-cell, .date-cell { font-size: 13px !important; color: var(--text-3); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .frequency-column { width: 104px; text-align: right !important; font-variant-numeric: tabular-nums; color: var(--text-2); }
 .actions-column { width: 84px; text-align: right !important; }
 .lexicon-table td.actions-column { padding: 0 12px 0 0; overflow: visible; text-overflow: clip; }

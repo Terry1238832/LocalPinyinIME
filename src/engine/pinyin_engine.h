@@ -60,6 +60,10 @@ public:
     // pinyin, unless the engine would already offer it first there. Returns
     // whether it was learned.
     bool learn_phrase(const std::wstring& typed, const std::wstring& phrase, const std::wstring& preceding_text = L"");
+    // Ctrl+Delete on a candidate: forgets every learned choice of exactly this
+    // text; when there is none, the learned phrases making up most of it (a
+    // sentence put together from one). Returns how many were forgotten.
+    size_t forget(const std::wstring& text);
 
 private:
     void open_learning(const std::wstring& user_lexicon_path);

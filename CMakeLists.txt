@@ -90,7 +90,7 @@ endfunction()
 # One copy of shared code is compiled for the product and all regression tests.
 add_library(pinyin_common STATIC src/common/logging.cpp src/common/utf_utils.cpp src/common/win32_utils.cpp
     src/common/json_lite.cpp src/engine/input_options.cpp)
-target_link_libraries(pinyin_common PUBLIC user32 gdi32 shell32 shlwapi ole32)
+target_link_libraries(pinyin_common PUBLIC user32 gdi32 shell32 shlwapi ole32 advapi32)
 add_library(pinyin_engine STATIC src/engine/pinyin_engine.cpp src/engine/dictionary.cpp
     src/engine/user_lexicon.cpp src/engine/candidate_ranker.cpp src/engine/user_learning.cpp src/engine/context_model.cpp src/engine/continuation_model.cpp
     src/engine/double_pinyin.cpp src/engine/fuzzy_pinyin.cpp src/engine/english_terms.cpp src/engine/typo_correction.cpp
@@ -106,8 +106,8 @@ target_link_libraries(pinyin_ui PUBLIC pinyin_common d2d1 dwrite windowscodecs)
 add_library(pinyin_settings STATIC src/settings/dictionary_catalog.cpp)
 target_link_libraries(pinyin_settings PUBLIC pinyin_ui pinyin_engine comctl32 advapi32)
 # The clipboard history shared by its recorder and the settings bridge.
-add_library(pinyin_clipboard STATIC src/clipboard/clipboard_store.cpp)
-target_link_libraries(pinyin_clipboard PUBLIC pinyin_common bcrypt)
+add_library(pinyin_clipboard STATIC src/clipboard/clipboard_store.cpp src/clipboard/picture_clipboard.cpp)
+target_link_libraries(pinyin_clipboard PUBLIC pinyin_common bcrypt windowscodecs ole32)
 # 记录 (encrypted with Windows CNG and DPAPI) and the tool panel's lists.
 add_library(pinyin_vault STATIC src/vault/vault.cpp)
 target_link_libraries(pinyin_vault PUBLIC pinyin_common bcrypt crypt32)
@@ -118,7 +118,7 @@ add_library(pinyin_service STATIC src/ime/text_service.cpp src/ime/composition_m
     src/ime/language_bar.cpp src/ime/input_mode.cpp src/ime/guids.cpp src/ime/globals.cpp
     src/ime/online_translation.cpp src/ime/tool_panel.cpp src/ime/tool_panel_window.cpp)
 target_link_libraries(pinyin_service PUBLIC pinyin_engine pinyin_ui pinyin_clipboard pinyin_vault pinyin_panel oleaut32 uuid advapi32
-    winhttp windowscodecs)
+    winhttp windowscodecs runtimeobject)
 add_library(LocalPinyinIME SHARED src/ime/dllmain.cpp src/ime/exports.cpp src/ime/class_factory.cpp
     src/ime/registration.cpp src/ime/LocalPinyinIME.def src/ime/LocalPinyinIME.rc)
 target_link_libraries(LocalPinyinIME PRIVATE pinyin_service)

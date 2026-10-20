@@ -4,6 +4,8 @@
 
 #include <dpapi.h>
 
+#include "../common/win32_utils.h"
+
 #include <algorithm>
 #include <cstring>
 #include <ctime>
@@ -118,6 +120,9 @@ void ToolPanel::open(std::optional<PanelPage> page) {
     open_ = true;
     load_catalogs();
     user_state_ = PanelUserState::load(services_.data_dir + L"\\desktop\\panel.json");
+    // Shared with store apps, so the panel shows the stickers there too.
+    static bool shared = false;
+    if (!services_.sandboxed && !shared) shared = share_with_store_apps(services_.data_dir + L"\\stickers");
     stickers_ = load_stickers(services_.data_dir + L"\\stickers\\index.json");
     if (records_unlocked_ && services_.now() - records_used_ > kRecordsUnlockSeconds) lock();
     tray_.clear();
@@ -190,10 +195,10 @@ void ToolPanel::set_page(PanelPage page) {
     list_cursor_ = list_scroll_ = 0;
     if (page_ == PanelPage::Clipboard) {
         clips_.clear();
-        if (!services_.clipboard_on || services_.clipboard_on())
+        if (!services_.sandboxed && (!services_.clipboard_on || services_.clipboard_on()))
             clips_ = ClipboardStore(services_.data_dir + L"\\clipboard").read();
     }
-    if (page_ == PanelPage::Records) {
+    if (page_ == PanelPage::Records && !services_.sandboxed) {
         record_open_ = -1;
         if (records_unlocked_ && vault_stamp() != records_stamp_) {
             // Changed in the settings app (or its password did): read it again.
@@ -777,6 +782,7 @@ void ToolPanel::unlock(const std::wstring& password) {
 
 PanelAction ToolPanel::records_key(const PanelKey& key) {
     PanelAction redraw{PanelAction::Kind::Redraw};
+    if (services_.sandboxed) return {};
     const int count = static_cast<int>(list_.size());
     const bool typing_password = records_state_ == RecordsState::SetPassword ||
                                  records_state_ == RecordsState::ConfirmPassword || records_state_ == RecordsState::Locked;
@@ -1041,7 +1047,9 @@ void ToolPanel::fill_view() {
         view.input_active = true;
         if (page_ == PanelPage::Stickers) {
             view.hint = L"数字 发送 · Tab 换页";
-            if (stickers_.empty()) view.message = L"还没有表情包。按 Shift+Enter 打开大窗口，把图片拖进去就能添加。";
+            if (stickers_.empty())
+                view.message = services_.sandboxed ? L"这里读不到表情包。在别的程序里打开一次小窗后再试，或按 Shift+Enter 在大窗口里发送。"
+                                                   : L"还没有表情包。按 Shift+Enter 打开大窗口，把图片拖进去就能添加。";
         } else {
             view.hint = view.tray.empty() ? L"数字 选 · Enter 输入 · Ctrl+D 收藏" : L"Enter 输入 · Backspace 去掉";
         }
@@ -1145,6 +1153,19 @@ void ToolPanel::fill_view() {
                     break;
             }
         }
+    }
+    if (services_.sandboxed && (page_ == PanelPage::Records || page_ == PanelPage::Clipboard)) {
+        // A store app's sandbox: not read here, on purpose for the records.
+        view.cells.clear();
+        view.categories.clear();
+        view.info.clear();
+        view.prompt.clear();
+        view.input_active = false;
+        view.magnifier = view.preview = false;
+        view.message = page_ == PanelPage::Records
+            ? L"这是商店里的沙盒应用，为了安全，小窗在这里不打开记录。按 Shift+Enter 在大窗口里使用。"
+            : L"这是商店里的沙盒应用，小窗在这里读不到剪贴板记录。按 Shift+Enter 在大窗口里使用。";
+        view.hint = L"Shift+Enter 大窗口 · Tab 换页";
     }
     if (!message_.empty()) view.message = message_;
     view_ = std::move(view);

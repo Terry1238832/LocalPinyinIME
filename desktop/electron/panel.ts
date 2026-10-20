@@ -91,6 +91,21 @@ function unscramble(data: Uint8Array): Uint8Array | null {
   return null;
 }
 
+// The input method in a store app's sandbox cannot start programs; Windows
+// starts this app for it through its link instead: localpinyin:settings, or
+// localpinyin:panel?ime=…&host=…&token=…&anchor=…&page=…, read here as the
+// arguments it stands for.
+export function linkArguments(argv: string[]): string[] {
+  const link = argv.find(item => /^localpinyin:/i.test(item));
+  if (!link) return argv;
+  const rest = argv.filter(item => item !== link);
+  try {
+    const url = new URL(link);
+    if (url.pathname.replace(/^\/+/, '').toLowerCase() !== 'panel') return rest;
+    return [...rest, '--panel', ...[...url.searchParams].map(([name, value]) => `--${name}=${value}`)];
+  } catch { return rest; }
+}
+
 // --panel --ime=<window> --host=<window> --token=<hex> --anchor=<x>,<y>,<bottom>
 export function panelArguments(argv: string[]): PanelTarget | null {
   if (!argv.includes('--panel')) return null;
@@ -158,6 +173,8 @@ export class Panel {
   private async writeStickers(list: Sticker[]) {
     await mkdir(this.stickerDirectory, { recursive: true });
     await writeFile(path.join(this.stickerDirectory, 'index.json'), JSON.stringify(list, null, 2) + '\n', 'utf8');
+    // Readable by store apps too, where the small panel shows them.
+    void this.options.bridge('share-stickers').catch(() => undefined);
   }
 
   // A sticker file for the app:// protocol, or null.

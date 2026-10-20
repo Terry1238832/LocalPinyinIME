@@ -5,6 +5,12 @@
 #include "../common/win32_utils.h"
 #include "../settings/settings_store.h"
 
+#include <roapi.h>
+#include <windows.foundation.h>
+#include <windows.system.h>
+#include <wrl/client.h>
+#include <wrl/wrappers/corewrappers.h>
+
 #include <algorithm>
 #include <cmath>
 #include <cstdint>
@@ -141,7 +147,49 @@ bool high_contrast_enabled() noexcept {
            (contrast.dwFlags & HCF_HIGHCONTRASTON);
 }
 
+namespace {
+
+// --panel --ime=1 --host=2 … as the settings app's link,
+// localpinyin:panel?ime=1&host=2…; no arguments: localpinyin:settings.
+std::wstring settings_link(const std::wstring& arguments) {
+    std::wstring path = L"settings", query;
+    size_t start = 0;
+    while (start < arguments.size()) {
+        size_t end = arguments.find(L' ', start);
+        if (end == std::wstring::npos) end = arguments.size();
+        std::wstring part = arguments.substr(start, end - start);
+        start = end + 1;
+        if (part.rfind(L"--", 0) != 0) continue;
+        part.erase(0, 2);
+        if (part.find(L'=') == std::wstring::npos) path = part;
+        else query += (query.empty() ? L"?" : L"&") + part;
+    }
+    return L"localpinyin:" + path + query;
+}
+
+// A store app's sandbox may not start programs: Windows starts the settings
+// app for it, through the link the installer registers.
+bool launch_through_windows(const std::wstring& link) {
+    using namespace Microsoft::WRL;
+    using namespace Microsoft::WRL::Wrappers;
+    using namespace ABI::Windows::Foundation;
+    using namespace ABI::Windows::System;
+    ComPtr<IUriRuntimeClassFactory> uris;
+    ComPtr<IUriRuntimeClass> uri;
+    ComPtr<ILauncherStatics> launcher;
+    ComPtr<IAsyncOperation<bool>> operation;
+    HRESULT hr = RoGetActivationFactory(HStringReference(RuntimeClass_Windows_Foundation_Uri).Get(), IID_PPV_ARGS(&uris));
+    if (SUCCEEDED(hr)) hr = uris->CreateUri(HStringReference(link.c_str(), static_cast<unsigned int>(link.size())).Get(), &uri);
+    if (SUCCEEDED(hr)) hr = RoGetActivationFactory(HStringReference(RuntimeClass_Windows_System_Launcher).Get(), IID_PPV_ARGS(&launcher));
+    if (SUCCEEDED(hr)) hr = launcher->LaunchUriAsync(uri.Get(), &operation);
+    log_status(L"candidate-ui", L"settings_open_through_link hr=" + hresult_hex(hr));
+    return SUCCEEDED(hr);
+}
+
+}  // namespace
+
 bool launch_settings_app(const std::wstring& arguments) {
+    if (running_in_app_container()) return launch_through_windows(settings_link(arguments));
     const std::wstring path = install_file_path(g_instance, kSettingsExecutableName);
     const std::wstring directory = path.substr(0, path.find_last_of(L'\\') + 1);
     if (path.empty()) {
@@ -843,8 +891,6 @@ CandidateLayoutInput CandidateWindow::layout_input(int dpi, const RECT& work_are
         return renderer_.measure_text(text, static_cast<float>(font_px), weight, candidate_font_family(face));
     };
     input.previous_flow_form = flow_form_memory_;
-    // A Store app sandbox cannot start the settings app.
-    input.settings_button = !immersive_process();
     return input;
 }
 

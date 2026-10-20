@@ -1027,6 +1027,19 @@ bool PinyinEngine::learn_phrase(const std::wstring& typed, const std::wstring& p
     return true;
 }
 
+size_t PinyinEngine::forget(const std::wstring& text) {
+    if (text.empty()) return 0;
+    refresh_learning();
+    size_t forgotten = learning_.forget(text);
+    if (!forgotten) {
+        for (const auto& entry : learning_.entries())
+            if (entry.word.size() >= 2 && entry.word.size() * 2 > text.size() && text.find(entry.word) != std::wstring::npos)
+                forgotten += learning_.forget(entry.word, entry.pinyin);
+    }
+    refresh_learning();
+    return forgotten;
+}
+
 void PinyinEngine::learn(const std::wstring& typed, const std::wstring& selected_word) {
     // Learning is keyed by full pinyin, whatever the typing scheme.
     const auto normalized = normalize_input(full_pinyin(typed));

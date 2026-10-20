@@ -71,6 +71,10 @@ export interface BackupSummary {
   parts: Partial<Record<BackupPart, { files: number; bytes: number; items: number }>>;
 }
 
+// A choice the input method learned: `word` chosen `count` times for
+// `pinyin`, last at `time` (seconds since the epoch).
+export type LearnedEntry = { pinyin: string; word: string; count: number; time: number };
+
 export interface UserEntry {
   pinyin: string;
   word: string;
@@ -119,6 +123,9 @@ export interface LocalPinyinApi {
   deleteUserEntry(entry: UserEntry): Promise<{ entries: UserEntry[] }>;
   searchDictionary(query: string, limit?: number): Promise<{ entries: DictionaryEntry[]; total: number }>;
   clearLearning(): Promise<{ cleared: boolean }>;
+  // Learned choices, the latest first (at most 300 shown), and forgetting one.
+  listLearning(query: string): Promise<{ total: number; entries: LearnedEntry[] }>;
+  forgetLearning(pinyin: string, word: string): Promise<{ forgotten: number }>;
   // The words of every usage-scene pack.
   domainWords(): Promise<{ domains: Record<UsageDomain, string[]> }>;
   listPhrases(): Promise<{ phrases: Phrase[] }>;

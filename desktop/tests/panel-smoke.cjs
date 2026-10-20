@@ -83,8 +83,9 @@ async function main() {
 
   app = await _electron.launch({
     executablePath: executable,
-    args: [...(cli.packaged ? [] : [desktop]), '--panel', '--ime=1', '--host=2', `--token=${'a1'.repeat(16)}`, '--anchor=300,240,262',
-      '--page=symbol'],
+    // As the input method opens it from a store app: through the link (read
+    // as --panel --ime=1 --host=2 …).
+    args: [...(cli.packaged ? [] : [desktop]), `localpinyin:panel?ime=1&host=2&token=${'a1'.repeat(16)}&anchor=300,240,262&page=symbol`],
     cwd: desktop,
     env: { ...environment, LOCALPINYINIME_BRIDGE_PATH: bridge, LOCALPINYINIME_QA_HEADLESS: '1' },
     timeout: 30000,

@@ -1,6 +1,7 @@
 #include "../common/utf_utils.h"
 #include "../common/win32_utils.h"
 #include "../clipboard/clipboard_store.h"
+#include "../clipboard/picture_clipboard.h"
 #include "../common/json_lite.h"
 #include "../engine/custom_phrases.h"
 #include "../engine/input_tools.h"
@@ -329,66 +330,6 @@ std::wstring copied_picture(const std::wstring& out) {
     return out;
 }
 
-// A picture on the clipboard as a file (CF_HDROP: chat apps send GIFs whole)
-// and as a bitmap, marked so clipboard histories leave it out.
-void put_picture_on_clipboard(const std::wstring& file, bool keep_out_of_history = true) {
-    using Microsoft::WRL::ComPtr;
-    std::vector<std::uint8_t> dib;
-    {
-        ComPtr<IWICImagingFactory> factory;
-        ComPtr<IWICBitmapDecoder> decoder;
-        ComPtr<IWICBitmapFrameDecode> frame;
-        ComPtr<IWICFormatConverter> converter;
-        UINT width = 0, height = 0;
-        if (SUCCEEDED(CoCreateInstance(CLSID_WICImagingFactory, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&factory))) &&
-            SUCCEEDED(factory->CreateDecoderFromFilename(file.c_str(), nullptr, GENERIC_READ, WICDecodeMetadataCacheOnDemand, &decoder)) &&
-            SUCCEEDED(decoder->GetFrame(0, &frame)) && SUCCEEDED(factory->CreateFormatConverter(&converter)) &&
-            SUCCEEDED(converter->Initialize(frame.Get(), GUID_WICPixelFormat32bppBGRA, WICBitmapDitherTypeNone, nullptr, 0,
-                                            WICBitmapPaletteTypeCustom)) &&
-            SUCCEEDED(converter->GetSize(&width, &height)) && width && height && width <= 8192 && height <= 8192) {
-            BITMAPINFOHEADER header{};
-            header.biSize = sizeof(header);
-            header.biWidth = static_cast<LONG>(width);
-            header.biHeight = -static_cast<LONG>(height);
-            header.biPlanes = 1;
-            header.biBitCount = 32;
-            header.biCompression = BI_RGB;
-            const UINT stride = width * 4;
-            dib.resize(sizeof(header) + static_cast<size_t>(stride) * height);
-            std::memcpy(dib.data(), &header, sizeof(header));
-            if (FAILED(converter->CopyPixels(nullptr, stride, stride * height, dib.data() + sizeof(header)))) dib.clear();
-        }
-    }
-    require(OpenClipboard(nullptr) != FALSE, L"剪贴板正被占用，请稍后重试。");
-    EmptyClipboard();
-    const auto put = [](UINT format, const void* data, size_t size) {
-        HGLOBAL memory = GlobalAlloc(GMEM_MOVEABLE, size ? size : 1);
-        if (!memory) return;
-        if (size) {
-            void* target = GlobalLock(memory);
-            std::memcpy(target, data, size);
-            GlobalUnlock(memory);
-        }
-        if (!SetClipboardData(format, memory)) GlobalFree(memory);
-    };
-    std::vector<std::uint8_t> drop(sizeof(DROPFILES) + (file.size() + 2) * sizeof(wchar_t), 0);
-    auto* files = reinterpret_cast<DROPFILES*>(drop.data());
-    files->pFiles = sizeof(DROPFILES);
-    files->fWide = TRUE;
-    std::memcpy(drop.data() + sizeof(DROPFILES), file.c_str(), file.size() * sizeof(wchar_t));
-    put(CF_HDROP, drop.data(), drop.size());
-    if (!dib.empty()) put(CF_DIB, dib.data(), dib.size());
-    std::ifstream source(std::filesystem::path(file), std::ios::binary);
-    const std::vector<char> bytes((std::istreambuf_iterator<char>(source)), std::istreambuf_iterator<char>());
-    const auto extension = std::filesystem::path(file).extension().wstring();
-    if (!bytes.empty() && (extension == L".png" || extension == L".PNG"))
-        put(RegisterClipboardFormatW(L"PNG"), bytes.data(), bytes.size());
-    if (!bytes.empty() && (extension == L".gif" || extension == L".GIF"))
-        put(RegisterClipboardFormatW(L"GIF"), bytes.data(), bytes.size());
-    if (keep_out_of_history) put(RegisterClipboardFormatW(L"ExcludeClipboardContentFromMonitorProcessing"), nullptr, 0);
-    CloseClipboard();
-}
-
 void put_text_on_clipboard(const std::wstring& text) {
     require(OpenClipboard(nullptr) != FALSE, L"剪贴板正被占用，请稍后重试。");
     EmptyClipboard();
@@ -483,18 +424,6 @@ std::string clipboard_summary_json(const ClipboardStore& store) {
     for (const auto& entry : std::filesystem::directory_iterator(std::filesystem::path(store.directory()), error))
         if (entry.is_regular_file(error)) bytes += entry.file_size(error);
     return "{\"items\":" + std::to_string(items) + ",\"images\":" + std::to_string(images) + ",\"bytes\":" + std::to_string(bytes) + '}';
-}
-
-void press_paste() {
-    INPUT keys[4]{};
-    for (auto& key : keys) key.type = INPUT_KEYBOARD;
-    keys[0].ki.wVk = VK_CONTROL;
-    keys[1].ki.wVk = 'V';
-    keys[2].ki.wVk = 'V';
-    keys[2].ki.dwFlags = KEYEVENTF_KEYUP;
-    keys[3].ki.wVk = VK_CONTROL;
-    keys[3].ki.dwFlags = KEYEVENTF_KEYUP;
-    SendInput(4, keys, sizeof(INPUT));
 }
 
 // A request with secrets (passwords, records) comes on stdin as JSON, so it
@@ -929,7 +858,7 @@ std::string run(const std::vector<std::wstring>& args) {
         require(found, L"剪贴板记录不存在。");
         if (image) {
             CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
-            put_picture_on_clipboard(clipboard.picture_path(id), false);
+            require(localpinyin::put_picture_on_clipboard(clipboard.picture_path(id), false), L"剪贴板正被占用，请稍后重试。");
         } else {
             std::wstring text;
             require(clipboard.full_text(id, &text), L"剪贴板记录不存在。");
@@ -937,7 +866,7 @@ std::string run(const std::vector<std::wstring>& args) {
         }
         return_to(window_argument(args[1]));
         Sleep(60);
-        press_paste();
+        localpinyin::press_paste();
         return "{\"pasted\":true}";
     }
     if (command == L"replace-data") {
@@ -1006,11 +935,47 @@ std::string run(const std::vector<std::wstring>& args) {
         require_count(args, 3);
         require(std::filesystem::is_regular_file(std::filesystem::path(args[2])), L"图片不存在。");
         CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
-        put_picture_on_clipboard(args[2]);
+        require(localpinyin::put_picture_on_clipboard(args[2]), L"剪贴板正被占用，请稍后重试。");
         return_to(window_argument(args[1]));
         Sleep(60);
-        press_paste();
+        localpinyin::press_paste();
         return "{\"pasted\":true}";
+    }
+    if (command == L"share-stickers") {
+        // The stickers folder, readable by store apps (the small panel there).
+        require_count(args, 1);
+        const std::wstring folder = store.data_dir() + L"\\stickers";
+        require(store.ensure_data_dir() && ensure_directory(folder), L"无法创建表情包文件夹。");
+        require(share_with_store_apps(folder), L"无法设置表情包文件夹的权限。");
+        return "{\"shared\":true}";
+    }
+    if (command == L"learning-list") {
+        // learning-list [query]: learned choices, the latest first; the query
+        // matches the start of the pinyin or any part of the word.
+        require(args.size() == 1 || args.size() == 2, L"请求参数数量不正确。");
+        const std::wstring query = args.size() == 2 ? args[1] : L"";
+        UserLearning learning;
+        learning.open(store.learning_data_path());
+        const auto entries = learning.entries();
+        std::string result = "{\"total\":" + std::to_string(entries.size()) + ",\"entries\":[";
+        size_t shown = 0;
+        for (const auto& entry : entries) {
+            if (!query.empty() && entry.pinyin.rfind(query, 0) != 0 && entry.word.find(query) == std::wstring::npos) continue;
+            if (shown++ >= 300) break;
+            if (shown > 1) result += ',';
+            result += "{\"pinyin\":" + json_string(entry.pinyin) + ",\"word\":" + json_string(entry.word) +
+                      ",\"count\":" + std::to_string(entry.count) + ",\"time\":" + std::to_string(entry.last_selected) + '}';
+        }
+        return result + "]}";
+    }
+    if (command == L"learning-forget") {
+        // learning-forget <pinyin> <word>
+        require_count(args, 3);
+        UserLearning learning;
+        require(learning.open(store.learning_data_path()), L"学习记录正在更新，请稍后重试。");
+        const size_t forgotten = learning.forget(args[2], args[1]);
+        notify_options_changed();
+        return "{\"forgotten\":" + std::to_string(forgotten) + '}';
     }
     if (command == L"clear-learning") {
         require_count(args, 1);

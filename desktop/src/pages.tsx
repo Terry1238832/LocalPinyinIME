@@ -1,4 +1,4 @@
-import { useEffect, useId, useState } from 'react';
+import { useCallback, useEffect, useId, useState } from 'react';
 import { CandidatePreview, StyleThumbnail, candidateStyles, previewSample } from './CandidatePreview';
 import { InputOptions } from './InputOptions';
 import { StyleGallery } from './StyleGallery';
@@ -6,7 +6,7 @@ import { BrandMark, Icon, type IconName } from './icons';
 import { asError, Badge, ErrorNotice, formatNumber, InfoButton, Keys, Meter, MiniCandidates, Modal, PageHeader, SaveStatus, SettingRow, SettingStatus, SettingsGroup, Switch } from './components';
 import { KeyDemo, TypingDemo } from './FeatureDemo';
 import { usePageCommand } from './CommandPalette';
-import type { AppState, CandidateStyle, Settings, Theme, UpdateStatus } from './types';
+import type { AppState, CandidateStyle, LearnedEntry, Settings, Theme, UpdateStatus } from './types';
 import { UpdatePanel } from './Updates';
 import { Habits } from './PanelPage';
 import { BackupSection } from './Backup';
@@ -180,6 +180,7 @@ export function LearningPage({ state, onState, notify }: { state: AppState; onSt
         </li>
       </ol>
     </section>
+    <LearnedWords onState={onState} notify={notify} />
     <Habits notify={notify} />
     <section className="danger-zone">
       <div><h3>清除学习记录<InfoButton label="清除学习记录" open={resetInfo} controls={resetInfoId} onToggle={setResetInfo} /></h3>
@@ -188,6 +189,62 @@ export function LearningPage({ state, onState, notify }: { state: AppState; onSt
     </section>
     {confirm && <Modal title="清除学习记录？" description="候选排序和整句学习将恢复到初始状态，个人词库会保留。" busy={pending} onClose={() => setConfirm(false)}><div className="modal-body"><p className="confirmation-copy">这项操作无法撤销。之后输入时，输入法会重新学习你的选词习惯。</p><ErrorNotice message={error} /></div><footer className="modal-footer"><button className="button secondary" disabled={pending} onClick={() => setConfirm(false)}>取消</button><button className="button danger" disabled={pending} onClick={() => void clear()}>{pending ? '正在清除…' : '清除记录'}</button></footer></Modal>}
   </>;
+}
+
+// 学到的词: each learned choice, searchable, each one can be forgotten (as
+// Ctrl+Delete on a candidate does while typing).
+function LearnedWords({ onState, notify }: { onState: (state: AppState) => void; notify: (message: string) => void }) {
+  const [entries, setEntries] = useState<LearnedEntry[] | null>(null);
+  const [total, setTotal] = useState(0);
+  const [query, setQuery] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const load = useCallback((value: string) => {
+    window.localPinyin.listLearning(value).then(result => { setEntries(result.entries); setTotal(result.total); setError(null); })
+      .catch(failure => setError(asError(failure)));
+  }, []);
+  useEffect(() => {
+    const timer = window.setTimeout(() => load(query.trim().toLowerCase()), 150);
+    return () => window.clearTimeout(timer);
+  }, [query, load]);
+  const forget = async (entry: LearnedEntry) => {
+    try {
+      await window.localPinyin.forgetLearning(entry.pinyin, entry.word);
+      load(query.trim().toLowerCase());
+      onState(await window.localPinyin.getState());
+      notify(`已删除：打 ${entry.pinyin} 时不再优先“${entry.word}”`);
+    } catch (failure) { setError(asError(failure)); }
+  };
+  const day = (seconds: number) => seconds ? new Date(seconds * 1000).toLocaleDateString('zh-CN', { month: 'numeric', day: 'numeric' }) : '';
+  const needle = query.trim();
+  return <section className="collection learned" aria-labelledby="learned-title">
+    <div className="collection-toolbar">
+      <div className="collection-title"><h2 id="learned-title">学到的词</h2><span className="count-pill">{formatNumber(total)}</span></div>
+      <div className="search-field"><Icon name="search" size={15} /><input className="input-field" aria-label="搜索学到的词" placeholder="搜索拼音或词"
+        value={query} onChange={event => setQuery(event.target.value)} />{query && <button aria-label="清空搜索" className="search-clear" onClick={() => setQuery('')}><Icon name="close" size={13} /></button>}</div>
+    </div>
+    <p className="habits-intro">你选过的词，和接连选出来的几个词组成的词。删掉一条，打这个拼音时它就不再排在前面。
+      打字时把候选移到它上面按 <Keys keys={['Ctrl', 'Delete']} /> 也能删掉。</p>
+    <ErrorNotice message={error} />
+    <div className="table-scroll">
+      <table className="lexicon-table">
+        <thead><tr><th>拼音</th><th>词</th><th>次数</th><th>最近</th><th className="actions-column"><span className="visually-hidden">操作</span></th></tr></thead>
+        <tbody>{(entries ?? []).map(entry => <tr key={`${entry.pinyin}\0${entry.word}`}>
+          <td className="pinyin-cell">{entry.pinyin}</td>
+          <td className="word-cell">{entry.word}</td>
+          <td className="count-cell">{formatNumber(entry.count)}</td>
+          <td className="date-cell">{day(entry.time)}</td>
+          <td className="actions-column"><span className="row-actions">
+            <button className="table-action delete-action" aria-label={`删除 ${entry.pinyin} ${entry.word}`} title="删除"
+                    onClick={() => void forget(entry)}><Icon name="trash" size={15} /></button>
+          </span></td>
+        </tr>)}</tbody>
+      </table>
+      {entries && !entries.length && <div className="empty-state compact">
+        <h3>{needle ? '没有找到' : '还没有学到的词'}</h3>
+        <p>{needle ? '试试拼音开头或词里的字。' : '选过候选以后，会记在这里。'}</p>
+      </div>}
+    </div>
+  </section>;
 }
 
 export function AboutPage({ state, update, notify }: { state: AppState; update: UpdateStatus | null; notify: (message: string) => void }) {

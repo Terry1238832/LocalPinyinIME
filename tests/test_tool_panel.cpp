@@ -299,6 +299,21 @@ int main() {
     REQUIRE_TRUE(panel.view().cells.empty());
     panel.close();
 
+    // In a store app's sandbox: records and the clipboard history are left to
+    // the large window (Shift+Enter still opens it).
+    {
+        ToolPanel::Services sandbox = services;
+        sandbox.sandboxed = true;
+        ToolPanel contained(sandbox);
+        contained.open(PanelPage::Records);
+        view = contained.view();
+        REQUIRE_TRUE(view.cells.empty() && view.message.find(L"Shift+Enter") != std::wstring::npos);
+        REQUIRE_TRUE(contained.key(ch(L'a')).kind == PanelAction::Kind::None);
+        contained.open(PanelPage::Clipboard);
+        REQUIRE_TRUE(contained.view().cells.empty() && contained.view().message.find(L"沙盒") != std::wstring::npos);
+        REQUIRE_TRUE(contained.key(vk(VK_RETURN, true)).kind == PanelAction::Kind::Expand);
+    }
+
     REQUIRE_TRUE(ToolPanel::takes_key(L'A', false, false));
     REQUIRE_TRUE(!ToolPanel::takes_key(VK_SHIFT, false, false));
     REQUIRE_TRUE(!ToolPanel::takes_key(L'A', false, true));

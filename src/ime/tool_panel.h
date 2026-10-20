@@ -107,6 +107,10 @@ public:
         std::function<bool()> clipboard_on;
         // Seconds since the epoch, for tests.
         std::function<long long()> now;
+        // In a store app's sandbox: of the data folder only the stickers can
+        // be read (they are shared with such apps); records and the
+        // clipboard history are left to the large window.
+        bool sandboxed = false;
     };
 
     explicit ToolPanel(Services services);
