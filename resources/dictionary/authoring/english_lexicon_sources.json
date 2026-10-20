@@ -1,0 +1,47 @@
+{
+  "artifact": "../english_words.tsv",
+  "content": "English spellings with weighted word counts only; no sentence text is packaged.",
+  "authoring_scripts": [
+    "tools/build_english_lexicon.py"
+  ],
+  "sources": [
+    {
+      "name": "SCOWL (Spell Checker Oriented Word Lists) 2020.12.07",
+      "url": "https://sourceforge.net/projects/wordlist/files/SCOWL/2020.12.07/scowl-2020.12.07.tar.gz/download",
+      "sha256": "5587667caa20c4891390c2d42dbb4d5c4c3f41bee77af1457ece3ba23fb859cc",
+      "retrieved": "2026-10-20",
+      "files": "final/{english,american,special}-*.{10..60} offered; final/{british,british_z,canadian,australian}-*.{10..60} and every category's .70 accepted as typed; misc/{profane.1,offensive.1,offensive.2} never offered",
+      "license": "SCOWL copyright notice (permission to use, copy, modify, distribute and sell with the notice kept), with public-domain, UKACD, WordNet and Ispell-derived components; the notice is reproduced verbatim in resources/THIRD_PARTY_NOTICES.txt",
+      "attribution": "Kevin Atkinson and the SCOWL contributors, http://wordlist.aspell.net/",
+      "commercial_use": true,
+      "share_alike": false,
+      "review_status": "approved",
+      "included_in_release": true
+    },
+    {
+      "name": "Mozilla Common Voice English sentence text",
+      "url": "https://github.com/common-voice/common-voice/tree/7015419eb71f82ac8121f91d3f4c5338b83d6844/server/data/en",
+      "files": {
+        "sentence-collector.txt": {
+          "sha256": "31ac8e200449ebd7aee4a8c6bd16d4dafd076cf11f7c3efe1035f0283712d136",
+          "weight": 8
+        },
+        "wiki.en.txt": {
+          "sha256": "438e55e8bc91dfa6cbe098a7233702c6b177c5ae07137a01d66b9c75c9789ae5",
+          "weight": 1
+        }
+      },
+      "retrieved": "2026-10-20",
+      "license": "CC0 1.0 (server/data/en/LICENSE in the repository)",
+      "commercial_use": true,
+      "share_alike": false,
+      "review_status": "approved",
+      "included_in_release": true,
+      "note": "Only weighted word counts are packaged. One sentence in forty (by SHA-256 of its text) is held out; 2,000 of them are tests/data/english_heldout_sentences.txt."
+    }
+  ],
+  "evaluation": {
+    "tests/data/english_misspellings.tsv": "Project-authored misspellings, slips and words that must stay (MIT).",
+    "tests/data/english_heldout_sentences.txt": "Held-out Common Voice English sentences (CC0 1.0), never counted."
+  }
+}

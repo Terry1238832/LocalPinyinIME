@@ -51,7 +51,8 @@ endif()
 string(APPEND localpinyin_dictionary_output_dir "/dictionary")
 set(localpinyin_dictionary_sources)
 set(localpinyin_dictionary_outputs)
-foreach(name IN ITEMS core_zh_pinyin.tsv local_core_zh_pinyin.tsv context_zh.tsv context_zh.lm standard_zh_pinyin.tsv continuations_zh.tsv english_terms.tsv)
+foreach(name IN ITEMS core_zh_pinyin.tsv local_core_zh_pinyin.tsv context_zh.tsv context_zh.lm standard_zh_pinyin.tsv continuations_zh.tsv english_terms.tsv
+    english_words.tsv)
     list(APPEND localpinyin_dictionary_sources "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/${name}")
     list(APPEND localpinyin_dictionary_outputs "${localpinyin_dictionary_output_dir}/${name}")
 endforeach()
@@ -94,7 +95,7 @@ target_link_libraries(pinyin_common PUBLIC user32 gdi32 shell32 shlwapi ole32 ad
 add_library(pinyin_engine STATIC src/engine/pinyin_engine.cpp src/engine/dictionary.cpp
     src/engine/user_lexicon.cpp src/engine/candidate_ranker.cpp src/engine/user_learning.cpp src/engine/context_model.cpp src/engine/continuation_model.cpp
     src/engine/double_pinyin.cpp src/engine/fuzzy_pinyin.cpp src/engine/english_terms.cpp src/engine/typo_correction.cpp
-    src/engine/domain_lexicon.cpp src/engine/custom_phrases.cpp src/engine/input_tools.cpp)
+    src/engine/domain_lexicon.cpp src/engine/custom_phrases.cpp src/engine/input_tools.cpp src/engine/english_speller.cpp)
 target_link_libraries(pinyin_engine PUBLIC pinyin_common)
 add_library(pinyin_ui STATIC src/ime/candidate_ui.cpp src/settings/settings_store.cpp src/settings/modern_renderer.cpp
     src/ime/candidate_styles/layout_core.cpp src/ime/candidate_styles/paint_core.cpp
@@ -185,6 +186,10 @@ if(BUILD_TESTING)
         pinyin_test(${name} pinyin_service)
     endforeach()
     pinyin_test(test_logging pinyin_common)
+    # 本地英文's speller is platform independent and reads the source word list.
+    add_executable(test_english_speller tests/test_english_speller.cpp)
+    target_link_libraries(test_english_speller PRIVATE pinyin_engine)
+    add_test(NAME test_english_speller COMMAND test_english_speller "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary")
     pinyin_test(test_online_translation pinyin_service)
     pinyin_test(test_clipboard_store pinyin_clipboard)
     pinyin_test(test_json_lite pinyin_common)
@@ -205,6 +210,8 @@ if(BUILD_TESTING)
     add_executable(LocalPinyinImeEval src/tools/ime_eval.cpp)
     target_link_libraries(LocalPinyinImeEval PRIVATE pinyin_engine)
     localpinyin_copy_dictionary_resource(LocalPinyinImeEval)
+    add_executable(LocalPinyinEnglishEval src/tools/english_eval.cpp)
+    target_link_libraries(LocalPinyinEnglishEval PRIVATE pinyin_engine)
     add_executable(LocalPinyinCandidateCapture src/tools/candidate_capture.cpp)
     target_link_libraries(LocalPinyinCandidateCapture PRIVATE pinyin_service gdiplus)
     localpinyin_copy_dictionary_resource(LocalPinyinCandidateCapture)
@@ -242,7 +249,8 @@ if(BUILD_TESTING)
         ENVIRONMENT "TEMP=${CMAKE_BINARY_DIR}/test-tmp;TMP=${CMAKE_BINARY_DIR}/test-tmp;LOCALPINYINIME_LOCALAPPDATA=${CMAKE_BINARY_DIR}/test-data")
 endif()
 install(TARGETS LocalPinyinIME LocalPinyinSettingsBridge LocalPinyinClipboard LocalPinyinImeSetup RUNTIME DESTINATION .)
-install(FILES resources/dictionary/core_zh_pinyin.tsv resources/dictionary/local_core_zh_pinyin.tsv resources/dictionary/context_zh.tsv resources/dictionary/context_zh.lm resources/dictionary/standard_zh_pinyin.tsv resources/dictionary/continuations_zh.tsv resources/dictionary/english_terms.tsv DESTINATION dictionary)
+install(FILES resources/dictionary/core_zh_pinyin.tsv resources/dictionary/local_core_zh_pinyin.tsv resources/dictionary/context_zh.tsv resources/dictionary/context_zh.lm resources/dictionary/standard_zh_pinyin.tsv resources/dictionary/continuations_zh.tsv resources/dictionary/english_terms.tsv
+    resources/dictionary/english_words.tsv DESTINATION dictionary)
 install(FILES ${localpinyin_domain_sources} DESTINATION dictionary/domains)
 install(FILES ${localpinyin_panel_sources} DESTINATION dictionary/panel)
 install(FILES resources/THIRD_PARTY_NOTICES.txt DESTINATION .)
