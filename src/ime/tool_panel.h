@@ -187,6 +187,8 @@ private:
     // List pages: the rows and which one is current.
     std::vector<PanelCell> list_;
     std::vector<std::string> list_ids_;  // clipboard ids
+    // 声调: the tones chosen so far for the typed pinyin's vowels, in order.
+    std::vector<int> tone_choices_;
     std::vector<int> list_refs_;         // records, tool results, choices
     int list_cursor_ = 0;
     int list_scroll_ = 0;

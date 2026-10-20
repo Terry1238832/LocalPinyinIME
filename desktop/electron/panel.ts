@@ -3,8 +3,10 @@
 // user's stickers, the clipboard history and the typing tools; what the user
 // confirms goes back to the input method in the application it came from.
 import { BrowserWindow, ipcMain, nativeTheme, screen, type IpcMainInvokeEvent } from 'electron';
-import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, rm, stat, writeFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
 import { randomUUID } from 'node:crypto';
+import os from 'node:os';
 import path from 'node:path';
 import { panelPages, type PanelData, type PanelKind, type PanelPageId, type PanelState, type Sticker } from '../src/panel/types';
 import type { Settings } from '../src/types';
@@ -22,6 +24,31 @@ const RECENT_LIMIT = 48;
 const STICKER_TYPES: Record<string, string> = { '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg',
   '.gif': 'image/gif', '.webp': 'image/webp', '.bmp': 'image/bmp' };
 const STICKER_MAX_BYTES = 20 * 1024 * 1024;
+// Pictures are known by their first bytes, not their names: a picture from
+// a chat program's cache may have none, or end in .dat.
+const SIGNATURES: [string, number, number[]][] = [['.png', 0, [0x89, 0x50, 0x4e, 0x47]], ['.jpg', 0, [0xff, 0xd8, 0xff]],
+  ['.gif', 0, [0x47, 0x49, 0x46, 0x38]], ['.webp', 8, [0x57, 0x45, 0x42, 0x50]], ['.bmp', 0, [0x42, 0x4d]]];
+
+function pictureType(data: Uint8Array): string | null {
+  for (const [ext, at, bytes] of SIGNATURES)
+    if (data.length > at + bytes.length && bytes.every((byte, index) => data[at + index] === byte) &&
+        (ext !== '.webp' || (data[0] === 0x52 && data[1] === 0x49))) return ext;
+  return null;
+}
+
+// WeChat keeps received pictures as .dat files: the picture with every byte
+// XORed with one key. Try the key each picture type's first byte gives.
+function unscramble(data: Uint8Array): Uint8Array | null {
+  if (data.length < 16) return null;
+  for (const [, at, bytes] of SIGNATURES) {
+    if (at !== 0) continue;
+    const key = data[0] ^ bytes[0];
+    if (!key || bytes.some((byte, index) => (data[index] ^ key) !== byte)) continue;
+    const plain = data.map(byte => byte ^ key);
+    if (pictureType(plain)) return plain;
+  }
+  return null;
+}
 
 // --panel --ime=<window> --host=<window> --token=<hex> --anchor=<x>,<y>,<bottom>
 export function panelArguments(argv: string[]): PanelTarget | null {
@@ -40,8 +67,7 @@ export class Panel {
   window: BrowserWindow | null = null;
   private target: PanelTarget | null = null;
   private idle: NodeJS.Timeout | null = null;
-  private choosingFile = false;
-  // The 表情包 page waits while pictures are dragged in from a folder.
+  // Pinned, or on the 表情包 page: stays after sending something.
   private keepOpen = false;
   private state: PanelState = { favorites: { symbol: [], kaomoji: [], emoji: [] }, recents: { symbol: [], kaomoji: [], emoji: [] } };
   private loaded = false;
@@ -159,8 +185,9 @@ export class Panel {
     window.webContents.setWindowOpenHandler(() => ({ action: 'deny' }));
     window.webContents.on('will-navigate', event => event.preventDefault());
     window.webContents.on('will-attach-webview', event => event.preventDefault());
-    // Clicking elsewhere puts it away, as an input method's panel should.
-    window.on('blur', () => { if (!this.choosingFile && !this.keepOpen) this.hide(); });
+    // Unlike the input method's small panel, this window stays when something
+    // else is clicked (a picture can be dragged in from a chat or a folder);
+    // × or Esc puts it away.
     window.on('closed', () => { if (this.window === window) this.window = null; });
     void window.loadURL('app://local/panel.html');
     this.window = window;
@@ -264,23 +291,55 @@ export class Panel {
       if (labels.length) await this.options.bridge('emoji-learn', [emoji, ...labels]).catch(() => undefined);
     });
     handle('phrase-delete', (pinyin, value) => this.options.bridge('phrases-delete', [text(pinyin, 64), text(value, 64)]));
-    handle('sticker-add', async (files) => {
-      if (!Array.isArray(files) || !files.length || files.length > 50) throw new Error('一次最多添加 50 张。');
+    const addStickers = async (files: { name: string; data: Uint8Array }[]) => {
+      if (!files.length || files.length > 50) throw new Error('一次最多添加 50 张。');
       const list = await this.stickers();
       await mkdir(this.stickerDirectory, { recursive: true });
-      for (const file of files) {
-        const entry = file as { name?: unknown; data?: unknown };
-        const name = typeof entry.name === 'string' ? entry.name.slice(0, 120) : '';
-        const ext = path.extname(name).toLowerCase();
-        if (!(ext in STICKER_TYPES)) throw new Error(`不支持的图片格式：${name || '未命名'}（可用 PNG、JPG、GIF、WebP、BMP）`);
-        if (!(entry.data instanceof Uint8Array) || !entry.data.byteLength || entry.data.byteLength > STICKER_MAX_BYTES)
-          throw new Error(`图片太大：${name}（最大 20 MB）`);
+      for (const { name, data } of files) {
+        if (!data.byteLength || data.byteLength > STICKER_MAX_BYTES) throw new Error(`图片太大：${name || '未命名'}（最大 20 MB）`);
+        const picture = pictureType(data) ? data : unscramble(data);
+        const ext = picture && pictureType(picture);
+        if (!picture || !ext) throw new Error(`不是能用的图片：${name || '未命名'}（可用 PNG、JPG、GIF、WebP、BMP）`);
         const id = randomUUID();
-        await writeFile(path.join(this.stickerDirectory, id + ext), entry.data);
-        list.unshift({ id, ext, name: path.basename(name, ext), added: Date.now() });
+        await writeFile(path.join(this.stickerDirectory, id + ext), picture);
+        const title = path.basename(name, path.extname(name)).trim().slice(0, 60);
+        list.unshift({ id, ext, name: title || '表情包', added: Date.now() });
       }
       await this.writeStickers(list);
       return list;
+    };
+    // Files named by path (a drag that carries file:// links, a copied file).
+    const readPictures = async (paths: string[]) => Promise.all(paths.map(async file => {
+      const info = await stat(file).catch(() => null);
+      if (!info?.isFile()) throw new Error(`找不到图片：${path.basename(file)}`);
+      if (info.size > STICKER_MAX_BYTES) throw new Error(`图片太大：${path.basename(file)}（最大 20 MB）`);
+      return { name: path.basename(file), data: new Uint8Array(await readFile(file)) };
+    }));
+    handle('sticker-add', async (files) => {
+      if (!Array.isArray(files)) throw new Error('参数无效。');
+      return addStickers(files.map(file => {
+        const entry = file as { name?: unknown; data?: unknown };
+        if (!(entry.data instanceof Uint8Array)) throw new Error('图片无效。');
+        return { name: typeof entry.name === 'string' ? entry.name.slice(0, 120) : '', data: entry.data };
+      }));
+    });
+    handle('sticker-add-links', async (links) => {
+      if (!Array.isArray(links) || !links.length || links.length > 50) throw new Error('一次最多添加 50 张。');
+      const paths = links.map(link => {
+        if (typeof link !== 'string' || !link.startsWith('file:') || link.length > 2048) throw new Error('只能添加这台电脑上的图片。');
+        return fileURLToPath(link);
+      });
+      return addStickers(await readPictures(paths));
+    });
+    // Ctrl+V on the 表情包 page: a copied picture file (keeps a GIF moving),
+    // else the copied picture itself, which the bridge saves to a file.
+    handle('sticker-clipboard', async () => {
+      const saved = path.join(os.tmpdir(), `localpinyin-sticker-${randomUUID()}`);
+      try {
+        const { file } = await this.options.bridge<{ file: string }>('clipboard-picture', [saved]);
+        const [picture] = await readPictures([file]);
+        return await addStickers([file === saved ? { ...picture, name: '粘贴的图片' } : picture]);
+      } finally { await rm(saved, { force: true }).catch(() => undefined); }
     });
     handle('sticker-delete', async (id) => {
       const list = await this.stickers();
@@ -291,7 +350,6 @@ export class Panel {
       await this.writeStickers(rest);
       return rest;
     });
-    handle('choosing-file', (on) => { this.choosingFile = on === true; });
     handle('keep-open', (on) => { this.keepOpen = on === true; });
     handle('settings', () => { this.hide(); this.options.openSettings(); });
     ipcMain.on('localpinyin:panel:bootstrap', event => {

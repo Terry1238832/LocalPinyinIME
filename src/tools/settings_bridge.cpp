@@ -12,6 +12,7 @@
 #include "localpinyin_version.h"
 
 #include <windows.h>
+#include <shellapi.h>
 #include <shlobj.h>
 #include <wincodec.h>
 #include <wrl/client.h>
@@ -238,6 +239,94 @@ std::string phrases_json(const std::wstring& path) {
                   ",\"label\":" + json_string(phrase.label) + ",\"created\":" + std::to_string(phrase.created) + '}';
     }
     return result + "]}";
+}
+
+// The picture on the clipboard, for a new sticker: a copied picture file
+// (Explorer; chat programs, where GIFs stay whole), one an HTML copy points
+// to, else the copied picture itself saved to `out` (GIF or PNG as copied, a
+// bitmap as PNG). Returns the file; the caller checks it is a picture.
+std::wstring copied_picture(const std::wstring& out) {
+    using Microsoft::WRL::ComPtr;
+    bool opened = false;
+    for (int attempt = 0; attempt < 10 && !opened; ++attempt) {
+        opened = OpenClipboard(nullptr) != FALSE;
+        if (!opened) Sleep(25);
+    }
+    require(opened, L"剪贴板正被占用，请稍后重试。");
+    const auto bytes_of = [](UINT format) {
+        std::vector<std::uint8_t> bytes;
+        if (!IsClipboardFormatAvailable(format)) return bytes;
+        if (HANDLE data = GetClipboardData(format)) {
+            if (const auto* value = static_cast<const std::uint8_t*>(GlobalLock(data))) {
+                bytes.assign(value, value + GlobalSize(data));
+                GlobalUnlock(data);
+            }
+        }
+        return bytes;
+    };
+    std::wstring file;
+    if (IsClipboardFormatAvailable(CF_HDROP)) {
+        if (HANDLE data = GetClipboardData(CF_HDROP)) {
+            wchar_t path[4096]{};
+            if (DragQueryFileW(static_cast<HDROP>(data), 0, path, ARRAYSIZE(path))) file = path;
+        }
+    }
+    if (file.empty()) {
+        // <img src="file:///C:/…">, with %XX escapes.
+        const auto html = bytes_of(RegisterClipboardFormatW(L"HTML Format"));
+        const std::string text(html.begin(), html.end());
+        const size_t start = text.find("src=\"file:///");
+        const size_t end = start == std::string::npos ? std::string::npos : text.find('"', start + 14);
+        if (end != std::string::npos) {
+            std::string path;
+            for (size_t at = start + 13; at < end; ++at) {
+                if (text[at] == '%' && at + 2 < end) {
+                    path += static_cast<char>(std::stoi(text.substr(at + 1, 2), nullptr, 16));
+                    at += 2;
+                } else {
+                    path += text[at] == '/' ? '\\' : text[at];
+                }
+            }
+            if (std::filesystem::is_regular_file(std::filesystem::path(utf8_to_wide(path)))) file = utf8_to_wide(path);
+        }
+    }
+    std::vector<std::uint8_t> picture;
+    HBITMAP bitmap = nullptr;
+    if (file.empty()) {
+        picture = bytes_of(RegisterClipboardFormatW(L"GIF"));
+        if (picture.empty()) picture = bytes_of(RegisterClipboardFormatW(L"PNG"));
+        if (picture.empty() && (IsClipboardFormatAvailable(CF_BITMAP) || IsClipboardFormatAvailable(CF_DIB)))
+            if (auto copied = static_cast<HBITMAP>(GetClipboardData(CF_BITMAP)))
+                bitmap = static_cast<HBITMAP>(CopyImage(copied, IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION));
+    }
+    CloseClipboard();
+    if (!file.empty()) return file;
+    if (!picture.empty()) {
+        std::ofstream target(std::filesystem::path(out), std::ios::binary);
+        target.write(reinterpret_cast<const char*>(picture.data()), static_cast<std::streamsize>(picture.size()));
+        require(target.good(), L"无法保存图片，请稍后重试。");
+        return out;
+    }
+    require(bitmap != nullptr, L"剪贴板里没有图片。先在聊天里右键图片选“复制”，再回来按 Ctrl+V。");
+    ComPtr<IWICImagingFactory> factory;
+    ComPtr<IWICBitmap> source;
+    ComPtr<IWICStream> stream;
+    ComPtr<IWICBitmapEncoder> encoder;
+    ComPtr<IWICBitmapFrameEncode> frame;
+    UINT width = 0, height = 0;
+    WICPixelFormatGUID format = GUID_WICPixelFormat32bppBGRA;
+    const bool saved =
+        SUCCEEDED(CoCreateInstance(CLSID_WICImagingFactory, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&factory))) &&
+        SUCCEEDED(factory->CreateBitmapFromHBITMAP(bitmap, nullptr, WICBitmapIgnoreAlpha, &source)) &&
+        SUCCEEDED(factory->CreateStream(&stream)) && SUCCEEDED(stream->InitializeFromFilename(out.c_str(), GENERIC_WRITE)) &&
+        SUCCEEDED(factory->CreateEncoder(GUID_ContainerFormatPng, nullptr, &encoder)) &&
+        SUCCEEDED(encoder->Initialize(stream.Get(), WICBitmapEncoderNoCache)) && SUCCEEDED(encoder->CreateNewFrame(&frame, nullptr)) &&
+        SUCCEEDED(frame->Initialize(nullptr)) && SUCCEEDED(source->GetSize(&width, &height)) && SUCCEEDED(frame->SetSize(width, height)) &&
+        SUCCEEDED(frame->SetPixelFormat(&format)) && SUCCEEDED(frame->WriteSource(source.Get(), nullptr)) &&
+        SUCCEEDED(frame->Commit()) && SUCCEEDED(encoder->Commit());
+    DeleteObject(bitmap);
+    require(saved, L"无法读取剪贴板里的图片。");
+    return out;
 }
 
 // A picture on the clipboard as a file (CF_HDROP: chat apps send GIFs whole)
@@ -904,6 +993,13 @@ std::string run(const std::vector<std::wstring>& args) {
         require(SendMessageTimeoutW(ime, WM_COPYDATA, 0, reinterpret_cast<LPARAM>(&data), SMTO_ABORTIFHUNG, 3000, &accepted) &&
                 accepted == 1, L"输入法没有接收，请回到输入框后重试。");
         return "{\"inserted\":true}";
+    }
+    if (command == L"clipboard-picture") {
+        // clipboard-picture <file>: the copied picture, as a file (maybe <file>).
+        require_count(args, 2);
+        require(std::filesystem::path(args[1]).is_absolute(), L"参数无效。");
+        CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
+        return "{\"file\":" + json_string(copied_picture(args[1])) + '}';
     }
     if (command == L"panel-paste") {
         // panel-paste <application window> <picture>: pasted with Ctrl+V.

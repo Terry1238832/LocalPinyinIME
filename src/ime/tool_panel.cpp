@@ -76,7 +76,10 @@ struct Example {
     const wchar_t* input;
 };
 constexpr Example kExamples[] = {
-    {L"数字计算", L"55+15"}, {L"大小写转换", L"123"}, {L"日期格式", L"12.19"}, {L"当前时间", L"sj"}};
+    {L"数字计算", L"55+15"}, {L"大小写转换", L"123"}, {L"日期格式", L"12.19"}, {L"当前时间", L"sj"}, {L"拼音声调", L"ai"}};
+// 声调: tones one to four, then none.
+constexpr int kToneOrder[] = {1, 2, 3, 4, 0};
+constexpr const wchar_t* kToneNames[] = {L"不标声调", L"第一声", L"第二声", L"第三声", L"第四声"};
 
 }  // namespace
 
@@ -359,10 +362,20 @@ void ToolPanel::build_list() {
             list_ids_.push_back(clip.id);
         }
     } else if (page_ == PanelPage::Tools) {
+        if (!is_tone_text(input_)) tone_choices_.clear();
+        else if (tone_choices_.size() >= tone_vowel_count(input_)) tone_choices_.resize(tone_vowel_count(input_) - 1);
         if (input_.empty()) {
-            for (int index = 0; index < 4; ++index) {
+            for (int index = 0; index < static_cast<int>(std::size(kExamples)); ++index) {
                 list_.push_back(PanelCell{kExamples[index].title, kExamples[index].input, {}, {}, false});
                 list_refs_.push_back(index);
+            }
+        } else if (is_tone_text(input_)) {
+            // The next vowel in each tone, the ones before as chosen.
+            for (int tone : kToneOrder) {
+                auto tones = tone_choices_;
+                tones.push_back(tone);
+                list_.push_back(PanelCell{tone_text(input_, tones), kToneNames[tone], {}, {}, false});
+                list_refs_.push_back(tone);
             }
         } else {
             std::tm local{};
@@ -720,13 +733,18 @@ PanelAction ToolPanel::tools_key(const PanelKey& key) {
         case VK_DOWN: list_cursor_ = std::min(std::max(0, count - 1), list_cursor_ + 1); rebuild(); return redraw;
         case VK_RETURN: return activate(list_cursor_);
         case VK_BACK:
-            if (input_.empty()) return {};
-            input_.pop_back();
+            // Back one vowel first, then letters.
+            if (!tone_choices_.empty()) tone_choices_.pop_back();
+            else if (!input_.empty()) input_.pop_back();
+            else return {};
             list_cursor_ = list_scroll_ = 0;
             rebuild();
             return redraw;
         default: break;
     }
+    // 声调: 1-4 a tone, 5 none.
+    const int digit = digit_of(key.vk);
+    if (is_tone_text(input_) && digit >= 1 && digit <= 5) return activate(digit - 1);
     const wchar_t ch = key.ch;
     const bool allowed = (ch >= L'0' && ch <= L'9') || (ch >= L'a' && ch <= L'z') || (ch >= L'A' && ch <= L'Z') ||
                          std::wstring(L"+-*/().%").find(ch) != std::wstring::npos;
@@ -886,6 +904,19 @@ PanelAction ToolPanel::activate(int index) {
             list_cursor_ = list_scroll_ = 0;
             rebuild();
             return redraw;
+        }
+        if (is_tone_text(input_)) {
+            // A tone for this vowel; the pinyin goes in after the last one.
+            tone_choices_.push_back(list_refs_[static_cast<size_t>(index)]);
+            if (tone_choices_.size() < tone_vowel_count(input_)) {
+                list_cursor_ = list_scroll_ = 0;
+                rebuild();
+                return redraw;
+            }
+            PanelAction action{PanelAction::Kind::Insert};
+            action.text = tone_text(input_, tone_choices_);
+            tone_choices_.clear();
+            return action;
         }
         PanelAction action{PanelAction::Kind::Insert};
         action.text = list_[static_cast<size_t>(index)].text;
@@ -1057,7 +1088,22 @@ void ToolPanel::fill_view() {
             view.input = input_;
             view.input_active = true;
             view.hint = input_.empty() ? L"↑↓ 选 · Enter 试一试" : L"↑↓ 选 · Enter 输入";
-            if (!input_.empty() && list_.empty()) view.message = L"这个还不会转换，试试 3*(4+5)、2024、2024.12.19 或 sj。";
+            if (is_tone_text(input_)) {
+                // Which vowel is being marked, of how many.
+                const size_t count = tone_vowel_count(input_);
+                size_t seen = 0;
+                wchar_t vowel = 0;
+                for (wchar_t ch : input_) {
+                    if (std::wstring(L"aeiouvü").find(ch) == std::wstring::npos) continue;
+                    if (seen++ == tone_choices_.size()) { vowel = ch == L'v' ? L'ü' : ch; break; }
+                }
+                view.prompt = L"拼音";
+                view.numbered_list = true;
+                view.info = L"选 " + std::wstring(1, vowel) + L" 的声调 · " + std::to_wstring(tone_choices_.size() + 1) + L"/" +
+                            std::to_wstring(count);
+                view.hint = tone_choices_.empty() ? L"1–4 声调 · 5 不标" : L"1–4 声调 · 5 不标 · Backspace 上一个";
+            }
+            if (!input_.empty() && list_.empty()) view.message = L"这个还不会转换，试试 3*(4+5)、2024、2024.12.19、sj，或拼音 ai。";
         } else {
             switch (records_state_) {
                 case RecordsState::Missing:

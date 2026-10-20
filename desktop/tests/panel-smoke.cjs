@@ -173,6 +173,18 @@ async function main() {
     await field.fill('12.19');
     await page.locator('.tool-value', { hasText: '十二月十九日' }).first().waitFor();
     await shot('panel-tools-result.png');
+    // 声调: a's tone, then i's; Backspace goes back a vowel.
+    await field.fill('ai');
+    await page.locator('.tone-progress', { hasText: '第 1 个，共 2 个' }).waitFor();
+    assert.deepEqual(await page.locator('.tool-value').allInnerTexts(), ['āi', 'ái', 'ǎi', 'ài', 'ai']);
+    await field.press('2');
+    await page.locator('.tone-progress', { hasText: '第 2 个，共 2 个' }).waitFor();
+    assert.deepEqual(await page.locator('.tool-value').allInnerTexts(), ['áī', 'áí', 'áǐ', 'áì', 'ái']);
+    assert.equal(await field.inputValue(), 'ai');
+    await shot('panel-tools-tone.png');
+    await field.press('Backspace');
+    await page.locator('.tone-progress', { hasText: '第 1 个，共 2 个' }).waitFor();
+    await field.fill('');
   });
 
   await check('剪贴板 asks first, then lists, searches picture words and enlarges', async () => {
@@ -203,11 +215,33 @@ async function main() {
     ]);
     await page.locator('.sticker').nth(1).waitFor();
     assert.equal(await page.locator('.sticker').count(), 2);
+    // From a chat: dropped as file:// links, known by content — a GIF with no
+    // name ending, and a WeChat-style .dat (every byte XORed with one key).
+    const chat = path.join(output, 'chat-cache');
+    fs.mkdirSync(chat, { recursive: true });
+    const gif = Buffer.from('R0lGODlhAQABAIAAAP///wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==', 'base64');
+    fs.writeFileSync(path.join(chat, 'a1b2c3'), gif);
+    fs.writeFileSync(path.join(chat, 'e4f5.dat'), Buffer.from(png(48, 48, [60, 120, 220]).map(byte => byte ^ 0x5a)));
+    const links = [path.join(chat, 'a1b2c3'), path.join(chat, 'e4f5.dat')].map(file => require('node:url').pathToFileURL(file).href);
+    // Dragged in over another page, the window turns to 表情包.
+    await page.getByRole('button', { name: '符号', exact: true }).click();
+    const dragged = await page.evaluateHandle(list => { const transfer = new DataTransfer(); transfer.setData('text/uri-list', list.join('\r\n')); return transfer; }, links);
+    await page.dispatchEvent('.panel', 'dragenter', { dataTransfer: dragged });
+    await page.locator('.stickers').waitFor();
+    await page.dispatchEvent('.stickers', 'dragover', { dataTransfer: dragged });
+    await page.dispatchEvent('.stickers', 'drop', { dataTransfer: dragged });
+    await page.locator('.sticker').nth(3).waitFor();
+    const added = JSON.parse(fs.readFileSync(path.join(data, 'LocalPinyinIME', 'stickers', 'index.json'), 'utf8'));
+    assert.deepEqual(added.slice(0, 2).map(item => item.ext).sort(), ['.gif', '.png']);
+    for (const sticker of added.slice(0, 2)) {
+      const saved = fs.readFileSync(path.join(data, 'LocalPinyinIME', 'stickers', sticker.id + sticker.ext));
+      assert.ok(saved.equals(sticker.ext === '.gif' ? gif : png(48, 48, [60, 120, 220])));
+    }
     await shot('panel-stickers.png');
     await page.locator('.sticker').first().hover();
     await page.getByRole('button', { name: /^删除 / }).first().click();
     await page.locator('.sticker-confirm').getByRole('button', { name: '删除', exact: true }).click();
-    await page.waitForFunction(() => document.querySelectorAll('.sticker').length === 1);
+    await page.waitForFunction(() => document.querySelectorAll('.sticker').length === 3);
   });
 
   await check('记录: a password first, then items are added, renamed, shown and locked', async () => {

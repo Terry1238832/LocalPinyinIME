@@ -12,6 +12,16 @@ constexpr wchar_t kUpperDigits[] = L"零壹贰叁肆伍陆柒捌玖";
 constexpr wchar_t kLowerDigits[] = L"零一二三四五六七八九";
 constexpr wchar_t kYearDigits[] = L"〇一二三四五六七八九";
 
+// Each vowel unmarked, then in tones one to four.
+constexpr const wchar_t* kToneVowels[] = {L"aāáǎà", L"eēéěè", L"iīíǐì", L"oōóǒò", L"uūúǔù", L"üǖǘǚǜ"};
+
+const wchar_t* tone_row(wchar_t ch) {
+    if (ch == L'v') ch = L'ü';
+    for (const wchar_t* row : kToneVowels)
+        if (row[0] == ch) return row;
+    return nullptr;
+}
+
 bool digits_only(const std::wstring& text) {
     return !text.empty() && text.find_first_not_of(L"0123456789") == std::wstring::npos;
 }
@@ -293,6 +303,30 @@ std::vector<std::wstring> tool_results(const std::wstring& text, const std::tm&)
         if (fraction.size() <= 2) add(chinese_amount(text));
     }
     return results;
+}
+
+bool is_tone_text(const std::wstring& text) {
+    if (text.empty() || text.size() > 32) return false;
+    for (wchar_t ch : text)
+        if (!(ch >= L'a' && ch <= L'z') && ch != L'ü') return false;
+    return tone_vowel_count(text) > 0;
+}
+
+size_t tone_vowel_count(const std::wstring& text) {
+    return static_cast<size_t>(std::count_if(text.begin(), text.end(), [](wchar_t ch) { return tone_row(ch) != nullptr; }));
+}
+
+std::wstring tone_text(const std::wstring& text, const std::vector<int>& tones) {
+    std::wstring result;
+    size_t vowel = 0;
+    for (wchar_t ch : text) {
+        const wchar_t* row = tone_row(ch);
+        if (!row) { result += ch; continue; }
+        const int tone = vowel < tones.size() ? tones[vowel] : 0;
+        result += row[tone >= 1 && tone <= 4 ? tone : 0];
+        ++vowel;
+    }
+    return result;
 }
 
 std::vector<std::wstring> time_shortcuts(const std::wstring& pinyin, const std::tm& now) {

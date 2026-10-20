@@ -622,7 +622,7 @@ void ToolPanelWindow::paint_footer() {
         canvas.text(view_.prompt, prompt, palette_.hint_text, size, 400, DT_SINGLELINE | DT_VCENTER);
         const int start = prompt.right + dip(6);
         if (view_.input.empty()) {
-            const std::wstring placeholder = view_.prompt == L"搜索" ? L"打拼音" : view_.prompt == L"算式" ? L"如 55+15、123、sj" : L"";
+            const std::wstring placeholder = view_.prompt == L"搜索" ? L"打拼音" : view_.prompt == L"算式" ? L"如 55+15、sj、ai" : L"";
             canvas.text(placeholder, RECT{start + dip(3), box.top, box.right - dip(8), box.bottom}, palette_.control, size, 400,
                         DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS);
         }

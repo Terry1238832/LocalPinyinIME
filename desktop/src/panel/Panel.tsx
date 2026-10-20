@@ -2,7 +2,7 @@
 // symbols, kaomoji and emoji collect in a tray at the bottom, so several can
 // be picked in a row, and go in together with 确定. 添加短语 ties what is in
 // the tray to words: typing one of them later offers it first.
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, type DragEvent } from 'react';
 import { Icon, type IconName } from '../icons';
 import { Browse } from './Browse';
 import { emojiNames, loadCatalog, type Item } from './catalog';
@@ -123,8 +123,14 @@ export default function Panel() {
 
   const current = PAGES.find(entry => entry.id === page)!;
   const browsing = page === 'symbol' || page === 'kaomoji' || page === 'emoji';
+  // A picture dragged in over any page goes to 表情包.
+  const dragIn = (event: DragEvent) => {
+    const types = [...event.dataTransfer.types];
+    if (page !== 'stickers' && (types.includes('Files') || types.includes('text/uri-list'))) setPage('stickers');
+  };
+
   return (
-    <div className="panel">
+    <div className="panel" onDragEnter={dragIn}>
       <nav className="rail" aria-label="面板">
         {PAGES.map(entry => (
           <button key={entry.id} type="button" className={entry.id === page ? 'rail-item active' : 'rail-item'}
@@ -151,7 +157,7 @@ export default function Panel() {
           ) : <h1 className="topbar-title">{current.label}</h1>}
           <span className="drag-space" />
           <button type="button" className={pinned ? 'icon-button toggled' : 'icon-button'} aria-pressed={pinned}
-                  title={pinned ? '取消固定：点到别处时收起' : '固定面板：点到别处也不收起'} onClick={() => setPinned(value => !value)}>
+                  title={pinned ? '取消固定：输入后收起' : '固定面板：输入后也不收起'} onClick={() => setPinned(value => !value)}>
             <Icon name="pin" size={16} /></button>
           <button type="button" className="icon-button" title="关闭（Esc）" aria-label="关闭" onClick={() => void api().close()}>
             <Icon name="close" size={16} /></button>

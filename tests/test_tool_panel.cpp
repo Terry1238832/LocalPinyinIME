@@ -144,7 +144,7 @@ int main() {
 
     // 工具: what is typed converts at once.
     panel.open(PanelPage::Tools);
-    REQUIRE_EQ(panel.view().cells.size(), size_t{4});
+    REQUIRE_EQ(panel.view().cells.size(), size_t{5});
     type(panel, L"55+15");
     view = panel.view();
     REQUIRE_EQ(view.cells.at(0).text, std::wstring(L"70"));
@@ -155,6 +155,42 @@ int main() {
     panel.key(vk(VK_RETURN));
     REQUIRE_EQ(panel.view().input, std::wstring(L"123"));
     REQUIRE_EQ(panel.view().cells.at(0).text, std::wstring(L"壹佰贰拾叁"));
+
+    // 声调: each vowel of the pinyin in turn, 1-4 a tone, 5 none.
+    panel.open(PanelPage::Tools);
+    type(panel, L"ai");
+    view = panel.view();
+    REQUIRE_TRUE(view.numbered_list && view.cells.size() == 5);
+    REQUIRE_EQ(view.cells[0].text, std::wstring(L"āi"));
+    REQUIRE_EQ(view.cells[3].text, std::wstring(L"ài"));
+    REQUIRE_EQ(view.cells[4].text, std::wstring(L"ai"));
+    REQUIRE_TRUE(view.info.find(L"a") != std::wstring::npos);
+    REQUIRE_TRUE(panel.key(vk(L'2')).kind == PanelAction::Kind::Redraw);
+    view = panel.view();
+    REQUIRE_EQ(view.cells[0].text, std::wstring(L"áī"));
+    REQUIRE_TRUE(view.info.find(L"i") != std::wstring::npos);
+    // Backspace goes back a vowel before it deletes letters.
+    panel.key(vk(VK_BACK));
+    REQUIRE_EQ(panel.view().input, std::wstring(L"ai"));
+    REQUIRE_EQ(panel.view().cells[0].text, std::wstring(L"āi"));
+    panel.key(vk(L'2'));
+    action = panel.key(vk(L'4'));
+    REQUIRE_TRUE(action.kind == PanelAction::Kind::Insert && action.text == L"áì");
+    panel.open(PanelPage::Tools);
+    type(panel, L"hao");
+    panel.key(vk(L'3'));
+    action = panel.key(vk(L'5'));
+    REQUIRE_TRUE(action.kind == PanelAction::Kind::Insert && action.text == L"hǎo");
+    panel.open(PanelPage::Tools);
+    type(panel, L"lv");
+    action = panel.key(vk(VK_DOWN));
+    action = panel.key(vk(VK_DOWN));
+    action = panel.key(vk(VK_RETURN));
+    REQUIRE_TRUE(action.kind == PanelAction::Kind::Insert && action.text == L"lǚ");
+    // sj stays the time.
+    panel.open(PanelPage::Tools);
+    type(panel, L"sj");
+    REQUIRE_TRUE(!panel.view().numbered_list && !panel.view().cells.empty());
 
     // 剪贴板: newest first, searchable by pinyin, numbers type them.
     localpinyin::ClipboardStore clipboard((data / L"clipboard").wstring());

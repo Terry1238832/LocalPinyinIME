@@ -147,6 +147,12 @@ kbd { font: 12px/1 var(--font-mono); padding: 2px 5px; border-radius: var(--radi
 .tool-card-line { display: flex; align-items: center; gap: 6px; min-width: 0; max-width: 100%; color: var(--text-3); }
 .tool-card-result { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text); font-size: 15px; }
 .tool-card-hint { color: var(--text-3); font-size: var(--size-caption); }
+.tool-card.wide { grid-column: 1 / -1; }
+.tone-step { display: flex; flex-direction: column; gap: 6px; }
+.tone-progress { display: flex; align-items: baseline; gap: 10px; margin: 0; padding: 0 4px; font-size: var(--size-body-sm); }
+.tone-progress b { font-size: 17px; }
+.tone-progress span { color: var(--text-3); font-size: var(--size-caption); }
+.tone-name { color: var(--text-3); font-size: var(--size-caption); }
 .tool-tip { grid-column: 1 / -1; padding: 4px 2px; color: var(--text-3); font-size: var(--size-caption); }
 
 /* ── 剪贴板 ─────────────────────────────────────────────────────────── */

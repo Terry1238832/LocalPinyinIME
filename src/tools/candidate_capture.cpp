@@ -223,6 +223,7 @@ bool capture_panel(const std::filesystem::path& directory) {
         {L"kaomoji", PanelPage::Kaomoji, L"", {}},
         {L"tools", PanelPage::Tools, L"", {}},
         {L"tools-sum", PanelPage::Tools, L"55+15", {}},
+        {L"tools-tone", PanelPage::Tools, L"ai", {L'2'}},
         {L"clipboard", PanelPage::Clipboard, L"", {VK_DOWN}},
         {L"clipboard-picture", PanelPage::Clipboard, L"", {VK_DOWN, VK_RIGHT}},
         {L"clipboard-text", PanelPage::Clipboard, L"", {VK_DOWN, VK_DOWN, VK_RIGHT}},

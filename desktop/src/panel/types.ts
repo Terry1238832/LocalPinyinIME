@@ -62,7 +62,9 @@ export type PanelApi = {
   learnEmoji(emoji: string, names: string[]): Promise<void>;
   addStickers(files: { name: string; data: Uint8Array }[]): Promise<Sticker[]>;
   deleteSticker(id: string): Promise<Sticker[]>;
-  choosingFile(on: boolean): Promise<void>;
+  // Pictures dropped as file:// links, or copied (Ctrl+V).
+  addStickerLinks(links: string[]): Promise<Sticker[]>;
+  addStickerFromClipboard(): Promise<Sticker[]>;
   keepOpen(on: boolean): Promise<void>;
   openSettings(): Promise<void>;
   clipboard(query: ClipQuery): Promise<ClipList>;
