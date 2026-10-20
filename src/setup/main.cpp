@@ -28,6 +28,10 @@ constexpr wchar_t kProfileSpec[] =
 constexpr wchar_t kProfileSpecCompact[] =
     L"0804:{7C0B4B75-80B0-4E1F-A4A5-4D49A5440D8A}"
     L"{84D58E7C-481E-4D20-A951-4ED39F01D8D5}";
+// 本地英文, the same text service's second input method.
+constexpr wchar_t kEnglishProfileSpec[] =
+    L"0x0804:{7C0B4B75-80B0-4E1F-A4A5-4D49A5440D8A}"
+    L"{76D42B0B-C9A1-4106-A917-48D06C1E30A2};";
 constexpr LANGID kLangId = MAKELANGID(LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED);
 constexpr DWORD kInstallLayoutOrTipFlags = 0;
 constexpr DWORD kIlotUninstall = 0x00000001;
@@ -779,7 +783,7 @@ bool verify_unregistered() {
     return true;
 }
 
-HRESULT query_current_user_enabled(bool& enabled) {
+HRESULT query_current_user_enabled(bool& enabled, REFGUID profile = localpinyin::GUID_LocalPinyinProfile) {
     enabled = false;
     ITfInputProcessorProfiles* profiles = nullptr;
     HRESULT hr = CoCreateInstance(CLSID_TF_InputProcessorProfiles, nullptr, CLSCTX_INPROC_SERVER,
@@ -790,7 +794,7 @@ HRESULT query_current_user_enabled(bool& enabled) {
     BOOL is_enabled = FALSE;
     hr = profiles->IsEnabledLanguageProfile(localpinyin::CLSID_LocalPinyinTextService,
                                             kLangId,
-                                            localpinyin::GUID_LocalPinyinProfile,
+                                            profile,
                                             &is_enabled);
     profiles->Release();
     if (SUCCEEDED(hr)) {
@@ -816,7 +820,8 @@ HRESULT load_install_layout_or_tip(HMODULE& input_module, InstallLayoutOrTipFn& 
 
 int enable_or_disable_current_user(bool enable) {
     std::wcout << L"ProfileSpec canonical: " << kProfileSpec << L"\n"
-               << L"ProfileSpec compact equivalent: " << kProfileSpecCompact << L"\n";
+               << L"ProfileSpec compact equivalent: " << kProfileSpecCompact << L"\n"
+               << L"English ProfileSpec: " << kEnglishProfileSpec << L"\n";
 
     bool before = false;
     HRESULT hr = query_current_user_enabled(before);
@@ -825,15 +830,25 @@ int enable_or_disable_current_user(bool enable) {
     if (FAILED(hr)) {
         return 1;
     }
+    bool english_before = false;
+    const HRESULT english_hr = query_current_user_enabled(english_before, localpinyin::GUID_LocalPinyinEnglishProfile);
+    std::wcout << L"before.IsEnabledLanguageProfile English HRESULT: " << hresult_hex(english_hr) << L"\n"
+               << L"English enabled before: " << bool_text(english_before) << L"\n";
+    // An English profile that is not registered (an older DLL) is left alone.
+    const bool english_known = SUCCEEDED(english_hr);
 
-    if (enable && before) {
+    if (enable && before && (english_before || !english_known)) {
         std::wcout << L"already enabled\n";
         return 0;
     }
-    if (!enable && !before) {
+    if (!enable && !before && !english_before) {
         std::wcout << L"already disabled\n";
         return 0;
     }
+    // Upgrades enable 本地英文 beside an already enabled 本地拼音.
+    std::wstring spec;
+    if (before != enable) spec += kProfileSpec;
+    if (english_known && english_before != enable) spec += kEnglishProfileSpec;
 
     HMODULE input = nullptr;
     InstallLayoutOrTipFn install = nullptr;
@@ -845,7 +860,7 @@ int enable_or_disable_current_user(bool enable) {
 
     const DWORD flags = enable ? kInstallLayoutOrTipFlags : kIlotUninstall;
     SetLastError(ERROR_SUCCESS);
-    const BOOL ok = install(kProfileSpec, flags);
+    const BOOL ok = install(spec.c_str(), flags);
     const DWORD last_error = ok ? ERROR_SUCCESS : GetLastError();
     FreeLibrary(input);
 
@@ -860,11 +875,15 @@ int enable_or_disable_current_user(bool enable) {
     hr = query_current_user_enabled(after);
     std::wcout << L"after.IsEnabledLanguageProfile HRESULT: " << hresult_hex(hr) << L"\n"
                << L"enabled after: " << bool_text(after) << L"\n";
+    bool english_after = false;
+    const HRESULT english_after_hr = query_current_user_enabled(english_after, localpinyin::GUID_LocalPinyinEnglishProfile);
+    std::wcout << L"after.IsEnabledLanguageProfile English HRESULT: " << hresult_hex(english_after_hr) << L"\n"
+               << L"English enabled after: " << bool_text(english_after) << L"\n";
     std::wcout << L"current user InputMethodTips verification: use --verify --require-current-user-enabled\n";
     if (FAILED(hr)) {
         return 1;
     }
-    return after == enable ? 0 : 1;
+    return after == enable && (!english_known || english_after == enable) ? 0 : 1;
 }
 
 // Deletes `folder` and all in it, not following links (a junction is

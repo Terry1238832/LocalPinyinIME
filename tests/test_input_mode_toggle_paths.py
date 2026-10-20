@@ -36,7 +36,7 @@ def main() -> int:
         "HRESULT TextService::toggle_input_mode",
         ("bool TextService::handle_chinese_key",),
     )
-    if toggle_block.count("mode_ = toggled_input_mode(mode_)") != 1:
+    if toggle_block.count("mode_ = toggled_input_mode(mode_, english_profile_)") != 1:
         fail("toggle_input_mode must be the single TextService mode flip point")
     if "language_bar_.set_mode(mode_)" not in toggle_block:
         fail("shared mode toggle must update Language Bar state")

@@ -9,7 +9,11 @@ namespace localpinyin {
 
 enum class InputMode {
     Chinese,
-    English
+    // Plain typing: keys go to the application as they are.
+    English,
+    // 本地英文 with spelling help (辅): each word is typed into a composition
+    // with corrections and completions as candidates.
+    Assisted
 };
 
 struct InputModeOptions {
@@ -33,6 +37,9 @@ struct InputModeOptions {
     // closes ten idle minutes after use unless kept ready in the background.
     bool panel_double_tab = true;
     bool panel_resident = false;
+    // 本地英文: Space puts in the correction of a misspelled word (teh →
+    // the); off, it puts in the word as typed and offers the correction.
+    bool english_autocorrect = true;
     // Clipboard history: undecided until the user is asked (after installing
     // or updating), then on or off; kept this many days (0: for good).
     enum class ClipboardHistory { Ask, On, Off };
@@ -114,6 +121,13 @@ struct CtrlSpaceCtrlKeyUpLatchDecision {
 
 [[nodiscard]] constexpr InputMode toggled_input_mode(InputMode mode) noexcept {
     return mode == InputMode::Chinese ? InputMode::English : InputMode::Chinese;
+}
+
+// 本地拼音 toggles between Chinese and plain English; 本地英文 between
+// spelling help and plain English.
+[[nodiscard]] constexpr InputMode toggled_input_mode(InputMode mode, bool english_profile) noexcept {
+    if (!english_profile) return toggled_input_mode(mode);
+    return mode == InputMode::Assisted ? InputMode::English : InputMode::Assisted;
 }
 
 [[nodiscard]] constexpr ModifierKeyState modifier_key_state_from_readings(

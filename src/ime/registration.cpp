@@ -15,7 +15,12 @@ namespace localpinyin {
 namespace {
 
 constexpr wchar_t kDisplayName[] = L"本地拼音";
+constexpr wchar_t kEnglishDisplayName[] = L"本地英文";
 constexpr LANGID kLangId = MAKELANGID(LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED);
+// Profile icons are this DLL's icon resources by index, in resource ID order:
+// 1 is the blue 中 tile (IDI_MODE_ZH), 2 the blue 英 tile (IDI_MODE_EN).
+constexpr ULONG kProfileIconIndex = 1;
+constexpr ULONG kEnglishProfileIconIndex = 2;
 
 std::wstring g_last_registration_diagnostic;
 std::wstring g_registration_warning;
@@ -828,7 +833,7 @@ HRESULT register_tsf_profile(const std::wstring& icon_path,
                                    static_cast<ULONG>(wcslen(kDisplayName)),
                                    icon_path.c_str(),
                                    static_cast<ULONG>(icon_path.size()),
-                                   0,
+                                   kProfileIconIndex,
                                    nullptr,
                                    0,
                                    TRUE,
@@ -894,7 +899,7 @@ HRESULT restore_tsf_profile(const ProfileSnapshot& before, const std::wstring& i
                                        static_cast<ULONG>(wcslen(kDisplayName)),
                                        icon_path.c_str(),
                                        static_cast<ULONG>(icon_path.size()),
-                                       0,
+                                       kProfileIconIndex,
                                        nullptr,
                                        0,
                                        enabled,
@@ -904,6 +909,81 @@ HRESULT restore_tsf_profile(const ProfileSnapshot& before, const std::wstring& i
         }
         log_operation_result(L"RollbackRestoreExistingProfile", hr, icon_path);
     }
+    profiles->Release();
+    return hr;
+}
+
+bool english_profile_registered(ITfInputProcessorProfileMgr* profiles, HRESULT& enum_hr) {
+    enum_hr = S_OK;
+    IEnumTfInputProcessorProfiles* enum_profiles = nullptr;
+    enum_hr = profiles->EnumProfiles(kLangId, &enum_profiles);
+    if (FAILED(enum_hr)) return false;
+    bool found = false;
+    if (enum_profiles) {
+        for (;;) {
+            TF_INPUTPROCESSORPROFILE profile{};
+            ULONG fetched = 0;
+            if (enum_profiles->Next(1, &profile, &fetched) != S_OK || fetched == 0) break;
+            if (profile.langid == kLangId && IsEqualGUID(profile.clsid, CLSID_LocalPinyinTextService) &&
+                IsEqualGUID(profile.guidProfile, GUID_LocalPinyinEnglishProfile)) {
+                found = true;
+                break;
+            }
+        }
+        enum_profiles->Release();
+    }
+    return found;
+}
+
+// 本地英文, the second input method of this text service. Registered after
+// 本地拼音 and rolled back with it.
+HRESULT register_english_profile(const std::wstring& icon_path, bool& added_profile) {
+    added_profile = false;
+    ITfInputProcessorProfileMgr* profiles = nullptr;
+    HRESULT hr = CoCreateInstance(CLSID_TF_InputProcessorProfiles, nullptr, CLSCTX_INPROC_SERVER,
+                                  IID_PPV_ARGS(&profiles));
+    if (FAILED(hr)) {
+        log_status(L"registration", L"operation=CreateProfileManagerForEnglish hr=" + format_hresult(hr));
+        return hr;
+    }
+    HRESULT enum_hr = S_OK;
+    const bool existed = english_profile_registered(profiles, enum_hr);
+    hr = profiles->RegisterProfile(CLSID_LocalPinyinTextService,
+                                   kLangId,
+                                   GUID_LocalPinyinEnglishProfile,
+                                   kEnglishDisplayName,
+                                   static_cast<ULONG>(wcslen(kEnglishDisplayName)),
+                                   icon_path.c_str(),
+                                   static_cast<ULONG>(icon_path.size()),
+                                   kEnglishProfileIconIndex,
+                                   nullptr,
+                                   0,
+                                   TRUE,
+                                   profile_registration_flags());
+    if (hr == TF_E_ALREADY_EXISTS) hr = S_OK;
+    if (SUCCEEDED(hr)) {
+        HRESULT verify_hr = S_OK;
+        if (!english_profile_registered(profiles, verify_hr)) hr = FAILED(verify_hr) ? verify_hr : E_FAIL;
+        else added_profile = SUCCEEDED(enum_hr) && !existed;
+    }
+    log_status(L"registration", L"operation=RegisterEnglishProfile hr=" + format_hresult(hr) +
+                                    L" profile=" + guid_to_string(GUID_LocalPinyinEnglishProfile) +
+                                    L" added_this_call=" + bool_field(added_profile) + L" target_dll=" + icon_path);
+    profiles->Release();
+    return hr;
+}
+
+HRESULT unregister_english_profile() {
+    ITfInputProcessorProfileMgr* profiles = nullptr;
+    HRESULT hr = CoCreateInstance(CLSID_TF_InputProcessorProfiles, nullptr, CLSCTX_INPROC_SERVER,
+                                  IID_PPV_ARGS(&profiles));
+    if (FAILED(hr)) return hr;
+    HRESULT enum_hr = S_OK;
+    if (!english_profile_registered(profiles, enum_hr)) {
+        profiles->Release();
+        return FAILED(enum_hr) ? enum_hr : S_OK;
+    }
+    hr = profiles->UnregisterProfile(CLSID_LocalPinyinTextService, kLangId, GUID_LocalPinyinEnglishProfile, 0);
     profiles->Release();
     return hr;
 }
@@ -1282,6 +1362,7 @@ HRESULT register_server() {
     const std::wstring previous_dll = read_com_inproc_server();
     ProfileSnapshot profile_before{};
     bool added_profile = false;
+    bool added_english_profile = false;
     std::vector<const TsfProfileCategory*> added_categories;
     HRESULT final_profile_register_hr = E_UNEXPECTED;
     bool final_profile_registered = false;
@@ -1317,9 +1398,15 @@ HRESULT register_server() {
             log_failure_line(L"RegisterComInprocServer32", hr, target_dll);
         }
     }
+    if (SUCCEEDED(hr)) {
+        hr = register_english_profile(target_dll, added_english_profile);
+        if (FAILED(hr)) log_failure_line(L"RegisterEnglishProfile", hr, target_dll);
+    }
 
     if (FAILED(hr)) {
         const HRESULT first_failure = hr;
+        const HRESULT english_rollback_hr = added_english_profile ? unregister_english_profile() : S_OK;
+        log_step_result(L"rollback English profile", english_rollback_hr);
         const HRESULT category_rollback_hr = rollback_added_tsf_categories(added_categories);
         const std::wstring profile_restore_icon = previous_dll.empty() ? target_dll : previous_dll;
         const HRESULT profile_rollback_hr = restore_tsf_profile(profile_before, profile_restore_icon, added_profile);
@@ -1390,6 +1477,10 @@ HRESULT unregister_server() {
     const HRESULT profile_hr = unregister_tsf_profile();
     log_step_result(L"unregister TSF profile", profile_hr);
     merge_failure(profile_hr, first_failure);
+
+    const HRESULT english_hr = unregister_english_profile();
+    log_step_result(L"unregister English TSF profile", english_hr);
+    merge_failure(english_hr, first_failure);
 
     const HRESULT tip_root_hr = unregister_tsf_tip_root();
     log_step_result(L"delete TSF TIP root", tip_root_hr);

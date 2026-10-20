@@ -117,7 +117,7 @@ New-Item -ItemType Directory -Path (Join-Path $stageRoot 'bin\x86') -Force | Out
 foreach ($binary in @('LocalPinyinIME.dll', 'LocalPinyinImeSetup.exe')) {
     Copy-Item -LiteralPath (Join-Path $buildRootX86 "bin\$binary") -Destination (Join-Path $stageRoot 'bin\x86')
 }
-Copy-Item -LiteralPath (Join-Path $sourceRoot 'resources\dictionary\core_zh_pinyin.tsv'), (Join-Path $sourceRoot 'resources\dictionary\local_core_zh_pinyin.tsv'), (Join-Path $sourceRoot 'resources\dictionary\context_zh.tsv'), (Join-Path $sourceRoot 'resources\dictionary\context_zh.lm'), (Join-Path $sourceRoot 'resources\dictionary\standard_zh_pinyin.tsv'), (Join-Path $sourceRoot 'resources\dictionary\continuations_zh.tsv'), (Join-Path $sourceRoot 'resources\dictionary\english_terms.tsv') -Destination (Join-Path $stageRoot 'bin\dictionary')
+Copy-Item -LiteralPath (Join-Path $sourceRoot 'resources\dictionary\core_zh_pinyin.tsv'), (Join-Path $sourceRoot 'resources\dictionary\local_core_zh_pinyin.tsv'), (Join-Path $sourceRoot 'resources\dictionary\context_zh.tsv'), (Join-Path $sourceRoot 'resources\dictionary\context_zh.lm'), (Join-Path $sourceRoot 'resources\dictionary\standard_zh_pinyin.tsv'), (Join-Path $sourceRoot 'resources\dictionary\continuations_zh.tsv'), (Join-Path $sourceRoot 'resources\dictionary\english_terms.tsv'), (Join-Path $sourceRoot 'resources\dictionary\english_words.tsv') -Destination (Join-Path $stageRoot 'bin\dictionary')
 New-Item -ItemType Directory -Path (Join-Path $stageRoot 'bin\dictionary\domains') -Force | Out-Null
 Copy-Item -Path (Join-Path $sourceRoot 'resources\dictionary\domains\*.tsv') -Destination (Join-Path $stageRoot 'bin\dictionary\domains')
 New-Item -ItemType Directory -Path (Join-Path $stageRoot 'bin\dictionary\panel') -Force | Out-Null

@@ -199,6 +199,11 @@ int main() {
 
     REQUIRE_EQ(localpinyin::toggled_input_mode(localpinyin::InputMode::Chinese), localpinyin::InputMode::English);
     REQUIRE_EQ(localpinyin::toggled_input_mode(localpinyin::InputMode::English), localpinyin::InputMode::Chinese);
+    // 本地拼音 toggles 中/英; 本地英文 toggles 辅 (spelling help) / 英.
+    REQUIRE_EQ(localpinyin::toggled_input_mode(localpinyin::InputMode::Chinese, false), localpinyin::InputMode::English);
+    REQUIRE_EQ(localpinyin::toggled_input_mode(localpinyin::InputMode::English, false), localpinyin::InputMode::Chinese);
+    REQUIRE_EQ(localpinyin::toggled_input_mode(localpinyin::InputMode::Assisted, true), localpinyin::InputMode::English);
+    REQUIRE_EQ(localpinyin::toggled_input_mode(localpinyin::InputMode::English, true), localpinyin::InputMode::Assisted);
     REQUIRE_TRUE(localpinyin::should_eat_backspace_for_composition(localpinyin::InputMode::Chinese, true, false));
     REQUIRE_TRUE(!localpinyin::should_eat_backspace_for_composition(localpinyin::InputMode::Chinese, false, false));
     REQUIRE_TRUE(!localpinyin::should_eat_backspace_for_composition(localpinyin::InputMode::English, true, false));

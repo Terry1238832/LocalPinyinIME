@@ -55,6 +55,13 @@ int main() {
     input_options.tab_translate = false;
     REQUIRE_TRUE(store.save_options(options, input_options));
     REQUIRE_TRUE(!store.load_input_mode_options().tab_translate);
+    // 本地英文's corrections are on until turned off, and round-trip.
+    REQUIRE_TRUE(store.load_input_mode_options().english_autocorrect);
+    input_options.english_autocorrect = false;
+    REQUIRE_TRUE(store.save_options(options, input_options));
+    REQUIRE_TRUE(!store.load_input_mode_options().english_autocorrect);
+    input_options.english_autocorrect = true;
+    REQUIRE_TRUE(store.save_options(options, input_options));
 
     // The style is saved on its own and leaves every other option alone.
     for (const auto style : kCandidateStyles) {
@@ -113,6 +120,10 @@ int main() {
     REQUIRE_EQ(loaded_status.thread_id, static_cast<unsigned long>(5678));
     REQUIRE_EQ(loaded_status.sequence, static_cast<unsigned long long>(42));
     REQUIRE_TRUE(loaded_status.updated_at_utc_ms > 0);
+    // 本地英文 with spelling help is a mode of its own.
+    status.mode = InputMode::Assisted;
+    REQUIRE_TRUE(store.save_runtime_input_mode_status(status));
+    REQUIRE_EQ(store.load_runtime_input_mode_status().mode, InputMode::Assisted);
 
     status.active = false;
     status.source = L"deactivate";

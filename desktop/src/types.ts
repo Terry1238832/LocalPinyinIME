@@ -37,6 +37,8 @@ export interface Settings {
   panelDoubleTab: boolean;
   panelResident: boolean;
   emojiCandidates: boolean;
+  // 本地英文: Space puts in the correction of a misspelled word (on by default).
+  englishAutocorrect: boolean;
   clipboardHistory: ClipboardHistory;
   clipboardRetentionDays: number;
   shiftToggleEnabled: boolean;
