@@ -477,6 +477,9 @@ begin
     RunRegisterX86AndVerify();
     RunRegisterAndVerify(NewDll, CurrentDll);
     RunEnableAndVerify(NewDll, CurrentDll);
+    // Now that this version is the registered one, the folders of earlier
+    // versions go (what running programs hold, at the next restart).
+    RunBestEffort('--remove-old-releases', 'remove earlier versions');
   end;
 end;
 

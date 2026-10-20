@@ -867,6 +867,72 @@ int enable_or_disable_current_user(bool enable) {
     return after == enable ? 0 : 1;
 }
 
+// Deletes `folder` and all in it, not following links (a junction is
+// removed, not what it points to). What running programs still hold is
+// deleted at the next restart (needs administrator rights).
+void remove_folder(const std::wstring& folder, size_t& deleted, size_t& at_restart) {
+    WIN32_FIND_DATAW data{};
+    HANDLE find = FindFirstFileW((folder + L"\\*").c_str(), &data);
+    if (find != INVALID_HANDLE_VALUE) {
+        do {
+            const std::wstring name = data.cFileName;
+            if (name == L"." || name == L"..") continue;
+            const std::wstring path = folder + L"\\" + name;
+            const bool directory = (data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) != 0;
+            if (directory && !(data.dwFileAttributes & FILE_ATTRIBUTE_REPARSE_POINT)) {
+                remove_folder(path, deleted, at_restart);
+                continue;
+            }
+            if (data.dwFileAttributes & FILE_ATTRIBUTE_READONLY) SetFileAttributesW(path.c_str(), FILE_ATTRIBUTE_NORMAL);
+            if (directory ? RemoveDirectoryW(path.c_str()) : DeleteFileW(path.c_str())) ++deleted;
+            else if (MoveFileExW(path.c_str(), nullptr, MOVEFILE_DELAY_UNTIL_REBOOT)) ++at_restart;
+        } while (FindNextFileW(find, &data));
+        FindClose(find);
+    }
+    // After the files scheduled in it, so it is empty by then.
+    if (!RemoveDirectoryW(folder.c_str())) MoveFileExW(folder.c_str(), nullptr, MOVEFILE_DELAY_UNTIL_REBOOT);
+}
+
+// --remove-old-releases: every version installs into a folder of its own,
+// LocalPinyinIME\releases\<version>, beside the earlier ones, which would pile
+// up (each holds the whole settings app). After an update this removes all
+// but the folder this tool runs from. Only folders named like a version
+// (0.20.3, 0.3.10-dev) go; files programs still hold (the input method in an
+// open application, a running recorder or settings window) go at restart.
+int remove_old_releases() {
+    namespace fs = std::filesystem;
+    wchar_t self[MAX_PATH * 2]{};
+    GetModuleFileNameW(nullptr, self, static_cast<DWORD>(std::size(self)));
+    const fs::path version_folder = fs::path(self).parent_path().parent_path();
+    const fs::path releases = version_folder.parent_path();
+    if (_wcsicmp(releases.filename().c_str(), L"releases") != 0 ||
+        _wcsicmp(releases.parent_path().filename().c_str(), L"LocalPinyinIME") != 0) {
+        std::wcerr << L"error: not run from a LocalPinyinIME\\releases\\<version> folder\n";
+        return 2;
+    }
+    size_t folders = 0, deleted = 0, at_restart = 0;
+    WIN32_FIND_DATAW data{};
+    HANDLE find = FindFirstFileW((releases.wstring() + L"\\*").c_str(), &data);
+    if (find != INVALID_HANDLE_VALUE) {
+        do {
+            const std::wstring name = data.cFileName;
+            const bool version_like = !name.empty() && name[0] >= L'0' && name[0] <= L'9' &&
+                name.find_first_not_of(L"0123456789.-abcdefghijklmnopqrstuvwxyz") == std::wstring::npos;
+            if (!(data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) || (data.dwFileAttributes & FILE_ATTRIBUTE_REPARSE_POINT) ||
+                !version_like || _wcsicmp(name.c_str(), version_folder.filename().c_str()) == 0)
+                continue;
+            ++folders;
+            remove_folder((releases / name).wstring(), deleted, at_restart);
+        } while (FindNextFileW(find, &data));
+        FindClose(find);
+    }
+    const std::wstring summary = L"old releases: " + std::to_wstring(folders) + L" folders, " + std::to_wstring(deleted) +
+                                 L" files deleted, " + std::to_wstring(at_restart) + L" at restart";
+    std::wcout << summary << L"\n";
+    append_diagnostic_line(L"LocalPinyinImeSetup " + summary);
+    return 0;
+}
+
 void print_usage() {
     std::wcout
         << L"LocalPinyinImeSetup " << LOCALPINYINIME_VERSION_STRING << L"\n"
@@ -876,7 +942,8 @@ void print_usage() {
         << L"  LocalPinyinImeSetup.exe --enable-current-user\n"
         << L"  LocalPinyinImeSetup.exe --disable-current-user\n"
         << L"  LocalPinyinImeSetup.exe --verify [--expected-dll <absolute LocalPinyinIME.dll>] [--require-current-user-enabled]\n"
-        << L"  LocalPinyinImeSetup.exe --version\n";
+        << L"  LocalPinyinImeSetup.exe --version\n"
+        << L"  LocalPinyinImeSetup.exe --remove-old-releases\n";
 }
 
 }  // namespace
@@ -892,7 +959,7 @@ int wmain(int argc, wchar_t** argv) {
         const std::wstring arg = argv[i];
         if (arg == L"--register-system" || arg == L"--unregister-system" ||
             arg == L"--enable-current-user" || arg == L"--disable-current-user" ||
-            arg == L"--verify" || arg == L"--version") {
+            arg == L"--verify" || arg == L"--version" || arg == L"--remove-old-releases") {
             if (!command.empty()) {
                 std::wcerr << L"error: only one command is allowed\n";
                 print_usage();
@@ -935,6 +1002,7 @@ int wmain(int argc, wchar_t** argv) {
                                L" diagnostic_log=" + g_diagnostic_log_path);
     }
 
+    if (command == L"--remove-old-releases") return remove_old_releases();
     if (command == L"--version") {
         std::wcout << L"product: LocalPinyinIME\n"
                    << L"displayName: " << LOCALPINYINIME_DISPLAY_NAME << L"\n"
