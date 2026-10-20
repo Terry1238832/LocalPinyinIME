@@ -127,32 +127,6 @@ export function InputPage({ state, saving, saveSettings }: SettingsPageProps) {
       </SettingRow>
     </SettingsGroup>
     <InputOptions settings={settings} saving={saving} onChange={next => void saveSettings(next)} />
-    <SettingsGroup id="group-english" title="本地英文">
-      <SettingRow title="在本地拼音和本地英文之间切换"
-        description="按下就换到另一个输入法，和 Win + 空格一样；用 CapsLock 的组合不会改变大小写状态。"
-        demo={<KeyDemo before="" keys={imeSwitchKeys.find(item => item.value === settings.imeSwitchKey)?.keys ?? ['Alt', 'CapsLock']} modes={['中', '英']} />}>
-        <div className="segmented" role="radiogroup" aria-label="切换输入法的快捷键">{imeSwitchKeys.map(item =>
-          <label key={item.value} className={settings.imeSwitchKey === item.value ? 'active' : undefined}>
-            <input type="radio" name="ime-switch-key" value={item.value} checked={settings.imeSwitchKey === item.value} disabled={saving}
-              onChange={() => void saveSettings({ ...settings, imeSwitchKey: item.value })} />{item.label}
-          </label>)}
-        </div>
-      </SettingRow>
-      <SettingRow title="整句输入"
-        description="打完一整句再放进去：按一下空格只是空格，句子接着打；连按两下空格放进整句，拼写、句首大写、a / an 等一起改好，紧接着按退格换回原样；Enter 原样放进去。关闭后按空格就把当前单词放进去。"
-        demo={<TypingDemo before="" keys="i saw a owl" candidates={['I saw an owl', 'i saw a owl']} after="I saw an owl" />}>
-        <Switch checked={settings.englishSentence} disabled={saving} label="整句输入"
-          onChange={englishSentence => void saveSettings({ ...settings, englishSentence })} />
-      </SettingRow>
-      <SettingRow title="自动纠正拼写"
-        description="在“本地英文”输入法里，打错的单词按空格或标点时改成正确的（teh → the，dont → don't），紧接着按退格改回原样，以后不再改它。关闭后按空格保持原样，正确的写法仍在候选里。"
-        demo={<TypingDemo before="" keys="teh" candidates={['the', 'teh', 'ten']} after="the" />}>
-        <Switch checked={settings.englishAutocorrect} disabled={saving} label="自动纠正拼写"
-          onChange={englishAutocorrect => void saveSettings({ ...settings, englishAutocorrect })} />
-      </SettingRow>
-      <SettingRow title="切换辅助拼写" description="在“本地英文”里按 Shift（开启“按 Shift 切换中英文”时）或 Ctrl + Space，在“辅”（候选与纠错）和“英”（直接输入）之间切换。Win + 空格在“本地拼音”和“本地英文”之间切换。"
-        demo={<KeyDemo before="hello" keys={['Ctrl', 'Space']} modes={['辅', '英']} />}><SettingStatus>始终可用</SettingStatus></SettingRow>
-    </SettingsGroup>
     <section className="legend" aria-labelledby="legend-title">
       <h2 className="block-title" id="legend-title">快捷键<span>中文模式下可用</span></h2>
       <ul className="legend-grid">{shortcuts.map(item =>
@@ -161,13 +135,6 @@ export function InputPage({ state, saving, saveSettings }: SettingsPageProps) {
     </section>
   </>;
 }
-
-const imeSwitchKeys: { value: Settings['imeSwitchKey']; label: string; keys: string[] }[] = [
-  { value: 'alt+capslock', label: 'Alt + CapsLock', keys: ['Alt', 'CapsLock'] },
-  { value: 'ctrl+capslock', label: 'Ctrl + CapsLock', keys: ['Ctrl', 'CapsLock'] },
-  { value: 'ctrl+alt+space', label: 'Ctrl + Alt + 空格', keys: ['Ctrl', 'Alt', 'Space'] },
-  { value: 'off', label: '不用', keys: [] },
-];
 
 export function LearningPage({ state, onState, notify }: { state: AppState; onState: (state: AppState) => void; notify: (message: string) => void }) {
   const [confirm, setConfirm] = useState(false);

@@ -7,12 +7,14 @@
 #include "../engine/input_tools.h"
 #include "../engine/pinyin_engine.h"
 #include "../engine/user_lexicon.h"
+#include "../ime/guids.h"
 #include "../settings/dictionary_catalog.h"
 #include "../settings/settings_store.h"
 #include "../vault/vault.h"
 #include "localpinyin_version.h"
 
 #include <windows.h>
+#include <msctf.h>
 #include <shellapi.h>
 #include <shlobj.h>
 #include <wincodec.h>
@@ -130,6 +132,57 @@ std::string ids_json(const std::wstring& ids) {
     return result + ']';
 }
 
+// 本地英文 in the user's list of input methods (Win + Space). A test or
+// portable data folder (LOCALPINYINIME_LOCALAPPDATA) never touches the list.
+bool isolated_data() {
+    return GetEnvironmentVariableW(L"LOCALPINYINIME_LOCALAPPDATA", nullptr, 0) > 1;
+}
+
+// 1 listed, 0 not, -1 unknown (not registered, or TSF unavailable).
+int english_ime_listed() {
+    const HRESULT init = CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
+    int listed = -1;
+    {
+        Microsoft::WRL::ComPtr<ITfInputProcessorProfiles> profiles;
+        BOOL enabled = FALSE;
+        if (SUCCEEDED(CoCreateInstance(CLSID_TF_InputProcessorProfiles, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&profiles))) &&
+            SUCCEEDED(profiles->IsEnabledLanguageProfile(CLSID_LocalPinyinTextService,
+                                                         MAKELANGID(LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED),
+                                                         GUID_LocalPinyinEnglishProfile, &enabled)))
+            listed = enabled ? 1 : 0;
+    }
+    if (SUCCEEDED(init)) CoUninitialize();
+    return listed;
+}
+
+std::wstring guid_text(REFGUID guid) {
+    wchar_t text[64]{};
+    StringFromGUID2(guid, text, 64);
+    return text;
+}
+
+// Adds 本地英文 to the list, or takes it out, as the installer does.
+bool list_english_ime(bool on) {
+    HMODULE input = LoadLibraryExW(L"input.dll", nullptr, LOAD_LIBRARY_SEARCH_SYSTEM32);
+    if (!input) return false;
+    using InstallLayoutOrTip = BOOL(WINAPI*)(LPCWSTR, DWORD);
+    const auto install = reinterpret_cast<InstallLayoutOrTip>(GetProcAddress(input, "InstallLayoutOrTip"));
+    constexpr DWORD kUninstall = 0x00000001;  // ILOT_UNINSTALL
+    const std::wstring spec = L"0x0804:" + guid_text(CLSID_LocalPinyinTextService) +
+                              guid_text(GUID_LocalPinyinEnglishProfile) + L";";
+    const BOOL ok = install && install(spec.c_str(), on ? 0 : kUninstall);
+    FreeLibrary(input);
+    return ok && english_ime_listed() == (on ? 1 : 0);
+}
+
+// What the settings show: the list itself where it can be read, so removing
+// 本地英文 in Windows' own settings shows here too.
+bool english_ime_shown(const InputModeOptions& input) {
+    if (isolated_data()) return input.english_ime;
+    const int listed = english_ime_listed();
+    return listed < 0 ? input.english_ime : listed == 1;
+}
+
 std::string settings_json(const SettingsStore& store) {
     const auto candidate = store.load_candidate_options();
     const auto input = store.load_input_mode_options();
@@ -153,6 +206,7 @@ std::string settings_json(const SettingsStore& store) {
            ",\"emojiCandidates\":" + (input.engine.emoji_candidates ? "true" : "false") +
            ",\"englishAutocorrect\":" + (input.english_autocorrect ? "true" : "false") +
            ",\"englishSentence\":" + (input.english_sentence ? "true" : "false") +
+           ",\"englishIme\":" + (english_ime_shown(input) ? "true" : "false") +
            ",\"imeSwitchKey\":" + json_string(input.ime_switch_key) +
            ",\"clipboardHistory\":" + json_string(
                input.clipboard_history == InputModeOptions::ClipboardHistory::On ? L"on"
@@ -531,7 +585,7 @@ std::string run(const std::vector<std::wstring>& args) {
             if (key == L"typoCorrection" || key == L"mixedEnglish" || key == L"digitPeriod" || key == L"digitPunctuation" ||
                 key == L"letterPunctuation" || key == L"codePunctuation" || key == L"tabTranslate" ||
                 key == L"panelDoubleTab" || key == L"panelResident" || key == L"emojiCandidates" ||
-                key == L"englishAutocorrect" || key == L"englishSentence")
+                key == L"englishAutocorrect" || key == L"englishSentence" || key == L"englishIme")
                 require(value == L"true" || value == L"false", L"开关选项必须是 true 或 false。");
             else if (key == L"imeSwitchKey")
                 require(value == L"alt+capslock" || value == L"ctrl+capslock" || value == L"ctrl+alt+space" || value == L"off",
@@ -577,12 +631,23 @@ std::string run(const std::vector<std::wstring>& args) {
             else if (key == L"emojiCandidates") input.engine.emoji_candidates = value == L"true";
             else if (key == L"englishAutocorrect") input.english_autocorrect = value == L"true";
             else if (key == L"englishSentence") input.english_sentence = value == L"true";
+            else if (key == L"englishIme") input.english_ime = value == L"true";
             else if (key == L"imeSwitchKey") input.ime_switch_key = value;
             else if (key == L"clipboardHistory")
                 input.clipboard_history = value == L"on" ? InputModeOptions::ClipboardHistory::On
                                         : value == L"off" ? InputModeOptions::ClipboardHistory::Off
                                                           : InputModeOptions::ClipboardHistory::Ask;
             else if (key == L"clipboardRetentionDays") input.clipboard_retention_days = std::stoul(value);
+        }
+        // Turning 本地英文 on or off changes the list first: should Windows
+        // refuse, nothing is saved.
+        const bool english_sent = std::any_of(named.begin(), named.end(), [](const auto& item) { return item.first == L"englishIme"; });
+        if (english_sent && !isolated_data()) {
+            const int listed = english_ime_listed();
+            if (listed >= 0 && (listed == 1) != input.english_ime)
+                require(list_english_ime(input.english_ime), input.english_ime
+                    ? L"Windows 没能把“本地英文”加入输入法列表，请稍后重试。"
+                    : L"Windows 没能从输入法列表中去掉“本地英文”，请稍后重试。");
         }
         require(store.save_options(candidate, input), L"无法保存设置，请检查文件权限。");
         notify_options_changed();

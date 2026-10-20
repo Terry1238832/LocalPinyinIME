@@ -7,6 +7,9 @@
 
 #include <array>
 #include <cstddef>
+#include <filesystem>
+#include <fstream>
+#include <string>
 #include <vector>
 
 namespace {
@@ -468,6 +471,29 @@ int main() {
     REQUIRE_EQ(failing_service->ActivateEx(&failing_thread_mgr, kClientId, 0), E_FAIL);
     REQUIRE_EQ(failing_thread_mgr.keystroke_mgr.preserve_count, 1);
     failing_service->Release();
+
+    // With 本地英文 turned off only Ctrl+Space is taken: Alt+CapsLock stays
+    // with the application.
+    {
+        wchar_t temp[MAX_PATH]{};
+        GetTempPathW(MAX_PATH, temp);
+        const std::filesystem::path root =
+            std::filesystem::path(temp) / (L"lp-english-off-" + std::to_wstring(GetCurrentProcessId()));
+        std::filesystem::create_directories(root / L"LocalPinyinIME");
+        std::ofstream(root / L"LocalPinyinIME" / L"settings.json") << "{\"inputMode\": {\"englishIme\": false}}\n";
+        SetEnvironmentVariableW(L"LOCALPINYINIME_LOCALAPPDATA", root.c_str());
+        FakeThreadMgr off_thread_mgr;
+        auto* off_service = new localpinyin::TextService();
+        REQUIRE_EQ(off_service->ActivateEx(&off_thread_mgr, kClientId, 0), S_OK);
+        REQUIRE_EQ(off_thread_mgr.keystroke_mgr.preserve_count, 1);
+        REQUIRE_TRUE(localpinyin::same_guid(off_thread_mgr.keystroke_mgr.preserved_guids[0],
+                                            localpinyin::GUID_LocalPinyinCtrlSpacePreservedKey));
+        REQUIRE_EQ(off_service->Deactivate(), S_OK);
+        REQUIRE_EQ(off_thread_mgr.keystroke_mgr.unpreserve_count, 1);
+        off_service->Release();
+        std::error_code ignored;
+        std::filesystem::remove_all(root, ignored);
+    }
 
     const auto& capabilities = localpinyin::required_tsf_profile_capabilities();
     REQUIRE_EQ(capabilities.size(), static_cast<size_t>(4));

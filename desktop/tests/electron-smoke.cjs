@@ -102,8 +102,9 @@ const pages = [
   { id: 'dictionary', label: '词库', heading: '词库' },
   { id: 'learning', label: '学习', heading: '学习' },
   { id: 'about', label: '关于', heading: '关于' },
-  // Third in the sidebar; last here so the indexes above stay put.
+  // Third and fourth in the sidebar; last here so the indexes above stay put.
   { id: 'panel', label: '工具面板', heading: '工具面板' },
+  { id: 'english', label: '英文', heading: '本地英文' },
 ];
 
 // PNG decoding stays in the test, so no image package is required to reject blank captures.
@@ -421,7 +422,7 @@ async function run() {
       const shell = document.querySelector('#root')?.firstElementChild;
       const nav = document.querySelector('nav');
       const sections = Array.from(document.querySelectorAll('section[id^="page-"]'));
-      const expected = ['appearance', 'input', 'panel', 'dictionary', 'learning', 'about'];
+      const expected = ['appearance', 'input', 'english', 'panel', 'dictionary', 'learning', 'about'];
       const buttons = Array.from(nav.querySelectorAll('button'));
       const failures = [];
       let frames = 0;
@@ -430,7 +431,7 @@ async function run() {
         requestAnimationFrame(() => { clearTimeout(timeout); resolve(); });
       });
       for (let iteration = 0; iteration < 80; iteration++) {
-        const index = iteration % 6;
+        const index = iteration % expected.length;
         buttons[index].click();
         await nextFrame(); await nextFrame();
         frames += 2;
@@ -444,7 +445,7 @@ async function run() {
       return { failures, frames, sections: sections.length, samePreview: document.querySelector('.ime-preview-pinyin')?.textContent === "sui'bian" };
     });
     assert.deepEqual(observations.failures, []);
-    assert.equal(observations.sections, 6);
+    assert.equal(observations.sections, 7);
     assert.equal(observations.samePreview, true);
     assert.equal(navigationCount, beforeNavigation, 'Clicking sidebar reloaded the document.');
     report.navigationFrames = observations.frames;
@@ -1056,6 +1057,40 @@ async function run() {
     assert.equal(await page.locator('.nav-badge').count(), 0);
     assert(feed.requests.every(url => url.startsWith('/releases') || url.startsWith('/download/')), 'Only the update feed was asked.');
     report.updates = { found: '99.0.0', verified: true, tamperedRefused: true, autoCheckToggle: true, requests: feed.requests.length };
+  });
+  await check('本地英文 has its own page: on or off, switch key, typing options and keys', async () => {
+    await navigate(pages.find(item => item.id === 'english'));
+    const english = page.locator('#page-english');
+    const ime = english.getByRole('switch', { name: '本地英文输入法', exact: true });
+    assert.equal(await ime.getAttribute('aria-checked'), 'true');
+    assert.match(await english.locator('.english-hero').textContent(), /Alt\s*\+?\s*CapsLock/);
+    const keys = english.getByRole('radiogroup', { name: '切换输入法的快捷键' });
+    await keys.locator('label', { hasText: 'Ctrl + CapsLock' }).click();
+    await waitState(value => value.settings.imeSwitchKey === 'ctrl+capslock');
+    const sentence = english.getByRole('switch', { name: '整句输入', exact: true });
+    await sentence.click();
+    await waitState(value => value.settings.englishSentence === false);
+    // Space twice is only listed for sentences.
+    await english.getByText('放进改好的整句', { exact: true }).waitFor({ state: 'detached' });
+    await sentence.click();
+    await waitState(value => value.settings.englishSentence === true);
+    await english.getByText('放进改好的整句', { exact: true }).waitFor();
+    // Off: the data folder here is a test one, so only the setting changes;
+    // the switch key is then neither taken nor chosen.
+    await ime.click();
+    await waitState(value => value.settings.englishIme === false);
+    assert.match(JSON.stringify(native('state').settings), /"englishIme":false/);
+    await english.getByText('切换到本地拼音', { exact: true }).waitFor({ state: 'detached' });
+    assert.equal(await keys.locator('input').first().isDisabled(), true);
+    await screenshot('english-off');
+    await ime.click();
+    await waitState(value => value.settings.englishIme === true);
+    await keys.locator('label', { hasText: 'Alt + CapsLock' }).click();
+    await waitState(value => value.settings.imeSwitchKey === 'alt+capslock');
+    await english.getByText('切换到本地拼音', { exact: true }).waitFor();
+    await screenshot('english-page');
+    // The input page no longer repeats these settings.
+    assert.equal(await page.locator('#page-input').getByRole('switch', { name: '整句输入', exact: true }).count(), 0);
   });
   await check('工具面板 settings save for the IME', async () => {
     await navigate(pages.find(item => item.id === 'panel'));

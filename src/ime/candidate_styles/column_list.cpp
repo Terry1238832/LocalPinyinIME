@@ -66,7 +66,8 @@ CandidateLayoutResult layout_column_list(const CandidateLayoutInput& input) {
 
     std::vector<int> text_widths(count), number_widths(count);
     for (size_t i = 0; i < count; ++i) {
-        text_widths[i] = f.candidate_width(i, result.candidate_font_px);
+        // Measured at the current row's weight (semibold), so it is never cut.
+        text_widths[i] = f.candidate_width(i, result.candidate_font_px, FW_SEMIBOLD);
         number_widths[i] = f.digit_width(i, result.number_font_px);
     }
     const int controls_space = controls_width(result.paging_visible, input.settings_button, controls);

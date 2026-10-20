@@ -504,7 +504,7 @@ TextService::TextService() {
     candidate_window_.set_theme_changed_callback([this]() { language_bar_.refresh_icon(); });
     candidate_window_.set_options_changed_callback([this]() {
         const auto options = settings_store_.load_input_mode_options();
-        if (options.ime_switch_key != switch_key_setting_) preserve_switch_key();
+        if (switch_key_setting(options) != switch_key_setting_) preserve_switch_key();
         if (prediction_active_ && (!options.prediction_enabled || options.tab_translate))
             dismiss_prediction(L"prediction_disabled");
         else if (candidate_context_) update_candidate_window(candidate_context_);
@@ -814,7 +814,7 @@ HRESULT TextService::preserve_ctrl_space_key() {
 
 HRESULT TextService::preserve_switch_key() {
     if (!thread_mgr_) return S_OK;
-    const std::wstring setting = settings_store_.load_input_mode_options().ime_switch_key;
+    const std::wstring setting = switch_key_setting(settings_store_.load_input_mode_options());
     if (switch_key_preserved_ && setting == switch_key_setting_) return S_OK;
     unpreserve_switch_key();
     switch_key_setting_ = setting;

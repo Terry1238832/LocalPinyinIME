@@ -125,8 +125,8 @@ add_library(LocalPinyinIME SHARED src/ime/dllmain.cpp src/ime/exports.cpp src/im
 target_link_libraries(LocalPinyinIME PRIVATE pinyin_service)
 localpinyin_add_version_resource(LocalPinyinIME "本地拼音" "LocalPinyinIME.dll" "VFT_DLL")
 localpinyin_copy_dictionary_resource(LocalPinyinIME)
-add_executable(LocalPinyinSettingsBridge src/tools/settings_bridge.cpp)
-target_link_libraries(LocalPinyinSettingsBridge PRIVATE pinyin_settings pinyin_clipboard pinyin_vault windowscodecs ole32 advapi32)
+add_executable(LocalPinyinSettingsBridge src/tools/settings_bridge.cpp src/ime/guids.cpp)
+target_link_libraries(LocalPinyinSettingsBridge PRIVATE pinyin_settings pinyin_clipboard pinyin_vault windowscodecs ole32 uuid advapi32)
 localpinyin_add_version_resource(LocalPinyinSettingsBridge "本地拼音设置服务" "LocalPinyinSettingsBridge.exe" "VFT_APP")
 localpinyin_copy_dictionary_resource(LocalPinyinSettingsBridge)
 # Records copies for the tool panel while clipboard history is on; reads the

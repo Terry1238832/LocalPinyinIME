@@ -9,7 +9,7 @@
 
 两个都挂在中文下，任务栏才显示我们自己画的“中 / 英 / 辅”图标；切换它们只换输入法，不换系统的输入语言。按 Shift 切换要先在“输入”页打开“按 Shift 切换中英文”（两个输入法共用这一项），Ctrl + Space 始终可用。
 
-**Alt + CapsLock**（0.22.0 起，默认）在本地拼音和本地英文之间直接切换，和 Win + 空格一样对所有程序生效；CapsLock 的大小写状态不变（Windows 按下时会切换一次，松开后输入法再按一次换回来）。“设置 › 输入 › 本地英文”里可以改成 Ctrl + CapsLock、Ctrl + Alt + 空格，或者不用（`inputMode.imeSwitchKey`：`alt+capslock`、`ctrl+capslock`、`ctrl+alt+space`、`off`）。别的输入法已经占用这个组合时，这个快捷键不起作用。
+**Alt + CapsLock**（0.22.0 起，默认）在本地拼音和本地英文之间直接切换，和 Win + 空格一样对所有程序生效；CapsLock 的大小写状态不变（Windows 按下时会切换一次，松开后输入法再按一次换回来）。“设置 › 英文”里可以改成 Ctrl + CapsLock、Ctrl + Alt + 空格，或者不用（`inputMode.imeSwitchKey`：`alt+capslock`、`ctrl+capslock`、`ctrl+alt+space`、`off`）。别的输入法已经占用这个组合时，这个快捷键不起作用。
 
 ## 整句输入（0.22.0 起默认）
 
@@ -89,15 +89,20 @@
 
 ## 设置
 
-“输入”页“本地英文”组：
+0.22.1 起本地英文在设置里有自己的“英文”页（以前是“输入”页里的一组）：
 
 | 设置 | 键 | 默认 |
 | --- | --- | --- |
+| 本地英文输入法 | `inputMode.englishIme` | 开 |
 | 自动纠正拼写 | `inputMode.englishAutocorrect` | 开 |
 | 整句输入 | `inputMode.englishSentence` | 开 |
 | 在本地拼音和本地英文之间切换 | `inputMode.imeSwitchKey` | Alt + CapsLock |
 
 关闭后按空格总是原样，改法仍在候选里，可以用数字选。
+
+“本地英文输入法”关闭时，设置程序把它从 Windows 的输入法列表（Win + 空格）里去掉，和在 Windows 设置里删掉它一样，切换快捷键也不再占用；打开时再加回来。本地拼音不受影响。页面显示的是列表里的实际情况：在 Windows 设置里删掉本地英文，这里也显示关闭。以后升级时，安装程序不会把关掉的本地英文加回来。
+
+页面最后列出本地英文里能用的快捷键：切换到本地拼音（按当前设置）、Win + 空格、空格和连按两下空格、1–9 选词、Tab 放进候选不加空格、Enter 原样、紧接着按退格换回原样、左右翻页、Esc、Ctrl + Space 开关辅助拼写、连按两下 Tab 打开工具面板。
 
 ## 词表和数据来源
 

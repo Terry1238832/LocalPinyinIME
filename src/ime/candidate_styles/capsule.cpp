@@ -46,7 +46,9 @@ CandidateLayoutResult layout_capsule(const CandidateLayoutInput& input) {
 
     std::vector<int> text_widths(count), number_widths(count);
     for (size_t i = 0; i < count; ++i) {
-        text_widths[i] = f.candidate_width(i, result.candidate_font_px);
+        // Measured at the pill's weight: the current choice is drawn semibold
+        // and must not lose its last letters.
+        text_widths[i] = f.candidate_width(i, result.candidate_font_px, FW_SEMIBOLD);
         number_widths[i] = f.digit_width(i, result.number_font_px);
     }
     const auto slot_width = [&](size_t i) { return pill_pad * 2 + number_widths[i] + number_gap + text_widths[i]; };

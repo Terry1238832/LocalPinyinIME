@@ -2,15 +2,17 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { BrandMark, Icon, type IconName } from './icons';
 import { asError, ErrorNotice } from './components';
 import { AppearancePage, InputPage, LearningPage, AboutPage } from './pages';
+import { EnglishPage } from './EnglishPage';
 import { DictionaryPage } from './dictionary';
 import { ClipboardQuestion, PanelPage } from './PanelPage';
 import { CommandPalette, requestPageCommand, type Command } from './CommandPalette';
 import type { AppState, Settings, Theme, UserEntry , UpdateStatus } from './types';
 
-type PageId = 'appearance' | 'input' | 'panel' | 'dictionary' | 'learning' | 'about';
+type PageId = 'appearance' | 'input' | 'english' | 'panel' | 'dictionary' | 'learning' | 'about';
 const navigation: { id: PageId; label: string; icon: IconName; keywords: string }[] = [
   { id: 'appearance', label: '外观', icon: 'appearance', keywords: 'waiguan wg 主题 zhuti 字号 theme appearance' },
   { id: 'input', label: '输入', icon: 'input', keywords: 'shuru sr 切换 联想 快捷键 input shortcut' },
+  { id: 'english', label: '英文', icon: 'english', keywords: 'yingwen yw 本地英文 english 整句 拼写 纠错 capslock 快捷键' },
   { id: 'panel', label: '工具面板', icon: 'panel', keywords: 'gongju mianban gj 符号 表情 颜文字 剪贴板 jianqieban tab panel clipboard emoji' },
   { id: 'dictionary', label: '词库', icon: 'dictionary', keywords: 'ciku ck 个人词语 dictionary words' },
   { id: 'learning', label: '学习', icon: 'learning', keywords: 'xuexi xx 记录 learning history' },
@@ -93,7 +95,7 @@ export default function App() {
 
   const go = (id: PageId) => { setPage(id); content.current?.scrollTo({ top: 0 }); };
 
-  // Ctrl+K opens the command palette; Ctrl+1–6 switch pages.
+  // Ctrl+K opens the command palette; Ctrl+1–7 switch pages.
   useEffect(() => {
     const keydown = (event: KeyboardEvent) => {
       if (!event.ctrlKey || event.altKey || event.metaKey || event.shiftKey) return;
@@ -151,6 +153,10 @@ export default function App() {
         keywords: 'lianxiang prediction 联想', run: () => void saveSettings({ ...settings, predictionEnabled: !settings.predictionEnabled }) },
       { id: 'toggle-translate', group: '设置', icon: 'spark', title: `${settings.tabTranslate ? '关闭' : '开启'}“Tab 键翻译成英文”`,
         keywords: 'fanyi yingwen translate english tab 翻译', run: () => void saveSettings({ ...settings, tabTranslate: !settings.tabTranslate }) },
+      { id: 'toggle-english', group: '设置', icon: 'english', title: `${settings.englishIme ? '关闭' : '开启'}本地英文输入法`,
+        keywords: 'bendi yingwen english ime 本地英文 输入法', run: () => void saveSettings({ ...settings, englishIme: !settings.englishIme }) },
+      { id: 'toggle-english-sentence', group: '设置', icon: 'english', title: `${settings.englishSentence ? '关闭' : '开启'}英文“整句输入”`,
+        keywords: 'zhengju shuru english sentence 整句', run: () => void saveSettings({ ...settings, englishSentence: !settings.englishSentence }) },
       { id: 'toggle-panel', group: '设置', icon: 'panel', title: `${settings.panelDoubleTab ? '关闭' : '开启'}“连按两下 Tab 打开工具面板”`,
         keywords: 'gongju mianban tab panel 工具面板', run: () => void saveSettings({ ...settings, panelDoubleTab: !settings.panelDoubleTab }) },
       { id: 'toggle-clipboard', group: '设置', icon: 'clipboard', title: `${settings.clipboardHistory === 'on' ? '关闭' : '开启'}剪贴板记录`,
@@ -208,6 +214,7 @@ export default function App() {
           <div className="global-message"><ErrorNotice message={error} /></div>
           <section id="page-appearance" className="page" hidden={page !== 'appearance'}><AppearancePage state={state} saving={saving} saveSettings={saveSettings} /></section>
           <section id="page-input" className="page" hidden={page !== 'input'}><InputPage state={state} saving={saving} saveSettings={saveSettings} /></section>
+          <section id="page-english" className="page" hidden={page !== 'english'}><EnglishPage state={state} saving={saving} saveSettings={saveSettings} /></section>
           <section id="page-panel" className="page" hidden={page !== 'panel'}><PanelPage state={state} saving={saving} saveSettings={saveSettings} notify={setNotice} /></section>
           <section id="page-dictionary" className="page" hidden={page !== 'dictionary'}><DictionaryPage state={state} entries={entries} onEntries={updateEntries} loadError={lexiconError} notify={setNotice} /></section>
           <section id="page-learning" className="page" hidden={page !== 'learning'}><LearningPage state={state} onState={setState} notify={setNotice} /></section>

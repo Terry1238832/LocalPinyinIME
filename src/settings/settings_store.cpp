@@ -249,6 +249,8 @@ InputModeOptions SettingsStore::load_input_mode_options() const {
     options.english_autocorrect = parse_bool(setting_value(text, L"englishAutocorrect"), true);
     // Added in 0.22.
     options.english_sentence = parse_bool(setting_value(text, L"englishSentence"), true);
+    // Added in 0.22.1.
+    options.english_ime = parse_bool(setting_value(text, L"englishIme"), true);
     const std::wstring switch_key = setting_value(text, L"imeSwitchKey");
     if (switch_key == L"alt+capslock" || switch_key == L"ctrl+capslock" || switch_key == L"ctrl+alt+space" || switch_key == L"off")
         options.ime_switch_key = switch_key;
@@ -334,6 +336,8 @@ bool SettingsStore::save_options(const CandidateWindowOptions& candidate_options
     text += input_mode_options.english_autocorrect ? L"true" : L"false";
     text += L",\n    \"englishSentence\": ";
     text += input_mode_options.english_sentence ? L"true" : L"false";
+    text += L",\n    \"englishIme\": ";
+    text += input_mode_options.english_ime ? L"true" : L"false";
     text += L",\n    \"imeSwitchKey\": \"";
     text += input_mode_options.ime_switch_key;
     text += L"\"";

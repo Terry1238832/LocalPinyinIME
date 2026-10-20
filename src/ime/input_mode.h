@@ -44,6 +44,9 @@ struct InputModeOptions {
     // space, Space twice puts the sentence in (corrected); off, Space puts in
     // each word on its own.
     bool english_sentence = true;
+    // 本地英文 is in the user's list of input methods (the settings app adds
+    // or removes it there); off, the switch key below is not taken either.
+    bool english_ime = true;
     // The key that switches between 本地拼音 and 本地英文: alt+capslock,
     // ctrl+capslock, ctrl+alt+space or off.
     std::wstring ime_switch_key = L"alt+capslock";
@@ -55,6 +58,11 @@ struct InputModeOptions {
     // Fuzzy pinyin, spelling correction, Chinese-English mixing, double pinyin.
     EngineInputOptions engine;
 };
+
+// The switch key in effect: none while 本地英文 is turned off.
+[[nodiscard]] inline std::wstring switch_key_setting(const InputModeOptions& options) {
+    return options.english_ime ? options.ime_switch_key : L"off";
+}
 
 struct ModifierKeyState {
     bool ctrl = false;

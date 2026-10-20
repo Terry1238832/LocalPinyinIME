@@ -95,7 +95,7 @@ class SettingsBridgeContract(unittest.TestCase):
         }), encoding="utf-8")
         for theme, size, shift in (("dark", "7", "true"), ("system", "1", "false"), ("light", "4", "true")):
             expected = {"theme": theme, "textSize": int(size), "candidateStyle": "flow",
-                        "shiftToggleEnabled": shift == "true", "predictionEnabled": False, "typoCorrection": True, "mixedEnglish": True, "fuzzyPinyin": [], "doublePinyin": "none", "usageDomains": [], "digitPeriod": True, "digitPunctuation": True, "letterPunctuation": False, "codePunctuation": True, "tabTranslate": False, "panelDoubleTab": True, "panelResident": False, "emojiCandidates": True, "englishAutocorrect": True, "englishSentence": True, "imeSwitchKey": "alt+capslock", "clipboardHistory": "ask", "clipboardRetentionDays": 7}
+                        "shiftToggleEnabled": shift == "true", "predictionEnabled": False, "typoCorrection": True, "mixedEnglish": True, "fuzzyPinyin": [], "doublePinyin": "none", "usageDomains": [], "digitPeriod": True, "digitPunctuation": True, "letterPunctuation": False, "codePunctuation": True, "tabTranslate": False, "panelDoubleTab": True, "panelResident": False, "emojiCandidates": True, "englishAutocorrect": True, "englishSentence": True, "englishIme": True, "imeSwitchKey": "alt+capslock", "clipboardHistory": "ask", "clipboardRetentionDays": 7}
             self.assertEqual(self.call("save-settings", theme, size, shift), {"settings": expected})
             self.assertEqual(self.call("state")["settings"], expected)
             self.assertFalse(json.loads(settings.read_text(encoding="utf-8"))["candidateWindow"]["showKeyHints"])
@@ -111,11 +111,11 @@ class SettingsBridgeContract(unittest.TestCase):
             "inputMode": {"shiftToggleEnabled": False, "nextWordPrediction": True},
         }), encoding="utf-8")
         self.assertEqual(self.call("state")["settings"], {"theme": "dark", "textSize": 6, "candidateStyle": "flow",
-                                                          "shiftToggleEnabled": False, "predictionEnabled": True, "typoCorrection": True, "mixedEnglish": True, "fuzzyPinyin": [], "doublePinyin": "none", "usageDomains": [], "digitPeriod": True, "digitPunctuation": True, "letterPunctuation": False, "codePunctuation": True, "tabTranslate": False, "panelDoubleTab": True, "panelResident": False, "emojiCandidates": True, "englishAutocorrect": True, "englishSentence": True, "imeSwitchKey": "alt+capslock", "clipboardHistory": "ask", "clipboardRetentionDays": 7})
+                                                          "shiftToggleEnabled": False, "predictionEnabled": True, "typoCorrection": True, "mixedEnglish": True, "fuzzyPinyin": [], "doublePinyin": "none", "usageDomains": [], "digitPeriod": True, "digitPunctuation": True, "letterPunctuation": False, "codePunctuation": True, "tabTranslate": False, "panelDoubleTab": True, "panelResident": False, "emojiCandidates": True, "englishAutocorrect": True, "englishSentence": True, "englishIme": True, "imeSwitchKey": "alt+capslock", "clipboardHistory": "ask", "clipboardRetentionDays": 7})
         for style in ("rail", "type", "glass", "flow"):
             saved = self.call("save-settings", "dark", "6", "false", "true", style)["settings"]
             self.assertEqual(saved, {"theme": "dark", "textSize": 6, "candidateStyle": style,
-                                     "shiftToggleEnabled": False, "predictionEnabled": True, "typoCorrection": True, "mixedEnglish": True, "fuzzyPinyin": [], "doublePinyin": "none", "usageDomains": [], "digitPeriod": True, "digitPunctuation": True, "letterPunctuation": False, "codePunctuation": True, "tabTranslate": False, "panelDoubleTab": True, "panelResident": False, "emojiCandidates": True, "englishAutocorrect": True, "englishSentence": True, "imeSwitchKey": "alt+capslock", "clipboardHistory": "ask", "clipboardRetentionDays": 7})
+                                     "shiftToggleEnabled": False, "predictionEnabled": True, "typoCorrection": True, "mixedEnglish": True, "fuzzyPinyin": [], "doublePinyin": "none", "usageDomains": [], "digitPeriod": True, "digitPunctuation": True, "letterPunctuation": False, "codePunctuation": True, "tabTranslate": False, "panelDoubleTab": True, "panelResident": False, "emojiCandidates": True, "englishAutocorrect": True, "englishSentence": True, "englishIme": True, "imeSwitchKey": "alt+capslock", "clipboardHistory": "ask", "clipboardRetentionDays": 7})
             self.assertEqual(self.call("state")["settings"], saved)
             stored = json.loads(settings.read_text(encoding="utf-8"))["candidateWindow"]
             self.assertEqual(stored["style"], style)
@@ -255,6 +255,14 @@ class SettingsBridgeContract(unittest.TestCase):
         self.assertEqual(json.loads(settings.read_text(encoding="utf-8"))["inputMode"]["englishAutocorrect"], False)
         self.call("save-settings", "light", "4", "false", "false", "flow", "englishAutocorrect=maybe", success=False)
         self.call("save-settings", "light", "4", "false", "false", "flow", "englishAutocorrect=true")
+        # 本地英文 itself (0.22.1): with a test data folder only the setting
+        # changes, never the Windows list of input methods.
+        self.assertEqual(self.call("state")["settings"]["englishIme"], True)
+        saved = self.call("save-settings", "light", "4", "false", "false", "flow", "englishIme=false")["settings"]
+        self.assertEqual(saved["englishIme"], False)
+        self.assertEqual(json.loads(settings.read_text(encoding="utf-8"))["inputMode"]["englishIme"], False)
+        self.call("save-settings", "light", "4", "false", "false", "flow", "englishIme=no", success=False)
+        self.assertEqual(self.call("save-settings", "light", "4", "false", "false", "flow", "englishIme=true")["settings"]["englishIme"], True)
 
     def test_context_preview_and_prediction_persistence(self) -> None:
         before = self.snapshot()
@@ -370,7 +378,7 @@ class SettingsBridgeContract(unittest.TestCase):
         self.assertEqual(self.call("state")["learning"], {"count": 0, "capacity": 2048})
         self.assertEqual(self.call("user-list"), personal)
         self.assertEqual(self.call("state")["settings"], {"theme": "dark", "textSize": 5, "candidateStyle": "flow",
-                                                          "shiftToggleEnabled": True, "predictionEnabled": False, "typoCorrection": True, "mixedEnglish": True, "fuzzyPinyin": [], "doublePinyin": "none", "usageDomains": [], "digitPeriod": True, "digitPunctuation": True, "letterPunctuation": False, "codePunctuation": True, "tabTranslate": False, "panelDoubleTab": True, "panelResident": False, "emojiCandidates": True, "englishAutocorrect": True, "englishSentence": True, "imeSwitchKey": "alt+capslock", "clipboardHistory": "ask", "clipboardRetentionDays": 7})
+                                                          "shiftToggleEnabled": True, "predictionEnabled": False, "typoCorrection": True, "mixedEnglish": True, "fuzzyPinyin": [], "doublePinyin": "none", "usageDomains": [], "digitPeriod": True, "digitPunctuation": True, "letterPunctuation": False, "codePunctuation": True, "tabTranslate": False, "panelDoubleTab": True, "panelResident": False, "emojiCandidates": True, "englishAutocorrect": True, "englishSentence": True, "englishIme": True, "imeSwitchKey": "alt+capslock", "clipboardHistory": "ask", "clipboardRetentionDays": 7})
         self.assertEqual(self.call("clear-learning"), {"cleared": True})
 
     def test_valid_runtime_status_is_reported_and_not_rewritten(self) -> None:

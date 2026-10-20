@@ -205,6 +205,12 @@ int main() {
         REQUIRE_TRUE(localpinyin::ime_switch_preserved_key(L"ctrl+alt+space", &key));
         REQUIRE_TRUE(key.uVKey == VK_SPACE && key.uModifiers == (TF_MOD_CONTROL | TF_MOD_ALT));
         REQUIRE_TRUE(!localpinyin::ime_switch_preserved_key(L"off", &key));
+        // With 本地英文 turned off the switch key is not taken.
+        localpinyin::InputModeOptions options;
+        options.ime_switch_key = L"ctrl+capslock";
+        REQUIRE_EQ(localpinyin::switch_key_setting(options), std::wstring(L"ctrl+capslock"));
+        options.english_ime = false;
+        REQUIRE_EQ(localpinyin::switch_key_setting(options), std::wstring(L"off"));
     }
 
     REQUIRE_EQ(localpinyin::toggled_input_mode(localpinyin::InputMode::Chinese), localpinyin::InputMode::English);

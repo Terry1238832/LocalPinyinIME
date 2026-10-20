@@ -791,6 +791,32 @@ int main() {
         REQUIRE_EQ(seven.items.size(), size_t{6});
     }
 
+    // Capsule and Column List draw the current choice semibold, which runs
+    // wider: it still gets the room it needs ("what a beautiful" kept its l).
+    for (const auto style : {CandidateStyle::Capsule, CandidateStyle::ColumnList}) {
+        const auto width_at = [](const std::wstring& text, int font_px, int weight) {
+            return static_cast<int>(text.size()) * font_px * (weight >= 600 ? 62 : 52) / 100;
+        };
+        CandidateLayoutInput input;
+        input.composition_text = L"what a beautifule";
+        input.candidate_texts = {L"what a beautiful", L"what a beautifule"};
+        input.caret_rect = middle;
+        input.work_area = work;
+        input.options.style = style;
+        input.measure = [&](const std::wstring& text, int font_px, int weight, CandidateFontFace) {
+            return width_at(text, font_px, weight);
+        };
+        for (const size_t selected : {size_t{0}, size_t{1}}) {
+            input.selected_index = selected;
+            const auto layout = make_candidate_layout(input);
+            REQUIRE_EQ(layout.items.size(), size_t{2});
+            for (const auto& item : layout.items) {
+                REQUIRE_TRUE(!item.truncated);
+                REQUIRE_TRUE(width(item.text_bounds) >= width_at(item.display_text, layout.candidate_font_px, FW_SEMIBOLD));
+            }
+        }
+    }
+
     // Split-Flap: every character on a tile of one shared width; long
     // candidates show as many tiles as fit. Nothing slides: the amber tiles
     // stay with the current choice.

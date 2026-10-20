@@ -42,6 +42,8 @@ export interface Settings {
   // 本地英文: a sentence is typed whole (Space is a space, Space twice puts it
   // in); off, Space puts in each word.
   englishSentence: boolean;
+  // 本地英文 is in Windows' list of input methods (Win + Space).
+  englishIme: boolean;
   // Switching between 本地拼音 and 本地英文.
   imeSwitchKey: 'alt+capslock' | 'ctrl+capslock' | 'ctrl+alt+space' | 'off';
   clipboardHistory: ClipboardHistory;

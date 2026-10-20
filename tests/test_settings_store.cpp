@@ -62,6 +62,14 @@ int main() {
     REQUIRE_TRUE(!store.load_input_mode_options().english_autocorrect);
     input_options.english_autocorrect = true;
     REQUIRE_TRUE(store.save_options(options, input_options));
+    // 本地英文 itself is on until turned off; off, it takes no switch key.
+    REQUIRE_TRUE(store.load_input_mode_options().english_ime);
+    input_options.english_ime = false;
+    REQUIRE_TRUE(store.save_options(options, input_options));
+    REQUIRE_TRUE(!store.load_input_mode_options().english_ime);
+    REQUIRE_EQ(switch_key_setting(store.load_input_mode_options()), std::wstring(L"off"));
+    input_options.english_ime = true;
+    REQUIRE_TRUE(store.save_options(options, input_options));
 
     // The style is saved on its own and leaves every other option alone.
     for (const auto style : kCandidateStyles) {

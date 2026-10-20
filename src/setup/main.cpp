@@ -818,6 +818,30 @@ HRESULT load_install_layout_or_tip(HMODULE& input_module, InstallLayoutOrTipFn& 
     return S_OK;
 }
 
+// Whether the user turned 本地英文 off in the settings ("englishIme": false
+// in settings.json): an update then leaves it out of the list.
+bool english_turned_off() {
+    std::wstring base;
+    wchar_t override_path[MAX_PATH * 2]{};
+    const DWORD length = GetEnvironmentVariableW(L"LOCALPINYINIME_LOCALAPPDATA", override_path,
+                                                 static_cast<DWORD>(std::size(override_path)));
+    if (length > 0 && length < std::size(override_path)) {
+        base = override_path;
+    } else {
+        PWSTR path = nullptr;
+        if (FAILED(SHGetKnownFolderPath(FOLDERID_LocalAppData, 0, nullptr, &path))) return false;
+        base = path;
+        CoTaskMemFree(path);
+    }
+    std::ifstream file(std::filesystem::path(base) / L"LocalPinyinIME" / L"settings.json", std::ios::binary);
+    if (!file) return false;
+    const std::string text((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+    const size_t key = text.find("\"englishIme\"");
+    if (key == std::string::npos) return false;
+    const size_t value = text.find_first_not_of(" \t\r\n:", key + 12);
+    return value != std::string::npos && text.compare(value, 5, "false") == 0;
+}
+
 int enable_or_disable_current_user(bool enable) {
     std::wcout << L"ProfileSpec canonical: " << kProfileSpec << L"\n"
                << L"ProfileSpec compact equivalent: " << kProfileSpecCompact << L"\n"
@@ -834,10 +858,13 @@ int enable_or_disable_current_user(bool enable) {
     const HRESULT english_hr = query_current_user_enabled(english_before, localpinyin::GUID_LocalPinyinEnglishProfile);
     std::wcout << L"before.IsEnabledLanguageProfile English HRESULT: " << hresult_hex(english_hr) << L"\n"
                << L"English enabled before: " << bool_text(english_before) << L"\n";
-    // An English profile that is not registered (an older DLL) is left alone.
+    // An English profile that is not registered (an older DLL) is left alone,
+    // and so is one the user turned off in the settings.
     const bool english_known = SUCCEEDED(english_hr);
+    const bool english_wanted = english_known && !(enable && !english_before && english_turned_off());
+    if (english_known && !english_wanted) std::wcout << L"English turned off in the settings: left out\n";
 
-    if (enable && before && (english_before || !english_known)) {
+    if (enable && before && (english_before || !english_wanted)) {
         std::wcout << L"already enabled\n";
         return 0;
     }
@@ -848,7 +875,7 @@ int enable_or_disable_current_user(bool enable) {
     // Upgrades enable 本地英文 beside an already enabled 本地拼音.
     std::wstring spec;
     if (before != enable) spec += kProfileSpec;
-    if (english_known && english_before != enable) spec += kEnglishProfileSpec;
+    if (english_wanted && english_before != enable) spec += kEnglishProfileSpec;
 
     HMODULE input = nullptr;
     InstallLayoutOrTipFn install = nullptr;
@@ -883,7 +910,7 @@ int enable_or_disable_current_user(bool enable) {
     if (FAILED(hr)) {
         return 1;
     }
-    return after == enable && (!english_known || english_after == enable) ? 0 : 1;
+    return after == enable && (!english_wanted || english_after == enable) ? 0 : 1;
 }
 
 // Deletes `folder` and all in it, not following links (a junction is

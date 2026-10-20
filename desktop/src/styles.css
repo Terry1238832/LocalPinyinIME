@@ -265,6 +265,15 @@ input[type="range"]:disabled { opacity: .5; }
 .size-value { flex: none; min-width: 44px; font: 600 var(--size-title)/1 var(--font-display); text-align: right; font-variant-numeric: tabular-nums; }
 .size-value span { margin-left: 2px; font: 400 11px var(--font-sans); color: var(--text-3); }
 
+/* ── 本地英文: the input method's own card ────────────────────── */
+.english-hero { display: flex; align-items: center; gap: 18px; padding: 18px 20px; border-radius: var(--radius-xl); background: var(--glass); border: 1px solid var(--border); }
+.english-mark { flex: none; display: grid; place-items: center; width: 52px; height: 52px; border-radius: 14px; background: var(--text-3); color: #FFFFFF; font: 600 26px/1 var(--font-display); transition: background var(--dur-base), box-shadow var(--dur-base); }
+.english-hero.on .english-mark { background: var(--accent); box-shadow: 0 8px 18px rgba(26, 111, 232, .28); }
+.english-hero-copy { flex: 1; min-width: 0; }
+.english-hero-copy h2 { font-size: var(--size-title-sm); font-weight: 600; }
+.english-hero-copy p { margin-top: 4px; color: var(--text-2); font-size: var(--size-body-sm); line-height: 1.6; }
+.english-hero-copy .keys { vertical-align: middle; }
+
 /* ── 输入: settings rows (settings.css) and a key legend ─────── */
 
 
