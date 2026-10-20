@@ -73,6 +73,14 @@ int monitor_dpi(const RECT& rect) {
     return static_cast<int>(GetDpiForSystem());
 }
 
+// A clock face (the recently used category) centered on (x, y).
+void clock_icon(ModernRenderer& canvas, float x, float y, float radius, COLORREF color, float stroke) {
+    const RECT face{static_cast<int>(x - radius), static_cast<int>(y - radius), static_cast<int>(x + radius), static_cast<int>(y + radius)};
+    canvas.outline(face, radius, color, stroke);
+    canvas.line(x, y - radius * 0.55f, x, y, color, stroke);
+    canvas.line(x, y, x + radius * 0.45f, y + radius * 0.3f, color, stroke);
+}
+
 bool same_hit(const PanelHit& left, const PanelHit& right) noexcept {
     return left.kind == right.kind && left.index == right.index;
 }
@@ -274,10 +282,25 @@ void ToolPanelWindow::paint() {
     paint_tabs();
     canvas->line(static_cast<float>(panel_.left + 1), static_cast<float>(tabs_.bottom + dip(2)), static_cast<float>(panel_.right - 1),
                  static_cast<float>(tabs_.bottom + dip(2)), palette_.divider, 1.0f);
-    paint_categories();
-    if (view_.grid) paint_grid();
-    else paint_list();
+    if (view_.preview) {
+        paint_preview();
+    } else {
+        paint_categories();
+        if (view_.grid) paint_grid();
+        else paint_list();
+    }
     paint_footer();
+}
+
+int ToolPanelWindow::paint_key_hint(std::wstring_view name, int right, int middle) {
+    auto& canvas = *active_modern_renderer();
+    const float size = static_cast<float>(dip(10));
+    const int width = canvas.measure_text(name, size, 600) + dip(8);
+    const int height = dip(15);
+    const RECT key{right - width, middle - height / 2, right, middle - height / 2 + height};
+    canvas.outline(key, static_cast<float>(dip(3)), palette_.control, 1.0f);
+    canvas.text(name, key, palette_.composition_text, size, 600, DT_SINGLELINE | DT_VCENTER | DT_CENTER);
+    return key.left;
 }
 
 void ToolPanelWindow::paint_tabs() {
@@ -287,7 +310,7 @@ void ToolPanelWindow::paint_tabs() {
     for (int page = 0; page < kPanelPageCount; ++page) {
         const std::wstring label = panel_page_label(static_cast<PanelPage>(page));
         const bool current = static_cast<int>(view_.page) == page;
-        const int width = canvas.measure_text(label, size, current ? 700 : 400) + dip(16);
+        const int width = canvas.measure_text(label, size, current ? 700 : 400) + dip(14);
         const RECT rect{x, tabs_.top + dip(2), x + width, tabs_.bottom - dip(2)};
         const PanelHit hit{PanelHit::Kind::Page, page};
         if (same_hit(hover_, hit) && !current) canvas.rounded_fill(rect, static_cast<float>(dip(6)), palette_.hover_background, 1.0f);
@@ -330,6 +353,7 @@ void ToolPanelWindow::paint_tabs() {
         canvas.line(bx - 4 * unit, by, bx, by, palette_.control, stroke);
         canvas.line(bx, by, bx, by + 4 * unit, palette_.control, stroke);
     }
+    if (x + dip(30) <= expand.left - dip(6)) paint_key_hint(L"Tab", expand.left - dip(6), middle);
 }
 
 void ToolPanelWindow::paint_categories() {
@@ -337,22 +361,26 @@ void ToolPanelWindow::paint_categories() {
     const float size = static_cast<float>(dip(12));
     const std::wstring side = !view_.message.empty() && !view_.cells.empty() ? view_.message : view_.info;
     int right = categories_.right;
+    if (view_.caps_hint && view_.categories.size() > 1)
+        right = paint_key_hint(L"Caps", right, (categories_.top + categories_.bottom) / 2) - dip(8);
     if (!side.empty()) {
         const bool notice = !view_.message.empty() && !view_.cells.empty();
         const int width = std::min(canvas.measure_text(side, size) + dip(4),
-                                   static_cast<int>(categories_.right - categories_.left) / 2);
+                                   static_cast<int>(right - categories_.left) / 2);
         if (view_.categories.empty() && notice) {
             canvas.text(side, categories_, palette_.text, size, 400, DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS);
             return;
         }
-        const RECT rect{categories_.right - width, categories_.top, categories_.right, categories_.bottom};
+        const RECT rect{right - width, categories_.top, right, categories_.bottom};
         canvas.text(side, rect, notice ? palette_.text : palette_.hint_text, size, 400, DT_SINGLELINE | DT_VCENTER | DT_RIGHT | DT_END_ELLIPSIS);
         right = rect.left - dip(10);
     }
     if (view_.categories.empty()) return;
     std::vector<int> widths;
     for (size_t index = 0; index < view_.categories.size(); ++index)
-        widths.push_back(canvas.measure_text(view_.categories[index], size, static_cast<int>(index) == view_.category ? 700 : 400) + dip(14));
+        widths.push_back(static_cast<int>(index) == view_.recent_category
+                             ? dip(30)
+                             : canvas.measure_text(view_.categories[index], size, static_cast<int>(index) == view_.category ? 700 : 400) + dip(14));
     // Start late enough that the current category shows.
     const int chevron = dip(12);
     const int available = right - categories_.left - chevron * 2;
@@ -381,8 +409,12 @@ void ToolPanelWindow::paint_categories() {
         const PanelHit hit{PanelHit::Kind::Category, static_cast<int>(index)};
         if (current) canvas.rounded_fill(rect, static_cast<float>((rect.bottom - rect.top) / 2), palette_.focus_background, 1.0f);
         else if (same_hit(hover_, hit)) canvas.rounded_fill(rect, static_cast<float>((rect.bottom - rect.top) / 2), palette_.hover_background, 1.0f);
-        canvas.text(view_.categories[index], rect, current ? palette_.focus_text : palette_.composition_text, size, current ? 700 : 400,
-                    DT_SINGLELINE | DT_VCENTER | DT_CENTER);
+        const COLORREF color = current ? palette_.focus_text : palette_.composition_text;
+        if (static_cast<int>(index) == view_.recent_category)
+            clock_icon(canvas, (rect.left + rect.right) / 2.0f, (rect.top + rect.bottom) / 2.0f, static_cast<float>(dip(6)), color,
+                       std::max(1.2f, static_cast<float>(dip(1)) * (current ? 1.5f : 1.3f)));
+        else
+            canvas.text(view_.categories[index], rect, color, size, current ? 700 : 400, DT_SINGLELINE | DT_VCENTER | DT_CENTER);
         hits_.emplace_back(rect, hit);
         x += widths[index];
     }
@@ -419,7 +451,7 @@ void ToolPanelWindow::paint_grid() {
         if (row == view_.numbered_row && column < 10) {
             const std::wstring number = std::to_wstring((column + 1) % 10);
             const RECT corner{rect.left + dip(3), rect.top + dip(1), rect.left + dip(15), rect.top + dip(13)};
-            canvas.text(number, corner, highlighted ? palette_.focus_number_text : palette_.number_text, static_cast<float>(dip(9)), 600,
+            canvas.text(number, corner, highlighted ? palette_.focus_text : palette_.composition_text, static_cast<float>(dip(9)), 600,
                         DT_SINGLELINE | DT_VCENTER);
         }
         if (cell.favorite)
@@ -465,9 +497,9 @@ void ToolPanelWindow::paint_list() {
             const int key = dip(18);
             const int top = (rect.top + rect.bottom - key) / 2;
             const RECT keycap{x, top, x + key, top + key};
-            canvas.rounded_fill(keycap, static_cast<float>(dip(4)), highlighted ? palette_.focus_keycap : palette_.keycap, 1.0f);
-            canvas.text(std::to_wstring(index + 1), keycap, highlighted ? palette_.focus_number_text : palette_.number_text,
-                        static_cast<float>(dip(11)), 600, DT_SINGLELINE | DT_VCENTER | DT_CENTER);
+            const COLORREF ink = highlighted ? palette_.focus_text : palette_.text;
+            canvas.rounded_fill(keycap, static_cast<float>(dip(4)), ink, highlighted ? 0.14f : 0.09f);
+            canvas.text(std::to_wstring(index + 1), keycap, ink, static_cast<float>(dip(11)), 700, DT_SINGLELINE | DT_VCENTER | DT_CENTER);
             x = keycap.right + dip(8);
         }
         if (!cell.image.empty()) {
@@ -476,6 +508,18 @@ void ToolPanelWindow::paint_list() {
             x = thumb.right + dip(8);
         }
         int right = rect.right - dip(8);
+        if (view_.magnifier) {
+            // The magnifier: the whole text, or the picture larger with its words.
+            const int button = dip(24);
+            const int top = (rect.top + rect.bottom - button) / 2;
+            const RECT lens{rect.right - dip(4) - button, top, rect.right - dip(4), top + button};
+            const PanelHit lens_hit{PanelHit::Kind::Preview, static_cast<int>(index)};
+            if (same_hit(hover_, lens_hit)) canvas.rounded_fill(lens, static_cast<float>(dip(6)), palette_.pressed_background, 1.0f);
+            const RECT glyph{lens.left + dip(4), lens.top + dip(4), lens.right - dip(4), lens.bottom - dip(4)};
+            canvas.icon(5, glyph, highlighted ? palette_.focus_text : palette_.control, std::max(1.3f, static_cast<float>(dip(1)) * 1.5f));
+            hits_.emplace_back(lens, lens_hit);
+            right = lens.left - dip(6);
+        }
         if (!cell.detail.empty()) {
             const int width = std::min(canvas.measure_text(cell.detail, detail_size), static_cast<int>(rect.right - rect.left) * 2 / 5);
             const RECT detail{right - width, rect.top, right, rect.bottom};
@@ -511,6 +555,54 @@ void ToolPanelWindow::paint_list() {
         const float y = static_cast<float>(content_.bottom - dip(8));
         canvas.line(x - unit, y - unit / 2, x, y + unit / 2, palette_.control, 1.4f);
         canvas.line(x, y + unit / 2, x + unit, y - unit / 2, palette_.control, 1.4f);
+    }
+}
+
+void ToolPanelWindow::paint_preview() {
+    auto& canvas = *active_modern_renderer();
+    // The header: back, then what this is.
+    const float size = static_cast<float>(dip(12));
+    const int back_width = canvas.measure_text(L"‹ 返回", size) + dip(14);
+    const RECT back{categories_.left, categories_.top + dip(2), categories_.left + back_width, categories_.bottom - dip(2)};
+    const PanelHit back_hit{PanelHit::Kind::Preview, -1};
+    canvas.rounded_fill(back, static_cast<float>((back.bottom - back.top) / 2),
+                        same_hit(hover_, back_hit) ? palette_.pressed_background : palette_.hover_background, 1.0f);
+    canvas.text(L"‹ 返回", back, palette_.composition_text, size, 400, DT_SINGLELINE | DT_VCENTER | DT_CENTER);
+    hits_.emplace_back(back, back_hit);
+    canvas.text(view_.preview_title, RECT{back.right + dip(10), categories_.top, categories_.right, categories_.bottom}, palette_.hint_text, size,
+                400, DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS);
+    const RECT area{content_.left, content_.top + dip(2), content_.right, content_.bottom};
+    canvas.rounded(area, static_cast<float>(dip(8)), palette_.chip_background, palette_.chip_border, 1.0f);
+    RECT body{area.left + dip(10), area.top + dip(8), area.right - dip(12), area.bottom - dip(8)};
+    if (!view_.preview_image.empty()) {
+        // The picture as large as it fits; its words, if any, beside it.
+        RECT picture = body;
+        if (!view_.preview_text.empty()) {
+            picture.right = picture.left + (body.right - body.left) * 11 / 20;
+            body.left = picture.right + dip(12);
+        }
+        canvas.image(view_.preview_image, picture);
+        if (view_.preview_text.empty()) return;
+    }
+    // The text, wrapped and scrolled by whole lines; nothing spills past the box.
+    const float text_size = static_cast<float>(dip(13));
+    const int line = static_cast<int>(text_size * 1.32f + 0.5f);  // Microsoft YaHei's line height
+    const auto edge = [](const RECT& rect) {
+        return std::vector<D2D1_POINT_2F>{{static_cast<float>(rect.left), static_cast<float>(rect.top)},
+                                          {static_cast<float>(rect.right), static_cast<float>(rect.top)},
+                                          {static_cast<float>(rect.right), static_cast<float>(rect.bottom)},
+                                          {static_cast<float>(rect.left), static_cast<float>(rect.bottom)}};
+    };
+    canvas.push_layer(edge(body));
+    const RECT flow{body.left, body.top - view_.preview_scroll * line, body.right, body.bottom};
+    canvas.text(view_.preview_text, flow, palette_.text, text_size, 400, DT_TOP | DT_WORDBREAK);
+    canvas.pop_layer();
+    const float x = static_cast<float>(area.right - dip(6));
+    const float unit = static_cast<float>(dip(3));
+    if (view_.preview_scroll > 0) {
+        const float y = static_cast<float>(area.top + dip(8));
+        canvas.line(x - unit, y + unit / 2, x, y - unit / 2, palette_.control, 1.4f);
+        canvas.line(x, y - unit / 2, x + unit, y + unit / 2, palette_.control, 1.4f);
     }
 }
 

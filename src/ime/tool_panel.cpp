@@ -15,6 +15,7 @@ namespace {
 constexpr const wchar_t* kPageLabels[] = {L"工具", L"剪贴板", L"符号", L"颜文字", L"表情", L"表情包", L"记录"};
 constexpr const wchar_t* kPageIds[] = {L"tools", L"clipboard", L"symbol", L"kaomoji", L"emoji", L"stickers", L"records"};
 constexpr const wchar_t* kRecordKinds[] = {L"", L"password", L"address", L"other"};
+constexpr size_t kPreviewLimit = 20000;
 constexpr const wchar_t* kRecordCategories[] = {L"全部", L"密码", L"地址", L"其他"};
 constexpr int kListRows = 5;
 constexpr size_t kTrayLimit = 64;
@@ -90,7 +91,7 @@ bool ToolPanel::takes_key(UINT vk, bool ctrl, bool alt) noexcept {
     if (alt) return false;
     switch (vk) {
         case VK_SHIFT: case VK_LSHIFT: case VK_RSHIFT: case VK_CONTROL: case VK_LCONTROL: case VK_RCONTROL:
-        case VK_MENU: case VK_LMENU: case VK_RMENU: case VK_LWIN: case VK_RWIN: case VK_CAPITAL: case VK_NUMLOCK:
+        case VK_MENU: case VK_LMENU: case VK_RMENU: case VK_LWIN: case VK_RWIN: case VK_NUMLOCK:
         case VK_SCROLL: case VK_APPS:
             return false;
         default: break;
@@ -122,6 +123,7 @@ void ToolPanel::open(std::optional<PanelPage> page) {
 
 void ToolPanel::close() {
     open_ = false;
+    open_preview(-1);
     tray_.clear();
     wipe(input_);
     wipe(new_password_);
@@ -178,6 +180,7 @@ long long ToolPanel::vault_stamp() const {
 
 void ToolPanel::set_page(PanelPage page) {
     page_ = page;
+    open_preview(-1);
     wipe(input_);
     message_.clear();
     cursor_row_ = cursor_column_ = scroll_ = 0;
@@ -345,7 +348,7 @@ void ToolPanel::build_list() {
             if (!input_.empty() && !matches(searchable)) continue;
             PanelCell cell;
             if (clip.image) {
-                cell.text = clip.ocr.empty() ? L"图片 " + std::to_wstring(clip.width) + L"×" + std::to_wstring(clip.height) : one_line(clip.ocr);
+                cell.text = L"图片 " + std::to_wstring(clip.width) + L"×" + std::to_wstring(clip.height);
                 cell.tag = L"图片";
                 cell.image = ClipboardStore(services_.data_dir + L"\\clipboard").picture_path(clip.id);
             } else {
@@ -440,10 +443,11 @@ void ToolPanel::move(int rows, int columns) {
     keep_cursor_visible();
 }
 
-void ToolPanel::jump_category(int direction) {
+void ToolPanel::jump_category(int direction, bool wrap) {
     if (rows_.empty()) return;
     const int group = rows_[static_cast<size_t>(cursor_row_)].group;
-    const int target = std::clamp(group + direction, 0, static_cast<int>(group_names_.size()) - 1);
+    const int count = static_cast<int>(group_names_.size());
+    const int target = wrap ? ((group + direction) % count + count) % count : std::clamp(group + direction, 0, count - 1);
     for (size_t row = 0; row < rows_.size(); ++row) {
         if (rows_[row].group == target) {
             cursor_row_ = static_cast<int>(row);
@@ -464,6 +468,22 @@ PanelAction ToolPanel::key(const PanelKey& key) {
         return redraw;
     }
     if (key.vk == VK_RETURN && key.shift) return PanelAction{PanelAction::Kind::Expand};
+    if (preview_ >= 0) return preview_key(key);
+    if (key.vk == VK_CAPITAL) {
+        // CapsLock walks the categories (the second row), Shift+CapsLock back.
+        const int step = key.shift ? -1 : 1;
+        if (grid_page()) {
+            jump_category(step, true);
+            return redraw;
+        }
+        if (page_ == PanelPage::Records && records_state_ == RecordsState::Items) {
+            record_category_ = (record_category_ + 4 + step) % 4;
+            list_cursor_ = list_scroll_ = 0;
+            rebuild();
+            return redraw;
+        }
+        return {};
+    }
     if (key.vk == VK_ESCAPE) {
         if (!input_.empty()) {
             wipe(input_);
@@ -614,6 +634,10 @@ PanelAction ToolPanel::list_key(const PanelKey& key) {
         case VK_OEM_MINUS: if (key.shift) return {}; list_cursor_ = std::max(0, list_cursor_ - kListRows); break;
         case VK_OEM_PLUS: if (key.shift) return {}; list_cursor_ = std::min(std::max(0, count - 1), list_cursor_ + kListRows); break;
         case VK_RETURN: case VK_SPACE: return activate(list_cursor_);
+        case VK_RIGHT:
+            if (list_.empty()) return {};
+            open_preview(list_cursor_);
+            return redraw;
         case VK_BACK:
             if (input_.empty()) return {};
             input_.pop_back();
@@ -631,6 +655,60 @@ PanelAction ToolPanel::list_key(const PanelKey& key) {
     }
     rebuild();
     return redraw;
+}
+
+void ToolPanel::open_preview(int index) {
+    if (!preview_text_.empty()) SecureZeroMemory(preview_text_.data(), preview_text_.size() * sizeof(wchar_t));
+    preview_text_.clear();
+    preview_ = -1;
+    preview_scroll_ = 0;
+    if (page_ != PanelPage::Clipboard || index < 0 || index >= static_cast<int>(list_ids_.size())) return;
+    const std::string& id = list_ids_[static_cast<size_t>(index)];
+    for (const auto& clip : clips_) {
+        if (clip.id != id) continue;
+        preview_ = index;
+        list_cursor_ = index;
+        preview_picture_ = clip.image;
+        if (clip.image) preview_text_ = clip.ocr;
+        else if (!clip.long_text || !ClipboardStore(services_.data_dir + L"\\clipboard").full_text(id, &preview_text_))
+            preview_text_ = clip.text;
+        preview_length_ = preview_text_.size();
+        // Enough to read through; Enter still pastes all of it.
+        if (preview_text_.size() > kPreviewLimit) {
+            SecureZeroMemory(preview_text_.data() + kPreviewLimit, (preview_text_.size() - kPreviewLimit) * sizeof(wchar_t));
+            preview_text_.resize(kPreviewLimit);
+            preview_text_ += L"…\n（只显示前 2 万字，Enter 粘贴全部）";
+        }
+        return;
+    }
+}
+
+PanelAction ToolPanel::preview_key(const PanelKey& key) {
+    PanelAction redraw{PanelAction::Kind::Redraw};
+    // About how many lines the text wraps to (a narrower column beside a
+    // picture), so scrolling stops near its end.
+    const size_t per_line = preview_picture_ ? 12 : 28;
+    int lines = 1;
+    size_t run = 0;
+    for (wchar_t ch : preview_text_) {
+        if (ch == L'\n' || ++run > per_line) { ++lines; run = ch == L'\n' ? 0 : 1; }
+    }
+    const int last = std::max(0, lines - 6);
+    switch (key.vk) {
+        case VK_ESCAPE: case VK_LEFT: case VK_BACK:
+            open_preview(-1);
+            return redraw;
+        case VK_UP: preview_scroll_ = std::max(0, preview_scroll_ - 1); return redraw;
+        case VK_DOWN: preview_scroll_ = std::min(last, preview_scroll_ + 1); return redraw;
+        case VK_PRIOR: preview_scroll_ = std::max(0, preview_scroll_ - 5); return redraw;
+        case VK_NEXT: preview_scroll_ = std::min(last, preview_scroll_ + 5); return redraw;
+        case VK_RETURN: case VK_SPACE: {
+            const int index = preview_;
+            open_preview(-1);
+            return activate(index);
+        }
+        default: return {};
+    }
 }
 
 PanelAction ToolPanel::tools_key(const PanelKey& key) {
@@ -872,6 +950,9 @@ PanelAction ToolPanel::click(const PanelHit& hit) {
                 return pick(scroll_ + hit.index / width, hit.index % width);
             }
             return activate(list_scroll_ + hit.index);
+        case PanelHit::Kind::Preview:
+            open_preview(hit.index < 0 ? -1 : list_scroll_ + hit.index);
+            return redraw;
         case PanelHit::Kind::Tray:
             if (hit.index >= 0 && hit.index < static_cast<int>(tray_.size())) tray_.erase(tray_.begin() + hit.index);
             return redraw;
@@ -899,6 +980,8 @@ void ToolPanel::fill_view() {
                   : page_ == PanelPage::Stickers ? PanelFont::Text : PanelFont::Symbol;
         view.categories = group_names_;
         if (!rows_.empty()) view.category = rows_[static_cast<size_t>(cursor_row_)].group;
+        if (!group_names_.empty() && group_names_.front() == L"最近使用") view.recent_category = 0;
+        view.caps_hint = group_names_.size() > 1;
         for (int row = scroll_; row < std::min(static_cast<int>(rows_.size()), scroll_ + view.rows); ++row) {
             const auto& items = rows_[static_cast<size_t>(row)].items;
             for (int column = 0; column < view.columns; ++column) {
@@ -946,7 +1029,23 @@ void ToolPanel::fill_view() {
             view.prompt = L"搜索";
             view.input = input_;
             view.input_active = true;
-            view.hint = L"数字/Enter 粘贴";
+            view.hint = L"数字/Enter 粘贴 · → 查看";
+            view.magnifier = true;
+            if (preview_ >= 0 && preview_ < static_cast<int>(list_ids_.size())) {
+                for (const auto& clip : clips_) {
+                    if (clip.id != list_ids_[static_cast<size_t>(preview_)]) continue;
+                    view.preview = true;
+                    view.preview_title = (clip.image ? L"图片 " + std::to_wstring(clip.width) + L"×" + std::to_wstring(clip.height)
+                                                     : L"文字 " + std::to_wstring(preview_length_) + L" 字") +
+                                         L" · " + time_label(clip.time, services_.now());
+                    view.preview_text = clip.image && !preview_text_.empty() ? L"图中文字：" + preview_text_ : preview_text_;
+                    if (clip.image) view.preview_image = ClipboardStore(services_.data_dir + L"\\clipboard").picture_path(clip.id);
+                    view.preview_scroll = preview_scroll_;
+                    view.hint = L"Enter 粘贴 · ↑↓ 滚动 · ← 返回";
+                    view.prompt.clear();
+                    view.input_active = false;
+                }
+            }
             if (services_.clipboard_on && !services_.clipboard_on())
                 view.message = L"剪贴板记录没有开启。按 Shift+Enter 打开大窗口开启。";
             else if (list_.empty())
@@ -980,11 +1079,12 @@ void ToolPanel::fill_view() {
                 case RecordsState::Items:
                     view.categories.assign(std::begin(kRecordCategories), std::end(kRecordCategories));
                     view.category = record_category_;
+                    view.caps_hint = true;
                     view.prompt = L"搜索";
                     view.input = input_;
                     view.input_active = true;
                     view.info = L"已加密";
-                    view.hint = L"Enter 打开 · ←→ 分类";
+                    view.hint = L"Enter 打开 · Caps 分类";
                     if (records_.empty())
                         view.message = L"还没有记录。按 Shift+Enter 打开大窗口，添加地址、账号密码、卡号等。";
                     else if (list_.empty())

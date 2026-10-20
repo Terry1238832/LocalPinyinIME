@@ -4,6 +4,7 @@
 #include "../ime/tool_panel_window.h"
 #include <gdiplus.h>
 #include <filesystem>
+#include <fstream>
 #include <iostream>
 #include <optional>
 #include <string>
@@ -156,7 +157,37 @@ bool capture_panel(const std::filesystem::path& directory) {
     const long long now = 1'800'000'000;
     ClipboardStore clipboard((data / L"clipboard").wstring());
     clipboard.add_text(L"https://github.com/Terry1238832/LocalPinyinIME", (now - 7200) * 1000);
-    clipboard.add_text(L"明天上午十点在三楼会议室开会，记得带电脑和投影转接头。", (now - 600) * 1000);
+    clipboard.add_text(L"明天上午十点在三楼会议室开会，记得带电脑和投影转接头。会议议程：\n"
+                       L"1. 回顾上周的进度，每个小组五分钟；\n2. 讨论新版本的发布时间和测试安排；\n"
+                       L"3. 确定下个月的分工。会后请把纪要发到群里，有问题提前和我说。", (now - 600) * 1000);
+    {
+        // A picture copy: a small receipt drawn here, with the words read from it.
+        Gdiplus::Bitmap receipt(360, 220, PixelFormat32bppARGB);
+        {
+            Gdiplus::Graphics graphics(&receipt);
+            graphics.SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAliasGridFit);
+            graphics.Clear(Gdiplus::Color(255, 252, 250, 244));
+            Gdiplus::Pen pen(Gdiplus::Color(255, 196, 64, 52), 3.0f);
+            graphics.DrawRectangle(&pen, 10, 10, 340, 200);
+            Gdiplus::FontFamily family(L"Microsoft YaHei UI");
+            Gdiplus::Font title(&family, 20, Gdiplus::FontStyleBold, Gdiplus::UnitPixel);
+            Gdiplus::Font body(&family, 14, Gdiplus::FontStyleRegular, Gdiplus::UnitPixel);
+            Gdiplus::SolidBrush red(Gdiplus::Color(255, 176, 48, 40));
+            Gdiplus::SolidBrush ink(Gdiplus::Color(255, 40, 40, 44));
+            graphics.DrawString(L"电子普通发票", -1, &title, Gdiplus::PointF(118, 24), &red);
+            graphics.DrawString(L"发票号码：12345678", -1, &body, Gdiplus::PointF(32, 78), &ink);
+            graphics.DrawString(L"开票日期：2026年10月18日", -1, &body, Gdiplus::PointF(32, 106), &ink);
+            graphics.DrawString(L"合计：¥ 1,280.00", -1, &body, Gdiplus::PointF(32, 150), &ink);
+        }
+        const auto file = data / L"receipt.png";
+        const CLSID png{0x557cf406, 0x1a04, 0x11d3, {0x9a, 0x73, 0x00, 0x00, 0xf8, 0x1e, 0xf3, 0x2e}};
+        receipt.Save(file.c_str(), &png, nullptr);
+        std::ifstream stream(file, std::ios::binary);
+        const std::vector<std::uint8_t> bytes((std::istreambuf_iterator<char>(stream)), std::istreambuf_iterator<char>());
+        std::string id;
+        if (clipboard.add_picture(bytes, 360, 220, "receipt", (now - 120) * 1000, &id))
+            clipboard.set_ocr(id, L"电子普通发票\n发票号码：12345678\n开票日期：2026年10月18日\n合计：¥ 1,280.00");
+    }
     clipboard.add_text(L"收货地址：北京市海淀区中关村大街 1 号", now * 1000);
     const Vault vault((data / L"vault.json").wstring());
     vault.create(L"");
@@ -184,13 +215,17 @@ bool capture_panel(const std::filesystem::path& directory) {
         std::vector<UINT> keys;
     };
     const std::vector<Shot> shots = {
-        {L"symbol", PanelPage::Symbol, L"", {L'9', VK_RIGHT, VK_SPACE, VK_DOWN}},
+        {L"symbol", PanelPage::Symbol, L"", {L'9', VK_RETURN, L'9', VK_RIGHT, VK_SPACE, VK_DOWN}},
+        {L"symbol-recent", PanelPage::Symbol, L"", {}},
+        {L"symbol-caps", PanelPage::Symbol, L"", {VK_CAPITAL, VK_CAPITAL}},
         {L"symbol-search", PanelPage::Symbol, L"meiyuan", {}},
         {L"emoji", PanelPage::Emoji, L"", {VK_DOWN, VK_RIGHT}},
         {L"kaomoji", PanelPage::Kaomoji, L"", {}},
         {L"tools", PanelPage::Tools, L"", {}},
         {L"tools-sum", PanelPage::Tools, L"55+15", {}},
         {L"clipboard", PanelPage::Clipboard, L"", {VK_DOWN}},
+        {L"clipboard-picture", PanelPage::Clipboard, L"", {VK_DOWN, VK_RIGHT}},
+        {L"clipboard-text", PanelPage::Clipboard, L"", {VK_DOWN, VK_DOWN, VK_RIGHT}},
         {L"stickers", PanelPage::Stickers, L"", {}},
         {L"records", PanelPage::Records, L"", {}},
         {L"records-fields", PanelPage::Records, L"", {VK_RETURN}},

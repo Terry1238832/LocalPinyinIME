@@ -104,6 +104,11 @@ private:
     void hide_tool_panel();
     [[nodiscard]] bool tool_panel_open() const noexcept;
     void handle_tool_panel_key(ITfContext* context, unsigned long key, bool shift, bool ctrl);
+    // CapsLock while the panel is open is the panel's (it walks the
+    // categories): eaten, and its on/off put back on release. True when the
+    // key is dealt with; `route` sends it to the panel (the key-down, not the test).
+    bool tool_panel_caps_down(ITfContext* context, const ModifierKeyState& modifiers, bool route, BOOL* eaten);
+    void tool_panel_caps_up();
     void handle_tool_panel_action(const PanelAction& action, ITfContext* context);
     ToolPanel& tool_panel();
     // Runs the settings bridge beside this DLL without waiting (pastes, emoji).
@@ -115,6 +120,11 @@ private:
     ToolPanelWindow tool_panel_window_;
     HWND tool_panel_host_ = nullptr;
     DWORD secret_clipboard_sequence_ = 0;
+    // CapsLock's on/off when the panel opened, and whether the panel holds a
+    // CapsLock press. The press sent to put it back: 1 on its way, 2 down.
+    bool caps_expected_on_ = false;
+    bool caps_panel_down_ = false;
+    int caps_restore_pending_ = 0;
     bool accept_panel_message(const COPYDATASTRUCT& data);
     void insert_panel_text();
     // v and a sum, number or date: the typing tools (full pinyin only).

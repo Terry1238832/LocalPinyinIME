@@ -49,7 +49,11 @@ private:
     void paint_categories();
     void paint_grid();
     void paint_list();
+    void paint_preview();
     void paint_footer();
+    // A small key name ("Tab", "Caps") ending at `right`, centered on `middle`;
+    // returns its left edge.
+    int paint_key_hint(std::wstring_view name, int right, int middle);
     void render(std::uint8_t* pixels, HDC dc);
     void composite_shadow(std::uint8_t* pixels, int width, int height);
     [[nodiscard]] PanelHit hit_at(POINT point) const;

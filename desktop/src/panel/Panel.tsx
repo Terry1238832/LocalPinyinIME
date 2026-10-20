@@ -200,7 +200,8 @@ function PhraseDialog({ text, onClose, onSaved, onError }: {
   const [existing, setExisting] = useState<Phrase[]>([]);
   const [busy, setBusy] = useState(false);
   const field = useRef<HTMLInputElement>(null);
-  const valid = (value: string) => /^([㐀-鿿]{1,32}|[A-Za-z]{1,32})$/.test(value);
+  // English words only: Chinese ones are typed as pinyin already.
+  const valid = (value: string) => /^[A-Za-z]{1,32}$/.test(value);
 
   useEffect(() => {
     field.current?.focus();
@@ -210,7 +211,7 @@ function PhraseDialog({ text, onClose, onSaved, onError }: {
   const commitDraft = () => {
     const words = draft.split(/[,，、\s]+/).map(word => word.trim()).filter(Boolean);
     const bad = words.find(word => !valid(word));
-    if (bad) { onError(new Error(`“${bad}”不行：短语只能是汉字，或只用英文字母，最多 32 个`)); return labels; }
+    if (bad) { onError(new Error(`“${bad}”不行：短语只能用英文字母，最多 32 个`)); return labels; }
     const next = [...new Set([...labels, ...words])].filter(word => !existing.some(phrase => phrase.label === word)).slice(0, 10);
     setLabels(next);
     setDraft('');
@@ -231,15 +232,15 @@ function PhraseDialog({ text, onClose, onSaved, onError }: {
     <div className="dialog-scrim" onMouseDown={event => { if (event.target === event.currentTarget) onClose(); }}>
       <div className="dialog" role="dialog" aria-modal="true" aria-labelledby="phrase-title">
         <h2 id="phrase-title">添加短语</h2>
-        <p className="dialog-text">以后打这些词，<span className="phrase-target">{text}</span> 会是第一个候选；
-          选了别的，它也只退到第二位。可以在设置的“输入习惯”里删掉。</p>
+        <p className="dialog-text">以后打这些英文，<span className="phrase-target">{text}</span> 会是第一个候选；
+          选了别的，它也只退到第二位。短语只能用英文字母，可以在设置的“输入习惯”里删掉。</p>
         <div className="chip-field" onClick={() => field.current?.focus()}>
           {labels.map(label => (
             <span key={label} className="chip">{label}
               <button type="button" aria-label={`去掉 ${label}`} onClick={() => setLabels(list => list.filter(item => item !== label))}>
                 <Icon name="close" size={11} /></button></span>
           ))}
-          <input ref={field} value={draft} placeholder={labels.length ? '再加一个' : '例如 美元，回车添加'} aria-label="短语"
+          <input ref={field} value={draft} placeholder={labels.length ? '再加一个' : '例如 dollar，回车添加'} aria-label="短语"
                  maxLength={40} onChange={event => setDraft(event.target.value)}
                  onKeyDown={event => {
                    if ((event.key === 'Enter' || event.key === ',' || event.key === '，') && !event.nativeEvent.isComposing) {

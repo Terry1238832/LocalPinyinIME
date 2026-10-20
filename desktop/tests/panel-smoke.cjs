@@ -119,7 +119,7 @@ async function main() {
     await page.locator('[data-group="greek"] .cell').first().waitFor();
   });
 
-  await check('search finds $ by 美元, and 添加短语 ties words to it', async () => {
+  await check('search finds $ by 美元, and 添加短语 ties English words to it', async () => {
     await page.getByLabel(/^搜索符号/).fill('美元');
     await page.locator('.cell.symbol', { hasText: '$' }).first().click();
     assert.deepEqual(await tray(), ['$']);
@@ -127,14 +127,18 @@ async function main() {
     const dialog = page.getByRole('dialog', { name: '添加短语' });
     await dialog.waitFor();
     const field = dialog.getByLabel('短语', { exact: true });
+    // Chinese words are refused: only English letters make a phrase.
     await field.fill('美元'); await field.press('Enter');
-    await field.fill('美刀'); await field.press('Enter');
-    assert.deepEqual(await dialog.locator('.chip').allInnerTexts(), ['美元', '美刀']);
+    await page.locator('.toast.error', { hasText: '只能用英文字母' }).waitFor();
+    assert.deepEqual(await dialog.locator('.chip').allInnerTexts(), []);
+    await field.fill('dollar'); await field.press('Enter');
+    await field.fill('USD'); await field.press('Enter');
+    assert.deepEqual(await dialog.locator('.chip').allInnerTexts(), ['dollar', 'USD']);
     await shot('panel-add-phrase.png');
     await dialog.getByRole('button', { name: '保存', exact: true }).click();
-    await page.locator('.toast', { hasText: '美刀' }).waitFor();
-    assert.equal(callBridge('lookup', 'meiyuan').candidates[0], '$');
-    assert.equal(callBridge('lookup', 'meidao').candidates[0], '$');
+    await page.locator('.toast', { hasText: 'USD' }).waitFor();
+    assert.equal(callBridge('lookup', 'dollar').candidates[0], '$');
+    assert.equal(callBridge('lookup', 'usd').candidates[0], '$');
     await page.getByLabel('清空搜索').click();
   });
 

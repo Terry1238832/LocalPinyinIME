@@ -56,6 +56,19 @@ struct ToolPanelView {
     std::vector<std::wstring> tray;
     std::wstring message;  // shown when there are no cells, or above them
     std::wstring hint;     // keys at the bottom right
+    // The category drawn as a clock (最近使用), or -1; whether CapsLock walks
+    // the categories (a small "Caps" at the bar's end, as "Tab" for the pages).
+    int recent_category = -1;
+    bool caps_hint = false;
+    // Clipboard rows end in a magnifier that opens the whole copy.
+    bool magnifier = false;
+    // The whole copy over the list: its text, or its picture and the words read
+    // from it, scrolled by this many lines.
+    bool preview = false;
+    std::wstring preview_title;
+    std::wstring preview_text;
+    std::wstring preview_image;
+    int preview_scroll = 0;
 };
 
 // What the input method does after a key or click.
@@ -77,7 +90,8 @@ struct PanelKey {
 };
 
 struct PanelHit {
-    enum class Kind { None, Page, Category, Cell, Tray, Expand, Close };
+    // Preview: the magnifier of row `index`, or -1 for the preview's 返回.
+    enum class Kind { None, Page, Category, Cell, Tray, Expand, Close, Preview };
     Kind kind = Kind::None;
     int index = 0;
 };
@@ -138,7 +152,10 @@ private:
     PanelAction insert_tray();
     void move(int rows, int columns);
     void keep_cursor_visible();
-    void jump_category(int direction);
+    void jump_category(int direction, bool wrap = false);
+    // The whole clipboard copy at `index` in the list, or none (-1).
+    void open_preview(int index);
+    PanelAction preview_key(const PanelKey& key);
     [[nodiscard]] std::vector<std::wstring> search_words() const;
     [[nodiscard]] bool matches(const std::wstring& text) const;
     [[nodiscard]] int columns() const noexcept;
@@ -173,6 +190,11 @@ private:
     std::vector<int> list_refs_;         // records, tool results, choices
     int list_cursor_ = 0;
     int list_scroll_ = 0;
+    int preview_ = -1;
+    int preview_scroll_ = 0;
+    bool preview_picture_ = false;
+    size_t preview_length_ = 0;
+    std::wstring preview_text_;
     // Data.
     PanelCatalog catalogs_[3];
     bool catalogs_loaded_ = false;

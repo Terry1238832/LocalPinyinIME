@@ -88,8 +88,21 @@ int main() {
     panel.open();
     view = panel.view();
     REQUIRE_EQ(view.categories.at(0), std::wstring(L"最近使用"));
+    REQUIRE_EQ(view.recent_category, 0);
+    REQUIRE_TRUE(view.caps_hint);
     REQUIRE_TRUE(has_cell(view, L"≈"));
     REQUIRE_TRUE(std::filesystem::exists(data / L"desktop" / L"panel.json"));
+
+    // CapsLock walks the categories, Shift+CapsLock back, round the ends.
+    REQUIRE_TRUE(ToolPanel::takes_key(VK_CAPITAL, false, false));
+    panel.key(vk(VK_CAPITAL));
+    REQUIRE_EQ(panel.view().category, 1);
+    panel.key(vk(VK_CAPITAL, true));
+    REQUIRE_EQ(panel.view().category, 0);
+    panel.key(vk(VK_CAPITAL, true));
+    REQUIRE_EQ(panel.view().category, static_cast<int>(panel.view().categories.size()) - 1);
+    panel.key(vk(VK_CAPITAL));
+    REQUIRE_EQ(panel.view().category, 0);
 
     // ] goes to the next category, Ctrl+D adds to 收藏.
     panel.key(vk(VK_OEM_6));
@@ -155,6 +168,44 @@ int main() {
     REQUIRE_EQ(panel.view().cells.size(), size_t{1});
     action = panel.key(vk(L'1'));
     REQUIRE_TRUE(action.kind == PanelAction::Kind::Insert && action.text == L"会议纪要第二版");
+    // A picture shows its size, not the words in it; → (or the magnifier)
+    // shows the whole copy: a long text in full, a picture with its words.
+    const std::vector<std::uint8_t> png{0x89, 'P', 'N', 'G'};
+    std::string picture;
+    REQUIRE_TRUE(clipboard.add_picture(png, 640, 480, "feedface", (now + 1) * 1000, &picture));
+    REQUIRE_TRUE(clipboard.set_ocr(picture, L"发票号码 12345"));
+    std::wstring long_text(1500, L'长');
+    long_text += L"结尾";
+    clipboard.add_text(long_text, (now + 2) * 1000);
+    panel.open(PanelPage::Clipboard);
+    view = panel.view();
+    REQUIRE_TRUE(view.magnifier && view.cells.size() == 4);
+    REQUIRE_EQ(view.cells[1].text, std::wstring(L"图片 640×480"));
+    REQUIRE_TRUE(view.hint.find(L"→") != std::wstring::npos);
+    panel.key(vk(VK_RIGHT));
+    view = panel.view();
+    REQUIRE_TRUE(view.preview && view.preview_image.empty());
+    REQUIRE_EQ(view.preview_text.size(), long_text.size());
+    REQUIRE_TRUE(view.preview_title.find(L"1502 字") != std::wstring::npos);
+    panel.key(vk(VK_DOWN));
+    REQUIRE_EQ(panel.view().preview_scroll, 1);
+    panel.key(vk(VK_LEFT));
+    REQUIRE_TRUE(!panel.view().preview);
+    panel.click(PanelHit{PanelHit::Kind::Preview, 1});
+    view = panel.view();
+    REQUIRE_TRUE(view.preview && !view.preview_image.empty());
+    REQUIRE_TRUE(view.preview_text.find(L"发票号码 12345") != std::wstring::npos);
+    REQUIRE_TRUE(view.preview_title.find(L"640×480") != std::wstring::npos);
+    // Typing pinyin in the preview does nothing; Enter pastes the picture.
+    REQUIRE_TRUE(panel.key(ch(L'a')).kind == PanelAction::Kind::None);
+    action = panel.key(vk(VK_RETURN));
+    REQUIRE_TRUE(action.kind == PanelAction::Kind::PasteClip && action.clip_id == picture);
+    REQUIRE_TRUE(!panel.view().preview);
+    // Tab leaves the preview with the page.
+    panel.key(vk(VK_RIGHT));
+    REQUIRE_TRUE(panel.view().preview);
+    panel.key(vk(VK_TAB));
+    REQUIRE_TRUE(!panel.view().preview);
 
     // 记录: first a password (asked twice), then items open to their fields.
     panel.open(PanelPage::Records);

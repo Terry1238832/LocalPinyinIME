@@ -1070,6 +1070,7 @@ HRESULT TextService::test_key_down(ITfContext* context, WPARAM wparam, BOOL* eat
         return S_OK;
     }
     ctrl_space_key_down_.accepted_by_test_key_down = false;
+    if (key == VK_CAPITAL && tool_panel_caps_down(context, modifiers, false, eaten)) return S_OK;
     if (tool_panel_open() && !is_modifier_key(key)) {
         if (ToolPanel::takes_key(key, modifiers.ctrl, modifiers.alt)) {
             *eaten = TRUE;
@@ -1203,6 +1204,7 @@ HRESULT TextService::handle_key_down(ITfContext* context, WPARAM wparam, BOOL* e
     const ModifierKeyState modifiers = ctrl_space_state.modifiers;
     const bool shift_enabled = shift_toggle_enabled();
     const unsigned long key = static_cast<unsigned long>(wparam);
+    if (key == VK_CAPITAL && tool_panel_caps_down(context, modifiers, true, eaten)) return S_OK;
     if (tool_panel_open() && !is_modifier_key(key)) {
         // Shift+Tab is not a Shift tap: no switch to English on release.
         shift_toggle_on_key_down(shift_toggle_, key, modifiers, shift_enabled);
@@ -1305,6 +1307,7 @@ HRESULT TextService::OnTestKeyUp(ITfContext*, WPARAM wparam, LPARAM, BOOL* eaten
     if (wparam == tested_key_) tested_key_ = 0;
     if (static_cast<unsigned long>(wparam) == noted_key_) noted_key_ = 0;
     if (wparam == VK_TAB && pass_next_tab_ && !tab_tap_.pending) pass_next_tab_ = false;
+    if (wparam == VK_CAPITAL) tool_panel_caps_up();
     *eaten = is_shift_key(static_cast<unsigned long>(wparam)) && shift_toggle_.pending ? TRUE : FALSE;
     return S_OK;
 }
@@ -1315,6 +1318,7 @@ HRESULT TextService::OnKeyUp(ITfContext* context, WPARAM wparam, LPARAM lparam, 
     }
     *eaten = FALSE;
     if (wparam == VK_TAB && pass_next_tab_ && !tab_tap_.pending) pass_next_tab_ = false;
+    if (wparam == VK_CAPITAL) tool_panel_caps_up();
     const unsigned long key = static_cast<unsigned long>(wparam);
     if (key == noted_key_) noted_key_ = 0;
     ctrl_space_key_down_.accepted_by_test_key_down = false;
@@ -2616,7 +2620,49 @@ void TextService::show_tool_panel(ITfContext* context) {
     }
     auto& panel = tool_panel();
     panel.open();
+    caps_expected_on_ = (GetKeyState(VK_CAPITAL) & 1) != 0;
+    caps_panel_down_ = false;
+    caps_restore_pending_ = 0;
     tool_panel_window_.show(panel.view(), anchor, owner);
+}
+
+bool TextService::tool_panel_caps_down(ITfContext* context, const ModifierKeyState& modifiers, bool route, BOOL* eaten) {
+    if (!tool_panel_open() || modifiers.ctrl || modifiers.alt || modifiers.win) return false;
+    // The press sent to put CapsLock back goes through untouched (the key
+    // test and the key-down both see it).
+    if (caps_restore_pending_ > 0) {
+        caps_restore_pending_ = 2;
+        return true;
+    }
+    *eaten = TRUE;
+    if (!route) return true;
+    // Shift+CapsLock is not a Shift tap: no switch to English on release.
+    shift_toggle_on_key_down(shift_toggle_, VK_CAPITAL, modifiers, shift_toggle_enabled());
+    caps_panel_down_ = true;
+    handle_tool_panel_key(context, VK_CAPITAL, modifiers.shift, false);
+    return true;
+}
+
+void TextService::tool_panel_caps_up() {
+    // The key test and the key-up both see each release.
+    if (caps_restore_pending_ == 2) {
+        caps_restore_pending_ = 0;
+        return;
+    }
+    if (!caps_panel_down_) return;
+    caps_panel_down_ = false;
+    // Windows switched CapsLock on the press even though the panel took it;
+    // switch it back with one more press, in this program only.
+    if (((GetKeyState(VK_CAPITAL) & 1) != 0) == caps_expected_on_) return;
+    DWORD process = 0;
+    GetWindowThreadProcessId(GetForegroundWindow(), &process);
+    if (process != GetCurrentProcessId()) return;
+    INPUT keys[2]{};
+    keys[0].type = keys[1].type = INPUT_KEYBOARD;
+    keys[0].ki.wVk = keys[1].ki.wVk = VK_CAPITAL;
+    keys[0].ki.wScan = keys[1].ki.wScan = static_cast<WORD>(MapVirtualKeyW(VK_CAPITAL, MAPVK_VK_TO_VSC));
+    keys[1].ki.dwFlags = KEYEVENTF_KEYUP;
+    caps_restore_pending_ = SendInput(2, keys, sizeof(INPUT)) == 2 ? 1 : 0;
 }
 
 void TextService::hide_tool_panel() {
