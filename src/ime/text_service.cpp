@@ -1187,8 +1187,9 @@ HRESULT TextService::test_key_down(ITfContext* context, WPARAM wparam, BOOL* eat
             }
         }
     }
+    // Tab twice opens the tool panel, in 本地拼音's 中 and 本地英文's 辅.
     if (wparam == VK_TAB && !modifiers.shift && !modifiers.ctrl && !modifiers.alt && !modifiers.win &&
-        mode_ == InputMode::Chinese) {
+        (mode_ == InputMode::Chinese || english_assist_active())) {
         if (pass_next_tab_ || key_repeat_) return S_OK;
         const auto options = settings_store_.load_input_mode_options();
         if (options.panel_double_tab) {
@@ -1196,7 +1197,8 @@ HRESULT TextService::test_key_down(ITfContext* context, WPARAM wparam, BOOL* eat
             return S_OK;
         }
         // While typing pinyin Tab commits it first, then translates.
-        if (options.tab_translate && (!composing_.empty() || !translation_source(context).text.empty())) {
+        if (mode_ == InputMode::Chinese && options.tab_translate &&
+            (!composing_.empty() || !translation_source(context).text.empty())) {
             *eaten = TRUE;
             return S_OK;
         }
@@ -1335,7 +1337,7 @@ HRESULT TextService::handle_key_down(ITfContext* context, WPARAM wparam, BOOL* e
         }
     }
     if (key == VK_TAB && !modifiers.shift && !modifiers.ctrl && !modifiers.alt && !modifiers.win &&
-        mode_ == InputMode::Chinese && !pass_next_tab_ && !key_repeat_) {
+        (mode_ == InputMode::Chinese || english_assist_active()) && !pass_next_tab_ && !key_repeat_) {
         const auto options = settings_store_.load_input_mode_options();
         const ULONGLONG now = GetTickCount64();
         if (options.panel_double_tab && tab_tap_.pending && now - tab_tap_.tick <= kDoubleTabMs) {
@@ -1349,7 +1351,15 @@ HRESULT TextService::handle_key_down(ITfContext* context, WPARAM wparam, BOOL* e
             return S_OK;
         }
         bool handled = false;
-        if (options.tab_translate) {
+        if (mode_ == InputMode::Assisted) {
+            // 辅: the word being typed goes in at once (no space); a second
+            // Tab still opens the panel. With nothing typed the Tab waits.
+            if (!composing_.empty()) {
+                BOOL committed = FALSE;
+                handle_english_key(context, wparam, &committed);
+                handled = committed != FALSE;
+            }
+        } else if (options.tab_translate) {
             const bool was_typing = !composing_.empty();
             if (was_typing) {
                 const HRESULT hr = commit_whole_composition(context);

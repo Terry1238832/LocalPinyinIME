@@ -1442,9 +1442,27 @@ int wmain(int argc, wchar_t** argv) {
             s.key(VK_ESCAPE);
             require(s.store->text.empty(), "Esc drops the word being typed");
             require(s.store->composition_starts == s.store->composition_ends, "English compositions ended");
+            // 辅 has the tool panel too: Tab puts the word in at once (no
+            // space), a second Tab opens the panel, which takes the keys.
+            write_settings("{\"inputMode\":{\"panelDoubleTab\":true}}");
+            s.store->host_replace(L"");
+            for (const auto letter : std::wstring(L"HELP")) s.key(letter);
+            s.key(VK_TAB);
+            require(s.store->text == L"help", "Tab puts in the first candidate without a space");
+            s.key(VK_TAB);
+            require(s.store->text == L"help", "a second Tab opens the panel instead of typing");
+            s.key(L'N');
+            require(s.store->text == L"help", "keys go to the panel while it is up");
+            s.key(VK_ESCAPE);
+            s.key(VK_ESCAPE);
+            s.key(L'A');
+            require(s.store->text == L"helpa", "after Esc letters are composed again");
+            s.key(VK_ESCAPE);
+            require(s.store->text == L"help", "and nothing else went into the text");
+            write_settings("{\"inputMode\":{\"panelDoubleTab\":false,\"nextWordPrediction\":true}}");
             check(s.service->Deactivate(), "text service deactivation for 本地英文");
             s.service_active = false;
-            std::cout << "PASS: 本地英文 corrections, take-back, digits, Enter and punctuation, single-line candidate pages, page-relative digit/Space commits, host page boundaries/selection, cross-page prediction Tab, DLL COM creation, real TSF edit sessions, context-ranked pinyin, bounded/private preceding text, Tab prediction, host-managed selection, edit/focus/context invalidation, ordinary key passthrough and composition regressions.\n"
+            std::cout << "PASS: 本地英文 corrections, take-back, digits, Enter and punctuation, Tab twice for the panel in 辅, single-line candidate pages, page-relative digit/Space commits, host page boundaries/selection, cross-page prediction Tab, DLL COM creation, real TSF edit sessions, context-ranked pinyin, bounded/private preceding text, Tab prediction, host-managed selection, edit/focus/context invalidation, ordinary key passthrough and composition regressions.\n"
                 << "Scope: key-sink registration is in memory; OS profile loading/key routing and candidate presentation require desktop acceptance.\n";
         }
         std::filesystem::remove_all(isolated);
