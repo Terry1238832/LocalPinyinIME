@@ -1,0 +1,64 @@
+{
+  "batch": "lexicon_batch_171",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "游戏与娱乐",
+  "author": "gap-fill",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 317,
+  "sha256": "5968a41788a27ec74e871b7882c0db9538145972487c1298da8f560d54adec39",
+  "authoring_files_sha256": {
+    "lexicon_batch_171.authoring.json": "247b40a2c35d5d0777d7a006c2a1ae223ba8a8174ed4e3155c9b09141f48c9ed",
+    "batch171_authored_draft.txt": "a6b12be79a281cd67dbc3e5bc06d2555db4d96cfa47ed644d5db2d3ca206e902",
+    "batch171_pronunciation_review.tsv": "e18a98699d1279cf0d6b0e496faa8f63dba84a9a0116b8dacbb2861bff1327bc"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "ae0093388723a47e7e8b4031f99f49e4b9e8dc2df87e8b65bdc328ba1555f3b2",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "b171_high": 6000,
+    "b171_low": 5000,
+    "b171_mid": 5500
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "b171_high": 18,
+    "b171_low": 96,
+    "b171_mid": 203
+  },
+  "length_distribution": {
+    "4": 89,
+    "2": 129,
+    "3": 97,
+    "5": 2
+  },
+  "authoring_rejections": [],
+  "mandatory_polyphone_reviews": 224,
+  "manual_pronunciation_overrides": {
+    "交易行": "jiaoyihang",
+    "将军抽车": "jiangjunchouju",
+    "读档重来": "dudangchonglai",
+    "谁是卧底": "sheishiwodi",
+    "闪退重开": "shantuichongkai"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 5,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}
