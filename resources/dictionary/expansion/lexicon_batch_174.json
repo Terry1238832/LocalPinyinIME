@@ -1,0 +1,27 @@
+{
+  "batch": "lexicon_batch_174",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "bulk_third_party_lexicon_import": false,
+  "scope": "家居与日用品较长说法",
+  "author": "gap-fill",
+  "review_scope": "Single AI author reads every selected word and records positional polyphone decisions. Words are longer than six characters, so curate_lexicon.py select() does not accept them; merge_lexicon_batch.py appends the frozen rows. Not an independent human linguistic review and not a bulk import.",
+  "pronunciation_dependency": "pypinyin 0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 4,
+  "sha256": "a3d2bd0c05d6495c3eff83eda2fde16fe187017cefde4a57d05d85ce24d54e73",
+  "authoring_files_sha256": {
+    "batch174_draft.txt": "b6ef57cca7135cf06198f7af8c84e66868b3ec507f056cef0e746c68376b7b1e",
+    "batch174_pronunciation_review.tsv": "4358227818aed415fb6905335d0b344f71b37a161fc4ec3a516e99dc23a2c50f"
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "low": 4
+  },
+  "length_distribution": {
+    "7": 4
+  },
+  "mandatory_polyphone_reviews": 4,
+  "manual_pronunciation_overrides": {},
+  "tool": "merge_lexicon_batch.py"
+}
