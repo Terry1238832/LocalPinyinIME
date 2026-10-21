@@ -1,0 +1,32 @@
+{
+  "batch": "lexicon_batch_175",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "bulk_third_party_lexicon_import": false,
+  "scope": "身体与健康较长说法",
+  "author": "gap-fill",
+  "review_scope": "Single AI author reads every selected word and records positional polyphone decisions. Words are longer than six characters, so curate_lexicon.py select() does not accept them; merge_lexicon_batch.py appends the frozen rows. Not an independent human linguistic review and not a bulk import.",
+  "pronunciation_dependency": "pypinyin 0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 18,
+  "sha256": "f877d96e3cbe595d7c0042dc6010f80f1a06bc3aa738b4f010f76af0cfb1a26d",
+  "authoring_files_sha256": {
+    "batch175_draft.txt": "2026b6634e35dbf97565cea6d51b2323e9485bb4579d2d58541b3f25083c47b5",
+    "batch175_pronunciation_review.tsv": "c509fa3a6334a59036aaaef70812032311c1b67e457fcf8e424b2c9477c5dafa"
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "low": 15,
+    "mid": 3
+  },
+  "length_distribution": {
+    "9": 1,
+    "7": 13,
+    "8": 4
+  },
+  "mandatory_polyphone_reviews": 17,
+  "manual_pronunciation_overrides": {
+    "小儿豉翘清热颗粒": "xiaoerchiqiaoqingrekeli"
+  },
+  "tool": "merge_lexicon_batch.py"
+}
