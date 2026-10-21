@@ -1,0 +1,86 @@
+{
+  "batch": "lexicon_batch_165",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "饮食",
+  "author": "gap-fill",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 1001,
+  "sha256": "c86f67f1de2b875b3ae681643a47cbc0522c612c55821c7a3792f4cc6bf1d165",
+  "authoring_files_sha256": {
+    "lexicon_batch_165.authoring.json": "267dcbeaacfd55509c01932daa753faffd58cf5d5151b4c7263698b3092fa9f8",
+    "batch165_authored_draft.txt": "31589f7255d4c76e6dfdd621bc21bc2c7b582a27581b60a75bd22009b9b7b946",
+    "batch165_pronunciation_review.tsv": "4c4bfc0ab8cc50a0aea807d8308b781ff896936007ccd42ae128dd92deeb5a4d"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "6cd929e4711865182e2d0d08a80631692f3b3f83e89754d42f005d274a7d19ac",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "b165_high": 6000,
+    "b165_low": 5000,
+    "b165_mid": 5500
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "b165_high": 31,
+    "b165_low": 412,
+    "b165_mid": 558
+  },
+  "length_distribution": {
+    "2": 301,
+    "3": 416,
+    "4": 215,
+    "5": 54,
+    "6": 15
+  },
+  "authoring_rejections": [],
+  "mandatory_polyphone_reviews": 638,
+  "manual_pronunciation_overrides": {
+    "仔姜": "zijiang",
+    "剥蒜": "baosuan",
+    "剥虾": "baoxia",
+    "和馅": "huoxian",
+    "咖喱牛腩": "kaliniunan",
+    "咖喱猪排": "kalizhupai",
+    "咖喱酱": "kalijiang",
+    "山楂脯": "shanzhafu",
+    "杏脯": "xingfu",
+    "桃脯": "taofu",
+    "梨脯": "lifu",
+    "澄面": "dengmian",
+    "盛汤": "chengtang",
+    "红咖喱": "hongkali",
+    "绿咖喱": "lvkali",
+    "肉脯": "roufu",
+    "苹果脯": "pingguofu",
+    "茄盒": "qiehe",
+    "蜜汁肉脯": "mizhiroufu",
+    "调汁": "tiaozhi",
+    "豉汁排骨": "chizhipaigu",
+    "豉油": "chiyou",
+    "蹄膀": "tipang",
+    "长粒米": "changlimi",
+    "长豆角": "changdoujiao",
+    "黄咖喱": "huangkali"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 26,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}
