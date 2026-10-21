@@ -73,6 +73,15 @@ async function launch() {
     await question.getByRole('button', { name: '不用了', exact: true }).click();
     await question.waitFor({ state: 'detached' });
   }
+  // Then, until it is answered once, the first-run welcome.
+  const welcome = page.getByRole('dialog', { name: '欢迎使用本地拼音', exact: true });
+  if (report.welcomeShown) assert.equal(await welcome.isVisible(), false, 'The welcome came back after it was answered.');
+  else if (await welcome.waitFor({ timeout: 3000 }).then(() => true, () => false)) {
+    report.welcomeShown = 1;
+    await screenshot('welcome');
+    await welcome.getByRole('button', { name: '以后再说', exact: true }).click();
+    await welcome.waitFor({ state: 'detached' });
+  }
 }
 
 async function state() { return page.evaluate(() => window.localPinyin.getState()); }
@@ -365,6 +374,25 @@ async function run() {
   await check('The clipboard question is asked once on a fresh install and answered', async () => {
     assert.equal(report.clipboardQuestionShown, 1);
     assert.equal((await state()).settings.clipboardHistory, 'off');
+  });
+  await check('The first-run welcome is shown once; About replays the tour on the real pages', async () => {
+    assert.equal(report.welcomeShown, 1);
+    await navigate(pages.find(item => item.id === 'about'));
+    await page.locator('#page-about').getByRole('button', { name: '重新观看', exact: true }).click();
+    await page.getByRole('dialog', { name: '欢迎使用本地拼音', exact: true }).getByRole('button', { name: /开始导览/ }).click();
+    const card = page.locator('.tour-card');
+    const steps = [['挑一个候选窗口', 'appearance'], ['中、英一键切换', 'input'], ['第二个输入法：本地英文', 'english'],
+      ['连按两下 Tab：工具面板', 'panel'], ['找设置，按 Ctrl + K', 'panel']];
+    for (const [index, [title, id]] of steps.entries()) {
+      await card.getByRole('heading', { name: title, exact: true }).waitFor();
+      assert.equal(await page.locator(`#page-${id}`).isVisible(), true);
+      assert.equal(await card.locator('[aria-current="step"]').textContent(), String(index + 1));
+      if (index === 1) await screenshot('tour-step');
+      await card.getByRole('button', { name: index === steps.length - 1 ? '完成' : '下一步', exact: true }).click();
+    }
+    await card.waitFor({ state: 'detached' });
+    assert.equal(await page.evaluate(() => localStorage.getItem('localpinyin.tour')), 'done');
+    await navigate(pages.find(item => item.id === 'appearance'));
   });
   await check('Real native state and preview', async () => {
     const initial = await state();

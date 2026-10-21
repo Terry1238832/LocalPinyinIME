@@ -33,7 +33,7 @@ export function PanelPage({ state, saving, saveSettings, notify }: Props) {
   return <>
     <PageHeader kicker="gong'ju" title="工具面板" description="连按两下 Tab 打开：符号、颜文字、表情、表情包、剪贴板和计算等小工具。" action={<SaveStatus saving={saving} />} />
     <SettingsGroup id="group-panel" title="打开方式">
-      <SettingRow title="连按两下 Tab 打开工具面板" description="在输入框里快速按两次 Tab，光标旁出现一个小面板，全部可以用键盘操作：Tab 换页、方向键移动、数字键选择、Enter 输入、Esc 关闭，直接打拼音就能搜索。点右上角的放大图标（或 Shift+Enter）换成大窗口。只按一次 Tab 还是普通的 Tab（或翻译）。"
+      <SettingRow title="连按两下 Tab 打开工具面板" tour="panel-tab" description="在输入框里快速按两次 Tab，光标旁出现一个小面板，全部可以用键盘操作：Tab 换页、方向键移动、数字键选择、Enter 输入、Esc 关闭，直接打拼音就能搜索。点右上角的放大图标（或 Shift+Enter）换成大窗口。只按一次 Tab 还是普通的 Tab（或翻译）。"
         demo={<KeyDemo before="你好" keys={['Tab', 'Tab']} output=" → 工具面板" />}>
         <Switch checked={settings.panelDoubleTab} disabled={saving} label="连按两下 Tab 打开工具面板"
           onChange={panelDoubleTab => void saveSettings({ ...settings, panelDoubleTab })} />

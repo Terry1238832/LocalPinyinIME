@@ -99,7 +99,7 @@ export function InputPage({ state, saving, saveSettings }: SettingsPageProps) {
   return <>
     <PageHeader kicker="shu'ru" title="输入" description="切换方式、候选、常用场景、拼写、输入方案与辅助功能。" action={<SaveStatus saving={saving} />} />
     <SettingsGroup id="group-switching" title="中英文切换">
-      <SettingRow title="按 Shift 切换中英文" description="单独按下并松开 Shift 键时切换；按住 Shift 打出的大写字母照常输入。正在输入的字母会原样保留。"
+      <SettingRow title="按 Shift 切换中英文" tour="shift" description="单独按下并松开 Shift 键时切换；按住 Shift 打出的大写字母照常输入。正在输入的字母会原样保留。"
         demo={<KeyDemo before="hello" keys={['Shift']} modes={['中', '英']} />}>
         <Switch checked={settings.shiftToggleEnabled} disabled={saving} label="按 Shift 切换中英文"
           onChange={shiftToggleEnabled => void saveSettings({ ...settings, shiftToggleEnabled })} />
@@ -247,7 +247,7 @@ function LearnedWords({ onState, notify }: { onState: (state: AppState) => void;
   </section>;
 }
 
-export function AboutPage({ state, update, notify }: { state: AppState; update: UpdateStatus | null; notify: (message: string) => void }) {
+export function AboutPage({ state, update, notify, onTour }: { state: AppState; update: UpdateStatus | null; notify: (message: string) => void; onTour: () => void }) {
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const activeSession = state.runtime.available && state.runtime.active;
@@ -284,6 +284,13 @@ export function AboutPage({ state, update, notify }: { state: AppState; update: 
     </div>
     <ErrorNotice message={error} />
     </div>
+    <section className="about-tour" aria-labelledby="about-tour-title">
+      <h2 id="about-tour-title" className="block-title">新手引导<span>五步，约一分钟</span></h2>
+      <div className="about-tour-body">
+        <p>欢迎页和导览：候选窗口、中英切换、本地英文、工具面板和搜索设置。</p>
+        <button className="button secondary" onClick={onTour}><Icon name="spark" size={15} />重新观看</button>
+      </div>
+    </section>
     <BackupSection notify={notify} />
     <UpdatePanel status={update} />
     <section className="credits">
