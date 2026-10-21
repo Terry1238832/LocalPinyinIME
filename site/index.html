@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>本地拼音 — 只在你的电脑上思考的输入法</title>
+  <meta name="description" content="本地拼音是 Windows 10/11 上的离线中文拼音输入法：参考前文排序候选、拼写纠错、中英混输、八种候选框风格、连按两下 Tab 的工具面板，还附带一个离线英文输入法。打字时不联网，免费开源。">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" data-theme-color>
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" data-theme-color>
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="本地拼音 — 只在你的电脑上思考的输入法">
+  <meta property="og:description" content="离线中文拼音输入法，打字时不联网。参考前文、拼写纠错、八种候选框、工具面板和本地英文。免费开源。">
+  <meta property="og:image" content="https://terry1238832.github.io/LocalPinyinIME/assets/img/og.png">
+  <meta property="og:url" content="https://terry1238832.github.io/LocalPinyinIME/">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/img/icon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <script>
+    // Theme before first paint: a stored choice, else the system's.
+    (function () {
+      var choice = 'auto';
+      try { choice = localStorage.getItem('lp-theme') || 'auto'; } catch (e) {}
+      var dark = choice === 'dark' || (choice === 'auto' && matchMedia('(prefers-color-scheme: dark)').matches);
+      document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+      document.documentElement.dataset.themeChoice = choice;
+      document.documentElement.classList.add('js');
+    })();
+  </script>
+  <link rel="stylesheet" href="assets/css/candidate-tokens.css">
+  <link rel="stylesheet" href="assets/css/candidates.css">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script src="assets/js/site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">跳到内容</a>
+
+  <nav class="nav" aria-label="主导航">
+    <div class="nav-inner">
+      <a class="nav-brand" href="#top" aria-label="本地拼音，回到顶部">
+        <img src="assets/img/icon.svg" width="24" height="24" alt="">
+        <span>本地拼音</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#local">本地</a></li>
+        <li><a href="#context">前文</a></li>
+        <li><a href="#typing">纠错</a></li>
+        <li><a href="#styles">候选框</a></li>
+        <li><a href="#tools">工具面板</a></li>
+        <li><a href="#english">本地英文</a></li>
+      </ul>
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="外观：跟随系统">
+        <svg class="i-auto" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 3.5a6.5 6.5 0 0 1 0 13z" fill="currentColor"/></svg>
+        <svg class="i-light" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="3.6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 1.8v2.4M10 15.8v2.4M1.8 10h2.4M15.8 10h2.4M4.2 4.2l1.7 1.7M14.1 14.1l1.7 1.7M4.2 15.8l1.7-1.7M14.1 5.9l1.7-1.7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <svg class="i-dark" viewBox="0 0 20 20" aria-hidden="true"><path d="M16.5 12.2A7 7 0 0 1 7.8 3.5a7 7 0 1 0 8.7 8.7z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+      </button>
+      <a class="btn btn-sm" href="#download">下载</a>
+    </div>
+  </nav>
+
+  <main id="main">
+    <!-- 1 · Hero -->
+    <header class="hero" id="top">
+      <div class="hero-copy">
+        <p class="compose" translate="no" aria-hidden="true" data-compose="ben'di'pin'yin"><span class="compose-py">ben<i>'</i>di<i>'</i>pin<i>'</i>yin</span><b class="compose-caret"></b></p>
+        <h1 class="hero-title">本地拼音<span class="brand-caret" aria-hidden="true"></span></h1>
+        <p class="hero-lead">聪明的输入法，只在你的电脑上思考。</p>
+        <div class="hero-cta">
+          <a class="btn" href="#download">免费下载</a>
+          <a class="text-link" href="#local">为什么是“本地”</a>
+        </div>
+      </div>
+      <div class="hero-stage" aria-hidden="true" translate="no">
+        <div class="doc">
+          <span class="doc-text">每个程序员的第一句话：</span><span class="doc-comp">nihaoshijie</span><span class="doc-caret"></span>
+        </div>
+        <div class="cand hero-cand" data-cand-style="flow" data-cand-tone="light">
+          <div class="cand-q"><span class="cand-mark"></span><span class="cand-py">ni<i>'</i>hao<i>'</i>shi<i>'</i>jie<b class="cand-caret"></b></span><span class="cand-sep"></span><span class="cand-ctl"><span class="cand-dots"><i class="on"></i><i></i></span><svg class="cand-gear" viewBox="0 0 16 16"><path fill="none" stroke="currentColor" stroke-width="1.3" d="M8 5.6a2.4 2.4 0 1 0 0 4.8 2.4 2.4 0 0 0 0-4.8zM6.9 1.5h2.2l.4 1.8 1.3.7 1.7-.7 1.1 1.9-1.4 1.2v1.2l1.4 1.2-1.1 1.9-1.7-.7-1.3.7-.4 1.8H6.9l-.4-1.8-1.3-.7-1.7.7-1.1-1.9 1.4-1.2V6.4L2.4 5.2l1.1-1.9 1.7.7 1.3-.7z"/></svg></span></div>
+          <ol class="cand-list">
+            <li class="cand-item is-focus"><span class="cand-c"><span class="cand-n">1</span><span class="cand-w">你好世界</span></span><span class="cand-hint">空格</span></li>
+            <li class="cand-item"><span class="cand-c"><span class="cand-n">2</span><span class="cand-w">你好</span></span></li>
+            <li class="cand-item"><span class="cand-c"><span class="cand-n">3</span><span class="cand-w">拟好</span></span></li>
+            <li class="cand-item"><span class="cand-c"><span class="cand-n">4</span><span class="cand-w">你</span></span></li>
+            <li class="cand-item"><span class="cand-c"><span class="cand-n">5</span><span class="cand-w">泥</span></span></li>
+            <li class="cand-item"><span class="cand-c"><span class="cand-n">6</span><span class="cand-w">尼</span></span></li>
+            <li class="cand-item"><span class="cand-c"><span class="cand-n">7</span><span class="cand-w">妮</span></span></li>
+            <li class="cand-item"><span class="cand-c"><span class="cand-n">8</span><span class="cand-w">逆</span></span></li>
+            <li class="cand-item"><span class="cand-c"><span class="cand-n">9</span><span class="cand-w">倪</span></span></li>
+          </ol>
+        </div>
+      </div>
+      <p class="sr-only">示意：输入 nihaoshijie，候选窗口的第一个候选是“你好世界”，按空格上屏。</p>
+      <p class="hero-meta">适用于 Windows 10 和 11，免费开源。</p>
+    </header>
+
+    <!-- 2 · Manifesto (stage) -->
+    <section class="chapter stage manifesto" id="local" aria-labelledby="local-title" data-scene="manifesto">
+      <div class="sticky">
+        <div class="wrap">
+          <h2 class="sr-only" id="local-title">本地</h2>
+          <p class="manifesto-text" data-words><span>你打的</span><span>每一个字，</span><span>都在</span><span>这台电脑上</span><span>读成候选、</span><span>排好顺序、</span><span>记住你的习惯。</span><span>没有云端，</span><span>没有账号，</span><span>也没有广告。</span></p>
+        </div>
+      </div>
+    </section>
+    <section class="chapter stage facts" aria-label="本地的含义">
+      <div class="wrap">
+        <ul class="fact-row">
+          <li data-reveal><strong>打字不联网</strong><span>查词、排序、纠错和学习全部在本机完成，断网照样好用。</span></li>
+          <li data-reveal><strong>数据只在本机</strong><span>个人词库、学习记录、剪贴板和表情包都存在你的电脑上，卸载时也不会删掉。</span></li>
+          <li data-reveal><strong>开源，MIT 许可</strong><span>每一行代码都在 GitHub 上，可以查看、构建和验证。</span></li>
+        </ul>
+        <p class="footnote" data-reveal>会联网的只有三件事，都由你决定：打开设置程序时检查有没有新版本（可以在“关于”页关闭）；开启“Tab 键翻译成英文”后按 Tab（默认关闭）；把网页上的图片加为表情包时，按图片地址下载一次原图。</p>
+      </div>
+    </section>
+
+    <!-- 3 · Context -->
+    <section class="chapter alt context" id="context" aria-labelledby="context-title" data-scene="context">
+      <div class="sticky">
+        <div class="wrap context-grid">
+          <div class="context-copy">
+            <h2 class="chapter-title" id="context-title">它会看前文。</h2>
+            <p class="lead">同样的拼音，放进不同的句子，第一个候选就不一样。本地拼音读光标前已经写下的字，用一个在本机运行的语言模型给候选排序。</p>
+            <ol class="context-steps" aria-hidden="true"><li class="on"></li><li></li><li></li></ol>
+          </div>
+          <div class="context-demo" aria-hidden="true" translate="no">
+            <div class="doc"><span class="doc-text" data-ctx>他跑</span><span class="doc-comp" data-ctx-py>de</span><span class="doc-caret"></span></div>
+            <div class="cand context-cand" data-cand-style="flow" data-cand-tone="light">
+              <div class="cand-q"><span class="cand-mark"></span><span class="cand-py">de<b class="cand-caret"></b></span><span class="cand-sep"></span><span class="cand-ctl"><span class="cand-dots"><i class="on"></i><i></i></span><svg class="cand-gear" viewBox="0 0 16 16"><path fill="none" stroke="currentColor" stroke-width="1.3" d="M8 5.6a2.4 2.4 0 1 0 0 4.8 2.4 2.4 0 0 0 0-4.8zM6.9 1.5h2.2l.4 1.8 1.3.7 1.7-.7 1.1 1.9-1.4 1.2v1.2l1.4 1.2-1.1 1.9-1.7-.7-1.3.7-.4 1.8H6.9l-.4-1.8-1.3-.7-1.7.7-1.1-1.9 1.4-1.2V6.4L2.4 5.2l1.1-1.9 1.7.7 1.3-.7z"/></svg></span></div>
+              <ol class="cand-list">
+                <li class="cand-item is-focus"><span class="cand-c"><span class="cand-n">1</span><span class="cand-w">得</span></span><span class="cand-hint">空格</span></li>
+                <li class="cand-item"><span class="cand-c"><span class="cand-n">2</span><span class="cand-w">的</span></span></li>
+                <li class="cand-item"><span class="cand-c"><span class="cand-n">3</span><span class="cand-w">地</span></span></li>
+                <li class="cand-item"><span class="cand-c"><span class="cand-n">4</span><span class="cand-w">德</span></span></li>
+                <li class="cand-item"><span class="cand-c"><span class="cand-n">5</span><span class="cand-w">嘚</span></span></li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ul class="sr-only">
+        <li>“他跑”后面输入 de，第一个候选是“得”。</li>
+        <li>“没有”后面输入 shijian，第一个候选是“时间”。</li>
+        <li>“这种又是”后面输入 zalaide，第一个候选是“咋来的”。</li>
+      </ul>
+    </section>
+    <section class="chapter alt numbers" aria-label="前文模型的数字">
+      <div class="wrap">
+        <dl class="number-row">
+          <div data-reveal><dt>86.04%</dt><dd>逐词输入、参考前文时，第一个候选就是要打的词。留出测试集，20,626 例。</dd></div>
+          <div data-reveal><dt>1,360&nbsp;万字</dt><dd>训练前文模型的语料，按权重计。来源和处理步骤都记录在仓库里。</dd></div>
+          <div data-reveal><dt>17.1&nbsp;MB</dt><dd>模型大小。只读内存映射，所有程序共用同一份内存。</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- 4 · Typing -->
+    <section class="chapter typing" id="typing" aria-labelledby="typing-title">
+      <div class="wrap">
+        <h2 class="chapter-title" id="typing-title">打错了，它也认得。</h2>
+        <p class="lead">多打一个字母、漏打一个、按到旁边的键，中文里夹着英文，只打首字母，它都读得懂。</p>
+        <ul class="xforms">
+          <li class="xform" data-reveal><span class="x-label">拼写纠错<small>多打、漏打、颠倒、按到相邻键</small></span><span class="x-in" translate="no" data-type>nihso</span><span class="x-out">你好</span></li>
+          <li class="xform" data-reveal><span class="x-label">中英混输<small>英文单词、编程术语、缩写直接打</small></span><span class="x-in" translate="no" data-type>woyongpythonxiedaima</span><span class="x-out">我用 Python 写代码</span></li>
+          <li class="xform" data-reveal><span class="x-label">简拼<small>每个字只打首字母</small></span><span class="x-in" translate="no" data-type>bjdx</span><span class="x-out">北京大学</span></li>
+          <li class="xform" data-reveal><span class="x-label">模糊音<small>开启 z = zh 之后</small></span><span class="x-in" translate="no" data-type>zongguo</span><span class="x-out">中国</span></li>
+          <li class="xform" data-reveal><span class="x-label">双拼<small>小鹤双拼，也有自然码</small></span><span class="x-in" translate="no" data-type>nihc</span><span class="x-out">你好</span></li>
+          <li class="xform" data-reveal><span class="x-label">常用场景<small>选了“编程开发”之后</small></span><span class="x-in" translate="no" data-type>yilaizhuru</span><span class="x-out">依赖注入</span></li>
+          <li class="xform" data-reveal><span class="x-label">自动造词<small>分别打过“量”“甲”“成”之后</small></span><span class="x-in" translate="no" data-type>liangjiacheng</span><span class="x-out">量甲成</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 5 · Candidate styles (stage) -->
+    <section class="chapter stage styles" id="styles" aria-labelledby="styles-title">
+      <div class="wrap">
+        <h2 class="chapter-title center" id="styles-title">八种候选框，一套按键。</h2>
+        <p class="lead center">空格上屏、数字选词、方向键翻页，八种都一样。在设置的“外观”页点一下，正在打字的窗口立刻换成新样子。</p>
+        <div class="style-stage" data-reveal>
+          <div class="cand style-cand" translate="no" data-cand-style="flow" data-cand-tone="light" aria-hidden="true">
+            <div class="cand-q"><span class="cand-mark"></span><span class="cand-py">sui<i>'</i>bian<b class="cand-caret"></b></span><span class="cand-sep"></span><span class="cand-ctl"><span class="cand-dots"><i class="on"></i><i></i></span><svg class="cand-gear" viewBox="0 0 16 16"><path fill="none" stroke="currentColor" stroke-width="1.3" d="M8 5.6a2.4 2.4 0 1 0 0 4.8 2.4 2.4 0 0 0 0-4.8zM6.9 1.5h2.2l.4 1.8 1.3.7 1.7-.7 1.1 1.9-1.4 1.2v1.2l1.4 1.2-1.1 1.9-1.7-.7-1.3.7-.4 1.8H6.9l-.4-1.8-1.3-.7-1.7.7-1.1-1.9 1.4-1.2V6.4L2.4 5.2l1.1-1.9 1.7.7 1.3-.7z"/></svg></span></div>
+            <ol class="cand-list">
+              <li class="cand-item is-focus"><span class="cand-c"><span class="cand-n">1</span><span class="cand-w">随便</span></span><span class="cand-hint">空格</span></li>
+              <li class="cand-item"><span class="cand-c"><span class="cand-n">2</span><span class="cand-w">岁</span></span></li>
+              <li class="cand-item"><span class="cand-c"><span class="cand-n">3</span><span class="cand-w">随</span></span></li>
+              <li class="cand-item"><span class="cand-c"><span class="cand-n">4</span><span class="cand-w">碎</span></span></li>
+              <li class="cand-item"><span class="cand-c"><span class="cand-n">5</span><span class="cand-w">虽</span></span></li>
+              <li class="cand-item"><span class="cand-c"><span class="cand-n">6</span><span class="cand-w">遂</span></span></li>
+              <li class="cand-item"><span class="cand-c"><span class="cand-n">7</span><span class="cand-w">穗</span></span></li>
+              <li class="cand-item"><span class="cand-c"><span class="cand-n">8</span><span class="cand-w">隋</span></span></li>
+              <li class="cand-item"><span class="cand-c"><span class="cand-n">9</span><span class="cand-w">髓</span></span></li>
+            </ol>
+          </div>
+        </div>
+        <div class="style-bar">
+          <fieldset class="style-picker" data-style-picker>
+            <legend class="sr-only">候选框风格</legend>
+            <label><input type="radio" name="cand-style" value="flow" checked><span>自适应流体<small translate="no">Adaptive Flow</small></span></label>
+            <label><input type="radio" name="cand-style" value="capsule"><span>胶囊<small translate="no">Capsule</small></span></label>
+            <label><input type="radio" name="cand-style" value="flap"><span>翻牌<small translate="no">Split-Flap</small></span></label>
+            <label><input type="radio" name="cand-style" value="marker"><span>荧光笔<small translate="no">Highlighter</small></span></label>
+            <label><input type="radio" name="cand-style" value="type"><span>现代活字<small translate="no">Modern Type</small></span></label>
+            <label><input type="radio" name="cand-style" value="rail"><span>光标轨道<small translate="no">Cursor Rail</small></span></label>
+            <label><input type="radio" name="cand-style" value="glass"><span>悬浮晶体<small translate="no">Floating Glass</small></span></label>
+            <label><input type="radio" name="cand-style" value="column"><span>竖排列表<small translate="no">Column List</small></span></label>
+          </fieldset>
+          <fieldset class="tone-switch" data-tone-picker>
+            <legend class="sr-only">候选框主题</legend>
+            <label><input type="radio" name="cand-tone" value="light" checked><span>浅色</span></label>
+            <label><input type="radio" name="cand-tone" value="dark"><span>深色</span></label>
+          </fieldset>
+        </div>
+        <p class="style-desc" aria-live="polite" data-style-desc>当前候选是一滴流动的液体：换候选时拉长、收腰，再聚拢流过去；窗口按候选的长短在紧凑、平衡、展开三种形态之间切换。这是默认风格。</p>
+      </div>
+    </section>
+
+    <!-- 6 · Settings -->
+    <section class="chapter settings" id="settings" aria-labelledby="settings-title">
+      <div class="wrap">
+        <h2 class="chapter-title center" id="settings-title">设置，像一张划了格线的纸。</h2>
+        <p class="lead center">每一节的标题站在页边，设置之间只用细线分开。侧边栏本身是一个候选列表：页面有序号，Ctrl + 数字直接打开，当前页用你选的候选框风格画出来。</p>
+      </div>
+      <figure class="shot shot-wide" data-zoom>
+        <div class="frame">
+          <img class="for-light" src="assets/img/settings-light.webp" width="1920" height="1258" loading="lazy" decoding="async" alt="本地拼音设置程序的“外观”页（浅色）：左侧是带序号的侧边栏，右侧是候选框预览、主题和字号设置。">
+          <img class="for-dark" src="assets/img/settings-dark.webp" width="1920" height="1258" loading="lazy" decoding="async" alt="本地拼音设置程序的“外观”页（深色）：左侧是带序号的侧边栏，右侧是候选框预览、主题和字号设置。">
+        </div>
+        <figcaption>设置程序的“外观”页，0.24.0。关闭设置后程序就退出，输入法照常工作。</figcaption>
+      </figure>
+    </section>
+
+    <!-- 7 · Tool panel -->
+    <section class="chapter alt tools" id="tools" aria-labelledby="tools-title">
+      <div class="wrap">
+        <div class="keys" aria-hidden="true" data-reveal><kbd class="key">Tab</kbd><kbd class="key">Tab</kbd></div>
+        <h2 class="chapter-title center" id="tools-title">连按两下 Tab。</h2>
+        <p class="lead center">工具面板出现在光标旁边：算数、写大写数字、查日期，找符号、颜文字和表情，翻剪贴板。全部可以用键盘完成，选好的内容直接输入到原来的位置。</p>
+      </div>
+      <figure class="shot" data-reveal>
+        <div class="frame">
+          <img class="for-light" src="assets/img/panel-tools-light.webp" width="1500" height="1000" loading="lazy" decoding="async" alt="工具面板大窗口的“工具”页（浅色）：数字计算、大小写转换、日期格式、当前时间和拼音声调。">
+          <img class="for-dark" src="assets/img/panel-tools-dark.webp" width="1500" height="1000" loading="lazy" decoding="async" alt="工具面板大窗口的“工具”页（深色）：数字计算、大小写转换、日期格式、当前时间和拼音声调。">
+        </div>
+        <figcaption>按 Shift + Enter 把小面板放大成大窗口，停在同一页。</figcaption>
+      </figure>
+      <div class="wrap">
+        <dl class="ruled">
+          <div><dt>工具</dt><dd>55+15 → 70，123 → 壹佰贰拾叁，sj → 当前时间。在任何输入框里先打 v，候选里也有结果。</dd></div>
+          <div><dt>剪贴板</dt><dd>记住复制过的文字和图片，图片里的字也能搜到。只保存在本机，可以关闭，也可以一键清空。</dd></div>
+          <div><dt>符号</dt><dd>约 3,100 个：标点、货币、数学、希腊字母、箭头、拼音声调……按中文名搜索，“美元”就是 $。</dd></div>
+          <div><dt>颜文字</dt><dd>1,000 个，按开心、难过、无语、打招呼、睡觉、动物等分组。</dd></div>
+          <div><dt>表情</dt><dd>约 1,870 个，打拼音就能找到。在面板里用过的表情，之后打它的名字时也会出现在候选里。</dd></div>
+          <div><dt>表情包</dt><dd>把图片或动图拖进来就加好了，从微信拖进来也行，点一下发送。</dd></div>
+          <div><dt>记录</dt><dd>地址、账号密码、银行卡号，加密保存。解锁后选一项，直接输入到光标处。</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- 8 · English -->
+    <section class="chapter english" id="english" aria-labelledby="english-title">
+      <div class="wrap">
+        <h2 class="chapter-title center" id="english-title">还有一个英文输入法。</h2>
+        <p class="lead center">本地英文和本地拼音一起安装，按 Alt + CapsLock 切换。整句打完，连按两下空格，拼写、大小写和常见搭配一起改好；紧接着按退格，换回原样。</p>
+        <div class="en-demo" aria-hidden="true" translate="no" data-reveal>
+          <p class="en-line" data-en>I think the plan could have worked</p>
+          <div class="keys keys-sm"><kbd class="key">空格</kbd><kbd class="key">空格</kbd></div>
+        </div>
+        <p class="sr-only">示例：输入 i think teh plan could of worked，连按两下空格后变成 I think the plan could have worked。</p>
+        <dl class="number-row">
+          <div data-reveal><dt>约&nbsp;13&nbsp;万</dt><dd>个英文单词，词频来自公开、可商用的英文句子，只存词和次数。</dd></div>
+          <div data-reveal><dt>86.0%</dt><dd>日常短句里随机打错的单词，按空格改对的比例。</dd></div>
+          <div data-reveal><dt>0.01%</dt><dd>本来正确的单词被改动的比例，而且只改大小写和撇号。</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- 9 · Details -->
+    <section class="chapter alt details" id="details" aria-labelledby="details-title">
+      <div class="wrap">
+        <h2 class="chapter-title" id="details-title">还有这些细节。</h2>
+        <dl class="ruled ruled-wide">
+          <div><dt>21 万条词库</dt><dd>218,942 条，《通用规范汉字表》一级字全部能打；日常词、成语、网络用语和聊天短句一直在补。</dd></div>
+          <div><dt>选词记忆会慢慢淡去</dt><dd>选过的词先排第一；一段时间不用，就一次往后挪一位，最后回到原来的顺序。常用的越用越稳。</dd></div>
+          <div><dt>学到的词可以删</dt><dd>在候选上按 Ctrl + Delete，马上忘掉这个词；也可以在“学习”页搜索后一条条删除。</dd></div>
+          <div><dt>英文标点用在该用的地方</dt><dd>在 VS Code、JetBrains 系列和终端里，标点自动用半角，自动配对括号照常工作；紧跟在数字后面的标点也是英文的：3.14、1,000、12:30。</dd></div>
+          <div><dt>第一次打开有导览</dt><dd>用你正在用的候选框的实际截图讲怎么用，再带你走五步：挑候选框、中英切换、本地英文、工具面板、Ctrl + K。在“关于”里随时重看。</dd></div>
+          <div><dt>32 位程序也能用</dt><dd>QQ 音乐这类 32 位桌面软件同样能切换到本地拼音，和 64 位共用同一份词库和设置。</dd></div>
+          <div><dt>商店应用里也能用</dt><dd>Notepads、邮件等商店应用里，候选窗口、表情包和设置都能用。</dd></div>
+          <div><dt>Tab 翻译成英文</dt><dd>打完一段中文按 Tab，换成英文：我想吃饭 → I want to eat。需要联网，默认关闭。</dd></div>
+          <div><dt>导入与导出</dt><dd>设置、个人词库、选词记录、输入习惯、表情包、剪贴板，选几项一次带走，换电脑也不丢。</dd></div>
+          <div><dt>自动检查更新</dt><dd>打开设置时检查 GitHub 上的新版本，下载后用 SHA-256 校验，不一致就删掉。可以关闭。</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- 10 · Download -->
+    <section class="chapter download" id="download" aria-labelledby="download-title">
+      <div class="wrap center">
+        <img class="dl-icon" src="assets/img/icon.svg" width="112" height="112" alt="">
+        <p class="compose compose-center" translate="no" aria-hidden="true" data-reveal data-compose="xia'zai"><span class="compose-py">xia<i>'</i>zai</span><b class="compose-caret"></b></p>
+        <h2 class="chapter-title" id="download-title">下载本地拼音</h2>
+        <p class="lead">0.24.0 预览版，适用于 Windows 10 和 Windows 11（x64），32 位程序同样可用。</p>
+        <div class="dl-cta">
+          <a class="btn btn-lg" href="https://github.com/Terry1238832/LocalPinyinIME/releases/download/v0.24.0/LocalPinyinIME-0.24.0-x64.exe">下载安装包</a>
+        </div>
+        <p class="dl-meta"><span translate="no">LocalPinyinIME-0.24.0-x64.exe</span>，约 112&nbsp;MB</p>
+        <ul class="dl-links">
+          <li><a class="text-link" href="https://github.com/Terry1238832/LocalPinyinIME/releases/download/v0.24.0/LocalPinyinIME-0.24.0-x64.exe.sha256">SHA-256 校验值</a></li>
+          <li><a class="text-link" href="https://github.com/Terry1238832/LocalPinyinIME/releases/tag/v0.24.0">更新说明</a></li>
+          <li><a class="text-link" href="https://github.com/Terry1238832/LocalPinyinIME/releases">所有版本</a></li>
+          <li><a class="text-link" href="https://github.com/Terry1238832/LocalPinyinIME">源代码</a></li>
+        </ul>
+        <ol class="install-steps">
+          <li><strong>运行安装包</strong><span>点“立即安装”，在 Windows 的权限确认里选“是”。</span></li>
+          <li><strong>按 Win + 空格</strong><span>选“本地拼音”或“本地英文”。升级时，重新打开正在打字的程序。</span></li>
+          <li><strong>开始打字</strong><span>点候选窗口右上角的齿轮，打开设置。</span></li>
+        </ol>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <p>本地拼音是开源软件。项目代码、原创词库与联想关系采用 MIT 许可，标准词库为 Apache-2.0；前文模型只包含统计数据，来源署名见<a class="text-link" href="https://github.com/Terry1238832/LocalPinyinIME/blob/main/resources/THIRD_PARTY_NOTICES.txt">第三方声明</a>。</p>
+      <p>这个页面不使用 Cookie，不加载任何第三方资源。</p>
+      <ul class="footer-links">
+        <li><a class="text-link" href="https://github.com/Terry1238832/LocalPinyinIME/blob/main/docs/INSTALL-zh-CN.md">安装说明</a></li>
+        <li><a class="text-link" href="https://github.com/Terry1238832/LocalPinyinIME/blob/main/docs/TROUBLESHOOTING-zh-CN.md">常见问题</a></li>
+        <li><a class="text-link" href="https://github.com/Terry1238832/LocalPinyinIME/blob/main/docs/UNINSTALL-zh-CN.md">卸载</a></li>
+        <li><a class="text-link" href="https://github.com/Terry1238832/LocalPinyinIME/issues">问题反馈</a></li>
+      </ul>
+    </div>
+  </footer>
+</body>
+</html>

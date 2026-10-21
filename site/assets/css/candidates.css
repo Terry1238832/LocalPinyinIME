@@ -1,0 +1,313 @@
+/* The candidate window, drawn live in the product's own palettes
+   (candidate-tokens.css). Sizes follow docs/DESIGN_SYSTEM.md §7 in DIP,
+   multiplied by --k so the window can be shown large and stay sharp.
+
+   <div class="cand" data-cand-style data-cand-tone>
+     .cand-q    mark, pinyin + caret, separator (capsule), pager + gear
+     .cand-list li.cand-item > .cand-c (.cand-n number, .cand-w word) [+ .cand-hint] */
+
+.cand {
+  --k: 1;
+  --u: calc(1px * var(--k));
+  --cf: calc(18 * var(--u));
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  width: max-content;
+  max-width: 100%;
+  border: var(--u) solid var(--cand-border);
+  border-radius: calc(10 * var(--u));
+  background: var(--cand-background);
+  color: var(--cand-text);
+  font-family: var(--font);
+  line-height: 1.25;
+  letter-spacing: 0;
+  text-align: left;
+  box-shadow:
+    0 var(--u) calc(3 * var(--u)) rgb(0 0 0 / var(--cand-shadow-key-alpha)),
+    0 calc(12 * var(--u)) calc(32 * var(--u)) calc(-6 * var(--u)) rgb(0 0 0 / var(--cand-shadow-ambient-alpha));
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Pinyin row */
+.cand-q {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: calc(7 * var(--u));
+  min-height: calc(30 * var(--u));
+  padding: 0 calc(10 * var(--u));
+  font-size: calc(13 * var(--u));
+  color: var(--cand-composition);
+  white-space: nowrap;
+}
+.cand-mark { display: none; flex: none; }
+.cand-py { display: inline-flex; align-items: center; min-width: 0; }
+.cand-py i { font-style: normal; color: var(--cand-separator); }
+.cand-caret {
+  flex: none;
+  width: max(1.5px, calc(1.5 * var(--u)));
+  height: 1.05em;
+  margin-left: calc(2 * var(--u));
+  border-radius: 1px;
+  background: var(--cand-caret);
+  animation: cand-blink 1.1s steps(1) 5;
+}
+.cand-sep { display: none; }
+.cand-ctl { display: inline-flex; align-items: center; gap: calc(8 * var(--u)); margin-left: auto; padding-left: calc(18 * var(--u)); color: var(--cand-control); }
+.cand-dots { display: inline-flex; align-items: center; gap: calc(3 * var(--u)); }
+.cand-dots i { width: calc(4 * var(--u)); height: calc(4 * var(--u)); border-radius: 99px; background: var(--cand-control-disabled); }
+.cand-dots i.on { width: calc(12 * var(--u)); background: var(--cand-mark); }
+.cand-gear { width: calc(13 * var(--u)); height: calc(13 * var(--u)); }
+
+/* Candidates */
+.cand-list {
+  display: flex;
+  align-items: baseline;
+  gap: calc(16 * var(--u));
+  margin: 0;
+  padding: calc(4 * var(--u)) calc(10 * var(--u)) calc(9 * var(--u));
+  list-style: none;
+  font-size: var(--cf);
+  white-space: nowrap;
+}
+.cand-item { position: relative; display: flex; align-items: baseline; }
+.cand-c { position: relative; display: inline-flex; align-items: baseline; gap: calc(4 * var(--u)); }
+.cand-n { font-size: .55em; color: var(--cand-number); font-variant-numeric: tabular-nums; }
+.cand-w { position: relative; }
+.cand-hint { display: none; }
+
+/* Motion shared by every style: changed candidates rise into place. */
+.cand-item.is-new { animation: cand-rise 220ms cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(var(--i, 0) * 26ms); }
+
+/* ── Adaptive Flow (default), balanced form ─────────────────────────────── */
+.cand[data-cand-style="flow"] { border-radius: calc(14 * var(--u)); }
+.cand[data-cand-style="flow"] .cand-mark {
+  display: block;
+  width: calc(10 * var(--u));
+  height: calc(10 * var(--u));
+  margin: calc(3 * var(--u)) calc(1 * var(--u)) 0;
+  border-radius: 50% 0 50% 50%;
+  background: linear-gradient(135deg, var(--cand-focus-top), var(--cand-mark));
+  transform: rotate(-45deg);
+}
+.cand[data-cand-style="flow"] .cand-list { flex-wrap: wrap; row-gap: calc(7 * var(--u)); column-gap: calc(15 * var(--u)); padding: calc(2 * var(--u)) calc(8 * var(--u)) calc(9 * var(--u)); }
+.cand[data-cand-style="flow"] .cand-item.is-focus { flex: 1 0 100%; align-items: center; }
+.cand[data-cand-style="flow"] .cand-item:not(.is-focus) .cand-c { padding: 0 calc(2 * var(--u)); }
+.cand[data-cand-style="flow"] .cand-n { font-weight: 600; }
+.cand[data-cand-style="flow"] .is-focus .cand-c {
+  align-items: center;
+  gap: calc(8 * var(--u));
+  padding: calc(4 * var(--u)) calc(14 * var(--u)) calc(5 * var(--u)) calc(9 * var(--u));
+  border-radius: calc(12 * var(--u));
+  background: linear-gradient(var(--cand-focus-top), var(--cand-focus));
+  color: var(--cand-focus-text);
+  font-size: 1.17em;
+  box-shadow: 0 calc(5 * var(--u)) calc(14 * var(--u)) calc(-4 * var(--u)) rgb(37 96 230 / var(--cand-focus-shadow-alpha)), inset 0 var(--u) 0 rgb(255 255 255 / .28);
+  overflow: hidden;
+}
+/* The drop's sheen: a lighter upper half with a slow wave at its lower edge. */
+.cand[data-cand-style="flow"] .is-focus .cand-c::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 52% 0;
+  border-radius: 0 0 40% 60% / 0 0 30% 30%;
+  background: linear-gradient(rgb(255 255 255 / .26), rgb(255 255 255 / .06));
+  pointer-events: none;
+}
+.cand[data-cand-style="flow"] .is-focus .cand-n { color: var(--cand-focus-number); font-size: .5em; }
+.cand[data-cand-style="flow"] .is-focus .cand-hint {
+  display: inline-block;
+  margin-left: auto;
+  padding: .18em .55em;
+  border-radius: calc(5 * var(--u));
+  background: var(--cand-keycap);
+  color: var(--cand-hint);
+  font: inherit;
+  font-size: .6em;
+}
+.cand[data-cand-style="flow"].is-pour .is-focus .cand-c { animation: cand-pour 340ms cubic-bezier(.3, 1, .4, 1) both; }
+
+/* ── Cursor Rail ────────────────────────────────────────────────────────── */
+.cand[data-cand-style="rail"] { background: linear-gradient(var(--cand-surface-top), var(--cand-background)); }
+.cand[data-cand-style="rail"] .cand-list { align-items: flex-end; gap: calc(14 * var(--u)); padding-bottom: calc(10 * var(--u)); }
+.cand[data-cand-style="rail"] .cand-list::after {
+  content: "";
+  position: absolute;
+  left: calc(10 * var(--u));
+  right: calc(10 * var(--u));
+  bottom: calc(7 * var(--u));
+  height: var(--u);
+  background: var(--cand-divider);
+}
+.cand[data-cand-style="rail"] .cand-item + .cand-item::before {
+  content: "";
+  position: absolute;
+  left: calc(-7 * var(--u));
+  bottom: calc(-4 * var(--u));
+  width: var(--u);
+  height: calc(5 * var(--u));
+  background: var(--cand-divider);
+}
+.cand[data-cand-style="rail"] .cand-c { padding: var(--u) calc(4 * var(--u)); border-radius: calc(5 * var(--u)); }
+.cand[data-cand-style="rail"] .is-focus .cand-c { background: var(--cand-focus); color: var(--cand-focus-text); font-size: 1.12em; font-weight: 700; }
+.cand[data-cand-style="rail"] .is-focus .cand-n { color: var(--cand-focus-number); }
+.cand[data-cand-style="rail"] .is-focus::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(-4 * var(--u));
+  height: calc(2 * var(--u));
+  border-radius: 1px;
+  background: var(--cand-focus-bar);
+  z-index: 1;
+}
+.cand[data-cand-style="rail"].is-pour .is-focus::after { animation: cand-grow 260ms cubic-bezier(.2, .8, .2, 1) both; }
+
+/* ── Modern Type ────────────────────────────────────────────────────────── */
+.cand[data-cand-style="type"] { border-radius: calc(7 * var(--u)); }
+.cand[data-cand-style="type"] .cand-mark { display: block; width: calc(5 * var(--u)); height: calc(5 * var(--u)); background: var(--cand-mark); }
+.cand[data-cand-style="type"] .cand-q { font-size: calc(12 * var(--u)); }
+.cand[data-cand-style="type"] .cand-q::after { content: ""; position: absolute; left: calc(10 * var(--u)); right: calc(10 * var(--u)); bottom: 0; height: var(--u); background: var(--cand-divider); }
+.cand[data-cand-style="type"] .cand-list { gap: max(1em, calc(16 * var(--u))); padding-top: calc(9 * var(--u)); padding-bottom: calc(12 * var(--u)); }
+.cand[data-cand-style="type"] .cand-c { gap: calc(2 * var(--u)); color: var(--cand-text-muted); font-weight: 300; }
+.cand[data-cand-style="type"] .cand-n { align-self: flex-start; margin-top: .1em; font-size: .5em; }
+.cand[data-cand-style="type"] .is-focus .cand-c { color: var(--cand-focus-text); font-size: 1.3em; font-weight: 700; }
+.cand[data-cand-style="type"] .is-focus .cand-n { color: var(--cand-focus-number); font-weight: 600; }
+.cand[data-cand-style="type"] .is-focus .cand-w::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -.14em;
+  width: 1em;
+  height: calc(2 * var(--u));
+  background: var(--cand-focus-bar);
+}
+.cand[data-cand-style="type"].is-pour .is-focus .cand-w::after { animation: cand-grow 260ms cubic-bezier(.2, .8, .2, 1) both; }
+
+/* ── Floating Glass ─────────────────────────────────────────────────────── */
+.cand[data-cand-style="glass"] {
+  border-radius: calc(16 * var(--u));
+  background: linear-gradient(var(--cand-surface-top), var(--cand-background));
+  box-shadow:
+    inset 0 var(--u) 0 var(--cand-highlight),
+    inset 0 0 0 calc(2 * var(--u)) var(--cand-inner-edge),
+    0 calc(2 * var(--u)) calc(4 * var(--u)) rgb(0 0 0 / var(--cand-shadow-key-alpha)),
+    0 calc(22 * var(--u)) calc(44 * var(--u)) calc(-8 * var(--u)) rgb(0 0 0 / calc(var(--cand-shadow-ambient-alpha) * 1.4));
+}
+.cand[data-cand-style="glass"] .cand-q { padding: calc(2 * var(--u)) calc(14 * var(--u)) 0; }
+.cand[data-cand-style="glass"] .cand-list { gap: calc(12 * var(--u)); padding: calc(3 * var(--u)) calc(8 * var(--u)) calc(9 * var(--u)); align-items: center; }
+.cand[data-cand-style="glass"] .cand-c { padding: calc(4 * var(--u)) calc(6 * var(--u)); color: var(--cand-text-muted); }
+.cand[data-cand-style="glass"] .is-focus .cand-c {
+  padding: calc(4 * var(--u)) calc(11 * var(--u));
+  border: var(--u) solid var(--cand-focus-edge);
+  border-radius: calc(9 * var(--u));
+  background: linear-gradient(var(--cand-focus-top), var(--cand-focus));
+  color: var(--cand-focus-text);
+  box-shadow: inset 0 var(--u) 0 var(--cand-highlight), 0 calc(2 * var(--u)) calc(3 * var(--u)) rgb(0 0 0 / .16), 0 calc(6 * var(--u)) calc(10 * var(--u)) calc(-4 * var(--u)) rgb(0 0 0 / .22);
+}
+.cand[data-cand-style="glass"] .is-focus .cand-n { color: var(--cand-focus-number); }
+.cand[data-cand-style="glass"].is-pour .is-focus .cand-c { animation: cand-press 300ms cubic-bezier(.2, .8, .2, 1) both; }
+
+/* ── Capsule: one rounded bar ───────────────────────────────────────────── */
+.cand[data-cand-style="capsule"] {
+  flex-direction: row;
+  align-items: center;
+  height: calc(var(--cf) + 20 * var(--u));
+  border-radius: 999px;
+  padding: 0 calc(6 * var(--u)) 0 calc(14 * var(--u));
+}
+.cand[data-cand-style="capsule"] .cand-q { display: contents; }
+.cand[data-cand-style="capsule"] .cand-py { order: 1; font-size: calc(13 * var(--u)); }
+.cand[data-cand-style="capsule"] .cand-sep { order: 2; display: block; flex: none; width: var(--u); height: 44%; margin: 0 calc(8 * var(--u)) 0 calc(10 * var(--u)); background: var(--cand-divider); }
+.cand[data-cand-style="capsule"] .cand-list { order: 3; align-items: center; gap: calc(2 * var(--u)); padding: 0; height: 100%; }
+.cand[data-cand-style="capsule"] .cand-ctl { order: 4; padding-left: calc(10 * var(--u)); font-size: calc(13 * var(--u)); }
+.cand[data-cand-style="capsule"] .cand-item { height: 100%; align-items: center; padding: calc(4 * var(--u)) 0; }
+.cand[data-cand-style="capsule"] .cand-c { height: 100%; align-items: center; padding: 0 calc(11 * var(--u)); border-radius: 999px; }
+.cand[data-cand-style="capsule"] .is-focus .cand-c { background: var(--cand-focus); color: var(--cand-focus-text); font-weight: 600; box-shadow: 0 calc(3 * var(--u)) calc(8 * var(--u)) calc(-2 * var(--u)) rgb(26 111 232 / var(--cand-focus-shadow-alpha)); }
+.cand[data-cand-style="capsule"] .is-focus .cand-n { color: var(--cand-focus-number); }
+.cand[data-cand-style="capsule"].is-pour .is-focus .cand-c { animation: cand-slide 300ms cubic-bezier(.2, .8, .2, 1) both; }
+
+/* ── Column List ────────────────────────────────────────────────────────── */
+.cand[data-cand-style="column"] { border-radius: calc(12 * var(--u)); min-width: calc(220 * var(--u)); }
+.cand[data-cand-style="column"] .cand-q::after { content: ""; position: absolute; left: calc(10 * var(--u)); right: calc(10 * var(--u)); bottom: 0; height: var(--u); background: var(--cand-divider); }
+.cand[data-cand-style="column"] .cand-list { flex-direction: column; align-items: stretch; gap: calc(2 * var(--u)); padding: calc(4 * var(--u)) calc(6 * var(--u)) calc(6 * var(--u)); }
+.cand[data-cand-style="column"] .cand-item:nth-child(n + 7) { display: none; }
+.cand[data-cand-style="column"] .cand-c { width: 100%; height: calc(var(--cf) + 14 * var(--u)); align-items: center; gap: calc(10 * var(--u)); padding: 0 calc(10 * var(--u)); border-radius: calc(7 * var(--u)); }
+.cand[data-cand-style="column"] .is-focus .cand-c { background: var(--cand-focus); box-shadow: inset 0 0 0 var(--u) var(--cand-focus-edge); color: var(--cand-focus-text); font-weight: 600; }
+.cand[data-cand-style="column"] .is-focus .cand-c::before { content: ""; position: absolute; left: 0; top: 26%; bottom: 26%; width: calc(2 * var(--u)); border-radius: 2px; background: var(--cand-focus-bar); }
+.cand[data-cand-style="column"] .is-focus .cand-n { color: var(--cand-focus-number); }
+.cand[data-cand-style="column"].is-pour .is-focus .cand-c { animation: cand-slide 300ms cubic-bezier(.2, .8, .2, 1) both; }
+
+/* ── Split-Flap ─────────────────────────────────────────────────────────── */
+.cand[data-cand-style="flap"] { border-radius: calc(12 * var(--u)); }
+.cand[data-cand-style="flap"] .cand-q { font-size: calc(12 * var(--u)); }
+.cand[data-cand-style="flap"] .cand-list { align-items: center; gap: calc(9 * var(--u)); padding: calc(2 * var(--u)) calc(10 * var(--u)) calc(10 * var(--u)); }
+.cand[data-cand-style="flap"] .cand-c { align-items: center; gap: calc(4 * var(--u)); }
+.cand[data-cand-style="flap"] .cand-w { display: inline-flex; gap: calc(2 * var(--u)); perspective: calc(240 * var(--u)); }
+.cand-tile {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: calc(var(--cf) + 6 * var(--u));
+  height: calc(var(--cf) + 12 * var(--u));
+  border-radius: calc(3 * var(--u));
+  background: linear-gradient(var(--cand-surface-top) 50%, var(--cand-inner-edge) 50%);
+  font-weight: 500;
+  line-height: 1;
+}
+.cand-tile::after { content: ""; position: absolute; left: 0; right: 0; top: calc(50% - var(--u) / 2); height: var(--u); background: var(--cand-divider); }
+.cand[data-cand-style="flap"] .is-focus .cand-tile { background: linear-gradient(var(--cand-focus-top) 50%, var(--cand-focus) 50%); color: var(--cand-focus-text); font-weight: 600; }
+.cand[data-cand-style="flap"] .is-focus .cand-tile::after { background: var(--cand-focus-edge); }
+.cand[data-cand-style="flap"] .is-focus .cand-n { color: var(--cand-focus-number); font-weight: 600; }
+.cand-tile.is-flip { animation: cand-flap 170ms cubic-bezier(.4, 0, .6, 1) both; animation-delay: calc(var(--t, 0) * 16ms); }
+
+/* ── Highlighter ────────────────────────────────────────────────────────── */
+.cand[data-cand-style="marker"] { border-radius: calc(10 * var(--u)); }
+.cand[data-cand-style="marker"] .cand-list { padding-bottom: calc(12 * var(--u)); }
+.cand[data-cand-style="marker"] .cand-list::after { content: ""; position: absolute; left: 0; right: 0; bottom: calc(6 * var(--u)); height: var(--u); background: var(--cand-divider); }
+.cand[data-cand-style="marker"] .cand-c { color: var(--cand-text-muted); }
+.cand[data-cand-style="marker"] .is-focus .cand-c { color: var(--cand-text); font-weight: 500; }
+.cand[data-cand-style="marker"] .is-focus .cand-n { color: var(--cand-focus-number); }
+/* The stroke sits behind the word; a second copy of the word in the dark
+   focus ink is cut to the stroke, so ink above the stroke keeps the paper's
+   own color (light on dark paper). */
+.cand[data-cand-style="marker"] .is-focus .cand-w::before,
+.cand[data-cand-style="marker"] .is-focus .cand-w::after { position: absolute; pointer-events: none; }
+.cand[data-cand-style="marker"] .is-focus .cand-w::before {
+  content: "";
+  inset: .3em -.3em -.02em -.14em;
+  z-index: -1;
+  background: var(--cand-focus);
+  opacity: .86;
+  clip-path: var(--stroke-end);
+}
+.cand[data-cand-style="marker"] .is-focus .cand-w::after {
+  content: attr(data-text);
+  inset: 0;
+  color: var(--cand-focus-text);
+  clip-path: var(--ink-end);
+}
+.cand[data-cand-style="marker"] .is-focus .cand-w {
+  --stroke-end: polygon(3% 8%, 99% 0%, 100% 90%, 0% 100%);
+  --ink-end: polygon(0% 30%, 100% 26%, 100% 100%, 0% 100%);
+}
+.cand[data-cand-style="marker"].is-pour .is-focus .cand-w::before { animation: cand-stroke 190ms cubic-bezier(.3, .7, .4, 1) both; }
+.cand[data-cand-style="marker"].is-pour .is-focus .cand-w::after { animation: cand-ink 190ms cubic-bezier(.3, .7, .4, 1) both; }
+
+/* ── Keyframes ──────────────────────────────────────────────────────────── */
+@keyframes cand-blink { 50% { opacity: 0; } }
+@keyframes cand-rise { from { opacity: 0; transform: translateY(calc(6 * var(--u))); } }
+@keyframes cand-pour { from { clip-path: inset(0 calc(100% - 1.4em) 0 0 round 999px); } to { clip-path: inset(0 0 0 0 round calc(12 * var(--u))); } }
+@keyframes cand-grow { from { transform: scaleX(0); transform-origin: left; } to { transform: scaleX(1); transform-origin: left; } }
+@keyframes cand-press { 0% { transform: translateY(calc(-3 * var(--u))); opacity: 0; } 60% { transform: translateY(var(--u)); opacity: 1; } }
+@keyframes cand-slide { from { transform: translateX(calc(-10 * var(--u))); opacity: 0; } }
+@keyframes cand-flap { 0% { transform: rotateX(-88deg); opacity: .6; } 100% { transform: rotateX(0); opacity: 1; } }
+@keyframes cand-stroke { from { clip-path: polygon(3% 8%, 3% 8%, 0% 100%, 0% 100%); } to { clip-path: polygon(3% 8%, 99% 0%, 100% 90%, 0% 100%); } }
+@keyframes cand-ink { from { clip-path: polygon(0% 30%, 0% 30%, 0% 100%, 0% 100%); } to { clip-path: polygon(0% 30%, 100% 26%, 100% 100%, 0% 100%); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .cand *, .cand *::before, .cand *::after { animation: none !important; }
+}
