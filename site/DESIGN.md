@@ -7,7 +7,7 @@ only from `assets/branding/theme/design_tokens.json` through
 
 ## 0. Brief
 
-- **Product**: 本地拼音 0.23.0, an offline Chinese pinyin input method for Windows 10/11, with a
+- **Product**: 本地拼音 0.24.0, an offline Chinese pinyin input method for Windows 10/11, with a
   second offline English input method (本地英文). Free, MIT.
 - **Who**: Chinese-speaking Windows users who type all day and do not want a cloud input method
   reading their keystrokes, showing ads or popping up news; developers who mix Chinese, English
@@ -16,7 +16,7 @@ only from `assets/branding/theme/design_tokens.json` through
   (the product's face) as the hero object, and end at a download button that tells the truth
   (preview release, 112 MB, Windows x64).
 - **Evidence only from the repo**: README release notes, `docs/*.md`, design tokens, real
-  screenshots of the 0.23 settings app and tool panel rendered from `desktop/` with a mocked bridge.
+  screenshots of the 0.24 settings app and tool panel rendered from `desktop/` with a mocked bridge.
 
 ## 1. Visual theme and atmosphere
 
@@ -113,11 +113,11 @@ Flat chapters, one floating thing at a time: the candidate window (its own nativ
 | 3 | Context | 它会看前文。 | 他跑 + de → 得, 没有 + shijian → 时间, 这种又是 + zalaide → 咋来的; 86.04% / 1,360 万字 / 17.1 MB | **sticky** three-step scene: the line before the caret changes, the candidate list re-ranks, the focus slides |
 | 4 | Typing | 打错了，它也认得。 | nihso → 你好, woyongpythonxiedaima → 我用 Python 写代码, bjdx → 北京大学, zongguo → 中国, nihc → 你好, yilaizhuru → 依赖注入, liangjiacheng → 量甲成 | each row types its pinyin, then commits the result in place (one-shot, staggered) |
 | 5 | Styles (stage) | 八种候选框，一套按键。 | live window in all eight styles, light and dark | reveal: pour; switching: crossfade + the style's own move (drop slides, flaps flip, marker strokes, capsule slides) |
-| 6 | Settings | 设置，像一张划了格线的纸。 | real 0.23 外观 page, light/dark by theme | product zoom: frame scales .88→1 and settles while the chapter crosses the viewport |
+| 6 | Settings | 设置，像一张划了格线的纸。 | real 外观 page, light/dark by theme | product zoom: frame scales .88→1 and settles while the chapter crosses the viewport |
 | 7 | Tool panel | 连按两下 Tab。 | Tab Tab keycaps, real 工具 page; 3,100 符号, 1,000 颜文字, ~1,870 表情, 剪贴板, 表情包, 记录 | keycaps press in turn, then the panel rises |
 | 8 | English | 还有一个英文输入法。 | `i think teh plan could of worked` → `I think the plan could have worked`; ~13 万词; 86.0% | sentence types, Space Space press, the four fixes swap in with a short underline |
 | 9 | Details | 还有这些细节。 | ruled list of ten verified details | none beyond the shared reveal |
-| 10 | Download | 下载 | 0.23.0 preview, 112 MB, Windows 10/11 x64, SHA-256, three steps | `xia'zai` types and commits |
+| 10 | Download | 下载 | 0.24.0 preview, 112 MB, Windows 10/11 x64, SHA-256, three steps | `xia'zai` types and commits |
 
 Scroll engine: one rAF loop reads `getBoundingClientRect()` of the active sticky scenes and writes
 CSS custom properties (`--p`); IntersectionObserver starts one-shot reveals and pauses loops off

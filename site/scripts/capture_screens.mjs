@@ -13,6 +13,7 @@ import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
 
 const built = resolve(process.argv[2] ?? 'build/site-screens');
+const { version } = JSON.parse(await readFile(new URL('../../desktop/package.json', import.meta.url), 'utf8'));
 const images = fileURLToPath(new URL('../assets/img/', import.meta.url));
 const types = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.svg': 'image/svg+xml', '.png': 'image/png', '.woff2': 'font/woff2' };
 
@@ -30,10 +31,12 @@ const origin = `http://127.0.0.1:${server.address().port}`;
 
 // The settings app's bridge (desktop/electron/preload.ts): a plausible state,
 // every other call resolves to something empty.
-function mockSettings(theme) {
+function mockSettings({ theme, version }) {
+  // The first-run tour (desktop/src/Tour.tsx) counts as seen.
+  localStorage.setItem('localpinyin.tour', 'done');
   const ok = value => Promise.resolve(value);
   const state = {
-    version: '0.23.0',
+    version,
     settings: {
       theme, textSize: 4, candidateStyle: 'flow', typoCorrection: true, mixedEnglish: true, fuzzyPinyin: [], doublePinyin: 'none',
       usageDomains: ['daily', 'coding'], digitPeriod: true, digitPunctuation: true, letterPunctuation: false, codePunctuation: true,
@@ -92,7 +95,7 @@ async function capture(page, file, width) {
 
 for (const theme of ['light', 'dark']) {
   const settings = await browser.newPage({ viewport: { width: 1160, height: 760 }, deviceScaleFactor: 2, colorScheme: theme });
-  await settings.addInitScript(mockSettings, theme);
+  await settings.addInitScript(mockSettings, { theme, version });
   await settings.goto(`${origin}/index.html`);
   await settings.waitForTimeout(1500);
   await capture(settings, `settings-${theme}.webp`, 1920);
