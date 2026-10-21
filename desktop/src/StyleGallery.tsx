@@ -75,7 +75,7 @@ export function StyleGallery({ value, disabled, onChoose }: { value: CandidateSt
   };
   const settled = () => { heading.current = null; settle(); };
 
-  return <section className="style-gallery" aria-labelledby="style-gallery-title">
+  return <section className="style-gallery" aria-labelledby="style-gallery-title" data-tour="styles">
     <div className="gallery-head">
       <h2 id="style-gallery-title">候选框风格</h2>
       <InfoButton label="候选框风格" open={info} controls={infoId} onToggle={setInfo} />

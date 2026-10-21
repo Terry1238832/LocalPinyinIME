@@ -1,11 +1,12 @@
 import { Fragment, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { BrandMark, Icon, type IconName } from './icons';
-import { asError, ErrorNotice } from './components';
+import { asError, CandidateStyleContext, ErrorNotice } from './components';
 import { AppearancePage, InputPage, LearningPage, AboutPage } from './pages';
 import { EnglishPage } from './EnglishPage';
 import { DictionaryPage } from './dictionary';
 import { ClipboardQuestion, PanelPage } from './PanelPage';
 import { CommandPalette, requestPageCommand, type Command } from './CommandPalette';
+import { Onboarding, tourSeen } from './Tour';
 import type { AppState, Settings, Theme, UserEntry , UpdateStatus } from './types';
 
 type PageId = 'appearance' | 'input' | 'english' | 'panel' | 'dictionary' | 'learning' | 'about';
@@ -33,6 +34,9 @@ export default function App() {
   const [palette, setPalette] = useState(false);
   // The clipboard question, once per launch until answered.
   const [askClipboard, setAskClipboard] = useState(true);
+  // The first-run guide: once, after the clipboard question; again from 关于.
+  const [tour, setTour] = useState(false);
+  const tourChecked = useRef(false);
   const [systemDark, setSystemDark] = useState(() => window.matchMedia('(prefers-color-scheme: dark)').matches);
   const content = useRef<HTMLElement>(null);
   const nav = useRef<HTMLElement>(null);
@@ -99,6 +103,11 @@ export default function App() {
   }, [page, state !== null]);
 
   const go = (id: PageId) => { setPage(id); content.current?.scrollTo({ top: 0 }); };
+  useEffect(() => {
+    if (!state || tourChecked.current || (state.settings.clipboardHistory === 'ask' && askClipboard)) return;
+    tourChecked.current = true;
+    if (!tourSeen()) setTour(true);
+  }, [state, askClipboard]);
 
   // Ctrl+K opens the command palette; Ctrl+1–7 switch pages.
   useEffect(() => {
@@ -174,6 +183,8 @@ export default function App() {
         run: () => requestPageCommand('open-data') },
       { id: 'clear-learning', group: '操作', icon: 'reset', title: '清除学习记录…', keywords: 'qingchu xuexi clear learning',
         run: () => { go('learning'); requestPageCommand('clear-learning'); } },
+      { id: 'tour', group: '操作', icon: 'spark', title: '重新观看新手引导', keywords: 'xinshou yindao daolan bangzhu tour guide help 引导 帮助',
+        run: () => setTour(true) },
     ];
   }, [state]);
 
@@ -181,11 +192,11 @@ export default function App() {
   const runtimeLabel = !state ? '正在连接' : runtimeActive ? (state.runtime.mode.toLowerCase() === 'english' ? '正在输入 · 英文' : '正在输入 · 中文') : '输入法未在使用';
 
   const english = !!state && state.runtime.mode.toLowerCase() === 'english';
-  return <div className="app-shell">
+  return <CandidateStyleContext.Provider value={state?.settings.candidateStyle}><div className="app-shell">
     <a className="skip-link" href="#app-content" onClick={event => { event.preventDefault(); content.current?.focus(); }}>跳到内容</a>
     <aside className="sidebar" id="app-sidebar">
       <div className="sidebar-head"><BrandMark size={26} /><div><strong>本地拼音</strong><span>Local Pinyin</span></div></div>
-      <button className="command-trigger" onClick={() => setPalette(true)} disabled={!state}>
+      <button className="command-trigger" data-tour="search" onClick={() => setPalette(true)} disabled={!state}>
         <Icon name="search" size={15} /><span>搜索设置</span><span className="command-hint">Ctrl K</span>
       </button>
       <nav aria-label="设置导航" ref={nav} data-cand-style={state?.settings.candidateStyle ?? 'flow'}>
@@ -227,13 +238,15 @@ export default function App() {
           <section id="page-panel" className="page" hidden={page !== 'panel'}><PanelPage state={state} saving={saving} saveSettings={saveSettings} notify={setNotice} /></section>
           <section id="page-dictionary" className="page" hidden={page !== 'dictionary'}><DictionaryPage state={state} entries={entries} onEntries={updateEntries} loadError={lexiconError} notify={setNotice} /></section>
           <section id="page-learning" className="page" hidden={page !== 'learning'}><LearningPage state={state} onState={setState} notify={setNotice} /></section>
-          <section id="page-about" className="page" hidden={page !== 'about'}><AboutPage state={state} update={update} notify={setNotice} /></section>
+          <section id="page-about" className="page" hidden={page !== 'about'}><AboutPage state={state} update={update} notify={setNotice} onTour={() => setTour(true)} /></section>
         </div>}
       </main>
     </div>
     {palette && state && <CommandPalette commands={commands} onClose={() => setPalette(false)} />}
     {state && state.settings.clipboardHistory === 'ask' && askClipboard && !palette &&
       <ClipboardQuestion settings={state.settings} saveSettings={saveSettings} onClose={() => setAskClipboard(false)} />}
+    {tour && state && <Onboarding settings={state.settings} theme={resolvedTheme} paletteOpen={palette} go={go}
+      notify={setNotice} onClose={() => setTour(false)} />}
     {notice && <div className="toast" role="status"><Icon name="check" size={15} />{notice}</div>}
-  </div>;
+  </div></CandidateStyleContext.Provider>;
 }

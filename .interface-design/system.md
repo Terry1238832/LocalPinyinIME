@@ -47,7 +47,12 @@ decisions in short form for design passes.
 - Nav item: 36 h, radius 8, number 11/600 via CSS `content: attr(data-number) / ""`.
 - Button: 32 h, radius 8, 13/500; primary flat `--accent`; secondary white, `--rule-strong`
   border, `--shadow-xs`; press scale .97.
-- Switch: 40×24, thumb 20, on = `--accent`, no halo; 260 ms `--ease-out-quint`.
+- Switch: 40×24, thumb 20, on = `--accent`, no halo; 260 ms `--ease-out-quint`. Under the yellow
+  candidate styles (marker, flap) on = `--cand-focus` + inset `--cand-focus-edge`, like the nav mark.
+- Tour (`Tour.tsx`): welcome dialog with a real native capture, then a ≤5-step non-modal spotlight
+  (even-odd clip-path hole, radius 12, ring in `--cand-focus-bar`), 344 px card beside the target,
+  numbered steps, a "try it" line that turns success-green when the user has done it. Persisted in
+  `localStorage["localpinyin.tour"]`; replay from 关于 and the palette.
 - Segmented: `--fill-hover` track, 2 px inset, items 28 h; active white + `--shadow-xs`, 600.
 - Search field: `--fill-hover` inset, border on hover, white on focus, 3 px focus ring.
 - Detail / disclosure panel: a small sheet, radius 12, 14–16 padding.

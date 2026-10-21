@@ -34,7 +34,7 @@ export function EnglishPage({ state, saving, saveSettings }: EnglishPageProps) {
   ];
   return <>
     <PageHeader kicker="ying'wen" title="本地英文" description="第二个输入法，专门打英文：整句输入，拼写和常见语法当场改好，全部在本机完成。" action={<SaveStatus saving={saving} />} />
-    <section className={`english-hero${on ? ' on' : ''}`} aria-label="本地英文输入法">
+    <section className={`english-hero${on ? ' on' : ''}`} aria-label="本地英文输入法" data-tour="english-ime">
       <span className="english-mark" aria-hidden="true">英</span>
       <div className="english-hero-copy">
         <h2>本地英文输入法</h2>

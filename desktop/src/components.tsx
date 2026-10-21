@@ -1,6 +1,7 @@
-import { Fragment, useEffect, useId, useRef, useState, type CSSProperties, type ReactNode } from 'react';
+import { createContext, Fragment, useContext, useEffect, useId, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { Icon, type IconName } from './icons';
+import type { CandidateStyle } from './types';
 
 export function ErrorNotice({ message }: { message: string | null }) {
   return message ? <div className="error-notice" role="alert"><Icon name="warning" size={16} /><span>{message}</span></div> : null;
@@ -23,8 +24,15 @@ export function PageHeader({ kicker, title, description, action }: { kicker: str
   </header>;
 }
 
+// The candidate style the settings are drawn in (the sidebar's current page).
+// A switch that is on takes that style's color where it has one of its own:
+// the highlighter's yellow, the split-flap's amber (styles.css).
+export const CandidateStyleContext = createContext<CandidateStyle | undefined>(undefined);
+
 export function Switch({ checked, disabled, label, onChange }: { checked: boolean; disabled?: boolean; label: string; onChange: (checked: boolean) => void }) {
-  return <button type="button" className="switch" role="switch" aria-label={label} aria-checked={checked} disabled={disabled} onClick={() => onChange(!checked)}><span className="switch-thumb" /></button>;
+  const style = useContext(CandidateStyleContext);
+  return <button type="button" className="switch" role="switch" aria-label={label} aria-checked={checked} disabled={disabled}
+    data-cand-style={style} onClick={() => onChange(!checked)}><span className="switch-thumb" /></button>;
 }
 
 // The details button beside a setting's name. Explanations stay out of the
@@ -60,11 +68,12 @@ export function SettingsGroup({ id, title, description, demo, children }: {
   </section>;
 }
 
-export function SettingRow({ title, description, demo, children }: { title: string; description?: ReactNode; demo?: ReactNode; children?: ReactNode }) {
+// `tour`: where the first-run guide points (data-tour).
+export function SettingRow({ title, description, demo, tour, children }: { title: string; description?: ReactNode; demo?: ReactNode; tour?: string; children?: ReactNode }) {
   const [open, setOpen] = useState(false);
   const detailId = useId();
   const details = description || demo;
-  return <div className={`setting-item${open ? ' open' : ''}`}>
+  return <div className={`setting-item${open ? ' open' : ''}`} data-tour={tour}>
     <div className="setting-row">
       <div className="setting-text"><span className="setting-title">{title}
         {details && <InfoButton label={title} open={open} controls={detailId} onToggle={setOpen} />}</span></div>

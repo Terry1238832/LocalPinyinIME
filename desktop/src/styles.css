@@ -186,6 +186,9 @@ nav { position: relative; display: flex; flex-direction: column; flex: 1; min-he
 .switch-thumb { position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; border-radius: var(--radius-pill); background: #fff; box-shadow: 0 1px 2px rgba(0, 0, 0, .22), 0 0 0 .5px rgba(0, 0, 0, .06); transition: transform var(--dur-slow) var(--ease-out-quint), width var(--dur-base) var(--ease-out-quint); }
 .switch:active:not(:disabled) .switch-thumb { width: 23px; }
 .switch[aria-checked="true"] { background: var(--accent); }
+/* In the yellow candidate styles the switches are yellow too, the same as
+   the sidebar's current page; a deeper edge keeps the white thumb apart. */
+.switch[data-cand-style="marker"][aria-checked="true"], .switch[data-cand-style="flap"][aria-checked="true"] { background: var(--cand-focus); box-shadow: inset 0 0 0 1px var(--cand-focus-edge); }
 .switch[aria-checked="true"] .switch-thumb { transform: translateX(16px); }
 .switch[aria-checked="true"]:active:not(:disabled) .switch-thumb { transform: translateX(13px); }
 .switch:disabled { opacity: .45; }
@@ -504,6 +507,50 @@ input[type="range"]:disabled { opacity: .5; }
 .palette-footer kbd { height: 18px; min-width: 18px; padding: 0 4px; font-size: 10.5px; box-shadow: none; }
 .palette-brand { margin-left: auto; }
 
+/* ── First-run guide: a welcome, then a spotlight on the real controls ──── */
+.tour-welcome { width: min(540px, 100%); }
+.tour-shot { display: flex; flex-direction: column; align-items: center; gap: 8px; margin: 2px 0 4px; }
+/* The capture's own desktop backdrop, carried to the frame's edges. */
+.tour-shot img { display: block; max-width: 100%; height: auto; padding: 10px; border-radius: var(--radius-lg); background: #EDF0F4; box-shadow: inset 0 0 0 1px var(--rule); }
+.tour-shot[data-theme-shot="dark"] img { background: #1A1C20; }
+.tour-shot figcaption { color: var(--text-3); font-size: var(--size-caption); }
+.tour-basics { display: flex; flex-direction: column; gap: 10px; padding: 12px 0 0; border-top: 1px solid var(--rule); list-style: none; }
+.tour-basics li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 10px; align-items: baseline; color: var(--text-2); font-size: var(--size-body-sm); line-height: 1.75; }
+.tour-basic-number { display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 6px; background: var(--fill-hover); color: var(--text-2); font: 600 11px/1 var(--font-sans); }
+.tour-basics kbd, .tour-card kbd { height: 21px; min-width: 21px; padding: 0 5px; font-size: 11px; vertical-align: 1px; }
+
+.tour { position: fixed; inset: 0; z-index: 15; pointer-events: none; }
+/* Even-odd clip: the dimmed sheet blocks the page except the control shown. */
+.tour-scrim { position: absolute; inset: 0; background: var(--scrim); pointer-events: auto; animation: fade-in var(--dur-base) var(--ease-out-quint); transition: clip-path var(--dur-slow) var(--ease-out-quint); }
+.tour-ring { position: absolute; border-radius: 12px; box-shadow: 0 0 0 2px var(--cand-focus-bar), 0 0 0 7px color-mix(in srgb, var(--cand-focus-bar) 20%, transparent); transition: left var(--dur-slow) var(--ease-out-quint), top var(--dur-slow) var(--ease-out-quint), width var(--dur-slow) var(--ease-out-quint), height var(--dur-slow) var(--ease-out-quint); }
+.tour-card { position: absolute; width: 344px; -webkit-app-region: no-drag; padding: 14px 16px 14px 18px; border: 1px solid var(--rule); border-radius: var(--radius-xl); background: var(--surface-raised); box-shadow: var(--shadow-lg); pointer-events: auto; animation: dialog-in var(--dur-slow) var(--ease-out-quint); transition: left var(--dur-slow) var(--ease-out-quint), top var(--dur-slow) var(--ease-out-quint); }
+.tour-card:focus-visible { outline: none; }
+.tour-card-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+/* Progress reads as a candidate list: numbered, the current step in the user's candidate style. */
+.tour-progress { display: flex; gap: 4px; list-style: none; }
+.tour-progress button { display: inline-grid; place-items: center; width: 22px; height: 22px; padding: 0; border: 0; border-radius: 6px; background: var(--fill-hover); color: var(--text-3); font: 600 11px/1 var(--font-sans); font-variant-numeric: tabular-nums; transition: background var(--dur-fast), color var(--dur-fast); }
+.tour-progress button:hover { color: var(--text); }
+.tour-progress button.seen { color: var(--text-2); }
+.tour-progress button.current { background: var(--cand-focus); color: var(--cand-focus-text); box-shadow: inset 0 0 0 1px var(--cand-focus-edge); }
+.tour-progress button:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--focus-ring); }
+.tour-skip { margin-right: -6px; }
+.tour-card h2 { font: 600 var(--size-title)/1.35 var(--font-display); }
+.tour-body { margin-top: 6px; color: var(--text-2); font-size: var(--size-body-sm); line-height: 1.75; }
+.tour-body p + * { margin-top: 10px; }
+.tour-modes { display: flex; align-items: center; gap: 10px; margin-top: 12px; color: var(--text-3); }
+.tour-mode { display: inline-flex; align-items: center; gap: 8px; color: var(--text-2); font-size: var(--size-caption); }
+.tour-mode img { display: block; border-radius: 7px; box-shadow: inset 0 0 0 1px var(--rule); }
+.tour-modes-note { margin-left: auto; font-size: var(--size-caption); }
+.tour-try { display: flex; align-items: center; gap: 7px; margin-top: 12px; padding: 7px 10px; border-radius: var(--radius-md); background: var(--fill-hover); color: var(--text-2); font-size: var(--size-caption); }
+.tour-try svg { flex: none; color: var(--text-3); }
+.tour-try.done { background: var(--success-soft); color: var(--success); }
+.tour-try.done svg { color: var(--success); }
+.tour-card-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 14px; }
+.about-tour { display: grid; grid-template-columns: var(--margin-column) minmax(0, 1fr); column-gap: var(--margin-gap); align-items: start; }
+.about-tour > .block-title { padding-top: 15px; }
+.about-tour-body { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-top: 12px; border-top: 1px solid var(--rule-strong); }
+.about-tour-body p { color: var(--text-2); font-size: var(--size-body-sm); }
+
 /* ── Motion preferences ─────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 1ms !important; animation-delay: 0ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; }
@@ -532,8 +579,8 @@ input[type="range"]:disabled { opacity: .5; }
 }
 /* Narrow (minimum window): section titles move above their rows. */
 @container main (max-width: 760px) {
-  .legend, .credits, .update-panel { grid-template-columns: minmax(0, 1fr); row-gap: 12px; }
-  .legend > .block-title, .credits > .block-title, .update-panel > .block-title { padding-top: 0; }
+  .legend, .credits, .update-panel, .about-tour { grid-template-columns: minmax(0, 1fr); row-gap: 12px; }
+  .legend > .block-title, .credits > .block-title, .update-panel > .block-title, .about-tour > .block-title { padding-top: 0; }
   .legend-grid { grid-template-columns: minmax(0, 1fr); }
   .search-field { width: 200px; }
   .facts dd { font-size: 18px; }

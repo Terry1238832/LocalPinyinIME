@@ -270,8 +270,8 @@ bool capture_panel(const std::filesystem::path& directory) {
 
 int wmain(int argc, wchar_t** argv) {
     if (argc != 2 && !(argc == 3 && (std::wstring(argv[2]) == L"--live" || std::wstring(argv[2]) == L"--icons" ||
-                                     std::wstring(argv[2]) == L"--panel"))) {
-        std::cerr << "Usage: LocalPinyinCandidateCapture <output directory> [--live|--icons|--panel]\n";
+                                     std::wstring(argv[2]) == L"--panel" || std::wstring(argv[2]) == L"--tour"))) {
+        std::cerr << "Usage: LocalPinyinCandidateCapture <output directory> [--live|--icons|--panel|--tour]\n";
         return 2;
     }
     CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
@@ -322,6 +322,44 @@ int wmain(int argc, wchar_t** argv) {
         Gdiplus::GdiplusShutdown(token);
         CoUninitialize();
         return saved ? 0 : 1;
+    }
+    if (argc == 3 && std::wstring(argv[2]) == L"--tour") {
+        // The settings app's first-run tour shows the user's own candidate
+        // window: cand-<style>-<light|dark>.png in desktop/src/assets/tour.
+        const std::vector<std::wstring> words = {L"你好世界", L"你好", L"拟好", L"你", L"泥", L"尼", L"妮", L"逆", L"倪"};
+        bool captured = true;
+        for (const auto style : localpinyin::kCandidateStyles) {
+            const std::wstring name = L"cand-" + localpinyin::candidate_style_to_string(style);
+            for (const bool dark : {false, true}) {
+                localpinyin::CandidateWindowCapture::Scene scene{name + (dark ? L"-dark" : L"-light"), style, dark,
+                                                                 96, 4, 1920, false, L"ni'hao'shi'jie", words};
+                captured = localpinyin::CandidateWindowCapture::capture(output, scene) && captured;
+            }
+        }
+        // The Shift step shows the taskbar glyphs: mode-<zh|en>-<light|dark>.png,
+        // a 48 px icon on a 64 px patch of taskbar.
+        const CLSID png{0x557cf406, 0x1a04, 0x11d3, {0x9a, 0x73, 0x00, 0x00, 0xf8, 0x1e, 0xf3, 0x2e}};
+        for (const bool dark : {false, true}) {
+            for (const auto mode : {localpinyin::InputMode::Chinese, localpinyin::InputMode::English}) {
+                Gdiplus::Bitmap tile(64, 64, PixelFormat32bppARGB);
+                {
+                    Gdiplus::Graphics graphics(&tile);
+                    graphics.Clear(dark ? Gdiplus::Color(255, 32, 32, 32) : Gdiplus::Color(255, 238, 238, 238));
+                    HICON icon = localpinyin::render_mode_icon(mode, 48, dark ? RGB(255, 255, 255) : RGB(26, 26, 26));
+                    if (!icon) captured = false;
+                    HDC dc = graphics.GetHDC();
+                    if (icon) DrawIconEx(dc, 8, 8, icon, 48, 48, 0, nullptr, DI_NORMAL);
+                    graphics.ReleaseHDC(dc);
+                    if (icon) DestroyIcon(icon);
+                }
+                const std::wstring name = std::wstring(L"mode-") + (mode == localpinyin::InputMode::Chinese ? L"zh" : L"en") +
+                                          (dark ? L"-dark.png" : L"-light.png");
+                captured = tile.Save((output / name).c_str(), &png, nullptr) == Gdiplus::Ok && captured;
+            }
+        }
+        Gdiplus::GdiplusShutdown(token);
+        CoUninitialize();
+        return captured ? 0 : 1;
     }
     if (argc == 3) {
         SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
