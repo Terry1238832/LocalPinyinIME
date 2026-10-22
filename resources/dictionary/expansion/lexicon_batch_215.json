@@ -1,0 +1,29 @@
+{
+  "batch": "lexicon_batch_215",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "bulk_third_party_lexicon_import": false,
+  "scope": "天气预警较长说法",
+  "author": "gap-fill",
+  "review_scope": "Single AI author reads every selected word and records positional polyphone decisions. Words are longer than six characters, so curate_lexicon.py select() does not accept them; merge_lexicon_batch.py appends the frozen rows. Not an independent human linguistic review and not a bulk import.",
+  "pronunciation_dependency": "pypinyin 0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 9,
+  "sha256": "ead6aa1dd41f0fe2324712f74d7a75ce87eee850189728955f200cb0bf1d1fe9",
+  "authoring_files_sha256": {
+    "batch215_draft.txt": "ee78d56ba2259f139069cc0a2c646a30d16b6e2c0af21b6189cc1dbe362cb671",
+    "batch215_pronunciation_review.tsv": "749ed7083338001da122bac0e4de33a5024e5c8aef96475309a00f78c85391bc"
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "mid": 7,
+    "low": 2
+  },
+  "length_distribution": {
+    "7": 6,
+    "8": 3
+  },
+  "mandatory_polyphone_reviews": 8,
+  "manual_pronunciation_overrides": {},
+  "tool": "merge_lexicon_batch.py"
+}
