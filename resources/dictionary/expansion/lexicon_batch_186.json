@@ -1,0 +1,31 @@
+{
+  "batch": "lexicon_batch_186",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "bulk_third_party_lexicon_import": false,
+  "scope": "银行、支付、理财、保险、税务较长说法",
+  "author": "gap-fill",
+  "review_scope": "Single AI author reads every selected word and records positional polyphone decisions. Words are longer than six characters, so curate_lexicon.py select() does not accept them; merge_lexicon_batch.py appends the frozen rows. Not an independent human linguistic review and not a bulk import.",
+  "pronunciation_dependency": "pypinyin 0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 7,
+  "sha256": "0901d96d26dd974c88c38de0a38c633123db8d0685d026a2eda1cd9ceb11213b",
+  "authoring_files_sha256": {
+    "batch186_draft.txt": "165bd5f2b6fc007ba37bdc7b040ffb693f07d63a7e6490eab4402c7904b907f4",
+    "batch186_pronunciation_review.tsv": "c27889ccd02daa7b03ffa01fa260c85a25c40e9223e8683508d1e0f7c978574a"
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "mid": 4,
+    "low": 3
+  },
+  "length_distribution": {
+    "8": 2,
+    "7": 5
+  },
+  "mandatory_polyphone_reviews": 7,
+  "manual_pronunciation_overrides": {
+    "提前还款违约金": "tiqianhuankuanweiyuejin"
+  },
+  "tool": "merge_lexicon_batch.py"
+}
