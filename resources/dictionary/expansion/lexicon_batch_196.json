@@ -1,0 +1,27 @@
+{
+  "batch": "lexicon_batch_196",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "bulk_third_party_lexicon_import": false,
+  "scope": "租房装修入住较长说法",
+  "author": "gap-fill",
+  "review_scope": "Single AI author reads every selected word and records positional polyphone decisions. Words are longer than six characters, so curate_lexicon.py select() does not accept them; merge_lexicon_batch.py appends the frozen rows. Not an independent human linguistic review and not a bulk import.",
+  "pronunciation_dependency": "pypinyin 0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 3,
+  "sha256": "996de1435ba15c1527bf0aa370f38c87906d8a7fea14269a3d05c11cd89d528d",
+  "authoring_files_sha256": {
+    "batch196_draft.txt": "2cfd79d23db1a258db8034c07bd7354e0269c2b4eb6fe18a3502e08e2e19d68f",
+    "batch196_pronunciation_review.tsv": "9975ebe85500d976fcd4fbe03d6d4069fb33f1dbad9aa825741551fd12cbd9c5"
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "low": 3
+  },
+  "length_distribution": {
+    "7": 3
+  },
+  "mandatory_polyphone_reviews": 3,
+  "manual_pronunciation_overrides": {},
+  "tool": "merge_lexicon_batch.py"
+}
