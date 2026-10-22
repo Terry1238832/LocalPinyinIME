@@ -72,4 +72,4 @@ description: 制作具有 Apple 新品发布页质感的产品官网 / 发布页
 
 ## 本仓库的现成例子
 
-`site/` 是本地拼音的官网（GitHub Pages），`site/DESIGN.md` 是它的规范，可作为下一个页面的起点。
+本地拼音的官网在私有仓库 `Terry1238832/LocalPinyinIME-site`（GitHub Pages），它的 `DESIGN.md` 是规范，可作为下一个页面的起点。官网的配色和截图脚本需要本仓库的检出路径作参数。
