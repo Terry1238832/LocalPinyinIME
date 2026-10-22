@@ -1,0 +1,27 @@
+{
+  "batch": "lexicon_batch_205",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "bulk_third_party_lexicon_import": false,
+  "scope": "快递外卖较长说法",
+  "author": "gap-fill",
+  "review_scope": "Single AI author reads every selected word and records positional polyphone decisions. Words are longer than six characters, so curate_lexicon.py select() does not accept them; merge_lexicon_batch.py appends the frozen rows. Not an independent human linguistic review and not a bulk import.",
+  "pronunciation_dependency": "pypinyin 0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 2,
+  "sha256": "d3322cf929cb13ecb57d8b0e18ca3884ca31b5167db6e77b29811ad6d1a4844f",
+  "authoring_files_sha256": {
+    "batch205_draft.txt": "8bd458b063b9bd4bc62749ed93aaa8793183d9930970b82245b4fcc2dbdacfed",
+    "batch205_pronunciation_review.tsv": "109529e503023f907fc6c09a489e76e17a934f6cf918abbbb1af510b98e1a528"
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "low": 2
+  },
+  "length_distribution": {
+    "7": 2
+  },
+  "mandatory_polyphone_reviews": 2,
+  "manual_pronunciation_overrides": {},
+  "tool": "merge_lexicon_batch.py"
+}
