@@ -1,0 +1,27 @@
+{
+  "batch": "lexicon_batch_204",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "bulk_third_party_lexicon_import": false,
+  "scope": "农业农村较长说法",
+  "author": "gap-fill",
+  "review_scope": "Single AI author reads every selected word and records positional polyphone decisions. Words are longer than six characters, so curate_lexicon.py select() does not accept them; merge_lexicon_batch.py appends the frozen rows. Not an independent human linguistic review and not a bulk import.",
+  "pronunciation_dependency": "pypinyin 0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 1,
+  "sha256": "5e8bb53fa2ec904c7ee48be24f984ffc1c58eadc1fec54c05ac8e67fed49e5d4",
+  "authoring_files_sha256": {
+    "batch204_draft.txt": "67dc13e12bb901810e2cd582e2d702ce50194c40e0b07c031c78d78397e715f9",
+    "batch204_pronunciation_review.tsv": "41a4a12fb0f28aec8a6f2f995171f3c06e8bbc362fc67736f758358b27e49d9d"
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "mid": 1
+  },
+  "length_distribution": {
+    "7": 1
+  },
+  "mandatory_polyphone_reviews": 1,
+  "manual_pronunciation_overrides": {},
+  "tool": "merge_lexicon_batch.py"
+}
