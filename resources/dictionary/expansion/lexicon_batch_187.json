@@ -1,0 +1,28 @@
+{
+  "batch": "lexicon_batch_187",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "bulk_third_party_lexicon_import": false,
+  "scope": "体育与健身较长说法",
+  "author": "gap-fill",
+  "review_scope": "Single AI author reads every selected word and records positional polyphone decisions. Words are longer than six characters, so curate_lexicon.py select() does not accept them; merge_lexicon_batch.py appends the frozen rows. Not an independent human linguistic review and not a bulk import.",
+  "pronunciation_dependency": "pypinyin 0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 5,
+  "sha256": "c3531d0f409128ba1060c077dc4db3852c74dedbdfe2e797b786c4763b406b22",
+  "authoring_files_sha256": {
+    "batch187_draft.txt": "642aa0c0aa7845c205a804a133d17cde43bf6833d8f8db35501416f05bc1eb79",
+    "batch187_pronunciation_review.tsv": "47dca8ff01be8698d935f5b6ca896aacae94454066654ddfbf056b425e937042"
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "mid": 3,
+    "low": 2
+  },
+  "length_distribution": {
+    "7": 5
+  },
+  "mandatory_polyphone_reviews": 5,
+  "manual_pronunciation_overrides": {},
+  "tool": "merge_lexicon_batch.py"
+}
