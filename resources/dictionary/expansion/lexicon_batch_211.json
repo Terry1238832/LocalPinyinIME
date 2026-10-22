@@ -1,0 +1,65 @@
+{
+  "batch": "lexicon_batch_211",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "天气预警",
+  "author": "gap-fill",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 886,
+  "sha256": "1ea4e2b51e0f21e3aa091aef0520e7935ee22583abf870dcf36c6b76ed83990e",
+  "authoring_files_sha256": {
+    "lexicon_batch_211.authoring.json": "a20df5208412a517cc2239236e624bda250a7e1c67737491aea1fc3f4d9f7361",
+    "batch211_authored_draft.txt": "611169f5cbd90c69b5808d96b4623bda8ef3b4eb1fe601f8a1d3aa4c056d8234",
+    "batch211_pronunciation_review.tsv": "67d4a5ccb85a4ff0300e8f999c66b777a357eb7d947bb6559d8dfd7478952db4"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "272f6185e2788655a5a340f9191d40dd441a6c99d5364140132974ed7e8f559c",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "b211_high": 6000,
+    "b211_low": 5000,
+    "b211_mid": 5500
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "b211_high": 66,
+    "b211_low": 174,
+    "b211_mid": 646
+  },
+  "length_distribution": {
+    "4": 560,
+    "3": 93,
+    "6": 76,
+    "2": 64,
+    "5": 93
+  },
+  "authoring_rejections": [],
+  "mandatory_polyphone_reviews": 639,
+  "manual_pronunciation_overrides": {
+    "受降雨影响": "shoujiangyuyingxiang",
+    "河道行洪": "hedaoxinghong",
+    "长时间降水": "changshijianjiangshui",
+    "长时间降雨": "changshijianjiangyu",
+    "长浪": "changlang"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 5,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}
