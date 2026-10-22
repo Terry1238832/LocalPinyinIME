@@ -1,0 +1,29 @@
+{
+  "batch": "lexicon_batch_229",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "bulk_third_party_lexicon_import": false,
+  "scope": "家政服务较长说法",
+  "author": "gap-fill",
+  "review_scope": "Single AI author reads every selected word and records positional polyphone decisions. Words are longer than six characters, so curate_lexicon.py select() does not accept them; merge_lexicon_batch.py appends the frozen rows. Not an independent human linguistic review and not a bulk import.",
+  "pronunciation_dependency": "pypinyin 0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 20,
+  "sha256": "031e590aa7065fa01d496d50af0c346e4ac88e50e8774e556d24d5be59b2efe2",
+  "authoring_files_sha256": {
+    "batch229_draft.txt": "7a626d0638be50383c86c7af3439790391f0def8531096c4607d76be051ac76f",
+    "batch229_pronunciation_review.tsv": "1528326fa2647a3930da27688114f85760fec3b2cc3300822ddeb87423c43430"
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "mid": 10,
+    "low": 10
+  },
+  "length_distribution": {
+    "7": 18,
+    "8": 2
+  },
+  "mandatory_polyphone_reviews": 18,
+  "manual_pronunciation_overrides": {},
+  "tool": "merge_lexicon_batch.py"
+}
