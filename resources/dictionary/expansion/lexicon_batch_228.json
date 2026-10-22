@@ -1,0 +1,32 @@
+{
+  "batch": "lexicon_batch_228",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "bulk_third_party_lexicon_import": false,
+  "scope": "棋牌休闲较长说法",
+  "author": "gap-fill",
+  "review_scope": "Single AI author reads every selected word and records positional polyphone decisions. Words are longer than six characters, so curate_lexicon.py select() does not accept them; merge_lexicon_batch.py appends the frozen rows. Not an independent human linguistic review and not a bulk import.",
+  "pronunciation_dependency": "pypinyin 0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 5,
+  "sha256": "a3eb84f0c7bb4146f2a330780f7b20254a42f76ef5d808a04c553de49df9abbb",
+  "authoring_files_sha256": {
+    "batch228_draft.txt": "64205be81b0343dfee88419bf4b57779649bfdf3d790ae0bb6eacc4cc2a6f541",
+    "batch228_pronunciation_review.tsv": "909226100ca94c4873caa538fc6795e1524fab1c5d47a0a95d01dc91a3c7ef43"
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "mid": 5
+  },
+  "length_distribution": {
+    "9": 2,
+    "7": 2,
+    "8": 1
+  },
+  "mandatory_polyphone_reviews": 5,
+  "manual_pronunciation_overrides": {
+    "顺炮直车对横车": "shunpaozhijuduihengju",
+    "中炮过河车对屏风马": "zhongpaoguohejuduipingfengma"
+  },
+  "tool": "merge_lexicon_batch.py"
+}
