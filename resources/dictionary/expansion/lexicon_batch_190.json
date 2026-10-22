@@ -1,0 +1,29 @@
+{
+  "batch": "lexicon_batch_190",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "bulk_third_party_lexicon_import": false,
+  "scope": "情感与社交较长说法",
+  "author": "gap-fill",
+  "review_scope": "Single AI author reads every selected word and records positional polyphone decisions. Words are longer than six characters, so curate_lexicon.py select() does not accept them; merge_lexicon_batch.py appends the frozen rows. Not an independent human linguistic review and not a bulk import.",
+  "pronunciation_dependency": "pypinyin 0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 15,
+  "sha256": "762f2c337d3fda6394987fa7886e24d5dbd34dfe0409eeb502fb7e4d89d63eab",
+  "authoring_files_sha256": {
+    "batch190_draft.txt": "760ad0b401cfbf1c62442c720381d92cb88be41af5c39a0caebd7e82ff7c23fb",
+    "batch190_pronunciation_review.tsv": "2360b7815f278816c4030dcd631f4e984d1e034e9df10552d369e9a2a44aeab2"
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "mid": 8,
+    "low": 7
+  },
+  "length_distribution": {
+    "7": 13,
+    "8": 2
+  },
+  "mandatory_polyphone_reviews": 14,
+  "manual_pronunciation_overrides": {},
+  "tool": "merge_lexicon_batch.py"
+}
