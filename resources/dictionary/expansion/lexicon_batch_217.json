@@ -1,0 +1,27 @@
+{
+  "batch": "lexicon_batch_217",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "bulk_third_party_lexicon_import": false,
+  "scope": "五金建材较长说法",
+  "author": "gap-fill",
+  "review_scope": "Single AI author reads every selected word and records positional polyphone decisions. Words are longer than six characters, so curate_lexicon.py select() does not accept them; merge_lexicon_batch.py appends the frozen rows. Not an independent human linguistic review and not a bulk import.",
+  "pronunciation_dependency": "pypinyin 0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 2,
+  "sha256": "d819425210b6a30ba9f5b16405d0c7740924fd7285b916f6e029b0c8f072c410",
+  "authoring_files_sha256": {
+    "batch217_draft.txt": "2807c245ce86a0c0f78b69f0e8bc9bb5470b38b036393cb2511016d263e3834e",
+    "batch217_pronunciation_review.tsv": "6f3d042cdc45aaaaf292d9a8eab2738733edf79929aaaad689d776cea44ad2f9"
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "mid": 2
+  },
+  "length_distribution": {
+    "7": 2
+  },
+  "mandatory_polyphone_reviews": 2,
+  "manual_pronunciation_overrides": {},
+  "tool": "merge_lexicon_batch.py"
+}
