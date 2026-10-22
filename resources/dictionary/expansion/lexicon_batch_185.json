@@ -1,0 +1,36 @@
+{
+  "batch": "lexicon_batch_185",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "bulk_third_party_lexicon_import": false,
+  "scope": "办事、证件与法律常识较长说法",
+  "author": "gap-fill",
+  "review_scope": "Single AI author reads every selected word and records positional polyphone decisions. Words are longer than six characters, so curate_lexicon.py select() does not accept them; merge_lexicon_batch.py appends the frozen rows. Not an independent human linguistic review and not a bulk import.",
+  "pronunciation_dependency": "pypinyin 0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 80,
+  "sha256": "1007b4bada51ef00306a4f3f3927fd23a46eac89ae6e3bded224ad3e1ea30b6f",
+  "authoring_files_sha256": {
+    "batch185_draft.txt": "fd9e37919fc0e15d6a1fb469559145f534540193c9ab864085073ab4ae64d898",
+    "batch185_pronunciation_review.tsv": "5bffc8ff4ea4c7f43467eb7d20f03cdf1e5d2842b29262bcad177049254d7953"
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "mid": 67,
+    "high": 7,
+    "low": 6
+  },
+  "length_distribution": {
+    "11": 5,
+    "9": 9,
+    "7": 40,
+    "8": 23,
+    "12": 1,
+    "10": 2
+  },
+  "mandatory_polyphone_reviews": 74,
+  "manual_pronunciation_overrides": {
+    "社保卡密码重置": "shebaokamimachongzhi"
+  },
+  "tool": "merge_lexicon_batch.py"
+}
