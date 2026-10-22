@@ -1,0 +1,67 @@
+{
+  "batch": "lexicon_batch_220",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "地图导航",
+  "author": "gap-fill",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 722,
+  "sha256": "7b11b658a47d3155818891b09c18e3b560c698cb881060c636d66d04d97d7be2",
+  "authoring_files_sha256": {
+    "lexicon_batch_220.authoring.json": "42b84c7f6a124ad229d554674909f3314d083a7e189846a2465e8bfcc21747b9",
+    "batch220_authored_draft.txt": "7b1d8ab1442236f2766e4dea25d1a650480c483e03b6d90925f33661c6e3f7b9",
+    "batch220_pronunciation_review.tsv": "d268edfe37cf13166e04651e6a177c7619d109bbe26df2bdaccd368bb02ce46c"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "a99a689bb497e882d4f35d3d0e2f6324720d9b2a33b09b42d2ee74ef84c0dd50",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "b220_high": 6000,
+    "b220_low": 5000,
+    "b220_mid": 5500
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "b220_high": 29,
+    "b220_low": 29,
+    "b220_mid": 664
+  },
+  "length_distribution": {
+    "4": 395,
+    "3": 118,
+    "6": 53,
+    "5": 133,
+    "2": 23
+  },
+  "authoring_rejections": [],
+  "mandatory_polyphone_reviews": 581,
+  "manual_pronunciation_overrides": {
+    "借道行驶": "jiedaoxingshi",
+    "偏航重算": "pianhangchongsuan",
+    "别老重算": "bielaochongsuan",
+    "塞车了": "sechele",
+    "还卡": "huanka",
+    "长实线": "changshixian",
+    "长按选点": "changanxuandian"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 7,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}
