@@ -1,0 +1,35 @@
+{
+  "batch": "lexicon_batch_198",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "bulk_third_party_lexicon_import": false,
+  "scope": "升学与职业资格较长说法",
+  "author": "gap-fill",
+  "review_scope": "Single AI author reads every selected word and records positional polyphone decisions. Words are longer than six characters, so curate_lexicon.py select() does not accept them; merge_lexicon_batch.py appends the frozen rows. Not an independent human linguistic review and not a bulk import.",
+  "pronunciation_dependency": "pypinyin 0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 66,
+  "sha256": "944ec18792a0ec29ffd36209530246e5f71df058eb5c11400fd28bb73604b271",
+  "authoring_files_sha256": {
+    "batch198_draft.txt": "ba9f8a0acf5ca34e2927bf90121769f8f04416493df24947e2d6602e92084285",
+    "batch198_pronunciation_review.tsv": "f2b3823df717063f287c51eefbb6bdd0e495dc16ea125fd6cd19861cac8105e9"
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "mid": 36,
+    "low": 30
+  },
+  "length_distribution": {
+    "7": 36,
+    "8": 13,
+    "11": 4,
+    "9": 11,
+    "12": 1,
+    "10": 1
+  },
+  "mandatory_polyphone_reviews": 59,
+  "manual_pronunciation_overrides": {
+    "给排水科学与工程": "jipaishuikexueyugongcheng"
+  },
+  "tool": "merge_lexicon_batch.py"
+}
