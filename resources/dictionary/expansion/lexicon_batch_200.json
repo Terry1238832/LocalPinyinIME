@@ -1,0 +1,92 @@
+{
+  "batch": "lexicon_batch_200",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "农业农村",
+  "author": "gap-fill",
+  "review_scope": "Single AI author reads every selected word and default key in context, then records positional polyphone decisions. Structural reconstruction is a separate code path, not an independent linguistic editor. Individually authored natural vocabulary, no copied corpus sentences or private text.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 994,
+  "sha256": "ad46b79741d9beec0d1e80747b585ddfa72aa73bc9753bf7726c30d3ed782e51",
+  "authoring_files_sha256": {
+    "lexicon_batch_200.authoring.json": "ec677c0ddbfc7b127b62200aec92baf3103bb226b14b186cd1df2adca883bbbe",
+    "batch200_authored_draft.txt": "75865f96fc39f65a9b12416d31bd63525a2d2d8d5d5ae32c6cac6ae327f158a3",
+    "batch200_pronunciation_review.tsv": "a4fd62dfc605031f28badcbd2062d2fe4e58d25b56e8821648ee05aea188612c"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "738ed2ae7679b9cd75d4ed53eba7c0e96be6eabcb26c9b71d4f168b9c62d17b6",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "b200_high": 6000,
+    "b200_low": 5000,
+    "b200_mid": 5500
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "b200_high": 140,
+    "b200_low": 65,
+    "b200_mid": 789
+  },
+  "length_distribution": {
+    "2": 629,
+    "3": 237,
+    "4": 96,
+    "5": 27,
+    "6": 5
+  },
+  "authoring_rejections": [],
+  "mandatory_polyphone_reviews": 610,
+  "manual_pronunciation_overrides": {
+    "产仔": "chanzi",
+    "仔兔": "zitu",
+    "冲圈": "chongjuan",
+    "囤粮": "tunliang",
+    "囤肥": "tunfei",
+    "圈养": "juanyang",
+    "圈肥": "juanfei",
+    "圈舍": "juanshe",
+    "圩日": "xuri",
+    "宽窄行": "kuanzhaihang",
+    "宽行": "kuanhang",
+    "封行": "fenghang",
+    "深翻还田": "shenfanhuantian",
+    "环剥": "huanbao",
+    "秧蔓": "yangwan",
+    "秸秆还田": "jieganhuantian",
+    "秸秆还田机": "jieganhuantianji",
+    "窄行": "zhaihang",
+    "粉碎还田": "fensuihuantian",
+    "粪肥还田": "fenfeihuantian",
+    "红薯蔓": "hongshuwan",
+    "绑蔓": "bangwan",
+    "花生蔓": "huashengwan",
+    "落蔓": "luowan",
+    "薄地": "bodi",
+    "薯蔓": "shuwan",
+    "赶圩": "ganxu",
+    "起圈": "qijuan",
+    "退耕还草": "tuigenghuancao",
+    "重茬": "chongcha",
+    "长白猪": "changbaizhu",
+    "鱼塘调水": "yutangtiaoshui"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 32,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}
