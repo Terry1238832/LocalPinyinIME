@@ -1,0 +1,416 @@
+{
+  "validation": "native probes --no-context --scores; isolated empty user lexicon",
+  "engine_sha256": "fdd07f9b9417acf4dcb8423e301c797dec441f8a9774267fc6e0f478ea0f7c94",
+  "local_core_sha256": "9eb7dca1225cf5dba233858bc118223616d6fadaffa521c57add1a5ca2b91ef9",
+  "batches": {
+    "230": {
+      "cases": 489,
+      "top1_count": 417,
+      "top9_count": 489,
+      "top1": 85.28,
+      "top9": 100.0,
+      "two_to_four_cases": 462,
+      "two_to_four_top9": 462,
+      "missing_from_top9": [],
+      "probe_sha256": "5c6a89a229dbd0ecbf85066e8a664b4dc5c41adf43b3e5d653927810307fd328",
+      "raw_scores_sha256": "0b54f6b4eeed2b3c330e950515f4c3ff0ec5e9b09a4fc7050e69e23dd0fb5978"
+    },
+    "231": {
+      "cases": 347,
+      "top1_count": 312,
+      "top9_count": 347,
+      "top1": 89.91,
+      "top9": 100.0,
+      "two_to_four_cases": 217,
+      "two_to_four_top9": 217,
+      "missing_from_top9": [],
+      "probe_sha256": "d4653da5d08b127a6b23a3ae03d6f90b9de515fb26016be039a47381fa26df57",
+      "raw_scores_sha256": "e6e45ced4bd3a33255fcefaff410d7ad0c4072e3c0a61dc02bb911cdd4cd4329"
+    },
+    "232": {
+      "cases": 394,
+      "top1_count": 365,
+      "top9_count": 394,
+      "top1": 92.64,
+      "top9": 100.0,
+      "two_to_four_cases": 318,
+      "two_to_four_top9": 318,
+      "missing_from_top9": [],
+      "probe_sha256": "a860a1bc100f64e65c75005eceb40232a8ef64c6d29bcfc21b3b292089be8039",
+      "raw_scores_sha256": "38ab0a8a5a4cc4419d4cee04933bbb99819c03dcd29caab947c7a0134d421b67"
+    },
+    "233": {
+      "cases": 389,
+      "top1_count": 361,
+      "top9_count": 389,
+      "top1": 92.8,
+      "top9": 100.0,
+      "two_to_four_cases": 303,
+      "two_to_four_top9": 303,
+      "missing_from_top9": [],
+      "probe_sha256": "57a2f3fde84bffaffae4657a7a26640c486d2fed09de30fab06e3a5a1436ddf5",
+      "raw_scores_sha256": "0525af8a1dac15715fdea6bb91b6d5c949cadd7d65ed98fc8bfb950f6d055050"
+    },
+    "234": {
+      "cases": 20,
+      "top1_count": 14,
+      "top9_count": 20,
+      "top1": 70.0,
+      "top9": 100.0,
+      "two_to_four_cases": 0,
+      "two_to_four_top9": 0,
+      "missing_from_top9": [],
+      "probe_sha256": "8f7468c14e413434e81c4bb8a1896cca81c0a090f0263309db3160973533f640",
+      "raw_scores_sha256": "d6fb85d0cef7a1da812da3a9f7e711bd0aed3511f7fec37699583207bb0ca342"
+    },
+    "235": {
+      "cases": 23,
+      "top1_count": 16,
+      "top9_count": 23,
+      "top1": 69.57,
+      "top9": 100.0,
+      "two_to_four_cases": 0,
+      "two_to_four_top9": 0,
+      "missing_from_top9": [],
+      "probe_sha256": "775105f957991ce2d447c7976456bdc669f0fc5703d60888e1cd70f55ea11f4b",
+      "raw_scores_sha256": "fe64e7aea589708fe1c8825af90f81cecdb0bd564a475a337a2aed4dec3d795a"
+    },
+    "236": {
+      "cases": 21,
+      "top1_count": 13,
+      "top9_count": 21,
+      "top1": 61.9,
+      "top9": 100.0,
+      "two_to_four_cases": 0,
+      "two_to_four_top9": 0,
+      "missing_from_top9": [],
+      "probe_sha256": "ffbf2f46b82488500ad8fbd4138d8da4141708537e8f1b091782bed1a9722dd3",
+      "raw_scores_sha256": "9a4f79eb171a3b37c52c0894ca065b4083349f0b9e241f29e70a2258301bc095"
+    },
+    "237": {
+      "cases": 21,
+      "top1_count": 19,
+      "top9_count": 21,
+      "top1": 90.48,
+      "top9": 100.0,
+      "two_to_four_cases": 0,
+      "two_to_four_top9": 0,
+      "missing_from_top9": [],
+      "probe_sha256": "f2367b10791e12f6b418b8e569b73a1fb7b0beaf00004ab6ff1e06d8f732d2e2",
+      "raw_scores_sha256": "6d707ac7479ad60d1241157d1bff802448c5193751aa50b006598b5e0204ce9f"
+    }
+  },
+  "data_audit": {
+    "baseline_entries": 201393,
+    "final_entries": 203097,
+    "sha256": "9eb7dca1225cf5dba233858bc118223616d6fadaffa521c57add1a5ca2b91ef9",
+    "all_existing_rows_in_order_and_weights_preserved": true,
+    "all_new_words_deduplicated_against_layers_domains_and_previous_batches": true,
+    "all_freeze_hashes_positional_reviews_probes_lf_and_weight_caps_passed": true,
+    "batches": {
+      "230": {
+        "count": 489,
+        "weights": {
+          "6000": 242,
+          "5000": 7,
+          "5500": 240
+        },
+        "reviews": 304,
+        "semantic_corrections": 14,
+        "sha256": "9a58d333977c7ad4635b96490d82d73bdf54603757e4ba48107d9a797bbb32a2"
+      },
+      "231": {
+        "count": 347,
+        "weights": {
+          "6000": 2,
+          "5500": 345
+        },
+        "reviews": 265,
+        "semantic_corrections": 6,
+        "sha256": "1da46df67f841a4e080a1dbf37ce080a9b7c92c25c5f2136df45e5d4611ccad1"
+      },
+      "232": {
+        "count": 394,
+        "weights": {
+          "6000": 7,
+          "5000": 1,
+          "5500": 386
+        },
+        "reviews": 293,
+        "semantic_corrections": 3,
+        "sha256": "8da3de81f29e308707fe9125cd63be646fe34530700c57342709a22535d24f41"
+      },
+      "233": {
+        "count": 389,
+        "weights": {
+          "6000": 25,
+          "5000": 4,
+          "5500": 360
+        },
+        "reviews": 326,
+        "semantic_corrections": 6,
+        "sha256": "e48269496889503f74587794707dfccb473047d0a2441e85f9ce6c62154e244c"
+      },
+      "234": {
+        "count": 20,
+        "weights": {
+          "5500": 14,
+          "5000": 6
+        },
+        "reviews": 17,
+        "semantic_corrections": 1,
+        "sha256": "54d9900e7ff8a9f45f570aa98b0bb54384c870618b4d359c265a015cfceccc9b"
+      },
+      "235": {
+        "count": 23,
+        "weights": {
+          "5500": 23
+        },
+        "reviews": 20,
+        "semantic_corrections": 0,
+        "sha256": "00296ad3e56cde03872196f3bacc8ececb5fb7ae7a1e8ef201f4b4cca84f1217"
+      },
+      "236": {
+        "count": 21,
+        "weights": {
+          "5500": 20,
+          "5000": 1
+        },
+        "reviews": 19,
+        "semantic_corrections": 0,
+        "sha256": "b69ece62e12ce65bd829e911b5fe3fd9df712239769db5d5564bbefb26859a26"
+      },
+      "237": {
+        "count": 21,
+        "weights": {
+          "5500": 21
+        },
+        "reviews": 21,
+        "semantic_corrections": 0,
+        "sha256": "7871157984c65c66b6b08c8691ecbb4a3ec9bb4116c24e9889a1bc3b66e53d6e"
+      }
+    }
+  },
+  "accuracy_before": {
+    "逐词输入·参考前文": {
+      "cases": 20626,
+      "top1": 85.95,
+      "top9": 98.1
+    },
+    "逐词输入·无前文": {
+      "cases": 20626,
+      "top1": 77.97,
+      "top9": 97.17
+    },
+    "留出整句": {
+      "cases": 4126,
+      "top1": 58.05,
+      "top9": 73.41
+    },
+    "口语对话·整句": {
+      "cases": 3368,
+      "top1": 80.43,
+      "top9": 91.81
+    },
+    "口语对话·逐词": {
+      "cases": 19504,
+      "top1": 94.12,
+      "top9": 99.5
+    },
+    "项目留出": {
+      "cases": 138,
+      "top1": 79.71,
+      "top9": 86.23
+    },
+    "新增用例": {
+      "cases": 67,
+      "top1": 62.69,
+      "top9": 77.61
+    },
+    "独立用例": {
+      "cases": 62,
+      "top1": 41.94,
+      "top9": 62.9
+    },
+    "日常口语·开发": {
+      "cases": 149,
+      "top1": 96.64,
+      "top9": 100.0
+    },
+    "日常口语·留出": {
+      "cases": 150,
+      "top1": 87.33,
+      "top9": 97.33
+    }
+  },
+  "accuracy_after": {
+    "逐词输入·参考前文": {
+      "cases": 20626,
+      "top1": 85.95,
+      "top9": 98.1
+    },
+    "逐词输入·无前文": {
+      "cases": 20626,
+      "top1": 77.97,
+      "top9": 97.17
+    },
+    "留出整句": {
+      "cases": 4126,
+      "top1": 58.05,
+      "top9": 73.41
+    },
+    "口语对话·整句": {
+      "cases": 3368,
+      "top1": 80.43,
+      "top9": 91.81
+    },
+    "口语对话·逐词": {
+      "cases": 19504,
+      "top1": 94.12,
+      "top9": 99.5
+    },
+    "项目留出": {
+      "cases": 138,
+      "top1": 79.71,
+      "top9": 86.23
+    },
+    "新增用例": {
+      "cases": 67,
+      "top1": 62.69,
+      "top9": 77.61
+    },
+    "独立用例": {
+      "cases": 62,
+      "top1": 41.94,
+      "top9": 62.9
+    },
+    "日常口语·开发": {
+      "cases": 149,
+      "top1": 96.64,
+      "top9": 100.0
+    },
+    "日常口语·留出": {
+      "cases": 150,
+      "top1": 87.33,
+      "top9": 97.33
+    }
+  },
+  "spot_check": {
+    "none": {
+      "式子": 8,
+      "算式": 2,
+      "根号": 1,
+      "竖式": 0,
+      "演草纸": 1,
+      "三角板": 1,
+      "甩锅": 1,
+      "背锅": 3,
+      "内卷": 1,
+      "躺平": 1,
+      "社死": 1,
+      "开黑": 1,
+      "上分": 1,
+      "掉分": 1,
+      "坑队友": 1,
+      "抽卡": 1,
+      "氪金": 1,
+      "刷怪": 1,
+      "锅子": 3
+    },
+    "math": {
+      "式子": 1,
+      "算式": 1,
+      "根号": 1,
+      "竖式": 1,
+      "演草纸": 1,
+      "三角板": 1,
+      "甩锅": 1,
+      "背锅": 3,
+      "内卷": 1,
+      "躺平": 1,
+      "社死": 1,
+      "开黑": 1,
+      "上分": 1,
+      "掉分": 1,
+      "坑队友": 1,
+      "抽卡": 1,
+      "氪金": 1,
+      "刷怪": 1,
+      "锅子": 3
+    },
+    "games": {
+      "式子": 8,
+      "算式": 2,
+      "根号": 1,
+      "竖式": 0,
+      "演草纸": 1,
+      "三角板": 1,
+      "甩锅": 1,
+      "背锅": 3,
+      "内卷": 1,
+      "躺平": 1,
+      "社死": 1,
+      "开黑": 1,
+      "上分": 1,
+      "掉分": 1,
+      "坑队友": 1,
+      "抽卡": 1,
+      "氪金": 1,
+      "刷怪": 1,
+      "锅子": 3
+    },
+    "work": {
+      "式子": 8,
+      "算式": 2,
+      "根号": 1,
+      "竖式": 0,
+      "演草纸": 1,
+      "三角板": 1,
+      "甩锅": 1,
+      "背锅": 1,
+      "内卷": 1,
+      "躺平": 1,
+      "社死": 1,
+      "开黑": 1,
+      "上分": 1,
+      "掉分": 1,
+      "坑队友": 1,
+      "抽卡": 1,
+      "氪金": 1,
+      "刷怪": 1,
+      "锅子": 3
+    },
+    "daily": {
+      "式子": 8,
+      "算式": 2,
+      "根号": 1,
+      "竖式": 0,
+      "演草纸": 1,
+      "三角板": 1,
+      "甩锅": 1,
+      "背锅": 3,
+      "内卷": 1,
+      "躺平": 1,
+      "社死": 1,
+      "开黑": 1,
+      "上分": 1,
+      "掉分": 1,
+      "坑队友": 1,
+      "抽卡": 1,
+      "氪金": 1,
+      "刷怪": 1,
+      "锅子": 3
+    }
+  },
+  "native_tests": {
+    "x64": "44/44 passed",
+    "x86": "44/44 passed",
+    "packaged": false
+  },
+  "coverage": {
+    "report": "docs/lexicon-coverage.json",
+    "unihan_version": "17.0.0",
+    "unihan_url": "https://www.unicode.org/Public/17.0.0/ucd/Unihan.zip",
+    "jieba_version": "0.42.1"
+  }
+}
