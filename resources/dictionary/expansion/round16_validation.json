@@ -1,0 +1,592 @@
+{
+  "round": 16,
+  "batch_min": 286,
+  "batch_max": 293,
+  "base_commit": "67cef8641e7bf1c96e14711f586aae37b3e360a9",
+  "engine_version": "1.1.0",
+  "audit": {
+    "before": 214332,
+    "after": 216403,
+    "added": 2071,
+    "existing_rows_preserved": true,
+    "all_layers_and_domains_surface_dedup": true,
+    "hashes_reviews_weights_formats_passed": true,
+    "batches": {
+      "286": {
+        "scope": "环保与能源",
+        "entries": 500,
+        "weights": {
+          "5000": 1,
+          "5500": 499
+        },
+        "reviews": 365,
+        "overrides": {
+          "电网调峰": "dianwangtiaofeng"
+        },
+        "sha256": "d9150c47c3dd079bf668f116d586c24c768bdc8ef8fb82f7442f62c1032ab982"
+      },
+      "287": {
+        "scope": "新能源车与充电",
+        "entries": 491,
+        "weights": {
+          "5500": 491
+        },
+        "reviews": 348,
+        "overrides": {},
+        "sha256": "04c195575a2a89bb14b3de3f1c35d50194aed23499e8720e50df668f55394c4b"
+      },
+      "288": {
+        "scope": "舞蹈",
+        "entries": 500,
+        "weights": {
+          "5000": 4,
+          "5500": 496
+        },
+        "reviews": 317,
+        "overrides": {
+          "长扇舞": "changshanwu",
+          "长绸舞": "changchouwu",
+          "找重拍": "zhaozhongpai",
+          "不对称队形": "buduichenduixing",
+          "脚掌着地": "jiaozhangzhuodi",
+          "脚跟着地": "jiaogenzhuodi"
+        },
+        "sha256": "09451c4da4ee7c97cbc858c56ea52db4c4b02b3285a69bef71cdf44012046554"
+      },
+      "289": {
+        "scope": "戏曲与曲艺",
+        "entries": 500,
+        "weights": {
+          "5000": 5,
+          "5500": 495
+        },
+        "reviews": 368,
+        "overrides": {},
+        "sha256": "d72f3ab573f4ec0bdfcb3b5a38c576110d85dd28358e59048d828328dc1a1e9a"
+      },
+      "290": {
+        "scope": "环保与能源较长说法",
+        "entries": 20,
+        "weights": {
+          "5500": 20
+        },
+        "reviews": 20,
+        "overrides": {},
+        "sha256": "4b8c3cbd4ae171cccbcdad1b1ba508f1f2b65ddd1175b98784ce6f4c1b7ef2c8"
+      },
+      "291": {
+        "scope": "新能源车与充电较长说法",
+        "entries": 20,
+        "weights": {
+          "5500": 20
+        },
+        "reviews": 20,
+        "overrides": {
+          "充满电大概要多长时间": "chongmandiandagaiyaoduochangshijian"
+        },
+        "sha256": "2516c9f0fc61143c71bb385980c0b16adaa79f0891b0d648ba7050b5ff33bc22"
+      },
+      "292": {
+        "scope": "舞蹈较长说法",
+        "entries": 20,
+        "weights": {
+          "5500": 20
+        },
+        "reviews": 20,
+        "overrides": {},
+        "sha256": "f667149370ed1258c5095086a3ebd305624daad9b9cf4c14a143f7df71c4bc1b"
+      },
+      "293": {
+        "scope": "戏曲与曲艺较长说法",
+        "entries": 20,
+        "weights": {
+          "5500": 20
+        },
+        "reviews": 20,
+        "overrides": {},
+        "sha256": "941d470ef037efd0ed831dc322a473817347a38fb2c2214f53e46acdcdf93f87"
+      }
+    },
+    "local_core_sha256": "8462b4650277a61827fd10988f714c8cb52e1b11fbe71d50d6f21c14f47bc914"
+  },
+  "probes": {
+    "286": {
+      "cases": 500,
+      "top1": 93.0,
+      "top9": 100.0,
+      "two_to_four_cases": 428,
+      "two_to_four_top9": 428,
+      "two_to_four_missing": [],
+      "other_missing": [],
+      "probe_sha256": "e52850206750043b3d6ca989cea66493f303fe27c7301d1b8c2dbc65d5f28150",
+      "raw_sha256": "35f4285c61b128520bf5a6e165ebf8d7b94a39822b360a21ba61eb830fd3d99a"
+    },
+    "287": {
+      "cases": 491,
+      "top1": 88.59,
+      "top9": 100.0,
+      "two_to_four_cases": 339,
+      "two_to_four_top9": 339,
+      "two_to_four_missing": [],
+      "other_missing": [],
+      "probe_sha256": "5ab7ad945ea3200ea5511f55408728ba42cf78697a8013c0f02014f9569982d8",
+      "raw_sha256": "61266959efdad37a678cad0e154fe24abc8392f053c7f5ecf370bb2128844ddf"
+    },
+    "288": {
+      "cases": 500,
+      "top1": 92.6,
+      "top9": 100.0,
+      "two_to_four_cases": 456,
+      "two_to_four_top9": 456,
+      "two_to_four_missing": [],
+      "other_missing": [],
+      "probe_sha256": "7c9cee6a0f2bfaf27dc4b86ec1a712a7c09b74e734192d3b8f48c6c3232f1a9d",
+      "raw_sha256": "4aa4f52c76223d14130a3cad32f1921833bd2521640b16b92bb66bd855f4acad"
+    },
+    "289": {
+      "cases": 500,
+      "top1": 87.8,
+      "top9": 100.0,
+      "two_to_four_cases": 474,
+      "two_to_four_top9": 474,
+      "two_to_four_missing": [],
+      "other_missing": [],
+      "probe_sha256": "6eb742edb4ac4ad31d54b70e9502f3b3b868b06ff1d3b2c9e3fa9de12363e278",
+      "raw_sha256": "2616a1fced60441ae477634c0e208dc7c383a8c7c7e48234ef85daa9ad7b3a6e"
+    },
+    "290": {
+      "cases": 20,
+      "top1": 85.0,
+      "top9": 100.0,
+      "two_to_four_cases": 0,
+      "two_to_four_top9": 0,
+      "two_to_four_missing": [],
+      "other_missing": [],
+      "probe_sha256": "b608dc83e07f47ccb12becfb21903db946e41bc65c27ce38cedc9ee0cbf9afc3",
+      "raw_sha256": "b1ebfdd976fa3aaaa194364702a0bdc52a4f2c517bcf4923730faeeb314a1b83"
+    },
+    "291": {
+      "cases": 20,
+      "top1": 75.0,
+      "top9": 100.0,
+      "two_to_four_cases": 0,
+      "two_to_four_top9": 0,
+      "two_to_four_missing": [],
+      "other_missing": [],
+      "probe_sha256": "e112fda65501c06086b69b0e473e14dc73b7ff4d66fe4f1838bbd3f3a19c264a",
+      "raw_sha256": "bd393ef36e3e9144d79733e2e051926bfe663bfd749f8ace4de47394cd0696e7"
+    },
+    "292": {
+      "cases": 20,
+      "top1": 55.0,
+      "top9": 100.0,
+      "two_to_four_cases": 0,
+      "two_to_four_top9": 0,
+      "two_to_four_missing": [],
+      "other_missing": [],
+      "probe_sha256": "efa9f2de2502cff0a5d2672db6ed8d8b1fcf6e19fe1047b0d13dc0cfadc91b90",
+      "raw_sha256": "02fd11df488fadb350fc5eb68bc633aecab658860350b3d5218267f336093355"
+    },
+    "293": {
+      "cases": 20,
+      "top1": 70.0,
+      "top9": 100.0,
+      "two_to_four_cases": 0,
+      "two_to_four_top9": 0,
+      "two_to_four_missing": [],
+      "other_missing": [],
+      "probe_sha256": "6dec419508788d592f3d6e3842641292f936f05be74d8214b424732931b56eda",
+      "raw_sha256": "90f01db754c1005a3a1eec9a653ec306a69148a57ed58242dbdacd3cac8403fb"
+    }
+  },
+  "accuracy_before": {
+    "逐词输入·参考前文": {
+      "cases": 20626,
+      "top1": 85.95,
+      "top9": 98.1
+    },
+    "逐词输入·无前文": {
+      "cases": 20626,
+      "top1": 77.97,
+      "top9": 97.17
+    },
+    "留出整句": {
+      "cases": 4126,
+      "top1": 58.05,
+      "top9": 73.41
+    },
+    "口语对话·整句": {
+      "cases": 3368,
+      "top1": 80.43,
+      "top9": 91.81
+    },
+    "口语对话·逐词": {
+      "cases": 19504,
+      "top1": 94.12,
+      "top9": 99.5
+    },
+    "项目留出": {
+      "cases": 138,
+      "top1": 79.71,
+      "top9": 86.23
+    },
+    "新增用例": {
+      "cases": 67,
+      "top1": 62.69,
+      "top9": 77.61
+    },
+    "独立用例": {
+      "cases": 62,
+      "top1": 41.94,
+      "top9": 62.9
+    },
+    "日常口语·开发": {
+      "cases": 149,
+      "top1": 96.64,
+      "top9": 100.0
+    },
+    "日常口语·留出": {
+      "cases": 150,
+      "top1": 87.33,
+      "top9": 97.33
+    }
+  },
+  "accuracy_after": {
+    "逐词输入·参考前文": {
+      "cases": 20626,
+      "top1": 85.95,
+      "top9": 98.1
+    },
+    "逐词输入·无前文": {
+      "cases": 20626,
+      "top1": 77.97,
+      "top9": 97.17
+    },
+    "留出整句": {
+      "cases": 4126,
+      "top1": 58.05,
+      "top9": 73.41
+    },
+    "口语对话·整句": {
+      "cases": 3368,
+      "top1": 80.43,
+      "top9": 91.81
+    },
+    "口语对话·逐词": {
+      "cases": 19504,
+      "top1": 94.12,
+      "top9": 99.5
+    },
+    "项目留出": {
+      "cases": 138,
+      "top1": 79.71,
+      "top9": 86.23
+    },
+    "新增用例": {
+      "cases": 67,
+      "top1": 62.69,
+      "top9": 77.61
+    },
+    "独立用例": {
+      "cases": 62,
+      "top1": 41.94,
+      "top9": 62.9
+    },
+    "日常口语·开发": {
+      "cases": 149,
+      "top1": 96.64,
+      "top9": 100.0
+    },
+    "日常口语·留出": {
+      "cases": 150,
+      "top1": 87.33,
+      "top9": 97.33
+    }
+  },
+  "native_tests": {
+    "x64": {
+      "passed": 44,
+      "total": 44,
+      "log_sha256": "15947425d3de6f27b95d3160beff7bbcd4c89ab6341254e318fd77947fda551d"
+    },
+    "x86": {
+      "passed": 44,
+      "total": 44,
+      "log_sha256": "0bb762b25fa6ee6a55e9a936ebe0bf36f0275ccfb376b985c467be7ae7bdc5a1"
+    }
+  },
+  "max_entries": 231676,
+  "commits": {
+    "286": "f17edffea08a488c401b1443d60201c5c4e74397",
+    "287": "faff55a4b9da032fe428934f1c6eaaa46b32970e",
+    "288": "37ab320f17bb57621682f9904f4a3cf1166f1151",
+    "289": "8eb6eda7b12b229db7088694cf5a673c11003898",
+    "290": "3b8b4e19e3857b732a443f0c593a233f7976d02c",
+    "291": "0355eb3e6f4463d485aa3683c4a70765c2f584f5",
+    "292": "e418f4654174a2cb9ac1ea3bb67998103768182c",
+    "293": "bd8a62404406ee79e099be93d66b61971b43abc1"
+  },
+  "rejections": {
+    "duplicate:local_core_zh_pinyin.tsv": 244,
+    "duplicate:standard_zh_pinyin.tsv": 38,
+    "quality:incomplete_or_uncommon_label": 63,
+    "quality:uncertain_or_uncommon_label": 28,
+    "duplicate:batch286": 1,
+    "outside_batch_length_scope": 2,
+    "batch_size_limit": 181,
+    "quality:prefer_clear_automotive_亏电_wording": 4,
+    "quality:prefer_generic_unbranded_快充站": 1,
+    "quality:specific_performance_title_omit": 1,
+    "authoring_checker:contextual_lao_not_listed_by_pypinyin_0.55.0": 1,
+    "duplicate:batch288": 2
+  },
+  "whole_batch_withdrawals": [],
+  "status": "passed",
+  "coverage": {
+    "lexicon": {
+      "entries": 263281,
+      "distinct_words": 262783
+    },
+    "standard_characters": {
+      "一级 (1-3500)": {
+        "characters": 3500,
+        "typeable_by_standard_reading": 3500,
+        "percent": 100.0,
+        "single_entry_any_reading": 3500
+      },
+      "二级 (3501-6500)": {
+        "characters": 3000,
+        "typeable_by_standard_reading": 2997,
+        "percent": 99.9,
+        "single_entry_any_reading": 2997
+      },
+      "三级 (6501-8105)": {
+        "characters": 1605,
+        "typeable_by_standard_reading": 261,
+        "percent": 16.26,
+        "single_entry_any_reading": 267
+      }
+    },
+    "standard_characters_missing_examples": {
+      "一级 (1-3500)": [],
+      "二级 (3501-6500)": [
+        "𬉼(ou)",
+        "𠳐(bang)",
+        "𥻗(cha)"
+      ],
+      "三级 (6501-8105)": [
+        "尢(wang)",
+        "卬(ang)",
+        "𠙶(ou)",
+        "毌(guan)",
+        "邘(yu)",
+        "圢(ting)",
+        "伋(ji)",
+        "冮(gang)",
+        "氿(jiu)",
+        "汈(diao)",
+        "宄(gui)",
+        "𬣙(xu)",
+        "讱(ren)",
+        "扞(han)",
+        "圲(qian)",
+        "圫(tuo)",
+        "芏(du)",
+        "朳(ba)",
+        "朸(li)",
+        "𨙸(qi)",
+        "辿(chan)",
+        "伣(qian)",
+        "癿(bie)",
+        "犴(an/han)",
+        "冱(hu)",
+        "𬇕(wan)",
+        "汋(zhuo)",
+        "䜣(xin)",
+        "讻(xiong)",
+        "𬣞(zhu)",
+        "𬘓(xun)",
+        "纩(kuang)",
+        "玒(hong)",
+        "玓(di)",
+        "玘(qi)",
+        "玚(yang)",
+        "刬(chan)",
+        "𫭟(ou/qu)",
+        "坉(tun)",
+        "𫭢(lun)"
+      ]
+    },
+    "common_words": {
+      "top 1000": {
+        "words": 1000,
+        "in_lexicon": 999,
+        "percent": 99.9
+      },
+      "top 5000": {
+        "words": 5000,
+        "in_lexicon": 4900,
+        "percent": 98.0
+      },
+      "top 10000": {
+        "words": 10000,
+        "in_lexicon": 9565,
+        "percent": 95.65
+      },
+      "top 30000": {
+        "words": 30000,
+        "in_lexicon": 23308,
+        "percent": 77.69
+      },
+      "top 50000": {
+        "words": 50000,
+        "in_lexicon": 32181,
+        "percent": 64.36
+      },
+      "top 100000": {
+        "words": 100000,
+        "in_lexicon": 43313,
+        "percent": 43.31
+      }
+    },
+    "common_words_missing_examples": [
+      "甚么",
+      "洪山区",
+      "江夏区",
+      "本行政区域",
+      "袁承志",
+      "礼部",
+      "万公顷",
+      "胡秉宸",
+      "武昌区",
+      "李高成",
+      "鄂西",
+      "千步",
+      "郧阳",
+      "刑部",
+      "官军",
+      "陈家洛",
+      "职司",
+      "王琦瑶",
+      "万平方米",
+      "李莫愁",
+      "亲兵",
+      "江夏",
+      "十八年",
+      "马朝旭",
+      "大学士",
+      "行省",
+      "十五年",
+      "工部",
+      "万平方公里",
+      "适才",
+      "怎地",
+      "人口数",
+      "贡献者",
+      "王公",
+      "屈家岭",
+      "节度使",
+      "天鹅洲",
+      "亿立方米",
+      "欧阳锋",
+      "金殿",
+      "周伯通",
+      "明永乐",
+      "首辅",
+      "户部",
+      "解放区",
+      "中纺",
+      "义军",
+      "立法权",
+      "刘宗敏",
+      "琉璃瓦",
+      "清兵",
+      "湖广",
+      "福临",
+      "兵部",
+      "三藏",
+      "黄陂",
+      "极了",
+      "笔架山",
+      "文理学院",
+      "须弥座",
+      "池河",
+      "吏部",
+      "军马",
+      "丁能通",
+      "官家",
+      "二十年",
+      "老营",
+      "宋献策",
+      "国师",
+      "我会",
+      "起义军",
+      "子口",
+      "荆江",
+      "如果说",
+      "苏维埃政府",
+      "六部",
+      "黄依依",
+      "国徽",
+      "音乐堂",
+      "白嘉轩"
+    ],
+    "common_words_missing_but_typed": {
+      "words": 435,
+      "first_candidate": 136,
+      "within_nine": 283,
+      "percent_within_nine": 65.06
+    },
+    "running_text": {
+      "heldout_sentences.tsv": {
+        "lines": 4126,
+        "word_tokens": 13800,
+        "word_types": 7161,
+        "token_coverage_percent": 84.04,
+        "type_coverage_percent": 71.57,
+        "frequent_missing": [
+          "我会×11",
+          "萨米×8",
+          "教区×6",
+          "穿著×5",
+          "兰科×5",
+          "回家吧×4",
+          "和玛丽×4",
+          "乡试×4",
+          "神社×4",
+          "曾祖父×4",
+          "悬钩子×4",
+          "小檗×3",
+          "米纳斯吉拉斯州×3",
+          "登进士×3",
+          "瓷蟹×3",
+          "花为×3",
+          "鳗鲡×3",
+          "亚科×3",
+          "蛱蝶×3",
+          "维耶×3",
+          "这药×2",
+          "受够了×2",
+          "前有×2",
+          "二十年×2",
+          "我快×2",
+          "空房间×2",
+          "信神×2",
+          "谢谢您×2",
+          "无法形容×2",
+          "通晓×2",
+          "蓝线×2",
+          "他用×2",
+          "随著×2",
+          "十二个×2",
+          "非常高兴×2",
+          "玛莉×2",
+          "待在家里×2",
+          "神户×2",
+          "昨天上午×2",
+          "见证人×2"
+        ]
+      }
+    }
+  }
+}
