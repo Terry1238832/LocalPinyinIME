@@ -400,7 +400,7 @@ async function run() {
     const initial = await state();
     assert.equal(initial.version, expectedVersion);
     assert.equal(initial.settings.predictionEnabled, false, 'Next-word suggestions are opt-in on fresh installations.');
-    assert.equal(initial.dictionary.total, 259380, `The ${expectedVersion} built-in resources were not loaded.`);
+    assert.equal(initial.dictionary.total, 281815, `The ${expectedVersion} built-in resources were not loaded.`);
     report.dictionary = initial.dictionary;
     assert.equal(path.resolve(initial.dataDirectory), path.join(data, 'LocalPinyinIME'));
     assert.deepEqual((await api('listUserLexicon')).entries, []);
