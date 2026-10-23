@@ -13,18 +13,25 @@
   "native_candidate_coverage": {
     "status": "passed",
     "report": "lexicon_batch_318.validation.json",
-    "sha256": "085e8e0ed910f53c30ce41abd25d42993dc74a2acff6fc6923a15e8e3d1bec48",
+    "sha256": "7b6ea99649ac8c4fe42e6f8e20aab57fa7ef3d145f5438714644807332561e6c",
     "cases": 338,
     "top1_correct": 325,
     "top9_present": 338,
     "top1_percent": 96.15,
     "top9_percent": 100.0,
     "character_error_rate": 0.0101,
-    "p50_lookup_ms": 4.907,
-    "p95_lookup_ms": 8.183,
-    "max_lookup_ms": 10.536,
+    "p50_lookup_ms": 5.084,
+    "p95_lookup_ms": 8.392,
+    "max_lookup_ms": 12.674,
     "missing_from_top9_count": 0,
     "missing_from_top9": [],
     "max_returned_candidate_count": 9
+  },
+  "historical_append_receipt_preserved": true,
+  "current_batch_revision": {
+    "round": 33,
+    "frozen_batch_sha256": "0243821db61fe4e58750fcb0cbe0a584877ee9aa5978a3ba91515c851b66d296",
+    "ledger": "round33_corrections.json",
+    "note": "Original frozen_batch_sha256 and canonical before/after hashes above describe the historical append, not a replay of this correction."
   }
 }

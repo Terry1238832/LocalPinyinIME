@@ -8,11 +8,11 @@
   "review_scope": "One AI author reads every selected expression and full-pinyin key in context, then records positional character choices. Structural reconstruction is not an independent linguistic editor. Individually authored common vocabulary; no third-party lexicon or test-derived words.",
   "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
   "new_entries": 320,
-  "sha256": "eaa57d308ca82bff710ba4f83979a83a7d8f8affa701b3871c1cfcd8463d1264",
+  "sha256": "a2e7273e249d3da7cccc1029a865d6b318c77d2f142f2bb9835764e8648446e6",
   "authoring_files_sha256": {
     "lexicon_batch_239.authoring.json": "3f360ab9114fd3e2e8ac3b58297c9fb79714cb8cf7e3353c3a1ed93467db4fc4",
     "batch239_authored_draft.txt": "21a09cea24e20859fe659dc2abfc880725bdb95710ff70be0fadeff135f512bc",
-    "batch239_pronunciation_review.tsv": "dffb71c70fee122a8faf6a7dd99cce0a1cff26983e26c9085450d08ce007c462"
+    "batch239_pronunciation_review.tsv": "1c9763b73d03d5a7c4f7895cbc67c57b9dd6622ea32b02d36bb55dbb993bb898"
   },
   "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
   "supporting_tools_sha256": {
@@ -56,10 +56,22 @@
     "网卡重置": "wangkachongzhi",
     "路由器重置": "luyouqichongzhi",
     "网络重置": "wangluochongzhi",
-    "上行速度": "shangxingsudu"
+    "上行速度": "shangxingsudu",
+    "网站弹窗": "wangzhantanchuang",
+    "拦截弹窗": "lanjietanchuang",
+    "禁止弹窗": "jinzhitanchuang"
   },
   "reading_variant_choices": {},
   "semantic_pronunciation_corrections": 8,
   "line_endings": "UTF-8 LF",
-  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded.",
+  "correction_history": [
+    {
+      "round": 33,
+      "reason": "Contextual popup-window pronunciation 弹=tan; no words or weights added or removed",
+      "previous_frozen_batch_sha256": "eaa57d308ca82bff710ba4f83979a83a7d8f8affa701b3871c1cfcd8463d1264",
+      "current_batch_sha256": "a2e7273e249d3da7cccc1029a865d6b318c77d2f142f2bb9835764e8648446e6",
+      "ledger": "round33_corrections.json"
+    }
+  ]
 }
