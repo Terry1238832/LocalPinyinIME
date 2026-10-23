@@ -1,0 +1,622 @@
+{
+  "round": 27,
+  "batch_min": 374,
+  "batch_max": 381,
+  "base_commit": "1837fad140c3b6b98079d62694dd0a4c942c2a9e",
+  "engine_version": "1.1.0",
+  "audit": {
+    "before": 232171,
+    "after": 233539,
+    "added": 1368,
+    "existing_rows_preserved": true,
+    "all_layers_and_domains_surface_dedup": true,
+    "hashes_reviews_weights_formats_passed": true,
+    "batches": {
+      "374": {
+        "scope": "航空乘机与机场服务",
+        "entries": 340,
+        "weights": {
+          "5500": 340
+        },
+        "reviews": 291,
+        "overrides": {
+          "买额外行李": "maiewaixingli",
+          "还没过安检": "haimeiguoanjian",
+          "额外行李费": "ewaixinglifei"
+        },
+        "sha256": "4e790bcf76fe35e30b1ef644146c70a664df196539872801ba7f17837a033a02"
+      },
+      "375": {
+        "scope": "家用照明与灯具选用",
+        "entries": 301,
+        "weights": {
+          "5000": 1,
+          "5500": 300
+        },
+        "reviews": 279,
+        "overrides": {
+          "长臂台灯": "changbitaideng"
+        },
+        "sha256": "575cd53af43f84044b3a07d66a4fbfef75e9d4d3192be0cb04e76f1c7d06ba17"
+      },
+      "376": {
+        "scope": "观鸟与常见鸟类观察",
+        "entries": 326,
+        "weights": {
+          "5000": 5,
+          "5500": 321
+        },
+        "reviews": 234,
+        "overrides": {
+          "黑翅长脚鹬": "heichichangjiaoyu",
+          "长耳鸮": "changerxiao"
+        },
+        "sha256": "64528aaa7ab0f93855f6e16708084e8e135a6c85e223a94537e446ba684d4abd"
+      },
+      "377": {
+        "scope": "平面设计与海报制作",
+        "entries": 321,
+        "weights": {
+          "5000": 1,
+          "5500": 320
+        },
+        "reviews": 208,
+        "overrides": {
+          "海报出血位": "haibaochuxuewei",
+          "长投影": "changtouying",
+          "出血线": "chuxuexian",
+          "长图海报": "changtuhaibao",
+          "长图设计": "changtusheji",
+          "文字断行": "wenziduanhang"
+        },
+        "sha256": "ea8bd5c1265ae0b2821a2369202c581d2bdabf095ae484019f9f9a5e15dc7670"
+      },
+      "378": {
+        "scope": "航空乘机与机场服务较长说法",
+        "entries": 20,
+        "weights": {
+          "5500": 20
+        },
+        "reviews": 20,
+        "overrides": {},
+        "sha256": "485fbbb19b2c753fd8c53fff6fd9e4c2f3d7f46c0d7aebf420f611e829cd92af"
+      },
+      "379": {
+        "scope": "家用照明与灯具选用较长说法",
+        "entries": 20,
+        "weights": {
+          "5500": 20
+        },
+        "reviews": 20,
+        "overrides": {
+          "灯带的背胶已经脱落了": "dengdaidebeijiaoyijingtuoluole"
+        },
+        "sha256": "42607fd90655147ca31bfeaf16ceedd1c7c547a4886edd6cc94bfbdd77a5e369"
+      },
+      "380": {
+        "scope": "观鸟与常见鸟类观察较长说法",
+        "entries": 20,
+        "weights": {
+          "5500": 20
+        },
+        "reviews": 20,
+        "overrides": {
+          "这只鸟的尾巴特别长": "zhezhiniaodeweibatebiechang"
+        },
+        "sha256": "c8d4aac96a497e20eb239f3ccec4a5f9fbd6b3356bf7112f206c847638e9476f"
+      },
+      "381": {
+        "scope": "平面设计与海报制作较长说法",
+        "entries": 20,
+        "weights": {
+          "5500": 20
+        },
+        "reviews": 20,
+        "overrides": {
+          "印刷文件要留好出血位": "yinshuawenjianyaoliuhaochuxuewei"
+        },
+        "sha256": "4b04e4ccb9e25677a4226fae2e82317d9c3f8d36e859c798cf666baf0855f6f3"
+      }
+    },
+    "local_core_sha256": "214270008a919d4de1362ed7a47e587a4b99b68f37d51ac3d83a304cfcdb536e"
+  },
+  "probes": {
+    "374": {
+      "cases": 340,
+      "top1": 81.18,
+      "top9": 100.0,
+      "two_to_four_cases": 157,
+      "two_to_four_top9": 157,
+      "two_to_four_missing": [],
+      "other_missing": [],
+      "probe_sha256": "4172d5aa6aea5f3a0b4caf30b01ebcfa9e440f1304c6d94f3e9cb80445eb00ae",
+      "raw_sha256": "1065b63bd041ac5e627f16686545d64342c4731580648b9794019aa8e4277ea8"
+    },
+    "375": {
+      "cases": 301,
+      "top1": 95.02,
+      "top9": 100.0,
+      "two_to_four_cases": 266,
+      "two_to_four_top9": 266,
+      "two_to_four_missing": [],
+      "other_missing": [],
+      "probe_sha256": "48331c36f156ae4714ad3d183dc723ce69350d58bf574b30dfeca0c5a974d084",
+      "raw_sha256": "ee378f797d39c1f11fb2d482799b402dce87796426d5f85212d30318238daa1a"
+    },
+    "376": {
+      "cases": 326,
+      "top1": 81.9,
+      "top9": 100.0,
+      "two_to_four_cases": 308,
+      "two_to_four_top9": 308,
+      "two_to_four_missing": [],
+      "other_missing": [],
+      "probe_sha256": "5bcc39aea9fbfb3a21f822d5d836866b3709ba40ddf1c5e887fbcdd457d56dba",
+      "raw_sha256": "18f14f541f4ac3ed24078ab5ddc313afec61948c83b7840c0272fad1376a8aff"
+    },
+    "377": {
+      "cases": 321,
+      "top1": 95.02,
+      "top9": 100.0,
+      "two_to_four_cases": 288,
+      "two_to_four_top9": 288,
+      "two_to_four_missing": [],
+      "other_missing": [],
+      "probe_sha256": "ba09ccfc77bb1d8aa7f0f046807fde99de4eb08ee7964f4bfa1d6e665fd49856",
+      "raw_sha256": "ee00f7342ec69d28c6762030a871c52697eb334fbf68bb2e3eceb8bc2e7a5db8"
+    },
+    "378": {
+      "cases": 20,
+      "top1": 70.0,
+      "top9": 100.0,
+      "two_to_four_cases": 0,
+      "two_to_four_top9": 0,
+      "two_to_four_missing": [],
+      "other_missing": [],
+      "probe_sha256": "acc30e12741a49578df12e4bafb0959a9b84b225eb9ac96162326e8f07a75658",
+      "raw_sha256": "d11d6ad8ca59dd0846586d85a0a37feeddb5bea5ab6e69c7012506669482df6f"
+    },
+    "379": {
+      "cases": 20,
+      "top1": 60.0,
+      "top9": 100.0,
+      "two_to_four_cases": 0,
+      "two_to_four_top9": 0,
+      "two_to_four_missing": [],
+      "other_missing": [],
+      "probe_sha256": "f6aaedf89809ad4a288ba1caeaee7bc5e5e2cb72421b20368941725aed464811",
+      "raw_sha256": "01c5090afa13157bafaea78689d7e136b1c67e320c1b2449931be7ada0356dcf"
+    },
+    "380": {
+      "cases": 20,
+      "top1": 90.0,
+      "top9": 100.0,
+      "two_to_four_cases": 0,
+      "two_to_four_top9": 0,
+      "two_to_four_missing": [],
+      "other_missing": [],
+      "probe_sha256": "a84860addddc3147c74964fd440d75da611d6c5f32e9eef7aa5ffa18382c9ec6",
+      "raw_sha256": "4ecc02033c30d19d3579a8a63a2020406f01a779885da821c133add13957b4b3"
+    },
+    "381": {
+      "cases": 20,
+      "top1": 45.0,
+      "top9": 100.0,
+      "two_to_four_cases": 0,
+      "two_to_four_top9": 0,
+      "two_to_four_missing": [],
+      "other_missing": [],
+      "probe_sha256": "41db349603358a1e9a3057d0073aa60c33ffa9780a32732eea45d05ccb2ee1ce",
+      "raw_sha256": "13971a477c39e73fc4ef0c4437baea77a3a30603eff7d02d11265acb468cd506"
+    }
+  },
+  "accuracy_before": {
+    "逐词输入·参考前文": {
+      "cases": 20626,
+      "top1": 85.95,
+      "top9": 98.09
+    },
+    "逐词输入·无前文": {
+      "cases": 20626,
+      "top1": 77.97,
+      "top9": 97.17
+    },
+    "留出整句": {
+      "cases": 4126,
+      "top1": 58.05,
+      "top9": 73.44
+    },
+    "口语对话·整句": {
+      "cases": 3368,
+      "top1": 80.4,
+      "top9": 91.81
+    },
+    "口语对话·逐词": {
+      "cases": 19504,
+      "top1": 94.12,
+      "top9": 99.5
+    },
+    "项目留出": {
+      "cases": 138,
+      "top1": 79.71,
+      "top9": 86.23
+    },
+    "新增用例": {
+      "cases": 67,
+      "top1": 62.69,
+      "top9": 77.61
+    },
+    "独立用例": {
+      "cases": 62,
+      "top1": 41.94,
+      "top9": 62.9
+    },
+    "日常口语·开发": {
+      "cases": 149,
+      "top1": 96.64,
+      "top9": 100.0
+    },
+    "日常口语·留出": {
+      "cases": 150,
+      "top1": 87.33,
+      "top9": 97.33
+    }
+  },
+  "accuracy_after": {
+    "逐词输入·参考前文": {
+      "cases": 20626,
+      "top1": 85.95,
+      "top9": 98.09
+    },
+    "逐词输入·无前文": {
+      "cases": 20626,
+      "top1": 77.97,
+      "top9": 97.17
+    },
+    "留出整句": {
+      "cases": 4126,
+      "top1": 58.05,
+      "top9": 73.44
+    },
+    "口语对话·整句": {
+      "cases": 3368,
+      "top1": 80.4,
+      "top9": 91.81
+    },
+    "口语对话·逐词": {
+      "cases": 19504,
+      "top1": 94.12,
+      "top9": 99.5
+    },
+    "项目留出": {
+      "cases": 138,
+      "top1": 79.71,
+      "top9": 86.23
+    },
+    "新增用例": {
+      "cases": 67,
+      "top1": 62.69,
+      "top9": 77.61
+    },
+    "独立用例": {
+      "cases": 62,
+      "top1": 41.94,
+      "top9": 62.9
+    },
+    "日常口语·开发": {
+      "cases": 149,
+      "top1": 96.64,
+      "top9": 100.0
+    },
+    "日常口语·留出": {
+      "cases": 150,
+      "top1": 87.33,
+      "top9": 97.33
+    }
+  },
+  "native_tests": {
+    "x64": {
+      "passed": 44,
+      "total": 44,
+      "log_sha256": "eaf706ec3ffbfe0e481e563c45cfa06f1a12c551b5cb2037a4913ad6a1eedc14"
+    },
+    "x86": {
+      "passed": 44,
+      "total": 44,
+      "log_sha256": "53c545b623bb0bd34c3552659a97cd105bb7aec6644e6b8d9bddc5de95689f17"
+    }
+  },
+  "max_entries": 255390,
+  "commits": {
+    "374": "14d9a79e73cb2a29481f43b11dec1604324d2d09",
+    "375": "8db661df361e26290a890deac33e86a1e5241762",
+    "376": "853cf0b8be9c19b560aeb8968aa88e0805929fe6",
+    "377": "bb7f87fe8867155a9d71ae7b62f2cfab91a00e89",
+    "378": "23ccfa6ca03f12e73f8dd2df8b58fa28064b8daa",
+    "379": "f326f600cd2a3d015beb8b9f7c2a22a190e980d4",
+    "380": "8e478b171b40dfe697890e137e9274920ee018b9",
+    "381": "f889c158b1e0d0e6c87be6f063158353d3b6f3ad"
+  },
+  "rejections": {
+    "quality: unnatural short phrase, redundant label or excessively narrow detail": 261,
+    "duplicate:local_core_zh_pinyin.tsv": 514,
+    "quality: repetitive parameter, unnatural phrase or overly narrow aviation detail": 239,
+    "quality: name-derived label, questionable everyday usage or specialist detail": 53,
+    "duplicate:standard_zh_pinyin.tsv": 89,
+    "quality: repetitive lamp parameter, uncommon fixture subtype or uncertain marketing label": 206,
+    "quality: overly narrow ornithology detail, uncommon species label or repetitive observation phrase": 231,
+    "probe_top9: zhiji absent from top nine; omit bird term rather than increase priority in crowded everyday homophone group": 1,
+    "probe_top9: shiji absent from top nine; existing homophone minimum 5500 prevents promotion": 1,
+    "probe_top9: yiyu absent from top nine; omit less common feather term rather than increase priority over established everyday homophones": 1,
+    "quality: repetitive design parameter, uncommon print jargon or unnatural phrase": 190
+  },
+  "whole_batch_withdrawals": [],
+  "status": "passed",
+  "coverage": {
+    "lexicon": {
+      "entries": 280417,
+      "distinct_words": 279919
+    },
+    "standard_characters": {
+      "一级 (1-3500)": {
+        "characters": 3500,
+        "typeable_by_standard_reading": 3500,
+        "percent": 100.0,
+        "single_entry_any_reading": 3500
+      },
+      "二级 (3501-6500)": {
+        "characters": 3000,
+        "typeable_by_standard_reading": 2997,
+        "percent": 99.9,
+        "single_entry_any_reading": 2997
+      },
+      "三级 (6501-8105)": {
+        "characters": 1605,
+        "typeable_by_standard_reading": 261,
+        "percent": 16.26,
+        "single_entry_any_reading": 267
+      }
+    },
+    "standard_characters_missing_examples": {
+      "一级 (1-3500)": [],
+      "二级 (3501-6500)": [
+        "𬉼(ou)",
+        "𠳐(bang)",
+        "𥻗(cha)"
+      ],
+      "三级 (6501-8105)": [
+        "尢(wang)",
+        "卬(ang)",
+        "𠙶(ou)",
+        "毌(guan)",
+        "邘(yu)",
+        "圢(ting)",
+        "伋(ji)",
+        "冮(gang)",
+        "氿(jiu)",
+        "汈(diao)",
+        "宄(gui)",
+        "𬣙(xu)",
+        "讱(ren)",
+        "扞(han)",
+        "圲(qian)",
+        "圫(tuo)",
+        "芏(du)",
+        "朳(ba)",
+        "朸(li)",
+        "𨙸(qi)",
+        "辿(chan)",
+        "伣(qian)",
+        "癿(bie)",
+        "犴(an/han)",
+        "冱(hu)",
+        "𬇕(wan)",
+        "汋(zhuo)",
+        "䜣(xin)",
+        "讻(xiong)",
+        "𬣞(zhu)",
+        "𬘓(xun)",
+        "纩(kuang)",
+        "玒(hong)",
+        "玓(di)",
+        "玘(qi)",
+        "玚(yang)",
+        "刬(chan)",
+        "𫭟(ou/qu)",
+        "坉(tun)",
+        "𫭢(lun)"
+      ]
+    },
+    "common_words": {
+      "top 1000": {
+        "words": 1000,
+        "in_lexicon": 999,
+        "percent": 99.9
+      },
+      "top 5000": {
+        "words": 5000,
+        "in_lexicon": 4900,
+        "percent": 98.0
+      },
+      "top 10000": {
+        "words": 10000,
+        "in_lexicon": 9567,
+        "percent": 95.67
+      },
+      "top 30000": {
+        "words": 30000,
+        "in_lexicon": 23385,
+        "percent": 77.95
+      },
+      "top 50000": {
+        "words": 50000,
+        "in_lexicon": 32409,
+        "percent": 64.82
+      },
+      "top 100000": {
+        "words": 100000,
+        "in_lexicon": 43819,
+        "percent": 43.82
+      }
+    },
+    "common_words_missing_examples": [
+      "甚么",
+      "洪山区",
+      "江夏区",
+      "本行政区域",
+      "袁承志",
+      "礼部",
+      "万公顷",
+      "胡秉宸",
+      "武昌区",
+      "李高成",
+      "鄂西",
+      "千步",
+      "郧阳",
+      "刑部",
+      "官军",
+      "陈家洛",
+      "职司",
+      "王琦瑶",
+      "万平方米",
+      "李莫愁",
+      "亲兵",
+      "江夏",
+      "十八年",
+      "马朝旭",
+      "大学士",
+      "行省",
+      "十五年",
+      "工部",
+      "万平方公里",
+      "适才",
+      "怎地",
+      "人口数",
+      "贡献者",
+      "王公",
+      "屈家岭",
+      "节度使",
+      "天鹅洲",
+      "亿立方米",
+      "欧阳锋",
+      "金殿",
+      "周伯通",
+      "明永乐",
+      "首辅",
+      "户部",
+      "解放区",
+      "中纺",
+      "义军",
+      "立法权",
+      "刘宗敏",
+      "琉璃瓦",
+      "清兵",
+      "湖广",
+      "福临",
+      "兵部",
+      "三藏",
+      "黄陂",
+      "极了",
+      "笔架山",
+      "文理学院",
+      "须弥座",
+      "池河",
+      "吏部",
+      "军马",
+      "丁能通",
+      "官家",
+      "二十年",
+      "老营",
+      "宋献策",
+      "国师",
+      "我会",
+      "起义军",
+      "子口",
+      "荆江",
+      "如果说",
+      "苏维埃政府",
+      "六部",
+      "黄依依",
+      "国徽",
+      "音乐堂",
+      "白嘉轩"
+    ],
+    "common_words_missing_but_typed": {
+      "words": 433,
+      "first_candidate": 136,
+      "within_nine": 282,
+      "percent_within_nine": 65.13
+    },
+    "running_text": {
+      "heldout_sentences.tsv": {
+        "lines": 4126,
+        "word_tokens": 13800,
+        "word_types": 7161,
+        "token_coverage_percent": 84.12,
+        "type_coverage_percent": 71.71,
+        "frequent_missing": [
+          "我会×11",
+          "萨米×8",
+          "教区×6",
+          "穿著×5",
+          "兰科×5",
+          "回家吧×4",
+          "和玛丽×4",
+          "乡试×4",
+          "神社×4",
+          "曾祖父×4",
+          "悬钩子×4",
+          "小檗×3",
+          "米纳斯吉拉斯州×3",
+          "登进士×3",
+          "瓷蟹×3",
+          "花为×3",
+          "鳗鲡×3",
+          "亚科×3",
+          "蛱蝶×3",
+          "维耶×3",
+          "这药×2",
+          "受够了×2",
+          "前有×2",
+          "二十年×2",
+          "我快×2",
+          "空房间×2",
+          "信神×2",
+          "谢谢您×2",
+          "无法形容×2",
+          "通晓×2",
+          "蓝线×2",
+          "他用×2",
+          "随著×2",
+          "十二个×2",
+          "非常高兴×2",
+          "玛莉×2",
+          "待在家里×2",
+          "神户×2",
+          "昨天上午×2",
+          "见证人×2"
+        ]
+      }
+    }
+  },
+  "repairs": [
+    {
+      "word": "石鸡",
+      "pinyin": "shiji",
+      "baseline_homophone_minimum": 5500,
+      "action": "omit individual word; absent from top nine and cannot raise above current band"
+    },
+    {
+      "word": "翼羽",
+      "pinyin": "yiyu",
+      "baseline_homophone_minimum": 6645,
+      "action": "omit less common term; no weight increase attempted"
+    },
+    {
+      "word": "雉鸡",
+      "pinyin": "zhiji",
+      "baseline_homophone_minimum": 6000,
+      "action": "omit bird term; no weight increase attempted"
+    }
+  ]
+}
