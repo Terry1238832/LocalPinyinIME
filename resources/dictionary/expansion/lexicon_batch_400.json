@@ -1,0 +1,55 @@
+{
+  "batch": "lexicon_batch_400",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "祝福语与日常问候补漏",
+  "author": "continuous-lexicon-author",
+  "review_scope": "One AI author reads every selected expression and full-pinyin key in context, then records positional character choices. Structural reconstruction is not an independent linguistic editor. Individually authored common vocabulary; no third-party lexicon or test-derived words.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 140,
+  "sha256": "6996902b98edde5896224a81d82521750f07150f9db8b1b9f09c39c0ae920e61",
+  "authoring_files_sha256": {
+    "lexicon_batch_400.authoring.json": "a9047e637fb5a57ea0f7779bbe4341427bb499050add32f1ba65e2715cb6b06f",
+    "batch400_authored_draft.txt": "e401e9547d771f9984cc1ad3418f6596f12c1d2f1d9ef7088a5757340b67a695",
+    "batch400_pronunciation_review.tsv": "a98847ff6135ebb95869c5f63c400f552db50cecfa6e30eb8ce402942cf6b372"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "6fb6c8c6ec6d74da0fbd9e169034b2d42f89e2880e1fcb3bb7c14081a759ddd7",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "b400_6000": 6000,
+    "b400_5500": 5500,
+    "b400_5000": 5000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "b400_5500": 140
+  },
+  "length_distribution": {
+    "4": 70,
+    "5": 13,
+    "6": 57
+  },
+  "authoring_rejections": [],
+  "mandatory_polyphone_reviews": 119,
+  "manual_pronunciation_overrides": {},
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 0,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}
