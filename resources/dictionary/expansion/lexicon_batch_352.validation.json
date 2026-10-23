@@ -1,0 +1,6602 @@
+{
+  "batch": "lexicon_batch_352",
+  "evaluation": "native_engine_candidate_coverage",
+  "evaluated_at_utc": "2026-10-23T18:20:02.182521+00:00",
+  "engine_sha256": "f386e80d11e8702d30292f79af26e7f43f879aeb68e65fa7679b117eef673734",
+  "resource_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "583adb8d51ce0751d42572217b91ad302185b1517991f0b614e4f69c73e69e23",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+    "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+    "continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e"
+  },
+  "frozen_batch_sha256": "7bd28748d93c16f93142b6134190ad72f609e881806b4129ff5ad1f8a5abbeb7",
+  "personal_data_isolated": true,
+  "expected_answers_learned": false,
+  "summary": {
+    "cases": 365,
+    "top1_correct": 333,
+    "top9_present": 365,
+    "top1_percent": 91.23,
+    "top9_percent": 100.0,
+    "character_error_rate": 0.0373,
+    "p50_lookup_ms": 4.146,
+    "p95_lookup_ms": 7.542,
+    "max_lookup_ms": 12.989,
+    "missing_from_top9_count": 0,
+    "missing_from_top9": [],
+    "max_returned_candidate_count": 9
+  },
+  "rows": [
+    {
+      "pinyin": "chongpai",
+      "expected": "重排",
+      "source": "5000",
+      "lookup_us": 3625,
+      "candidates": [
+        "重拍",
+        "重排",
+        "重派",
+        "重牌",
+        "冲派",
+        "冲拍",
+        "冲排",
+        "冲牌",
+        "冲"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "yijiao",
+      "expected": "一校",
+      "source": "5000",
+      "lookup_us": 5956,
+      "candidates": [
+        "一脚",
+        "移交",
+        "一角",
+        "一觉",
+        "衣角",
+        "一跤",
+        "椅脚",
+        "一校",
+        "一家"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "anxuchuban",
+      "expected": "按需出版",
+      "source": "5500",
+      "lookup_us": 4014,
+      "candidates": [
+        "按需出版",
+        "安许出版",
+        "案需出版",
+        "按序出版",
+        "安须出版",
+        "按须出版",
+        "按许出版",
+        "安徐出版",
+        "按需"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "anxuyinshua",
+      "expected": "按需印刷",
+      "source": "5500",
+      "lookup_us": 5111,
+      "candidates": [
+        "按需印刷",
+        "安许印刷",
+        "案需印刷",
+        "按序印刷",
+        "安徐印刷",
+        "按许印刷",
+        "安须印刷",
+        "按须印刷",
+        "按需"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "banquandaili",
+      "expected": "版权代理",
+      "source": "5500",
+      "lookup_us": 4885,
+      "candidates": [
+        "版权代理",
+        "版权带离",
+        "版权袋里",
+        "版权代里",
+        "版权代利",
+        "版权带里",
+        "版权大力",
+        "坂犬代理",
+        "版权"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "banquanjiaoyi",
+      "expected": "版权交易",
+      "source": "5500",
+      "lookup_us": 7618,
+      "candidates": [
+        "版权交易",
+        "版权教义",
+        "版权交椅",
+        "版权交以",
+        "坂犬交易",
+        "班全交易",
+        "办权交易",
+        "版权教以",
+        "版权"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "banquanqixian",
+      "expected": "版权期限",
+      "source": "5500",
+      "lookup_us": 7760,
+      "candidates": [
+        "版权期限",
+        "版权起线",
+        "版权起见",
+        "版权七线",
+        "版权起先",
+        "版权祁县",
+        "坂犬期限",
+        "版权气线",
+        "版权"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "banquanshuchu",
+      "expected": "版权输出",
+      "source": "5500",
+      "lookup_us": 4749,
+      "candidates": [
+        "版权输出",
+        "版权属出",
+        "版权书出",
+        "坂犬输出",
+        "版权属处",
+        "版权数出",
+        "版权数处",
+        "班全输出",
+        "版权"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "banquanxieyi",
+      "expected": "版权协议",
+      "source": "5500",
+      "lookup_us": 6781,
+      "candidates": [
+        "版权协议",
+        "版权谢意",
+        "办权协议",
+        "版权协以",
+        "班全协议",
+        "坂犬协议",
+        "版全协议",
+        "版权谢以",
+        "版权"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "banquanxuke",
+      "expected": "版权许可",
+      "source": "5500",
+      "lookup_us": 4553,
+      "candidates": [
+        "版权许可",
+        "版权徐克",
+        "办权许可",
+        "坂犬许可",
+        "版权许课",
+        "班全许可",
+        "版权许克",
+        "版权许科",
+        "版权"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "banquanyinjin",
+      "expected": "版权引进",
+      "source": "5500",
+      "lookup_us": 6422,
+      "candidates": [
+        "版权引进",
+        "版权音近",
+        "版权因近",
+        "版权引近",
+        "版权因金",
+        "办权引进",
+        "坂犬引进",
+        "版权因进",
+        "版权"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "banquanzhuanrang",
+      "expected": "版权转让",
+      "source": "5500",
+      "lookup_us": 5306,
+      "candidates": [
+        "版权转让",
+        "办权转让",
+        "坂犬转让",
+        "班全转让",
+        "半圈转让",
+        "版全转让",
+        "版权专让",
+        "班圈转让",
+        "版权"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "banshibianji",
+      "expected": "版式编辑",
+      "source": "5500",
+      "lookup_us": 5792,
+      "candidates": [
+        "版式编辑",
+        "办事编辑",
+        "班拾编辑",
+        "班是编辑",
+        "版是编辑",
+        "班时编辑",
+        "半时编辑",
+        "办事遍及",
+        "办事"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "banshui",
+      "expected": "版税",
+      "source": "5500",
+      "lookup_us": 1344,
+      "candidates": [
+        "版税",
+        "半水",
+        "班水",
+        "板说",
+        "办水",
+        "版水",
+        "班说",
+        "半说",
+        "半数"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "banshuijiesuan",
+      "expected": "版税结算",
+      "source": "5500",
+      "lookup_us": 6036,
+      "candidates": [
+        "版税结算",
+        "半水结算",
+        "班税结算",
+        "班水结算",
+        "班睡结算",
+        "半睡结算",
+        "班谁结算",
+        "半谁结算",
+        "版税"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "banshuilv",
+      "expected": "版税率",
+      "source": "5500",
+      "lookup_us": 2223,
+      "candidates": [
+        "版税率",
+        "班税率",
+        "半税率",
+        "办税率",
+        "板税率",
+        "般税率",
+        "斑税率",
+        "搬税率",
+        "版税"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bianjiao",
+      "expected": "编校",
+      "source": "5500",
+      "lookup_us": 5043,
+      "candidates": [
+        "变焦",
+        "边角",
+        "编校",
+        "便叫",
+        "便教",
+        "便觉",
+        "便交",
+        "便角",
+        "边夹"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "bianjifankui",
+      "expected": "编辑反馈",
+      "source": "5500",
+      "lookup_us": 5815,
+      "candidates": [
+        "编辑反馈",
+        "遍及反馈",
+        "边际反馈",
+        "便及反馈",
+        "便即反馈",
+        "扁基反馈",
+        "便机反馈",
+        "变基反馈",
+        "编辑"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bianjiguifan",
+      "expected": "编辑规范",
+      "source": "5500",
+      "lookup_us": 6449,
+      "candidates": [
+        "编辑规范",
+        "遍及规范",
+        "边际规范",
+        "便及规范",
+        "扁基规范",
+        "便即规范",
+        "变基规范",
+        "便计规范",
+        "编辑"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bianjijiagong",
+      "expected": "编辑加工",
+      "source": "5500",
+      "lookup_us": 5881,
+      "candidates": [
+        "编辑加工",
+        "遍及加工",
+        "编辑加共",
+        "编辑家共",
+        "编辑甲功",
+        "边际加工",
+        "编辑加公",
+        "编辑家工",
+        "编辑"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bianjijiaogao",
+      "expected": "编辑校稿",
+      "source": "5500",
+      "lookup_us": 8299,
+      "candidates": [
+        "编辑校稿",
+        "编辑较高",
+        "遍及较高",
+        "编辑叫高",
+        "边际较高",
+        "便计较高",
+        "编辑教高",
+        "便及较高",
+        "编辑"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bianjijihua",
+      "expected": "编辑计划",
+      "source": "5500",
+      "lookup_us": 5763,
+      "candidates": [
+        "编辑计划",
+        "遍及计划",
+        "编辑激化",
+        "边际计划",
+        "编辑挤化",
+        "扁基计划",
+        "编辑极化",
+        "便及计划",
+        "编辑"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bianjijindu",
+      "expected": "编辑进度",
+      "source": "5500",
+      "lookup_us": 6397,
+      "candidates": [
+        "编辑进度",
+        "编辑禁毒",
+        "遍及进度",
+        "边际进度",
+        "遍及禁毒",
+        "编辑进读",
+        "便激进度",
+        "扁基进度",
+        "编辑"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bianjiliucheng",
+      "expected": "编辑流程",
+      "source": "5500",
+      "lookup_us": 6755,
+      "candidates": [
+        "编辑流程",
+        "遍及流程",
+        "编辑六成",
+        "遍及六成",
+        "边际流程",
+        "扁基流程",
+        "变基流程",
+        "便及流程",
+        "编辑"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bianjishi",
+      "expected": "编辑室",
+      "source": "5500",
+      "lookup_us": 4164,
+      "candidates": [
+        "编辑室",
+        "编辑是",
+        "编辑时",
+        "编辑事",
+        "编辑市",
+        "遍及时",
+        "编辑使",
+        "编辑实",
+        "编辑"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bianjixiugai",
+      "expected": "编辑修改",
+      "source": "5500",
+      "lookup_us": 4681,
+      "candidates": [
+        "编辑修改",
+        "遍及修改",
+        "边际修改",
+        "便及修改",
+        "便即修改",
+        "扁基修改",
+        "便寄修改",
+        "变基修改",
+        "编辑"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bianxuan",
+      "expected": "编选",
+      "source": "5500",
+      "lookup_us": 3508,
+      "candidates": [
+        "编选",
+        "便选",
+        "边选",
+        "便宣",
+        "变选",
+        "扁选",
+        "便轩",
+        "便玄",
+        "便"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bianzhu",
+      "expected": "编注",
+      "source": "5500",
+      "lookup_us": 1689,
+      "candidates": [
+        "编著",
+        "编注",
+        "便主",
+        "便注",
+        "便住",
+        "变著",
+        "边住",
+        "便著",
+        "便"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "bianzhu",
+      "expected": "编著",
+      "source": "5500",
+      "lookup_us": 1813,
+      "candidates": [
+        "编著",
+        "编注",
+        "便主",
+        "便注",
+        "便住",
+        "变著",
+        "边住",
+        "便著",
+        "便"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biaohao",
+      "expected": "表号",
+      "source": "5500",
+      "lookup_us": 2341,
+      "candidates": [
+        "标号",
+        "表号",
+        "表好",
+        "标好",
+        "表豪",
+        "镖好",
+        "表浩",
+        "标豪",
+        "表"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "cankaowenxiangeshi",
+      "expected": "参考文献格式",
+      "source": "5500",
+      "lookup_us": 9569,
+      "candidates": [
+        "参考文献格式",
+        "参考文献各式",
+        "参考文献格是",
+        "参考文献各是",
+        "参考文献各市",
+        "参考文献个是",
+        "参考文献歌是",
+        "参考文献个事",
+        "参考"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "cehuabianji",
+      "expected": "策划编辑",
+      "source": "5500",
+      "lookup_us": 5261,
+      "candidates": [
+        "策划编辑",
+        "策划遍及",
+        "侧花编辑",
+        "策划边际",
+        "策划变基",
+        "策划变及",
+        "策划边机",
+        "策划边及",
+        "策划"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chahuaji",
+      "expected": "插画集",
+      "source": "5500",
+      "lookup_us": 2819,
+      "candidates": [
+        "插画集",
+        "插画及",
+        "插画技",
+        "插画机",
+        "插画记",
+        "插画计",
+        "插画基",
+        "查滑稽",
+        "插画"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "changpianxiaoshuoji",
+      "expected": "长篇小说集",
+      "source": "5500",
+      "lookup_us": 9370,
+      "candidates": [
+        "长篇小说集",
+        "唱片小说集",
+        "长篇小说记",
+        "长篇小说及",
+        "长篇小说机",
+        "长篇小说基",
+        "长篇小说吉",
+        "长篇小说级",
+        "唱片"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chatubianhao",
+      "expected": "插图编号",
+      "source": "5500",
+      "lookup_us": 4732,
+      "candidates": [
+        "插图编号",
+        "插图变好",
+        "差图编号",
+        "查突变好",
+        "茶突变好",
+        "查土编号",
+        "茶土编号",
+        "查突编号",
+        "插图"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chatuwenjian",
+      "expected": "插图文件",
+      "source": "5500",
+      "lookup_us": 5501,
+      "candidates": [
+        "插图文件",
+        "差图文件",
+        "插图稳健",
+        "查土文件",
+        "茶土文件",
+        "查突文件",
+        "查徒文件",
+        "茶突文件",
+        "插图"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chongban",
+      "expected": "重版",
+      "source": "5500",
+      "lookup_us": 1137,
+      "candidates": [
+        "重瓣",
+        "重办",
+        "重版",
+        "冲版",
+        "重半",
+        "重班",
+        "冲办",
+        "重板",
+        "冲"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "chongpaiban",
+      "expected": "重排版",
+      "source": "5500",
+      "lookup_us": 2352,
+      "candidates": [
+        "重排版",
+        "冲排版",
+        "重拍板",
+        "崇排版",
+        "充排版",
+        "重排班",
+        "虫排版",
+        "冲拍板",
+        "重拍"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chongyin",
+      "expected": "重印",
+      "source": "5500",
+      "lookup_us": 1120,
+      "candidates": [
+        "冲印",
+        "重印",
+        "重音",
+        "重因",
+        "冲因",
+        "崇印",
+        "重引",
+        "重银",
+        "冲"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "chuantongchuban",
+      "expected": "传统出版",
+      "source": "5500",
+      "lookup_us": 4947,
+      "candidates": [
+        "传统出版",
+        "串通出版",
+        "传统初版",
+        "传统除斑",
+        "传统初办",
+        "传统出半",
+        "传统出办",
+        "传统除版",
+        "传统"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chubanben",
+      "expected": "初版本",
+      "source": "5500",
+      "lookup_us": 2104,
+      "candidates": [
+        "初版本",
+        "出版本",
+        "除版本",
+        "处版本",
+        "楚版本",
+        "触版本",
+        "储版本",
+        "出版笨",
+        "出版"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chubanbianji",
+      "expected": "出版编辑",
+      "source": "5500",
+      "lookup_us": 6381,
+      "candidates": [
+        "出版编辑",
+        "初版编辑",
+        "除斑编辑",
+        "出版遍及",
+        "出版边际",
+        "出版变基",
+        "除班编辑",
+        "初办编辑",
+        "出版"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chubandanwei",
+      "expected": "出版单位",
+      "source": "5500",
+      "lookup_us": 4511,
+      "candidates": [
+        "出版单位",
+        "初办单位",
+        "出版但未",
+        "除办单位",
+        "初版单位",
+        "出版但为",
+        "除斑单位",
+        "出版单为",
+        "出版"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chubandi",
+      "expected": "出版地",
+      "source": "5500",
+      "lookup_us": 2786,
+      "candidates": [
+        "出版地",
+        "出版的",
+        "出版第",
+        "出版低",
+        "出版底",
+        "出版迪",
+        "出版滴",
+        "出版蒂",
+        "出版"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chubanjigou",
+      "expected": "出版机构",
+      "source": "5500",
+      "lookup_us": 3695,
+      "candidates": [
+        "出版机构",
+        "初办机构",
+        "除办机构",
+        "除班机构",
+        "除斑机构",
+        "出班机构",
+        "初版机构",
+        "出版集狗",
+        "出版"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chubannianyue",
+      "expected": "出版年月",
+      "source": "5500",
+      "lookup_us": 6096,
+      "candidates": [
+        "出版年月",
+        "出版年约",
+        "出半年约",
+        "触半年岳",
+        "出版年说",
+        "除半年约",
+        "出版年余额",
+        "出版年越",
+        "出版"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chubanquan",
+      "expected": "出版权",
+      "source": "5500",
+      "lookup_us": 4126,
+      "candidates": [
+        "出版权",
+        "初版权",
+        "出版全",
+        "除版权",
+        "出版圈",
+        "处版权",
+        "楚版权",
+        "出版泉",
+        "出版"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chubanriqi",
+      "expected": "出版日期",
+      "source": "5500",
+      "lookup_us": 2592,
+      "candidates": [
+        "出版日期",
+        "出版日起",
+        "初办日期",
+        "出半日期",
+        "除办日期",
+        "除斑日期",
+        "除半日期",
+        "初版日期",
+        "出版"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chubanshijian",
+      "expected": "出版时间",
+      "source": "5500",
+      "lookup_us": 7469,
+      "candidates": [
+        "出版时间",
+        "出版事件",
+        "出版实践",
+        "出版世间",
+        "除班时间",
+        "出版尸检",
+        "出班时间",
+        "初办事件",
+        "出版"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chubanshouquan",
+      "expected": "出版授权",
+      "source": "5500",
+      "lookup_us": 4366,
+      "candidates": [
+        "出版授权",
+        "除颁授权",
+        "除斑授权",
+        "初版授权",
+        "出半授权",
+        "除班授权",
+        "初办授权",
+        "出版手权",
+        "出版"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chubanxieyi",
+      "expected": "出版协议",
+      "source": "5500",
+      "lookup_us": 5995,
+      "candidates": [
+        "出版协议",
+        "出版谢意",
+        "除斑协议",
+        "初版协议",
+        "出版谢以",
+        "出版谢逸",
+        "出半协议",
+        "初办协议",
+        "出版"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chubanxuke",
+      "expected": "出版许可",
+      "source": "5500",
+      "lookup_us": 3516,
+      "candidates": [
+        "出版许可",
+        "出版徐克",
+        "除斑许可",
+        "初版许可",
+        "出半许可",
+        "出版许课",
+        "出版许克",
+        "初办许可",
+        "出版"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chubanzhe",
+      "expected": "出版者",
+      "source": "5500",
+      "lookup_us": 2329,
+      "candidates": [
+        "出版者",
+        "出版这",
+        "出版着",
+        "出版折",
+        "出版哲",
+        "除伴着",
+        "出版遮",
+        "出版浙",
+        "出版"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chujiao",
+      "expected": "初校",
+      "source": "5500",
+      "lookup_us": 3175,
+      "candidates": [
+        "触角",
+        "初校",
+        "出脚",
+        "除交",
+        "除叫",
+        "出教",
+        "出交",
+        "除胶",
+        "出价"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "chunwenzigao",
+      "expected": "纯文字稿",
+      "source": "5500",
+      "lookup_us": 3788,
+      "candidates": [
+        "纯文字稿",
+        "纯文字高",
+        "春文字稿",
+        "春文字高",
+        "纯文字搞",
+        "纯文字镐",
+        "春蚊子高",
+        "纯蚊子高",
+        "春"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chushenyijian",
+      "expected": "初审意见",
+      "source": "5500",
+      "lookup_us": 7339,
+      "candidates": [
+        "初审意见",
+        "出身意见",
+        "出身一件",
+        "出身一间",
+        "出身一见",
+        "出神意见",
+        "出身一剑",
+        "出审意见",
+        "出身"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "danxingben",
+      "expected": "单行本",
+      "source": "5500",
+      "lookup_us": 2526,
+      "candidates": [
+        "单行本",
+        "但行本",
+        "但性本",
+        "但星本",
+        "但兴本",
+        "单行笨",
+        "但型本",
+        "单行奔",
+        "单行"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "daoduben",
+      "expected": "导读本",
+      "source": "5500",
+      "lookup_us": 1833,
+      "candidates": [
+        "导读本",
+        "到读本",
+        "道读本",
+        "倒读本",
+        "刀读本",
+        "岛读本",
+        "盗读本",
+        "稻读本",
+        "导读"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dazhongduwu",
+      "expected": "大众读物",
+      "source": "5500",
+      "lookup_us": 3850,
+      "candidates": [
+        "大众读物",
+        "大中读物",
+        "大中毒物",
+        "大众独舞",
+        "大众毒物",
+        "打中读物",
+        "大众都无",
+        "大众度五",
+        "大众"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dazigao",
+      "expected": "打字稿",
+      "source": "5500",
+      "lookup_us": 2210,
+      "candidates": [
+        "打字稿",
+        "打字高",
+        "大字高",
+        "搭子高",
+        "大字稿",
+        "打字搞",
+        "搭子搞",
+        "大字搞",
+        "打字"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dianzichuban",
+      "expected": "电子出版",
+      "source": "5500",
+      "lookup_us": 4852,
+      "candidates": [
+        "电子出版",
+        "点子出版",
+        "电子除斑",
+        "电子初版",
+        "点字出版",
+        "电子出半",
+        "点自出版",
+        "电子出办",
+        "电子"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dianzigao",
+      "expected": "电子稿",
+      "source": "5500",
+      "lookup_us": 3009,
+      "candidates": [
+        "电子稿",
+        "电子高",
+        "电子搞",
+        "电子告",
+        "电子糕",
+        "电子膏",
+        "点子高",
+        "电子镐",
+        "电子"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dingshudan",
+      "expected": "订书单",
+      "source": "5500",
+      "lookup_us": 3763,
+      "candidates": [
+        "订书单",
+        "定书单",
+        "丁书单",
+        "顶书单",
+        "定输单",
+        "定书但",
+        "鼎书单",
+        "丁输单",
+        "定"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "erjiao",
+      "expected": "二校",
+      "source": "5500",
+      "lookup_us": 2776,
+      "candidates": [
+        "二角",
+        "二校",
+        "而教",
+        "而交",
+        "而叫",
+        "而较",
+        "而校",
+        "而觉",
+        "耳夹"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "erjiaoyang",
+      "expected": "二校样",
+      "source": "5500",
+      "lookup_us": 5559,
+      "candidates": [
+        "二校样",
+        "而教养",
+        "而骄阳",
+        "二教养",
+        "而校样",
+        "儿教养",
+        "尔教养",
+        "二骄阳",
+        "二角"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ertongduwu",
+      "expected": "儿童读物",
+      "source": "5500",
+      "lookup_us": 3384,
+      "candidates": [
+        "儿童读物",
+        "儿童独舞",
+        "儿童毒物",
+        "而同读物",
+        "儿童都无",
+        "儿童读无",
+        "儿童读五",
+        "儿童读舞",
+        "儿童"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangtanji",
+      "expected": "访谈集",
+      "source": "5500",
+      "lookup_us": 3259,
+      "candidates": [
+        "访谈集",
+        "访谈及",
+        "访谈记",
+        "访谈机",
+        "方谈及",
+        "访谈纪",
+        "访谈计",
+        "访谈几",
+        "访谈"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fanxiugao",
+      "expected": "返修稿",
+      "source": "5500",
+      "lookup_us": 3400,
+      "candidates": [
+        "返修稿",
+        "返修高",
+        "翻修高",
+        "反修高",
+        "返修告",
+        "翻修告",
+        "凡秀高",
+        "反修告",
+        "返修"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fanxiuyijian",
+      "expected": "返修意见",
+      "source": "5500",
+      "lookup_us": 8032,
+      "candidates": [
+        "返修意见",
+        "范修一见",
+        "翻修意见",
+        "凡秀意见",
+        "返修一件",
+        "翻修一件",
+        "凡秀一件",
+        "反秀意见",
+        "返修"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fanyichuban",
+      "expected": "翻译出版",
+      "source": "5500",
+      "lookup_us": 5574,
+      "candidates": [
+        "翻译出版",
+        "翻译出半",
+        "翻译初版",
+        "翻译出办",
+        "翻译除斑",
+        "反已出版",
+        "樊一出版",
+        "翻一出版",
+        "翻译"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fanyitushu",
+      "expected": "翻译图书",
+      "source": "5500",
+      "lookup_us": 2982,
+      "candidates": [
+        "翻译图书",
+        "范意图书",
+        "翻译涂枢",
+        "凡意图书",
+        "翻译兔属",
+        "反义图书",
+        "樊一图书",
+        "翻译图树",
+        "翻译"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "faxingdanwei",
+      "expected": "发行单位",
+      "source": "5500",
+      "lookup_us": 4552,
+      "candidates": [
+        "发行单位",
+        "发型单位",
+        "发行但未",
+        "发行单为",
+        "法性单位",
+        "发行但为",
+        "法行单位",
+        "法兴单位",
+        "发行"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "faxinghetong",
+      "expected": "发行合同",
+      "source": "5500",
+      "lookup_us": 3281,
+      "candidates": [
+        "发行合同",
+        "发型合同",
+        "法性合同",
+        "发行和通",
+        "发行河童",
+        "发行和同",
+        "发行和痛",
+        "发性合同",
+        "发行"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "faxingjihua",
+      "expected": "发行计划",
+      "source": "5500",
+      "lookup_us": 4880,
+      "candidates": [
+        "发行计划",
+        "发型计划",
+        "发行激化",
+        "发行计画",
+        "法行计划",
+        "法性计划",
+        "法兴计划",
+        "发星计划",
+        "发行"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "faxingqudao",
+      "expected": "发行渠道",
+      "source": "5500",
+      "lookup_us": 4464,
+      "candidates": [
+        "发行渠道",
+        "发型渠道",
+        "发行去到",
+        "法性渠道",
+        "法兴渠道",
+        "发行区到",
+        "发型去到",
+        "法兴趣到",
+        "发行"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "faxingwangdian",
+      "expected": "发行网点",
+      "source": "5500",
+      "lookup_us": 5613,
+      "candidates": [
+        "发行网点",
+        "发型网点",
+        "发行网店",
+        "发型网店",
+        "法兴旺店",
+        "法性网点",
+        "法兴网点",
+        "发行旺店",
+        "发行"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "feidujiashouquan",
+      "expected": "非独家授权",
+      "source": "5500",
+      "lookup_us": 6289,
+      "candidates": [
+        "非独家授权",
+        "非度假授权",
+        "飞度假授权",
+        "费独家授权",
+        "飞度加授权",
+        "非都加授权",
+        "非独家收权",
+        "非独家受全",
+        "飞度"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fushenyijian",
+      "expected": "复审意见",
+      "source": "5500",
+      "lookup_us": 7933,
+      "candidates": [
+        "复审意见",
+        "俯身意见",
+        "浮申意见",
+        "俯身一件",
+        "复审一件",
+        "傅申意见",
+        "弗什意见",
+        "俯身一间",
+        "复审"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fuyingao",
+      "expected": "付印稿",
+      "source": "5500",
+      "lookup_us": 4701,
+      "candidates": [
+        "付印稿",
+        "福音高",
+        "复印稿",
+        "辅音高",
+        "富音高",
+        "副音高",
+        "复印高",
+        "复音高",
+        "浮盈"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fuyinqianjiaodui",
+      "expected": "付印前校对",
+      "source": "5500",
+      "lookup_us": 10758,
+      "candidates": [
+        "福音前校对",
+        "福音钱校对",
+        "复印前校对",
+        "福音千校对",
+        "福音签校对",
+        "福音前教对",
+        "复印钱校对",
+        "付印前校对",
+        "复印"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "fuzhubian",
+      "expected": "副主编",
+      "source": "5500",
+      "lookup_us": 3801,
+      "candidates": [
+        "副主编",
+        "辅助变",
+        "辅助边",
+        "辅助便",
+        "辅助编",
+        "幅主编",
+        "辅助辩",
+        "福主编",
+        "辅助"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gaiding",
+      "expected": "改订",
+      "source": "5500",
+      "lookup_us": 1000,
+      "candidates": [
+        "改订",
+        "该定",
+        "该顶",
+        "该订",
+        "该丁",
+        "该町",
+        "该鼎",
+        "改定",
+        "改底"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gaixieben",
+      "expected": "改写本",
+      "source": "5500",
+      "lookup_us": 2299,
+      "candidates": [
+        "改写本",
+        "改写笨",
+        "改写奔",
+        "该写本",
+        "该协本",
+        "该血本",
+        "改邪本",
+        "改写苯",
+        "改写"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gaochoubiaozhun",
+      "expected": "稿酬标准",
+      "source": "5500",
+      "lookup_us": 4264,
+      "candidates": [
+        "稿酬标准",
+        "高抽标准",
+        "高臭标准",
+        "高丑标准",
+        "高筹标准",
+        "高愁标准",
+        "高仇标准",
+        "搞抽标准",
+        "稿酬"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gaochoufafang",
+      "expected": "稿酬发放",
+      "source": "5500",
+      "lookup_us": 3172,
+      "candidates": [
+        "稿酬发放",
+        "高抽发放",
+        "高臭发放",
+        "高丑发放",
+        "高筹发放",
+        "高愁发放",
+        "高仇发放",
+        "搞抽发放",
+        "稿酬"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gaochoujisuan",
+      "expected": "稿酬计算",
+      "source": "5500",
+      "lookup_us": 3527,
+      "candidates": [
+        "稿酬计算",
+        "高抽计算",
+        "高酬计算",
+        "高臭计算",
+        "高丑计算",
+        "高筹计算",
+        "高愁计算",
+        "高仇计算",
+        "稿酬"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gaochouzhifu",
+      "expected": "稿酬支付",
+      "source": "5500",
+      "lookup_us": 3815,
+      "candidates": [
+        "稿酬支付",
+        "高抽支付",
+        "稿酬制服",
+        "高臭支付",
+        "高丑支付",
+        "高筹支付",
+        "高愁支付",
+        "稿酬之父",
+        "稿酬"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gaojianbiaoti",
+      "expected": "稿件标题",
+      "source": "5500",
+      "lookup_us": 7440,
+      "candidates": [
+        "稿件标题",
+        "高见标题",
+        "高剑标题",
+        "高件标题",
+        "高健标题",
+        "高建标题",
+        "高间标题",
+        "搞间标题",
+        "稿件"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gaojianchatu",
+      "expected": "稿件插图",
+      "source": "5500",
+      "lookup_us": 5255,
+      "candidates": [
+        "稿件插图",
+        "高见插图",
+        "高剑插图",
+        "高检查图",
+        "高检查土",
+        "高检查兔",
+        "高建插图",
+        "高检察图",
+        "稿件"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gaojianchushen",
+      "expected": "稿件初审",
+      "source": "5500",
+      "lookup_us": 6576,
+      "candidates": [
+        "稿件初审",
+        "稿件出身",
+        "稿件出神",
+        "高见出身",
+        "高剑出身",
+        "高检出身",
+        "高间出身",
+        "高建出身",
+        "稿件"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gaojiandengji",
+      "expected": "稿件登记",
+      "source": "5500",
+      "lookup_us": 5980,
+      "candidates": [
+        "稿件登记",
+        "稿件等级",
+        "稿件登基",
+        "稿件登机",
+        "高见登记",
+        "高剑登记",
+        "稿件登计",
+        "高见等级",
+        "稿件"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gaojianfushen",
+      "expected": "稿件复审",
+      "source": "5500",
+      "lookup_us": 6757,
+      "candidates": [
+        "稿件复审",
+        "高剑父神",
+        "高剑父深",
+        "高剑父身",
+        "高剑父什",
+        "稿件俯身",
+        "稿件副身",
+        "高剑父审",
+        "高剑父"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gaojiangeshi",
+      "expected": "稿件格式",
+      "source": "5500",
+      "lookup_us": 7340,
+      "candidates": [
+        "稿件格式",
+        "高间隔时",
+        "稿件各式",
+        "高见格式",
+        "搞间隔时",
+        "高剑格式",
+        "稿件各是",
+        "稿件各市",
+        "稿件"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gaojianguanjianci",
+      "expected": "稿件关键词",
+      "source": "5500",
+      "lookup_us": 12989,
+      "candidates": [
+        "稿件关键词",
+        "高见关键词",
+        "稿件关键次",
+        "稿件关键此",
+        "稿件关键辞",
+        "稿件关键差",
+        "稿件关键刺",
+        "稿件关键兹",
+        "稿件"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gaojianjiagong",
+      "expected": "稿件加工",
+      "source": "5500",
+      "lookup_us": 6465,
+      "candidates": [
+        "稿件加工",
+        "高见加工",
+        "高剑加工",
+        "高间加工",
+        "稿件加共",
+        "高健加工",
+        "高建加工",
+        "稿件夹共",
+        "稿件"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gaojianjiegou",
+      "expected": "稿件结构",
+      "source": "5500",
+      "lookup_us": 7271,
+      "candidates": [
+        "稿件结构",
+        "高见结构",
+        "高剑结构",
+        "高建结构",
+        "高间结构",
+        "高检结构",
+        "高健结构",
+        "高减结构",
+        "稿件"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gaojianjieshou",
+      "expected": "稿件接收",
+      "source": "5500",
+      "lookup_us": 7142,
+      "candidates": [
+        "稿件接收",
+        "稿件接受",
+        "稿件接手",
+        "高见接受",
+        "高剑接受",
+        "高间接受",
+        "搞检接受",
+        "高见接收",
+        "稿件"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gaojianneirong",
+      "expected": "稿件内容",
+      "source": "5500",
+      "lookup_us": 5183,
+      "candidates": [
+        "稿件内容",
+        "高见内容",
+        "高建内容",
+        "高剑内容",
+        "高件内容",
+        "高间内容",
+        "搞建内容",
+        "高健内容",
+        "稿件"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gaojianpianfu",
+      "expected": "稿件篇幅",
+      "source": "5500",
+      "lookup_us": 6753,
+      "candidates": [
+        "稿件篇幅",
+        "高见篇幅",
+        "高剑篇幅",
+        "高建篇幅",
+        "高健篇幅",
+        "高间篇幅",
+        "稿件片服",
+        "稿件片夫",
+        "稿件"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gaojianshenyue",
+      "expected": "稿件审阅",
+      "source": "5500",
+      "lookup_us": 7867,
+      "candidates": [
+        "稿件审阅",
+        "高健身约",
+        "稿件申说",
+        "高健身说",
+        "高健身月",
+        "稿件沈约",
+        "高健身越",
+        "高见审阅",
+        "稿件"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gaojianzhaiyao",
+      "expected": "稿件摘要",
+      "source": "5500",
+      "lookup_us": 7008,
+      "candidates": [
+        "稿件摘要",
+        "高见摘要",
+        "高剑摘要",
+        "高建摘要",
+        "高健摘要",
+        "高间摘要",
+        "高检摘要",
+        "高渐摘要",
+        "稿件"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gaojianzhongshen",
+      "expected": "稿件终审",
+      "source": "5500",
+      "lookup_us": 5779,
+      "candidates": [
+        "稿件终审",
+        "稿件终身",
+        "稿件重申",
+        "稿件重审",
+        "稿件众神",
+        "高见终身",
+        "高剑终身",
+        "稿件众深",
+        "稿件"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gaoyue",
+      "expected": "稿约",
+      "source": "5500",
+      "lookup_us": 3047,
+      "candidates": [
+        "稿约",
+        "高约",
+        "皋月",
+        "高月",
+        "高说",
+        "高乐",
+        "高越",
+        "搞约",
+        "高于"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "hezuochuban",
+      "expected": "合作出版",
+      "source": "5500",
+      "lookup_us": 3782,
+      "candidates": [
+        "合作出版",
+        "和做出版",
+        "和作出版",
+        "何做出版",
+        "合作出半",
+        "合作出办",
+        "合作出班",
+        "合作除斑",
+        "合作"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huibianben",
+      "expected": "汇编本",
+      "source": "5500",
+      "lookup_us": 2872,
+      "candidates": [
+        "汇编本",
+        "会变本",
+        "会变笨",
+        "会变奔",
+        "汇编笨",
+        "汇编奔",
+        "会变苯",
+        "会便本",
+        "汇编"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiaodingban",
+      "expected": "校订版",
+      "source": "5500",
+      "lookup_us": 4176,
+      "candidates": [
+        "校订版",
+        "叫定版",
+        "叫订版",
+        "交订版",
+        "较定版",
+        "叫定办",
+        "教定版",
+        "交定版",
+        "校订"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiaoduibianji",
+      "expected": "校对编辑",
+      "source": "5500",
+      "lookup_us": 6004,
+      "candidates": [
+        "校对编辑",
+        "叫对编辑",
+        "叫队编辑",
+        "校队编辑",
+        "叫碓编辑",
+        "叫堆编辑",
+        "校对遍及",
+        "校对边际",
+        "校对"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiaoduigao",
+      "expected": "校对稿",
+      "source": "5500",
+      "lookup_us": 3439,
+      "candidates": [
+        "校对稿",
+        "校对高",
+        "叫对高",
+        "教对高",
+        "校对搞",
+        "较对高",
+        "校对告",
+        "交对高",
+        "校对"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiaofushu",
+      "expected": "教辅书",
+      "source": "5500",
+      "lookup_us": 3237,
+      "candidates": [
+        "教辅书",
+        "教父书",
+        "教父数",
+        "交付数",
+        "叫附属",
+        "教父属",
+        "交付书",
+        "教父树",
+        "交付"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiaogao",
+      "expected": "交稿",
+      "source": "5500",
+      "lookup_us": 1940,
+      "candidates": [
+        "较高",
+        "交稿",
+        "叫高",
+        "教高",
+        "交高",
+        "角高",
+        "脚高",
+        "校高",
+        "叫"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "jiaogaogeshi",
+      "expected": "交稿格式",
+      "source": "5500",
+      "lookup_us": 4729,
+      "candidates": [
+        "交稿格式",
+        "较高格式",
+        "较高各式",
+        "较高歌是",
+        "较高个是",
+        "较高个事",
+        "较高个时",
+        "较高歌时",
+        "较高"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiaogaoriqi",
+      "expected": "交稿日期",
+      "source": "5500",
+      "lookup_us": 3577,
+      "candidates": [
+        "交稿日期",
+        "较高日期",
+        "较高日起",
+        "叫稿日期",
+        "叫高日期",
+        "叫告日期",
+        "较告日期",
+        "叫告日起",
+        "较高"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiaogaoshijian",
+      "expected": "交稿时间",
+      "source": "5500",
+      "lookup_us": 9113,
+      "candidates": [
+        "交稿时间",
+        "较高时间",
+        "较高事件",
+        "较高实践",
+        "较高世间",
+        "叫告时间",
+        "叫高时间",
+        "叫高事件",
+        "较高"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiaogaoyanqi",
+      "expected": "交稿延期",
+      "source": "5500",
+      "lookup_us": 5483,
+      "candidates": [
+        "交稿延期",
+        "较高延期",
+        "叫高延期",
+        "较高烟气",
+        "叫告延期",
+        "叫搞延期",
+        "较告延期",
+        "叫稿延期",
+        "较高"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiaogaoyaoqiu",
+      "expected": "交稿要求",
+      "source": "5500",
+      "lookup_us": 5930,
+      "candidates": [
+        "交稿要求",
+        "较高要求",
+        "叫高要求",
+        "叫告要求",
+        "较告要求",
+        "较高要球",
+        "叫搞要求",
+        "叫稿要求",
+        "较高"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiaokan",
+      "expected": "校勘",
+      "source": "5500",
+      "lookup_us": 2008,
+      "candidates": [
+        "校勘",
+        "叫看",
+        "角看",
+        "较看",
+        "交看",
+        "脚看",
+        "教看",
+        "胶看",
+        "交卡"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiaokanben",
+      "expected": "校勘本",
+      "source": "5500",
+      "lookup_us": 2209,
+      "candidates": [
+        "校勘本",
+        "叫看本",
+        "较看本",
+        "角看本",
+        "交看本",
+        "脚看本",
+        "教看本",
+        "胶看本",
+        "校勘"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiaozhu",
+      "expected": "校注",
+      "source": "5500",
+      "lookup_us": 1995,
+      "candidates": [
+        "浇筑",
+        "教主",
+        "叫住",
+        "脚注",
+        "校注",
+        "浇铸",
+        "交猪",
+        "角逐",
+        "叫"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "jiayin",
+      "expected": "加印",
+      "source": "5500",
+      "lookup_us": 2825,
+      "candidates": [
+        "佳音",
+        "加印",
+        "架因",
+        "家因",
+        "加因",
+        "家银",
+        "家音",
+        "家印",
+        "加以"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "jibengaochou",
+      "expected": "基本稿酬",
+      "source": "5500",
+      "lookup_us": 3999,
+      "candidates": [
+        "基本稿酬",
+        "基本高愁",
+        "基本高臭",
+        "基本高仇",
+        "基本高筹",
+        "基本高丑",
+        "基本高抽",
+        "几本稿酬",
+        "基本"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jinianban",
+      "expected": "纪念版",
+      "source": "5500",
+      "lookup_us": 4795,
+      "candidates": [
+        "纪念版",
+        "纪念半",
+        "几年半",
+        "纪念办",
+        "纪念班",
+        "纪念板",
+        "几年班",
+        "几年版",
+        "几年"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lianhechuban",
+      "expected": "联合出版",
+      "source": "5500",
+      "lookup_us": 4992,
+      "candidates": [
+        "联合出版",
+        "连和出版",
+        "联合出半",
+        "联和出版",
+        "联合出办",
+        "联合除斑",
+        "联合初版",
+        "联合出班",
+        "联合"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "maiduangaochou",
+      "expected": "买断稿酬",
+      "source": "5500",
+      "lookup_us": 5355,
+      "candidates": [
+        "买断稿酬",
+        "买断高愁",
+        "买断高臭",
+        "买断高仇",
+        "买断高筹",
+        "买断高丑",
+        "买断高抽",
+        "买断告愁",
+        "买断"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meishubianji",
+      "expected": "美术编辑",
+      "source": "5500",
+      "lookup_us": 5008,
+      "candidates": [
+        "美术编辑",
+        "没熟编辑",
+        "美属编辑",
+        "美术遍及",
+        "没数编辑",
+        "没书编辑",
+        "梅属编辑",
+        "美术边际",
+        "美术"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "neishenyijian",
+      "expected": "内审意见",
+      "source": "5500",
+      "lookup_us": 6131,
+      "candidates": [
+        "内审意见",
+        "那神意见",
+        "那什意见",
+        "那身意见",
+        "那审意见",
+        "那神一件",
+        "内身意见",
+        "那深意见",
+        "内审"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "neishenzhuanjia",
+      "expected": "内审专家",
+      "source": "5500",
+      "lookup_us": 5197,
+      "candidates": [
+        "内审专家",
+        "那肾专家",
+        "那神专家",
+        "那什专家",
+        "那深专家",
+        "内深专家",
+        "内神专家",
+        "内申专家",
+        "内审"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "paibanbianji",
+      "expected": "排版编辑",
+      "source": "5500",
+      "lookup_us": 4406,
+      "candidates": [
+        "排版编辑",
+        "排班编辑",
+        "拍板编辑",
+        "排版遍及",
+        "拍版编辑",
+        "排版边际",
+        "拍班编辑",
+        "拍办编辑",
+        "排版"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "paibangao",
+      "expected": "排版稿",
+      "source": "5500",
+      "lookup_us": 2750,
+      "candidates": [
+        "排版稿",
+        "排版高",
+        "排班高",
+        "排版搞",
+        "拍板高",
+        "排版告",
+        "排版糕",
+        "排版膏",
+        "排版"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "pingzhuben",
+      "expected": "评注本",
+      "source": "5500",
+      "lookup_us": 1654,
+      "candidates": [
+        "评注本",
+        "凭著本",
+        "屏住本",
+        "凭著笨",
+        "凭著奔",
+        "平主本",
+        "平逐本",
+        "平注本",
+        "平"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "pujiduwu",
+      "expected": "普及读物",
+      "source": "5500",
+      "lookup_us": 3918,
+      "candidates": [
+        "普及读物",
+        "普及毒物",
+        "普及独舞",
+        "普及读无",
+        "普及读五",
+        "普及读舞",
+        "普及读屋",
+        "普及读武",
+        "普及"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qianmingban",
+      "expected": "签名版",
+      "source": "5500",
+      "lookup_us": 3962,
+      "candidates": [
+        "签名版",
+        "签名办",
+        "签名半",
+        "千名办",
+        "千名半",
+        "千名版",
+        "签名班",
+        "千名班",
+        "签名"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qianzengben",
+      "expected": "签赠本",
+      "source": "5500",
+      "lookup_us": 2039,
+      "candidates": [
+        "签赠本",
+        "前曾本",
+        "前增本",
+        "前曾笨",
+        "前曾奔",
+        "钱曾本",
+        "钱增本",
+        "千曾本",
+        "谴责"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinggao",
+      "expected": "清稿",
+      "source": "5500",
+      "lookup_us": 1285,
+      "candidates": [
+        "清高",
+        "清稿",
+        "请告",
+        "请高",
+        "请搞",
+        "情高",
+        "青高",
+        "请稿",
+        "晴"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "qingshaonianduwu",
+      "expected": "青少年读物",
+      "source": "5500",
+      "lookup_us": 5476,
+      "candidates": [
+        "青少年读物",
+        "青少年独舞",
+        "青少年度五",
+        "青少年毒物",
+        "青少年度无",
+        "青少年度武",
+        "青少年都无",
+        "青少年度物",
+        "青少年"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "sanjiao",
+      "expected": "三校",
+      "source": "5500",
+      "lookup_us": 4191,
+      "candidates": [
+        "三角",
+        "三校",
+        "三脚",
+        "三叫",
+        "三教",
+        "三交",
+        "三较",
+        "三觉",
+        "三家"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "sanjiaoyang",
+      "expected": "三校样",
+      "source": "5500",
+      "lookup_us": 6271,
+      "candidates": [
+        "三校样",
+        "三角阳",
+        "三角养",
+        "三角样",
+        "三教养",
+        "三角扬",
+        "三角羊",
+        "三角洋",
+        "三角"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "sanshen",
+      "expected": "三审",
+      "source": "5500",
+      "lookup_us": 1527,
+      "candidates": [
+        "三审",
+        "三深",
+        "三神",
+        "三身",
+        "三什",
+        "三申",
+        "三甚",
+        "三参",
+        "散射"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "sanshensanjiao",
+      "expected": "三审三校",
+      "source": "5500",
+      "lookup_us": 5669,
+      "candidates": [
+        "三审三校",
+        "三审三角",
+        "三深三角",
+        "三身三角",
+        "三神三角",
+        "三沈三角",
+        "三申三角",
+        "三什三角",
+        "三审"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "sanwenji",
+      "expected": "散文集",
+      "source": "5500",
+      "lookup_us": 1894,
+      "candidates": [
+        "散文集",
+        "散文及",
+        "三问及",
+        "散文记",
+        "散文机",
+        "散文基",
+        "三文集",
+        "散文姬",
+        "散文"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "seyang",
+      "expected": "色样",
+      "source": "5500",
+      "lookup_us": 1004,
+      "candidates": [
+        "色样",
+        "色羊",
+        "塞扬",
+        "色阳",
+        "塞阳",
+        "塞养",
+        "色洋",
+        "塞样",
+        "色"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangjidayang",
+      "expected": "上机打样",
+      "source": "5500",
+      "lookup_us": 4645,
+      "candidates": [
+        "上机打样",
+        "上级大洋",
+        "商机大洋",
+        "伤及大洋",
+        "上及大洋",
+        "上集大洋",
+        "上机大洋",
+        "商机打样",
+        "上级"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shejigao",
+      "expected": "设计稿",
+      "source": "5500",
+      "lookup_us": 1850,
+      "candidates": [
+        "设计稿",
+        "涉及高",
+        "设计高",
+        "射击高",
+        "设计搞",
+        "设计告",
+        "涉及搞",
+        "涉及告",
+        "设计"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shendinggao",
+      "expected": "审定稿",
+      "source": "5500",
+      "lookup_us": 2563,
+      "candidates": [
+        "审定稿",
+        "沈定稿",
+        "审定高",
+        "神定稿",
+        "深定稿",
+        "身定稿",
+        "申定稿",
+        "审定搞",
+        "审定"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shendu",
+      "expected": "审读",
+      "source": "5500",
+      "lookup_us": 1181,
+      "candidates": [
+        "深度",
+        "沈度",
+        "审读",
+        "神都",
+        "身都",
+        "神度",
+        "神读",
+        "沈都",
+        "身"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "shendubaogao",
+      "expected": "审读报告",
+      "source": "5500",
+      "lookup_us": 3886,
+      "candidates": [
+        "审读报告",
+        "深度报告",
+        "沈度报告",
+        "深度报高",
+        "神读报告",
+        "神都报告",
+        "身都报告",
+        "深度报稿",
+        "深度"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shenduyijian",
+      "expected": "审读意见",
+      "source": "5500",
+      "lookup_us": 6594,
+      "candidates": [
+        "审读意见",
+        "深度意见",
+        "深度一件",
+        "深度一间",
+        "深度一见",
+        "深度一剑",
+        "深度异见",
+        "深度一键",
+        "深度"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shengaobaogao",
+      "expected": "审稿报告",
+      "source": "5500",
+      "lookup_us": 4900,
+      "candidates": [
+        "审稿报告",
+        "身高报告",
+        "圣奥报告",
+        "身高报高",
+        "甚高报告",
+        "身高包高",
+        "身高抱高",
+        "身高宝高",
+        "身高"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shengaobianji",
+      "expected": "审稿编辑",
+      "source": "5500",
+      "lookup_us": 7037,
+      "candidates": [
+        "审稿编辑",
+        "身高编辑",
+        "身高遍及",
+        "身高边际",
+        "圣奥编辑",
+        "身高变基",
+        "身高变及",
+        "身高边机",
+        "身高"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shengaojieguo",
+      "expected": "审稿结果",
+      "source": "5500",
+      "lookup_us": 8870,
+      "candidates": [
+        "审稿结果",
+        "身高结果",
+        "身高接过",
+        "圣奥结果",
+        "身高届国",
+        "身高借过",
+        "身高届过",
+        "审稿接过",
+        "身高"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shengaojindu",
+      "expected": "审稿进度",
+      "source": "5500",
+      "lookup_us": 5678,
+      "candidates": [
+        "审稿进度",
+        "身高进度",
+        "身高禁毒",
+        "神高进度",
+        "审稿禁毒",
+        "身高进读",
+        "圣奥进度",
+        "身高津渡",
+        "身高"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shengaoliucheng",
+      "expected": "审稿流程",
+      "source": "5500",
+      "lookup_us": 5198,
+      "candidates": [
+        "审稿流程",
+        "身高流程",
+        "身高六成",
+        "审稿六成",
+        "身高柳橙",
+        "圣奥流程",
+        "身高刘称",
+        "身高柳城",
+        "身高"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shengaoren",
+      "expected": "审稿人",
+      "source": "5500",
+      "lookup_us": 2832,
+      "candidates": [
+        "审稿人",
+        "身高人",
+        "身高任",
+        "身高仁",
+        "身高认",
+        "身高忍",
+        "身高刃",
+        "甚高人",
+        "身高"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shengaotongzhi",
+      "expected": "审稿通知",
+      "source": "5500",
+      "lookup_us": 4374,
+      "candidates": [
+        "审稿通知",
+        "身高通知",
+        "身高同志",
+        "身高统治",
+        "审稿统治",
+        "审稿同志",
+        "身高同知",
+        "身高同治",
+        "身高"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shengaozhuanjia",
+      "expected": "审稿专家",
+      "source": "5500",
+      "lookup_us": 6689,
+      "candidates": [
+        "审稿专家",
+        "身高专家",
+        "身高转嫁",
+        "身高专辑啊",
+        "圣奥专家",
+        "甚高专家",
+        "身高转家",
+        "审稿转嫁",
+        "身高"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "sheyingji",
+      "expected": "摄影集",
+      "source": "5500",
+      "lookup_us": 2591,
+      "candidates": [
+        "摄影机",
+        "摄影集",
+        "摄影记",
+        "摄影纪",
+        "摄影技",
+        "摄影及",
+        "摄影基",
+        "摄影几",
+        "摄影"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "shoucangban",
+      "expected": "收藏版",
+      "source": "5500",
+      "lookup_us": 2767,
+      "candidates": [
+        "收藏版",
+        "收藏办",
+        "收藏半",
+        "收藏班",
+        "收藏板",
+        "收藏般",
+        "收藏搬",
+        "收藏斑",
+        "收藏"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shouciyinshua",
+      "expected": "首次印刷",
+      "source": "5500",
+      "lookup_us": 4024,
+      "candidates": [
+        "首次印刷",
+        "受此印刷",
+        "首次引述啊",
+        "首次因刷",
+        "首次引刷",
+        "受次印刷",
+        "首次因数啊",
+        "首次因耍",
+        "首次"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shouquanbanben",
+      "expected": "授权版本",
+      "source": "5500",
+      "lookup_us": 3889,
+      "candidates": [
+        "授权版本",
+        "受全版本",
+        "授权癍本",
+        "手全版本",
+        "授权癍笨",
+        "受权版本",
+        "授权办本",
+        "授权坂本",
+        "授权"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shouquanchuban",
+      "expected": "授权出版",
+      "source": "5500",
+      "lookup_us": 4149,
+      "candidates": [
+        "授权出版",
+        "受全出版",
+        "授权初版",
+        "授权出半",
+        "授权除斑",
+        "授权出办",
+        "手全出版",
+        "授权处办",
+        "授权"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shouquandiqu",
+      "expected": "授权地区",
+      "source": "5500",
+      "lookup_us": 3685,
+      "candidates": [
+        "授权地区",
+        "授权的去",
+        "授权的曲",
+        "授权的区",
+        "授权地去",
+        "受全地区",
+        "授权的取",
+        "手全地区",
+        "授权"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shouquanyuzhong",
+      "expected": "授权语种",
+      "source": "5500",
+      "lookup_us": 4090,
+      "candidates": [
+        "授权语种",
+        "授权与中",
+        "授权雨中",
+        "授权狱中",
+        "授权于中",
+        "授权语中",
+        "授权与重",
+        "授权与忠",
+        "授权"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shouyin",
+      "expected": "首印",
+      "source": "5500",
+      "lookup_us": 1218,
+      "candidates": [
+        "收音",
+        "收银",
+        "手淫",
+        "手印",
+        "首印",
+        "手因",
+        "受因",
+        "首音",
+        "收益"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "shouyinliang",
+      "expected": "首印量",
+      "source": "5500",
+      "lookup_us": 4702,
+      "candidates": [
+        "首印量",
+        "收音量",
+        "首音量",
+        "受音量",
+        "手音量",
+        "收音两",
+        "收银两",
+        "授音量",
+        "手淫"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuyang",
+      "expected": "书样",
+      "source": "5500",
+      "lookup_us": 2288,
+      "candidates": [
+        "书样",
+        "属扬",
+        "叔养",
+        "数羊",
+        "属阳",
+        "属养",
+        "属样",
+        "书阳",
+        "书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuzichuban",
+      "expected": "数字出版",
+      "source": "5500",
+      "lookup_us": 4300,
+      "candidates": [
+        "数字出版",
+        "梳子出版",
+        "数字初版",
+        "数字除斑",
+        "数字出半",
+        "属字出版",
+        "数字出办",
+        "属自出版",
+        "数字"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "songshengao",
+      "expected": "送审稿",
+      "source": "5500",
+      "lookup_us": 3272,
+      "candidates": [
+        "送审稿",
+        "松身高",
+        "宋身高",
+        "送身高",
+        "宋审稿",
+        "松审稿",
+        "颂身高",
+        "颂审稿",
+        "送审"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "suibiji",
+      "expected": "随笔集",
+      "source": "5500",
+      "lookup_us": 1770,
+      "candidates": [
+        "随笔集",
+        "随笔记",
+        "岁笔记",
+        "虽笔记",
+        "遂笔记",
+        "随笔迹",
+        "岁笔迹",
+        "随笔机",
+        "随笔"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "suoxieben",
+      "expected": "缩写本",
+      "source": "5500",
+      "lookup_us": 2917,
+      "candidates": [
+        "缩写本",
+        "所写本",
+        "缩写笨",
+        "缩写奔",
+        "所写笨",
+        "所写奔",
+        "缩写苯",
+        "所血本",
+        "缩写"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tougaodizhi",
+      "expected": "投稿地址",
+      "source": "5500",
+      "lookup_us": 2673,
+      "candidates": [
+        "投稿地址",
+        "投稿抵制",
+        "头高地址",
+        "投稿地质",
+        "头高抵制",
+        "投高地址",
+        "投稿的指",
+        "投稿的值",
+        "投稿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tougaofangshi",
+      "expected": "投稿方式",
+      "source": "5500",
+      "lookup_us": 4049,
+      "candidates": [
+        "投稿方式",
+        "头高方式",
+        "投稿房市",
+        "头告方式",
+        "投稿方是",
+        "投稿放时",
+        "头搞方式",
+        "投稿访时",
+        "投稿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tougaofankui",
+      "expected": "投稿反馈",
+      "source": "5500",
+      "lookup_us": 3802,
+      "candidates": [
+        "投稿反馈",
+        "头高反馈",
+        "头告反馈",
+        "投高反馈",
+        "头搞反馈",
+        "头糕反馈",
+        "投告反馈",
+        "头稿反馈",
+        "投稿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tougaohuifu",
+      "expected": "投稿回复",
+      "source": "5500",
+      "lookup_us": 3396,
+      "candidates": [
+        "投稿回复",
+        "投稿恢复",
+        "头高恢复",
+        "头高回复",
+        "头告恢复",
+        "头告回复",
+        "头搞恢复",
+        "投高恢复",
+        "投稿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tougaojindu",
+      "expected": "投稿进度",
+      "source": "5500",
+      "lookup_us": 3361,
+      "candidates": [
+        "投稿进度",
+        "投稿禁毒",
+        "头高进度",
+        "头告进度",
+        "投高进度",
+        "投告进度",
+        "头搞进度",
+        "投稿缙度",
+        "投稿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tougaoliucheng",
+      "expected": "投稿流程",
+      "source": "5500",
+      "lookup_us": 4499,
+      "candidates": [
+        "投稿流程",
+        "投稿六成",
+        "头高流程",
+        "头告流程",
+        "头稿流程",
+        "头搞流程",
+        "投高流程",
+        "投稿流成",
+        "投稿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tougaoxuzhi",
+      "expected": "投稿须知",
+      "source": "5500",
+      "lookup_us": 2737,
+      "candidates": [
+        "投稿须知",
+        "头高须知",
+        "投稿续指",
+        "投稿须至",
+        "投稿须指",
+        "投稿需至",
+        "投稿须值",
+        "投稿须制",
+        "投稿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tuhao",
+      "expected": "图号",
+      "source": "5500",
+      "lookup_us": 814,
+      "candidates": [
+        "图号",
+        "图好",
+        "土好",
+        "途好",
+        "土豪",
+        "吐好",
+        "土号",
+        "涂好",
+        "图"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tuigao",
+      "expected": "退稿",
+      "source": "5500",
+      "lookup_us": 819,
+      "candidates": [
+        "推高",
+        "退稿",
+        "退高",
+        "腿高",
+        "退搞",
+        "推搞",
+        "退告",
+        "推告",
+        "退"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "tuigaoyijian",
+      "expected": "退稿意见",
+      "source": "5500",
+      "lookup_us": 6139,
+      "candidates": [
+        "退稿意见",
+        "推高意见",
+        "推高一件",
+        "推高一间",
+        "推高一见",
+        "推高一剑",
+        "退高意见",
+        "推高一键",
+        "推高"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tupianbili",
+      "expected": "图片比例",
+      "source": "5500",
+      "lookup_us": 4185,
+      "candidates": [
+        "图片比例",
+        "图片比利",
+        "图片哔哩",
+        "图片比里",
+        "图片比哩",
+        "图片比力",
+        "图片比礼",
+        "图片比立",
+        "图片"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tupiancaiqie",
+      "expected": "图片裁切",
+      "source": "5500",
+      "lookup_us": 5049,
+      "candidates": [
+        "图片裁切",
+        "图片菜切",
+        "图片才切",
+        "图片才企鹅",
+        "图片裁企鹅",
+        "图片采切",
+        "图片材切",
+        "图片采企鹅",
+        "图片"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tupianchuchu",
+      "expected": "图片出处",
+      "source": "5500",
+      "lookup_us": 3898,
+      "candidates": [
+        "图片出处",
+        "图片处处",
+        "图片楚楚",
+        "图片出出",
+        "图片除出",
+        "图片处出",
+        "图片初出",
+        "图片出初",
+        "图片"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tupiangao",
+      "expected": "图片稿",
+      "source": "5500",
+      "lookup_us": 4156,
+      "candidates": [
+        "图片稿",
+        "图片高",
+        "图偏高",
+        "图片搞",
+        "土偏高",
+        "图片告",
+        "吐偏高",
+        "涂偏高",
+        "图片"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tupianjingdu",
+      "expected": "图片精度",
+      "source": "5500",
+      "lookup_us": 6068,
+      "candidates": [
+        "图片精度",
+        "图片经度",
+        "图片京都",
+        "图片精读",
+        "图片经读",
+        "图片经毒",
+        "图片经都",
+        "图片经督",
+        "图片"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tupianshouquan",
+      "expected": "图片授权",
+      "source": "5500",
+      "lookup_us": 4470,
+      "candidates": [
+        "图片授权",
+        "图片受全",
+        "图片受权",
+        "图片收权",
+        "图片手权",
+        "图片受圈",
+        "图片收全",
+        "图片手全",
+        "图片"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tupianshuming",
+      "expected": "图片署名",
+      "source": "5500",
+      "lookup_us": 4867,
+      "candidates": [
+        "图片署名",
+        "图片数名",
+        "图片书名",
+        "图片淑明",
+        "图片数明",
+        "图篇署名",
+        "图片属明",
+        "图片属名",
+        "图片"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushubanquanye",
+      "expected": "图书版权页",
+      "source": "5500",
+      "lookup_us": 6016,
+      "candidates": [
+        "图书版权也",
+        "图书版权页",
+        "图书版权耶",
+        "图书版权业",
+        "图书版权夜",
+        "图书版权叶",
+        "图书版权野",
+        "图书版权液",
+        "图书"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "tushubaozhuang",
+      "expected": "图书包装",
+      "source": "5500",
+      "lookup_us": 5541,
+      "candidates": [
+        "图书包装",
+        "土书包装",
+        "图术包装",
+        "图书报装",
+        "图数包装",
+        "图属包装",
+        "图书包状",
+        "图树包装",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushubianji",
+      "expected": "图书编辑",
+      "source": "5500",
+      "lookup_us": 4889,
+      "candidates": [
+        "图书编辑",
+        "图书遍及",
+        "图数编辑",
+        "图书边际",
+        "图属编辑",
+        "土书编辑",
+        "图树编辑",
+        "土数编辑",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushubuhuo",
+      "expected": "图书补货",
+      "source": "5500",
+      "lookup_us": 3398,
+      "candidates": [
+        "图书补货",
+        "图书捕获",
+        "图书不和",
+        "图书不活",
+        "图书不获",
+        "图书不火",
+        "图书不或",
+        "图书不货",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushucangchu",
+      "expected": "图书仓储",
+      "source": "5500",
+      "lookup_us": 2457,
+      "candidates": [
+        "图书仓储",
+        "图书藏出",
+        "图书藏处",
+        "图书仓出",
+        "图书仓处",
+        "图书苍出",
+        "图书舱出",
+        "图书苍处",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushucankaowenxian",
+      "expected": "图书参考文献",
+      "source": "5500",
+      "lookup_us": 6190,
+      "candidates": [
+        "图书参考文献",
+        "图数参考文献",
+        "图书参考文县",
+        "图书参考问线",
+        "图书参考问县",
+        "图书参考问先",
+        "图书参考问衔",
+        "图书参考文贤",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushucehua",
+      "expected": "图书策划",
+      "source": "5500",
+      "lookup_us": 2910,
+      "candidates": [
+        "图书策划",
+        "图书策画",
+        "图数策划",
+        "图属策划",
+        "图树策划",
+        "土数策划",
+        "土属策划",
+        "土书策划",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushuchengben",
+      "expected": "图书成本",
+      "source": "5500",
+      "lookup_us": 3314,
+      "candidates": [
+        "图书成本",
+        "图数成本",
+        "图属成本",
+        "土数成本",
+        "土书成本",
+        "图书称本",
+        "图树成本",
+        "图熟成本",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushuchongyin",
+      "expected": "图书重印",
+      "source": "5500",
+      "lookup_us": 3045,
+      "candidates": [
+        "图书重印",
+        "图书冲印",
+        "图书虫因",
+        "图书虫音",
+        "图书重音",
+        "图书重因",
+        "图书虫印",
+        "图书虫银",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushuchoujian",
+      "expected": "图书抽检",
+      "source": "5500",
+      "lookup_us": 4765,
+      "candidates": [
+        "图书抽检",
+        "图书筹建",
+        "图数筹建",
+        "图属筹建",
+        "图树筹建",
+        "土数筹建",
+        "土属筹建",
+        "土书筹建",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushuchuban",
+      "expected": "图书出版",
+      "source": "5500",
+      "lookup_us": 3653,
+      "candidates": [
+        "图书出版",
+        "土书出版",
+        "图输出版",
+        "土输出版",
+        "图书出半",
+        "图书出办",
+        "图书初版",
+        "图书出班",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushudinggao",
+      "expected": "图书定稿",
+      "source": "5500",
+      "lookup_us": 3508,
+      "candidates": [
+        "图书定稿",
+        "图书定高",
+        "图书丁皋",
+        "图书顶高",
+        "图书订稿",
+        "图书丁高",
+        "图书订高",
+        "图书钉高",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushudingjia",
+      "expected": "图书定价",
+      "source": "5500",
+      "lookup_us": 4285,
+      "candidates": [
+        "图书定价",
+        "图书订家",
+        "图书订价",
+        "图书丁家",
+        "图书定家",
+        "图书定假",
+        "图书顶夹",
+        "图书定加",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushufaxing",
+      "expected": "图书发行",
+      "source": "5500",
+      "lookup_us": 3449,
+      "candidates": [
+        "图书发行",
+        "图书发型",
+        "图书法性",
+        "图书发性",
+        "图书法行",
+        "图抒发行",
+        "图书法兴",
+        "图书法星",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushufulu",
+      "expected": "图书附录",
+      "source": "5500",
+      "lookup_us": 3119,
+      "candidates": [
+        "图书附录",
+        "图书俘虏",
+        "图书辅路",
+        "图书福路",
+        "图书复路",
+        "图书府路",
+        "图书副路",
+        "图舒服路",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushufuyin",
+      "expected": "图书付印",
+      "source": "5500",
+      "lookup_us": 5061,
+      "candidates": [
+        "图书付印",
+        "图书福音",
+        "图书复印",
+        "图书辅音",
+        "图书服喑",
+        "图舒服因",
+        "图书夫因",
+        "图属福音",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushugaiban",
+      "expected": "图书改版",
+      "source": "5500",
+      "lookup_us": 3089,
+      "candidates": [
+        "图书改版",
+        "图书盖板",
+        "图数改版",
+        "图书该版",
+        "图书该办",
+        "土数改版",
+        "图书该班",
+        "图属改版",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushugengzheng",
+      "expected": "图书更正",
+      "source": "5500",
+      "lookup_us": 4741,
+      "candidates": [
+        "图书更正",
+        "图数更正",
+        "图书更证",
+        "土书更正",
+        "图输更正",
+        "土数更正",
+        "图书更症",
+        "图书更政",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushuhantao",
+      "expected": "图书函套",
+      "source": "5500",
+      "lookup_us": 3504,
+      "candidates": [
+        "图书函套",
+        "图书韩涛",
+        "图书含套",
+        "图书喊讨",
+        "图书含逃",
+        "图书汉套",
+        "图书韩套",
+        "图书汗套",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushuhoudu",
+      "expected": "图书厚度",
+      "source": "5500",
+      "lookup_us": 2356,
+      "candidates": [
+        "图书厚度",
+        "图书后都",
+        "图数厚度",
+        "图属厚度",
+        "图书后度",
+        "图书后读",
+        "图书后独",
+        "图树厚度",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushuhouji",
+      "expected": "图书后记",
+      "source": "5500",
+      "lookup_us": 2278,
+      "candidates": [
+        "图书后记",
+        "图书后继",
+        "图书后几",
+        "图书后即",
+        "图书后及",
+        "图书后集",
+        "图书后级",
+        "图书后机",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushuhufeng",
+      "expected": "图书护封",
+      "source": "5500",
+      "lookup_us": 3026,
+      "candidates": [
+        "图书护封",
+        "图书胡枫",
+        "图书呼风",
+        "图书虎风",
+        "图书湖风",
+        "图书胡风",
+        "图书呼峰",
+        "图书护风",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushujiaodui",
+      "expected": "图书校对",
+      "source": "5500",
+      "lookup_us": 5973,
+      "candidates": [
+        "图书校对",
+        "图书角队",
+        "图书角对",
+        "图书教对",
+        "图书角堆",
+        "图书交对",
+        "图书交队",
+        "图书角兑",
+        "图书角"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushujiaogao",
+      "expected": "图书校稿",
+      "source": "5500",
+      "lookup_us": 5898,
+      "candidates": [
+        "图书校稿",
+        "图书较高",
+        "图书角高",
+        "图数较高",
+        "土数较高",
+        "图书角搞",
+        "图书角稿",
+        "图书角告",
+        "图书角"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushujiaoyang",
+      "expected": "图书校样",
+      "source": "5500",
+      "lookup_us": 7622,
+      "candidates": [
+        "图书校样",
+        "图书教养",
+        "图书角阳",
+        "图书骄阳",
+        "图书角扬",
+        "图书角养",
+        "图书角羊",
+        "图书角样",
+        "图书角"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushujiayin",
+      "expected": "图书加印",
+      "source": "5500",
+      "lookup_us": 6542,
+      "candidates": [
+        "图书加印",
+        "图书架印",
+        "图书架因",
+        "图书价因",
+        "图书佳音",
+        "图书家因",
+        "图书架音",
+        "图书架银",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushujisong",
+      "expected": "图书寄送",
+      "source": "5500",
+      "lookup_us": 2748,
+      "candidates": [
+        "图书寄送",
+        "图书籍送",
+        "图书籍松",
+        "图书记送",
+        "图书记松",
+        "图书籍颂",
+        "图书及送",
+        "图书籍宋",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushujiucuo",
+      "expected": "图书纠错",
+      "source": "5500",
+      "lookup_us": 3447,
+      "candidates": [
+        "图书纠错",
+        "图书就错",
+        "图数纠错",
+        "图属纠错",
+        "图术纠错",
+        "图书就措",
+        "图树纠错",
+        "图书就挫",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushukaiben",
+      "expected": "图书开本",
+      "source": "5500",
+      "lookup_us": 1692,
+      "candidates": [
+        "图书开本",
+        "图书开笨",
+        "图书凯本",
+        "图书开奔",
+        "图书凯笨",
+        "图书楷本",
+        "图书凯奔",
+        "图书恺本",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushukanwu",
+      "expected": "图书勘误",
+      "source": "5500",
+      "lookup_us": 2261,
+      "candidates": [
+        "图书勘误",
+        "图书刊物",
+        "土书刊物",
+        "图书看物",
+        "图数刊物",
+        "图属刊物",
+        "图书看无",
+        "图书看屋",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushukucun",
+      "expected": "图书库存",
+      "source": "5500",
+      "lookup_us": 2530,
+      "candidates": [
+        "图书库存",
+        "图书库村",
+        "土书库存",
+        "图数库存",
+        "图属库存",
+        "土数库存",
+        "图树库存",
+        "土属库存",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushulekou",
+      "expected": "图书勒口",
+      "source": "5500",
+      "lookup_us": 1779,
+      "candidates": [
+        "图书勒口",
+        "图书了口",
+        "图书乐扣",
+        "图书了扣",
+        "图书乐口",
+        "图熟了口",
+        "图书了寇",
+        "图书勒扣",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushuneiye",
+      "expected": "图书内页",
+      "source": "5500",
+      "lookup_us": 3704,
+      "candidates": [
+        "图书内页",
+        "图书内也",
+        "图书那页",
+        "图书内业",
+        "图书那夜",
+        "图书那也",
+        "图书内耶",
+        "图书内野",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushupaiban",
+      "expected": "图书排版",
+      "source": "5500",
+      "lookup_us": 3359,
+      "candidates": [
+        "图书排版",
+        "图书拍板",
+        "图书排班",
+        "图数排版",
+        "图书拍版",
+        "土数排版",
+        "图书排办",
+        "图书派版",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushupandian",
+      "expected": "图书盘点",
+      "source": "5500",
+      "lookup_us": 4976,
+      "candidates": [
+        "图书盘点",
+        "图属盘点",
+        "图书胖点",
+        "图数盘点",
+        "图书盘垫",
+        "土属盘点",
+        "图书盘店",
+        "图树盘点",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushupeisong",
+      "expected": "图书配送",
+      "source": "5500",
+      "lookup_us": 2745,
+      "candidates": [
+        "图书配送",
+        "图数配送",
+        "图属配送",
+        "图书配松",
+        "图树配送",
+        "土数配送",
+        "土属配送",
+        "土书配送",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushuqianshou",
+      "expected": "图书签售",
+      "source": "5500",
+      "lookup_us": 5480,
+      "candidates": [
+        "图书签售",
+        "图书签收",
+        "图书牵手",
+        "图书签手",
+        "图书前首",
+        "图书前守",
+        "图书前收",
+        "图书前手",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushuqianyan",
+      "expected": "图书前言",
+      "source": "5500",
+      "lookup_us": 6016,
+      "candidates": [
+        "图书前言",
+        "图书前沿",
+        "图书签眼",
+        "图书签颜",
+        "图书签言",
+        "图书前演",
+        "图书签烟",
+        "图书前眼",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushuqingyang",
+      "expected": "图书清样",
+      "source": "5500",
+      "lookup_us": 6827,
+      "candidates": [
+        "图书清样",
+        "图书清扬",
+        "图书庆阳",
+        "图书青阳",
+        "图书请养",
+        "图书清阳",
+        "图书请阳",
+        "图书请扬",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushushangjia",
+      "expected": "图书上架",
+      "source": "5500",
+      "lookup_us": 5310,
+      "candidates": [
+        "图书上架",
+        "图书商家",
+        "图书上加",
+        "图书上家",
+        "图书上佳",
+        "图书上假",
+        "图书上甲",
+        "土书商家",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushushangshi",
+      "expected": "图书上市",
+      "source": "5500",
+      "lookup_us": 4105,
+      "candidates": [
+        "图书上市",
+        "图书上时",
+        "图书伤势",
+        "图书上是",
+        "图书商是",
+        "图书上师",
+        "图书上士",
+        "图书赏识",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushusheji",
+      "expected": "图书设计",
+      "source": "5500",
+      "lookup_us": 3545,
+      "candidates": [
+        "图书设计",
+        "图书涉及",
+        "图书射击",
+        "图术设计",
+        "图数设计",
+        "图属设计",
+        "图输设计",
+        "土数设计",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushushengao",
+      "expected": "图书审稿",
+      "source": "5500",
+      "lookup_us": 5258,
+      "candidates": [
+        "图书审稿",
+        "图书身高",
+        "图书甚高",
+        "图数身高",
+        "图属身高",
+        "土数身高",
+        "图树身高",
+        "土属身高",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushushoufa",
+      "expected": "图书首发",
+      "source": "5500",
+      "lookup_us": 2066,
+      "candidates": [
+        "图书首发",
+        "图书手法",
+        "图书受罚",
+        "图书守法",
+        "图书收发",
+        "图书受法",
+        "图属首发",
+        "图数首发",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushushutao",
+      "expected": "图书书套",
+      "source": "5500",
+      "lookup_us": 3009,
+      "candidates": [
+        "图书书套",
+        "图书书逃",
+        "图书书讨",
+        "图书书陶",
+        "图书书涛",
+        "图书数套",
+        "图书书桃",
+        "图书属套",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushusuoyin",
+      "expected": "图书索引",
+      "source": "5500",
+      "lookup_us": 4146,
+      "candidates": [
+        "图书索引",
+        "图书所引",
+        "图书所因",
+        "图属索引",
+        "图书所音",
+        "土属索引",
+        "图书所印",
+        "图书所银",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushutuangou",
+      "expected": "图书团购",
+      "source": "5500",
+      "lookup_us": 3575,
+      "candidates": [
+        "图书团购",
+        "图数团购",
+        "图属团购",
+        "图术团购",
+        "图书团狗",
+        "图树团购",
+        "土数团购",
+        "土属团购",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushutuiguang",
+      "expected": "图书推广",
+      "source": "5500",
+      "lookup_us": 4399,
+      "candidates": [
+        "图书推广",
+        "图术推广",
+        "图数推广",
+        "图属推广",
+        "图树推广",
+        "图署推广",
+        "兔属推广",
+        "土数推广",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushutuihuo",
+      "expected": "图书退货",
+      "source": "5500",
+      "lookup_us": 3183,
+      "candidates": [
+        "图书退货",
+        "图书退火",
+        "图数退货",
+        "图书退或",
+        "图属退货",
+        "图树退货",
+        "土数退货",
+        "土属退货",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushuwuliu",
+      "expected": "图书物流",
+      "source": "5500",
+      "lookup_us": 3691,
+      "candidates": [
+        "图书物流",
+        "图书五六",
+        "图属物流",
+        "土属物流",
+        "图书屋流",
+        "图书五流",
+        "图数物流",
+        "图书无流",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushuxiajia",
+      "expected": "图书下架",
+      "source": "5500",
+      "lookup_us": 4524,
+      "candidates": [
+        "图书下架",
+        "图书下家",
+        "图属下架",
+        "图树下架",
+        "图书下加",
+        "土属下架",
+        "土树下架",
+        "图数下架",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushuxiaoshou",
+      "expected": "图书销售",
+      "source": "5500",
+      "lookup_us": 4701,
+      "candidates": [
+        "图书销售",
+        "图书消瘦",
+        "图书小手",
+        "土书销售",
+        "图数销售",
+        "图属销售",
+        "图树销售",
+        "土数销售",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushuxiuding",
+      "expected": "图书修订",
+      "source": "5500",
+      "lookup_us": 3774,
+      "candidates": [
+        "图书修订",
+        "图数修订",
+        "图属修订",
+        "图树修订",
+        "图书修定",
+        "土数修订",
+        "土属修订",
+        "土书修订",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushuxuanchuan",
+      "expected": "图书宣传",
+      "source": "5500",
+      "lookup_us": 5284,
+      "candidates": [
+        "图书宣传",
+        "图数宣传",
+        "图属宣传",
+        "图树宣传",
+        "图署宣传",
+        "土数宣传",
+        "土属宣传",
+        "土书宣传",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushuxuanti",
+      "expected": "图书选题",
+      "source": "5500",
+      "lookup_us": 3917,
+      "candidates": [
+        "图书选题",
+        "图书旋体",
+        "图书选提",
+        "图书选体",
+        "图数选题",
+        "图属选题",
+        "图书选替",
+        "图书轩体",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushuxuyan",
+      "expected": "图书序言",
+      "source": "5500",
+      "lookup_us": 3361,
+      "candidates": [
+        "图书序言",
+        "图书续咽",
+        "图书许艳",
+        "土书序言",
+        "图书徐雁",
+        "图书续演",
+        "图书许盐",
+        "图书需眼",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushuyangshu",
+      "expected": "图书样书",
+      "source": "5500",
+      "lookup_us": 4316,
+      "candidates": [
+        "图书样书",
+        "图书杨树",
+        "图书杨属",
+        "图书阳书",
+        "图书杨书",
+        "图书养书",
+        "图书洋书",
+        "图书阳树",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushuyanshou",
+      "expected": "图书验收",
+      "source": "5500",
+      "lookup_us": 3363,
+      "candidates": [
+        "图书验收",
+        "图书延寿",
+        "图书严守",
+        "图书岩手",
+        "图书眼熟",
+        "图书眼手",
+        "图书言受",
+        "图书妍手",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushuyeshu",
+      "expected": "图书页数",
+      "source": "5500",
+      "lookup_us": 2540,
+      "candidates": [
+        "图书页数",
+        "图书椰树",
+        "图书页书",
+        "图书也属",
+        "图书也书",
+        "图书叶树",
+        "图书也树",
+        "图书也数",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushuyingxiao",
+      "expected": "图书营销",
+      "source": "5500",
+      "lookup_us": 7042,
+      "candidates": [
+        "图书营销",
+        "图书应小",
+        "图数营销",
+        "图属营销",
+        "图树营销",
+        "图书应笑",
+        "土数营销",
+        "土属营销",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushuyinliang",
+      "expected": "图书印量",
+      "source": "5500",
+      "lookup_us": 7147,
+      "candidates": [
+        "图书印量",
+        "图书音量",
+        "图书阴凉",
+        "图书银两",
+        "图书音两",
+        "图书印两",
+        "图书因亮",
+        "图树音量",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushuyinshua",
+      "expected": "图书印刷",
+      "source": "5500",
+      "lookup_us": 3945,
+      "candidates": [
+        "图书印刷",
+        "图属印刷",
+        "土书印刷",
+        "图数印刷",
+        "土属印刷",
+        "图树印刷",
+        "土数印刷",
+        "图输印刷",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushuyinyan",
+      "expected": "图书引言",
+      "source": "5500",
+      "lookup_us": 4242,
+      "candidates": [
+        "图书引言",
+        "图书因言",
+        "图书引眼",
+        "图书因眼",
+        "图书印烟",
+        "图书因演",
+        "图书因烟",
+        "图书因盐",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushuyongzhi",
+      "expected": "图书用纸",
+      "source": "5500",
+      "lookup_us": 3590,
+      "candidates": [
+        "图书用纸",
+        "图书用之",
+        "图书用至",
+        "图书用指",
+        "图书用制",
+        "图书用智",
+        "图书用知",
+        "图书用值",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushuyuding",
+      "expected": "图书预订",
+      "source": "5500",
+      "lookup_us": 3569,
+      "candidates": [
+        "图书预订",
+        "图书预定",
+        "图书与定",
+        "图数预订",
+        "图书与顶",
+        "图书与丁",
+        "图书于定",
+        "图数预定",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushuyushou",
+      "expected": "图书预售",
+      "source": "5500",
+      "lookup_us": 2395,
+      "candidates": [
+        "图书预售",
+        "图书与手",
+        "图书与受",
+        "图书与守",
+        "图书预收",
+        "图书与收",
+        "图书与首",
+        "图属于手",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushuzaiban",
+      "expected": "图书再版",
+      "source": "5500",
+      "lookup_us": 2926,
+      "candidates": [
+        "图书再版",
+        "图书在半",
+        "图书在办",
+        "图书在班",
+        "图书在版",
+        "图书在板",
+        "图书再办",
+        "图书在伴",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushuzengyue",
+      "expected": "图书赠阅",
+      "source": "5500",
+      "lookup_us": 4139,
+      "candidates": [
+        "图书赠阅",
+        "图书曾说",
+        "图书曾约",
+        "图书增约",
+        "图书赠约",
+        "图书曾月",
+        "图书曾乐",
+        "图书增说",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushuzhekou",
+      "expected": "图书折扣",
+      "source": "5500",
+      "lookup_us": 2049,
+      "candidates": [
+        "图书折扣",
+        "图书这口",
+        "图数折扣",
+        "图属折扣",
+        "图书着口",
+        "图树折扣",
+        "土数折扣",
+        "土属折扣",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushuzhengding",
+      "expected": "图书征订",
+      "source": "5500",
+      "lookup_us": 5112,
+      "candidates": [
+        "图书征订",
+        "图书正定",
+        "图书正顶",
+        "图书正丁",
+        "图书证定",
+        "图书证顶",
+        "图书争顶",
+        "图书证丁",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushuzhengdingdan",
+      "expected": "图书征订单",
+      "source": "5500",
+      "lookup_us": 6774,
+      "candidates": [
+        "图书正订单",
+        "图书征订单",
+        "图书证订单",
+        "图书整订单",
+        "图书政订单",
+        "图书争订单",
+        "图书郑订单",
+        "图书症订单",
+        "图书"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "tushuzhengwen",
+      "expected": "图书正文",
+      "source": "5500",
+      "lookup_us": 4602,
+      "candidates": [
+        "图书正文",
+        "图书征文",
+        "图书郑文",
+        "图书正问",
+        "图书证文",
+        "图书证问",
+        "图书整问",
+        "图书整文",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushuzhijian",
+      "expected": "图书质检",
+      "source": "5500",
+      "lookup_us": 6569,
+      "candidates": [
+        "图书质检",
+        "图书之间",
+        "图书之剑",
+        "图数之间",
+        "土数之间",
+        "图书只见",
+        "图书之见",
+        "图书指尖",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushuzhizuo",
+      "expected": "图书制作",
+      "source": "5500",
+      "lookup_us": 3023,
+      "candidates": [
+        "图书制作",
+        "图书之作",
+        "图书只做",
+        "图属制作",
+        "图书之做",
+        "图数制作",
+        "图书指做",
+        "土属制作",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushuzhongchou",
+      "expected": "图书众筹",
+      "source": "5500",
+      "lookup_us": 1875,
+      "candidates": [
+        "图书众筹",
+        "图书中抽",
+        "图书中愁",
+        "图书中臭",
+        "图书中仇",
+        "图书中筹",
+        "图书中丑",
+        "图书中稠",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushuzhonggao",
+      "expected": "图书终稿",
+      "source": "5500",
+      "lookup_us": 2757,
+      "candidates": [
+        "图书终稿",
+        "图书忠告",
+        "图书中高",
+        "图书中搞",
+        "图书中告",
+        "图书中稿",
+        "图书中膏",
+        "图书中糕",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushuzhuangding",
+      "expected": "图书装订",
+      "source": "5500",
+      "lookup_us": 5128,
+      "candidates": [
+        "图书装订",
+        "图书装定",
+        "图书装顶",
+        "图书装丁",
+        "图书庄锭",
+        "图书庄鼎",
+        "图书装町",
+        "图书幢顶",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushuzhushi",
+      "expected": "图书注释",
+      "source": "5500",
+      "lookup_us": 3246,
+      "candidates": [
+        "图书注释",
+        "图书主食",
+        "图书注视",
+        "图书主是",
+        "图书主事",
+        "图书著是",
+        "图书注时",
+        "图书蛀蚀",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tushuzishu",
+      "expected": "图书字数",
+      "source": "5500",
+      "lookup_us": 2887,
+      "candidates": [
+        "图书字数",
+        "图书自述",
+        "图数字数",
+        "土数字数",
+        "图书子树",
+        "图数字书",
+        "图书资数",
+        "图书紫薯",
+        "图书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tuwengao",
+      "expected": "图文稿",
+      "source": "5500",
+      "lookup_us": 2573,
+      "candidates": [
+        "图文稿",
+        "土文稿",
+        "图文告",
+        "图文高",
+        "吐文稿",
+        "突文稿",
+        "涂文稿",
+        "图文搞",
+        "图文"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waishenyijian",
+      "expected": "外审意见",
+      "source": "5500",
+      "lookup_us": 6353,
+      "candidates": [
+        "外审意见",
+        "外身意见",
+        "外深意见",
+        "外神意见",
+        "外申意见",
+        "外什意见",
+        "外审一件",
+        "外身一件",
+        "外审"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waishenzhuanjia",
+      "expected": "外审专家",
+      "source": "5500",
+      "lookup_us": 5135,
+      "candidates": [
+        "外审专家",
+        "外深专家",
+        "外神专家",
+        "外身专家",
+        "外申专家",
+        "外什专家",
+        "外沈专家",
+        "外参专家",
+        "外审"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waiwenduwu",
+      "expected": "外文读物",
+      "source": "5500",
+      "lookup_us": 2398,
+      "candidates": [
+        "外文读物",
+        "外文独舞",
+        "外温度五",
+        "外文毒物",
+        "外温度无",
+        "外文都无",
+        "外温度武",
+        "外温度物",
+        "外文"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wenxianleixing",
+      "expected": "文献类型",
+      "source": "5500",
+      "lookup_us": 6454,
+      "candidates": [
+        "文献类型",
+        "温宪类型",
+        "文县类型",
+        "文贤类型",
+        "温线类型",
+        "问先类型",
+        "文线类型",
+        "文现类型",
+        "文献"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wenxianzhulu",
+      "expected": "文献著录",
+      "source": "5500",
+      "lookup_us": 4735,
+      "candidates": [
+        "文献著录",
+        "文献著陆",
+        "文献主路",
+        "问显著陆",
+        "文显著陆",
+        "文献住路",
+        "文献筑路",
+        "文献竹路",
+        "文献"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wenzibianji",
+      "expected": "文字编辑",
+      "source": "5500",
+      "lookup_us": 4846,
+      "candidates": [
+        "文字编辑",
+        "蚊子编辑",
+        "文字变基",
+        "文字变及",
+        "文字遍及",
+        "吻自编辑",
+        "文字变集",
+        "文字变机",
+        "文字"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wenzibianjijiagong",
+      "expected": "文字编辑加工",
+      "source": "5500",
+      "lookup_us": 8881,
+      "candidates": [
+        "文字编辑加工",
+        "蚊子编辑加工",
+        "文字变及加工",
+        "文字遍及加工",
+        "文字编辑加共",
+        "文字变基加工",
+        "文字编辑家共",
+        "文字编辑甲功",
+        "文字编辑"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wenzijiagong",
+      "expected": "文字加工",
+      "source": "5500",
+      "lookup_us": 4179,
+      "candidates": [
+        "文字加工",
+        "蚊子加工",
+        "文字加共",
+        "文字家共",
+        "文字甲功",
+        "文字家工",
+        "文字夹共",
+        "吻自加工",
+        "问自己"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wenzijiaodui",
+      "expected": "文字校对",
+      "source": "5500",
+      "lookup_us": 7360,
+      "candidates": [
+        "文字校对",
+        "蚊子校对",
+        "文字叫对",
+        "文字教对",
+        "文字嚼对",
+        "文字叫队",
+        "文字交对",
+        "文字嚼队",
+        "问自己"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiaoshuoji",
+      "expected": "小说集",
+      "source": "5500",
+      "lookup_us": 3241,
+      "candidates": [
+        "小说集",
+        "小说及",
+        "小说几",
+        "小说机",
+        "小说基",
+        "小说记",
+        "小说吉",
+        "小说即",
+        "小说"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiliecongshu",
+      "expected": "系列丛书",
+      "source": "5500",
+      "lookup_us": 3520,
+      "candidates": [
+        "系列丛书",
+        "系列从书",
+        "系列从树",
+        "系列从属",
+        "系列从数",
+        "系列从输",
+        "系列从熟",
+        "细裂丛书",
+        "系列"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinshufabu",
+      "expected": "新书发布",
+      "source": "5500",
+      "lookup_us": 2162,
+      "candidates": [
+        "新书发布",
+        "新书发不",
+        "新署发布",
+        "新书法不",
+        "新书发部",
+        "新数发布",
+        "心书发布",
+        "新树发布",
+        "新书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinshufabuhui",
+      "expected": "新书发布会",
+      "source": "5500",
+      "lookup_us": 3940,
+      "candidates": [
+        "新书发布会",
+        "新书发不会",
+        "新书法不会",
+        "新书发布回",
+        "新书发布辉",
+        "新署发布会",
+        "新书发布惠",
+        "新书发布汇",
+        "新书发布"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinshufenxianghui",
+      "expected": "新书分享会",
+      "source": "5500",
+      "lookup_us": 8587,
+      "candidates": [
+        "新书分享会",
+        "新书分享回",
+        "新书分享辉",
+        "新书分享惠",
+        "新书分享汇",
+        "新书分享慧",
+        "新书分享毁",
+        "新书分享灰",
+        "新书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinshujianmianhui",
+      "expected": "新书见面会",
+      "source": "5500",
+      "lookup_us": 9384,
+      "candidates": [
+        "新书见面会",
+        "新属见面会",
+        "新书见面回",
+        "新书见面辉",
+        "新书减免会",
+        "新书见面惠",
+        "新书见面汇",
+        "新书见面慧",
+        "新书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinshuqianshouhui",
+      "expected": "新书签售会",
+      "source": "5500",
+      "lookup_us": 7010,
+      "candidates": [
+        "新书签收回",
+        "新书签收贿",
+        "新书前收回",
+        "新书签受贿",
+        "新数千收回",
+        "心书签收回",
+        "新书前受贿",
+        "新书签售会",
+        "新书期"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "xinshushangshi",
+      "expected": "新书上市",
+      "source": "5500",
+      "lookup_us": 4612,
+      "candidates": [
+        "新书上市",
+        "新书上时",
+        "新书伤势",
+        "新书上是",
+        "新书商是",
+        "新书上师",
+        "新书上士",
+        "新树上市",
+        "新书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinshushoufa",
+      "expected": "新书首发",
+      "source": "5500",
+      "lookup_us": 2400,
+      "candidates": [
+        "新书首发",
+        "新书手法",
+        "新书受罚",
+        "新书守法",
+        "新书收发",
+        "新数首发",
+        "新属首发",
+        "新数手法",
+        "新书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinshutuijie",
+      "expected": "新书推介",
+      "source": "5500",
+      "lookup_us": 4905,
+      "candidates": [
+        "新书推介",
+        "新数推介",
+        "新属推介",
+        "新书退饥饿",
+        "新树推介",
+        "新署推介",
+        "新术推介",
+        "新输推介",
+        "新书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinshuyuding",
+      "expected": "新书预订",
+      "source": "5500",
+      "lookup_us": 3985,
+      "candidates": [
+        "新书预订",
+        "新书预定",
+        "新数预订",
+        "新数预定",
+        "新属于定",
+        "新书与定",
+        "新属于丁",
+        "新属于顶",
+        "新书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinshuzhengding",
+      "expected": "新书征订",
+      "source": "5500",
+      "lookup_us": 5061,
+      "candidates": [
+        "新书征订",
+        "新书正定",
+        "新书证定",
+        "新书正顶",
+        "新书证顶",
+        "新书正丁",
+        "新书证丁",
+        "新书争顶",
+        "新书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiudingzaiban",
+      "expected": "修订再版",
+      "source": "5500",
+      "lookup_us": 5463,
+      "candidates": [
+        "修订再版",
+        "修订在半",
+        "修订在办",
+        "修订在班",
+        "修订在版",
+        "修订在板",
+        "修订再办",
+        "修订在伴",
+        "修订"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xuanbian",
+      "expected": "选编",
+      "source": "5500",
+      "lookup_us": 3581,
+      "candidates": [
+        "选编",
+        "选边",
+        "选变",
+        "选便",
+        "选辩",
+        "玄变",
+        "玄边",
+        "旋变",
+        "选"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xuanbianben",
+      "expected": "选编本",
+      "source": "5500",
+      "lookup_us": 3543,
+      "candidates": [
+        "选编本",
+        "选变本",
+        "选边本",
+        "选边奔",
+        "玄变本",
+        "旋变本",
+        "选便本",
+        "选变笨",
+        "选编"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xuantibaopi",
+      "expected": "选题报批",
+      "source": "5500",
+      "lookup_us": 4712,
+      "candidates": [
+        "选题报批",
+        "选题包皮",
+        "选提包皮",
+        "选题剥皮",
+        "选题报皮",
+        "选提报批",
+        "选题保皮",
+        "选题包批",
+        "选题"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xuantidingwei",
+      "expected": "选题定位",
+      "source": "5500",
+      "lookup_us": 3701,
+      "candidates": [
+        "选题定位",
+        "选题定为",
+        "选题订为",
+        "选题订位",
+        "选体定位",
+        "玄题定位",
+        "选提定位",
+        "旋体定位",
+        "选题"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xuantihuiyi",
+      "expected": "选题会议",
+      "source": "5500",
+      "lookup_us": 4827,
+      "candidates": [
+        "选题会议",
+        "选题回忆",
+        "选题会以",
+        "选体会议",
+        "旋体会议",
+        "选题悔意",
+        "选体回忆",
+        "玄题会议",
+        "选题会"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xuantijihua",
+      "expected": "选题计划",
+      "source": "5500",
+      "lookup_us": 4786,
+      "candidates": [
+        "选题计划",
+        "选体计划",
+        "选题激化",
+        "旋体计划",
+        "选提计划",
+        "选替计划",
+        "选提及化",
+        "选题极化",
+        "选题"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xuantilunzheng",
+      "expected": "选题论证",
+      "source": "5500",
+      "lookup_us": 5510,
+      "candidates": [
+        "选题论证",
+        "选体论证",
+        "选提论证",
+        "旋体论证",
+        "选题论正",
+        "选题论政",
+        "玄题论证",
+        "选替论证",
+        "选题"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xuantipingshen",
+      "expected": "选题评审",
+      "source": "5500",
+      "lookup_us": 4738,
+      "candidates": [
+        "选题评审",
+        "选提评审",
+        "选体评审",
+        "旋体评审",
+        "玄题评审",
+        "选替评审",
+        "选踢评审",
+        "宣倜评审",
+        "选题"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xuantishenhe",
+      "expected": "选题审核",
+      "source": "5500",
+      "lookup_us": 4620,
+      "candidates": [
+        "选题审核",
+        "选体审核",
+        "选提审核",
+        "旋体审核",
+        "选替审核",
+        "玄题审核",
+        "选题神和",
+        "选题审和",
+        "选题"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xuantishenqing",
+      "expected": "选题申请",
+      "source": "5500",
+      "lookup_us": 6259,
+      "candidates": [
+        "选题申请",
+        "选体申请",
+        "旋体申请",
+        "选提申请",
+        "选题神情",
+        "选替申请",
+        "选题深情",
+        "选踢申请",
+        "选题"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xueshuzhuanzhu",
+      "expected": "学术专著",
+      "source": "5500",
+      "lookup_us": 4887,
+      "candidates": [
+        "学术专著",
+        "学术专注",
+        "学书专注",
+        "学术转住",
+        "学术转著",
+        "学术转主",
+        "学术传著",
+        "学术专住",
+        "学术"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yangce",
+      "expected": "样册",
+      "source": "5500",
+      "lookup_us": 807,
+      "candidates": [
+        "样册",
+        "杨测",
+        "洋侧",
+        "杨侧",
+        "杨策",
+        "杨册",
+        "洋测",
+        "阳测",
+        "样"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yangshujisong",
+      "expected": "样书寄送",
+      "source": "5500",
+      "lookup_us": 2581,
+      "candidates": [
+        "样书寄送",
+        "杨树寄送",
+        "杨庶寄送",
+        "杨淑寄送",
+        "杨书籍送",
+        "杨树及送",
+        "杨书籍松",
+        "杨书寄送",
+        "杨树"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yangshushenqing",
+      "expected": "样书申请",
+      "source": "5500",
+      "lookup_us": 5982,
+      "candidates": [
+        "样书申请",
+        "杨树申请",
+        "杨庶申请",
+        "杨树神情",
+        "杨淑申请",
+        "杨数申请",
+        "杨署申请",
+        "杨属申请",
+        "杨树"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yanjiangji",
+      "expected": "演讲集",
+      "source": "5500",
+      "lookup_us": 4990,
+      "candidates": [
+        "演讲集",
+        "演讲及",
+        "演讲几",
+        "演讲基",
+        "演讲机",
+        "演讲记",
+        "演讲鸡",
+        "演讲计",
+        "演讲"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yexiazhu",
+      "expected": "页下注",
+      "source": "5500",
+      "lookup_us": 3033,
+      "candidates": [
+        "页下注",
+        "叶下珠",
+        "也下注",
+        "也下住",
+        "也下主",
+        "也下著",
+        "腋下住",
+        "也下猪",
+        "腋下"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yinjinbantushu",
+      "expected": "引进版图书",
+      "source": "5500",
+      "lookup_us": 5626,
+      "candidates": [
+        "引进版图书",
+        "引进班图书",
+        "引进半图书",
+        "引进板图书",
+        "因近半图书",
+        "引进办图书",
+        "引进般图书",
+        "引进伴图书",
+        "引进"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yinliang",
+      "expected": "印量",
+      "source": "5500",
+      "lookup_us": 3140,
+      "candidates": [
+        "音量",
+        "阴凉",
+        "银两",
+        "印量",
+        "因两",
+        "因量",
+        "因亮",
+        "印两",
+        "银联"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "yinshu",
+      "expected": "印数",
+      "source": "5500",
+      "lookup_us": 1108,
+      "candidates": [
+        "引述",
+        "因数",
+        "隐书",
+        "印数",
+        "因书",
+        "因输",
+        "因属",
+        "因树",
+        "因"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "yinshuashijian",
+      "expected": "印刷时间",
+      "source": "5500",
+      "lookup_us": 6925,
+      "candidates": [
+        "印刷时间",
+        "印刷事件",
+        "印刷实践",
+        "印刷世间",
+        "印刷尸检",
+        "印刷是件",
+        "印刷石剑",
+        "印刷始建",
+        "印刷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yinshugaochou",
+      "expected": "印数稿酬",
+      "source": "5500",
+      "lookup_us": 3004,
+      "candidates": [
+        "印数稿酬",
+        "引述稿酬",
+        "引述羔酬",
+        "引述高愁",
+        "引述高臭",
+        "引述高仇",
+        "引述高筹",
+        "引述高丑",
+        "因数"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yinshui",
+      "expected": "印税",
+      "source": "5500",
+      "lookup_us": 1253,
+      "candidates": [
+        "饮水",
+        "引水",
+        "淫水",
+        "银水",
+        "印税",
+        "因水",
+        "因说",
+        "因睡",
+        "因数"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "yinwenbiaozhu",
+      "expected": "引文标注",
+      "source": "5500",
+      "lookup_us": 4418,
+      "candidates": [
+        "引文标注",
+        "阴文标注",
+        "殷温标注",
+        "因问标注",
+        "因温标注",
+        "因闻标注",
+        "因稳标注",
+        "隐问标注",
+        "引文"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yinwengeshi",
+      "expected": "引文格式",
+      "source": "5500",
+      "lookup_us": 4052,
+      "candidates": [
+        "引文格式",
+        "因文革时",
+        "阴文格式",
+        "因文革是",
+        "引文革时",
+        "殷温格式",
+        "殷温格是",
+        "因文革市",
+        "引文"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yinxiangchuban",
+      "expected": "音像出版",
+      "source": "5500",
+      "lookup_us": 6919,
+      "candidates": [
+        "音像出版",
+        "印象出版",
+        "音箱出版",
+        "音响出版",
+        "引向出版",
+        "因向出版",
+        "印象初版",
+        "因像出版",
+        "印象"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yinyang",
+      "expected": "印样",
+      "source": "5500",
+      "lookup_us": 2566,
+      "candidates": [
+        "阴阳",
+        "印样",
+        "因样",
+        "因阳",
+        "因养",
+        "淫羊",
+        "因扬",
+        "因羊",
+        "引言"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "yinzhichang",
+      "expected": "印制厂",
+      "source": "5500",
+      "lookup_us": 3985,
+      "candidates": [
+        "印制厂",
+        "因职场",
+        "引致长",
+        "引致唱",
+        "引致场",
+        "引致昌",
+        "引致厂",
+        "引致常",
+        "音质"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yinzhu",
+      "expected": "引注",
+      "source": "5500",
+      "lookup_us": 1279,
+      "candidates": [
+        "引注",
+        "银珠",
+        "因主",
+        "因著",
+        "因住",
+        "因猪",
+        "因注",
+        "因珠",
+        "因"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yizhu",
+      "expected": "译注",
+      "source": "5500",
+      "lookup_us": 1141,
+      "candidates": [
+        "遗嘱",
+        "一株",
+        "医嘱",
+        "遗珠",
+        "译注",
+        "以猪",
+        "以主",
+        "以住",
+        "一"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "yonggaotongzhi",
+      "expected": "用稿通知",
+      "source": "5500",
+      "lookup_us": 2951,
+      "candidates": [
+        "用稿通知",
+        "用高通知",
+        "用高统治",
+        "用高同志",
+        "用告通知",
+        "永高通知",
+        "用搞通知",
+        "永告通知",
+        "用"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youshengchuban",
+      "expected": "有声出版",
+      "source": "5500",
+      "lookup_us": 4779,
+      "candidates": [
+        "有声出版",
+        "优胜出版",
+        "有胜出版",
+        "有生出版",
+        "由省出版",
+        "有省出版",
+        "由生出版",
+        "有盛出版",
+        "有声"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuanchuangchuban",
+      "expected": "原创出版",
+      "source": "5500",
+      "lookup_us": 5551,
+      "candidates": [
+        "原创出版",
+        "元创出版",
+        "原创出半",
+        "原创出办",
+        "原创初版",
+        "元闯出版",
+        "原创出班",
+        "原创除斑",
+        "原创"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuegaohetong",
+      "expected": "约稿合同",
+      "source": "5500",
+      "lookup_us": 3555,
+      "candidates": [
+        "约稿合同",
+        "越高合同",
+        "月高合同",
+        "月告合同",
+        "月搞合同",
+        "月稿合同",
+        "与恶搞合同",
+        "越高河童",
+        "越高"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuegaoxin",
+      "expected": "约稿信",
+      "source": "5500",
+      "lookup_us": 3486,
+      "candidates": [
+        "约稿信",
+        "月高薪",
+        "月高新",
+        "越高薪",
+        "乐高薪",
+        "越高新",
+        "乐高新",
+        "约高薪",
+        "越高"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yufubanshui",
+      "expected": "预付版税",
+      "source": "5500",
+      "lookup_us": 4147,
+      "candidates": [
+        "预付版税",
+        "渔夫半水",
+        "渔夫板说",
+        "与浮板说",
+        "渔夫版税",
+        "渔夫办水",
+        "渔夫版水",
+        "渔夫班水",
+        "预付"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yufugaochou",
+      "expected": "预付稿酬",
+      "source": "5500",
+      "lookup_us": 2738,
+      "candidates": [
+        "预付稿酬",
+        "渔夫稿酬",
+        "与富稿酬",
+        "渔夫高愁",
+        "渔夫高臭",
+        "渔夫高仇",
+        "渔夫高筹",
+        "渔夫高丑",
+        "预付"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaibanxiuding",
+      "expected": "再版修订",
+      "source": "5500",
+      "lookup_us": 3982,
+      "candidates": [
+        "再版修订",
+        "在班修订",
+        "在办修订",
+        "在半修订",
+        "在伴修订",
+        "在板修订",
+        "在版修订",
+        "再办修订",
+        "再版"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zengding",
+      "expected": "增订",
+      "source": "5500",
+      "lookup_us": 1992,
+      "candidates": [
+        "增订",
+        "曾定",
+        "曾顶",
+        "曾丁",
+        "曾订",
+        "曾町",
+        "曾鼎",
+        "增定",
+        "曾"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zengdingban",
+      "expected": "增订版",
+      "source": "5500",
+      "lookup_us": 3689,
+      "candidates": [
+        "增订版",
+        "增定绊",
+        "曾定版",
+        "曾订版",
+        "增订办",
+        "曾定办",
+        "曾丁版",
+        "增订半",
+        "增订"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zengyin",
+      "expected": "增印",
+      "source": "5500",
+      "lookup_us": 2255,
+      "candidates": [
+        "增印",
+        "曾因",
+        "曾引",
+        "曾荫",
+        "曾饮",
+        "曾音",
+        "曾印",
+        "曾银",
+        "增益"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhangmozhu",
+      "expected": "章末注",
+      "source": "5500",
+      "lookup_us": 2933,
+      "candidates": [
+        "章末注",
+        "张末住",
+        "张默住",
+        "张末主",
+        "张默主",
+        "张末著",
+        "张默著",
+        "张魔株",
+        "张末"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhengdingdan",
+      "expected": "征订单",
+      "source": "5500",
+      "lookup_us": 3713,
+      "candidates": [
+        "征订单",
+        "正订单",
+        "郑订单",
+        "整订单",
+        "争订单",
+        "政订单",
+        "证订单",
+        "正定单",
+        "征订"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhenggaoqishi",
+      "expected": "征稿启事",
+      "source": "5500",
+      "lookup_us": 4132,
+      "candidates": [
+        "征稿启事",
+        "正告歧视",
+        "征稿歧视",
+        "征稿骑士",
+        "郑告歧视",
+        "正高歧视",
+        "正高骑士",
+        "正告骑士",
+        "征稿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhenggaotongzhi",
+      "expected": "征稿通知",
+      "source": "5500",
+      "lookup_us": 3510,
+      "candidates": [
+        "征稿通知",
+        "正高通知",
+        "整高通知",
+        "正告通知",
+        "征稿统治",
+        "征稿同志",
+        "郑告通知",
+        "正高统治",
+        "征稿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhizhangyangben",
+      "expected": "纸张样本",
+      "source": "5500",
+      "lookup_us": 5669,
+      "candidates": [
+        "纸张样本",
+        "执掌样本",
+        "智障样本",
+        "指张样本",
+        "至长样本",
+        "之长样本",
+        "之杖样本",
+        "只章样本",
+        "纸张"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhizhangyangce",
+      "expected": "纸张样册",
+      "source": "5500",
+      "lookup_us": 5392,
+      "candidates": [
+        "纸张样册",
+        "纸张洋侧",
+        "纸张洋测",
+        "纸张扬测",
+        "纸张扬侧",
+        "纸张洋册",
+        "纸张扬册",
+        "纸张阳测",
+        "纸张"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhizhigao",
+      "expected": "纸质稿",
+      "source": "5500",
+      "lookup_us": 2400,
+      "candidates": [
+        "纸质稿",
+        "直至高",
+        "制止高",
+        "直至搞",
+        "直指高",
+        "直至告",
+        "直至稿",
+        "只之高",
+        "直至"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhonggao",
+      "expected": "终稿",
+      "source": "5500",
+      "lookup_us": 1147,
+      "candidates": [
+        "忠告",
+        "终稿",
+        "中高",
+        "种高",
+        "中告",
+        "钟高",
+        "重高",
+        "终高",
+        "中"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zhongjiao",
+      "expected": "终校",
+      "source": "5500",
+      "lookup_us": 3342,
+      "candidates": [
+        "终校",
+        "中交",
+        "中教",
+        "中较",
+        "中叫",
+        "中校",
+        "中角",
+        "钟叫",
+        "中甲"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhongshenyijian",
+      "expected": "终审意见",
+      "source": "5500",
+      "lookup_us": 6522,
+      "candidates": [
+        "终审意见",
+        "终身意见",
+        "终身一件",
+        "众神意见",
+        "重申意见",
+        "终身一间",
+        "终身一见",
+        "众神一件",
+        "终身"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuangdingchang",
+      "expected": "装订厂",
+      "source": "5500",
+      "lookup_us": 5332,
+      "candidates": [
+        "装订厂",
+        "装订长",
+        "装订唱",
+        "装订场",
+        "装订常",
+        "装订昌",
+        "幢顶长",
+        "装订肠",
+        "装订"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuanyejiaodui",
+      "expected": "专业校对",
+      "source": "5500",
+      "lookup_us": 7542,
+      "candidates": [
+        "专业校对",
+        "专业教对",
+        "专业教队",
+        "专业交对",
+        "专业交队",
+        "专业叫对",
+        "专业角队",
+        "转业校对",
+        "专业级"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuanyouchubanquan",
+      "expected": "专有出版权",
+      "source": "5500",
+      "lookup_us": 6731,
+      "candidates": [
+        "转悠出版权",
+        "专有出版权",
+        "专有初版权",
+        "转悠初版权",
+        "转悠处版权",
+        "转悠除版权",
+        "转悠出版全",
+        "专有出版全",
+        "转悠"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zhuanyouxuke",
+      "expected": "专有许可",
+      "source": "5500",
+      "lookup_us": 4420,
+      "candidates": [
+        "专有许可",
+        "转悠许可",
+        "转有许可",
+        "转由许可",
+        "专有徐克",
+        "转悠徐克",
+        "转又许可",
+        "转由徐克",
+        "转悠"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuhao",
+      "expected": "注号",
+      "source": "5500",
+      "lookup_us": 1475,
+      "candidates": [
+        "煮好",
+        "注号",
+        "祝好",
+        "住好",
+        "朱好",
+        "著好",
+        "主好",
+        "猪好",
+        "住"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zhulugeshi",
+      "expected": "著录格式",
+      "source": "5500",
+      "lookup_us": 2831,
+      "candidates": [
+        "著录格式",
+        "主路格式",
+        "朱鲁格式",
+        "著陆格式",
+        "朱陆格式",
+        "主鲁格式",
+        "朱卢格式",
+        "住路格式",
+        "主路"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhushibianhao",
+      "expected": "注释编号",
+      "source": "5500",
+      "lookup_us": 4793,
+      "candidates": [
+        "注释编号",
+        "注视编号",
+        "主食编号",
+        "注视变好",
+        "注释变好",
+        "主是编号",
+        "蛀蚀编号",
+        "著实编号",
+        "注释"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuyi",
+      "expected": "注译",
+      "source": "5500",
+      "lookup_us": 1070,
+      "candidates": [
+        "注意",
+        "逐一",
+        "主义",
+        "主意",
+        "助医",
+        "注译",
+        "朱一",
+        "猪以",
+        "住"
+      ],
+      "expected_rank": 6
+    },
+    {
+      "pinyin": "zifeichuban",
+      "expected": "自费出版",
+      "source": "5500",
+      "lookup_us": 3867,
+      "candidates": [
+        "自费出版",
+        "资费出版",
+        "子非出版",
+        "自费出半",
+        "自费出办",
+        "自飞出版",
+        "自费出班",
+        "自非出版",
+        "资费"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zongfaxing",
+      "expected": "总发行",
+      "source": "5500",
+      "lookup_us": 3237,
+      "candidates": [
+        "总发行",
+        "宗发行",
+        "总发型",
+        "纵发行",
+        "宗发型",
+        "棕发行",
+        "纵发型",
+        "综发行",
+        "总阀"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zongjingxiao",
+      "expected": "总经销",
+      "source": "5500",
+      "lookup_us": 5432,
+      "candidates": [
+        "总经销",
+        "宗经销",
+        "总警校",
+        "纵经销",
+        "总警小",
+        "棕经销",
+        "总警消",
+        "总经小",
+        "总计"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zugao",
+      "expected": "组稿",
+      "source": "5500",
+      "lookup_us": 842,
+      "candidates": [
+        "组稿",
+        "组高",
+        "祖高",
+        "族高",
+        "足高",
+        "租高",
+        "组搞",
+        "组告",
+        "组"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zugaojihua",
+      "expected": "组稿计划",
+      "source": "5500",
+      "lookup_us": 3434,
+      "candidates": [
+        "组稿计划",
+        "组告计划",
+        "组高计划",
+        "祖高计划",
+        "祖告计划",
+        "组搞计划",
+        "祖皋计划",
+        "祖搞计划",
+        "组稿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zuozhebanshui",
+      "expected": "作者版税",
+      "source": "5500",
+      "lookup_us": 4350,
+      "candidates": [
+        "作者版税",
+        "作者半水",
+        "作者板说",
+        "作者版水",
+        "作者版说",
+        "作者办水",
+        "坐着半水",
+        "作者班水",
+        "作者"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zuozhedinggao",
+      "expected": "作者定稿",
+      "source": "5500",
+      "lookup_us": 3778,
+      "candidates": [
+        "作者定稿",
+        "坐着定稿",
+        "作者丁皋",
+        "作者定高",
+        "作者丁高",
+        "作者顶高",
+        "坐着定高",
+        "作者丁告",
+        "作者"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zuozhefangtan",
+      "expected": "作者访谈",
+      "source": "5500",
+      "lookup_us": 4406,
+      "candidates": [
+        "作者访谈",
+        "坐着访谈",
+        "作者方谈",
+        "做这访谈",
+        "作者防弹",
+        "坐这访谈",
+        "作者放谈",
+        "做着访谈",
+        "作者"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zuozhefenxianghui",
+      "expected": "作者分享会",
+      "source": "5500",
+      "lookup_us": 8014,
+      "candidates": [
+        "作者分享会",
+        "作者分享回",
+        "坐着分享会",
+        "作者分享辉",
+        "作者分享惠",
+        "作者分享汇",
+        "作者分享慧",
+        "作者分享毁",
+        "作者"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zuozhegaochou",
+      "expected": "作者稿酬",
+      "source": "5500",
+      "lookup_us": 2503,
+      "candidates": [
+        "作者稿酬",
+        "作者高愁",
+        "作者高臭",
+        "坐着稿酬",
+        "作者高仇",
+        "作者高筹",
+        "作者高丑",
+        "作者高抽",
+        "作者"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zuozhejiangzuo",
+      "expected": "作者讲座",
+      "source": "5500",
+      "lookup_us": 6753,
+      "candidates": [
+        "作者讲座",
+        "坐着讲座",
+        "作者将做",
+        "作者将作",
+        "做着讲座",
+        "作者将坐",
+        "做这讲座",
+        "坐这讲座",
+        "作者"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zuozhejiaogao",
+      "expected": "作者校稿",
+      "source": "5500",
+      "lookup_us": 6489,
+      "candidates": [
+        "作者校稿",
+        "作者较高",
+        "坐着较高",
+        "做这较高",
+        "坐这较高",
+        "做着较高",
+        "作者叫高",
+        "作者交高",
+        "作者"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zuozhejieshao",
+      "expected": "作者介绍",
+      "source": "5500",
+      "lookup_us": 5270,
+      "candidates": [
+        "作者介绍",
+        "坐着介绍",
+        "做这介绍",
+        "坐这介绍",
+        "做着介绍",
+        "做者介绍",
+        "作者接少",
+        "作者皆少",
+        "作者"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zuozhejiyu",
+      "expected": "作者寄语",
+      "source": "5500",
+      "lookup_us": 3622,
+      "candidates": [
+        "作者寄语",
+        "作者给予",
+        "作者基于",
+        "作者机遇",
+        "作者急于",
+        "坐着急于",
+        "坐着基于",
+        "作者觊觎",
+        "作者"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zuozheqianshouhui",
+      "expected": "作者签售会",
+      "source": "5500",
+      "lookup_us": 7800,
+      "candidates": [
+        "作者签收回",
+        "作者前收回",
+        "作者前受贿",
+        "作者钱收回",
+        "作者前受惠",
+        "作者签收贿",
+        "坐着签收回",
+        "作者签售会",
+        "作者"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zuozheqianzeng",
+      "expected": "作者签赠",
+      "source": "5500",
+      "lookup_us": 5137,
+      "candidates": [
+        "作者签赠",
+        "作者前曾",
+        "作者前增",
+        "作者前赠",
+        "作者钱增",
+        "作者签增",
+        "坐着前曾",
+        "作者千增",
+        "作者"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zuozhequanyi",
+      "expected": "作者权益",
+      "source": "5500",
+      "lookup_us": 4555,
+      "candidates": [
+        "作者权益",
+        "坐着权益",
+        "做者权益",
+        "作者权以",
+        "做这权益",
+        "坐这权益",
+        "做着权益",
+        "作者全以",
+        "作者"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zuozheshengao",
+      "expected": "作者审稿",
+      "source": "5500",
+      "lookup_us": 5707,
+      "candidates": [
+        "作者审稿",
+        "作者身高",
+        "坐着身高",
+        "作者身告",
+        "作者甚高",
+        "做这身高",
+        "坐着审稿",
+        "坐这身高",
+        "作者"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zuozheshouquan",
+      "expected": "作者授权",
+      "source": "5500",
+      "lookup_us": 3785,
+      "candidates": [
+        "作者授权",
+        "坐着授权",
+        "做这授权",
+        "坐这授权",
+        "做着授权",
+        "作者手权",
+        "作者受全",
+        "作者手全",
+        "作者"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zuozhezengshu",
+      "expected": "作者赠书",
+      "source": "5500",
+      "lookup_us": 2739,
+      "candidates": [
+        "作者赠书",
+        "作者曾数",
+        "作者曾书",
+        "作者曾属",
+        "作者综述",
+        "作者曾树",
+        "作者曾输",
+        "作者曾熟",
+        "作者"
+      ],
+      "expected_rank": 1
+    }
+  ]
+}
