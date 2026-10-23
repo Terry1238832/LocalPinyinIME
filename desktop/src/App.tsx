@@ -22,6 +22,21 @@ const navigation: { id: PageId; label: string; icon: IconName; keywords: string;
   { id: 'about', label: '关于', icon: 'about', keywords: 'guanyu gy 版本 数据 about version' },
 ];
 
+function BootScreen() {
+  return <div className="boot" role="status" aria-label="正在打开设置">
+    <div className="boot-side" aria-hidden="true">
+      <div className="boot-brand"><span className="boot-mark" />本地拼音</div>
+      <div className="boot-search" />
+      <ol className="boot-nav">{[1, 2, 3, 4, 5, 6].map(number => <li key={number}>{number}<span /></li>)}</ol>
+    </div>
+    <div className="boot-main">
+      <div className="boot-line" aria-hidden="true"><span className="boot-pinyin">she<i>'</i>zhi</span><span className="boot-caret" /></div>
+      <div className="boot-cands" aria-hidden="true"><span><b>1</b>设置</span><span><b>2</b>摄制</span><span><b>3</b>社址</span></div>
+      <p className="boot-note">正在读取设置和词库…</p>
+    </div>
+  </div>;
+}
+
 export default function App() {
   const [page, setPage] = useState<PageId>('appearance');
   const [state, setState] = useState<AppState | null>(() => window.localPinyin?.initialState ?? null);
@@ -192,6 +207,9 @@ export default function App() {
   const runtimeLabel = !state ? '正在连接' : runtimeActive ? (state.runtime.mode.toLowerCase() === 'english' ? '正在输入 · 英文' : '正在输入 · 中文') : '输入法未在使用';
 
   const english = !!state && state.runtime.mode.toLowerCase() === 'english';
+  // Until the settings arrive: the same loading screen index.html paints
+  // with the window, so taking over from it does not flicker.
+  if (!state && loading) return <BootScreen />;
   return <CandidateStyleContext.Provider value={state?.settings.candidateStyle}><div className="app-shell">
     <a className="skip-link" href="#app-content" onClick={event => { event.preventDefault(); content.current?.focus(); }}>跳到内容</a>
     <aside className="sidebar" id="app-sidebar">

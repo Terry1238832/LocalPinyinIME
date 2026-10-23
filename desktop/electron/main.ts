@@ -1,6 +1,7 @@
 import { app, BrowserWindow, dialog, ipcMain, nativeTheme, protocol, session, shell } from 'electron';
 import { execFile } from 'node:child_process';
 import { mkdir, readFile } from 'node:fs/promises';
+import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { candidateStyleIds, clipboardRetentionChoices, type AppState, type Settings } from '../src/types';
 import { exportBackup, inspectBackup, importBackup } from './backup';
@@ -76,9 +77,29 @@ async function state(): Promise<AppState> {
   const result = await bridge<AppState>('state');
   latestSettings = result.settings;
   nativeTheme.themeSource = result.settings.theme;
-  window?.setBackgroundColor(nativeTheme.shouldUseDarkColors ? '#0f1012' : '#eceef1');
+  window?.setBackgroundColor(nativeTheme.shouldUseDarkColors ? '#0f131b' : '#f4f3ef');
   panel?.window?.setBackgroundColor(nativeTheme.shouldUseDarkColors ? '#16181c' : '#f6f7f9');
   return result;
+}
+// One read at a time: the window's first request takes the read started at
+// launch instead of starting another.
+let pendingState: Promise<AppState> | null = null;
+function sharedState(): Promise<AppState> {
+  if (!pendingState) {
+    pendingState = state();
+    const clear = () => { pendingState = null; };
+    pendingState.then(clear, clear);
+  }
+  return pendingState;
+}
+// The theme, read straight from settings.json so the window and its loading
+// screen open in the right colors before the full settings arrive.
+function savedTheme(): 'system' | 'light' | 'dark' {
+  try {
+    const text = readFileSync(path.join(dataRoot, 'LocalPinyinIME', 'settings.json'), 'utf8');
+    const match = /"theme"\s*:\s*"(system|light|dark)"/.exec(text);
+    return (match?.[1] as 'system' | 'light' | 'dark') ?? 'system';
+  } catch { return 'system'; }
 }
 async function currentSettings(): Promise<Settings> {
   if (latestSettings) { void state().catch(() => undefined); return latestSettings; }
@@ -87,7 +108,7 @@ async function currentSettings(): Promise<Settings> {
 const dataDirectory = () => bootstrap?.dataDirectory ?? path.join(dataRoot, 'LocalPinyinIME');
 function installHandlers() {
   ipcMain.on('localpinyin:bootstrap', event => { event.returnValue = fromSettings(event) ? bootstrap : null; });
-  handle('state', state);
+  handle('state', sharedState);
   const fuzzyIds = ['z-zh', 'c-ch', 's-sh', 'n-l', 'f-h', 'r-l', 'an-ang', 'en-eng', 'in-ing', 'ian-iang', 'uan-uang'];
   const domainIds = ['coding', 'work', 'math', 'study', 'daily', 'games'];
   const imeSwitchKeys = ['alt+capslock', 'ctrl+capslock', 'ctrl+alt+space', 'off'];
@@ -242,9 +263,10 @@ async function openSettings() {
     if (!hidden) { if (window.isMinimized()) window.restore(); window.show(); window.focus(); }
     return;
   }
-  bootstrap = await state().catch(() => bootstrap);
+  // Shown at once: the page draws its loading screen first and asks for the
+  // settings itself, so nothing here waits for the native bridge.
   const created = new BrowserWindow({ width: 1160, height: 800, minWidth: 920, minHeight: 680,
-    frame: false, show: false, backgroundColor: nativeTheme.shouldUseDarkColors ? '#0f1012' : '#eceef1', title: '本地拼音设置',
+    frame: false, show: !hidden, backgroundColor: nativeTheme.shouldUseDarkColors ? '#0f131b' : '#f4f3ef', title: '本地拼音设置',
     icon: iconPath, webPreferences: {
       preload: path.join(__dirname, 'preload.cjs'), contextIsolation: true, sandbox: true,
       nodeIntegration: false, webSecurity: true, backgroundThrottling: !hidden, offscreen: hidden, spellcheck: false,
@@ -257,7 +279,6 @@ async function openSettings() {
     if (window === created) window = null;
     void panel?.settingsClosed();
   });
-  created.once('ready-to-show', () => { if (!hidden) created.show(); });
   await created.loadURL('app://local/index.html');
 }
 const mediaTypes: Record<string, string> = { '.png': 'image/png', '.gif': 'image/gif', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg',
@@ -278,14 +299,19 @@ else {
     else if (argv.includes('--first-run')) { if (latestSettings?.clipboardHistory === 'ask') void openSettings(); }
     else void openSettings();
   });
-  // Read the settings while Electron starts up rather than after it: the
-  // window waits for them, and the two together are most of the launch.
+  // Read the settings while Electron starts up; the window opens without
+  // waiting for them and its first request takes this read.
   const initialState = bridge<AppState>('state');
   initialState.catch(() => undefined);
+  pendingState = initialState.then(result => {
+    bootstrap = result;
+    latestSettings = result.settings;
+    if (app.isReady()) nativeTheme.themeSource = result.settings.theme;
+    return result;
+  });
+  pendingState.then(() => { pendingState = null; }, () => { pendingState = null; });
   app.whenReady().then(async () => {
-    bootstrap = await initialState;
-    latestSettings = bootstrap.settings;
-    nativeTheme.themeSource = bootstrap.settings.theme;
+    nativeTheme.themeSource = savedTheme();
     const dist = path.join(app.getAppPath(), 'dist');
     protocol.handle('app', async request => {
       try {
@@ -318,6 +344,11 @@ else {
         !details.url.startsWith('blob:app://local/') });
     });
     installHandlers();
+    const settingsFirst = !initialPanel && !process.argv.includes('--first-run');
+    if (settingsFirst) void openSettings();
+    bootstrap = await initialState;
+    latestSettings = bootstrap.settings;
+    nativeTheme.themeSource = bootstrap.settings.theme;
     panel = new Panel({ dataDirectory: dataDirectory(), userData: app.getPath('userData'), bridge,
       settings: currentSettings, preload: path.join(__dirname, 'panel-preload.cjs'), icon: iconPath, hidden,
       settingsOpen: () => !!window, openSettings: () => void openSettings(), quit: () => app.quit() });
@@ -348,7 +379,6 @@ else {
       // Started by the installer to ask about the clipboard: already answered.
       if (!panel.keepsApp()) app.quit();
     } else {
-      await openSettings();
       // Measurements of the packaged app (QA headless without a test feed) stay offline.
       if (!hidden || process.env.LOCALPINYINIME_UPDATE_FEED) scheduleAutoCheck();
     }

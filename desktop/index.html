@@ -5,9 +5,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="light dark" />
     <title>Local Pinyin · 设置</title>
+    <!-- The loading screen is plain HTML and CSS so it paints with the
+         window, before the app's script has loaded: the sidebar's outline
+         (a numbered candidate list) and she'zhi being typed into 设置.
+         App.tsx draws the same markup (BootScreen) until the settings
+         arrive. The colors follow the window's theme (prefers-color-scheme
+         tracks the theme the main process set from settings.json). -->
+    <style>
+      html, body { height: 100%; margin: 0; }
+      .boot { --paper: #F4F3EF; --ink: #16171B; --ink-2: #4F525A; --ink-3: #6B6E76; --rule: rgba(28, 25, 20, .07); --bar: rgba(28, 25, 20, .07); --accent: #1A6FE8; --sheet: #FFFFFF;
+        position: fixed; inset: 0; display: grid; grid-template-columns: 232px minmax(0, 1fr); background: var(--paper); color: var(--ink);
+        font: 14px/1.55 "Segoe UI Variable Text", "Segoe UI", "Microsoft YaHei UI", "Microsoft YaHei", system-ui, sans-serif; -webkit-font-smoothing: antialiased; user-select: none; }
+      @media (prefers-color-scheme: dark) {
+        .boot { --paper: #0F131B; --ink: #E9ECF2; --ink-2: #A1AABB; --ink-3: #7C879B; --rule: rgba(148, 163, 184, .09); --bar: rgba(148, 163, 184, .10); --accent: #2A6FE0; --sheet: #171D28; }
+      }
+      .boot::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 40px; -webkit-app-region: drag; }
+      .boot-side { padding: 0 12px; border-right: 1px solid var(--rule); }
+      .boot-brand { display: flex; align-items: center; gap: 10px; height: 60px; padding: 0 8px; font: 600 14px/1 "Segoe UI Variable Display", "Segoe UI", "Microsoft YaHei UI", sans-serif; }
+      .boot-mark { position: relative; width: 24px; height: 24px; border-radius: 7px; background: var(--accent); }
+      .boot-mark::after { content: ""; position: absolute; left: 14px; top: 6px; width: 2px; height: 12px; border-radius: 1px; background: #fff; }
+      .boot-search { height: 34px; margin: 2px 0 24px; border-radius: 8px; background: var(--bar); }
+      .boot-nav { margin: 0; padding: 0; list-style: none; }
+      .boot-nav li { display: flex; align-items: center; gap: 10px; height: 36px; margin: 1px 0; padding: 0 10px; font: 600 11px/1 "Segoe UI", sans-serif; color: var(--ink-3); }
+      .boot-nav li span { height: 9px; border-radius: 4px; background: var(--bar); }
+      .boot-nav li:nth-child(1) span { width: 30px; } .boot-nav li:nth-child(2) span { width: 30px; } .boot-nav li:nth-child(3) span { width: 30px; }
+      .boot-nav li:nth-child(4) span { width: 58px; } .boot-nav li:nth-child(5) span { width: 30px; } .boot-nav li:nth-child(6) span { width: 30px; }
+      .boot-nav li:nth-child(4) { margin-top: 30px; }
+      .boot-main { display: grid; place-content: center; justify-items: start; gap: 22px; padding-bottom: 6vh; }
+      .boot-line { display: flex; align-items: center; height: 30px; font-size: 20px; letter-spacing: .02em; }
+      .boot-pinyin { display: inline-block; overflow: hidden; white-space: nowrap; padding-bottom: 4px;
+        background: radial-gradient(circle, var(--ink-3) .8px, transparent 1px) bottom left / 5px 2px repeat-x;
+        max-width: 3.3em; animation: boot-type 2.6s steps(7) infinite; }
+      .boot-pinyin i { font-style: normal; color: var(--ink-3); }
+      .boot-caret { width: 2px; height: 22px; margin-left: 2px; border-radius: 1px; background: var(--accent); animation: boot-blink 1s steps(1) infinite; }
+      .boot-cands { display: flex; align-items: center; gap: 4px; padding: 5px; border-radius: 12px; background: var(--sheet); border: 1px solid var(--rule);
+        box-shadow: 0 10px 30px -12px rgba(15, 23, 42, .28); font-size: 18px; animation: boot-cands 2.6s ease-out infinite; }
+      .boot-cands span { display: inline-flex; align-items: baseline; gap: 6px; padding: 4px 12px 4px 9px; border-radius: 8px; white-space: nowrap; }
+      .boot-cands b { font: 600 11px/1 "Segoe UI", sans-serif; color: var(--ink-3); }
+      .boot-cands span:first-child { animation: boot-pick 2.6s ease-out infinite; }
+      .boot-cands span:first-child b { animation: boot-pick-number 2.6s ease-out infinite; }
+      .boot-note { margin: 0; font-size: 12px; color: var(--ink-3); }
+      /* The width grows letter by letter, so the caret follows the typing. */
+      @keyframes boot-type { 0% { max-width: 0; } 30%, 92% { max-width: 3.3em; } 100% { max-width: 0; } }
+      @keyframes boot-blink { 50% { opacity: 0; } }
+      @keyframes boot-cands { 0%, 32% { opacity: 0; transform: translateY(4px); } 40%, 88% { opacity: 1; transform: none; } 96%, 100% { opacity: 0; } }
+      @keyframes boot-pick { 0%, 52% { background: transparent; color: inherit; } 60%, 88% { background: var(--accent); color: #fff; } 100% { background: transparent; color: inherit; } }
+      @keyframes boot-pick-number { 0%, 52% { color: var(--ink-3); } 60%, 88% { color: #fff; } 100% { color: var(--ink-3); } }
+      @media (prefers-reduced-motion: reduce) {
+        .boot *, .boot *::before, .boot *::after { animation: none !important; }
+        .boot-cands span:first-child { background: var(--accent); color: #fff; }
+        .boot-cands span:first-child b { color: #fff; }
+      }
+      @media (max-width: 980px) { .boot { grid-template-columns: 208px minmax(0, 1fr); } }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div class="boot" role="status" aria-label="正在打开设置">
+        <div class="boot-side" aria-hidden="true">
+          <div class="boot-brand"><span class="boot-mark"></span>本地拼音</div>
+          <div class="boot-search"></div>
+          <ol class="boot-nav"><li>1<span></span></li><li>2<span></span></li><li>3<span></span></li><li>4<span></span></li><li>5<span></span></li><li>6<span></span></li></ol>
+        </div>
+        <div class="boot-main">
+          <div class="boot-line" aria-hidden="true"><span class="boot-pinyin">she<i>'</i>zhi</span><span class="boot-caret"></span></div>
+          <div class="boot-cands" aria-hidden="true"><span><b>1</b>设置</span><span><b>2</b>摄制</span><span><b>3</b>社址</span></div>
+          <p class="boot-note">正在读取设置和词库…</p>
+        </div>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

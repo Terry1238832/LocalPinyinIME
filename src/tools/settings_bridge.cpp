@@ -183,6 +183,50 @@ bool english_ime_shown(const InputModeOptions& input) {
     return listed < 0 ? input.english_ime : listed == 1;
 }
 
+// The built-in dictionary changes only with an update. Its counts are kept
+// in the temporary folder (never the user's data folder: opening the settings
+// writes nothing there), keyed by the dictionary's place and each file's size
+// and time, so the settings do not count a quarter of a million rows on every
+// launch. A cleaned temporary folder only means counting once more.
+DictionaryCatalogStats dictionary_stats(const std::filesystem::path& directory) {
+    std::string key = wide_to_utf8(directory.wstring()) + '|';
+    for (const wchar_t* name : {L"standard_zh_pinyin.tsv", L"core_zh_pinyin.tsv", L"local_core_zh_pinyin.tsv"}) {
+        std::error_code size_error, time_error;
+        const auto size = std::filesystem::file_size(directory / name, size_error);
+        const auto time = std::filesystem::last_write_time(directory / name, time_error);
+        key += std::to_string(size_error ? 0 : size) + ':' +
+               std::to_string(time_error ? 0 : static_cast<long long>(time.time_since_epoch().count())) + ';';
+    }
+    wchar_t temp[MAX_PATH + 1]{};
+    const DWORD temp_length = GetTempPathW(MAX_PATH + 1, temp);
+    const std::filesystem::path cache_directory = std::filesystem::path(std::wstring(temp, temp_length)) / L"LocalPinyinIME";
+    const std::filesystem::path cache = cache_directory / L"dictionary_counts.txt";
+    {
+        std::ifstream in(cache, std::ios::binary);
+        std::string saved_key;
+        DictionaryCatalogStats stats;
+        if (in && std::getline(in, saved_key) && saved_key == key &&
+            (in >> stats.standard_entries >> stats.core_entries >> stats.local_core_entries >> stats.total_unique_entries) &&
+            stats.total_unique_entries > 0)
+            return stats;
+    }
+    const auto stats = DictionaryCatalog::count(directory.wstring());
+    std::error_code created;
+    if (temp_length > 0) std::filesystem::create_directories(cache_directory, created);
+    if (stats.total_unique_entries > 0 && temp_length > 0 && !created) {
+        const std::filesystem::path partial = cache.wstring() + L"." + std::to_wstring(GetCurrentProcessId()) + L".partial";
+        {
+            std::ofstream out(partial, std::ios::binary | std::ios::trunc);
+            out << key << '\n' << stats.standard_entries << ' ' << stats.core_entries << ' '
+                << stats.local_core_entries << ' ' << stats.total_unique_entries << '\n';
+        }
+        std::error_code ignored;
+        std::filesystem::rename(partial, cache, ignored);
+        if (ignored) std::filesystem::remove(partial, ignored);
+    }
+    return stats;
+}
+
 std::string settings_json(const SettingsStore& store) {
     const auto candidate = store.load_candidate_options();
     const auto input = store.load_input_mode_options();
@@ -541,7 +585,7 @@ std::string run(const std::vector<std::wstring>& args) {
     if (command == L"state") {
         require_count(args, 1);
         // Counted rather than loaded: the settings window waits for this.
-        const auto stats = DictionaryCatalog::count((resource_directory() / L"dictionary").wstring());
+        const auto stats = dictionary_stats(resource_directory() / L"dictionary");
         require(stats.total_unique_entries > 0, L"无法读取内置词库，请重新安装本地拼音。");
         const auto user = read_user_lexicon(user_path);
         UserLearning learning;

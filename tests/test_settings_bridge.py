@@ -71,6 +71,8 @@ class SettingsBridgeContract(unittest.TestCase):
         self.assertIs(state["settings"]["predictionEnabled"], False)
         self.assertGreater(state["dictionary"]["total"], 1000)
         self.assertTrue(all(state["dictionary"][key] > 0 for key in ("core", "local", "standard")))
+        # The second read takes the kept counts (in the temporary folder) and agrees.
+        self.assertEqual(self.call("state")["dictionary"], state["dictionary"])
         self.assertEqual(state["learning"], {"count": 0, "capacity": 2048})
         self.assertFalse(state["runtime"]["available"])
         self.assertEqual(Path(state["dataDirectory"]), self.data)
