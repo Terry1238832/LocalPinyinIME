@@ -144,7 +144,7 @@ set(LOCALPINYIN_INNER_INSTALLER "" CACHE FILEPATH "Inno Setup package embedded i
 set(LOCALPINYIN_PAYLOAD_BYTES "" CACHE STRING "Total size of the installed files, for the progress bar")
 add_executable(LocalPinyinInstaller WIN32 src/installer/installer_shell.cpp src/installer/installer.rc
     src/installer/installer.manifest)
-target_link_libraries(LocalPinyinInstaller PRIVATE pinyin_ui dwmapi gdiplus shell32 ole32 oleaut32 uuid)
+target_link_libraries(LocalPinyinInstaller PRIVATE pinyin_ui dwmapi gdiplus shell32 ole32 oleaut32 uuid advapi32 user32)
 # The execution level comes from installer.manifest (highestAvailable), not
 # the linker's default asInvoker.
 target_link_options(LocalPinyinInstaller PRIVATE /MANIFESTUAC:NO)

@@ -1,10 +1,14 @@
 // A modern one-window installer front end. The proven Inno Setup package is
 // embedded as a resource and run silently (it copies, registers and enables
 // the input method); this window only presents the flow:
-// welcome -> progress -> finished (or failed, with retry and log).
+// welcome -> progress -> finished (or failed, with retry and log). Over an
+// installed version it is an update: programs already open keep the old input
+// method until they restart, so it finishes by offering to restart Windows now
+// or later.
 //
 //   LocalPinyinInstaller.exe              install
 //   LocalPinyinInstaller.exe --preview    simulate an installation (no changes)
+//   LocalPinyinInstaller.exe --preview-update   simulate an update (no changes)
 //   LocalPinyinInstaller.exe --capture D  render every state to PNG files in D
 //
 // The manifest asks for the highest rights the user has (highestAvailable):
@@ -141,6 +145,34 @@ bool open_as_desktop_user(const std::wstring& file, const std::wstring& director
     return SUCCEEDED(result);
 }
 
+// The version already installed (setup records it in Windows' list of
+// installed programs), or empty before a first installation.
+std::wstring installed_version() {
+    wchar_t buffer[64]{};
+    DWORD size = sizeof(buffer);
+    if (RegGetValueW(HKEY_LOCAL_MACHINE,
+                     L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\{7C0B4B75-80B0-4E1F-A4A5-4D49A5440D8A}_is1",
+                     L"DisplayVersion", RRF_RT_REG_SZ | RRF_SUBKEY_WOW6464KEY, nullptr, buffer, &size) != ERROR_SUCCESS)
+        return L"";
+    return buffer;
+}
+
+// Restarts Windows the ordinary way: programs with unsaved work still ask
+// first, and programs registered for it open again afterwards.
+bool restart_windows() {
+    HANDLE token = nullptr;
+    if (OpenProcessToken(GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &token)) {
+        TOKEN_PRIVILEGES privileges{};
+        privileges.PrivilegeCount = 1;
+        privileges.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;
+        if (LookupPrivilegeValueW(nullptr, SE_SHUTDOWN_NAME, &privileges.Privileges[0].Luid))
+            AdjustTokenPrivileges(token, FALSE, &privileges, 0, nullptr, nullptr);
+        CloseHandle(token);
+    }
+    return ExitWindowsEx(EWX_REBOOT | EWX_RESTARTAPPS, SHTDN_REASON_MAJOR_APPLICATION | SHTDN_REASON_MINOR_INSTALLATION |
+                                                       SHTDN_REASON_FLAG_PLANNED) != FALSE;
+}
+
 std::uint64_t directory_bytes(const std::wstring& directory) {
     std::uint64_t total = 0;
     std::error_code error;
@@ -152,8 +184,11 @@ std::uint64_t directory_bytes(const std::wstring& directory) {
 
 class InstallerWindow {
 public:
-    explicit InstallerWindow(bool preview)
-        : preview_(preview), elevated_(!preview && process_elevated()), palette_(palette_for(system_dark())) {}
+    // `previous`: the version being updated (the preview and the captures
+    // pass one; a real run reads the installed one).
+    explicit InstallerWindow(bool preview, std::wstring previous = L"")
+        : preview_(preview), elevated_(!preview && process_elevated()), palette_(palette_for(system_dark())),
+          previous_version_(preview ? std::move(previous) : installed_version()) {}
 
     int run(HINSTANCE instance, int show) {
         instance_ = instance;
@@ -287,19 +322,32 @@ private:
         switch (stage_) {
             case Stage::Welcome:
                 title = L"本地拼音";
-                subtitle = std::wstring(L"离线的中文拼音输入法 · 版本 ") + LOCALPINYINIME_VERSION_NUMERIC_STRING;
-                primary = L"立即安装";
+                subtitle = !updating() ? std::wstring(L"离线的中文拼音输入法 · 版本 ") + LOCALPINYINIME_VERSION_NUMERIC_STRING
+                    : previous_version_ == LOCALPINYINIME_VERSION_NUMERIC_STRING
+                        ? std::wstring(L"重新安装版本 ") + LOCALPINYINIME_VERSION_NUMERIC_STRING
+                        : L"当前版本 " + previous_version_ + L"，将更新到 " + LOCALPINYINIME_VERSION_NUMERIC_STRING;
+                primary = updating() ? L"立即更新" : L"立即安装";
                 break;
             case Stage::Installing:
-                title = L"正在安装";
+                title = updating() ? L"正在更新" : L"正在安装";
                 subtitle = waiting_for_elevation() ? L"请在系统弹出的窗口中选择“是”，允许安装输入法。"
                                                    : L"请稍候，安装期间可以继续使用电脑。";
                 break;
             case Stage::Done:
-                title = L"安装完成";
-                subtitle = L"按 Win + 空格 切换到本地拼音。已打开的程序需重新打开。";
-                primary = L"开始使用";
-                secondary = L"完成";
+                if (updating()) {
+                    // Programs already open keep the old input method until
+                    // they restart: offer to restart Windows, now or later.
+                    title = L"更新完成";
+                    subtitle = restart_failed_ ? L"没能重启，请保存手头的工作后手动重启电脑。"
+                                               : L"重启电脑后，所有程序都会用上新版本。";
+                    primary = L"立即重启";
+                    secondary = L"稍后重启";
+                } else {
+                    title = L"安装完成";
+                    subtitle = L"按 Win + 空格 切换到本地拼音。已打开的程序需重新打开。";
+                    primary = L"开始使用";
+                    secondary = L"完成";
+                }
                 break;
             case Stage::Failed:
                 title = L"安装没有完成";
@@ -570,7 +618,12 @@ private:
             ShowWindow(hwnd_, SW_MINIMIZE);
         } else if (hit == Hit::Primary) {
             if (stage_ == Stage::Welcome || stage_ == Stage::Failed) start_install();
-            else if (stage_ == Stage::Done) {
+            else if (stage_ == Stage::Done && updating()) {
+                // Windows asks programs with unsaved work first; the window
+                // stays if the restart cannot start.
+                if (preview_ || restart_windows()) DestroyWindow(hwnd_);
+                else { restart_failed_ = true; InvalidateRect(hwnd_, nullptr, FALSE); }
+            } else if (stage_ == Stage::Done) {
                 if (!preview_) open(install_dir() + L"\\LocalPinyinSettings.exe", install_dir());
                 DestroyWindow(hwnd_);
             }
@@ -622,7 +675,8 @@ private:
                 }
                 break;
             case WM_KEYDOWN:
-                if (wparam == VK_RETURN && has_primary()) activate(Hit::Primary);
+                // Enter never restarts the computer: that takes a click.
+                if (wparam == VK_RETURN && has_primary() && !(stage_ == Stage::Done && updating())) activate(Hit::Primary);
                 if (wparam == VK_ESCAPE && stage_ != Stage::Installing) DestroyWindow(hwnd_);
                 return 0;
             case kPreparedMessage:
@@ -692,6 +746,9 @@ private:
     std::atomic<std::uint64_t> copied_bytes_{0};
     std::wstring failure_;
     std::wstring log_path_;
+    std::wstring previous_version_;
+    bool restart_failed_ = false;
+    bool updating() const { return !previous_version_.empty(); }
 };
 
 bool capture(const std::filesystem::path& directory) {
@@ -700,12 +757,13 @@ bool capture(const std::filesystem::path& directory) {
     if (Gdiplus::GdiplusStartup(&token, &startup, nullptr) != Gdiplus::Ok) return false;
     std::filesystem::create_directories(directory);
     bool ok = true;
-    const struct { const wchar_t* name; Stage stage; double progress; } states[] = {
-        {L"welcome", Stage::Welcome, 0}, {L"installing", Stage::Installing, 0.46},
-        {L"done", Stage::Done, 1}, {L"failed", Stage::Failed, 0}};
+    const struct { const wchar_t* name; Stage stage; double progress; const wchar_t* previous; } states[] = {
+        {L"welcome", Stage::Welcome, 0, L""}, {L"installing", Stage::Installing, 0.46, L""},
+        {L"done", Stage::Done, 1, L""}, {L"failed", Stage::Failed, 0, L""},
+        {L"update-welcome", Stage::Welcome, 0, L"1.0.0"}, {L"updated", Stage::Done, 1, L"1.0.0"}};
     for (const bool dark : {false, true}) {
         for (const auto& state : states) {
-            InstallerWindow window(true);
+            InstallerWindow window(true, state.previous);
             window.set_palette(dark);
             window.set_capture_state(state.stage, state.progress, 144);
             const int width = window.scale(InstallerWindow::kWidth), height = window.scale(InstallerWindow::kHeight);
@@ -745,7 +803,9 @@ int WINAPI wWinMain(HINSTANCE instance, HINSTANCE, PWSTR, int show) {
     if (argc == 3 && std::wstring(argv[1]) == L"--capture") {
         result = capture(argv[2]) ? 0 : 1;
     } else {
-        InstallerWindow window(argc >= 2 && std::wstring(argv[1]) == L"--preview");
+        const std::wstring mode = argc >= 2 ? argv[1] : L"";
+        InstallerWindow window(mode == L"--preview" || mode == L"--preview-update",
+                               mode == L"--preview-update" ? L"1.0.0" : L"");
         result = window.run(instance, show);
     }
     LocalFree(argv);
