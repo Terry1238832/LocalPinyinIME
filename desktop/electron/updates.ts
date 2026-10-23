@@ -4,8 +4,7 @@
 // online; this reads release information and downloads an installer, and
 // sends nothing about the user. Requests go through a session of their own
 // that only reaches the project's release endpoints.
-import { app, session, type Session } from 'electron';
-import { spawn } from 'node:child_process';
+import { app, session, shell, type Session } from 'electron';
 import { createHash } from 'node:crypto';
 import { createWriteStream } from 'node:fs';
 import { mkdir, readFile, rename, rm, writeFile } from 'node:fs/promises';
@@ -202,13 +201,16 @@ export async function downloadUpdate(): Promise<UpdateStatus> {
   return status;
 }
 
-// Starts the verified installer (it asks for administrator rights itself) and
-// closes the settings app so its files can be replaced.
+// Starts the verified installer and closes the settings app so its files can
+// be replaced. The installer needs administrator rights: it is opened through
+// the shell (as a double-click would), which shows the UAC prompt. Starting it
+// as a child process fails with EACCES (ERROR_ELEVATION_REQUIRED) instead.
+// Declining the prompt keeps the settings app open with a message.
 export async function installUpdate(quit: () => void): Promise<{ started: boolean }> {
   if (status.state !== 'ready' || !installerPath) throw new Error('更新还没有下载完成。');
   if (dryRun) return { started: true };
-  const child = spawn(installerPath, [], { detached: true, stdio: 'ignore', windowsHide: false });
-  child.unref();
+  const failure = await shell.openPath(installerPath);
+  if (failure) throw new Error(`安装程序没有启动（${failure}）。可以再点一次“安装”，或在“${path.dirname(installerPath)}”里双击安装包。`);
   setTimeout(quit, 400);
   return { started: true };
 }
