@@ -1,0 +1,63 @@
+{
+  "batch": "lexicon_batch_264",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "网络小说用语",
+  "author": "continuous-lexicon-author",
+  "review_scope": "One AI author reads every selected expression and full-pinyin key in context, then records positional character choices. Structural reconstruction is not an independent linguistic editor. Individually authored common vocabulary; no third-party lexicon or test-derived words.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 500,
+  "sha256": "05d2c2dc7bad58a6f25d70090cf9a227d96cbfa485ea62e42c14b452fb128f9b",
+  "authoring_files_sha256": {
+    "lexicon_batch_264.authoring.json": "a9ea07a420b8f3fe2ff611c8f728958c70edea7e96fa325ccd2ecf466d5be963",
+    "batch264_authored_draft.txt": "d059f8e1e0ed27392af90619cd300b6cd40c70c91e6e0fe438f1203ecfe1ba5a",
+    "batch264_pronunciation_review.tsv": "e19391b80110f66c756b132eda8d9f054440716ea479721a61896155b590da43"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "9ca40d1ded2e2d626744521482d1ee67d9f9d8f89fb30e0507cba9f1abe1144a",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "b264_6000": 6000,
+    "b264_5500": 5500,
+    "b264_5000": 5000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "b264_5000": 1,
+    "b264_5500": 499
+  },
+  "length_distribution": {
+    "2": 27,
+    "4": 353,
+    "3": 105,
+    "5": 15
+  },
+  "authoring_rejections": [],
+  "mandatory_polyphone_reviews": 336,
+  "manual_pronunciation_overrides": {
+    "小说前传": "xiaoshuoqianzhuan",
+    "小说后传": "xiaoshuohouzhuan",
+    "章节重发": "zhangjiechongfa",
+    "重写开头": "chongxiekaitou",
+    "重写大纲": "chongxiedagang"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 5,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}
