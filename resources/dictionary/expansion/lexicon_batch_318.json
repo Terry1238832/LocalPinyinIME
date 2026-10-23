@@ -8,11 +8,11 @@
   "review_scope": "One AI author reads every selected expression and full-pinyin key in context, then records positional character choices. Structural reconstruction is not an independent linguistic editor. Individually authored common vocabulary; no third-party lexicon or test-derived words.",
   "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
   "new_entries": 338,
-  "sha256": "c28a13630e4061dcd62b02b0868346aed7efe8db19e2385640aae00c8b771db7",
+  "sha256": "0243821db61fe4e58750fcb0cbe0a584877ee9aa5978a3ba91515c851b66d296",
   "authoring_files_sha256": {
     "lexicon_batch_318.authoring.json": "88e3c67e98e81adea44f00dd8d97e8556e5f3ee49513b88e6a0bd1eaec31d7d3",
     "batch318_authored_draft.txt": "43804a606569b25d3d331ff8324a16d7271f8fa1d99c99694b4a743c2a6bab9f",
-    "batch318_pronunciation_review.tsv": "93e45b2d3533f58d97b12689442a01fd44927898b42c165b8fccbf05e6cf256e"
+    "batch318_pronunciation_review.tsv": "ccea092301ef27c7a4680c0cde2aea97eadcc3f11fc8e2c476ba5b4bdf07c70e"
   },
   "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
   "supporting_tools_sha256": {
@@ -57,10 +57,20 @@
     "密码泄露": "mimaxielu",
     "通讯录泄露": "tongxunluxielu",
     "验证码泄露": "yanzhengmaxielu",
-    "泄露风险": "xielufengxian"
+    "泄露风险": "xielufengxian",
+    "恶意弹窗": "eyitanchuang"
   },
   "reading_variant_choices": {},
   "semantic_pronunciation_corrections": 7,
   "line_endings": "UTF-8 LF",
-  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded.",
+  "correction_history": [
+    {
+      "round": 33,
+      "reason": "Contextual popup-window pronunciation 弹=tan; no words or weights added or removed",
+      "previous_frozen_batch_sha256": "c28a13630e4061dcd62b02b0868346aed7efe8db19e2385640aae00c8b771db7",
+      "current_batch_sha256": "0243821db61fe4e58750fcb0cbe0a584877ee9aa5978a3ba91515c851b66d296",
+      "ledger": "round33_corrections.json"
+    }
+  ]
 }
