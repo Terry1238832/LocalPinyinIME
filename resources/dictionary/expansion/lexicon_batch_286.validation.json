@@ -1,0 +1,9032 @@
+{
+  "batch": "lexicon_batch_286",
+  "evaluation": "native_engine_candidate_coverage",
+  "evaluated_at_utc": "2026-10-23T16:07:59.925309+00:00",
+  "engine_sha256": "f386e80d11e8702d30292f79af26e7f43f879aeb68e65fa7679b117eef673734",
+  "resource_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "8462b4650277a61827fd10988f714c8cb52e1b11fbe71d50d6f21c14f47bc914",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+    "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+    "continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e"
+  },
+  "frozen_batch_sha256": "d9150c47c3dd079bf668f116d586c24c768bdc8ef8fb82f7442f62c1032ab982",
+  "personal_data_isolated": true,
+  "expected_answers_learned": false,
+  "summary": {
+    "cases": 500,
+    "top1_correct": 465,
+    "top9_present": 500,
+    "top1_percent": 93.0,
+    "top9_percent": 100.0,
+    "character_error_rate": 0.0307,
+    "p50_lookup_ms": 4.955,
+    "p95_lookup_ms": 8.247,
+    "max_lookup_ms": 15.376,
+    "missing_from_top9_count": 0,
+    "missing_from_top9": [],
+    "max_returned_candidate_count": 9
+  },
+  "rows": [
+    {
+      "pinyin": "kongqijiance",
+      "expected": "空气监测",
+      "source": "5000",
+      "lookup_us": 8355,
+      "candidates": [
+        "空气检测",
+        "空气监测",
+        "孔器检测",
+        "空器检测",
+        "空期检测",
+        "空其检测",
+        "空起检测",
+        "空其监测",
+        "空气"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "anxuzhaoming",
+      "expected": "按需照明",
+      "source": "5500",
+      "lookup_us": 5177,
+      "candidates": [
+        "按需照明",
+        "安许照明",
+        "安徐照明",
+        "按序照明",
+        "按许照明",
+        "安须照明",
+        "按须照明",
+        "按徐照明",
+        "按需"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "baohuxinggengzuo",
+      "expected": "保护性耕作",
+      "source": "5500",
+      "lookup_us": 6351,
+      "candidates": [
+        "保护性耕作",
+        "保护行耕作",
+        "保护星耕作",
+        "保护型耕作",
+        "保护形耕作",
+        "保护兴耕作",
+        "保护姓耕作",
+        "保护幸耕作",
+        "保护性"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bentuwuzhong",
+      "expected": "本土物种",
+      "source": "5500",
+      "lookup_us": 3093,
+      "candidates": [
+        "本土物种",
+        "本土五种",
+        "本土屋中",
+        "本土物中",
+        "本土无中",
+        "本土雾中",
+        "本图物种",
+        "本土五中",
+        "本土"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "binweiwuzhong",
+      "expected": "濒危物种",
+      "source": "5500",
+      "lookup_us": 3496,
+      "candidates": [
+        "濒危物种",
+        "濒危物中",
+        "濒危五种",
+        "濒危物重",
+        "宾危物种",
+        "濒危屋中",
+        "滨为物种",
+        "宾为物种",
+        "濒危"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "budaichuchen",
+      "expected": "布袋除尘",
+      "source": "5500",
+      "lookup_us": 3124,
+      "candidates": [
+        "布袋除尘",
+        "不带除尘",
+        "不戴除尘",
+        "不带出称",
+        "不带处称",
+        "不带出陈",
+        "不大除尘",
+        "不带出沉",
+        "不带"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caodibaohu",
+      "expected": "草地保护",
+      "source": "5500",
+      "lookup_us": 3849,
+      "candidates": [
+        "草地保护",
+        "草的保护",
+        "曹的保护",
+        "曹地保护",
+        "草底保护",
+        "曹底保护",
+        "曹低保护",
+        "草低保护",
+        "草地"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caodihuifu",
+      "expected": "草地恢复",
+      "source": "5500",
+      "lookup_us": 4014,
+      "candidates": [
+        "草地恢复",
+        "草地回复",
+        "草的回复",
+        "草的恢复",
+        "曹的回复",
+        "曹地恢复",
+        "曹地回复",
+        "草底恢复",
+        "草地"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caodituihua",
+      "expected": "草地退化",
+      "source": "5500",
+      "lookup_us": 3352,
+      "candidates": [
+        "草地退化",
+        "曹地退化",
+        "草的退化",
+        "草地推花",
+        "草地推话",
+        "草地推化",
+        "草地退花",
+        "草地退话",
+        "草地"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caodixiufu",
+      "expected": "草地修复",
+      "source": "5500",
+      "lookup_us": 3602,
+      "candidates": [
+        "草地修复",
+        "草的修复",
+        "曹地修复",
+        "草地秀夫",
+        "曹的修复",
+        "草底修复",
+        "草地修服",
+        "草笛修复",
+        "草地"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caoyuanbaohu",
+      "expected": "草原保护",
+      "source": "5500",
+      "lookup_us": 5236,
+      "candidates": [
+        "草原保护",
+        "曹远保护",
+        "曹元保护",
+        "草园保护",
+        "草元保护",
+        "草远保护",
+        "曹源保护",
+        "草源保护",
+        "草原"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caoyuanshengtai",
+      "expected": "草原生态",
+      "source": "5500",
+      "lookup_us": 6054,
+      "candidates": [
+        "草原生态",
+        "曹原生态",
+        "草原生苔",
+        "曹远生态",
+        "草原生台",
+        "草原声台",
+        "草原生太",
+        "草原生泰",
+        "草原"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caoyuanxiufu",
+      "expected": "草原修复",
+      "source": "5500",
+      "lookup_us": 4808,
+      "candidates": [
+        "草原修复",
+        "曹远修复",
+        "曹元修复",
+        "草原秀夫",
+        "草园修复",
+        "曹院修复",
+        "草院修复",
+        "草元修复",
+        "草原"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chaoxikeliwu",
+      "expected": "超细颗粒物",
+      "source": "5500",
+      "lookup_us": 4156,
+      "candidates": [
+        "潮汐可礼物",
+        "潮汐科礼物",
+        "抄袭可礼物",
+        "潮汐克礼物",
+        "潮汐客礼物",
+        "潮汐颗粒无",
+        "潮汐课礼物",
+        "超细颗粒物",
+        "潮汐"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "chengshigongyuan",
+      "expected": "城市公园",
+      "source": "5500",
+      "lookup_us": 4329,
+      "candidates": [
+        "城市公园",
+        "程式公园",
+        "城市公元",
+        "诚实公园",
+        "称是公园",
+        "程式公元",
+        "成事公园",
+        "称事公园",
+        "城市"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chengshilvdi",
+      "expected": "城市绿地",
+      "source": "5500",
+      "lookup_us": 2658,
+      "candidates": [
+        "城市绿地",
+        "城市率低",
+        "城市绿的",
+        "程式绿地",
+        "程式率低",
+        "诚实绿地",
+        "诚实率低",
+        "称是绿地",
+        "城市"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chengshilvhua",
+      "expected": "城市绿化",
+      "source": "5500",
+      "lookup_us": 3121,
+      "candidates": [
+        "城市绿化",
+        "城市氯化",
+        "程式绿化",
+        "诚实绿化",
+        "程式氯化",
+        "诚实氯化",
+        "称是绿化",
+        "城市绿花",
+        "城市"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chengshilvlang",
+      "expected": "城市绿廊",
+      "source": "5500",
+      "lookup_us": 3290,
+      "candidates": [
+        "城市绿廊",
+        "城市绿狼",
+        "城市绿郎",
+        "城市绿朗",
+        "城市绿浪",
+        "城市律狼",
+        "城市律郎",
+        "城市律朗",
+        "城市"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chongfangdianxiaolv",
+      "expected": "充放电效率",
+      "source": "5500",
+      "lookup_us": 8386,
+      "candidates": [
+        "重放电效率",
+        "冲放电效率",
+        "重放点效率",
+        "冲放点效率",
+        "冲防電效率",
+        "重防店效率",
+        "重方店效率",
+        "充放电效率",
+        "重返"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "choushuixuneng",
+      "expected": "抽水蓄能",
+      "source": "5500",
+      "lookup_us": 4551,
+      "candidates": [
+        "抽水蓄能",
+        "抽水需能",
+        "抽水许能",
+        "抽水须能",
+        "抽水续能",
+        "抽水序能",
+        "抽水徐能",
+        "抽水虚能",
+        "抽水"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chouyangwuran",
+      "expected": "臭氧污染",
+      "source": "5500",
+      "lookup_us": 2554,
+      "candidates": [
+        "臭氧污染",
+        "抽样污染",
+        "抽洋污染",
+        "臭洋污染",
+        "抽样无染",
+        "抽阳污染",
+        "臭氧无染",
+        "抽杨污染",
+        "抽样"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chuchenshebei",
+      "expected": "除尘设备",
+      "source": "5500",
+      "lookup_us": 2695,
+      "candidates": [
+        "除尘设备",
+        "除陈设备",
+        "出陈设备",
+        "初称设备",
+        "除称设备",
+        "除臣设备",
+        "除沉设备",
+        "除晨设备",
+        "除尘"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chunengdianchi",
+      "expected": "储能电池",
+      "source": "5500",
+      "lookup_us": 5382,
+      "candidates": [
+        "储能电池",
+        "出能电池",
+        "储能点吃",
+        "储能垫尺",
+        "储能滇池",
+        "储能店吃",
+        "出能点吃",
+        "储能垫吃",
+        "储能"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chunengdianzhan",
+      "expected": "储能电站",
+      "source": "5500",
+      "lookup_us": 5542,
+      "candidates": [
+        "储能电站",
+        "储能点站",
+        "出能电站",
+        "储能垫站",
+        "储能电展",
+        "储能点展",
+        "储能垫战",
+        "储能垫展",
+        "储能"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chunengjishu",
+      "expected": "储能技术",
+      "source": "5500",
+      "lookup_us": 3725,
+      "candidates": [
+        "储能技术",
+        "出能技术",
+        "储能计数",
+        "储能记述",
+        "储能级数",
+        "储能基数",
+        "出能计数",
+        "储能奇数",
+        "储能"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chunengrongliang",
+      "expected": "储能容量",
+      "source": "5500",
+      "lookup_us": 5513,
+      "candidates": [
+        "储能容量",
+        "出能容量",
+        "储能容亮",
+        "储能容良",
+        "储能荣亮",
+        "储能容凉",
+        "储能容两",
+        "储能绒量",
+        "储能"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chunengshebei",
+      "expected": "储能设备",
+      "source": "5500",
+      "lookup_us": 4094,
+      "candidates": [
+        "储能设备",
+        "出能设备",
+        "储能射被",
+        "储能设呗",
+        "储能射呗",
+        "除螚设备",
+        "储能舍被",
+        "储能设被",
+        "储能"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chunengxiaolv",
+      "expected": "储能效率",
+      "source": "5500",
+      "lookup_us": 5422,
+      "candidates": [
+        "储能效率",
+        "出能效率",
+        "储能小率",
+        "储能小绿",
+        "储能笑率",
+        "除螚效率",
+        "储能消率",
+        "储能销率",
+        "储能"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chunengxitong",
+      "expected": "储能系统",
+      "source": "5500",
+      "lookup_us": 3226,
+      "candidates": [
+        "储能系统",
+        "出能系统",
+        "储能系恸",
+        "出能系恸",
+        "储能洗桶",
+        "除螚系统",
+        "储能系通",
+        "储能系同",
+        "储能"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chuqing",
+      "expected": "储氢",
+      "source": "5500",
+      "lookup_us": 2097,
+      "candidates": [
+        "储氢",
+        "出清",
+        "除清",
+        "楚顷",
+        "除请",
+        "除情",
+        "出轻",
+        "出情",
+        "畜禽"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "cuofengyongdian",
+      "expected": "错峰用电",
+      "source": "5500",
+      "lookup_us": 4885,
+      "candidates": [
+        "错峰用电",
+        "错峰用点",
+        "错峰用店",
+        "错封用电",
+        "错风用电",
+        "错峰永点",
+        "错峰用典",
+        "错峰勇点",
+        "错峰"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "daijinenghao",
+      "expected": "待机能耗",
+      "source": "5500",
+      "lookup_us": 4140,
+      "candidates": [
+        "待机能耗",
+        "大技能好",
+        "带技能好",
+        "大机能好",
+        "大技能号",
+        "待机能好",
+        "带技能号",
+        "大既能好",
+        "殆尽"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "danweinenghao",
+      "expected": "单位能耗",
+      "source": "5500",
+      "lookup_us": 3716,
+      "candidates": [
+        "单位能耗",
+        "但未能好",
+        "但未能号",
+        "但未能耗",
+        "但未能豪",
+        "但未能浩",
+        "单位能好",
+        "但未能昊",
+        "单位"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "danyanghuawu",
+      "expected": "氮氧化物",
+      "source": "5500",
+      "lookup_us": 5303,
+      "candidates": [
+        "氮氧化物",
+        "但氧化物",
+        "但氧化无",
+        "但氧化武",
+        "丹阳化物",
+        "但氧化误",
+        "但氧化舞",
+        "但氧化五",
+        "丹阳"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "daolujiangchen",
+      "expected": "道路降尘",
+      "source": "5500",
+      "lookup_us": 6705,
+      "candidates": [
+        "道路降尘",
+        "道路将称",
+        "道路将陈",
+        "道路将臣",
+        "道路将沉",
+        "道路将尘",
+        "道路将辰",
+        "道路讲称",
+        "道路"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "daolusashui",
+      "expected": "道路洒水",
+      "source": "5500",
+      "lookup_us": 2539,
+      "candidates": [
+        "道路洒水",
+        "道路撒水",
+        "道路萨水",
+        "道路撒说",
+        "道路撒睡",
+        "道路萨说",
+        "道路撒谁",
+        "道路撒税",
+        "道路"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "daoluyangchen",
+      "expected": "道路扬尘",
+      "source": "5500",
+      "lookup_us": 4852,
+      "candidates": [
+        "道路扬尘",
+        "道路洋称",
+        "道路样称",
+        "道路养称",
+        "道路阳称",
+        "道路杨臣",
+        "道路杨称",
+        "道路扬称",
+        "道路"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "daqijiance",
+      "expected": "大气监测",
+      "source": "5500",
+      "lookup_us": 4928,
+      "candidates": [
+        "大气监测",
+        "大气检测",
+        "打起检测",
+        "打气检测",
+        "打起监测",
+        "大器检测",
+        "大旗检测",
+        "大齐检测",
+        "大气"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "daqizhili",
+      "expected": "大气治理",
+      "source": "5500",
+      "lookup_us": 2895,
+      "candidates": [
+        "大气治理",
+        "大气之力",
+        "大气智利",
+        "大气智力",
+        "大气致力",
+        "打起治理",
+        "打起致力",
+        "打气治理",
+        "大气"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dianchichuneng",
+      "expected": "电池储能",
+      "source": "5500",
+      "lookup_us": 6591,
+      "candidates": [
+        "电池储能",
+        "滇池储能",
+        "电池出能",
+        "电池处能",
+        "电池触能",
+        "点吃储能",
+        "电池除能",
+        "电池初能",
+        "电池"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dianfeifenxi",
+      "expected": "电费分析",
+      "source": "5500",
+      "lookup_us": 3792,
+      "candidates": [
+        "电费分析",
+        "点费分析",
+        "点非分析",
+        "点飞分析",
+        "店非分析",
+        "点菲分析",
+        "点肥分析",
+        "点废分析",
+        "电费"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dianhuaxuechuneng",
+      "expected": "电化学储能",
+      "source": "5500",
+      "lookup_us": 6845,
+      "candidates": [
+        "点滑雪储能",
+        "电话学储能",
+        "电化学储能",
+        "电话雪储能",
+        "电话血储能",
+        "电话薛储能",
+        "电话学出能",
+        "电化学出能",
+        "电化学"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "dianjieshuizhiqing",
+      "expected": "电解水制氢",
+      "source": "5500",
+      "lookup_us": 9375,
+      "candidates": [
+        "点解说知情",
+        "点解说之情",
+        "电解说知情",
+        "点节水之情",
+        "点解水之情",
+        "电解说之情",
+        "点解谁知情",
+        "电解水制氢",
+        "电解"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "dianliangjiance",
+      "expected": "电量监测",
+      "source": "5500",
+      "lookup_us": 8754,
+      "candidates": [
+        "电量监测",
+        "电量检测",
+        "点亮检测",
+        "点亮监测",
+        "点两检测",
+        "掂量检测",
+        "掂量监测",
+        "点凉检测",
+        "电量"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dianliangtongji",
+      "expected": "电量统计",
+      "source": "5500",
+      "lookup_us": 5723,
+      "candidates": [
+        "电量统计",
+        "点亮统计",
+        "电量通缉",
+        "点亮通缉",
+        "掂量统计",
+        "电量同级",
+        "电量同济",
+        "点亮同级",
+        "电量"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dianlixuqiu",
+      "expected": "电力需求",
+      "source": "5500",
+      "lookup_us": 4459,
+      "candidates": [
+        "电力需求",
+        "典礼需求",
+        "店里需求",
+        "点力需求",
+        "点理需求",
+        "点离需求",
+        "的案例需求",
+        "点里需求",
+        "电力"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dianwangchuneng",
+      "expected": "电网储能",
+      "source": "5500",
+      "lookup_us": 5045,
+      "candidates": [
+        "电网储能",
+        "点王储能",
+        "电王储能",
+        "电网处能",
+        "电网出能",
+        "点往储能",
+        "点网储能",
+        "点望储能",
+        "电网"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dianwangtiaofeng",
+      "expected": "电网调峰",
+      "source": "5500",
+      "lookup_us": 5587,
+      "candidates": [
+        "电网调峰",
+        "电网条缝",
+        "电网调风",
+        "电网条风",
+        "电网条峰",
+        "电网跳风",
+        "电网调封",
+        "电网挑风",
+        "电网"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dianwangtiaopin",
+      "expected": "电网调频",
+      "source": "5500",
+      "lookup_us": 5658,
+      "candidates": [
+        "电网调频",
+        "电网调品",
+        "电网条品",
+        "点往调频",
+        "电网调拼",
+        "点网调频",
+        "电网条拼",
+        "点王调频",
+        "电网"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "diguanjieshui",
+      "expected": "滴灌节水",
+      "source": "5500",
+      "lookup_us": 7114,
+      "candidates": [
+        "滴灌节水",
+        "的关节水",
+        "的关节说",
+        "滴管节水",
+        "滴管解说",
+        "滴管接水",
+        "的关节睡",
+        "的关节谁",
+        "滴管"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "direfadian",
+      "expected": "地热发电",
+      "source": "5500",
+      "lookup_us": 3416,
+      "candidates": [
+        "地热发电",
+        "地热法典",
+        "地热发点",
+        "的热发电",
+        "地热发店",
+        "的热法典",
+        "地热法点",
+        "的热发点",
+        "地热"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "diregongnuan",
+      "expected": "地热供暖",
+      "source": "5500",
+      "lookup_us": 2151,
+      "candidates": [
+        "地热供暖",
+        "的热供暖",
+        "地热共暖",
+        "地热工暖",
+        "地热公暖",
+        "的惹供暖",
+        "地热功暖",
+        "地惹供暖",
+        "地热"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ditanbangong",
+      "expected": "低碳办公",
+      "source": "5500",
+      "lookup_us": 4997,
+      "candidates": [
+        "低碳办公",
+        "地毯办公",
+        "地坛办公",
+        "的碳办公",
+        "地摊办公",
+        "的弹办公",
+        "地谈办公",
+        "的谈办公",
+        "低碳"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ditanchuxing",
+      "expected": "低碳出行",
+      "source": "5500",
+      "lookup_us": 5434,
+      "candidates": [
+        "低碳出行",
+        "地毯出行",
+        "地坛出行",
+        "低碳雏形",
+        "的弹出行",
+        "地毯雏形",
+        "地坛雏形",
+        "地弹出行",
+        "低碳"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ditanfazhan",
+      "expected": "低碳发展",
+      "source": "5500",
+      "lookup_us": 3514,
+      "candidates": [
+        "低碳发展",
+        "地坛发展",
+        "地毯发展",
+        "的弹发展",
+        "地摊发展",
+        "地谈发展",
+        "的谈发展",
+        "地弹发展",
+        "低碳"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ditangaizao",
+      "expected": "低碳改造",
+      "source": "5500",
+      "lookup_us": 4479,
+      "candidates": [
+        "低碳改造",
+        "地毯改造",
+        "地坛改造",
+        "地摊改造",
+        "的弹改造",
+        "的坦改造",
+        "地谈改造",
+        "的谈改造",
+        "低糖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ditanjianzhu",
+      "expected": "低碳建筑",
+      "source": "5500",
+      "lookup_us": 6729,
+      "candidates": [
+        "低碳建筑",
+        "地坛建筑",
+        "地毯建筑",
+        "地摊建筑",
+        "的弹建筑",
+        "的谭建筑",
+        "地谈建筑",
+        "地坛见铸",
+        "低碳"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ditanjiating",
+      "expected": "低碳家庭",
+      "source": "5500",
+      "lookup_us": 4897,
+      "candidates": [
+        "低碳家庭",
+        "地毯家庭",
+        "地坛家庭",
+        "的谭家庭",
+        "地摊家庭",
+        "的弹家庭",
+        "地谈家庭",
+        "的谈家庭",
+        "低碳"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ditanjingji",
+      "expected": "低碳经济",
+      "source": "5500",
+      "lookup_us": 5131,
+      "candidates": [
+        "低碳经济",
+        "地摊经济",
+        "地毯经济",
+        "低碳竞技",
+        "地坛经济",
+        "地摊经纪",
+        "地毯竞技",
+        "地坛竞技",
+        "低碳"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ditanjishu",
+      "expected": "低碳技术",
+      "source": "5500",
+      "lookup_us": 4070,
+      "candidates": [
+        "低碳技术",
+        "地毯技术",
+        "地坛技术",
+        "低碳计数",
+        "低碳记述",
+        "地毯计数",
+        "低碳基数",
+        "的弹技术",
+        "低碳"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ditanshequ",
+      "expected": "低碳社区",
+      "source": "5500",
+      "lookup_us": 3336,
+      "candidates": [
+        "低碳社区",
+        "地毯社区",
+        "地坛社区",
+        "地摊社区",
+        "地谈社区",
+        "的坦社区",
+        "的谈社区",
+        "低碳摄取",
+        "低碳"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ditanxiaofei",
+      "expected": "低碳消费",
+      "source": "5500",
+      "lookup_us": 6041,
+      "candidates": [
+        "低碳消费",
+        "地毯消费",
+        "地坛消费",
+        "低碳小费",
+        "地毯小费",
+        "地坛小费",
+        "地摊消费",
+        "的弹消费",
+        "低碳"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ditanxiaoyuan",
+      "expected": "低碳校园",
+      "source": "5500",
+      "lookup_us": 8158,
+      "candidates": [
+        "低碳校园",
+        "地毯校园",
+        "地坛校园",
+        "低碳小院",
+        "地摊校园",
+        "地毯小院",
+        "地坛小院",
+        "的弹校园",
+        "低碳"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ditanyinshi",
+      "expected": "低碳饮食",
+      "source": "5500",
+      "lookup_us": 4323,
+      "candidates": [
+        "低碳饮食",
+        "地毯饮食",
+        "地坛饮食",
+        "低碳饮时",
+        "低碳吟诗",
+        "低碳隐士",
+        "的碳饮食",
+        "低碳音是",
+        "低碳"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dixiashuibaohu",
+      "expected": "地下水保护",
+      "source": "5500",
+      "lookup_us": 5440,
+      "candidates": [
+        "地下水保护",
+        "底下水保护",
+        "地下谁保护",
+        "地下说保护",
+        "地下睡保护",
+        "地下税保护",
+        "底下谁保护",
+        "底下说保护",
+        "地下水"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dixiashuijiance",
+      "expected": "地下水监测",
+      "source": "5500",
+      "lookup_us": 6548,
+      "candidates": [
+        "地下水检测",
+        "地下水监测",
+        "地下谁检测",
+        "底下水检测",
+        "地下说检测",
+        "底下水监测",
+        "底下谁检测",
+        "地下谁监测",
+        "地下水"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "dixiashuiwuran",
+      "expected": "地下水污染",
+      "source": "5500",
+      "lookup_us": 3997,
+      "candidates": [
+        "地下水污染",
+        "底下水污染",
+        "地下谁污染",
+        "地下说污染",
+        "地下睡污染",
+        "地下税污染",
+        "地下水无染",
+        "地下水务然",
+        "地下水"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dixiashuixiufu",
+      "expected": "地下水修复",
+      "source": "5500",
+      "lookup_us": 5613,
+      "candidates": [
+        "地下水修复",
+        "底下水修复",
+        "地下水秀夫",
+        "地下谁修复",
+        "地下说修复",
+        "地下睡修复",
+        "地下税修复",
+        "底下谁修复",
+        "地下水"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "diyuanrebeng",
+      "expected": "地源热泵",
+      "source": "5500",
+      "lookup_us": 3243,
+      "candidates": [
+        "地源热泵",
+        "地缘热崩",
+        "地缘热泵",
+        "地缘惹崩",
+        "地缘热绷",
+        "地缘惹泵",
+        "的原热崩",
+        "地缘热蹦",
+        "地缘"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dizhaoduzhaoming",
+      "expected": "低照度照明",
+      "source": "5500",
+      "lookup_us": 5458,
+      "candidates": [
+        "的照独照明",
+        "低照度照明",
+        "的招都照明",
+        "的朝都照明",
+        "的招度照明",
+        "的招读照明",
+        "的招毒照明",
+        "的招杜照明",
+        "地"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "dongwuqixidi",
+      "expected": "动物栖息地",
+      "source": "5500",
+      "lookup_us": 4056,
+      "candidates": [
+        "动物栖息地",
+        "东吴栖息地",
+        "动物气息的",
+        "动物栖息的",
+        "动物气息地",
+        "动物气息第",
+        "东吴气息的",
+        "东武器洗涤",
+        "动物"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ercinengyuan",
+      "expected": "二次能源",
+      "source": "5500",
+      "lookup_us": 5162,
+      "candidates": [
+        "二次能源",
+        "而此能源",
+        "而次能源",
+        "二次能远",
+        "而辞能源",
+        "二次能元",
+        "而词能源",
+        "而磁能源",
+        "二次"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangfenggusha",
+      "expected": "防风固沙",
+      "source": "5500",
+      "lookup_us": 3059,
+      "candidates": [
+        "防风固沙",
+        "防风顾杀",
+        "防风顾啥",
+        "防风顾沙",
+        "防风顾傻",
+        "防风顾莎",
+        "防风顾纱",
+        "防风顾刹",
+        "防风"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangshazhisha",
+      "expected": "防沙治沙",
+      "source": "5500",
+      "lookup_us": 2361,
+      "candidates": [
+        "防沙治沙",
+        "放砂纸杀",
+        "纺纱织杀",
+        "放砂纸啥",
+        "纺纱织啥",
+        "纺纱之杀",
+        "放砂纸沙",
+        "防沙之杀",
+        "放"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "feihuashinengyuan",
+      "expected": "非化石能源",
+      "source": "5500",
+      "lookup_us": 6553,
+      "candidates": [
+        "非化石能源",
+        "费化石能源",
+        "废话是能源",
+        "废话时能源",
+        "废话事能源",
+        "废话使能源",
+        "飞花是能源",
+        "废话失能源",
+        "废话"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "feilunchuneng",
+      "expected": "飞轮储能",
+      "source": "5500",
+      "lookup_us": 4342,
+      "candidates": [
+        "飞轮储能",
+        "飞轮出能",
+        "飞轮处能",
+        "费伦储能",
+        "非论储能",
+        "飞论触能",
+        "非轮储能",
+        "非伦储能",
+        "飞轮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "feiqijinghua",
+      "expected": "废气净化",
+      "source": "5500",
+      "lookup_us": 6193,
+      "candidates": [
+        "废气净化",
+        "废弃精华",
+        "废弃净化",
+        "废气精华",
+        "非其精华",
+        "飞起精华",
+        "废弃京华",
+        "飞其精华",
+        "废气"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "feiqipaifang",
+      "expected": "废气排放",
+      "source": "5500",
+      "lookup_us": 4233,
+      "candidates": [
+        "废气排放",
+        "废弃排放",
+        "废弃牌坊",
+        "非气排放",
+        "飞起排放",
+        "非其排放",
+        "废气牌坊",
+        "飞其排放",
+        "废气"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "feiqishouji",
+      "expected": "废气收集",
+      "source": "5500",
+      "lookup_us": 3291,
+      "candidates": [
+        "废气收集",
+        "废弃手机",
+        "废弃收集",
+        "飞起手机",
+        "废气手机",
+        "非其手机",
+        "飞其手机",
+        "非骑手机",
+        "废气"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "feirehuishou",
+      "expected": "废热回收",
+      "source": "5500",
+      "lookup_us": 2885,
+      "candidates": [
+        "废热回收",
+        "非热回收",
+        "非热挥手",
+        "费热挥手",
+        "非惹回收",
+        "非惹挥手",
+        "费惹回收",
+        "非热回首",
+        "肺热"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "feireliyong",
+      "expected": "废热利用",
+      "source": "5500",
+      "lookup_us": 2825,
+      "candidates": [
+        "废热利用",
+        "非热利用",
+        "费热利用",
+        "非惹利用",
+        "费惹利用",
+        "非热力用",
+        "费热力用",
+        "非热李咏",
+        "肺热"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fenbushiguangfu",
+      "expected": "分布式光伏",
+      "source": "5500",
+      "lookup_us": 6389,
+      "candidates": [
+        "分布式光伏",
+        "分不是光伏",
+        "分布是光伏",
+        "分布式光复",
+        "分布式光府",
+        "分布时光复",
+        "分不识光伏",
+        "分布式广福",
+        "分布式"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fengdianchang",
+      "expected": "风电场",
+      "source": "5500",
+      "lookup_us": 4974,
+      "candidates": [
+        "风电场",
+        "风电厂",
+        "封电厂",
+        "冯电厂",
+        "丰电厂",
+        "凤电厂",
+        "封电场",
+        "峰电厂",
+        "风电"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fengdianjizu",
+      "expected": "风电机组",
+      "source": "5500",
+      "lookup_us": 4146,
+      "candidates": [
+        "风电机组",
+        "疯癫机组",
+        "封电机组",
+        "风电祭祖",
+        "疯癫祭祖",
+        "风点机组",
+        "冯点机组",
+        "风点祭祖",
+        "风电"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fengdiantatong",
+      "expected": "风电塔筒",
+      "source": "5500",
+      "lookup_us": 3934,
+      "candidates": [
+        "风电塔筒",
+        "风电他痛",
+        "风电他同",
+        "风电他通",
+        "疯癫他痛",
+        "疯癫他同",
+        "疯癫他通",
+        "风电她同",
+        "风电"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fengdianyepian",
+      "expected": "风电叶片",
+      "source": "5500",
+      "lookup_us": 6115,
+      "candidates": [
+        "风电叶片",
+        "疯癫叶片",
+        "风点叶片",
+        "冯点叶片",
+        "风店叶片",
+        "封电叶片",
+        "冯店叶片",
+        "封垫叶片",
+        "风电"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fengdianyunwei",
+      "expected": "风电运维",
+      "source": "5500",
+      "lookup_us": 5346,
+      "candidates": [
+        "风电运维",
+        "风电韵味",
+        "疯癫韵味",
+        "风点韵味",
+        "冯点韵味",
+        "风店韵味",
+        "封电韵味",
+        "冯店韵味",
+        "风电"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fengguyongdian",
+      "expected": "峰谷用电",
+      "source": "5500",
+      "lookup_us": 5173,
+      "candidates": [
+        "峰谷用电",
+        "风雇用电",
+        "冯雇用电",
+        "风雇佣点",
+        "冯雇佣点",
+        "风雇佣店",
+        "冯雇佣店",
+        "风雇用点",
+        "风"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fengnengliyong",
+      "expected": "风能利用",
+      "source": "5500",
+      "lookup_us": 4402,
+      "candidates": [
+        "风能利用",
+        "冯能利用",
+        "风能力用",
+        "风能李咏",
+        "风能力永",
+        "冯能力用",
+        "风能力勇",
+        "风能力涌",
+        "风能"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fenshiyongdian",
+      "expected": "分时用电",
+      "source": "5500",
+      "lookup_us": 4869,
+      "candidates": [
+        "分时用电",
+        "分使用电",
+        "分是用电",
+        "分使用点",
+        "分使用店",
+        "份使用电",
+        "分食用电",
+        "分使用垫",
+        "分时"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fuheguanli",
+      "expected": "负荷管理",
+      "source": "5500",
+      "lookup_us": 6852,
+      "candidates": [
+        "负荷管理",
+        "符合管理",
+        "符合惯例",
+        "复合管理",
+        "福和管理",
+        "附和管理",
+        "复核管理",
+        "复合惯例",
+        "复合管"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fuhetiaojie",
+      "expected": "负荷调节",
+      "source": "5500",
+      "lookup_us": 6374,
+      "candidates": [
+        "负荷调节",
+        "符合调节",
+        "符合调解",
+        "复合调节",
+        "复合调解",
+        "符合条街",
+        "福和调节",
+        "复核调节",
+        "复合跳"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fuheyuce",
+      "expected": "负荷预测",
+      "source": "5500",
+      "lookup_us": 2305,
+      "candidates": [
+        "负荷预测",
+        "符合预测",
+        "复合预测",
+        "福和预测",
+        "附和预测",
+        "复核预测",
+        "富赫预测",
+        "抚壑预测",
+        "符合"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "geshengcailiao",
+      "expected": "隔声材料",
+      "source": "5500",
+      "lookup_us": 5365,
+      "candidates": [
+        "隔声材料",
+        "个省材料",
+        "各省材料",
+        "歌声材料",
+        "个生材料",
+        "个声材料",
+        "个圣材料",
+        "个生菜了",
+        "歌声"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "geshengchuang",
+      "expected": "隔声窗",
+      "source": "5500",
+      "lookup_us": 4652,
+      "candidates": [
+        "隔声窗",
+        "个省创",
+        "各省创",
+        "歌声创",
+        "个省窗",
+        "个省床",
+        "各省窗",
+        "各省床",
+        "歌声"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gongdiyangchen",
+      "expected": "工地扬尘",
+      "source": "5500",
+      "lookup_us": 4513,
+      "candidates": [
+        "工地扬尘",
+        "公的烊辰",
+        "工地洋称",
+        "工地样称",
+        "工地杨臣",
+        "工地杨称",
+        "共地養称",
+        "工地阳称",
+        "工地"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gongrenenghao",
+      "expected": "供热能耗",
+      "source": "5500",
+      "lookup_us": 2988,
+      "candidates": [
+        "供热能耗",
+        "供热能好",
+        "共热能好",
+        "供热能号",
+        "共热能号",
+        "供热能豪",
+        "供热能浩",
+        "工人哦嗯好",
+        "工人"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gongshangyechuneng",
+      "expected": "工商业储能",
+      "source": "5500",
+      "lookup_us": 5141,
+      "candidates": [
+        "工商业储能",
+        "工商业处能",
+        "工商业出能",
+        "工商也储能",
+        "工商业除能",
+        "工商业初能",
+        "工商也出能",
+        "共商业储能",
+        "工商业"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gongyejieshui",
+      "expected": "工业节水",
+      "source": "5500",
+      "lookup_us": 4818,
+      "candidates": [
+        "工业节水",
+        "工业界说",
+        "工业界水",
+        "工业界谁",
+        "工业界睡",
+        "工业界税",
+        "工业解说",
+        "工业接水",
+        "工业"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gongyenenghao",
+      "expected": "工业能耗",
+      "source": "5500",
+      "lookup_us": 2963,
+      "candidates": [
+        "工业能耗",
+        "工业能好",
+        "共也能好",
+        "工业能号",
+        "工也能好",
+        "共也能号",
+        "工业能豪",
+        "工业能浩",
+        "工业"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gongyezaosheng",
+      "expected": "工业噪声",
+      "source": "5500",
+      "lookup_us": 3692,
+      "candidates": [
+        "工业噪声",
+        "工业造声",
+        "工业造生",
+        "工业遭生",
+        "工业遭声",
+        "工业早生",
+        "工业早声",
+        "工业遭升",
+        "工业"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guangcuihuajinghua",
+      "expected": "光催化净化",
+      "source": "5500",
+      "lookup_us": 8247,
+      "candidates": [
+        "光催化精华",
+        "光催化净化",
+        "广催化精华",
+        "广催化净化",
+        "光翠花精华",
+        "光催化京华",
+        "光翠花净化",
+        "广翠花精华",
+        "光"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "guangfubingwang",
+      "expected": "光伏并网",
+      "source": "5500",
+      "lookup_us": 5514,
+      "candidates": [
+        "光伏并网",
+        "光复并网",
+        "光伏并王",
+        "光复并王",
+        "光伏并往",
+        "光复并往",
+        "光伏并旺",
+        "光伏病网",
+        "光伏"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guangfuchuneng",
+      "expected": "光伏储能",
+      "source": "5500",
+      "lookup_us": 4839,
+      "candidates": [
+        "光伏储能",
+        "光复出能",
+        "光复储能",
+        "光付出能",
+        "光伏处能",
+        "光伏出能",
+        "光复处能",
+        "广付出能",
+        "光伏"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guangfudianzhan",
+      "expected": "光伏电站",
+      "source": "5500",
+      "lookup_us": 7020,
+      "candidates": [
+        "光伏电站",
+        "光伏电展",
+        "光复电站",
+        "光伏电战",
+        "光伏电占",
+        "光伏点站",
+        "光伏电粘",
+        "光复点站",
+        "光伏"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guangfunibianqi",
+      "expected": "光伏逆变器",
+      "source": "5500",
+      "lookup_us": 6297,
+      "candidates": [
+        "光伏逆变器",
+        "光复逆变器",
+        "光伏你便器",
+        "光伏你便其",
+        "光伏你便起",
+        "光复你便器",
+        "光伏你边起",
+        "光伏你便气",
+        "光伏"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guangfuqingxi",
+      "expected": "光伏清洗",
+      "source": "5500",
+      "lookup_us": 6891,
+      "candidates": [
+        "光伏清洗",
+        "光伏清晰",
+        "光复清晰",
+        "光复清洗",
+        "广福清晰",
+        "广福清洗",
+        "光福清晰",
+        "光福清洗",
+        "光伏"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guangfuwuding",
+      "expected": "光伏屋顶",
+      "source": "5500",
+      "lookup_us": 4371,
+      "candidates": [
+        "光伏屋顶",
+        "光复屋顶",
+        "光服务定",
+        "光服务顶",
+        "光服务丁",
+        "光服务订",
+        "广服务定",
+        "光服务町",
+        "光伏"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guangfuzhijia",
+      "expected": "光伏支架",
+      "source": "5500",
+      "lookup_us": 5854,
+      "candidates": [
+        "光伏支架",
+        "光复之家",
+        "光伏之家",
+        "光复制家",
+        "光复制加",
+        "光复制假",
+        "光伏指甲",
+        "光复支架",
+        "光伏"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guangfuzujian",
+      "expected": "光伏组件",
+      "source": "5500",
+      "lookup_us": 6143,
+      "candidates": [
+        "光伏组件",
+        "光伏组建",
+        "光复组建",
+        "光复组件",
+        "光副组建",
+        "广福组建",
+        "光副组件",
+        "广副组建",
+        "光伏"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guanghuaxuewuran",
+      "expected": "光化学污染",
+      "source": "5500",
+      "lookup_us": 6129,
+      "candidates": [
+        "光化学污染",
+        "光滑雪污染",
+        "光华学污染",
+        "光华雪污染",
+        "光华血污染",
+        "光滑血污染",
+        "光华薛污染",
+        "光华削污染",
+        "光滑"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guanghuaxueyanwu",
+      "expected": "光化学烟雾",
+      "source": "5500",
+      "lookup_us": 8059,
+      "candidates": [
+        "光化学延误",
+        "光滑雪延误",
+        "光化学烟雾",
+        "光滑雪烟雾",
+        "光化学厌恶",
+        "光滑雪厌恶",
+        "光华学延误",
+        "光华学烟雾",
+        "光滑"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "guanniaodidian",
+      "expected": "观鸟地点",
+      "source": "5500",
+      "lookup_us": 6375,
+      "candidates": [
+        "观鸟地点",
+        "观鸟低点",
+        "冠鸟地点",
+        "观鸟的店",
+        "冠鸟低点",
+        "关尿地点",
+        "管尿地点",
+        "观鸟的点",
+        "观鸟"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guanniaohuodong",
+      "expected": "观鸟活动",
+      "source": "5500",
+      "lookup_us": 5595,
+      "candidates": [
+        "观鸟活动",
+        "冠鸟活动",
+        "关尿活动",
+        "管尿活动",
+        "关溺活动",
+        "关尼奥活动",
+        "管溺活动",
+        "管尼奥活动",
+        "观鸟"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guanniaojijie",
+      "expected": "观鸟季节",
+      "source": "5500",
+      "lookup_us": 6468,
+      "candidates": [
+        "观鸟季节",
+        "观鸟集结",
+        "冠鸟集结",
+        "冠鸟季节",
+        "关尿集结",
+        "管尿集结",
+        "关尿季节",
+        "管尿季节",
+        "观鸟"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guanniaojilu",
+      "expected": "观鸟记录",
+      "source": "5500",
+      "lookup_us": 5454,
+      "candidates": [
+        "观鸟记录",
+        "观鸟纪录",
+        "冠鸟记录",
+        "冠鸟纪录",
+        "关尿记录",
+        "管尿记录",
+        "关尿纪录",
+        "管尿纪录",
+        "观鸟"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guanniaowangyuanjing",
+      "expected": "观鸟望远镜",
+      "source": "5500",
+      "lookup_us": 11713,
+      "candidates": [
+        "观鸟望远镜",
+        "冠鸟望远镜",
+        "观鸟望远景",
+        "观鸟网愿景",
+        "观鸟望愿景",
+        "冠鸟望远景",
+        "观鸟王愿景",
+        "观鸟往远景",
+        "观鸟"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guoduzhaoming",
+      "expected": "过度照明",
+      "source": "5500",
+      "lookup_us": 4881,
+      "candidates": [
+        "过度照明",
+        "过渡照明",
+        "国度照明",
+        "国都照明",
+        "过度赵铭",
+        "过渡赵铭",
+        "过度朝明",
+        "过度着名",
+        "过渡"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guolvxiaolv",
+      "expected": "过滤效率",
+      "source": "5500",
+      "lookup_us": 6300,
+      "candidates": [
+        "过滤效率",
+        "国旅效率",
+        "过滤哮率",
+        "过绿效率",
+        "过滤哮绿",
+        "过律效率",
+        "过滤效绿",
+        "国律效率",
+        "过滤"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gushubaohu",
+      "expected": "古树保护",
+      "source": "5500",
+      "lookup_us": 4331,
+      "candidates": [
+        "古树保护",
+        "古书保护",
+        "股数保护",
+        "古属保护",
+        "故书保护",
+        "故属保护",
+        "故数保护",
+        "故树保护",
+        "古树"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gushumingmu",
+      "expected": "古树名木",
+      "source": "5500",
+      "lookup_us": 4141,
+      "candidates": [
+        "古树名木",
+        "古书名目",
+        "股数名目",
+        "古树名目",
+        "古书明目",
+        "故数名目",
+        "古属名目",
+        "古树明目",
+        "古树"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimianchengshi",
+      "expected": "海绵城市",
+      "source": "5500",
+      "lookup_us": 5470,
+      "candidates": [
+        "海绵城市",
+        "海面城市",
+        "海面诚实",
+        "海绵诚实",
+        "海面程式",
+        "海绵程式",
+        "海面成事",
+        "海面成是",
+        "海面"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haishangfengdian",
+      "expected": "海上风电",
+      "source": "5500",
+      "lookup_us": 5647,
+      "candidates": [
+        "海上风电",
+        "海上风点",
+        "海上峰电",
+        "海上风店",
+        "还上风电",
+        "海上风殿",
+        "海上风垫",
+        "海上疯癫",
+        "海上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "heanlvhua",
+      "expected": "河岸绿化",
+      "source": "5500",
+      "lookup_us": 3426,
+      "candidates": [
+        "河岸绿化",
+        "河岸氯化",
+        "和安绿化",
+        "和安氯化",
+        "和按绿化",
+        "和暗绿化",
+        "和案绿化",
+        "和按氯化",
+        "河岸"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "heanxiufu",
+      "expected": "河岸修复",
+      "source": "5500",
+      "lookup_us": 3502,
+      "candidates": [
+        "河岸修复",
+        "和安修复",
+        "和案修复",
+        "和按修复",
+        "和暗修复",
+        "何案修复",
+        "何安修复",
+        "何按修复",
+        "河岸"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "heanzhibei",
+      "expected": "河岸植被",
+      "source": "5500",
+      "lookup_us": 3374,
+      "candidates": [
+        "河岸植被",
+        "和安置呗",
+        "河岸制备",
+        "河岸之辈",
+        "和安制备",
+        "和安置被",
+        "和安植被",
+        "和安置北",
+        "河岸"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "hedaobaojie",
+      "expected": "河道保洁",
+      "source": "5500",
+      "lookup_us": 6436,
+      "candidates": [
+        "河道保洁",
+        "喝到保洁",
+        "和到保洁",
+        "喝道保洁",
+        "河道宝洁",
+        "河道包捷",
+        "和导保洁",
+        "和刀保洁",
+        "河道"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "hedaoqingyu",
+      "expected": "河道清淤",
+      "source": "5500",
+      "lookup_us": 5161,
+      "candidates": [
+        "河道清淤",
+        "河道情欲",
+        "河道请于",
+        "河道请与",
+        "河道鲭鱼",
+        "河道晴雨",
+        "喝到情欲",
+        "河道清与",
+        "河道"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "hedaoxuncha",
+      "expected": "河道巡查",
+      "source": "5500",
+      "lookup_us": 4335,
+      "candidates": [
+        "河道巡查",
+        "喝道巡查",
+        "喝到巡查",
+        "和到巡查",
+        "和导巡查",
+        "和岛巡查",
+        "和倒巡查",
+        "和刀巡查",
+        "河道"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "hedaozhengzhi",
+      "expected": "河道整治",
+      "source": "5500",
+      "lookup_us": 5100,
+      "candidates": [
+        "河道整治",
+        "河道政治",
+        "喝到政治",
+        "和到政治",
+        "河道争执",
+        "河道正直",
+        "河道正值",
+        "喝道政治",
+        "河岛正"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "hehubaohu",
+      "expected": "河湖保护",
+      "source": "5500",
+      "lookup_us": 4256,
+      "candidates": [
+        "河湖保护",
+        "合乎保护",
+        "呵护保护",
+        "和护保护",
+        "和胡保护",
+        "和湖保护",
+        "和呼保护",
+        "和戏保护",
+        "呵护"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "hehuzhili",
+      "expected": "河湖治理",
+      "source": "5500",
+      "lookup_us": 3386,
+      "candidates": [
+        "河湖治理",
+        "合乎治理",
+        "合乎智利",
+        "呵护治理",
+        "合乎之力",
+        "合乎智力",
+        "合乎致力",
+        "呵护之力",
+        "呵护"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "heliushengtai",
+      "expected": "河流生态",
+      "source": "5500",
+      "lookup_us": 5149,
+      "candidates": [
+        "河流生态",
+        "和六生态",
+        "喝旒生态",
+        "和刘生态",
+        "和流生态",
+        "和陆生态",
+        "和柳生态",
+        "和留生态",
+        "河流"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "heliyongdian",
+      "expected": "合理用电",
+      "source": "5500",
+      "lookup_us": 4654,
+      "candidates": [
+        "合理用电",
+        "和利用电",
+        "何利用电",
+        "河里用电",
+        "和利用点",
+        "和利用店",
+        "合力用电",
+        "和利用典",
+        "合理"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "houniaobaohu",
+      "expected": "候鸟保护",
+      "source": "5500",
+      "lookup_us": 4329,
+      "candidates": [
+        "候鸟保护",
+        "后鸟保护",
+        "后尿保护",
+        "后尼奥保护",
+        "后溺保护",
+        "侯尿保护",
+        "后袅保护",
+        "后嬲保护",
+        "候鸟"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaobaozhuang",
+      "expected": "环保包装",
+      "source": "5500",
+      "lookup_us": 8213,
+      "candidates": [
+        "环保包装",
+        "环抱包装",
+        "还包包装",
+        "还报包装",
+        "换包包装",
+        "环保报装",
+        "还保包装",
+        "还爆包装",
+        "环保"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaobiaoqian",
+      "expected": "环保标签",
+      "source": "5500",
+      "lookup_us": 7211,
+      "candidates": [
+        "环保标签",
+        "还包标签",
+        "环抱标签",
+        "环保标前",
+        "环保标钱",
+        "还报标签",
+        "换包标签",
+        "环保镖前",
+        "环保"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaobiaoshi",
+      "expected": "环保标识",
+      "source": "5500",
+      "lookup_us": 6204,
+      "candidates": [
+        "环保标识",
+        "环保标示",
+        "环保表示",
+        "还报表示",
+        "环抱表示",
+        "环保标时",
+        "环保标是",
+        "换报表示",
+        "环保"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaobiaozhun",
+      "expected": "环保标准",
+      "source": "5500",
+      "lookup_us": 7141,
+      "candidates": [
+        "环保标准",
+        "环抱标准",
+        "还报标准",
+        "还包标准",
+        "还保标准",
+        "换包标准",
+        "还宝标准",
+        "换报标准",
+        "环保"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaocailiao",
+      "expected": "环保材料",
+      "source": "5500",
+      "lookup_us": 5968,
+      "candidates": [
+        "环保材料",
+        "还报材料",
+        "环抱材料",
+        "还保材料",
+        "还包材料",
+        "环保菜了",
+        "环保才了",
+        "换报材料",
+        "环保"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaochangdao",
+      "expected": "环保倡导",
+      "source": "5500",
+      "lookup_us": 6402,
+      "candidates": [
+        "环保倡导",
+        "环保长到",
+        "环保肠道",
+        "环保尝到",
+        "环保唱到",
+        "环抱倡导",
+        "环保长岛",
+        "环保常到",
+        "环保"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaochangyi",
+      "expected": "环保倡议",
+      "source": "5500",
+      "lookup_us": 5691,
+      "candidates": [
+        "环保倡议",
+        "环保长椅",
+        "环保常以",
+        "环保场以",
+        "环抱倡议",
+        "环保长以",
+        "还报倡议",
+        "环保昌邑",
+        "环保"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaochanpin",
+      "expected": "环保产品",
+      "source": "5500",
+      "lookup_us": 5527,
+      "candidates": [
+        "环保产品",
+        "环抱产品",
+        "还报产品",
+        "还保产品",
+        "还包产品",
+        "还爆产品",
+        "还宝产品",
+        "换包产品",
+        "环保"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaochuxing",
+      "expected": "环保出行",
+      "source": "5500",
+      "lookup_us": 5718,
+      "candidates": [
+        "环保出行",
+        "环保雏形",
+        "还爆出行",
+        "环抱出行",
+        "还报出行",
+        "还曝出行",
+        "环保处刑",
+        "换爆出行",
+        "环保"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaogongcheng",
+      "expected": "环保工程",
+      "source": "5500",
+      "lookup_us": 5629,
+      "candidates": [
+        "环保工程",
+        "环保供称",
+        "环抱工程",
+        "环保攻城",
+        "还报工程",
+        "还包工程",
+        "环保公称",
+        "还保工程",
+        "环保"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaogongyi",
+      "expected": "环保公益",
+      "source": "5500",
+      "lookup_us": 4432,
+      "candidates": [
+        "环保公益",
+        "环保工艺",
+        "环保公义",
+        "环抱工艺",
+        "环保公以",
+        "还包公益",
+        "环抱公益",
+        "环保工以",
+        "环保"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaogouwu",
+      "expected": "环保购物",
+      "source": "5500",
+      "lookup_us": 4121,
+      "candidates": [
+        "环保购物",
+        "环抱购物",
+        "还报购物",
+        "还包购物",
+        "还保购物",
+        "换包购物",
+        "环保狗屋",
+        "还爆购物",
+        "环保"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaoguifan",
+      "expected": "环保规范",
+      "source": "5500",
+      "lookup_us": 5973,
+      "candidates": [
+        "环保规范",
+        "环抱规范",
+        "还报规范",
+        "还保规范",
+        "还包规范",
+        "环保规饭",
+        "还爆规范",
+        "还宝规范",
+        "环保"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaohuodong",
+      "expected": "环保活动",
+      "source": "5500",
+      "lookup_us": 5237,
+      "candidates": [
+        "环保活动",
+        "还报活动",
+        "环抱活动",
+        "还包活动",
+        "换报活动",
+        "还保活动",
+        "换包活动",
+        "还爆活动",
+        "环保"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaojiance",
+      "expected": "环保检测",
+      "source": "5500",
+      "lookup_us": 6774,
+      "candidates": [
+        "环保检测",
+        "环保监测",
+        "环抱检测",
+        "还报检测",
+        "环抱监测",
+        "还报监测",
+        "还包检测",
+        "还保检测",
+        "环保"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaojiance",
+      "expected": "环保监测",
+      "source": "5500",
+      "lookup_us": 6747,
+      "candidates": [
+        "环保检测",
+        "环保监测",
+        "环抱检测",
+        "还报检测",
+        "环抱监测",
+        "还报监测",
+        "还包检测",
+        "还保检测",
+        "环保"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "huanbaojiancha",
+      "expected": "环保检查",
+      "source": "5500",
+      "lookup_us": 8438,
+      "candidates": [
+        "环保检查",
+        "环保监察",
+        "环抱检查",
+        "环保检察",
+        "还报检查",
+        "环保箭差",
+        "还包检查",
+        "还保检查",
+        "环保"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaojianyi",
+      "expected": "环保建议",
+      "source": "5500",
+      "lookup_us": 9401,
+      "candidates": [
+        "环保建议",
+        "环保检疫",
+        "环抱建议",
+        "环保坚毅",
+        "环保简易",
+        "环保健以",
+        "环保健一",
+        "还报建议",
+        "环保"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaojiaoyu",
+      "expected": "环保教育",
+      "source": "5500",
+      "lookup_us": 10011,
+      "candidates": [
+        "环保教育",
+        "环抱教育",
+        "还报教育",
+        "还保教育",
+        "环保交于",
+        "环保教于",
+        "还包教育",
+        "环保交与",
+        "环保"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaojishu",
+      "expected": "环保技术",
+      "source": "5500",
+      "lookup_us": 5477,
+      "candidates": [
+        "环保技术",
+        "环保计数",
+        "环保级数",
+        "环保记述",
+        "环保基数",
+        "环保及数",
+        "环抱技术",
+        "环保及书",
+        "环保"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaojubao",
+      "expected": "环保举报",
+      "source": "5500",
+      "lookup_us": 5567,
+      "candidates": [
+        "环保举报",
+        "环保局报",
+        "环保局包",
+        "环保局保",
+        "环保局宝",
+        "环保局爆",
+        "环保局薄",
+        "环保局暴",
+        "环保局"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaokepu",
+      "expected": "环保科普",
+      "source": "5500",
+      "lookup_us": 4904,
+      "candidates": [
+        "环保科普",
+        "环抱科普",
+        "环保可普",
+        "环保可谱",
+        "环保可铺",
+        "环保柯普",
+        "环保克普",
+        "环保科铺",
+        "环保"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaoketang",
+      "expected": "环保课堂",
+      "source": "5500",
+      "lookup_us": 5959,
+      "candidates": [
+        "环保课堂",
+        "环保磕糖",
+        "环抱课堂",
+        "环保课汤",
+        "环保可汤",
+        "还报课堂",
+        "环保可堂",
+        "环保可糖",
+        "环保"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaolinian",
+      "expected": "环保理念",
+      "source": "5500",
+      "lookup_us": 6149,
+      "candidates": [
+        "环保理念",
+        "环保历年",
+        "环抱理念",
+        "还报理念",
+        "还包理念",
+        "还保理念",
+        "环保李念",
+        "环抱历年",
+        "环保"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaorenzheng",
+      "expected": "环保认证",
+      "source": "5500",
+      "lookup_us": 5440,
+      "candidates": [
+        "环保认证",
+        "环保人正",
+        "环保人证",
+        "环保人争",
+        "环抱认证",
+        "环保人症",
+        "环保人征",
+        "环保人政",
+        "环保"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaoshebei",
+      "expected": "环保设备",
+      "source": "5500",
+      "lookup_us": 3936,
+      "candidates": [
+        "环保设备",
+        "环抱设备",
+        "还报设备",
+        "还包设备",
+        "还保设备",
+        "换报设备",
+        "还爆设备",
+        "还宝设备",
+        "环保"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaoshenghuo",
+      "expected": "环保生活",
+      "source": "5500",
+      "lookup_us": 6232,
+      "candidates": [
+        "环保生活",
+        "环保圣火",
+        "环保生火",
+        "还包生活",
+        "环抱生活",
+        "换包生活",
+        "还保生活",
+        "还报生活",
+        "环保"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaosheshi",
+      "expected": "环保设施",
+      "source": "5500",
+      "lookup_us": 4400,
+      "candidates": [
+        "环保设施",
+        "环抱设施",
+        "环保摄氏",
+        "还报设施",
+        "环保射失",
+        "环保涉事",
+        "环保社是",
+        "还报社是",
+        "环保"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaoshetuan",
+      "expected": "环保社团",
+      "source": "5500",
+      "lookup_us": 5312,
+      "candidates": [
+        "环保社团",
+        "还报社团",
+        "环抱社团",
+        "换报社团",
+        "还保社团",
+        "还包社团",
+        "环保社图案",
+        "还爆社团",
+        "环保"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaoshuju",
+      "expected": "环保数据",
+      "source": "5500",
+      "lookup_us": 4487,
+      "candidates": [
+        "环保数据",
+        "还报数据",
+        "环抱数据",
+        "环保署局",
+        "环保署剧",
+        "环保署居",
+        "环保书局",
+        "还包数据",
+        "环保"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaotousu",
+      "expected": "环保投诉",
+      "source": "5500",
+      "lookup_us": 3486,
+      "candidates": [
+        "环保投诉",
+        "环抱投诉",
+        "还报投诉",
+        "还保投诉",
+        "还包投诉",
+        "还爆投诉",
+        "环保投宿",
+        "还宝投诉",
+        "环保"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaoxiangmu",
+      "expected": "环保项目",
+      "source": "5500",
+      "lookup_us": 7989,
+      "candidates": [
+        "环保项目",
+        "环抱项目",
+        "还报项目",
+        "还保项目",
+        "还包项目",
+        "环保橡木",
+        "换报项目",
+        "环保相目",
+        "环保"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaoxiaofei",
+      "expected": "环保消费",
+      "source": "5500",
+      "lookup_us": 10123,
+      "candidates": [
+        "环保消费",
+        "环保小费",
+        "环保小飞",
+        "环抱消费",
+        "还报消费",
+        "环保小非",
+        "还包消费",
+        "还保消费",
+        "环保"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaoxiguan",
+      "expected": "环保习惯",
+      "source": "5500",
+      "lookup_us": 8244,
+      "candidates": [
+        "环保习惯",
+        "环保吸管",
+        "环抱习惯",
+        "环保西关",
+        "还报习惯",
+        "还包习惯",
+        "还保习惯",
+        "环保西官",
+        "环保"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaoxingdong",
+      "expected": "环保行动",
+      "source": "5500",
+      "lookup_us": 6506,
+      "candidates": [
+        "环保行动",
+        "还报行动",
+        "环抱行动",
+        "环保型动",
+        "还暴行动",
+        "换报行动",
+        "还保行动",
+        "环保型洞",
+        "环保型"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaoxuanchuan",
+      "expected": "环保宣传",
+      "source": "5500",
+      "lookup_us": 8200,
+      "candidates": [
+        "环保宣传",
+        "环抱宣传",
+        "还报宣传",
+        "还包宣传",
+        "还保宣传",
+        "换报宣传",
+        "还爆宣传",
+        "还宝宣传",
+        "环保"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaoxuncha",
+      "expected": "环保巡查",
+      "source": "5500",
+      "lookup_us": 5144,
+      "candidates": [
+        "环保巡查",
+        "环抱巡查",
+        "还报巡查",
+        "还包巡查",
+        "还保巡查",
+        "环保训差",
+        "还爆巡查",
+        "还宝巡查",
+        "环保"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaoyanshou",
+      "expected": "环保验收",
+      "source": "5500",
+      "lookup_us": 5747,
+      "candidates": [
+        "环保验收",
+        "环保延寿",
+        "环保严守",
+        "环抱验收",
+        "环保岩手",
+        "环保眼熟",
+        "环保彦受",
+        "还报验收",
+        "环保"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaoyaoqiu",
+      "expected": "环保要求",
+      "source": "5500",
+      "lookup_us": 6748,
+      "candidates": [
+        "环保要求",
+        "环抱要求",
+        "环保要球",
+        "还报要求",
+        "还包要求",
+        "还保要求",
+        "环保药球",
+        "还爆要求",
+        "环保"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaozhenggai",
+      "expected": "环保整改",
+      "source": "5500",
+      "lookup_us": 6400,
+      "candidates": [
+        "环保整改",
+        "环保政改",
+        "环保证改",
+        "环保证盖",
+        "环保证该",
+        "环抱整改",
+        "还保证改",
+        "还报整改",
+        "环保"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaozhibiao",
+      "expected": "环保指标",
+      "source": "5500",
+      "lookup_us": 10303,
+      "candidates": [
+        "环保指标",
+        "还报指标",
+        "环保治标",
+        "环抱指标",
+        "环保支表",
+        "还包指标",
+        "环保之标",
+        "换报指标",
+        "环保"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaozhiyuanfuwu",
+      "expected": "环保志愿服务",
+      "source": "5500",
+      "lookup_us": 15376,
+      "candidates": [
+        "环保支援服务",
+        "环保志愿服务",
+        "环保职员服务",
+        "环抱志愿服务",
+        "环保之源服务",
+        "环抱支援服务",
+        "环保致远服务",
+        "环保志远服务",
+        "环保"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "huanbaozhiyuanzhe",
+      "expected": "环保志愿者",
+      "source": "5500",
+      "lookup_us": 9636,
+      "candidates": [
+        "环保志愿者",
+        "环保支援者",
+        "环抱志愿者",
+        "环保支援这",
+        "环保支援着",
+        "环保职员这",
+        "环保职员者",
+        "环抱支援者",
+        "环保"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanbaozuzhi",
+      "expected": "环保组织",
+      "source": "5500",
+      "lookup_us": 4266,
+      "candidates": [
+        "环保组织",
+        "环保阻止",
+        "还报组织",
+        "环保阻旨",
+        "环抱组织",
+        "环保组指",
+        "环保阻滞",
+        "环保组之",
+        "环保"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huangmohuazhili",
+      "expected": "荒漠化治理",
+      "source": "5500",
+      "lookup_us": 5991,
+      "candidates": [
+        "荒漠化治理",
+        "荒漠化之力",
+        "荒漠化智利",
+        "荒漠化致力",
+        "荒漠化智力",
+        "荒漠华治理",
+        "荒漠化之利",
+        "荒漠化指里",
+        "荒漠化"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanjingbaogao",
+      "expected": "环境报告",
+      "source": "5500",
+      "lookup_us": 6389,
+      "candidates": [
+        "环境报告",
+        "环境保高",
+        "还警报告",
+        "环境保搞",
+        "还京报告",
+        "环境保稿",
+        "环景报告",
+        "环境保皋",
+        "环境"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanjingfengxian",
+      "expected": "环境风险",
+      "source": "5500",
+      "lookup_us": 8662,
+      "candidates": [
+        "环境风险",
+        "环境奉献",
+        "环境锋线",
+        "环境风县",
+        "环境奉贤",
+        "环境风线",
+        "环境丰县",
+        "幻境风险",
+        "环境"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanjinggaishan",
+      "expected": "环境改善",
+      "source": "5500",
+      "lookup_us": 8548,
+      "candidates": [
+        "环境改善",
+        "还经改善",
+        "还京改善",
+        "环境该山",
+        "幻境改善",
+        "环景改善",
+        "环境改山",
+        "换经改善",
+        "环境"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanjingjiance",
+      "expected": "环境检测",
+      "source": "5500",
+      "lookup_us": 7846,
+      "candidates": [
+        "环境监测",
+        "环境检测",
+        "幻境检测",
+        "还经检测",
+        "还京检测",
+        "环景检测",
+        "幻境监测",
+        "还京监测",
+        "环境"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "huanjingjiaoyu",
+      "expected": "环境教育",
+      "source": "5500",
+      "lookup_us": 9089,
+      "candidates": [
+        "环境教育",
+        "还经教育",
+        "还京教育",
+        "环境交于",
+        "环境交与",
+        "环境交予",
+        "环境教于",
+        "换经教育",
+        "环境"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanjingkepu",
+      "expected": "环境科普",
+      "source": "5500",
+      "lookup_us": 5110,
+      "candidates": [
+        "环境科普",
+        "环境咳浦",
+        "环境可普",
+        "环境可谱",
+        "环境可铺",
+        "环境可浦",
+        "环境可堡",
+        "环境科铺",
+        "环境"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanjingmeihua",
+      "expected": "环境美化",
+      "source": "5500",
+      "lookup_us": 6700,
+      "candidates": [
+        "环境美化",
+        "环境梅花",
+        "环境没话",
+        "环境没化",
+        "环境美花",
+        "环境没画",
+        "环境美华",
+        "环境没花",
+        "环境"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanjingpinggu",
+      "expected": "环境评估",
+      "source": "5500",
+      "lookup_us": 5963,
+      "candidates": [
+        "环境评估",
+        "环境平谷",
+        "还经评估",
+        "幻境评估",
+        "换经评估",
+        "还京评估",
+        "环境评股",
+        "环景评估",
+        "环境"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanjingshuju",
+      "expected": "环境数据",
+      "source": "5500",
+      "lookup_us": 4856,
+      "candidates": [
+        "环境数据",
+        "环境书局",
+        "幻境数据",
+        "还京数据",
+        "环景数据",
+        "还经数据",
+        "环境属局",
+        "环境数句",
+        "环境"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanjingweihu",
+      "expected": "环境维护",
+      "source": "5500",
+      "lookup_us": 5198,
+      "candidates": [
+        "环境维护",
+        "环境为虎",
+        "环境为湖",
+        "环境为胡",
+        "环境为护",
+        "还京维护",
+        "环境为户",
+        "环境为呼",
+        "环境"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanjingxiufu",
+      "expected": "环境修复",
+      "source": "5500",
+      "lookup_us": 5690,
+      "candidates": [
+        "环境修复",
+        "环境秀夫",
+        "还经修复",
+        "环景修复",
+        "还京修复",
+        "换经修复",
+        "幻境修复",
+        "环境修服",
+        "环境"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanjingyishi",
+      "expected": "环境意识",
+      "source": "5500",
+      "lookup_us": 6110,
+      "candidates": [
+        "环境意识",
+        "环境一事",
+        "环境仪式",
+        "环境一时",
+        "环境一世",
+        "环境已是",
+        "环境医师",
+        "环境一是",
+        "环境"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanjingyouhaoxing",
+      "expected": "环境友好型",
+      "source": "5500",
+      "lookup_us": 11392,
+      "candidates": [
+        "环境友好行",
+        "环境友好性",
+        "环境友好星",
+        "环境友好型",
+        "环境友好姓",
+        "环境友好幸",
+        "环境友好兴",
+        "环境友好形",
+        "环境"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "huanjingzhengzhi",
+      "expected": "环境整治",
+      "source": "5500",
+      "lookup_us": 8596,
+      "candidates": [
+        "环境整治",
+        "环境政治",
+        "环境争执",
+        "环境正直",
+        "环境正值",
+        "环境政制",
+        "环境正职",
+        "还竞争执",
+        "环境"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanjingzhibiao",
+      "expected": "环境指标",
+      "source": "5500",
+      "lookup_us": 7322,
+      "candidates": [
+        "环境指标",
+        "环境治标",
+        "环境织标",
+        "环境之标",
+        "环境之表",
+        "还京指标",
+        "环境支表",
+        "环境治表",
+        "环境"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huashinengyuan",
+      "expected": "化石能源",
+      "source": "5500",
+      "lookup_us": 5331,
+      "candidates": [
+        "化石能源",
+        "花是能源",
+        "话事能源",
+        "华仕能源",
+        "华是能源",
+        "花时能源",
+        "话时能源",
+        "华氏能源",
+        "化石"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huifaxingyoujiwu",
+      "expected": "挥发性有机物",
+      "source": "5500",
+      "lookup_us": 6162,
+      "candidates": [
+        "会发行有机物",
+        "挥发性有机物",
+        "会发行有机无",
+        "会发行有机务",
+        "会发行邮寄物",
+        "会发行有机舞",
+        "会发行有机五",
+        "会发行有机屋",
+        "挥发"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "huiqing",
+      "expected": "灰氢",
+      "source": "5500",
+      "lookup_us": 2227,
+      "candidates": [
+        "回请",
+        "灰氢",
+        "会请",
+        "会清",
+        "会庆",
+        "会情",
+        "讳庆",
+        "会轻",
+        "晦气"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "huoxingtanxifu",
+      "expected": "活性炭吸附",
+      "source": "5500",
+      "lookup_us": 5933,
+      "candidates": [
+        "活性炭媳妇",
+        "火星探媳妇",
+        "活性炭西服",
+        "火星探析服",
+        "火星探西服",
+        "火星探析夫",
+        "火星探析福",
+        "活性炭吸附",
+        "活性炭"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "jiadiannenghao",
+      "expected": "家电能耗",
+      "source": "5500",
+      "lookup_us": 4921,
+      "candidates": [
+        "家电能耗",
+        "家店能好",
+        "家电能好",
+        "家店能耗",
+        "加点能好",
+        "家店能号",
+        "加点能耗",
+        "家电能号",
+        "家电"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jianshaodaiji",
+      "expected": "减少待机",
+      "source": "5500",
+      "lookup_us": 5908,
+      "candidates": [
+        "减少待机",
+        "减少大计",
+        "减少大吉",
+        "减少带及",
+        "减少大机",
+        "减少大及",
+        "减少贷记",
+        "减少带鸡",
+        "减少"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jianzhenjiangzao",
+      "expected": "减震降噪",
+      "source": "5500",
+      "lookup_us": 11072,
+      "candidates": [
+        "减震降噪",
+        "剪枕降噪",
+        "鉴贞降噪",
+        "见真降噪",
+        "间真降噪",
+        "减针降噪",
+        "见镇降噪",
+        "集安镇降噪",
+        "减震"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jianzhunenghao",
+      "expected": "建筑能耗",
+      "source": "5500",
+      "lookup_us": 4512,
+      "candidates": [
+        "建筑能耗",
+        "建筑能好",
+        "建筑能号",
+        "建筑能豪",
+        "建筑能浩",
+        "建筑能昊",
+        "建筑能皓",
+        "建筑能嚎",
+        "建筑"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jianzhuyangchen",
+      "expected": "建筑扬尘",
+      "source": "5500",
+      "lookup_us": 5961,
+      "candidates": [
+        "建筑扬尘",
+        "建筑阳称",
+        "建筑洋称",
+        "建筑样称",
+        "建筑杨臣",
+        "建筑杨称",
+        "建筑养称",
+        "建筑阳臣",
+        "建筑"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jianzhuzaosheng",
+      "expected": "建筑噪声",
+      "source": "5500",
+      "lookup_us": 4957,
+      "candidates": [
+        "建筑噪声",
+        "建筑造声",
+        "建筑造生",
+        "见诸噪声",
+        "建筑早生",
+        "建筑早声",
+        "建筑遭生",
+        "建筑遭声",
+        "建筑"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiaotongzaosheng",
+      "expected": "交通噪声",
+      "source": "5500",
+      "lookup_us": 4677,
+      "candidates": [
+        "交通噪声",
+        "交通造声",
+        "交通造生",
+        "较同噪声",
+        "交通早生",
+        "交通噪生",
+        "交通早声",
+        "交通遭生",
+        "交通"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingchuneng",
+      "expected": "家庭储能",
+      "source": "5500",
+      "lookup_us": 4702,
+      "candidates": [
+        "家庭储能",
+        "家庭出能",
+        "家庭处能",
+        "家庭除能",
+        "家庭初能",
+        "家庭楚能",
+        "家庭触能",
+        "家庭厨能",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingjieshui",
+      "expected": "家庭节水",
+      "source": "5500",
+      "lookup_us": 5810,
+      "candidates": [
+        "家庭节水",
+        "家庭解说",
+        "家庭接水",
+        "家庭杰说",
+        "家庭接说",
+        "家庭解水",
+        "家庭解谁",
+        "家庭接税",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiediancuoshi",
+      "expected": "节电措施",
+      "source": "5500",
+      "lookup_us": 5048,
+      "candidates": [
+        "节电措施",
+        "节点措施",
+        "借点措施",
+        "届电措施",
+        "节点错事",
+        "街店措施",
+        "借点错事",
+        "节点错失",
+        "节点"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiediangaizao",
+      "expected": "节电改造",
+      "source": "5500",
+      "lookup_us": 5889,
+      "candidates": [
+        "节电改造",
+        "节点改造",
+        "借点改造",
+        "届电改造",
+        "街店改造",
+        "届店改造",
+        "节点改早",
+        "节点该早",
+        "节点"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiedianmoshi",
+      "expected": "节电模式",
+      "source": "5500",
+      "lookup_us": 5331,
+      "candidates": [
+        "节电模式",
+        "节点模式",
+        "借点模式",
+        "届电模式",
+        "街店模式",
+        "节点没事",
+        "节点漠视",
+        "届店模式",
+        "节点"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiedianshebei",
+      "expected": "节电设备",
+      "source": "5500",
+      "lookup_us": 4333,
+      "candidates": [
+        "节电设备",
+        "节点设备",
+        "届电设备",
+        "借点设备",
+        "街店设备",
+        "届店设备",
+        "节点设呗",
+        "节点射被",
+        "节点"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jienengbiaozhun",
+      "expected": "节能标准",
+      "source": "5500",
+      "lookup_us": 6262,
+      "candidates": [
+        "节能标准",
+        "皆能标准",
+        "节能表准",
+        "节能彪准",
+        "节能飙准",
+        "节能镖准",
+        "届螚标准",
+        "皆能表准",
+        "节能"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jienengcuoshi",
+      "expected": "节能措施",
+      "source": "5500",
+      "lookup_us": 4246,
+      "candidates": [
+        "节能措施",
+        "节能错事",
+        "节能错失",
+        "皆能措施",
+        "节能错时",
+        "节能错是",
+        "皆能错事",
+        "节能错视",
+        "节能"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jienenggaizao",
+      "expected": "节能改造",
+      "source": "5500",
+      "lookup_us": 3962,
+      "candidates": [
+        "节能改造",
+        "皆能改造",
+        "节能改早",
+        "节能该早",
+        "节能改遭",
+        "节能该造",
+        "节能改糟",
+        "节能该遭",
+        "节能"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jienengjiance",
+      "expected": "节能检测",
+      "source": "5500",
+      "lookup_us": 7405,
+      "candidates": [
+        "节能检测",
+        "节能监测",
+        "皆能检测",
+        "皆能监测",
+        "节能减测",
+        "节能减侧",
+        "节能减册",
+        "节能减策",
+        "节能"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jienengjishu",
+      "expected": "节能技术",
+      "source": "5500",
+      "lookup_us": 4855,
+      "candidates": [
+        "节能技术",
+        "节能计数",
+        "节能记述",
+        "节能级数",
+        "节能基数",
+        "皆能技术",
+        "节能奇数",
+        "节能集数",
+        "节能"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jienengpinggu",
+      "expected": "节能评估",
+      "source": "5500",
+      "lookup_us": 4994,
+      "candidates": [
+        "节能评估",
+        "节能平谷",
+        "结能评估",
+        "节能平菇",
+        "节能平股",
+        "节能平骨",
+        "节能平鼓",
+        "节能平故",
+        "节能"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jienengrenzheng",
+      "expected": "节能认证",
+      "source": "5500",
+      "lookup_us": 5975,
+      "candidates": [
+        "节能认证",
+        "皆能认证",
+        "节能人正",
+        "节能人证",
+        "节能任政",
+        "节能人争",
+        "节能人症",
+        "节能人征",
+        "节能"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jienengxiaoguo",
+      "expected": "节能效果",
+      "source": "5500",
+      "lookup_us": 7678,
+      "candidates": [
+        "节能效果",
+        "节能小国",
+        "皆能效果",
+        "节能笑过",
+        "节能小过",
+        "节能小郭",
+        "节能小果",
+        "节能消过",
+        "节能"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jienengzhaoming",
+      "expected": "节能照明",
+      "source": "5500",
+      "lookup_us": 6697,
+      "candidates": [
+        "节能照明",
+        "皆能照明",
+        "节能找明",
+        "节能找名",
+        "节能赵铭",
+        "节能照名",
+        "节能找命",
+        "节能找鸣",
+        "节能"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jieshuigaizao",
+      "expected": "节水改造",
+      "source": "5500",
+      "lookup_us": 3117,
+      "candidates": [
+        "节水改造",
+        "接税改造",
+        "接水改造",
+        "解说改造",
+        "届谁改造",
+        "解谁改造",
+        "接说改造",
+        "届睡改造",
+        "节水"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jieshuiguangai",
+      "expected": "节水灌溉",
+      "source": "5500",
+      "lookup_us": 5990,
+      "candidates": [
+        "节水灌溉",
+        "接水灌溉",
+        "解说灌溉",
+        "届谁灌溉",
+        "接税灌溉",
+        "解谁灌溉",
+        "接说灌溉",
+        "届睡灌溉",
+        "节水"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jieshuilongtou",
+      "expected": "节水龙头",
+      "source": "5500",
+      "lookup_us": 2678,
+      "candidates": [
+        "节水龙头",
+        "接水龙头",
+        "解说龙头",
+        "届谁龙头",
+        "接税龙头",
+        "解谁龙头",
+        "接说龙头",
+        "届睡龙头",
+        "节水"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jieshuimatong",
+      "expected": "节水马桶",
+      "source": "5500",
+      "lookup_us": 3509,
+      "candidates": [
+        "节水马桶",
+        "解说马桶",
+        "接水马桶",
+        "解说马通",
+        "解说马痛",
+        "解说马同",
+        "接说马桶",
+        "解说马筒",
+        "节水"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jieshuiqiju",
+      "expected": "节水器具",
+      "source": "5500",
+      "lookup_us": 3792,
+      "candidates": [
+        "节水器具",
+        "接水器具",
+        "节水齐聚",
+        "节水棋局",
+        "解说器具",
+        "接水齐聚",
+        "解说齐聚",
+        "接水棋局",
+        "节水"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jieyueyongdian",
+      "expected": "节约用电",
+      "source": "5500",
+      "lookup_us": 6319,
+      "candidates": [
+        "节约用电",
+        "解约用电",
+        "节约用点",
+        "节约用店",
+        "借阅用电",
+        "节约用典",
+        "节约用垫",
+        "节约用殿",
+        "节约"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jieyueyongshui",
+      "expected": "节约用水",
+      "source": "5500",
+      "lookup_us": 5587,
+      "candidates": [
+        "节约用水",
+        "节约用说",
+        "借阅用水",
+        "节约用睡",
+        "节约用谁",
+        "节约用税",
+        "解约用水",
+        "皆月用水",
+        "节约"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jinghuashebei",
+      "expected": "净化设备",
+      "source": "5500",
+      "lookup_us": 3555,
+      "candidates": [
+        "净化设备",
+        "京华设备",
+        "精华设备",
+        "净化社呗",
+        "经化设备",
+        "经花设备",
+        "经话设备",
+        "净化社被",
+        "精华"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jinghuaxiaolv",
+      "expected": "净化效率",
+      "source": "5500",
+      "lookup_us": 5701,
+      "candidates": [
+        "净化效率",
+        "京华效率",
+        "精华效率",
+        "经花效率",
+        "经画效率",
+        "经化效率",
+        "经话效率",
+        "京花效率",
+        "精华"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jinglingpaifang",
+      "expected": "净零排放",
+      "source": "5500",
+      "lookup_us": 5135,
+      "candidates": [
+        "净零排放",
+        "精灵排放",
+        "精灵牌坊",
+        "经零排放",
+        "竟陵排放",
+        "经令牌坊",
+        "经令排放",
+        "经领排放",
+        "精灵"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jixiechuneng",
+      "expected": "机械储能",
+      "source": "5500",
+      "lookup_us": 5254,
+      "candidates": [
+        "机械储能",
+        "机械处能",
+        "机械出能",
+        "记协储能",
+        "记协褚能",
+        "机械除能",
+        "机械初能",
+        "机械楚能",
+        "机械"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jizhongshiguangfu",
+      "expected": "集中式光伏",
+      "source": "5500",
+      "lookup_us": 5937,
+      "candidates": [
+        "集中时光复",
+        "集中时光伏",
+        "集中时光府",
+        "集中是光伏",
+        "集中时光服",
+        "集中时光夫",
+        "集中时光福",
+        "集中式光伏",
+        "集中"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "keliwu",
+      "expected": "颗粒物",
+      "source": "5500",
+      "lookup_us": 1845,
+      "candidates": [
+        "颗粒物",
+        "可礼物",
+        "颗粒无",
+        "克里无",
+        "克里五",
+        "科礼物",
+        "颗粒五",
+        "克礼物",
+        "颗粒"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kexirukeliwu",
+      "expected": "可吸入颗粒物",
+      "source": "5500",
+      "lookup_us": 5973,
+      "candidates": [
+        "可惜如可礼物",
+        "可惜入可礼物",
+        "可惜如科礼物",
+        "可惜如克礼物",
+        "可惜入科礼物",
+        "可惜如客礼物",
+        "可惜如颗粒无",
+        "可吸入颗粒物",
+        "可惜"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "kongqilvwang",
+      "expected": "空气滤网",
+      "source": "5500",
+      "lookup_us": 4632,
+      "candidates": [
+        "空气滤网",
+        "空气滤王",
+        "空气律王",
+        "空气率网",
+        "空气率王",
+        "空气滤旺",
+        "空气绿网",
+        "空气绿王",
+        "空气滤"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kongqiyuanrebeng",
+      "expected": "空气源热泵",
+      "source": "5500",
+      "lookup_us": 3559,
+      "candidates": [
+        "空气源热泵",
+        "空气元热崩",
+        "空气远热崩",
+        "空气原热崩",
+        "空气员热崩",
+        "空气源热崩",
+        "空气元热泵",
+        "空气远热泵",
+        "空气"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kongqizhiliangyubao",
+      "expected": "空气质量预报",
+      "source": "5500",
+      "lookup_us": 9807,
+      "candidates": [
+        "空气质量预报",
+        "空气质量与报",
+        "空气质量与包",
+        "空气质量与保",
+        "空气质量与宝",
+        "空气质量与爆",
+        "空气质量于报",
+        "空气质量与薄",
+        "空气治理"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kongqizhiliangzhishu",
+      "expected": "空气质量指数",
+      "source": "5500",
+      "lookup_us": 7563,
+      "candidates": [
+        "空气质量指数",
+        "空气质量之术",
+        "空气质量直属",
+        "空气质量之树",
+        "空气质量植树",
+        "空气质量之数",
+        "空气质量之书",
+        "空气质量指书",
+        "空气治理"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kongtiaonenghao",
+      "expected": "空调能耗",
+      "source": "5500",
+      "lookup_us": 3923,
+      "candidates": [
+        "空调能耗",
+        "空调能好",
+        "空调能号",
+        "空调能豪",
+        "空调能浩",
+        "空调能昊",
+        "空调能皓",
+        "空调能嚎",
+        "空调"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "koudaigongyuan",
+      "expected": "口袋公园",
+      "source": "5500",
+      "lookup_us": 3728,
+      "candidates": [
+        "口袋公园",
+        "口袋公元",
+        "口大公园",
+        "口袋公远",
+        "口带公园",
+        "扣带公园",
+        "口袋公源",
+        "口代公园",
+        "口袋"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lanqing",
+      "expected": "蓝氢",
+      "source": "5500",
+      "lookup_us": 2351,
+      "candidates": [
+        "蓝氢",
+        "兰青",
+        "兰情",
+        "蓝清",
+        "蓝情",
+        "兰清",
+        "蓝请",
+        "蓝青",
+        "岚气"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lindibaohu",
+      "expected": "林地保护",
+      "source": "5500",
+      "lookup_us": 3888,
+      "candidates": [
+        "林地保护",
+        "林的保护",
+        "临的保护",
+        "林底保护",
+        "临地保护",
+        "林迪保护",
+        "林低保护",
+        "林帝保护",
+        "林地"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lingtanjianzhu",
+      "expected": "零碳建筑",
+      "source": "5500",
+      "lookup_us": 6070,
+      "candidates": [
+        "零碳建筑",
+        "令谈建筑",
+        "令谭建筑",
+        "令弹建筑",
+        "令坦建筑",
+        "令坛建筑",
+        "令探建筑",
+        "另谈建筑",
+        "令他"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lingtanpaifang",
+      "expected": "零碳排放",
+      "source": "5500",
+      "lookup_us": 3863,
+      "candidates": [
+        "零碳排放",
+        "令碳排放",
+        "另碳排放",
+        "令谈排放",
+        "令滩排放",
+        "令弹排放",
+        "令摊牌坊",
+        "令坦排放",
+        "令他"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lingtanyuanqu",
+      "expected": "零碳园区",
+      "source": "5500",
+      "lookup_us": 4809,
+      "candidates": [
+        "零碳园区",
+        "令谈园区",
+        "令弹园区",
+        "令坦园区",
+        "令探园区",
+        "另谈园区",
+        "令谭园区",
+        "另弹园区",
+        "令他"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "linmubuzhi",
+      "expected": "林木补植",
+      "source": "5500",
+      "lookup_us": 2889,
+      "candidates": [
+        "林木补植",
+        "林木布置",
+        "林木不知",
+        "林木不止",
+        "林木不治",
+        "林木不值",
+        "林木不只",
+        "林木部指",
+        "林木"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "linmuyanghu",
+      "expected": "林木养护",
+      "source": "5500",
+      "lookup_us": 5147,
+      "candidates": [
+        "林木养护",
+        "林木阳虎",
+        "林木阳湖",
+        "林木养虎",
+        "林姆养护",
+        "林目养护",
+        "林木央湖",
+        "林母养护",
+        "林木"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "luotufugai",
+      "expected": "裸土覆盖",
+      "source": "5500",
+      "lookup_us": 2636,
+      "candidates": [
+        "裸土覆盖",
+        "罗土覆盖",
+        "罗涂覆盖",
+        "罗图覆盖",
+        "洛涂覆盖",
+        "洛图覆盖",
+        "罗突覆盖",
+        "罗吐覆盖",
+        "络"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lushangfengdian",
+      "expected": "陆上风电",
+      "source": "5500",
+      "lookup_us": 5839,
+      "candidates": [
+        "陆上风电",
+        "路上风电",
+        "路上风点",
+        "路上风店",
+        "路上疯癫",
+        "路上封点",
+        "路上封电",
+        "路上封店",
+        "路上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lvqing",
+      "expected": "绿氢",
+      "source": "5500",
+      "lookup_us": 1647,
+      "candidates": [
+        "绿氢",
+        "绿青",
+        "吕清",
+        "绿清",
+        "吕情",
+        "绿情",
+        "吕请",
+        "绿请",
+        "吕奇"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lvsebangong",
+      "expected": "绿色办公",
+      "source": "5500",
+      "lookup_us": 3672,
+      "candidates": [
+        "绿色办公",
+        "绿色版共",
+        "绿色版工",
+        "绿色版功",
+        "绿色斑共",
+        "绿色版宫",
+        "绿色版公",
+        "绿色半工",
+        "绿色版"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lvsebaozhuang",
+      "expected": "绿色包装",
+      "source": "5500",
+      "lookup_us": 5091,
+      "candidates": [
+        "绿色包装",
+        "绿色报装",
+        "绿色爆装",
+        "绿色暴装",
+        "绿色宝装",
+        "绿色宝状",
+        "绿色包状",
+        "滤色包装",
+        "绿色"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lvsecaigou",
+      "expected": "绿色采购",
+      "source": "5500",
+      "lookup_us": 1686,
+      "candidates": [
+        "绿色采购",
+        "绿色才够",
+        "绿色彩狗",
+        "绿色彩勾",
+        "绿色彩沟",
+        "绿色彩购",
+        "绿色财狗",
+        "绿色彩够",
+        "绿色"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lvsecailiao",
+      "expected": "绿色材料",
+      "source": "5500",
+      "lookup_us": 3894,
+      "candidates": [
+        "绿色材料",
+        "绿色彩了",
+        "绿色菜了",
+        "绿色才了",
+        "绿色采了",
+        "绿色踩了",
+        "绿色财了",
+        "绿色材了",
+        "绿色"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lvsechanpin",
+      "expected": "绿色产品",
+      "source": "5500",
+      "lookup_us": 3672,
+      "candidates": [
+        "绿色产品",
+        "滤色产品",
+        "吕塞产品",
+        "绿塞产品",
+        "吕瑟产品",
+        "绿瑟产品",
+        "绿色产拼",
+        "绿色单品",
+        "绿色"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lvsechuxing",
+      "expected": "绿色出行",
+      "source": "5500",
+      "lookup_us": 4094,
+      "candidates": [
+        "绿色出行",
+        "绿色雏形",
+        "绿色出性",
+        "绿色处刑",
+        "绿色出星",
+        "绿色出兴",
+        "绿色出型",
+        "绿色出形",
+        "绿色"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lvsegongchang",
+      "expected": "绿色工厂",
+      "source": "5500",
+      "lookup_us": 3666,
+      "candidates": [
+        "绿色工厂",
+        "绿色共娼",
+        "绿色共唱",
+        "绿色工场",
+        "绿色供长",
+        "绿色供场",
+        "绿色共长",
+        "绿色供唱",
+        "绿色"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lvsenengyuan",
+      "expected": "绿色能源",
+      "source": "5500",
+      "lookup_us": 4560,
+      "candidates": [
+        "绿色能源",
+        "绿色能远",
+        "绿色能元",
+        "绿色能预案",
+        "绿色能原",
+        "绿色能园",
+        "绿色能圆",
+        "绿色能员",
+        "绿色"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lvseshenghuo",
+      "expected": "绿色生活",
+      "source": "5500",
+      "lookup_us": 5146,
+      "candidates": [
+        "绿色生活",
+        "绿色圣火",
+        "绿色生火",
+        "绿色生和",
+        "绿色生或",
+        "绿色胜火",
+        "滤色生活",
+        "绿色生获",
+        "绿色"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lvseshequ",
+      "expected": "绿色社区",
+      "source": "5500",
+      "lookup_us": 2219,
+      "candidates": [
+        "绿色社区",
+        "绿色摄取",
+        "绿色设区",
+        "绿色舍区",
+        "绿色社去",
+        "绿色射区",
+        "绿色设去",
+        "绿色折去",
+        "绿色"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lvsewuliu",
+      "expected": "绿色物流",
+      "source": "5500",
+      "lookup_us": 3470,
+      "candidates": [
+        "绿色物流",
+        "绿色五六",
+        "绿色屋流",
+        "绿色无流",
+        "绿色舞流",
+        "绿色无留",
+        "绿色物留",
+        "绿色屋留",
+        "绿色"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lvsexiaofei",
+      "expected": "绿色消费",
+      "source": "5500",
+      "lookup_us": 4938,
+      "candidates": [
+        "绿色消费",
+        "绿色小费",
+        "绿色小飞",
+        "绿色小非",
+        "绿色小肥",
+        "绿色小废",
+        "绿色小菲",
+        "绿色校飞",
+        "绿色"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lvsexiaoyuan",
+      "expected": "绿色校园",
+      "source": "5500",
+      "lookup_us": 8181,
+      "candidates": [
+        "绿色校园",
+        "绿色小院",
+        "绿色小圆",
+        "绿色小远",
+        "绿色小元",
+        "绿色小园",
+        "绿色小源",
+        "绿色萧远",
+        "绿色"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lvseyunshu",
+      "expected": "绿色运输",
+      "source": "5500",
+      "lookup_us": 3360,
+      "candidates": [
+        "绿色运输",
+        "绿色云书",
+        "绿色运数",
+        "绿色运书",
+        "绿色运树",
+        "绿色云树",
+        "绿色云数",
+        "绿色晕书",
+        "绿色"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lvsezhaoming",
+      "expected": "绿色照明",
+      "source": "5500",
+      "lookup_us": 4568,
+      "candidates": [
+        "绿色照明",
+        "绿色赵铭",
+        "绿色照名",
+        "绿色着名",
+        "绿色兆铭",
+        "绿色兆明",
+        "绿色着明",
+        "绿色肇铭",
+        "绿色"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lvsezhizao",
+      "expected": "绿色制造",
+      "source": "5500",
+      "lookup_us": 2632,
+      "candidates": [
+        "绿色制造",
+        "绿色指早",
+        "绿色织造",
+        "绿色至早",
+        "绿色指遭",
+        "绿色植早",
+        "绿色之早",
+        "绿色纸早",
+        "绿色"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nenghaodengji",
+      "expected": "能耗等级",
+      "source": "5500",
+      "lookup_us": 3561,
+      "candidates": [
+        "能耗等级",
+        "能耗登记",
+        "能好登记",
+        "能号登记",
+        "能好等级",
+        "能号等级",
+        "能耗登基",
+        "能豪登记",
+        "能耗"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nenghaofenxi",
+      "expected": "能耗分析",
+      "source": "5500",
+      "lookup_us": 3179,
+      "candidates": [
+        "能耗分析",
+        "能好分析",
+        "能号分析",
+        "能浩分析",
+        "能豪分析",
+        "能毫分析",
+        "能昊分析",
+        "能郝分析",
+        "能耗"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nenghaoguanli",
+      "expected": "能耗管理",
+      "source": "5500",
+      "lookup_us": 5130,
+      "candidates": [
+        "能耗管理",
+        "能好管理",
+        "能号管理",
+        "能耗惯例",
+        "能好惯例",
+        "能浩管理",
+        "能豪管理",
+        "能毫管理",
+        "能耗"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nenghaojiance",
+      "expected": "能耗监测",
+      "source": "5500",
+      "lookup_us": 5822,
+      "candidates": [
+        "能耗监测",
+        "能好检测",
+        "能耗检测",
+        "能好监测",
+        "能号检测",
+        "能号监测",
+        "能浩检测",
+        "能豪检测",
+        "能耗"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nenghaojiliang",
+      "expected": "能耗计量",
+      "source": "5500",
+      "lookup_us": 6594,
+      "candidates": [
+        "能耗计量",
+        "能好剂量",
+        "能耗剂量",
+        "能好几辆",
+        "能耗伎俩",
+        "能好伎俩",
+        "能好计量",
+        "能耗脊梁",
+        "能耗"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nenghaozhibiao",
+      "expected": "能耗指标",
+      "source": "5500",
+      "lookup_us": 5409,
+      "candidates": [
+        "能耗指标",
+        "能好指标",
+        "能号指标",
+        "能豪指标",
+        "能浩指标",
+        "能好治标",
+        "能毫指标",
+        "能耗治标",
+        "能耗"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nengxiaobi",
+      "expected": "能效比",
+      "source": "5500",
+      "lookup_us": 5289,
+      "candidates": [
+        "能效比",
+        "能消笔",
+        "能消比",
+        "能小比",
+        "能小笔",
+        "能削笔",
+        "能效笔",
+        "能效必",
+        "能效"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nengxiaobiaoshi",
+      "expected": "能效标识",
+      "source": "5500",
+      "lookup_us": 7254,
+      "candidates": [
+        "能效标识",
+        "能效表示",
+        "能消表示",
+        "能小表示",
+        "能校表示",
+        "能笑表示",
+        "能消标识",
+        "能晓表示",
+        "能效比"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nengxiaodengji",
+      "expected": "能效等级",
+      "source": "5500",
+      "lookup_us": 6207,
+      "candidates": [
+        "能效等级",
+        "能消登记",
+        "能效登记",
+        "能小等级",
+        "能校登记",
+        "能小登记",
+        "能消等级",
+        "能销登记",
+        "能效"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nengyuanchucun",
+      "expected": "能源储存",
+      "source": "5500",
+      "lookup_us": 5833,
+      "candidates": [
+        "能源储存",
+        "能源出村",
+        "能源处村",
+        "能原储存",
+        "能源出存",
+        "能元储存",
+        "能远储存",
+        "能源处存",
+        "能源"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nengyuangongji",
+      "expected": "能源供给",
+      "source": "5500",
+      "lookup_us": 4894,
+      "candidates": [
+        "能源供给",
+        "能源攻击",
+        "能源共计",
+        "能源公鸡",
+        "能源功绩",
+        "能源公祭",
+        "能员工及",
+        "能源供及",
+        "能源"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nengyuanguanli",
+      "expected": "能源管理",
+      "source": "5500",
+      "lookup_us": 7640,
+      "candidates": [
+        "能源管理",
+        "能源惯例",
+        "能源官吏",
+        "能源管里",
+        "能圆管理",
+        "能员管理",
+        "能原管理",
+        "能源馆里",
+        "能源"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nengyuanhuishou",
+      "expected": "能源回收",
+      "source": "5500",
+      "lookup_us": 5342,
+      "candidates": [
+        "能源回收",
+        "能源挥手",
+        "能源回首",
+        "能源会受",
+        "能源回手",
+        "能源会收",
+        "能源会首",
+        "能源会手",
+        "能源"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nengyuanjiance",
+      "expected": "能源监测",
+      "source": "5500",
+      "lookup_us": 8167,
+      "candidates": [
+        "能源监测",
+        "能源检测",
+        "能原检测",
+        "能院检测",
+        "能元检测",
+        "能远检测",
+        "能愿检测",
+        "能原监测",
+        "能源"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nengyuanjiegou",
+      "expected": "能源结构",
+      "source": "5500",
+      "lookup_us": 6766,
+      "candidates": [
+        "能源结构",
+        "能元结构",
+        "能愿结构",
+        "能源解构",
+        "能原结构",
+        "能远结构",
+        "能员结构",
+        "能院结构",
+        "能源"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nengyuanjiliang",
+      "expected": "能源计量",
+      "source": "5500",
+      "lookup_us": 8406,
+      "candidates": [
+        "能源计量",
+        "能源剂量",
+        "能源伎俩",
+        "能源脊梁",
+        "能源及梁",
+        "能源几辆",
+        "能源及良",
+        "能源及两",
+        "能源"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nengyuanliyong",
+      "expected": "能源利用",
+      "source": "5500",
+      "lookup_us": 5169,
+      "candidates": [
+        "能源利用",
+        "能源李咏",
+        "能源里用",
+        "能员利用",
+        "能源李勇",
+        "能原利用",
+        "能远利用",
+        "能元利用",
+        "能源"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nengyuanshenji",
+      "expected": "能源审计",
+      "source": "5500",
+      "lookup_us": 5634,
+      "candidates": [
+        "能源审计",
+        "能原审计",
+        "能源深及",
+        "能源身及",
+        "能源神及",
+        "能源深机",
+        "能源深记",
+        "能源深急",
+        "能源"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nengyuantidai",
+      "expected": "能源替代",
+      "source": "5500",
+      "lookup_us": 4923,
+      "candidates": [
+        "能源替代",
+        "能源体带",
+        "能源体大",
+        "能源提袋",
+        "能源体代",
+        "能源体贷",
+        "能原替代",
+        "能元替代",
+        "能源"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nengyuantongji",
+      "expected": "能源统计",
+      "source": "5500",
+      "lookup_us": 4737,
+      "candidates": [
+        "能源统计",
+        "能源通缉",
+        "能源同级",
+        "能源同济",
+        "能元通缉",
+        "能元统计",
+        "能原统计",
+        "能源同机",
+        "能源"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nengyuanxiaofei",
+      "expected": "能源消费",
+      "source": "5500",
+      "lookup_us": 8431,
+      "candidates": [
+        "能源消费",
+        "能源消暃",
+        "能源小费",
+        "能源小飞",
+        "能源小非",
+        "能远消费",
+        "能原消费",
+        "能元消费",
+        "能源"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nengyuanxunhuan",
+      "expected": "能源循环",
+      "source": "5500",
+      "lookup_us": 8385,
+      "candidates": [
+        "能源循环",
+        "能原循环",
+        "能元循环",
+        "能远循环",
+        "能员循环",
+        "能源蕈环",
+        "能园循环",
+        "能院循环",
+        "能源"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nengyuanxuqiu",
+      "expected": "能源需求",
+      "source": "5500",
+      "lookup_us": 5688,
+      "candidates": [
+        "能源需求",
+        "能原需求",
+        "能员需求",
+        "能元需求",
+        "能远需求",
+        "能院需求",
+        "能源许虬",
+        "能园需求",
+        "能源"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nengyuanzhuanxing",
+      "expected": "能源转型",
+      "source": "5500",
+      "lookup_us": 8037,
+      "candidates": [
+        "能源转型",
+        "能源转行",
+        "能源专性",
+        "能源转性",
+        "能源转星",
+        "能源专行",
+        "能源转形",
+        "能源转姓",
+        "能源"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niaoleibaohu",
+      "expected": "鸟类保护",
+      "source": "5500",
+      "lookup_us": 4661,
+      "candidates": [
+        "鸟类保护",
+        "鸟类保湖",
+        "鸟类保户",
+        "鸟类保虎",
+        "鸟雷保护",
+        "鸟类保呼",
+        "尼奥勒保护",
+        "尼奥雷保护",
+        "鸟类"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niaoleiqianxi",
+      "expected": "鸟类迁徙",
+      "source": "5500",
+      "lookup_us": 5823,
+      "candidates": [
+        "鸟类迁徙",
+        "鸟类前夕",
+        "鸟类迁系",
+        "鸟类迁西",
+        "鸟类纤细",
+        "鸟类前戏",
+        "鸟类浅析",
+        "鸟类迁戏",
+        "鸟类"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niaoleiqixidi",
+      "expected": "鸟类栖息地",
+      "source": "5500",
+      "lookup_us": 4755,
+      "candidates": [
+        "鸟类栖息地",
+        "鸟类栖息的",
+        "鸟类气息的",
+        "鸟类栖息第",
+        "鸟类气息地",
+        "尿类栖息地",
+        "鸟类栖息低",
+        "鸟类栖息迪",
+        "鸟类"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "paifangjiance",
+      "expected": "排放检测",
+      "source": "5500",
+      "lookup_us": 4770,
+      "candidates": [
+        "排放检测",
+        "排放监测",
+        "牌坊检测",
+        "牌坊监测",
+        "拍方检测",
+        "排方检测",
+        "排防检测",
+        "拍防检测",
+        "排放"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "paifangjiance",
+      "expected": "排放监测",
+      "source": "5500",
+      "lookup_us": 6042,
+      "candidates": [
+        "排放检测",
+        "排放监测",
+        "牌坊检测",
+        "牌坊监测",
+        "拍方检测",
+        "排方检测",
+        "排防检测",
+        "拍防检测",
+        "排放"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "paifangnongdu",
+      "expected": "排放浓度",
+      "source": "5500",
+      "lookup_us": 2271,
+      "candidates": [
+        "排放浓度",
+        "牌坊浓度",
+        "拍方浓度",
+        "排方浓度",
+        "排防浓度",
+        "拍防浓度",
+        "拍放浓度",
+        "排房浓度",
+        "排放"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "paifangqiangdu",
+      "expected": "排放强度",
+      "source": "5500",
+      "lookup_us": 5109,
+      "candidates": [
+        "排放强度",
+        "牌坊强度",
+        "拍方强度",
+        "排方强度",
+        "排防强度",
+        "拍防强度",
+        "拍放强度",
+        "排房强度",
+        "排放"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "paifangxianzhi",
+      "expected": "排放限值",
+      "source": "5500",
+      "lookup_us": 5014,
+      "candidates": [
+        "排放限值",
+        "排放限制",
+        "牌坊限制",
+        "排放闲置",
+        "排放先知",
+        "牌坊先知",
+        "牌坊闲置",
+        "拍方限制",
+        "排放"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "paifangzongliang",
+      "expected": "排放总量",
+      "source": "5500",
+      "lookup_us": 4849,
+      "candidates": [
+        "排放总量",
+        "牌坊总量",
+        "排防总量",
+        "拍防总量",
+        "拍方总量",
+        "排方总量",
+        "排放纵亮",
+        "排放纵量",
+        "排放"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "penguanjieshui",
+      "expected": "喷灌节水",
+      "source": "5500",
+      "lookup_us": 5563,
+      "candidates": [
+        "喷灌节水",
+        "喷灌解说",
+        "喷灌接水",
+        "喷灌杰说",
+        "喷关节水",
+        "喷灌接说",
+        "喷灌界说",
+        "喷关节说",
+        "喷灌"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qianxitongdao",
+      "expected": "迁徙通道",
+      "source": "5500",
+      "lookup_us": 3965,
+      "candidates": [
+        "迁徙通道",
+        "前夕通道",
+        "浅析通道",
+        "前戏通道",
+        "黔西通道",
+        "前西通道",
+        "迁徙通到",
+        "前系统到",
+        "迁徙"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qingnengchucun",
+      "expected": "氢能储存",
+      "source": "5500",
+      "lookup_us": 3629,
+      "candidates": [
+        "氢能储存",
+        "请能储存",
+        "情能储存",
+        "请能出村",
+        "请螚储存",
+        "请能出存",
+        "情能出村",
+        "请能处村",
+        "晴"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qingnengliyong",
+      "expected": "氢能利用",
+      "source": "5500",
+      "lookup_us": 4027,
+      "candidates": [
+        "氢能利用",
+        "请能利用",
+        "情能利用",
+        "请能力用",
+        "情能力用",
+        "请能力永",
+        "请能力勇",
+        "情能力永",
+        "晴"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qingranliao",
+      "expected": "氢燃料",
+      "source": "5500",
+      "lookup_us": 3929,
+      "candidates": [
+        "氢燃料",
+        "请燃料",
+        "清燃料",
+        "青燃料",
+        "轻燃料",
+        "情燃料",
+        "请染料",
+        "庆燃料",
+        "晴"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qixidibaohu",
+      "expected": "栖息地保护",
+      "source": "5500",
+      "lookup_us": 5021,
+      "candidates": [
+        "栖息地保护",
+        "栖息的保护",
+        "七夕的保护",
+        "七夕地保护",
+        "七夕底保护",
+        "其系帝保护",
+        "栖息底保护",
+        "七夕低保护",
+        "栖息地"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qixidiposuihua",
+      "expected": "栖息地破碎化",
+      "source": "5500",
+      "lookup_us": 6180,
+      "candidates": [
+        "栖息地破碎花",
+        "栖息地破碎化",
+        "栖息地破碎话",
+        "栖息地破碎华",
+        "栖息地破碎画",
+        "栖息地破碎滑",
+        "栖息地破碎划",
+        "栖息地破碎桦",
+        "栖息地"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "qixidixiufu",
+      "expected": "栖息地修复",
+      "source": "5500",
+      "lookup_us": 4540,
+      "candidates": [
+        "栖息地修复",
+        "栖息的修复",
+        "七夕的修复",
+        "七夕地修复",
+        "栖息地秀夫",
+        "其洗涤修复",
+        "其系帝修复",
+        "七夕低修复",
+        "栖息地"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "rebengjishu",
+      "expected": "热泵技术",
+      "source": "5500",
+      "lookup_us": 2529,
+      "candidates": [
+        "热泵技术",
+        "热崩技术",
+        "热蹦技术",
+        "热绷技术",
+        "热蚌技术",
+        "惹崩技术",
+        "惹泵技术",
+        "热迸技术",
+        "热"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "renenghuishou",
+      "expected": "热能回收",
+      "source": "5500",
+      "lookup_us": 3930,
+      "candidates": [
+        "热能回收",
+        "热能挥手",
+        "热能回首",
+        "热能回手",
+        "热能会收",
+        "热能会首",
+        "热能会受",
+        "热能会手",
+        "热能"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ruqinwuzhong",
+      "expected": "入侵物种",
+      "source": "5500",
+      "lookup_us": 2967,
+      "candidates": [
+        "入侵物种",
+        "入侵物中",
+        "入侵五种",
+        "入侵屋中",
+        "入侵乌中",
+        "如侵物种",
+        "入侵雾中",
+        "如亲物种",
+        "入侵"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "senlintanhui",
+      "expected": "森林碳汇",
+      "source": "5500",
+      "lookup_us": 4955,
+      "candidates": [
+        "森林碳汇",
+        "森林谈会",
+        "森林坦会",
+        "森林弹会",
+        "森林谈回",
+        "森林坛会",
+        "森林弹回",
+        "森林探会",
+        "森林"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "senlinxiufu",
+      "expected": "森林修复",
+      "source": "5500",
+      "lookup_us": 3871,
+      "candidates": [
+        "森林修复",
+        "森林秀夫",
+        "森林秀富",
+        "森林秀服",
+        "森林秀福",
+        "森林修服",
+        "森林秀负",
+        "森林秀付",
+        "森林"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shahuazhili",
+      "expected": "沙化治理",
+      "source": "5500",
+      "lookup_us": 4241,
+      "candidates": [
+        "沙化治理",
+        "沙华治理",
+        "沙画纸里",
+        "沙画治理",
+        "傻话治理",
+        "沙花治理",
+        "啥华治理",
+        "沙花之力",
+        "沙狐"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangaifangchen",
+      "expected": "苫盖防尘",
+      "source": "5500",
+      "lookup_us": 5073,
+      "candidates": [
+        "苫盖防尘",
+        "上爱防尘",
+        "商爱防尘",
+        "山改防尘",
+        "删改防尘",
+        "山该防尘",
+        "上癌防尘",
+        "上艾防尘",
+        "上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shenghuojieshui",
+      "expected": "生活节水",
+      "source": "5500",
+      "lookup_us": 6124,
+      "candidates": [
+        "生活节水",
+        "生活解说",
+        "生活接水",
+        "生活结说",
+        "生活结水",
+        "生活节说",
+        "生活杰说",
+        "生活接说",
+        "生活"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shenghuozaosheng",
+      "expected": "生活噪声",
+      "source": "5500",
+      "lookup_us": 4976,
+      "candidates": [
+        "生活噪声",
+        "圣火噪声",
+        "声和噪声",
+        "生活造声",
+        "生活造生",
+        "生活早生",
+        "生活早声",
+        "生活遭生",
+        "生活"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shengjingbaohu",
+      "expected": "生境保护",
+      "source": "5500",
+      "lookup_us": 5134,
+      "candidates": [
+        "生境保护",
+        "圣经保护",
+        "盛京保护",
+        "生经保护",
+        "省境保护",
+        "生敬保护",
+        "省景保护",
+        "省警保护",
+        "圣经"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shengjinghuifu",
+      "expected": "生境恢复",
+      "source": "5500",
+      "lookup_us": 5617,
+      "candidates": [
+        "生境恢复",
+        "圣经恢复",
+        "圣经回复",
+        "生经恢复",
+        "盛京恢复",
+        "省警恢复",
+        "省景恢复",
+        "胜景恢复",
+        "圣经"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shengjingxiufu",
+      "expected": "生境修复",
+      "source": "5500",
+      "lookup_us": 6257,
+      "candidates": [
+        "生境修复",
+        "圣经修复",
+        "生经修复",
+        "圣经秀夫",
+        "生敬修复",
+        "盛京修复",
+        "圣经修服",
+        "圣精修复",
+        "圣经"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shengpingzhang",
+      "expected": "声屏障",
+      "source": "5500",
+      "lookup_us": 4389,
+      "candidates": [
+        "声屏障",
+        "生平长",
+        "省屏障",
+        "生屏障",
+        "圣屏障",
+        "生平章",
+        "升屏障",
+        "胜屏障",
+        "生平"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shengtaidiaocha",
+      "expected": "生态调查",
+      "source": "5500",
+      "lookup_us": 4567,
+      "candidates": [
+        "生态调查",
+        "省台调查",
+        "省太调查",
+        "生台调查",
+        "生太调查",
+        "胜肽调查",
+        "生苔调查",
+        "盛泰调查",
+        "生态"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shengtaihuanchongqu",
+      "expected": "生态缓冲区",
+      "source": "5500",
+      "lookup_us": 6315,
+      "candidates": [
+        "生态缓冲区",
+        "生态缓冲去",
+        "省台缓冲区",
+        "生态环冲去",
+        "生态缓冲取",
+        "生态缓冲曲",
+        "生态环重区",
+        "生态还重区",
+        "生态"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shengtaihuifu",
+      "expected": "生态恢复",
+      "source": "5500",
+      "lookup_us": 3958,
+      "candidates": [
+        "生态恢复",
+        "生态回复",
+        "省台回复",
+        "生台回复",
+        "省台恢复",
+        "省太恢复",
+        "生太恢复",
+        "胜肽恢复",
+        "生态"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shengtaijiance",
+      "expected": "生态监测",
+      "source": "5500",
+      "lookup_us": 5455,
+      "candidates": [
+        "生态监测",
+        "生态检测",
+        "省台检测",
+        "省太监测",
+        "生太监测",
+        "省太检测",
+        "生台检测",
+        "省台监测",
+        "生态"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shengtaijiazhi",
+      "expected": "生态价值",
+      "source": "5500",
+      "lookup_us": 4619,
+      "candidates": [
+        "生态价值",
+        "生态加之",
+        "生态加值",
+        "生态家指",
+        "生态价至",
+        "生态家之",
+        "省台价值",
+        "生态加至",
+        "生态"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shengtailangdao",
+      "expected": "生态廊道",
+      "source": "5500",
+      "lookup_us": 6153,
+      "candidates": [
+        "生态廊道",
+        "生态朗道",
+        "生太郎到",
+        "生态浪到",
+        "生态郎到",
+        "生态朗到",
+        "生态狼到",
+        "生态浪岛",
+        "生态"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shengtailvhua",
+      "expected": "生态绿化",
+      "source": "5500",
+      "lookup_us": 4860,
+      "candidates": [
+        "生态绿化",
+        "生态氯化",
+        "生态律化",
+        "生态旅花",
+        "生态绿花",
+        "生态绿话",
+        "生态旅话",
+        "生态旅化",
+        "生态"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shengtaipingheng",
+      "expected": "生态平衡",
+      "source": "5500",
+      "lookup_us": 5386,
+      "candidates": [
+        "生态平衡",
+        "省太平衡",
+        "生太平衡",
+        "圣态平衡",
+        "省台平衡",
+        "生台平衡",
+        "胜肽平衡",
+        "生苔平衡",
+        "生态"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shengtaishidi",
+      "expected": "生态湿地",
+      "source": "5500",
+      "lookup_us": 3909,
+      "candidates": [
+        "生态湿地",
+        "生态是第",
+        "生态势的",
+        "生态实地",
+        "生态是的",
+        "生态是低",
+        "生态是地",
+        "生态时的",
+        "生态"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shengtaixiaoyi",
+      "expected": "生态效益",
+      "source": "5500",
+      "lookup_us": 5998,
+      "candidates": [
+        "生态效益",
+        "生态小姨",
+        "生态小以",
+        "生态笑意",
+        "生态小一",
+        "生态孝义",
+        "生态小异",
+        "生态校以",
+        "生态"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shengtaixitongfuwu",
+      "expected": "生态系统服务",
+      "source": "5500",
+      "lookup_us": 4814,
+      "candidates": [
+        "生态系统服务",
+        "生态系通服务",
+        "生态系同服务",
+        "生态系统副舞",
+        "省台系统服务",
+        "生态系统服物",
+        "生态系统服无",
+        "生态系统服舞",
+        "生态"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shengtaizhili",
+      "expected": "生态治理",
+      "source": "5500",
+      "lookup_us": 3308,
+      "candidates": [
+        "生态治理",
+        "生态之力",
+        "生态智利",
+        "生态致力",
+        "生态智力",
+        "生态之利",
+        "生态直立",
+        "生态之里",
+        "生态"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shengtaizhongzhi",
+      "expected": "生态种植",
+      "source": "5500",
+      "lookup_us": 2908,
+      "candidates": [
+        "生态种植",
+        "生态终止",
+        "生态中指",
+        "生态中止",
+        "生态中职",
+        "生态中至",
+        "生态中之",
+        "生态重置",
+        "生态"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shengwuruqin",
+      "expected": "生物入侵",
+      "source": "5500",
+      "lookup_us": 3467,
+      "candidates": [
+        "生物入侵",
+        "生误入侵",
+        "生物如亲",
+        "圣武入侵",
+        "生无入侵",
+        "圣乌入侵",
+        "圣物入侵",
+        "生物如琴",
+        "生物"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shengwuzhifadian",
+      "expected": "生物质发电",
+      "source": "5500",
+      "lookup_us": 5125,
+      "candidates": [
+        "生物质发电",
+        "生物执法典",
+        "生物质法典",
+        "生物制发电",
+        "生物执法点",
+        "生物之发电",
+        "生物质发点",
+        "生物只发电",
+        "生物质"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shengwuzhiranliao",
+      "expected": "生物质燃料",
+      "source": "5500",
+      "lookup_us": 5224,
+      "candidates": [
+        "生物质燃料",
+        "生物制燃料",
+        "生物之燃料",
+        "生物质染料",
+        "生物掷燃料",
+        "生物只燃料",
+        "生物指燃料",
+        "生物支燃料",
+        "生物质"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shequlvdi",
+      "expected": "社区绿地",
+      "source": "5500",
+      "lookup_us": 2503,
+      "candidates": [
+        "社区绿地",
+        "社区率低",
+        "社区绿的",
+        "社区率的",
+        "摄取率低",
+        "社区率地",
+        "摄取绿地",
+        "社区律的",
+        "社区"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shidigongyuan",
+      "expected": "湿地公园",
+      "source": "5500",
+      "lookup_us": 4542,
+      "candidates": [
+        "湿地公园",
+        "是的公园",
+        "实地公园",
+        "时的公园",
+        "是第公园",
+        "是的公元",
+        "湿地公元",
+        "是低公园",
+        "实地"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shidihuifu",
+      "expected": "湿地恢复",
+      "source": "5500",
+      "lookup_us": 4183,
+      "candidates": [
+        "湿地恢复",
+        "是的回复",
+        "是的恢复",
+        "实地回复",
+        "实地恢复",
+        "湿地回复",
+        "时的回复",
+        "是第回复",
+        "实地"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shidishengtai",
+      "expected": "湿地生态",
+      "source": "5500",
+      "lookup_us": 4998,
+      "candidates": [
+        "湿地生态",
+        "实地生态",
+        "是的生态",
+        "时的生态",
+        "是第生态",
+        "是低生态",
+        "是迪生态",
+        "史低生态",
+        "实地"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shidishishu",
+      "expected": "适地适树",
+      "source": "5500",
+      "lookup_us": 3302,
+      "candidates": [
+        "适地适树",
+        "是的史书",
+        "实地实属",
+        "是的实属",
+        "是的是书",
+        "是的是数",
+        "是的实数",
+        "湿地实属",
+        "实地"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shidixiufu",
+      "expected": "湿地修复",
+      "source": "5500",
+      "lookup_us": 3668,
+      "candidates": [
+        "湿地修复",
+        "是的修复",
+        "实地修复",
+        "是第修复",
+        "是低修复",
+        "时的修复",
+        "是迪修复",
+        "是底修复",
+        "实地"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shigongzaosheng",
+      "expected": "施工噪声",
+      "source": "5500",
+      "lookup_us": 4212,
+      "candidates": [
+        "施工噪声",
+        "是工噪声",
+        "是公噪声",
+        "是共噪声",
+        "饰恭噪声",
+        "是供噪声",
+        "是宫噪声",
+        "是恭噪声",
+        "石工凿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shineikongqiwuran",
+      "expected": "室内空气污染",
+      "source": "5500",
+      "lookup_us": 4237,
+      "candidates": [
+        "室内空气污染",
+        "市内空气污染",
+        "是内控器污染",
+        "是内控其污染",
+        "室内控器污染",
+        "室内控其污染",
+        "是内控起污染",
+        "是内控期污染",
+        "室内空气"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shineitongfeng",
+      "expected": "室内通风",
+      "source": "5500",
+      "lookup_us": 4037,
+      "candidates": [
+        "室内通风",
+        "市内通风",
+        "室内痛风",
+        "市内痛风",
+        "是那通风",
+        "是哪通风",
+        "室内同风",
+        "室内通峰",
+        "室内"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuishengtaixiufu",
+      "expected": "水生态修复",
+      "source": "5500",
+      "lookup_us": 4376,
+      "candidates": [
+        "水生态修复",
+        "谁生态修复",
+        "水生太修复",
+        "水声太修复",
+        "水生台修复",
+        "水声台修复",
+        "水生泰修复",
+        "水生态修服",
+        "水声"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuitifuyingyanghua",
+      "expected": "水体富营养化",
+      "source": "5500",
+      "lookup_us": 10494,
+      "candidates": [
+        "水体父應氧化",
+        "水体富营养化",
+        "水体副营养花",
+        "水体赴英氧化",
+        "水体复营养花",
+        "水体服膺氧化",
+        "水体复映氧化",
+        "水体副营养话",
+        "水体"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "shuitiwuran",
+      "expected": "水体污染",
+      "source": "5500",
+      "lookup_us": 1854,
+      "candidates": [
+        "水体污染",
+        "谁体污染",
+        "谁提污染",
+        "水提污染",
+        "谁题污染",
+        "水题污染",
+        "谁替污染",
+        "水替污染",
+        "水体"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuitixiufu",
+      "expected": "水体修复",
+      "source": "5500",
+      "lookup_us": 2860,
+      "candidates": [
+        "水体修复",
+        "谁提修复",
+        "水提修复",
+        "谁题修复",
+        "水题修复",
+        "谁体修复",
+        "谁替修复",
+        "水替修复",
+        "水体"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuituzhili",
+      "expected": "水土治理",
+      "source": "5500",
+      "lookup_us": 2979,
+      "candidates": [
+        "水土治理",
+        "水土之力",
+        "谁图纸里",
+        "水图纸里",
+        "水土智利",
+        "水土智力",
+        "水土致力",
+        "谁图治理",
+        "水土"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuiyuanbaohu",
+      "expected": "水源保护",
+      "source": "5500",
+      "lookup_us": 4352,
+      "candidates": [
+        "水源保护",
+        "谁愿保护",
+        "税源保护",
+        "水元保护",
+        "水员保护",
+        "谁元保护",
+        "谁远保护",
+        "水远保护",
+        "水源"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuiyuandibaohu",
+      "expected": "水源地保护",
+      "source": "5500",
+      "lookup_us": 5468,
+      "candidates": [
+        "水源地保护",
+        "水源的保护",
+        "谁愿的保护",
+        "水原地保护",
+        "水源底保护",
+        "水源低保护",
+        "水源迪保护",
+        "水源帝保护",
+        "水源地"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuiyuanhanyang",
+      "expected": "水源涵养",
+      "source": "5500",
+      "lookup_us": 5536,
+      "candidates": [
+        "水源涵养",
+        "水源汉阳",
+        "谁愿涵养",
+        "谁愿汉阳",
+        "水源含氧",
+        "税源涵养",
+        "水元涵养",
+        "水原涵养",
+        "水源"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuiyuanhanyanglin",
+      "expected": "水源涵养林",
+      "source": "5500",
+      "lookup_us": 7089,
+      "candidates": [
+        "水源涵养林",
+        "水源汗杨林",
+        "水源涵养琳",
+        "水源汉阳林",
+        "水源汉杨林",
+        "水源韩杨林",
+        "水源含杨林",
+        "水源汉阳琳",
+        "水源"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuiyuanrebeng",
+      "expected": "水源热泵",
+      "source": "5500",
+      "lookup_us": 2041,
+      "candidates": [
+        "水源热泵",
+        "水源热崩",
+        "水源热绷",
+        "水源惹崩",
+        "水源惹泵",
+        "水源热蹦",
+        "谁愿热崩",
+        "水源热蚌",
+        "水源"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuizhigaishan",
+      "expected": "水质改善",
+      "source": "5500",
+      "lookup_us": 2825,
+      "candidates": [
+        "水质改善",
+        "谁知改善",
+        "税制改善",
+        "说只改善",
+        "水至改善",
+        "谁制改善",
+        "水之改善",
+        "水支改善",
+        "水质"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuizhijiance",
+      "expected": "水质检测",
+      "source": "5500",
+      "lookup_us": 4645,
+      "candidates": [
+        "水质检测",
+        "水质监测",
+        "谁知检测",
+        "谁知监测",
+        "税制检测",
+        "水至检测",
+        "说只检测",
+        "谁制检测",
+        "水质"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuizhijiance",
+      "expected": "水质监测",
+      "source": "5500",
+      "lookup_us": 4368,
+      "candidates": [
+        "水质检测",
+        "水质监测",
+        "谁知检测",
+        "谁知监测",
+        "税制检测",
+        "水至检测",
+        "说只检测",
+        "谁制检测",
+        "水质"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "shuizhijinghua",
+      "expected": "水质净化",
+      "source": "5500",
+      "lookup_us": 5577,
+      "candidates": [
+        "水质净化",
+        "谁知精华",
+        "水质精华",
+        "谁知净化",
+        "税制精华",
+        "水之精华",
+        "水至精华",
+        "谁知京华",
+        "水质"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuizhishuju",
+      "expected": "水质数据",
+      "source": "5500",
+      "lookup_us": 2768,
+      "candidates": [
+        "水质数据",
+        "谁知数据",
+        "税制数据",
+        "水之数据",
+        "水至数据",
+        "谁之数据",
+        "谁制数据",
+        "谁指数据",
+        "水质"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuizhizhibiao",
+      "expected": "水质指标",
+      "source": "5500",
+      "lookup_us": 4551,
+      "candidates": [
+        "水质指标",
+        "谁知指标",
+        "税制指标",
+        "水至指标",
+        "水直指标",
+        "说只指标",
+        "谁直指标",
+        "谁制指标",
+        "水质"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuiziyuanbaohu",
+      "expected": "水资源保护",
+      "source": "5500",
+      "lookup_us": 5518,
+      "candidates": [
+        "水资源保护",
+        "谁资源保护",
+        "水自愿保护",
+        "谁自愿保护",
+        "水资源保湖",
+        "水资源保户",
+        "水资源保虎",
+        "水资源保呼",
+        "水资源"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuiziyuanguanli",
+      "expected": "水资源管理",
+      "source": "5500",
+      "lookup_us": 7714,
+      "candidates": [
+        "水资源管理",
+        "谁资源管理",
+        "水资源惯例",
+        "水资源管里",
+        "水资源官吏",
+        "水自愿管理",
+        "水资源馆里",
+        "谁自愿管理",
+        "水资源"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuiziyuanliyong",
+      "expected": "水资源利用",
+      "source": "5500",
+      "lookup_us": 5810,
+      "candidates": [
+        "水资源利用",
+        "水资源李咏",
+        "水资源里用",
+        "谁资源利用",
+        "水资源李勇",
+        "水自愿利用",
+        "水资源理用",
+        "谁自愿利用",
+        "水资源"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "suanyu",
+      "expected": "酸雨",
+      "source": "5500",
+      "lookup_us": 1581,
+      "candidates": [
+        "酸雨",
+        "算与",
+        "酸与",
+        "算于",
+        "酸于",
+        "算鱼",
+        "算语",
+        "算雨",
+        "算"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "suanyuweihai",
+      "expected": "酸雨危害",
+      "source": "5500",
+      "lookup_us": 3474,
+      "candidates": [
+        "酸雨危害",
+        "算与危害",
+        "酸与危害",
+        "酸雨威海",
+        "算于危害",
+        "酸雨为海",
+        "酸于危害",
+        "酸雨为害",
+        "酸雨"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taiyangnengban",
+      "expected": "太阳能板",
+      "source": "5500",
+      "lookup_us": 4735,
+      "candidates": [
+        "太阳能板",
+        "太阳能办",
+        "太阳能版",
+        "太阳能班",
+        "太阳能半",
+        "太阳能搬",
+        "太阳能斑",
+        "太阳能般",
+        "太阳能"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taiyangnengfadian",
+      "expected": "太阳能发电",
+      "source": "5500",
+      "lookup_us": 5878,
+      "candidates": [
+        "太阳能发电",
+        "太阳能发点",
+        "太阳能法典",
+        "太阳能发店",
+        "太阳能发垫",
+        "太阳能发殿",
+        "太阳能发典",
+        "太阳能法点",
+        "太阳能"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taiyangnenggongre",
+      "expected": "太阳能供热",
+      "source": "5500",
+      "lookup_us": 3427,
+      "candidates": [
+        "太阳能供热",
+        "太阳能工热",
+        "太阳能共热",
+        "太阳能攻热",
+        "太阳能公热",
+        "太阳能功热",
+        "太阳能宫热",
+        "太阳能贡热",
+        "太阳能"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taiyangnengliyong",
+      "expected": "太阳能利用",
+      "source": "5500",
+      "lookup_us": 5448,
+      "candidates": [
+        "太阳能利用",
+        "太阳能力用",
+        "太阳能力永",
+        "太阳能力勇",
+        "太阳能李咏",
+        "太阳能力涌",
+        "太阳能力泳",
+        "太阳能力拥",
+        "太阳能"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taiyangnengreshui",
+      "expected": "太阳能热水",
+      "source": "5500",
+      "lookup_us": 4238,
+      "candidates": [
+        "太阳能热水",
+        "太阳能热说",
+        "太阳能热睡",
+        "太阳能热谁",
+        "太阳能热税",
+        "太阳能惹水",
+        "太阳能惹说",
+        "太阳能惹睡",
+        "太阳能"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tanchuliang",
+      "expected": "碳储量",
+      "source": "5500",
+      "lookup_us": 4869,
+      "candidates": [
+        "碳储量",
+        "弹出两",
+        "弹出量",
+        "弹出粮",
+        "谭储量",
+        "谈储量",
+        "探蹰两",
+        "弹储量",
+        "弹出"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tanhesuan",
+      "expected": "碳核算",
+      "source": "5500",
+      "lookup_us": 2890,
+      "candidates": [
+        "碳核算",
+        "弹劾算",
+        "弹劾酸",
+        "谭核酸",
+        "谈核酸",
+        "弹核酸",
+        "坦核酸",
+        "谭核算",
+        "弹劾"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tanhui",
+      "expected": "碳汇",
+      "source": "5500",
+      "lookup_us": 1907,
+      "candidates": [
+        "碳汇",
+        "返回",
+        "谈会",
+        "谭会",
+        "坦会",
+        "谭惠",
+        "弹会",
+        "谭回",
+        "谈回"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tanjianpai",
+      "expected": "碳减排",
+      "source": "5500",
+      "lookup_us": 4006,
+      "candidates": [
+        "碳减排",
+        "谈及安排",
+        "谭减排",
+        "谈减排",
+        "弹减排",
+        "坦减排",
+        "探减排",
+        "潭减排",
+        "谈及"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tanjianpailiang",
+      "expected": "碳减排量",
+      "source": "5500",
+      "lookup_us": 6700,
+      "candidates": [
+        "碳减排量",
+        "谈及安排两",
+        "谈及安排量",
+        "谈及安排亮",
+        "谈及安排梁",
+        "谈及安排良",
+        "谈及安排凉",
+        "谭减排量",
+        "碳减排"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tanpaifangguanli",
+      "expected": "碳排放管理",
+      "source": "5500",
+      "lookup_us": 6763,
+      "candidates": [
+        "碳排放管理",
+        "碳排放惯例",
+        "碳排放官吏",
+        "碳排放管里",
+        "碳排放馆里",
+        "谭排放管理",
+        "碳排放观礼",
+        "摊牌方管理",
+        "碳排放"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tanpaifanghesuan",
+      "expected": "碳排放核算",
+      "source": "5500",
+      "lookup_us": 5138,
+      "candidates": [
+        "碳排放核酸",
+        "碳排放核算",
+        "碳排放合算",
+        "碳排放和酸",
+        "谭排放核酸",
+        "碳排放和算",
+        "谭排放核算",
+        "碳排放喝酸",
+        "碳排放"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "tanpaifangjiance",
+      "expected": "碳排放监测",
+      "source": "5500",
+      "lookup_us": 6272,
+      "candidates": [
+        "碳排放检测",
+        "碳排放监测",
+        "谭排放检测",
+        "摊牌方检测",
+        "摊牌坊检测",
+        "谭排放监测",
+        "摊牌方监测",
+        "摊牌房检测",
+        "碳排放"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "tanpaifangliang",
+      "expected": "碳排放量",
+      "source": "5500",
+      "lookup_us": 6946,
+      "candidates": [
+        "碳排放量",
+        "碳排放凉",
+        "碳排放亮",
+        "碳排放两",
+        "碳排放良",
+        "谭排放量",
+        "碳排放梁",
+        "碳排放粮",
+        "碳排放"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tanpaifangqiangdu",
+      "expected": "碳排放强度",
+      "source": "5500",
+      "lookup_us": 7143,
+      "candidates": [
+        "碳排放强度",
+        "碳排放强读",
+        "碳排放强都",
+        "谭排放强度",
+        "摊牌方强度",
+        "碳排放强毒",
+        "碳排放枪度",
+        "碳排放枪读",
+        "碳排放"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tanpancha",
+      "expected": "碳盘查",
+      "source": "5500",
+      "lookup_us": 2073,
+      "candidates": [
+        "碳盘查",
+        "谈判差",
+        "谈判查",
+        "谈判茶",
+        "谈判插",
+        "谈判叉",
+        "谈判察",
+        "谈判刹",
+        "谈判"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tanqingdan",
+      "expected": "碳清单",
+      "source": "5500",
+      "lookup_us": 4321,
+      "candidates": [
+        "碳清单",
+        "谭清单",
+        "谈清单",
+        "潭清单",
+        "弹清单",
+        "坦清单",
+        "探清单",
+        "坛清单",
+        "摊青"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tanxishou",
+      "expected": "碳吸收",
+      "source": "5500",
+      "lookup_us": 1734,
+      "candidates": [
+        "碳吸收",
+        "谭吸收",
+        "谈吸收",
+        "弹吸收",
+        "谭洗手",
+        "坦吸收",
+        "谈洗手",
+        "叹息收",
+        "叹息"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tanzuji",
+      "expected": "碳足迹",
+      "source": "5500",
+      "lookup_us": 1835,
+      "candidates": [
+        "碳足迹",
+        "谭足迹",
+        "弹足迹",
+        "坦足迹",
+        "谈足迹",
+        "谭祖籍",
+        "谈祖籍",
+        "探足迹",
+        "谈"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "toushuilumian",
+      "expected": "透水路面",
+      "source": "5500",
+      "lookup_us": 3508,
+      "candidates": [
+        "透水路面",
+        "偷税露面",
+        "偷税路面",
+        "头水路面",
+        "透水露面",
+        "头水露面",
+        "头说露面",
+        "头睡露面",
+        "偷税"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "toushuipuzhuang",
+      "expected": "透水铺装",
+      "source": "5500",
+      "lookup_us": 3773,
+      "candidates": [
+        "透水铺装",
+        "偷税铺装",
+        "头水铺装",
+        "头说铺装",
+        "头睡铺装",
+        "偷税普装",
+        "偷税普状",
+        "头谁铺装",
+        "偷税"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "toushuizhuan",
+      "expected": "透水砖",
+      "source": "5500",
+      "lookup_us": 3157,
+      "candidates": [
+        "透水砖",
+        "投水轉",
+        "偷税转",
+        "偷税传",
+        "透水转",
+        "偷税赚",
+        "偷税专",
+        "头水转",
+        "偷税"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tudihuangmohua",
+      "expected": "土地荒漠化",
+      "source": "5500",
+      "lookup_us": 7345,
+      "candidates": [
+        "土地荒漠化",
+        "土地荒漠华",
+        "土地荒漠花",
+        "土地荒漠话",
+        "土地荒漠画",
+        "图的荒漠化",
+        "土地荒漠滑",
+        "土地荒漠划",
+        "土地"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tudituihua",
+      "expected": "土地退化",
+      "source": "5500",
+      "lookup_us": 2941,
+      "candidates": [
+        "土地退化",
+        "图地退化",
+        "徒弟退化",
+        "土地推花",
+        "土地推话",
+        "土地推化",
+        "图的退化",
+        "土地退花",
+        "土地"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tuoliushebei",
+      "expected": "脱硫设备",
+      "source": "5500",
+      "lookup_us": 3007,
+      "candidates": [
+        "脱硫设备",
+        "托流设备",
+        "托留设备",
+        "托六设备",
+        "托刘设备",
+        "驼六设备",
+        "脱流设备",
+        "脱留设备",
+        "脱硫"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tuoxiao",
+      "expected": "脱硝",
+      "source": "5500",
+      "lookup_us": 3970,
+      "candidates": [
+        "脱孝",
+        "脱硝",
+        "托小",
+        "脱小",
+        "拓销",
+        "托笑",
+        "拖小",
+        "托校",
+        "脱下"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "tuoxiaoshebei",
+      "expected": "脱硝设备",
+      "source": "5500",
+      "lookup_us": 4426,
+      "candidates": [
+        "脱硝设备",
+        "托小设备",
+        "托校设备",
+        "脱小设备",
+        "拓销设备",
+        "脱孝设备",
+        "脱校设备",
+        "托效设备",
+        "脱孝"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "turangbaohu",
+      "expected": "土壤保护",
+      "source": "5500",
+      "lookup_us": 3404,
+      "candidates": [
+        "土壤保护",
+        "图让保护",
+        "土让保护",
+        "土壤包湖",
+        "土壤报湖",
+        "土壤宝湖",
+        "土壤保湖",
+        "土壤包虎",
+        "土壤"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "turangfeili",
+      "expected": "土壤肥力",
+      "source": "5500",
+      "lookup_us": 2434,
+      "candidates": [
+        "土壤肥力",
+        "土壤费力",
+        "土壤非礼",
+        "土壤菲力",
+        "土壤肥里",
+        "土壤费里",
+        "土壤肺里",
+        "土壤肥利",
+        "土壤"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "turanggailiang",
+      "expected": "土壤改良",
+      "source": "5500",
+      "lookup_us": 5339,
+      "candidates": [
+        "土壤改良",
+        "土壤该量",
+        "土壤该两",
+        "土壤该亮",
+        "土壤改亮",
+        "土壤改量",
+        "土壤该良",
+        "土壤盖亮",
+        "土壤"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "turangjiance",
+      "expected": "土壤检测",
+      "source": "5500",
+      "lookup_us": 4443,
+      "candidates": [
+        "土壤检测",
+        "土壤监测",
+        "图让检测",
+        "图让监测",
+        "土让检测",
+        "土让监测",
+        "土壤间测",
+        "土壤见测",
+        "土壤"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "turangjiance",
+      "expected": "土壤监测",
+      "source": "5500",
+      "lookup_us": 4281,
+      "candidates": [
+        "土壤检测",
+        "土壤监测",
+        "图让检测",
+        "图让监测",
+        "土让检测",
+        "土让监测",
+        "土壤间测",
+        "土壤见测",
+        "土壤"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "turangsuanhua",
+      "expected": "土壤酸化",
+      "source": "5500",
+      "lookup_us": 3950,
+      "candidates": [
+        "土壤酸化",
+        "土壤算话",
+        "土壤酸花",
+        "土壤酸话",
+        "土壤酸华",
+        "土壤算花",
+        "土壤酸画",
+        "土壤算化",
+        "土壤"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "turangxiufu",
+      "expected": "土壤修复",
+      "source": "5500",
+      "lookup_us": 3011,
+      "candidates": [
+        "土壤修复",
+        "土壤秀夫",
+        "图让修复",
+        "土壤修服",
+        "土壤秀富",
+        "土让修复",
+        "土壤秀服",
+        "土壤修夫",
+        "土壤"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "turangyanjianhua",
+      "expected": "土壤盐碱化",
+      "source": "5500",
+      "lookup_us": 7455,
+      "candidates": [
+        "土壤盐简化",
+        "土壤言简化",
+        "土壤演简化",
+        "土壤眼简化",
+        "土壤盐碱化",
+        "土壤盐建华",
+        "土壤烟简化",
+        "土壤岩简化",
+        "土壤"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "wailaiwuzhong",
+      "expected": "外来物种",
+      "source": "5500",
+      "lookup_us": 2061,
+      "candidates": [
+        "外来物种",
+        "外来物中",
+        "外来五种",
+        "外来物重",
+        "外来屋中",
+        "外来物钟",
+        "外来物忠",
+        "外来无中",
+        "外来"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wailaiwuzhongruqin",
+      "expected": "外来物种入侵",
+      "source": "5500",
+      "lookup_us": 4592,
+      "candidates": [
+        "外来物种入侵",
+        "外来物中入侵",
+        "外来物种入琴",
+        "外来物种如亲",
+        "外来物种入亲",
+        "外来五种入侵",
+        "外来物种入秦",
+        "外来物种如琴",
+        "外来"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "weidianwang",
+      "expected": "微电网",
+      "source": "5500",
+      "lookup_us": 4480,
+      "candidates": [
+        "微电网",
+        "为电网",
+        "位电网",
+        "未电网",
+        "惟电网",
+        "威电网",
+        "韦电网",
+        "维电网",
+        "位点"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "weiqijinghua",
+      "expected": "尾气净化",
+      "source": "5500",
+      "lookup_us": 7003,
+      "candidates": [
+        "尾气净化",
+        "为其精华",
+        "围棋精华",
+        "为期精华",
+        "为其净化",
+        "围棋净化",
+        "维奇精华",
+        "为期净化",
+        "为其"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "weiqipaifang",
+      "expected": "尾气排放",
+      "source": "5500",
+      "lookup_us": 4846,
+      "candidates": [
+        "尾气排放",
+        "围棋牌坊",
+        "为其排放",
+        "为期排放",
+        "围棋排放",
+        "维奇排放",
+        "为气排放",
+        "为其牌坊",
+        "为其"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "weiqizhili",
+      "expected": "尾气治理",
+      "source": "5500",
+      "lookup_us": 3522,
+      "candidates": [
+        "尾气治理",
+        "为其治理",
+        "为期治理",
+        "围棋治理",
+        "为其智利",
+        "为期之力",
+        "为其致力",
+        "围棋智利",
+        "为其"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wudingguangfu",
+      "expected": "屋顶光伏",
+      "source": "5500",
+      "lookup_us": 5782,
+      "candidates": [
+        "屋顶光伏",
+        "屋顶光复",
+        "屋顶光府",
+        "屋顶广福",
+        "屋顶光服",
+        "屋顶光夫",
+        "屋顶光福",
+        "屋顶光富",
+        "屋顶"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wupaojiangchen",
+      "expected": "雾炮降尘",
+      "source": "5500",
+      "lookup_us": 7080,
+      "candidates": [
+        "雾炮降尘",
+        "无跑将称",
+        "吴跑将称",
+        "无跑将陈",
+        "无炮将称",
+        "无泡将称",
+        "吴跑将陈",
+        "乌泡将称",
+        "五"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wuranwujiance",
+      "expected": "污染物监测",
+      "source": "5500",
+      "lookup_us": 6281,
+      "candidates": [
+        "污染物检测",
+        "污染物监测",
+        "污染无检测",
+        "污染无监测",
+        "污染五检测",
+        "污染物件测",
+        "污染屋检测",
+        "污染误检测",
+        "污染物"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "wuranwunongdu",
+      "expected": "污染物浓度",
+      "source": "5500",
+      "lookup_us": 2859,
+      "candidates": [
+        "污染物浓度",
+        "污染无浓度",
+        "污染五浓度",
+        "污染武浓度",
+        "污染吴浓度",
+        "污染屋浓度",
+        "污染舞浓度",
+        "污染乌浓度",
+        "污染物"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wuranwupaifang",
+      "expected": "污染物排放",
+      "source": "5500",
+      "lookup_us": 4292,
+      "candidates": [
+        "污染物排放",
+        "污染物牌坊",
+        "污染唔排放",
+        "污染无牌坊",
+        "污染无排放",
+        "污染五排放",
+        "污染物排方",
+        "污染物排房",
+        "污染物"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wuranyujing",
+      "expected": "污染预警",
+      "source": "5500",
+      "lookup_us": 4824,
+      "candidates": [
+        "污染预警",
+        "污染语境",
+        "污染浴镜",
+        "无染预警",
+        "吴燃预警",
+        "污染与经",
+        "污染于静",
+        "污染与精",
+        "污染"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wuzhongdiaocha",
+      "expected": "物种调查",
+      "source": "5500",
+      "lookup_us": 3903,
+      "candidates": [
+        "物种调查",
+        "五种调查",
+        "吴忠调查",
+        "无中调查",
+        "五中调查",
+        "伍仲调查",
+        "无重调查",
+        "五重调查",
+        "物种"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wuzhonghuifu",
+      "expected": "物种恢复",
+      "source": "5500",
+      "lookup_us": 3620,
+      "candidates": [
+        "物种恢复",
+        "物种回复",
+        "五种恢复",
+        "五种回复",
+        "无中恢复",
+        "五中恢复",
+        "吴忠恢复",
+        "无重回复",
+        "物种"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wuzhongjiance",
+      "expected": "物种监测",
+      "source": "5500",
+      "lookup_us": 5378,
+      "candidates": [
+        "物种监测",
+        "物种检测",
+        "五种检测",
+        "五种监测",
+        "无中检测",
+        "五中检测",
+        "吴忠检测",
+        "吴忠监测",
+        "物种"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wuzhongruqin",
+      "expected": "物种入侵",
+      "source": "5500",
+      "lookup_us": 3443,
+      "candidates": [
+        "物种入侵",
+        "五种入侵",
+        "吴忠入侵",
+        "无中入侵",
+        "五中入侵",
+        "伍仲入侵",
+        "无重入侵",
+        "五重入侵",
+        "物种"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiaaolvdi",
+      "expected": "下凹绿地",
+      "source": "5500",
+      "lookup_us": 3126,
+      "candidates": [
+        "下凹绿地",
+        "下奥绿地",
+        "下奥率低",
+        "下澳绿地",
+        "下澳率低",
+        "下凹率低",
+        "夏奥绿地",
+        "夏奥率低",
+        "下"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiangtushuzhong",
+      "expected": "乡土树种",
+      "source": "5500",
+      "lookup_us": 3024,
+      "candidates": [
+        "乡土树种",
+        "乡土书中",
+        "像图书中",
+        "向图书中",
+        "乡土数中",
+        "想吐书中",
+        "乡土属中",
+        "乡土术中",
+        "乡土"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiangtuwuzhong",
+      "expected": "乡土物种",
+      "source": "5500",
+      "lookup_us": 3654,
+      "candidates": [
+        "乡土物种",
+        "乡土五种",
+        "乡土屋中",
+        "想吐物种",
+        "乡土物中",
+        "像突兀中",
+        "乡土无中",
+        "乡土雾中",
+        "乡土"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiaoshengshebei",
+      "expected": "消声设备",
+      "source": "5500",
+      "lookup_us": 4140,
+      "candidates": [
+        "消声设备",
+        "笑声设备",
+        "小声设备",
+        "小胜设备",
+        "小生设备",
+        "小省设备",
+        "小圣设备",
+        "校生设备",
+        "笑声"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xikeliwu",
+      "expected": "细颗粒物",
+      "source": "5500",
+      "lookup_us": 2906,
+      "candidates": [
+        "细颗粒物",
+        "希克礼物",
+        "西克礼物",
+        "西科礼物",
+        "西可礼物",
+        "戏可礼物",
+        "西客礼物",
+        "系科礼物",
+        "细颗粒"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinxingdianlixitong",
+      "expected": "新型电力系统",
+      "source": "5500",
+      "lookup_us": 7419,
+      "candidates": [
+        "新型电力系统",
+        "新兴电力系统",
+        "新兴店里系统",
+        "新兴典礼系统",
+        "新型典礼系统",
+        "新型店里系统",
+        "新兴的案例系统",
+        "新型电离系统",
+        "新型"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xishengcailiao",
+      "expected": "吸声材料",
+      "source": "5500",
+      "lookup_us": 5272,
+      "candidates": [
+        "吸声材料",
+        "牺牲材料",
+        "西圣材料",
+        "洗生菜了",
+        "西省材料",
+        "牺牲菜了",
+        "牺牲财了",
+        "西生材料",
+        "牺牲"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xuanfukeliwu",
+      "expected": "悬浮颗粒物",
+      "source": "5500",
+      "lookup_us": 5357,
+      "candidates": [
+        "悬浮可礼物",
+        "悬浮科礼物",
+        "悬浮克礼物",
+        "选副棵礼物",
+        "悬浮客礼物",
+        "悬浮颗粒无",
+        "悬浮颗粒物",
+        "悬浮课礼物",
+        "悬浮"
+      ],
+      "expected_rank": 7
+    },
+    {
+      "pinyin": "xuefengtiangu",
+      "expected": "削峰填谷",
+      "source": "5500",
+      "lookup_us": 6612,
+      "candidates": [
+        "削峰填谷",
+        "雪峰天股",
+        "学丰田谷",
+        "雪峰天骨",
+        "学丰田股",
+        "雪丰田谷",
+        "雪丰田股",
+        "雪峰天谷",
+        "学风"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xunengdianzhan",
+      "expected": "蓄能电站",
+      "source": "5500",
+      "lookup_us": 5466,
+      "candidates": [
+        "蓄能电站",
+        "许能电站",
+        "许能点站",
+        "须能点站",
+        "许能电展",
+        "须能电展",
+        "许能点展",
+        "须能点展",
+        "寻"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xunhuanyongshui",
+      "expected": "循环用水",
+      "source": "5500",
+      "lookup_us": 5320,
+      "candidates": [
+        "循环用水",
+        "循环用说",
+        "循环用睡",
+        "循环涌水",
+        "循环用谁",
+        "循环用税",
+        "循环永水",
+        "寻还用说",
+        "循环"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xunidianchang",
+      "expected": "虚拟电厂",
+      "source": "5500",
+      "lookup_us": 6276,
+      "candidates": [
+        "虚拟电厂",
+        "虚拟电场",
+        "虚拟店长",
+        "虚拟点长",
+        "虚拟点唱",
+        "虚拟点场",
+        "虚拟点厂",
+        "虚拟电长",
+        "虚拟"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xuqiuxiangying",
+      "expected": "需求响应",
+      "source": "5500",
+      "lookup_us": 8229,
+      "candidates": [
+        "需求响应",
+        "需求相应",
+        "需求想赢",
+        "需求向英",
+        "许虬响应",
+        "需求向影",
+        "需求向赢",
+        "需求相赢",
+        "需求"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yangchenjiance",
+      "expected": "扬尘监测",
+      "source": "5500",
+      "lookup_us": 6581,
+      "candidates": [
+        "扬尘监测",
+        "杨尘监测",
+        "杨臣检测",
+        "杨陈检测",
+        "杨称检测",
+        "杨晨检测",
+        "杨臣监测",
+        "洋称检测",
+        "样"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yangchenkongzhi",
+      "expected": "扬尘控制",
+      "source": "5500",
+      "lookup_us": 2611,
+      "candidates": [
+        "扬尘控制",
+        "杨臣控制",
+        "杨陈控制",
+        "杨称控制",
+        "杨沉控制",
+        "杨尘控制",
+        "杨晨控制",
+        "洋称控制",
+        "样"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yangchenzhili",
+      "expected": "扬尘治理",
+      "source": "5500",
+      "lookup_us": 3392,
+      "candidates": [
+        "扬尘治理",
+        "杨臣治理",
+        "杨陈智利",
+        "杨陈致力",
+        "杨陈治理",
+        "杨陈智力",
+        "杨臣智利",
+        "杨称治理",
+        "样"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yanqijinghua",
+      "expected": "烟气净化",
+      "source": "5500",
+      "lookup_us": 5969,
+      "candidates": [
+        "烟气净化",
+        "延期精华",
+        "延期净化",
+        "烟气精华",
+        "延期京华",
+        "岩气净化",
+        "言其精华",
+        "眼其精华",
+        "延期"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yanqipaifang",
+      "expected": "烟气排放",
+      "source": "5500",
+      "lookup_us": 4132,
+      "candidates": [
+        "烟气排放",
+        "延期排放",
+        "延期牌坊",
+        "岩气排放",
+        "烟气牌坊",
+        "言其排放",
+        "眼其排放",
+        "言期排放",
+        "延期"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yanqizhili",
+      "expected": "烟气治理",
+      "source": "5500",
+      "lookup_us": 3241,
+      "candidates": [
+        "烟气治理",
+        "延期治理",
+        "延期之力",
+        "延期智利",
+        "延期智力",
+        "延期致力",
+        "延期至里",
+        "延期至理",
+        "延期"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yasuokongqichuneng",
+      "expected": "压缩空气储能",
+      "source": "5500",
+      "lookup_us": 5285,
+      "candidates": [
+        "压缩空气储能",
+        "压缩空气处能",
+        "压缩空气出能",
+        "压缩控器储能",
+        "压缩空气除能",
+        "压缩孔器储能",
+        "压缩空气初能",
+        "亚所空气储能",
+        "压缩"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yejingzhaomingguanli",
+      "expected": "夜景照明管理",
+      "source": "5500",
+      "lookup_us": 10064,
+      "candidates": [
+        "夜景照明管理",
+        "液晶照明管理",
+        "夜景照明惯例",
+        "液晶照明惯例",
+        "夜景照名管理",
+        "液晶着名管理",
+        "液晶赵铭管理",
+        "夜景照明官吏",
+        "液晶"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yeshengdongwubaohu",
+      "expected": "野生动物保护",
+      "source": "5500",
+      "lookup_us": 5806,
+      "candidates": [
+        "野生动物保护",
+        "野生动物保湖",
+        "野生动物保户",
+        "也生动物保护",
+        "野生动物保虎",
+        "野生动物保呼",
+        "野生动物保胡",
+        "野生动物保戏",
+        "野生"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yeshengdongwujiuzhu",
+      "expected": "野生动物救助",
+      "source": "5500",
+      "lookup_us": 6281,
+      "candidates": [
+        "野生动物救助",
+        "野生动物救主",
+        "野生动物就住",
+        "野生动物救住",
+        "野生动物救著",
+        "野生动物揪住",
+        "野生动物就著",
+        "野生动物救猪",
+        "野生"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yeshengdongzhiwu",
+      "expected": "野生动植物",
+      "source": "5500",
+      "lookup_us": 4740,
+      "candidates": [
+        "野生动植物",
+        "也生动植物",
+        "野生动职务",
+        "野生动之物",
+        "也生动职务",
+        "也生动之物",
+        "野生东植物",
+        "野生东职务",
+        "野生"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yicinengyuan",
+      "expected": "一次能源",
+      "source": "5500",
+      "lookup_us": 4936,
+      "candidates": [
+        "一次能源",
+        "一词能源",
+        "以此能源",
+        "依次能源",
+        "一次能远",
+        "一次能元",
+        "一次能预案",
+        "一次能原",
+        "一次"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yongdiandigu",
+      "expected": "用电低谷",
+      "source": "5500",
+      "lookup_us": 5269,
+      "candidates": [
+        "用电低谷",
+        "用电低估",
+        "用点低谷",
+        "用点低估",
+        "用电的骨",
+        "用垫低谷",
+        "用电的股",
+        "用电的古",
+        "用电"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yongdianfuhe",
+      "expected": "用电负荷",
+      "source": "5500",
+      "lookup_us": 5234,
+      "candidates": [
+        "用电负荷",
+        "用电符合",
+        "用点符合",
+        "用颠覆核",
+        "用电复合",
+        "用电复核",
+        "用店符合",
+        "用电附和",
+        "用电"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yongdiangaofeng",
+      "expected": "用电高峰",
+      "source": "5500",
+      "lookup_us": 5806,
+      "candidates": [
+        "用电高峰",
+        "用点高峰",
+        "用店高峰",
+        "用垫高峰",
+        "永点高峰",
+        "用典高峰",
+        "用电高风",
+        "用电镐风",
+        "用电"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yongdianjiance",
+      "expected": "用电监测",
+      "source": "5500",
+      "lookup_us": 7401,
+      "candidates": [
+        "用电监测",
+        "用电检测",
+        "用点检测",
+        "用淀检测",
+        "用点监测",
+        "用店检测",
+        "永点检测",
+        "用典检测",
+        "用电"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yongdianjiliang",
+      "expected": "用电计量",
+      "source": "5500",
+      "lookup_us": 7580,
+      "candidates": [
+        "用电计量",
+        "用点击量",
+        "用电剂量",
+        "用电伎俩",
+        "用电脊梁",
+        "用电机亮",
+        "用电击量",
+        "用点剂量",
+        "用电"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yongshuiguanli",
+      "expected": "用水管理",
+      "source": "5500",
+      "lookup_us": 5121,
+      "candidates": [
+        "用水管理",
+        "用水惯例",
+        "用水管里",
+        "永水管理",
+        "用谁管理",
+        "用说管理",
+        "用水官吏",
+        "用睡管理",
+        "用水"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yongshuijiance",
+      "expected": "用水监测",
+      "source": "5500",
+      "lookup_us": 5337,
+      "candidates": [
+        "用水监测",
+        "用水检测",
+        "用谁检测",
+        "用说检测",
+        "用睡检测",
+        "用税检测",
+        "永水检测",
+        "用谁监测",
+        "用水"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yongshuijiliang",
+      "expected": "用水计量",
+      "source": "5500",
+      "lookup_us": 6038,
+      "candidates": [
+        "用水计量",
+        "用水剂量",
+        "用水伎俩",
+        "用水脊梁",
+        "用水几辆",
+        "用水技亮",
+        "用水及梁",
+        "用水机亮",
+        "用水"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yongshuiqiangdu",
+      "expected": "用水强度",
+      "source": "5500",
+      "lookup_us": 5652,
+      "candidates": [
+        "用水强度",
+        "用说强度",
+        "用谁强度",
+        "用睡强度",
+        "用税强度",
+        "永水强度",
+        "用水枪度",
+        "用水枪读",
+        "用水"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yongshuixiaolv",
+      "expected": "用水效率",
+      "source": "5500",
+      "lookup_us": 5231,
+      "candidates": [
+        "用水效率",
+        "用谁效率",
+        "用说效率",
+        "用睡效率",
+        "永水效率",
+        "用税效率",
+        "永谁效率",
+        "永睡效率",
+        "用水"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yongshuizongliang",
+      "expected": "用水总量",
+      "source": "5500",
+      "lookup_us": 5138,
+      "candidates": [
+        "用水总量",
+        "用说总量",
+        "用谁总量",
+        "用睡总量",
+        "用税总量",
+        "永水总量",
+        "用水宗亮",
+        "永谁总量",
+        "用水"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youyanjiance",
+      "expected": "油烟检测",
+      "source": "5500",
+      "lookup_us": 6310,
+      "candidates": [
+        "油烟检测",
+        "右眼检测",
+        "有烟检测",
+        "右眼监测",
+        "有眼检测",
+        "有演检测",
+        "有烟监测",
+        "有演监测",
+        "油烟机"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youyanjinghua",
+      "expected": "油烟净化",
+      "source": "5500",
+      "lookup_us": 6529,
+      "candidates": [
+        "油烟净化",
+        "右眼精华",
+        "有眼镜花",
+        "有眼睛花",
+        "有眼镜华",
+        "有眼睛话",
+        "有眼睛化",
+        "有眼镜画",
+        "油烟机"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youyanpaifang",
+      "expected": "油烟排放",
+      "source": "5500",
+      "lookup_us": 4263,
+      "candidates": [
+        "油烟排放",
+        "右眼排放",
+        "有烟排放",
+        "有盐排放",
+        "有眼排放",
+        "有演排放",
+        "右眼牌坊",
+        "有严排放",
+        "油烟"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youyanzhili",
+      "expected": "油烟治理",
+      "source": "5500",
+      "lookup_us": 4226,
+      "candidates": [
+        "油烟治理",
+        "右眼治理",
+        "右眼之力",
+        "右眼智利",
+        "有烟治理",
+        "右眼智力",
+        "有严治理",
+        "右眼致力",
+        "油烟"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuanwanghechu",
+      "expected": "源网荷储",
+      "source": "5500",
+      "lookup_us": 4324,
+      "candidates": [
+        "源网荷储",
+        "愿望何处",
+        "远望何处",
+        "冤枉何处",
+        "愿望和处",
+        "愿望和出",
+        "远望和处",
+        "远望和出",
+        "愿望"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yunqing",
+      "expected": "运氢",
+      "source": "5500",
+      "lookup_us": 2172,
+      "candidates": [
+        "运氢",
+        "云情",
+        "云清",
+        "云轻",
+        "云请",
+        "云青",
+        "云庆",
+        "运清",
+        "运气"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yunxingnenghao",
+      "expected": "运行能耗",
+      "source": "5500",
+      "lookup_us": 4602,
+      "candidates": [
+        "运行能耗",
+        "运行能好",
+        "运行能号",
+        "云性能好",
+        "运行能豪",
+        "运行能浩",
+        "运性能好",
+        "运行能昊",
+        "运行"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yurehuishou",
+      "expected": "余热回收",
+      "source": "5500",
+      "lookup_us": 2787,
+      "candidates": [
+        "余热回收",
+        "预热回收",
+        "预热挥手",
+        "余热挥手",
+        "预热回首",
+        "余热回首",
+        "与惹回收",
+        "与惹挥手",
+        "预热"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yureliyong",
+      "expected": "余热利用",
+      "source": "5500",
+      "lookup_us": 2491,
+      "candidates": [
+        "余热利用",
+        "预热利用",
+        "于热力用",
+        "与惹利用",
+        "与热力用",
+        "预热李咏",
+        "于惹利用",
+        "余热李咏",
+        "预热"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yushuihuayuan",
+      "expected": "雨水花园",
+      "source": "5500",
+      "lookup_us": 5407,
+      "candidates": [
+        "雨水花园",
+        "与水花园",
+        "雨水华源",
+        "雨水花苑",
+        "鱼睡花园",
+        "与谁花园",
+        "于谁花园",
+        "与说花园",
+        "雨水"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yushuihuiyong",
+      "expected": "雨水回用",
+      "source": "5500",
+      "lookup_us": 4726,
+      "candidates": [
+        "雨水回用",
+        "雨水会用",
+        "与水会用",
+        "与谁会用",
+        "鱼睡会用",
+        "于谁会用",
+        "与睡会用",
+        "雨水会永",
+        "雨水"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yushuishouji",
+      "expected": "雨水收集",
+      "source": "5500",
+      "lookup_us": 2844,
+      "candidates": [
+        "雨水收集",
+        "雨水手机",
+        "与水手机",
+        "与水收集",
+        "与谁手机",
+        "雨水手记",
+        "与税收集",
+        "于谁手机",
+        "雨水"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuwuguanwang",
+      "expected": "雨污管网",
+      "source": "5500",
+      "lookup_us": 5659,
+      "candidates": [
+        "雨污管网",
+        "与五官网",
+        "于五官网",
+        "与武官网",
+        "与吴官网",
+        "与吴观望",
+        "与五观望",
+        "于武官网",
+        "雨雾"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuwuhunjie",
+      "expected": "雨污混接",
+      "source": "5500",
+      "lookup_us": 5078,
+      "candidates": [
+        "雨污混接",
+        "与吴婚戒",
+        "与五婚戒",
+        "与吴婚介",
+        "与无婚戒",
+        "与五婚介",
+        "于五婚戒",
+        "与无婚介",
+        "雨雾"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaishengshuiguanwang",
+      "expected": "再生水管网",
+      "source": "5500",
+      "lookup_us": 7230,
+      "candidates": [
+        "在省水官网",
+        "在圣水官网",
+        "在省水观望",
+        "再生水管网",
+        "在圣水观望",
+        "在省水管网",
+        "再生谁官网",
+        "再生说观望",
+        "再生"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "zaishengshuiliyong",
+      "expected": "再生水利用",
+      "source": "5500",
+      "lookup_us": 4243,
+      "candidates": [
+        "在省水利用",
+        "在圣水利用",
+        "再生谁利用",
+        "再生说利用",
+        "再生睡利用",
+        "再生税利用",
+        "再生水里用",
+        "再生水利用",
+        "再生"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zaolinlvhua",
+      "expected": "造林绿化",
+      "source": "5500",
+      "lookup_us": 4236,
+      "candidates": [
+        "造林绿化",
+        "遭林绿化",
+        "造林氯化",
+        "遭林氯化",
+        "遭临绿化",
+        "早临绿化",
+        "遭琳绿化",
+        "遭临氯化",
+        "造林"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaoshenggeli",
+      "expected": "噪声隔离",
+      "source": "5500",
+      "lookup_us": 4220,
+      "candidates": [
+        "噪声隔离",
+        "噪省隔离",
+        "早生隔离",
+        "噪声格里",
+        "早生格里",
+        "遭生隔离",
+        "噪省格里",
+        "遭升格里",
+        "噪声"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaoshengjiance",
+      "expected": "噪声检测",
+      "source": "5500",
+      "lookup_us": 6196,
+      "candidates": [
+        "噪声检测",
+        "噪声监测",
+        "噪省检测",
+        "早生检测",
+        "噪省监测",
+        "早生监测",
+        "遭生检测",
+        "遭省检测",
+        "噪声"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaoshengjiance",
+      "expected": "噪声监测",
+      "source": "5500",
+      "lookup_us": 6355,
+      "candidates": [
+        "噪声检测",
+        "噪声监测",
+        "噪省检测",
+        "早生检测",
+        "噪省监测",
+        "早生监测",
+        "遭生检测",
+        "遭省检测",
+        "噪声"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zaoshengkongzhi",
+      "expected": "噪声控制",
+      "source": "5500",
+      "lookup_us": 3459,
+      "candidates": [
+        "噪声控制",
+        "噪省控制",
+        "早生控制",
+        "遭声控制",
+        "噪声控志",
+        "遭生控制",
+        "遭省控制",
+        "遭升控制",
+        "噪声"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaoshengraomin",
+      "expected": "噪声扰民",
+      "source": "5500",
+      "lookup_us": 3854,
+      "candidates": [
+        "噪声扰民",
+        "噪省扰民",
+        "早生扰民",
+        "遭生扰民",
+        "遭声扰民",
+        "遭省扰民",
+        "遭升扰民",
+        "早升扰民",
+        "噪声"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaoshengwuran",
+      "expected": "噪声污染",
+      "source": "5500",
+      "lookup_us": 3250,
+      "candidates": [
+        "噪声污染",
+        "早生污染",
+        "噪省污染",
+        "遭生污染",
+        "早生物燃",
+        "遭声污染",
+        "遭省污染",
+        "遭升污染",
+        "噪声"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaoshengzhili",
+      "expected": "噪声治理",
+      "source": "5500",
+      "lookup_us": 4877,
+      "candidates": [
+        "噪声治理",
+        "噪省治理",
+        "噪声之力",
+        "早生治理",
+        "噪声智利",
+        "早生之力",
+        "早生致力",
+        "噪声智力",
+        "噪声"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhaomingnenghao",
+      "expected": "照明能耗",
+      "source": "5500",
+      "lookup_us": 4517,
+      "candidates": [
+        "照明能耗",
+        "照明能好",
+        "照明能号",
+        "找命能皓",
+        "照明能豪",
+        "照明能浩",
+        "赵铭能好",
+        "赵铭能耗",
+        "照明"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhaoqifadian",
+      "expected": "沼气发电",
+      "source": "5500",
+      "lookup_us": 4215,
+      "candidates": [
+        "沼气发电",
+        "找起发电",
+        "朝气发电",
+        "赵启发电",
+        "找其发电",
+        "照其发电",
+        "赵启发点",
+        "找启发电",
+        "沼气"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhaoqiliyong",
+      "expected": "沼气利用",
+      "source": "5500",
+      "lookup_us": 3583,
+      "candidates": [
+        "沼气利用",
+        "找其利用",
+        "找起利用",
+        "照其利用",
+        "朝气利用",
+        "赵岐利用",
+        "赵期利用",
+        "找期利用",
+        "沼气"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhenxishuiziyuan",
+      "expected": "珍惜水资源",
+      "source": "5500",
+      "lookup_us": 6312,
+      "candidates": [
+        "珍惜水资源",
+        "珍稀水资源",
+        "珍惜税资源",
+        "珍惜谁资源",
+        "珍惜睡资源",
+        "珍惜说资源",
+        "珍惜水自愿",
+        "珍惜说自愿",
+        "珍惜"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhenxiwuzhong",
+      "expected": "珍稀物种",
+      "source": "5500",
+      "lookup_us": 2642,
+      "candidates": [
+        "珍稀物种",
+        "珍惜物种",
+        "珍惜五种",
+        "珍惜屋中",
+        "珍稀物中",
+        "珍惜物中",
+        "真系物种",
+        "珍惜雾中",
+        "珍惜"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhibeibaohu",
+      "expected": "植被保护",
+      "source": "5500",
+      "lookup_us": 3624,
+      "candidates": [
+        "植被保护",
+        "之備保护",
+        "只被保护",
+        "制备保护",
+        "纸杯保护",
+        "只背保护",
+        "之辈保护",
+        "指北保护",
+        "制备"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhibeihuifu",
+      "expected": "植被恢复",
+      "source": "5500",
+      "lookup_us": 3572,
+      "candidates": [
+        "植被恢复",
+        "之備恢复",
+        "植被回复",
+        "之備回复",
+        "制备恢复",
+        "只被恢复",
+        "只被回复",
+        "只背恢复",
+        "制备"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhilengnenghao",
+      "expected": "制冷能耗",
+      "source": "5500",
+      "lookup_us": 3901,
+      "candidates": [
+        "制冷能耗",
+        "制冷能好",
+        "制冷能号",
+        "只冷能好",
+        "制冷能豪",
+        "制冷能浩",
+        "只冷能耗",
+        "只冷能号",
+        "制冷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhinengdianwang",
+      "expected": "智能电网",
+      "source": "5500",
+      "lookup_us": 6630,
+      "candidates": [
+        "智能电网",
+        "只能电网",
+        "只能点王",
+        "只能垫网",
+        "只能点网",
+        "智能电王",
+        "智能点王",
+        "只能颠王",
+        "只能"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhiqing",
+      "expected": "制氢",
+      "source": "5500",
+      "lookup_us": 2357,
+      "candidates": [
+        "知情",
+        "之情",
+        "知青",
+        "制氢",
+        "质庆",
+        "至清",
+        "之清",
+        "至青",
+        "执勤"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "zhishuzaolin",
+      "expected": "植树造林",
+      "source": "5500",
+      "lookup_us": 3946,
+      "candidates": [
+        "植树造林",
+        "指数造林",
+        "直属造林",
+        "指数早林",
+        "指数早琳",
+        "质数造林",
+        "指数早麟",
+        "指数早霖",
+        "指数"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhongduannengyuan",
+      "expected": "终端能源",
+      "source": "5500",
+      "lookup_us": 5763,
+      "candidates": [
+        "终端能源",
+        "中断能源",
+        "中段能源",
+        "中端能源",
+        "中断能远",
+        "中断能元",
+        "中毒案能源",
+        "终端能远",
+        "终端"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhonglichuneng",
+      "expected": "重力储能",
+      "source": "5500",
+      "lookup_us": 3756,
+      "candidates": [
+        "重力储能",
+        "中立储能",
+        "中立处能",
+        "重力出能",
+        "中立出能",
+        "中里储能",
+        "重力处能",
+        "中立初能",
+        "中立"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhongshuihuiyong",
+      "expected": "中水回用",
+      "source": "5500",
+      "lookup_us": 3590,
+      "candidates": [
+        "中水回用",
+        "中谁会用",
+        "中说会用",
+        "中水会用",
+        "种水会用",
+        "中睡会用",
+        "中谁汇用",
+        "种谁会用",
+        "中暑"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhongwurantianqi",
+      "expected": "重污染天气",
+      "source": "5500",
+      "lookup_us": 4370,
+      "candidates": [
+        "中午然天气",
+        "中污染天气",
+        "重污染天气",
+        "中午燃天气",
+        "中午冉天气",
+        "中午然天起",
+        "中污染天起",
+        "中午苒天气",
+        "中午"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "ziranbaohu",
+      "expected": "自然保护",
+      "source": "5500",
+      "lookup_us": 3270,
+      "candidates": [
+        "自然保护",
+        "自燃保护",
+        "自然保湖",
+        "自然保户",
+        "自然包湖",
+        "自然保虎",
+        "自然包虎",
+        "自然报湖",
+        "自然"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ziranbaohudi",
+      "expected": "自然保护地",
+      "source": "5500",
+      "lookup_us": 4112,
+      "candidates": [
+        "自然保护的",
+        "自然保护地",
+        "自然保护第",
+        "自然保护低",
+        "自然保护迪",
+        "自然保护底",
+        "自然保护滴",
+        "自然保护蒂",
+        "自然保护"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "ziranguancha",
+      "expected": "自然观察",
+      "source": "5500",
+      "lookup_us": 4037,
+      "candidates": [
+        "自然观察",
+        "自燃观察",
+        "自然关差",
+        "自然关查",
+        "自然关茶",
+        "孜然观察",
+        "自然馆差",
+        "自然管差",
+        "自然"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ziranjiaoyu",
+      "expected": "自然教育",
+      "source": "5500",
+      "lookup_us": 5129,
+      "candidates": [
+        "自然教育",
+        "自燃教育",
+        "自然叫于",
+        "自然觉与",
+        "自然教于",
+        "自然叫鱼",
+        "自然教与",
+        "自然较于",
+        "自然"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zirankepu",
+      "expected": "自然科普",
+      "source": "5500",
+      "lookup_us": 2188,
+      "candidates": [
+        "自然科普",
+        "自然可普",
+        "自然可谱",
+        "自然可铺",
+        "自然科铺",
+        "自然科谱",
+        "自然柯普",
+        "自然克普",
+        "自然"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zirantiyan",
+      "expected": "自然体验",
+      "source": "5500",
+      "lookup_us": 3009,
+      "candidates": [
+        "自然体验",
+        "自燃体验",
+        "孜然体验",
+        "自然提眼",
+        "自然提言",
+        "自然体炎",
+        "自然体眼",
+        "自然体言",
+        "自然"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zonghenenghao",
+      "expected": "综合能耗",
+      "source": "5500",
+      "lookup_us": 2899,
+      "candidates": [
+        "综合能耗",
+        "综合能好",
+        "综合能号",
+        "总核能好",
+        "综合能豪",
+        "宗核能好",
+        "综合能浩",
+        "总和能好",
+        "综合"
+      ],
+      "expected_rank": 1
+    }
+  ]
+}
