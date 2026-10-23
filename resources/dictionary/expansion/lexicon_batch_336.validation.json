@@ -1,0 +1,6386 @@
+{
+  "batch": "lexicon_batch_336",
+  "evaluation": "native_engine_candidate_coverage",
+  "evaluated_at_utc": "2026-10-23T17:41:56.602775+00:00",
+  "engine_sha256": "f386e80d11e8702d30292f79af26e7f43f879aeb68e65fa7679b117eef673734",
+  "resource_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "0f8f2612bfb4f61a921c6d7135e555691bed0f423cc0f4a8c461ae3882119d4c",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+    "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+    "continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e"
+  },
+  "frozen_batch_sha256": "3a0511ec7ea413b0b686f7fc663842c6c6aed0d05851326e43480322dcc5f21f",
+  "personal_data_isolated": true,
+  "expected_answers_learned": false,
+  "summary": {
+    "cases": 353,
+    "top1_correct": 339,
+    "top9_present": 353,
+    "top1_percent": 96.03,
+    "top9_percent": 100.0,
+    "character_error_rate": 0.0197,
+    "p50_lookup_ms": 4.848,
+    "p95_lookup_ms": 8.067,
+    "max_lookup_ms": 12.908,
+    "missing_from_top9_count": 0,
+    "missing_from_top9": [],
+    "max_returned_candidate_count": 9
+  },
+  "rows": [
+    {
+      "pinyin": "bianzaogushi",
+      "expected": "编造故事",
+      "source": "5500",
+      "lookup_us": 7442,
+      "candidates": [
+        "编造故事",
+        "编造股市",
+        "编造古时",
+        "便造故事",
+        "便早故事",
+        "编造骨时",
+        "便遭故事",
+        "变糟故事",
+        "编造"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bianzaoshuju",
+      "expected": "编造数据",
+      "source": "5500",
+      "lookup_us": 4197,
+      "candidates": [
+        "编造数据",
+        "便造数据",
+        "便早数据",
+        "编造书局",
+        "便遭数据",
+        "变糟数据",
+        "变早数据",
+        "变遭数据",
+        "编造"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bianzaoxiaoxi",
+      "expected": "编造消息",
+      "source": "5500",
+      "lookup_us": 6296,
+      "candidates": [
+        "编造消息",
+        "编造小溪",
+        "便造消息",
+        "便早消息",
+        "编造小西",
+        "便遭消息",
+        "变糟消息",
+        "变早消息",
+        "编造"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bianzaoxijie",
+      "expected": "编造细节",
+      "source": "5500",
+      "lookup_us": 5905,
+      "candidates": [
+        "编造细节",
+        "编造西街",
+        "便造细节",
+        "编造希捷",
+        "便早细节",
+        "便遭细节",
+        "变糟细节",
+        "变早细节",
+        "编造"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biaotikuazhang",
+      "expected": "标题夸张",
+      "source": "5500",
+      "lookup_us": 5019,
+      "candidates": [
+        "标题夸张",
+        "表题夸张",
+        "标题跨长",
+        "表体夸张",
+        "标体夸张",
+        "表提夸张",
+        "标提夸张",
+        "标题跨章",
+        "标题"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biaotishishi",
+      "expected": "标题失实",
+      "source": "5500",
+      "lookup_us": 4505,
+      "candidates": [
+        "标题失实",
+        "标题是是",
+        "标题逝世",
+        "标题实施",
+        "标题事实",
+        "标题试试",
+        "标题是时",
+        "标题适时",
+        "标题"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biaotiwudao",
+      "expected": "标题误导",
+      "source": "5500",
+      "lookup_us": 4400,
+      "candidates": [
+        "标题误导",
+        "标题舞蹈",
+        "标题唔到",
+        "标题武道",
+        "标题五到",
+        "标题五道",
+        "标题无到",
+        "标题无道",
+        "标题"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "buchongshishi",
+      "expected": "补充事实",
+      "source": "5500",
+      "lookup_us": 3340,
+      "candidates": [
+        "补充事实",
+        "补充实施",
+        "补充实时",
+        "补充逝世",
+        "补充试试",
+        "不重试试",
+        "补充实事",
+        "不充实施",
+        "补充式"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bushibaodao",
+      "expected": "不实报道",
+      "source": "5500",
+      "lookup_us": 4914,
+      "candidates": [
+        "不实报道",
+        "不是报道",
+        "不是报导",
+        "不时报道",
+        "不实报导",
+        "不是报到",
+        "布什报道",
+        "不时报导",
+        "不是吧"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bushichuanyan",
+      "expected": "不实传言",
+      "source": "5500",
+      "lookup_us": 4794,
+      "candidates": [
+        "不实传言",
+        "不是传言",
+        "布什传言",
+        "不时传言",
+        "不识传言",
+        "不适传言",
+        "不失传言",
+        "布施传言",
+        "不是"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bushixiaoxi",
+      "expected": "不实消息",
+      "source": "5500",
+      "lookup_us": 5890,
+      "candidates": [
+        "不实消息",
+        "不是消息",
+        "不是小溪",
+        "布什消息",
+        "不时消息",
+        "不是小西",
+        "不识消息",
+        "不适消息",
+        "不是"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bushixinxi",
+      "expected": "不实信息",
+      "source": "5500",
+      "lookup_us": 3705,
+      "candidates": [
+        "不实信息",
+        "不是信息",
+        "布什信息",
+        "不是欣喜",
+        "不时信息",
+        "不失信息",
+        "不识信息",
+        "不适信息",
+        "不是"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "butongkoujing",
+      "expected": "不同口径",
+      "source": "5500",
+      "lookup_us": 3364,
+      "candidates": [
+        "不同口径",
+        "不通口径",
+        "不同口镜",
+        "不同口井",
+        "不痛口径",
+        "不同口经",
+        "不同口静",
+        "不同口景",
+        "不同"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caifangjilu",
+      "expected": "采访记录",
+      "source": "5500",
+      "lookup_us": 3066,
+      "candidates": [
+        "采访记录",
+        "采访纪录",
+        "采访忌路",
+        "采访及路",
+        "采访忌录",
+        "采访忌鲁",
+        "采访忌鹿",
+        "采访忌露",
+        "采访"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caifangluyin",
+      "expected": "采访录音",
+      "source": "5500",
+      "lookup_us": 4107,
+      "candidates": [
+        "采访录音",
+        "才放录音",
+        "采访路引",
+        "采访路因",
+        "才方录音",
+        "菜放录音",
+        "蔡方录音",
+        "采访庐隐",
+        "采访"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caifangshipin",
+      "expected": "采访视频",
+      "source": "5500",
+      "lookup_us": 3537,
+      "candidates": [
+        "采访视频",
+        "采访食品",
+        "采访饰品",
+        "采访时品",
+        "采访时拼",
+        "采访时频",
+        "才放视频",
+        "采访时聘",
+        "采访"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caifangtigang",
+      "expected": "采访提纲",
+      "source": "5500",
+      "lookup_us": 3502,
+      "candidates": [
+        "采访提纲",
+        "采访提港",
+        "采访提刚",
+        "采访替刚",
+        "采访提岗",
+        "采访体港",
+        "采访体刚",
+        "采访提钢",
+        "采访"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caifangwenti",
+      "expected": "采访问题",
+      "source": "5500",
+      "lookup_us": 3194,
+      "candidates": [
+        "采访问题",
+        "才访问题",
+        "才放问题",
+        "采访文体",
+        "采访问提",
+        "才房问题",
+        "采访问体",
+        "菜放问题",
+        "采访"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chazhengguocheng",
+      "expected": "查证过程",
+      "source": "5500",
+      "lookup_us": 5485,
+      "candidates": [
+        "查证过程",
+        "茶证过程",
+        "查整过程",
+        "茶整过程",
+        "查争过程",
+        "察诤过程",
+        "查正过程",
+        "查政过程",
+        "查证"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chazhengjieguo",
+      "expected": "查证结果",
+      "source": "5500",
+      "lookup_us": 8300,
+      "candidates": [
+        "查证结果",
+        "查症结果",
+        "察诤结果",
+        "查证接过",
+        "查整结果",
+        "查正结果",
+        "茶正结果",
+        "查争结果",
+        "查证"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chegaoshengming",
+      "expected": "撤稿声明",
+      "source": "5500",
+      "lookup_us": 4986,
+      "candidates": [
+        "撤稿声明",
+        "车高声明",
+        "车告声明",
+        "撤稿生命",
+        "车高生命",
+        "撤高声明",
+        "车告生命",
+        "撤告声明",
+        "撤稿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chegaoshuoming",
+      "expected": "撤稿说明",
+      "source": "5500",
+      "lookup_us": 4366,
+      "candidates": [
+        "撤稿说明",
+        "车告说明",
+        "车高说明",
+        "车稿说明",
+        "车搞说明",
+        "撤告说明",
+        "撤高说明",
+        "车糕说明",
+        "撤稿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chegaoyuanyin",
+      "expected": "撤稿原因",
+      "source": "5500",
+      "lookup_us": 5491,
+      "candidates": [
+        "撤稿原因",
+        "车高原因",
+        "车告原因",
+        "撤高原因",
+        "车搞原因",
+        "车稿原因",
+        "撤稿援引",
+        "车告援引",
+        "撤稿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chehuibaodao",
+      "expected": "撤回报道",
+      "source": "5500",
+      "lookup_us": 4416,
+      "candidates": [
+        "撤回报道",
+        "撤回报导",
+        "撤回报到",
+        "车回报道",
+        "车会报道",
+        "车汇报道",
+        "车回报导",
+        "车回报到",
+        "撤回"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chengqingchuanyan",
+      "expected": "澄清传言",
+      "source": "5500",
+      "lookup_us": 5840,
+      "candidates": [
+        "澄清传言",
+        "盛情传言",
+        "称情传言",
+        "称请传言",
+        "称清传言",
+        "澄清川眼",
+        "澄清川言",
+        "呈请传言",
+        "澄清"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chengqinggonggao",
+      "expected": "澄清公告",
+      "source": "5500",
+      "lookup_us": 3935,
+      "candidates": [
+        "澄清公告",
+        "称请公告",
+        "呈请公告",
+        "盛情公告",
+        "称清公告",
+        "称情公告",
+        "澄清宫高",
+        "澄清供稿",
+        "澄清"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chengqingshengming",
+      "expected": "澄清声明",
+      "source": "5500",
+      "lookup_us": 6663,
+      "candidates": [
+        "澄清声明",
+        "澄清生命",
+        "澄清盛名",
+        "澄清声名",
+        "称清声明",
+        "称轻声明",
+        "澄清声鸣",
+        "成轻声明",
+        "澄清"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chengqingshishi",
+      "expected": "澄清事实",
+      "source": "5500",
+      "lookup_us": 5527,
+      "candidates": [
+        "澄清事实",
+        "澄清逝世",
+        "澄清实施",
+        "澄清史诗",
+        "澄清试试",
+        "澄清事时",
+        "澄清史实",
+        "澄清事事",
+        "澄清"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chengqingwujie",
+      "expected": "澄清误解",
+      "source": "5500",
+      "lookup_us": 6355,
+      "candidates": [
+        "澄清误解",
+        "澄清无解",
+        "澄清五届",
+        "澄清无界",
+        "称请误解",
+        "称清误解",
+        "成庆误解",
+        "盛情误解",
+        "澄清"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chouyangwucha",
+      "expected": "抽样误差",
+      "source": "5500",
+      "lookup_us": 3365,
+      "candidates": [
+        "抽样误差",
+        "臭氧误差",
+        "抽样无差",
+        "臭氧无差",
+        "臭氧舞差",
+        "臭氧舞茶",
+        "臭氧舞查",
+        "抽样无茶",
+        "抽样"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chuanyanlaiyuan",
+      "expected": "传言来源",
+      "source": "5500",
+      "lookup_us": 6304,
+      "candidates": [
+        "传言来源",
+        "传言来圆",
+        "船沿来源",
+        "船言来源",
+        "传言来远",
+        "船眼来源",
+        "船烟来源",
+        "船演来源",
+        "传言"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chubujieguo",
+      "expected": "初步结果",
+      "source": "5500",
+      "lookup_us": 5856,
+      "candidates": [
+        "初步结果",
+        "初步接过",
+        "楚布结果",
+        "除不结果",
+        "出不结果",
+        "除布结果",
+        "初步结过",
+        "除步结果",
+        "初步"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "cunzaiyidian",
+      "expected": "存在疑点",
+      "source": "5500",
+      "lookup_us": 4592,
+      "candidates": [
+        "存在疑点",
+        "存在一点",
+        "存在一店",
+        "村在一点",
+        "存在以点",
+        "存在意点",
+        "存在椅垫",
+        "存在以电",
+        "存在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "cunzaizhengyi",
+      "expected": "存在争议",
+      "source": "5500",
+      "lookup_us": 4714,
+      "candidates": [
+        "存在争议",
+        "存在正义",
+        "存在正以",
+        "村在争议",
+        "存在争以",
+        "存在争一",
+        "存在整以",
+        "存在争已",
+        "存在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dangshirenhuiying",
+      "expected": "当事人回应",
+      "source": "5500",
+      "lookup_us": 6946,
+      "candidates": [
+        "当事人回应",
+        "当时人回应",
+        "当事人会赢",
+        "当时任回应",
+        "当事人会应",
+        "当事人会影",
+        "当时认回应",
+        "当事人辉映",
+        "当事人"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dangshirenshuofa",
+      "expected": "当事人说法",
+      "source": "5500",
+      "lookup_us": 4034,
+      "candidates": [
+        "当事人说法",
+        "当时人说法",
+        "当时任说法",
+        "当时认说法",
+        "当事人说发",
+        "当时仁说法",
+        "当时人说发",
+        "当事人数法",
+        "当事人"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "diaochaduixiang",
+      "expected": "调查对象",
+      "source": "5500",
+      "lookup_us": 7877,
+      "candidates": [
+        "调查对象",
+        "调查对向",
+        "调查对像",
+        "调查队向",
+        "调查对香",
+        "调查对乡",
+        "调查对相",
+        "调查对想",
+        "调查"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "diaochafangfa",
+      "expected": "调查方法",
+      "source": "5500",
+      "lookup_us": 3950,
+      "candidates": [
+        "调查方法",
+        "调查方发",
+        "吊镲方法",
+        "调查房发",
+        "调查访法",
+        "调查房法",
+        "调查防发",
+        "调查防法",
+        "调查"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "diaochafanwei",
+      "expected": "调查范围",
+      "source": "5500",
+      "lookup_us": 3934,
+      "candidates": [
+        "调查范围",
+        "调查范伟",
+        "调查范为",
+        "调查反胃",
+        "吊镲范围",
+        "调查反味",
+        "调查范纬",
+        "调查范玮",
+        "调查"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "diaochashijian",
+      "expected": "调查时间",
+      "source": "5500",
+      "lookup_us": 7819,
+      "candidates": [
+        "调查时间",
+        "调查事件",
+        "调查实践",
+        "调查世间",
+        "调查尸检",
+        "调查是件",
+        "调查时见",
+        "调查是见",
+        "调查"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "diaochayangben",
+      "expected": "调查样本",
+      "source": "5500",
+      "lookup_us": 4839,
+      "candidates": [
+        "调查样本",
+        "吊镲样本",
+        "调查阳本",
+        "调查杨本",
+        "调查养本",
+        "调查洋本",
+        "调查扬本",
+        "调查羊本",
+        "调查"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "didianbufu",
+      "expected": "地点不符",
+      "source": "5500",
+      "lookup_us": 4807,
+      "candidates": [
+        "地点不符",
+        "地点不服",
+        "地点不负",
+        "低点不符",
+        "低点不服",
+        "地点不复",
+        "地点不赴",
+        "地点不富",
+        "地点"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "duizhaoyanjiu",
+      "expected": "对照研究",
+      "source": "5500",
+      "lookup_us": 5360,
+      "candidates": [
+        "对照研究",
+        "对着研究",
+        "对朝研究",
+        "对赵研究",
+        "对照烟酒",
+        "对找研究",
+        "对着烟酒",
+        "对招研究",
+        "对照"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "duliheshi",
+      "expected": "独立核实",
+      "source": "5500",
+      "lookup_us": 3287,
+      "candidates": [
+        "独立核实",
+        "独立合适",
+        "独立和是",
+        "独立何时",
+        "独立和时",
+        "独立和室",
+        "独立和市",
+        "独立和事",
+        "独立"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "duofangcaifang",
+      "expected": "多方采访",
+      "source": "5500",
+      "lookup_us": 4268,
+      "candidates": [
+        "多方采访",
+        "多放采访",
+        "多房采访",
+        "多防采访",
+        "多访采访",
+        "多芳采访",
+        "多方才放",
+        "多坊采访",
+        "多方"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "duofangheshi",
+      "expected": "多方核实",
+      "source": "5500",
+      "lookup_us": 4303,
+      "candidates": [
+        "多方核实",
+        "多方合适",
+        "多方何时",
+        "多放合适",
+        "多放核实",
+        "多方和是",
+        "多方和时",
+        "多方和室",
+        "多方"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "duofanghuiying",
+      "expected": "多方回应",
+      "source": "5500",
+      "lookup_us": 6485,
+      "candidates": [
+        "多方回应",
+        "多放回应",
+        "多方会赢",
+        "多方辉映",
+        "多房回应",
+        "多访回应",
+        "夺方回应",
+        "多防回应",
+        "多方"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "duofangqiuzheng",
+      "expected": "多方求证",
+      "source": "5500",
+      "lookup_us": 5725,
+      "candidates": [
+        "多方求证",
+        "多放求证",
+        "多方球证",
+        "多房求证",
+        "多方求正",
+        "多方球正",
+        "多防求证",
+        "多访求证",
+        "多方"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ershouxinxi",
+      "expected": "二手信息",
+      "source": "5500",
+      "lookup_us": 3953,
+      "candidates": [
+        "二手信息",
+        "而收信息",
+        "而受信息",
+        "而守信息",
+        "而首信息",
+        "而手信息",
+        "二手欣喜",
+        "二收信息",
+        "二手"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ershouziliao",
+      "expected": "二手资料",
+      "source": "5500",
+      "lookup_us": 4674,
+      "candidates": [
+        "二手资料",
+        "而收资料",
+        "而受资料",
+        "而首资料",
+        "而手资料",
+        "而守资料",
+        "而授资料",
+        "二手子了",
+        "二手"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fabiaoshijian",
+      "expected": "发表时间",
+      "source": "5500",
+      "lookup_us": 7282,
+      "candidates": [
+        "发表时间",
+        "发表事件",
+        "发表实践",
+        "发表世间",
+        "发表示建",
+        "发表示坚",
+        "发表尸检",
+        "发表示见",
+        "发表"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fabuzhanghao",
+      "expected": "发布账号",
+      "source": "5500",
+      "lookup_us": 4284,
+      "candidates": [
+        "发布账号",
+        "发布帐号",
+        "发布张好",
+        "法不帐号",
+        "法部长好",
+        "发布长号",
+        "发不帐号",
+        "法不账号",
+        "发布"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fanxiangsoutu",
+      "expected": "反向搜图",
+      "source": "5500",
+      "lookup_us": 4312,
+      "candidates": [
+        "反向搜图",
+        "反响搜图",
+        "反响搜土",
+        "反响艘图",
+        "反响搜兔",
+        "反响艘土",
+        "反响搜途",
+        "返乡搜图",
+        "反响"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fayanrendawen",
+      "expected": "发言人答问",
+      "source": "5500",
+      "lookup_us": 3056,
+      "candidates": [
+        "发言人大文",
+        "发言人大问",
+        "发言人答问",
+        "发言人达文",
+        "发言人大温",
+        "发言人打问",
+        "发言人大雯",
+        "发言人大稳",
+        "发言人"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "fayanrenhuiying",
+      "expected": "发言人回应",
+      "source": "5500",
+      "lookup_us": 6901,
+      "candidates": [
+        "发言人回应",
+        "发言人会赢",
+        "发言人辉映",
+        "发言人会应",
+        "发言人会影",
+        "发言人会营",
+        "发言人会英",
+        "发言人回英",
+        "发言人"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gefangshuofa",
+      "expected": "各方说法",
+      "source": "5500",
+      "lookup_us": 3859,
+      "candidates": [
+        "各方说法",
+        "格方说法",
+        "戈舫说法",
+        "各方说发",
+        "个房说法",
+        "个放说法",
+        "个访说法",
+        "个防说法",
+        "各方"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "genggaibiaoti",
+      "expected": "更改标题",
+      "source": "5500",
+      "lookup_us": 4076,
+      "candidates": [
+        "更改标题",
+        "更该标题",
+        "更改表题",
+        "更盖标题",
+        "更改标体",
+        "更改标提",
+        "更改表体",
+        "更改表提",
+        "更改"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gengxinriqi",
+      "expected": "更新日期",
+      "source": "5500",
+      "lookup_us": 2845,
+      "candidates": [
+        "更新日期",
+        "更新日起",
+        "更新日气",
+        "更新日其",
+        "更新日器",
+        "更新日七",
+        "更新日旗",
+        "更新日奇",
+        "更新日"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gengzhengbaodao",
+      "expected": "更正报道",
+      "source": "5500",
+      "lookup_us": 6395,
+      "candidates": [
+        "更正报道",
+        "更正报导",
+        "更正报到",
+        "更证报道",
+        "更正宝岛",
+        "更整报道",
+        "更政报道",
+        "更证报导",
+        "更正"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gengzhengcuowu",
+      "expected": "更正错误",
+      "source": "5500",
+      "lookup_us": 4183,
+      "candidates": [
+        "更正错误",
+        "更证错误",
+        "耿正错误",
+        "更整错误",
+        "更政错误",
+        "更争错误",
+        "更征错误",
+        "更郑错误",
+        "更正"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gengzhenggonggao",
+      "expected": "更正公告",
+      "source": "5500",
+      "lookup_us": 4313,
+      "candidates": [
+        "更正公告",
+        "更政公告",
+        "更整公告",
+        "更证公告",
+        "更争公告",
+        "更征公告",
+        "更郑公告",
+        "更正供稿",
+        "更正"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gongkaifayan",
+      "expected": "公开发言",
+      "source": "5500",
+      "lookup_us": 4382,
+      "candidates": [
+        "公开发言",
+        "公开发炎",
+        "共开发言",
+        "公开发烟",
+        "公开发研",
+        "公开发眼",
+        "公开法眼",
+        "公开法言",
+        "公开"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gongkaihuiying",
+      "expected": "公开回应",
+      "source": "5500",
+      "lookup_us": 5805,
+      "candidates": [
+        "公开回应",
+        "公开会赢",
+        "公开辉映",
+        "公开会应",
+        "公开会影",
+        "公开会营",
+        "公开会英",
+        "共开回应",
+        "公开"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gongkaijianghua",
+      "expected": "公开讲话",
+      "source": "5500",
+      "lookup_us": 7361,
+      "candidates": [
+        "公开讲话",
+        "公开僵化",
+        "共开讲话",
+        "公开讲花",
+        "公开讲化",
+        "公开降华",
+        "公开江华",
+        "公开讲华",
+        "公开"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gongkaijilu",
+      "expected": "公开记录",
+      "source": "5500",
+      "lookup_us": 2651,
+      "candidates": [
+        "公开记录",
+        "公开纪录",
+        "共开记录",
+        "共开纪录",
+        "公开级路",
+        "公开及路",
+        "公开级鲁",
+        "公开机路",
+        "公开"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gongkaiqudao",
+      "expected": "公开渠道",
+      "source": "5500",
+      "lookup_us": 3045,
+      "candidates": [
+        "公开渠道",
+        "公开去到",
+        "公开区到",
+        "公开取到",
+        "共开渠道",
+        "公开区道",
+        "公开去道",
+        "公开去岛",
+        "公开"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gongkaishengming",
+      "expected": "公开声明",
+      "source": "5500",
+      "lookup_us": 4641,
+      "candidates": [
+        "公开声明",
+        "公开生命",
+        "公开声名",
+        "公开盛名",
+        "共开声明",
+        "公开声鸣",
+        "公开声命",
+        "共开生命",
+        "公开"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gongkaishuju",
+      "expected": "公开数据",
+      "source": "5500",
+      "lookup_us": 2513,
+      "candidates": [
+        "公开数据",
+        "共开数据",
+        "公开书局",
+        "公开数句",
+        "公开数居",
+        "公开数局",
+        "公开属局",
+        "公开数剧",
+        "公开"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gongkaiwenjian",
+      "expected": "公开文件",
+      "source": "5500",
+      "lookup_us": 5407,
+      "candidates": [
+        "公开文件",
+        "公开稳健",
+        "共开文件",
+        "共凯文件",
+        "宫凯文件",
+        "公开文简",
+        "公开文建",
+        "公开文见",
+        "公开"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gongkaixinxi",
+      "expected": "公开信息",
+      "source": "5500",
+      "lookup_us": 3195,
+      "candidates": [
+        "公开信息",
+        "公开信系",
+        "公开信习",
+        "公开信西",
+        "公开欣喜",
+        "公开心系",
+        "公开信戏",
+        "公开信喜",
+        "公开信"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gongkaiziliao",
+      "expected": "公开资料",
+      "source": "5500",
+      "lookup_us": 4289,
+      "candidates": [
+        "公开资料",
+        "公开资了",
+        "公开子了",
+        "公开字了",
+        "共开资料",
+        "公开自了",
+        "公开资聊",
+        "公开自料",
+        "公开"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guanchayanjiu",
+      "expected": "观察研究",
+      "source": "5500",
+      "lookup_us": 5279,
+      "candidates": [
+        "观察研究",
+        "观察烟酒",
+        "关查研究",
+        "观察眼就",
+        "管查研究",
+        "观察言就",
+        "观察演就",
+        "观察眼酒",
+        "观察"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guanfangfabu",
+      "expected": "官方发布",
+      "source": "5500",
+      "lookup_us": 4289,
+      "candidates": [
+        "官方发布",
+        "官方法不",
+        "官方发不",
+        "官方法部",
+        "官方发部",
+        "官方法布",
+        "官方法步",
+        "官房发布",
+        "官方"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guanfanghuiying",
+      "expected": "官方回应",
+      "source": "5500",
+      "lookup_us": 7057,
+      "candidates": [
+        "官方回应",
+        "官方会赢",
+        "官方辉映",
+        "官方会应",
+        "官方会影",
+        "官方会营",
+        "官方会英",
+        "管方回应",
+        "官方"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guanfanglaiyuan",
+      "expected": "官方来源",
+      "source": "5500",
+      "lookup_us": 6889,
+      "candidates": [
+        "官方来源",
+        "官方来元",
+        "官方来圆",
+        "官方来远",
+        "官方来园",
+        "官方来预案",
+        "官房来源",
+        "官方来原",
+        "官方"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guanfangrenzheng",
+      "expected": "官方认证",
+      "source": "5500",
+      "lookup_us": 6374,
+      "candidates": [
+        "官方认证",
+        "官方人正",
+        "官方任政",
+        "官方人证",
+        "官方人争",
+        "官方任正",
+        "官方人症",
+        "官方人征",
+        "官方"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guanfangshengming",
+      "expected": "官方声明",
+      "source": "5500",
+      "lookup_us": 7076,
+      "candidates": [
+        "官方声明",
+        "官方生命",
+        "官方盛名",
+        "官方声名",
+        "官方声鸣",
+        "管方声明",
+        "官房生命",
+        "官房声明",
+        "官方"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guanfangtongbao",
+      "expected": "官方通报",
+      "source": "5500",
+      "lookup_us": 5516,
+      "candidates": [
+        "官方通报",
+        "官方同胞",
+        "官方通宝",
+        "官方通包",
+        "官方统报",
+        "官方同报",
+        "官方统包",
+        "官方通爆",
+        "官方"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guanfangxiaoxi",
+      "expected": "官方消息",
+      "source": "5500",
+      "lookup_us": 6883,
+      "candidates": [
+        "官方消息",
+        "官方小溪",
+        "官方小西",
+        "管方消息",
+        "官房消息",
+        "官方小系",
+        "关放消息",
+        "管放消息",
+        "官方"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guanfangxinxi",
+      "expected": "官方信息",
+      "source": "5500",
+      "lookup_us": 6242,
+      "candidates": [
+        "官方信息",
+        "官方欣喜",
+        "官方新西",
+        "官方新系",
+        "官方心系",
+        "官房信息",
+        "官方新戏",
+        "官方新细",
+        "官方"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guanfangzhanghao",
+      "expected": "官方账号",
+      "source": "5500",
+      "lookup_us": 6562,
+      "candidates": [
+        "官方账号",
+        "官方帐号",
+        "官方帐好",
+        "官方张好",
+        "官方长号",
+        "官方长好",
+        "官房账号",
+        "官方账好",
+        "官方"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guanjianzhenjietu",
+      "expected": "关键帧截图",
+      "source": "5500",
+      "lookup_us": 9823,
+      "candidates": [
+        "关键帧截图",
+        "关键振截图",
+        "关键真截图",
+        "关键镇截图",
+        "关键针截图",
+        "关键震截图",
+        "关键珍截图",
+        "关键阵截图",
+        "关键帧"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "hechabaogao",
+      "expected": "核查报告",
+      "source": "5500",
+      "lookup_us": 4391,
+      "candidates": [
+        "核查报告",
+        "喝茶报告",
+        "和查报告",
+        "和察报告",
+        "和差报告",
+        "和插报告",
+        "和茶报告",
+        "何差报告",
+        "喝茶"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "hechaguocheng",
+      "expected": "核查过程",
+      "source": "5500",
+      "lookup_us": 4344,
+      "candidates": [
+        "核查过程",
+        "喝茶过程",
+        "和查过程",
+        "和差过程",
+        "何差过程",
+        "和插过程",
+        "和茶过程",
+        "和察过程",
+        "喝茶"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "hechajieguo",
+      "expected": "核查结果",
+      "source": "5500",
+      "lookup_us": 6298,
+      "candidates": [
+        "核查结果",
+        "喝茶结果",
+        "和查结果",
+        "喝茶接过",
+        "和察结果",
+        "和差结果",
+        "和插结果",
+        "和茶结果",
+        "喝茶"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "heshididian",
+      "expected": "核实地点",
+      "source": "5500",
+      "lookup_us": 5049,
+      "candidates": [
+        "核实地点",
+        "合适地点",
+        "何时地点",
+        "何事地点",
+        "何时低点",
+        "和事地点",
+        "核实低点",
+        "和实地点",
+        "合适"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "heshishenfen",
+      "expected": "核实身份",
+      "source": "5500",
+      "lookup_us": 3704,
+      "candidates": [
+        "核实身份",
+        "核实身分",
+        "何时身份",
+        "何时身分",
+        "合适身份",
+        "和室身份",
+        "和实身份",
+        "合适身分",
+        "合适"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "heshishijian",
+      "expected": "核实时间",
+      "source": "5500",
+      "lookup_us": 8178,
+      "candidates": [
+        "核实时间",
+        "合适时间",
+        "核实事件",
+        "何时时间",
+        "何时事件",
+        "核实实践",
+        "合适事件",
+        "何时实践",
+        "合适"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "heshixijie",
+      "expected": "核实细节",
+      "source": "5500",
+      "lookup_us": 5102,
+      "candidates": [
+        "核实细节",
+        "何时细节",
+        "合适细节",
+        "和是细节",
+        "何时西街",
+        "合适西街",
+        "核实西街",
+        "和室细节",
+        "合适"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "heshiyuanwen",
+      "expected": "核实原文",
+      "source": "5500",
+      "lookup_us": 4781,
+      "candidates": [
+        "核实原文",
+        "何时原文",
+        "合适原文",
+        "和是原文",
+        "和石原文",
+        "何事原文",
+        "和实原文",
+        "和使原文",
+        "合适"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "houxujinzhan",
+      "expected": "后续进展",
+      "source": "5500",
+      "lookup_us": 4559,
+      "candidates": [
+        "后续进展",
+        "后续进站",
+        "后续仅占",
+        "后续近战",
+        "后需进展",
+        "后续进占",
+        "后续进战",
+        "后许进展",
+        "后续"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "houxuyanjiu",
+      "expected": "后续研究",
+      "source": "5500",
+      "lookup_us": 4272,
+      "candidates": [
+        "后续研究",
+        "后续烟酒",
+        "后需研究",
+        "后徐研究",
+        "后许研究",
+        "后须研究",
+        "后续演就",
+        "后续眼就",
+        "后续"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "hunxiaodidian",
+      "expected": "混淆地点",
+      "source": "5500",
+      "lookup_us": 6940,
+      "candidates": [
+        "混淆地点",
+        "混淆低点",
+        "混淆的店",
+        "混淆的点",
+        "混淆地店",
+        "混淆地垫",
+        "混淆的电",
+        "混淆的殿",
+        "混淆"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "hunxiaorenwu",
+      "expected": "混淆人物",
+      "source": "5500",
+      "lookup_us": 6533,
+      "candidates": [
+        "混淆人物",
+        "混淆任务",
+        "混小人物",
+        "婚小人物",
+        "混淆人无",
+        "混小任务",
+        "婚小任务",
+        "混淆人舞",
+        "混淆"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "hunxiaoshijian",
+      "expected": "混淆事件",
+      "source": "5500",
+      "lookup_us": 9331,
+      "candidates": [
+        "混淆事件",
+        "混淆时间",
+        "混淆实践",
+        "混淆是涧",
+        "混淆世间",
+        "混淆尸检",
+        "混淆是件",
+        "混淆视见",
+        "混淆"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "hunxiaoshijian",
+      "expected": "混淆时间",
+      "source": "5500",
+      "lookup_us": 10447,
+      "candidates": [
+        "混淆事件",
+        "混淆时间",
+        "混淆实践",
+        "混淆是涧",
+        "混淆世间",
+        "混淆尸检",
+        "混淆是件",
+        "混淆视见",
+        "混淆"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "hunxiaoshishi",
+      "expected": "混淆事实",
+      "source": "5500",
+      "lookup_us": 6669,
+      "candidates": [
+        "混淆事实",
+        "混淆逝世",
+        "混淆实施",
+        "混淆试试",
+        "混淆是是",
+        "混淆实时",
+        "混淆视是",
+        "混淆适时",
+        "混淆"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jingchazheng",
+      "expected": "经查证",
+      "source": "5500",
+      "lookup_us": 4170,
+      "candidates": [
+        "经查证",
+        "警察正",
+        "警察证",
+        "警察政",
+        "警察整",
+        "警察症",
+        "警察争",
+        "警察征",
+        "警察"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jingheshi",
+      "expected": "经核实",
+      "source": "5500",
+      "lookup_us": 2288,
+      "candidates": [
+        "经核实",
+        "经合适",
+        "京合适",
+        "竟合适",
+        "经何时",
+        "静合适",
+        "京核实",
+        "精河识",
+        "晶核"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiqi",
+      "expected": "基期",
+      "source": "5500",
+      "lookup_us": 959,
+      "candidates": [
+        "机器",
+        "及其",
+        "极其",
+        "激起",
+        "记起",
+        "基期",
+        "即气",
+        "即起",
+        "机"
+      ],
+      "expected_rank": 6
+    },
+    {
+      "pinyin": "jiushichongti",
+      "expected": "旧事重提",
+      "source": "5500",
+      "lookup_us": 2054,
+      "candidates": [
+        "旧事重提",
+        "就是充替",
+        "就是重提",
+        "就是重体",
+        "就是冲体",
+        "就是冲提",
+        "就是重题",
+        "就是冲题",
+        "就是"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiushipin",
+      "expected": "旧视频",
+      "source": "5500",
+      "lookup_us": 2375,
+      "candidates": [
+        "旧视频",
+        "就视频",
+        "就是品",
+        "就食品",
+        "就是频",
+        "就是拼",
+        "就是贫",
+        "就是聘",
+        "就是"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiushipinxinfa",
+      "expected": "旧视频新发",
+      "source": "5500",
+      "lookup_us": 4315,
+      "candidates": [
+        "就是品新法",
+        "就视频新法",
+        "就是频新法",
+        "就食品新法",
+        "就是贫新法",
+        "就是聘新法",
+        "就是拼新法",
+        "旧视频新发",
+        "旧视频"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "jiutu",
+      "expected": "旧图",
+      "source": "5500",
+      "lookup_us": 823,
+      "candidates": [
+        "旧图",
+        "就图",
+        "就突",
+        "就土",
+        "就兔",
+        "旧土",
+        "就途",
+        "九图",
+        "就"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiutuxinyong",
+      "expected": "旧图新用",
+      "source": "5500",
+      "lookup_us": 3344,
+      "candidates": [
+        "旧图新用",
+        "就图信用",
+        "就突信用",
+        "就土信用",
+        "旧图信用",
+        "就吐信用",
+        "就途信用",
+        "旧土信用",
+        "旧图"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiuwen",
+      "expected": "旧闻",
+      "source": "5500",
+      "lookup_us": 833,
+      "candidates": [
+        "就问",
+        "旧闻",
+        "就闻",
+        "就文",
+        "旧文",
+        "就温",
+        "九文",
+        "就稳",
+        "就"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "jiuwenchongfa",
+      "expected": "旧闻重发",
+      "source": "5500",
+      "lookup_us": 1746,
+      "candidates": [
+        "旧闻重发",
+        "就问重罚",
+        "就问重发",
+        "就闻重罚",
+        "旧闻重罚",
+        "就闻重发",
+        "就稳重罚",
+        "就文重罚",
+        "就问"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jizhezhaodaihui",
+      "expected": "记者招待会",
+      "source": "5500",
+      "lookup_us": 5252,
+      "candidates": [
+        "记者招待会",
+        "记者招待回",
+        "记着招待会",
+        "记者招待辉",
+        "记者招待惠",
+        "记者招待汇",
+        "记者招待慧",
+        "记者招待毁",
+        "记者"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "juminglaiyuan",
+      "expected": "具名来源",
+      "source": "5500",
+      "lookup_us": 5570,
+      "candidates": [
+        "具名来源",
+        "剧名来源",
+        "据明来源",
+        "距明来源",
+        "据命来源",
+        "据鸣来源",
+        "据铭来源",
+        "距命来源",
+        "居民"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jutiyujing",
+      "expected": "具体语境",
+      "source": "5500",
+      "lookup_us": 5235,
+      "candidates": [
+        "具体语境",
+        "具体预警",
+        "具体育精",
+        "具体育经",
+        "具体与经",
+        "具体与精",
+        "具体育静",
+        "具体育景",
+        "具体"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kepubaodao",
+      "expected": "科普报道",
+      "source": "5500",
+      "lookup_us": 4369,
+      "candidates": [
+        "科普报道",
+        "科普报导",
+        "科普报到",
+        "科普宝岛",
+        "科堡报道",
+        "可普报道",
+        "科堡报导",
+        "科普刨刀",
+        "科普"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kepujiedu",
+      "expected": "科普解读",
+      "source": "5500",
+      "lookup_us": 5646,
+      "candidates": [
+        "科普解读",
+        "科普解毒",
+        "科普戒毒",
+        "科普节度",
+        "科堡解读",
+        "可普解读",
+        "科普及额度",
+        "科普解度",
+        "科普"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kepushipin",
+      "expected": "科普视频",
+      "source": "5500",
+      "lookup_us": 3415,
+      "candidates": [
+        "科普视频",
+        "科普食品",
+        "科普饰品",
+        "科堡视频",
+        "科堡食品",
+        "科普是品",
+        "可普视频",
+        "可普食品",
+        "科普"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kepuwenzhang",
+      "expected": "科普文章",
+      "source": "5500",
+      "lookup_us": 4177,
+      "candidates": [
+        "科普文章",
+        "科普蚊帐",
+        "科堡文章",
+        "可谱文章",
+        "可普文章",
+        "可浦文章",
+        "可铺文章",
+        "科普纹章",
+        "科普"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kexuezhengju",
+      "expected": "科学证据",
+      "source": "5500",
+      "lookup_us": 5889,
+      "candidates": [
+        "科学证据",
+        "科学政局",
+        "科学整句",
+        "可学证据",
+        "科学证句",
+        "科学证局",
+        "科学证居",
+        "科学正拘",
+        "科学"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "laiyuanbuming",
+      "expected": "来源不明",
+      "source": "5500",
+      "lookup_us": 4663,
+      "candidates": [
+        "来源不明",
+        "来远不明",
+        "来源不名",
+        "来源不命",
+        "来源不鸣",
+        "来源不铭",
+        "来元不明",
+        "来源部明",
+        "来源"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "laiyuancunyi",
+      "expected": "来源存疑",
+      "source": "5500",
+      "lookup_us": 3810,
+      "candidates": [
+        "来源存疑",
+        "来源存以",
+        "来源存一",
+        "来源村一",
+        "来源存异",
+        "来源村以",
+        "来源邨一",
+        "来源村已",
+        "来源"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "laiyuankekao",
+      "expected": "来源可靠",
+      "source": "5500",
+      "lookup_us": 3743,
+      "candidates": [
+        "来源可靠",
+        "来源可考",
+        "来源科考",
+        "来远可靠",
+        "来原可靠",
+        "来园可靠",
+        "来元可靠",
+        "来员可靠",
+        "来源"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "laiyuankexin",
+      "expected": "来源可信",
+      "source": "5500",
+      "lookup_us": 4732,
+      "candidates": [
+        "来源可信",
+        "来源可心",
+        "来源可欣",
+        "来远可信",
+        "来源可新",
+        "来源可辛",
+        "来源颗心",
+        "来源科新",
+        "来源"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lishihuamian",
+      "expected": "历史画面",
+      "source": "5500",
+      "lookup_us": 5184,
+      "candidates": [
+        "历史画面",
+        "历时画面",
+        "李氏画面",
+        "李时画面",
+        "力士画面",
+        "理事画面",
+        "李石画面",
+        "里是画面",
+        "李施嬅"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lishishipin",
+      "expected": "历史视频",
+      "source": "5500",
+      "lookup_us": 4070,
+      "candidates": [
+        "历史视频",
+        "历史食品",
+        "李氏食品",
+        "李氏视频",
+        "历史饰品",
+        "理事食品",
+        "历时视频",
+        "历时食品",
+        "李士实"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lixingfabuhui",
+      "expected": "例行发布会",
+      "source": "5500",
+      "lookup_us": 4757,
+      "candidates": [
+        "理性发布会",
+        "例行发布会",
+        "理性法不会",
+        "李刑罚不会",
+        "理性发不会",
+        "里刑罚不会",
+        "李刑法不会",
+        "理性发布回",
+        "理性"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "lunwenjielun",
+      "expected": "论文结论",
+      "source": "5500",
+      "lookup_us": 5644,
+      "candidates": [
+        "论文结论",
+        "论文杰伦",
+        "论文杰论",
+        "论问结论",
+        "论文杰轮",
+        "轮问结论",
+        "论文接伦",
+        "论文接论",
+        "论文集"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lunwenlianjie",
+      "expected": "论文链接",
+      "source": "5500",
+      "lookup_us": 6817,
+      "candidates": [
+        "论文链接",
+        "论文连接",
+        "论文连结",
+        "论文廉洁",
+        "论文联结",
+        "轮文链接",
+        "论文联接",
+        "论文连杰",
+        "论文"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lunwenyuanwen",
+      "expected": "论文原文",
+      "source": "5500",
+      "lookup_us": 5051,
+      "candidates": [
+        "论文原文",
+        "论文元文",
+        "论文原问",
+        "论文员问",
+        "论文元问",
+        "论文辕文",
+        "论文源文",
+        "论文源问",
+        "论文"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lunwenzuozhe",
+      "expected": "论文作者",
+      "source": "5500",
+      "lookup_us": 3071,
+      "candidates": [
+        "论文作者",
+        "论文坐着",
+        "论文做着",
+        "论文做这",
+        "论文作这",
+        "论文作着",
+        "论文做者",
+        "论文坐这",
+        "论文"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "maomingzhanghao",
+      "expected": "冒名账号",
+      "source": "5500",
+      "lookup_us": 5115,
+      "candidates": [
+        "冒名账号",
+        "茂名帐号",
+        "茂名账号",
+        "茂名张好",
+        "茂名长号",
+        "茂名长好",
+        "毛名帐号",
+        "毛明帐号",
+        "茂名"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meiticaifang",
+      "expected": "媒体采访",
+      "source": "5500",
+      "lookup_us": 3910,
+      "candidates": [
+        "媒体采访",
+        "每题采访",
+        "美体采访",
+        "媒体才放",
+        "媒体才房",
+        "媒体才方",
+        "每题材放",
+        "没提采访",
+        "媒体"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meitiguanzhu",
+      "expected": "媒体关注",
+      "source": "5500",
+      "lookup_us": 4678,
+      "candidates": [
+        "媒体关注",
+        "媒体关住",
+        "美体关注",
+        "每题关注",
+        "媒体管住",
+        "媒体关著",
+        "媒体关主",
+        "媒体灌注",
+        "媒体"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meitijianmianhui",
+      "expected": "媒体见面会",
+      "source": "5500",
+      "lookup_us": 8213,
+      "candidates": [
+        "媒体见面会",
+        "每题见面会",
+        "媒体见面回",
+        "媒体减免会",
+        "媒体见面辉",
+        "媒体减免回",
+        "媒体见面惠",
+        "媒体见面汇",
+        "媒体"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meitijiedu",
+      "expected": "媒体解读",
+      "source": "5500",
+      "lookup_us": 6251,
+      "candidates": [
+        "媒体解读",
+        "媒体解毒",
+        "媒体戒毒",
+        "每题解读",
+        "媒体节度",
+        "媒体界都",
+        "媒体界度",
+        "媒体界读",
+        "媒体"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meitipinglun",
+      "expected": "媒体评论",
+      "source": "5500",
+      "lookup_us": 4055,
+      "candidates": [
+        "媒体评论",
+        "每题评论",
+        "美体评论",
+        "没题评论",
+        "没提评论",
+        "没踢评论",
+        "美提评论",
+        "没替评论",
+        "媒体"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meitisuyang",
+      "expected": "媒体素养",
+      "source": "5500",
+      "lookup_us": 5243,
+      "candidates": [
+        "媒体素养",
+        "媒体素羊",
+        "媒体素阳",
+        "媒体素扬",
+        "美体素养",
+        "媒体素样",
+        "媒体素洋",
+        "媒体素痒",
+        "媒体"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meiyoushangxiawen",
+      "expected": "没有上下文",
+      "source": "5500",
+      "lookup_us": 6442,
+      "candidates": [
+        "没有上下文",
+        "没有上下问",
+        "没有上下闻",
+        "没有上下温",
+        "没有上下雯",
+        "没有上下稳",
+        "没有上下纹",
+        "没有上下吻",
+        "没有"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mujizhengci",
+      "expected": "目击证词",
+      "source": "5500",
+      "lookup_us": 4289,
+      "candidates": [
+        "目击证词",
+        "母鸡证词",
+        "募集证词",
+        "目击证次",
+        "母及证词",
+        "母机证词",
+        "目击证此",
+        "目击证辞",
+        "目击者"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mujizheshuofa",
+      "expected": "目击者说法",
+      "source": "5500",
+      "lookup_us": 3121,
+      "candidates": [
+        "目击者说法",
+        "目击者说发",
+        "母鸡这说法",
+        "目击者说罚",
+        "目击这说法",
+        "母记者说法",
+        "目击者说伐",
+        "目击者说発",
+        "目击者"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "neirongwudu",
+      "expected": "内容误读",
+      "source": "5500",
+      "lookup_us": 2698,
+      "candidates": [
+        "内容误读",
+        "内容无度",
+        "内容无毒",
+        "内容五度",
+        "内容无睹",
+        "内容无读",
+        "内容午读",
+        "内容五渡",
+        "内容"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niminglaiyuan",
+      "expected": "匿名来源",
+      "source": "5500",
+      "lookup_us": 5143,
+      "candidates": [
+        "匿名来源",
+        "你明来源",
+        "你名来源",
+        "你命来源",
+        "拟明来源",
+        "匿名来圆",
+        "你鸣来源",
+        "匿名来远",
+        "匿名"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nimingxiaoxiyuan",
+      "expected": "匿名消息源",
+      "source": "5500",
+      "lookup_us": 9336,
+      "candidates": [
+        "匿名消息源",
+        "匿名消息元",
+        "匿名消息预案",
+        "匿名消息远",
+        "匿名消息原",
+        "匿名消息员",
+        "匿名消息园",
+        "匿名消息圆",
+        "匿名"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "paisheshijian",
+      "expected": "拍摄时间",
+      "source": "5500",
+      "lookup_us": 6177,
+      "candidates": [
+        "拍摄时间",
+        "拍摄事件",
+        "拍摄实践",
+        "拍摄世间",
+        "拍摄尸检",
+        "拍摄时见",
+        "拍摄是件",
+        "拍摄时减",
+        "拍摄"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "peitubufu",
+      "expected": "配图不符",
+      "source": "5500",
+      "lookup_us": 2386,
+      "candidates": [
+        "配图不符",
+        "配土不服",
+        "配图不服",
+        "配土不符",
+        "培土不服",
+        "佩图不符",
+        "培土不符",
+        "配图不负",
+        "培土"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "piyaobaodao",
+      "expected": "辟谣报道",
+      "source": "5500",
+      "lookup_us": 5155,
+      "candidates": [
+        "辟谣报道",
+        "皮要报道",
+        "辟谣报导",
+        "皮要报导",
+        "批要报道",
+        "辟谣报到",
+        "批要报导",
+        "皮要报到",
+        "辟谣"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "piyaogonggao",
+      "expected": "辟谣公告",
+      "source": "5500",
+      "lookup_us": 3955,
+      "candidates": [
+        "辟谣公告",
+        "皮要公告",
+        "批要公告",
+        "皮药公告",
+        "皮耀公告",
+        "批药公告",
+        "皮腰公告",
+        "皮摇公告",
+        "辟谣"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "piyaopingtai",
+      "expected": "辟谣平台",
+      "source": "5500",
+      "lookup_us": 4898,
+      "candidates": [
+        "辟谣平台",
+        "皮要平台",
+        "批要平台",
+        "皮药平台",
+        "皮耀平台",
+        "皮腰平台",
+        "批药平台",
+        "皮摇平台",
+        "辟谣"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "piyaoshengming",
+      "expected": "辟谣声明",
+      "source": "5500",
+      "lookup_us": 6639,
+      "candidates": [
+        "辟谣声明",
+        "辟谣生命",
+        "皮要声明",
+        "皮要生命",
+        "批要声明",
+        "批要生命",
+        "辟谣盛名",
+        "皮耀声明",
+        "辟谣"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "piyaoshipin",
+      "expected": "辟谣视频",
+      "source": "5500",
+      "lookup_us": 4652,
+      "candidates": [
+        "辟谣视频",
+        "辟谣食品",
+        "皮要视频",
+        "皮要食品",
+        "批要视频",
+        "辟谣饰品",
+        "批要食品",
+        "皮腰视频",
+        "辟谣"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "piyaowenzhang",
+      "expected": "辟谣文章",
+      "source": "5500",
+      "lookup_us": 4568,
+      "candidates": [
+        "辟谣文章",
+        "皮要文章",
+        "辟谣蚊帐",
+        "皮药文章",
+        "皮摇蚊帐",
+        "批要文章",
+        "皮耀文章",
+        "皮咬文章",
+        "辟谣"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "piyaoxiaoxi",
+      "expected": "辟谣消息",
+      "source": "5500",
+      "lookup_us": 6086,
+      "candidates": [
+        "辟谣消息",
+        "皮要消息",
+        "批要消息",
+        "辟谣小溪",
+        "皮药消息",
+        "皮耀消息",
+        "皮腰消息",
+        "批药消息",
+        "辟谣"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "piyaoxinxi",
+      "expected": "辟谣信息",
+      "source": "5500",
+      "lookup_us": 4417,
+      "candidates": [
+        "辟谣信息",
+        "皮要信息",
+        "批要信息",
+        "皮药信息",
+        "辟谣欣喜",
+        "皮耀信息",
+        "皮腰信息",
+        "批药信息",
+        "辟谣"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qianhoubuyi",
+      "expected": "前后不一",
+      "source": "5500",
+      "lookup_us": 3456,
+      "candidates": [
+        "前后不一",
+        "前后不已",
+        "前后不易",
+        "前后不宜",
+        "前后不以",
+        "前后不义",
+        "前后部以",
+        "前后不意",
+        "前后"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qiatouquwei",
+      "expected": "掐头去尾",
+      "source": "5500",
+      "lookup_us": 2805,
+      "candidates": [
+        "掐头去尾",
+        "卡头趣味",
+        "卡投趣味",
+        "恰头趣味",
+        "卡偷趣味",
+        "卡透趣味",
+        "恰投趣味",
+        "卡头区委",
+        "掐"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qiuzhengjieguo",
+      "expected": "求证结果",
+      "source": "5500",
+      "lookup_us": 6987,
+      "candidates": [
+        "求证结果",
+        "球证结果",
+        "邱正结果",
+        "球正结果",
+        "球症结果",
+        "求症结果",
+        "求整结果",
+        "球整结果",
+        "求证"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qiuzhengqudao",
+      "expected": "求证渠道",
+      "source": "5500",
+      "lookup_us": 4068,
+      "candidates": [
+        "求证渠道",
+        "球证渠道",
+        "球争取到",
+        "求争取到",
+        "邱正渠道",
+        "球正渠道",
+        "球证去到",
+        "求政渠道",
+        "求证"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "quanweilaiyuan",
+      "expected": "权威来源",
+      "source": "5500",
+      "lookup_us": 5033,
+      "candidates": [
+        "权威来源",
+        "全未来源",
+        "全为来源",
+        "权未来源",
+        "权威来圆",
+        "权威来远",
+        "权威来元",
+        "全威来源",
+        "权威"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "quanwenduizhao",
+      "expected": "全文对照",
+      "source": "5500",
+      "lookup_us": 4340,
+      "candidates": [
+        "全文对照",
+        "全文对着",
+        "全文对朝",
+        "全问对照",
+        "全文对找",
+        "圈文对照",
+        "全文对赵",
+        "全文对招",
+        "全文"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "quanwenjietu",
+      "expected": "全文截图",
+      "source": "5500",
+      "lookup_us": 5877,
+      "candidates": [
+        "全文截图",
+        "全问截图",
+        "全温截图",
+        "全稳截图",
+        "全吻截图",
+        "全文杰图",
+        "全闻截图",
+        "权问截图",
+        "全文"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "quanwenlianjie",
+      "expected": "全文链接",
+      "source": "5500",
+      "lookup_us": 7888,
+      "candidates": [
+        "全文链接",
+        "全文连接",
+        "全文连结",
+        "全文廉洁",
+        "圈文链接",
+        "全文联结",
+        "全问链接",
+        "全问连接",
+        "全文"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "quanwenyuedu",
+      "expected": "全文阅读",
+      "source": "5500",
+      "lookup_us": 5824,
+      "candidates": [
+        "全文阅读",
+        "全文月度",
+        "圈文阅读",
+        "全问阅读",
+        "全文余额度",
+        "全文岳度",
+        "全温阅读",
+        "全稳阅读",
+        "全文"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "quanwenzhuanzai",
+      "expected": "全文转载",
+      "source": "5500",
+      "lookup_us": 4546,
+      "candidates": [
+        "全文转载",
+        "全问转载",
+        "全文转在",
+        "全文传在",
+        "全温转载",
+        "全闻转载",
+        "全稳转载",
+        "全吻转载",
+        "全文"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "quefazhengju",
+      "expected": "缺乏证据",
+      "source": "5500",
+      "lookup_us": 5091,
+      "candidates": [
+        "缺乏证据",
+        "缺乏政局",
+        "缺乏整句",
+        "却发证据",
+        "缺乏证句",
+        "却法证据",
+        "缺乏证局",
+        "却发政局",
+        "缺乏"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "querenpiancha",
+      "expected": "确认偏差",
+      "source": "5500",
+      "lookup_us": 6130,
+      "candidates": [
+        "确认偏差",
+        "缺人偏差",
+        "确认片差",
+        "确认片茶",
+        "确认便查",
+        "确认片查",
+        "确认便差",
+        "却人偏差",
+        "确认"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "queshaobeijing",
+      "expected": "缺少背景",
+      "source": "5500",
+      "lookup_us": 5761,
+      "candidates": [
+        "缺少背景",
+        "缺少北京",
+        "却少背景",
+        "却勺背景",
+        "却少北京",
+        "缺少倍旌",
+        "却烧背景",
+        "缺少被警",
+        "缺少"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "queshaochuchu",
+      "expected": "缺少出处",
+      "source": "5500",
+      "lookup_us": 3888,
+      "candidates": [
+        "缺少出处",
+        "缺少处处",
+        "缺少楚楚",
+        "缺少出出",
+        "缺少处出",
+        "缺少除出",
+        "缺少初出",
+        "却少出处",
+        "缺少"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "queshaolaiyuan",
+      "expected": "缺少来源",
+      "source": "5500",
+      "lookup_us": 5801,
+      "candidates": [
+        "缺少来源",
+        "却少来源",
+        "缺少来圆",
+        "缺少来远",
+        "却捎来源",
+        "缺少来元",
+        "缺少来园",
+        "缺少来预案",
+        "缺少"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "queshaoyuanwen",
+      "expected": "缺少原文",
+      "source": "5500",
+      "lookup_us": 5503,
+      "candidates": [
+        "缺少原文",
+        "缺少元文",
+        "却少原文",
+        "缺少员问",
+        "缺少元问",
+        "缺少源文",
+        "缺少原问",
+        "缺少源问",
+        "缺少"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "rengyouyidian",
+      "expected": "仍有疑点",
+      "source": "5500",
+      "lookup_us": 4184,
+      "candidates": [
+        "仍有疑点",
+        "仍有一点",
+        "仍由一点",
+        "仍有一店",
+        "仍有意点",
+        "仍有意店",
+        "仍又一点",
+        "仍有以点",
+        "仍有"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "renzhengbiaoshi",
+      "expected": "认证标识",
+      "source": "5500",
+      "lookup_us": 5331,
+      "candidates": [
+        "认证标识",
+        "认证表示",
+        "认证标示",
+        "人正表示",
+        "任正表示",
+        "人郑表示",
+        "认证标时",
+        "人证表示",
+        "认证"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shanchubaodao",
+      "expected": "删除报道",
+      "source": "5500",
+      "lookup_us": 4325,
+      "candidates": [
+        "删除报道",
+        "删除报导",
+        "删除报到",
+        "闪出报导",
+        "删除宝岛",
+        "闪出报道",
+        "山出报导",
+        "删除刨刀",
+        "删除"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shanchuyuanwen",
+      "expected": "删除原文",
+      "source": "5500",
+      "lookup_us": 4361,
+      "candidates": [
+        "删除原文",
+        "删除元文",
+        "闪出原文",
+        "删除元问",
+        "删除员问",
+        "删除源文",
+        "删除源问",
+        "删除原问",
+        "删除"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangao",
+      "expected": "删稿",
+      "source": "5500",
+      "lookup_us": 2053,
+      "candidates": [
+        "山高",
+        "删稿",
+        "上奥",
+        "上澳",
+        "善高",
+        "单高",
+        "汕高",
+        "山搞",
+        "上"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "shangweizhengshi",
+      "expected": "尚未证实",
+      "source": "5500",
+      "lookup_us": 5460,
+      "candidates": [
+        "尚未证实",
+        "尚未正式",
+        "尚未正是",
+        "尚未正视",
+        "尚未正事",
+        "上未证实",
+        "上尉证实",
+        "上为正式",
+        "尚未"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangxiawenjieduan",
+      "expected": "上下文截断",
+      "source": "5500",
+      "lookup_us": 7728,
+      "candidates": [
+        "上下文阶段",
+        "上下问阶段",
+        "上下文截断",
+        "上下闻阶段",
+        "上下温阶段",
+        "上下稳阶段",
+        "上下纹阶段",
+        "上下吻阶段",
+        "上下文"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "shangxiawenqueshi",
+      "expected": "上下文缺失",
+      "source": "5500",
+      "lookup_us": 6153,
+      "candidates": [
+        "上下文却是",
+        "上下文确实",
+        "上下文缺失",
+        "上下文确是",
+        "上下问缺失",
+        "上下问确实",
+        "上下文却时",
+        "上下问却是",
+        "上下文"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "shijianbufu",
+      "expected": "时间不符",
+      "source": "5500",
+      "lookup_us": 5356,
+      "candidates": [
+        "时间不符",
+        "时间不服",
+        "事件不符",
+        "事件不服",
+        "时间不负",
+        "时间不复",
+        "时间不赴",
+        "时间不富",
+        "时间"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shijiancuozhi",
+      "expected": "时间错置",
+      "source": "5500",
+      "lookup_us": 4592,
+      "candidates": [
+        "时间错置",
+        "时间错指",
+        "时间错之",
+        "时间错至",
+        "事件错指",
+        "时间搓纸",
+        "时间错知",
+        "时间错枝",
+        "时间"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shijiandangshiren",
+      "expected": "事件当事人",
+      "source": "5500",
+      "lookup_us": 10253,
+      "candidates": [
+        "时间当事人",
+        "事件当事人",
+        "时间当时人",
+        "事件当时人",
+        "尸检当诗人",
+        "时间当时任",
+        "事件当时任",
+        "时间当诗人",
+        "时间"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "shijianjinzhan",
+      "expected": "事件进展",
+      "source": "5500",
+      "lookup_us": 7211,
+      "candidates": [
+        "事件进展",
+        "时间进展",
+        "时间仅占",
+        "事件仅占",
+        "时间进站",
+        "世间进展",
+        "事件进站",
+        "实践进展",
+        "时间"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shijianmujizhe",
+      "expected": "事件目击者",
+      "source": "5500",
+      "lookup_us": 6770,
+      "candidates": [
+        "事件目击者",
+        "时间目击者",
+        "事件目记者",
+        "时间母记者",
+        "时间目记者",
+        "时间幕记者",
+        "事件母记者",
+        "事件幕记者",
+        "时间"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shijianqiyin",
+      "expected": "事件起因",
+      "source": "5500",
+      "lookup_us": 6862,
+      "candidates": [
+        "事件起因",
+        "时间起因",
+        "世间起因",
+        "始建起因",
+        "是件起因",
+        "实践起因",
+        "事件起音",
+        "事件起印",
+        "时间"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shijianxiangguanfang",
+      "expected": "事件相关方",
+      "source": "5500",
+      "lookup_us": 12908,
+      "candidates": [
+        "时间相关方",
+        "事件相关方",
+        "时间相关防",
+        "事件向官方",
+        "事件相关防",
+        "时间想官方",
+        "时间相关放",
+        "时间相关房",
+        "时间线"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "shikongcuozhi",
+      "expected": "时空错置",
+      "source": "5500",
+      "lookup_us": 2122,
+      "candidates": [
+        "时空错置",
+        "时空搓纸",
+        "时空错指",
+        "失控搓纸",
+        "时空错之",
+        "失控错指",
+        "失控错之",
+        "失控措之",
+        "时空"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shipinsuyuan",
+      "expected": "视频溯源",
+      "source": "5500",
+      "lookup_us": 4933,
+      "candidates": [
+        "视频溯源",
+        "食品溯源",
+        "视频速远",
+        "视频苏园",
+        "食品苏园",
+        "视频速员",
+        "视频诉愿",
+        "视频素媛",
+        "视频"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shishibaodao",
+      "expected": "失实报道",
+      "source": "5500",
+      "lookup_us": 4848,
+      "candidates": [
+        "失实报道",
+        "事实报道",
+        "实施报道",
+        "事实报导",
+        "实时报道",
+        "适时报道",
+        "试试报道",
+        "失实报导",
+        "实施"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shishichazheng",
+      "expected": "事实查证",
+      "source": "5500",
+      "lookup_us": 4066,
+      "candidates": [
+        "事实查证",
+        "实施查证",
+        "试试查证",
+        "实时查证",
+        "适时查证",
+        "是是查证",
+        "逝世查证",
+        "时事查证",
+        "实施"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shiyihuamian",
+      "expected": "示意画面",
+      "source": "5500",
+      "lookup_us": 4960,
+      "candidates": [
+        "示意画面",
+        "是以画面",
+        "失忆画面",
+        "十一画面",
+        "是一画面",
+        "事宜画面",
+        "施以画面",
+        "适宜画面",
+        "十一"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shiyongtiaojian",
+      "expected": "适用条件",
+      "source": "5500",
+      "lookup_us": 6762,
+      "candidates": [
+        "适用条件",
+        "使用条件",
+        "是用条件",
+        "是恿条件",
+        "是永条件",
+        "使用条建",
+        "使用条见",
+        "使用条剑",
+        "使用"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shizhengyanjiu",
+      "expected": "实证研究",
+      "source": "5500",
+      "lookup_us": 5630,
+      "candidates": [
+        "实证研究",
+        "市政研究",
+        "施政研究",
+        "是正研究",
+        "时正研究",
+        "是整研究",
+        "时整研究",
+        "是证研究",
+        "市政"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuangfanghuiying",
+      "expected": "双方回应",
+      "source": "5500",
+      "lookup_us": 7797,
+      "candidates": [
+        "双方回应",
+        "双方会赢",
+        "双方辉映",
+        "双方会应",
+        "双方会影",
+        "双方会营",
+        "双方会英",
+        "双方会迎",
+        "双方"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shujubufu",
+      "expected": "数据不符",
+      "source": "5500",
+      "lookup_us": 3065,
+      "candidates": [
+        "数据不符",
+        "数据不服",
+        "数据不负",
+        "数据不复",
+        "数据不赴",
+        "数据不富",
+        "数据不腐",
+        "数据不付",
+        "数据"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shujuchuchu",
+      "expected": "数据出处",
+      "source": "5500",
+      "lookup_us": 3170,
+      "candidates": [
+        "数据出处",
+        "数据处处",
+        "数据楚楚",
+        "数据出出",
+        "数据处出",
+        "数据初出",
+        "数据除出",
+        "书局出处",
+        "数据"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shujuwudu",
+      "expected": "数据误读",
+      "source": "5500",
+      "lookup_us": 2878,
+      "candidates": [
+        "数据误读",
+        "数据无度",
+        "数据无毒",
+        "数据五度",
+        "数据无睹",
+        "数据午读",
+        "数据五渡",
+        "数据无读",
+        "数据"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shujuzhichi",
+      "expected": "数据支持",
+      "source": "5500",
+      "lookup_us": 3073,
+      "candidates": [
+        "数据支持",
+        "书局支持",
+        "数据只吃",
+        "数据直尺",
+        "书据支持",
+        "数据咫尺",
+        "数据指吃",
+        "数据直斥",
+        "数据"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shumianhuiying",
+      "expected": "书面回应",
+      "source": "5500",
+      "lookup_us": 7493,
+      "candidates": [
+        "书面回应",
+        "书面辉映",
+        "书面会赢",
+        "属面回应",
+        "梳棉回应",
+        "书面回英",
+        "书面回赢",
+        "书面回营",
+        "书面"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shumianshengming",
+      "expected": "书面声明",
+      "source": "5500",
+      "lookup_us": 6441,
+      "candidates": [
+        "书面声明",
+        "书面生命",
+        "书面声名",
+        "书面盛名",
+        "梳棉生命",
+        "书面声鸣",
+        "梳棉声明",
+        "属面声明",
+        "书面"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuofabuyi",
+      "expected": "说法不一",
+      "source": "5500",
+      "lookup_us": 2878,
+      "candidates": [
+        "说法不一",
+        "说法不已",
+        "说法不易",
+        "说法不宜",
+        "说法不以",
+        "说法不义",
+        "说法不意",
+        "说发布一",
+        "说法"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuofamaodun",
+      "expected": "说法矛盾",
+      "source": "5500",
+      "lookup_us": 5333,
+      "candidates": [
+        "说法矛盾",
+        "说发矛盾",
+        "说罚矛盾",
+        "数法矛盾",
+        "说伐矛盾",
+        "数发矛盾",
+        "说法茅盾",
+        "说乏矛盾",
+        "说法"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuzisuyang",
+      "expected": "数字素养",
+      "source": "5500",
+      "lookup_us": 5192,
+      "candidates": [
+        "数字素养",
+        "梳子素养",
+        "数字塑阳",
+        "数字塑扬",
+        "数字塑养",
+        "数字塑羊",
+        "数字塑样",
+        "数字素羊",
+        "数字"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tongjiwucha",
+      "expected": "统计误差",
+      "source": "5500",
+      "lookup_us": 2669,
+      "candidates": [
+        "统计误差",
+        "同级误差",
+        "通缉误差",
+        "同济误差",
+        "统计误搽",
+        "统计无差",
+        "通济误差",
+        "统计误茶",
+        "统计"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tongkoujingbijiao",
+      "expected": "同口径比较",
+      "source": "5500",
+      "lookup_us": 8067,
+      "candidates": [
+        "同口径比较",
+        "通口径比较",
+        "同口经比较",
+        "同口镜比较",
+        "同口井比较",
+        "通口经比较",
+        "同口警比较",
+        "通口镜比较",
+        "同"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tubiaowudu",
+      "expected": "图表误读",
+      "source": "5500",
+      "lookup_us": 4290,
+      "candidates": [
+        "图表误读",
+        "图表无度",
+        "图标无度",
+        "图表无毒",
+        "图标无毒",
+        "图标误读",
+        "图表五度",
+        "图标五度",
+        "图标"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tupianfansou",
+      "expected": "图片反搜",
+      "source": "5500",
+      "lookup_us": 3360,
+      "candidates": [
+        "图片反搜",
+        "图片泛搜",
+        "图片凡搜",
+        "图片翻搜",
+        "图片反艘",
+        "图片饭搜",
+        "图片范搜",
+        "图片犯搜",
+        "图片"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tupiansuyuan",
+      "expected": "图片溯源",
+      "source": "5500",
+      "lookup_us": 5372,
+      "candidates": [
+        "图片溯源",
+        "图片宿院",
+        "图片苏园",
+        "图片速远",
+        "图片素媛",
+        "图片诉愿",
+        "图片速员",
+        "图片素远",
+        "图片"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tuwenbufu",
+      "expected": "图文不符",
+      "source": "5500",
+      "lookup_us": 2395,
+      "candidates": [
+        "图文不符",
+        "图文不服",
+        "图文不负",
+        "图问不符",
+        "土文不符",
+        "土问不符",
+        "图文不复",
+        "图问不服",
+        "图文"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangluochuanyan",
+      "expected": "网络传言",
+      "source": "5500",
+      "lookup_us": 5486,
+      "candidates": [
+        "网络传言",
+        "网络传眼",
+        "网络传烟",
+        "网络传演",
+        "网络传盐",
+        "网络传严",
+        "网络传彦",
+        "网络传燕",
+        "网络"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangluoyaoyan",
+      "expected": "网络谣言",
+      "source": "5500",
+      "lookup_us": 6023,
+      "candidates": [
+        "网络谣言",
+        "网络耀眼",
+        "网络妖艳",
+        "网络要严",
+        "网络要眼",
+        "网络要言",
+        "网络要演",
+        "网罗谣言",
+        "网络"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangshangchuanyan",
+      "expected": "网上传言",
+      "source": "5500",
+      "lookup_us": 5918,
+      "candidates": [
+        "网上传言",
+        "往上传言",
+        "网上传眼",
+        "网上传烟",
+        "网上传演",
+        "网上传盐",
+        "网上传严",
+        "网上传彦",
+        "网上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangshangyaoyan",
+      "expected": "网上谣言",
+      "source": "5500",
+      "lookup_us": 5944,
+      "candidates": [
+        "网上谣言",
+        "网上耀眼",
+        "往上谣言",
+        "网上妖艳",
+        "网上要严",
+        "网上要眼",
+        "网上要言",
+        "网上要演",
+        "网上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangyebeifen",
+      "expected": "网页备份",
+      "source": "5500",
+      "lookup_us": 3601,
+      "candidates": [
+        "网页备份",
+        "网页悲愤",
+        "王爷备份",
+        "网页被分",
+        "网页北分",
+        "王爷辈份",
+        "网页辈份",
+        "王埜备份",
+        "网页"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangyecundang",
+      "expected": "网页存档",
+      "source": "5500",
+      "lookup_us": 3952,
+      "candidates": [
+        "网页存档",
+        "王爷存档",
+        "网也存档",
+        "王也存档",
+        "王埜存档",
+        "网页村党",
+        "王业存档",
+        "王野存档",
+        "网页"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangyekuaizhao",
+      "expected": "网页快照",
+      "source": "5500",
+      "lookup_us": 4258,
+      "candidates": [
+        "网页快照",
+        "王爷快照",
+        "网页快找",
+        "网页快着",
+        "网也快照",
+        "王也快照",
+        "网页快招",
+        "网页快朝",
+        "网页"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wanzhengshangxiawen",
+      "expected": "完整上下文",
+      "source": "5500",
+      "lookup_us": 6783,
+      "candidates": [
+        "完整上下文",
+        "完整上下问",
+        "万证上下文",
+        "完整上下闻",
+        "完整商下文",
+        "完整上下温",
+        "完整上下雯",
+        "完整上下稳",
+        "完整"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wanzhengyuanhua",
+      "expected": "完整原话",
+      "source": "5500",
+      "lookup_us": 6568,
+      "candidates": [
+        "完整原话",
+        "完整元化",
+        "完整原画",
+        "完整圆滑",
+        "完整元华",
+        "完整原华",
+        "完整元花",
+        "完整元话",
+        "完整"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wanzhengyujing",
+      "expected": "完整语境",
+      "source": "5500",
+      "lookup_us": 6347,
+      "candidates": [
+        "完整语境",
+        "完整预警",
+        "完整浴镜",
+        "万政预警",
+        "万正预警",
+        "完整与经",
+        "万证预警",
+        "完整于静",
+        "完整"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "weijingheshi",
+      "expected": "未经核实",
+      "source": "5500",
+      "lookup_us": 5288,
+      "candidates": [
+        "未经核实",
+        "未经合适",
+        "未经何时",
+        "为经核实",
+        "未经和是",
+        "为经合适",
+        "未经和时",
+        "未经合时",
+        "未经"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "weijingzhengshi",
+      "expected": "未经证实",
+      "source": "5500",
+      "lookup_us": 5717,
+      "candidates": [
+        "未经证实",
+        "未经正式",
+        "为经证实",
+        "未经正是",
+        "未经证时",
+        "未经正视",
+        "为竞争是",
+        "未经正事",
+        "未经"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "weizaojietu",
+      "expected": "伪造截图",
+      "source": "5500",
+      "lookup_us": 4703,
+      "candidates": [
+        "伪造截图",
+        "为早截图",
+        "为造截图",
+        "惟遭截图",
+        "为遭截图",
+        "位早截图",
+        "为糟截图",
+        "为藻截图",
+        "伪造"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "weizaoluyin",
+      "expected": "伪造录音",
+      "source": "5500",
+      "lookup_us": 4987,
+      "candidates": [
+        "伪造录音",
+        "为早录音",
+        "为造录音",
+        "惟遭录音",
+        "为遭录音",
+        "位早录音",
+        "为糟录音",
+        "为藻录音",
+        "伪造"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "weizaoshipin",
+      "expected": "伪造视频",
+      "source": "5500",
+      "lookup_us": 3468,
+      "candidates": [
+        "伪造视频",
+        "伪造食品",
+        "伪造饰品",
+        "为造食品",
+        "为早视频",
+        "为造视频",
+        "为早食品",
+        "惟遭视频",
+        "伪造"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "weizaotupian",
+      "expected": "伪造图片",
+      "source": "5500",
+      "lookup_us": 3851,
+      "candidates": [
+        "伪造图片",
+        "为早图片",
+        "为造图片",
+        "惟遭图片",
+        "为遭图片",
+        "位早图片",
+        "为糟图片",
+        "为藻图片",
+        "伪造"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "weizaowenjian",
+      "expected": "伪造文件",
+      "source": "5500",
+      "lookup_us": 5184,
+      "candidates": [
+        "伪造文件",
+        "伪造稳健",
+        "为造文件",
+        "为早文件",
+        "伪造文简",
+        "惟遭文件",
+        "伪造文建",
+        "为遭文件",
+        "伪造"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "weizaoxiaoxi",
+      "expected": "伪造消息",
+      "source": "5500",
+      "lookup_us": 6430,
+      "candidates": [
+        "伪造消息",
+        "伪造小溪",
+        "为早消息",
+        "为造消息",
+        "惟遭消息",
+        "为遭消息",
+        "伪造小西",
+        "位早消息",
+        "伪造"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "weizaozhengju",
+      "expected": "伪造证据",
+      "source": "5500",
+      "lookup_us": 4474,
+      "candidates": [
+        "伪造证据",
+        "伪造政局",
+        "为早证据",
+        "为造证据",
+        "伪造整句",
+        "位早证据",
+        "惟遭证据",
+        "为遭证据",
+        "伪造"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wenjuanjieguo",
+      "expected": "问卷结果",
+      "source": "5500",
+      "lookup_us": 6858,
+      "candidates": [
+        "问卷结果",
+        "文隽结果",
+        "问卷接过",
+        "文娟结果",
+        "文卷结果",
+        "文圈结果",
+        "问卷借过",
+        "问圈结果",
+        "问卷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wenjuansheji",
+      "expected": "问卷设计",
+      "source": "5500",
+      "lookup_us": 3649,
+      "candidates": [
+        "问卷设计",
+        "问卷涉及",
+        "问卷射击",
+        "文隽设计",
+        "文娟设计",
+        "文隽涉及",
+        "文卷设计",
+        "文娟涉及",
+        "问卷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wenjuantimu",
+      "expected": "问卷题目",
+      "source": "5500",
+      "lookup_us": 3501,
+      "candidates": [
+        "问卷题目",
+        "问卷提姆",
+        "文隽题目",
+        "文卷题目",
+        "文娟题目",
+        "问卷蹄目",
+        "问卷体目",
+        "问卷题木",
+        "问卷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wenjuanxuanxiang",
+      "expected": "问卷选项",
+      "source": "5500",
+      "lookup_us": 9580,
+      "candidates": [
+        "问卷选项",
+        "文隽选项",
+        "文娟选项",
+        "文卷选项",
+        "文圈选项",
+        "问圈选项",
+        "文捐选项",
+        "问卷旋香",
+        "问卷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wudaoxingbiaoti",
+      "expected": "误导性标题",
+      "source": "5500",
+      "lookup_us": 6776,
+      "candidates": [
+        "误导性标题",
+        "舞蹈行标题",
+        "舞蹈型标题",
+        "舞蹈形标题",
+        "舞蹈星标题",
+        "误导行标题",
+        "舞蹈性标题",
+        "误导形标题",
+        "误导性"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wudaoxingjianji",
+      "expected": "误导性剪辑",
+      "source": "5500",
+      "lookup_us": 8337,
+      "candidates": [
+        "误导性剪辑",
+        "舞蹈行剪辑",
+        "舞蹈兴建计",
+        "舞蹈兴建及",
+        "误导性剑击",
+        "舞蹈性剪辑",
+        "舞蹈兴建基",
+        "舞蹈星剪辑",
+        "误导性"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wudaoxingneirong",
+      "expected": "误导性内容",
+      "source": "5500",
+      "lookup_us": 5084,
+      "candidates": [
+        "误导性内容",
+        "舞蹈行内容",
+        "舞蹈性内容",
+        "误导行内容",
+        "舞蹈型内容",
+        "舞蹈省内容",
+        "舞蹈星内容",
+        "舞蹈形内容",
+        "误导性"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wudaoxingtubiao",
+      "expected": "误导性图表",
+      "source": "5500",
+      "lookup_us": 6951,
+      "candidates": [
+        "误导性图标",
+        "误导性图表",
+        "舞蹈形图表",
+        "误导形图表",
+        "舞蹈形图标",
+        "舞蹈行图标",
+        "误导形图标",
+        "舞蹈星图标",
+        "误导性"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "wudaoxinxi",
+      "expected": "误导信息",
+      "source": "5500",
+      "lookup_us": 4595,
+      "candidates": [
+        "误导信息",
+        "舞蹈信息",
+        "唔到信息",
+        "五到信息",
+        "舞蹈欣喜",
+        "误导欣喜",
+        "五道信息",
+        "武道信息",
+        "舞蹈"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianchangcaifang",
+      "expected": "现场采访",
+      "source": "5500",
+      "lookup_us": 5122,
+      "candidates": [
+        "现场采访",
+        "现场才方",
+        "现场才放",
+        "献唱采访",
+        "先场采访",
+        "现场才房",
+        "县长采访",
+        "先唱采访",
+        "现场"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianchanglianxian",
+      "expected": "现场连线",
+      "source": "5500",
+      "lookup_us": 10356,
+      "candidates": [
+        "现场连线",
+        "现场连县",
+        "县长连线",
+        "献唱连线",
+        "现场连先",
+        "现场连贤",
+        "现场练线",
+        "现场连现",
+        "现场"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianchangmuji",
+      "expected": "现场目击",
+      "source": "5500",
+      "lookup_us": 4711,
+      "candidates": [
+        "现场目击",
+        "现场募集",
+        "现场母鸡",
+        "现场目及",
+        "现场目计",
+        "现场目记",
+        "现场目集",
+        "现场目机",
+        "现场"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianchangshipin",
+      "expected": "现场视频",
+      "source": "5500",
+      "lookup_us": 5587,
+      "candidates": [
+        "现场视频",
+        "现场食品",
+        "现场饰品",
+        "县长视频",
+        "先长视频",
+        "献唱视频",
+        "现场时品",
+        "现场是品",
+        "现场"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianchangzhaopian",
+      "expected": "现场照片",
+      "source": "5500",
+      "lookup_us": 6192,
+      "candidates": [
+        "现场照片",
+        "县长照片",
+        "献唱照片",
+        "先唱照片",
+        "现场照骗",
+        "先长照片",
+        "现场照篇",
+        "先常照片",
+        "现场"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiangduizhi",
+      "expected": "相对值",
+      "source": "5500",
+      "lookup_us": 3012,
+      "candidates": [
+        "相对值",
+        "相对峙",
+        "相对之",
+        "相对指",
+        "相对制",
+        "相对知",
+        "相对至",
+        "向对峙",
+        "相对"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiangguanbudengyinguo",
+      "expected": "相关不等因果",
+      "source": "5500",
+      "lookup_us": 9289,
+      "candidates": [
+        "相关部等因果",
+        "相关不等因果",
+        "相关部登因果",
+        "相关不登因果",
+        "相关补灯因果",
+        "相关部灯因果",
+        "相关部等音过",
+        "相关部邓因果",
+        "相关"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "xiangguanfanghuiying",
+      "expected": "相关方回应",
+      "source": "5500",
+      "lookup_us": 9612,
+      "candidates": [
+        "相关方回应",
+        "像官方回应",
+        "相关放回应",
+        "相关防回应",
+        "相关房回应",
+        "相关访回应",
+        "相关方会赢",
+        "相关芳回应",
+        "相关"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianqi",
+      "expected": "现期",
+      "source": "5500",
+      "lookup_us": 1795,
+      "candidates": [
+        "掀起",
+        "限期",
+        "嫌弃",
+        "先期",
+        "现期",
+        "先起",
+        "鲜其",
+        "现其",
+        "先"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "xianzhitiaojian",
+      "expected": "限制条件",
+      "source": "5500",
+      "lookup_us": 7728,
+      "candidates": [
+        "限制条件",
+        "县治条件",
+        "先知条件",
+        "闲置条件",
+        "现职条件",
+        "贤治条件",
+        "现只条件",
+        "先制条件",
+        "限制"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xingcunzhepiancha",
+      "expected": "幸存者偏差",
+      "source": "5500",
+      "lookup_us": 4494,
+      "candidates": [
+        "幸存者偏差",
+        "幸存着偏差",
+        "幸存者便查",
+        "幸存者便差",
+        "幸存者片差",
+        "幸存者便茶",
+        "幸存这偏差",
+        "行存折偏差",
+        "幸存者"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinwenbanmian",
+      "expected": "新闻版面",
+      "source": "5500",
+      "lookup_us": 4989,
+      "candidates": [
+        "新闻版面",
+        "新闻拌面",
+        "新文版面",
+        "新闻办面",
+        "新闻板面",
+        "新闻办免",
+        "新闻办棉",
+        "新闻版免",
+        "新闻办"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinwenbeijing",
+      "expected": "新闻背景",
+      "source": "5500",
+      "lookup_us": 4758,
+      "candidates": [
+        "新闻背景",
+        "新闻北京",
+        "新问北京",
+        "新文背景",
+        "新文北京",
+        "信问北京",
+        "新闻被警",
+        "新问背景",
+        "新闻"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinwenbianji",
+      "expected": "新闻编辑",
+      "source": "5500",
+      "lookup_us": 4862,
+      "candidates": [
+        "新闻编辑",
+        "新文编辑",
+        "新闻遍及",
+        "新闻边际",
+        "新问编辑",
+        "新闻变基",
+        "新闻变及",
+        "信文编辑",
+        "新闻"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinwencaifang",
+      "expected": "新闻采访",
+      "source": "5500",
+      "lookup_us": 3569,
+      "candidates": [
+        "新闻采访",
+        "新文采访",
+        "新闻才放",
+        "新闻才房",
+        "新闻才方",
+        "新问采访",
+        "新闻才芳",
+        "新闻材放",
+        "新闻"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinwenchuanbo",
+      "expected": "新闻传播",
+      "source": "5500",
+      "lookup_us": 4303,
+      "candidates": [
+        "新闻传播",
+        "新闻船舶",
+        "新文传播",
+        "新问传播",
+        "新闻传伯",
+        "新闻传波",
+        "新闻传博",
+        "新文船舶",
+        "新闻"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinwenchuchu",
+      "expected": "新闻出处",
+      "source": "5500",
+      "lookup_us": 3212,
+      "candidates": [
+        "新闻出处",
+        "新闻处处",
+        "新闻楚楚",
+        "新文出处",
+        "新闻处出",
+        "新闻出出",
+        "新闻除出",
+        "新闻处除",
+        "新闻"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinwendiaocha",
+      "expected": "新闻调查",
+      "source": "5500",
+      "lookup_us": 4365,
+      "candidates": [
+        "新闻调查",
+        "新文调查",
+        "新问调查",
+        "新温调查",
+        "新闻调差",
+        "信问调查",
+        "新闻调茶",
+        "新纹调查",
+        "新闻"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinwendingyue",
+      "expected": "新闻订阅",
+      "source": "5500",
+      "lookup_us": 6210,
+      "candidates": [
+        "新闻订阅",
+        "新闻定约",
+        "新闻定月",
+        "新稳定约",
+        "新闻定说",
+        "新文订阅",
+        "新闻顶约",
+        "心稳定约",
+        "新闻"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinwenfabuhui",
+      "expected": "新闻发布会",
+      "source": "5500",
+      "lookup_us": 3786,
+      "candidates": [
+        "新闻发布会",
+        "新闻发布回",
+        "新闻发布辉",
+        "新闻发不会",
+        "新闻发布惠",
+        "新文发布会",
+        "新闻发布汇",
+        "新闻发布慧",
+        "新闻发布"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinwenfenxi",
+      "expected": "新闻分析",
+      "source": "5500",
+      "lookup_us": 2661,
+      "candidates": [
+        "新闻分析",
+        "新文分析",
+        "信文分析",
+        "新闻分系",
+        "新问分析",
+        "新闻分西",
+        "新闻分细",
+        "新闻分喜",
+        "新闻"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinwenguancha",
+      "expected": "新闻观察",
+      "source": "5500",
+      "lookup_us": 4668,
+      "candidates": [
+        "新闻观察",
+        "新文观察",
+        "新闻管檫",
+        "新问观察",
+        "新闻关差",
+        "新闻关查",
+        "新闻关茶",
+        "新闻官差",
+        "新闻"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinwenhuigu",
+      "expected": "新闻回顾",
+      "source": "5500",
+      "lookup_us": 4338,
+      "candidates": [
+        "新闻回顾",
+        "新闻灰谷",
+        "新文回顾",
+        "新闻惠顾",
+        "新闻会股",
+        "新闻会骨",
+        "新闻会鼓",
+        "新闻会谷",
+        "新闻"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinwenjianbao",
+      "expected": "新闻简报",
+      "source": "5500",
+      "lookup_us": 6530,
+      "candidates": [
+        "新闻简报",
+        "新文件包",
+        "新文件报",
+        "新闻见报",
+        "新文件爆",
+        "新文件保",
+        "新文件宝",
+        "新闻健保",
+        "新闻"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinwenjianxun",
+      "expected": "新闻简讯",
+      "source": "5500",
+      "lookup_us": 6401,
+      "candidates": [
+        "新闻简讯",
+        "新文件训",
+        "新文件讯",
+        "新文件勋",
+        "新文件寻",
+        "新文件逊",
+        "新文件迅",
+        "新文件询",
+        "新闻"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinwenjiaodui",
+      "expected": "新闻校对",
+      "source": "5500",
+      "lookup_us": 5974,
+      "candidates": [
+        "新闻校对",
+        "新闻教对",
+        "新闻较对",
+        "新闻较队",
+        "新闻交对",
+        "新闻角队",
+        "新闻叫对",
+        "新闻角对",
+        "新闻"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinwenjiedu",
+      "expected": "新闻解读",
+      "source": "5500",
+      "lookup_us": 5036,
+      "candidates": [
+        "新闻解读",
+        "新闻节度",
+        "新闻解毒",
+        "新闻界都",
+        "新闻界度",
+        "新闻界读",
+        "新闻戒毒",
+        "新闻界毒",
+        "新闻界"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinwenkehuduan",
+      "expected": "新闻客户端",
+      "source": "5500",
+      "lookup_us": 4807,
+      "candidates": [
+        "新闻客户端",
+        "新文客户端",
+        "新闻客户短",
+        "新闻客户段",
+        "新闻客户断",
+        "新闻客户锻",
+        "新文客户短",
+        "新闻客户缎",
+        "新闻"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinwenkuaibao",
+      "expected": "新闻快报",
+      "source": "5500",
+      "lookup_us": 4582,
+      "candidates": [
+        "新闻快报",
+        "新闻快包",
+        "新闻快宝",
+        "新闻快爆",
+        "新闻会报",
+        "新闻快保",
+        "新闻快抱",
+        "新文快报",
+        "新闻"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinwenkuaixun",
+      "expected": "新闻快讯",
+      "source": "5500",
+      "lookup_us": 4490,
+      "candidates": [
+        "新闻快讯",
+        "新闻快训",
+        "新闻快寻",
+        "新闻快勋",
+        "新文快讯",
+        "新闻快逊",
+        "新闻快迅",
+        "新闻快询",
+        "新闻"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinwenlaiyuan",
+      "expected": "新闻来源",
+      "source": "5500",
+      "lookup_us": 4376,
+      "candidates": [
+        "新闻来源",
+        "新闻来圆",
+        "新文来源",
+        "新闻来远",
+        "新闻来元",
+        "新闻来园",
+        "新闻来预案",
+        "新闻来原",
+        "新闻"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinwenlanmu",
+      "expected": "新闻栏目",
+      "source": "5500",
+      "lookup_us": 5097,
+      "candidates": [
+        "新闻栏目",
+        "新文栏目",
+        "新闻兰木",
+        "新闻兰姆",
+        "新问栏目",
+        "新闻兰目",
+        "新闻蓝幕",
+        "新闻蓝目",
+        "新闻"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinwenlianjie",
+      "expected": "新闻链接",
+      "source": "5500",
+      "lookup_us": 7021,
+      "candidates": [
+        "新闻链接",
+        "新闻连接",
+        "新闻连结",
+        "新闻联结",
+        "新闻廉洁",
+        "新文链接",
+        "新闻联接",
+        "新闻联捷",
+        "新闻"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinwenliulan",
+      "expected": "新闻浏览",
+      "source": "5500",
+      "lookup_us": 4206,
+      "candidates": [
+        "新闻浏览",
+        "新文浏览",
+        "新问浏览",
+        "信问浏览",
+        "新温浏览",
+        "新闻流蓝",
+        "新闻流兰",
+        "新闻流岚",
+        "新闻"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinwenpinglun",
+      "expected": "新闻评论",
+      "source": "5500",
+      "lookup_us": 4166,
+      "candidates": [
+        "新闻评论",
+        "新文评论",
+        "新问评论",
+        "信文评论",
+        "信问评论",
+        "新温评论",
+        "新闻平伦",
+        "新闻平论",
+        "新闻"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinwenshipin",
+      "expected": "新闻视频",
+      "source": "5500",
+      "lookup_us": 3676,
+      "candidates": [
+        "新闻视频",
+        "新闻食品",
+        "新闻饰品",
+        "新文视频",
+        "新文食品",
+        "新闻是品",
+        "新闻时品",
+        "新问食品",
+        "新闻"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinwensousuo",
+      "expected": "新闻搜索",
+      "source": "5500",
+      "lookup_us": 2846,
+      "candidates": [
+        "新闻搜索",
+        "新文搜索",
+        "新问搜索",
+        "信文搜索",
+        "信问搜索",
+        "新温搜索",
+        "新纹搜索",
+        "新稳搜索",
+        "新闻"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinwensuyang",
+      "expected": "新闻素养",
+      "source": "5500",
+      "lookup_us": 4561,
+      "candidates": [
+        "新闻素养",
+        "新闻素羊",
+        "新文素养",
+        "新闻酥羊",
+        "新闻素阳",
+        "新闻素扬",
+        "新闻苏扬",
+        "新闻素样",
+        "新闻"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinwentonggao",
+      "expected": "新闻通稿",
+      "source": "5500",
+      "lookup_us": 3307,
+      "candidates": [
+        "新闻通稿",
+        "新闻通告",
+        "新闻通高",
+        "新闻同高",
+        "新文通告",
+        "新闻铜镐",
+        "新闻同告",
+        "新闻通搞",
+        "新闻"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinwentuisong",
+      "expected": "新闻推送",
+      "source": "5500",
+      "lookup_us": 2278,
+      "candidates": [
+        "新闻推送",
+        "新文推送",
+        "新闻腿松",
+        "新问推送",
+        "新闻推松",
+        "新闻退送",
+        "新闻退松",
+        "新闻腿送",
+        "新闻"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinwentupian",
+      "expected": "新闻图片",
+      "source": "5500",
+      "lookup_us": 4024,
+      "candidates": [
+        "新闻图片",
+        "新文图片",
+        "新问图片",
+        "信文图片",
+        "新纹图片",
+        "信问图片",
+        "新温图片",
+        "新闻图篇",
+        "新闻"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinwenxiansuo",
+      "expected": "新闻线索",
+      "source": "5500",
+      "lookup_us": 6012,
+      "candidates": [
+        "新闻线索",
+        "新闻现所",
+        "新文线索",
+        "新闻线所",
+        "新文献所",
+        "新闻县所",
+        "新闻限缩",
+        "新闻先所",
+        "新闻"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinwenxiezuo",
+      "expected": "新闻写作",
+      "source": "5500",
+      "lookup_us": 5473,
+      "candidates": [
+        "新闻写作",
+        "新闻协作",
+        "新文写作",
+        "新闻写做",
+        "新文协作",
+        "信文写作",
+        "新闻谢做",
+        "新闻写座",
+        "新闻"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinwenyuedu",
+      "expected": "新闻阅读",
+      "source": "5500",
+      "lookup_us": 4659,
+      "candidates": [
+        "新闻阅读",
+        "新文阅读",
+        "新闻月度",
+        "新闻余额度",
+        "信文阅读",
+        "新问阅读",
+        "新闻岳度",
+        "新闻说读",
+        "新闻"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinwenzhaiyao",
+      "expected": "新闻摘要",
+      "source": "5500",
+      "lookup_us": 4042,
+      "candidates": [
+        "新闻摘要",
+        "新文摘要",
+        "新问摘要",
+        "信文摘要",
+        "新闻斋爻",
+        "信问摘要",
+        "新温摘要",
+        "新纹摘要",
+        "新闻"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinwenzhuanti",
+      "expected": "新闻专题",
+      "source": "5500",
+      "lookup_us": 5008,
+      "candidates": [
+        "新闻专题",
+        "新文专题",
+        "新问专题",
+        "新闻传体",
+        "新闻转体",
+        "新闻专体",
+        "新闻专提",
+        "新闻传提",
+        "新闻"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinwenzhuizong",
+      "expected": "新闻追踪",
+      "source": "5500",
+      "lookup_us": 2800,
+      "candidates": [
+        "新闻追踪",
+        "新文追踪",
+        "新问追踪",
+        "新闻追宗",
+        "新闻追总",
+        "信问追踪",
+        "新温追踪",
+        "新纹追踪",
+        "新闻"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinxibianshi",
+      "expected": "信息辨识",
+      "source": "5500",
+      "lookup_us": 5061,
+      "candidates": [
+        "信息辨识",
+        "信息便是",
+        "信息变时",
+        "信息便时",
+        "信息变是",
+        "信息边时",
+        "信息边是",
+        "信息变事",
+        "信息"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinxigongkai",
+      "expected": "信息公开",
+      "source": "5500",
+      "lookup_us": 2375,
+      "candidates": [
+        "信息公开",
+        "欣喜公开",
+        "心系公开",
+        "新系公开",
+        "信息共开",
+        "新西公开",
+        "新细公开",
+        "信息工开",
+        "信息"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinxihecha",
+      "expected": "信息核查",
+      "source": "5500",
+      "lookup_us": 2961,
+      "candidates": [
+        "信息核查",
+        "信息喝茶",
+        "信息和差",
+        "信息和茶",
+        "信息和查",
+        "欣喜喝茶",
+        "信息和插",
+        "心系喝茶",
+        "信息"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinxiqiuzheng",
+      "expected": "信息求证",
+      "source": "5500",
+      "lookup_us": 5234,
+      "candidates": [
+        "信息求证",
+        "信息球证",
+        "信息球正",
+        "欣喜求证",
+        "信息求正",
+        "信息球政",
+        "信息邱正",
+        "信息球症",
+        "信息"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinxisuyang",
+      "expected": "信息素养",
+      "source": "5500",
+      "lookup_us": 4555,
+      "candidates": [
+        "信息素养",
+        "欣喜素养",
+        "信息速阳",
+        "信息素羊",
+        "心系素养",
+        "新系素养",
+        "信息酥羊",
+        "新西素养",
+        "信息"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinxisuyuan",
+      "expected": "信息溯源",
+      "source": "5500",
+      "lookup_us": 5140,
+      "candidates": [
+        "信息溯源",
+        "信息速远",
+        "信息苏园",
+        "信息速员",
+        "信息诉愿",
+        "信息速元",
+        "信息素媛",
+        "信息速源",
+        "信息"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiugaibiaoti",
+      "expected": "修改标题",
+      "source": "5500",
+      "lookup_us": 5238,
+      "candidates": [
+        "修改标题",
+        "修改表题",
+        "修改标体",
+        "修改标提",
+        "修该标题",
+        "修改表体",
+        "修改表提",
+        "秀改标题",
+        "修改"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiugaizhengwen",
+      "expected": "修改正文",
+      "source": "5500",
+      "lookup_us": 4150,
+      "candidates": [
+        "修改正文",
+        "修改正问",
+        "修改征文",
+        "修改郑文",
+        "修改正温",
+        "修改正雯",
+        "修改正稳",
+        "修改正纹",
+        "修改"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xuanzepiancha",
+      "expected": "选择偏差",
+      "source": "5500",
+      "lookup_us": 3819,
+      "candidates": [
+        "选择偏差",
+        "选择片差",
+        "选择偏茶",
+        "选择片茶",
+        "选择便查",
+        "选择片查",
+        "选择偏查",
+        "选择便差",
+        "选择"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xugouqingjie",
+      "expected": "虚构情节",
+      "source": "5500",
+      "lookup_us": 6278,
+      "candidates": [
+        "虚构情节",
+        "虚构情结",
+        "虚构清洁",
+        "徐构情节",
+        "需购清洁",
+        "虚构情街",
+        "徐够清洁",
+        "须购清洁",
+        "虚构"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xugourenwu",
+      "expected": "虚构人物",
+      "source": "5500",
+      "lookup_us": 2727,
+      "candidates": [
+        "虚构人物",
+        "虚构任务",
+        "虚构人无",
+        "徐构人物",
+        "需购任务",
+        "须购任务",
+        "需购人物",
+        "虚构人舞",
+        "虚构"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xugoushijian",
+      "expected": "虚构事件",
+      "source": "5500",
+      "lookup_us": 6647,
+      "candidates": [
+        "虚构事件",
+        "虚构时间",
+        "虚构实践",
+        "虚构世间",
+        "需购时间",
+        "虚构尸检",
+        "须购时间",
+        "徐够时间",
+        "虚构"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xugouxinxi",
+      "expected": "虚构信息",
+      "source": "5500",
+      "lookup_us": 3598,
+      "candidates": [
+        "虚构信息",
+        "虚构欣喜",
+        "需购信息",
+        "须购信息",
+        "徐构信息",
+        "虚构心系",
+        "徐够信息",
+        "徐狗信息",
+        "虚构"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xujiabaodao",
+      "expected": "虚假报道",
+      "source": "5500",
+      "lookup_us": 5524,
+      "candidates": [
+        "虚假报道",
+        "虚假报导",
+        "虚假报到",
+        "许家报道",
+        "徐家报道",
+        "徐佳报道",
+        "需加报道",
+        "许家报导",
+        "虚假"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xujiaxiaoxi",
+      "expected": "虚假消息",
+      "source": "5500",
+      "lookup_us": 7328,
+      "candidates": [
+        "虚假消息",
+        "续假消息",
+        "徐佳消息",
+        "许家消息",
+        "徐家消息",
+        "虚假小溪",
+        "需加消息",
+        "虚假小西",
+        "虚假"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xujiaxinwen",
+      "expected": "虚假新闻",
+      "source": "5500",
+      "lookup_us": 4745,
+      "candidates": [
+        "虚假新闻",
+        "需加新闻",
+        "徐假新闻",
+        "许家新闻",
+        "徐家新闻",
+        "徐佳新闻",
+        "虚假信问",
+        "虚假信文",
+        "虚假"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xujiaxinxi",
+      "expected": "虚假信息",
+      "source": "5500",
+      "lookup_us": 4293,
+      "candidates": [
+        "虚假信息",
+        "许家信息",
+        "徐家信息",
+        "徐佳信息",
+        "虚假欣喜",
+        "续假信息",
+        "需加信息",
+        "徐嘉信息",
+        "虚假"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yangbendaxiao",
+      "expected": "样本大小",
+      "source": "5500",
+      "lookup_us": 5017,
+      "candidates": [
+        "样本大小",
+        "样本大笑",
+        "样本大校",
+        "样本打消",
+        "样本打小",
+        "杨本大小",
+        "杨本大笑",
+        "样本打笑",
+        "样本"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yangbenpiancha",
+      "expected": "样本偏差",
+      "source": "5500",
+      "lookup_us": 3949,
+      "candidates": [
+        "样本偏差",
+        "样本片差",
+        "杨本偏差",
+        "样本片茶",
+        "样本片查",
+        "样本篇差",
+        "样本篇茶",
+        "样本篇查",
+        "样本"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yanjiubeijing",
+      "expected": "研究背景",
+      "source": "5500",
+      "lookup_us": 5325,
+      "candidates": [
+        "研究背景",
+        "研究北京",
+        "烟酒北京",
+        "烟酒背景",
+        "眼就北京",
+        "研究被警",
+        "眼就背景",
+        "演就北京",
+        "研究"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yanjiujieguo",
+      "expected": "研究结果",
+      "source": "5500",
+      "lookup_us": 6414,
+      "candidates": [
+        "研究结果",
+        "研究接过",
+        "烟酒结果",
+        "研究结过",
+        "眼就结果",
+        "研究结国",
+        "研究借过",
+        "研究解过",
+        "研究"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yanjiujielun",
+      "expected": "研究结论",
+      "source": "5500",
+      "lookup_us": 7193,
+      "candidates": [
+        "研究结论",
+        "研究杰伦",
+        "研究揭纶",
+        "烟酒结论",
+        "眼就结论",
+        "研究结伦",
+        "研究结轮",
+        "研究接伦",
+        "研究"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yanjiuyangben",
+      "expected": "研究样本",
+      "source": "5500",
+      "lookup_us": 4509,
+      "candidates": [
+        "研究样本",
+        "烟酒样本",
+        "研究阳本",
+        "研究杨本",
+        "研究养本",
+        "研究洋本",
+        "研究扬本",
+        "眼就样本",
+        "研究"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yaoyanchengqing",
+      "expected": "谣言澄清",
+      "source": "5500",
+      "lookup_us": 6482,
+      "candidates": [
+        "谣言澄清",
+        "耀眼澄清",
+        "妖艳澄清",
+        "要严澄清",
+        "要严惩请",
+        "要演澄清",
+        "要延澄清",
+        "谣言呈请",
+        "耀眼"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yaoyanchuanbo",
+      "expected": "谣言传播",
+      "source": "5500",
+      "lookup_us": 4536,
+      "candidates": [
+        "谣言传播",
+        "耀眼传播",
+        "谣言船舶",
+        "妖艳传播",
+        "要严传播",
+        "耀眼船舶",
+        "要言传播",
+        "要演传播",
+        "耀眼"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yaoyankuosan",
+      "expected": "谣言扩散",
+      "source": "5500",
+      "lookup_us": 3370,
+      "candidates": [
+        "谣言扩散",
+        "耀眼扩散",
+        "妖艳扩散",
+        "要严扩散",
+        "要演扩散",
+        "要延扩散",
+        "要眼扩散",
+        "要言扩散",
+        "耀眼"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yaoyanlaiyuan",
+      "expected": "谣言来源",
+      "source": "5500",
+      "lookup_us": 5176,
+      "candidates": [
+        "谣言来源",
+        "耀眼来源",
+        "谣言来圆",
+        "妖艳来源",
+        "要严来源",
+        "要演来源",
+        "要言来源",
+        "要眼来源",
+        "耀眼"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yichengqing",
+      "expected": "已澄清",
+      "source": "5500",
+      "lookup_us": 5573,
+      "candidates": [
+        "已澄清",
+        "以澄清",
+        "一澄清",
+        "亿澄清",
+        "义澄清",
+        "亦澄清",
+        "伊澄清",
+        "易澄清",
+        "已成"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yidianfenxi",
+      "expected": "疑点分析",
+      "source": "5500",
+      "lookup_us": 4337,
+      "candidates": [
+        "疑点分析",
+        "一点分析",
+        "以点分析",
+        "以电分析",
+        "以店分析",
+        "一店分析",
+        "椅垫分析",
+        "以垫分析",
+        "一点"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yidianshuli",
+      "expected": "疑点梳理",
+      "source": "5500",
+      "lookup_us": 4498,
+      "candidates": [
+        "疑点梳理",
+        "一点梳理",
+        "一点书里",
+        "一点树立",
+        "一点竖立",
+        "一点数理",
+        "一点数里",
+        "一点疏离",
+        "一点"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yiheshi",
+      "expected": "已核实",
+      "source": "5500",
+      "lookup_us": 2142,
+      "candidates": [
+        "已核实",
+        "以核实",
+        "以合适",
+        "一呵是",
+        "一合适",
+        "一呵时",
+        "一核实",
+        "伊核实",
+        "一盒"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yinguoxing",
+      "expected": "因果性",
+      "source": "5500",
+      "lookup_us": 6043,
+      "candidates": [
+        "因果性",
+        "因果行",
+        "因果星",
+        "因果形",
+        "因果型",
+        "因果兴",
+        "因果姓",
+        "因果刑",
+        "因果"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yinyongyuanhua",
+      "expected": "引用原话",
+      "source": "5500",
+      "lookup_us": 7280,
+      "candidates": [
+        "引用原话",
+        "引用圆滑",
+        "引用原画",
+        "引用元化",
+        "引用元华",
+        "引用原华",
+        "因永远华",
+        "饮用原话",
+        "引用"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yinyuchuchu",
+      "expected": "引语出处",
+      "source": "5500",
+      "lookup_us": 4639,
+      "candidates": [
+        "引语出处",
+        "阴雨出处",
+        "音域出处",
+        "阴郁出处",
+        "音域处处",
+        "阴郁处处",
+        "阴雨处处",
+        "隐喻出处",
+        "阴雨"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yinyuheshi",
+      "expected": "引语核实",
+      "source": "5500",
+      "lookup_us": 4014,
+      "candidates": [
+        "引语核实",
+        "音域合适",
+        "阴郁合适",
+        "阴雨合适",
+        "阴郁核实",
+        "阴雨核实",
+        "因与核实",
+        "音域核实",
+        "阴雨"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yinyulaiyuan",
+      "expected": "引语来源",
+      "source": "5500",
+      "lookup_us": 5049,
+      "candidates": [
+        "引语来源",
+        "阴雨来源",
+        "音域来源",
+        "阴郁来源",
+        "隐喻来源",
+        "因与来源",
+        "因雨来源",
+        "因语来源",
+        "阴雨"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yipiyao",
+      "expected": "已辟谣",
+      "source": "5500",
+      "lookup_us": 3140,
+      "candidates": [
+        "已辟谣",
+        "一批要",
+        "伊辟谣",
+        "以辟谣",
+        "一批药",
+        "一辟谣",
+        "一匹要",
+        "亿辟谣",
+        "一批"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yishouxinxi",
+      "expected": "一手信息",
+      "source": "5500",
+      "lookup_us": 4269,
+      "candidates": [
+        "一手信息",
+        "一首信息",
+        "一收信息",
+        "以收信息",
+        "以手信息",
+        "亦受信息",
+        "以受信息",
+        "义守信息",
+        "一首"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yishouziliao",
+      "expected": "一手资料",
+      "source": "5500",
+      "lookup_us": 4924,
+      "candidates": [
+        "一手资料",
+        "一首资料",
+        "以手资料",
+        "一收资料",
+        "以收资料",
+        "一首字了",
+        "亦受资料",
+        "以受资料",
+        "一首"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yitusoutu",
+      "expected": "以图搜图",
+      "source": "5500",
+      "lookup_us": 1737,
+      "candidates": [
+        "以图搜图",
+        "意图搜图",
+        "意图搜土",
+        "意图艘图",
+        "意图搜兔",
+        "意图艘土",
+        "意图搜途",
+        "意图艘兔",
+        "意图"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yizhengshi",
+      "expected": "已证实",
+      "source": "5500",
+      "lookup_us": 3468,
+      "candidates": [
+        "已证实",
+        "仪征市",
+        "以证实",
+        "医证实",
+        "已正式",
+        "亦正式",
+        "一正式",
+        "亦证实",
+        "一整"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youdaichazheng",
+      "expected": "有待查证",
+      "source": "5500",
+      "lookup_us": 4647,
+      "candidates": [
+        "有待查证",
+        "优待查证",
+        "有大查证",
+        "有带查证",
+        "有代查证",
+        "又带查证",
+        "由大查证",
+        "有戴查证",
+        "有待"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuanhuayujing",
+      "expected": "原话语境",
+      "source": "5500",
+      "lookup_us": 6720,
+      "candidates": [
+        "原话语境",
+        "原话预警",
+        "原画预警",
+        "元化预警",
+        "圆滑预警",
+        "元华预警",
+        "原华预警",
+        "元画预警",
+        "原话"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuanshibaodao",
+      "expected": "原始报道",
+      "source": "5500",
+      "lookup_us": 6345,
+      "candidates": [
+        "原始报道",
+        "远视报道",
+        "原始报导",
+        "元时报道",
+        "原是报道",
+        "原始报到",
+        "院士报道",
+        "元是报道",
+        "原始"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuanshicailiao",
+      "expected": "原始材料",
+      "source": "5500",
+      "lookup_us": 5274,
+      "candidates": [
+        "原始材料",
+        "院士材料",
+        "原是材料",
+        "远视材料",
+        "圆石材料",
+        "元是材料",
+        "原始菜了",
+        "元时材料",
+        "原始"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuanshichuchu",
+      "expected": "原始出处",
+      "source": "5500",
+      "lookup_us": 3602,
+      "candidates": [
+        "原始出处",
+        "原始处处",
+        "原始楚楚",
+        "原是出处",
+        "院士出处",
+        "原是处处",
+        "元是出处",
+        "远视出处",
+        "原始"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuanshijilu",
+      "expected": "原始记录",
+      "source": "5500",
+      "lookup_us": 4072,
+      "candidates": [
+        "原始记录",
+        "原始纪录",
+        "原是记录",
+        "院士记录",
+        "院士纪录",
+        "远视纪录",
+        "远视记录",
+        "原是纪录",
+        "原始"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuanshilianjie",
+      "expected": "原始链接",
+      "source": "5500",
+      "lookup_us": 8384,
+      "candidates": [
+        "原始链接",
+        "原始连接",
+        "原是连接",
+        "原始连结",
+        "远视链接",
+        "元是连接",
+        "院士链接",
+        "原是链接",
+        "远视力"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuanshiluyin",
+      "expected": "原始录音",
+      "source": "5500",
+      "lookup_us": 4908,
+      "candidates": [
+        "原始录音",
+        "原是录音",
+        "远视录音",
+        "院士录音",
+        "元是录音",
+        "元时录音",
+        "元实录音",
+        "圆石录音",
+        "原始"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuanshishipin",
+      "expected": "原始视频",
+      "source": "5500",
+      "lookup_us": 4905,
+      "candidates": [
+        "原始视频",
+        "原始食品",
+        "院士视频",
+        "原是视频",
+        "原始饰品",
+        "原是食品",
+        "远视视频",
+        "院士食品",
+        "原始"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuanshitupian",
+      "expected": "原始图片",
+      "source": "5500",
+      "lookup_us": 4302,
+      "candidates": [
+        "原始图片",
+        "远视图片",
+        "原是图片",
+        "院士图片",
+        "元是图片",
+        "元试图片",
+        "原试图片",
+        "圆石图片",
+        "原始"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuanshiwangye",
+      "expected": "原始网页",
+      "source": "5500",
+      "lookup_us": 4307,
+      "candidates": [
+        "原始网页",
+        "原是网页",
+        "远视网页",
+        "院士网页",
+        "元是网页",
+        "原始王爷",
+        "元时网页",
+        "原市网页",
+        "原始"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuanshiwenzhang",
+      "expected": "原始文章",
+      "source": "5500",
+      "lookup_us": 4932,
+      "candidates": [
+        "原始文章",
+        "原是文章",
+        "院士文章",
+        "原始蚊帐",
+        "远视文章",
+        "元是文章",
+        "原是蚊帐",
+        "原市文章",
+        "原始"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuanshixiaoxi",
+      "expected": "原始消息",
+      "source": "5500",
+      "lookup_us": 6639,
+      "candidates": [
+        "原始消息",
+        "原是消息",
+        "院士消息",
+        "元是消息",
+        "远视消息",
+        "元世消息",
+        "原始小溪",
+        "元时消息",
+        "原始"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuanshiyujing",
+      "expected": "原始语境",
+      "source": "5500",
+      "lookup_us": 6040,
+      "candidates": [
+        "原始语境",
+        "原始预警",
+        "原是预警",
+        "远视预警",
+        "院士预警",
+        "元是预警",
+        "原始于静",
+        "元时预警",
+        "原始"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuanshizhengju",
+      "expected": "原始证据",
+      "source": "5500",
+      "lookup_us": 5884,
+      "candidates": [
+        "原始证据",
+        "原始政局",
+        "院士证据",
+        "原是证据",
+        "远视证据",
+        "元是证据",
+        "元实证据",
+        "原是政局",
+        "原始"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuanwenbeifen",
+      "expected": "原文备份",
+      "source": "5500",
+      "lookup_us": 3167,
+      "candidates": [
+        "原文备份",
+        "原文悲愤",
+        "元文备份",
+        "原文被分",
+        "愿闻备份",
+        "元问备份",
+        "原文北分",
+        "原文辈份",
+        "原文"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuanwenhedui",
+      "expected": "原文核对",
+      "source": "5500",
+      "lookup_us": 3788,
+      "candidates": [
+        "原文核对",
+        "原文和对",
+        "原文和队",
+        "元文核对",
+        "元温和对",
+        "愿闻核对",
+        "圆吻合对",
+        "元文和对",
+        "原文"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuanwenjietu",
+      "expected": "原文截图",
+      "source": "5500",
+      "lookup_us": 5453,
+      "candidates": [
+        "原文截图",
+        "元文截图",
+        "愿闻截图",
+        "元问截图",
+        "原问截图",
+        "元温截图",
+        "元闻截图",
+        "袁文杰图",
+        "袁文杰"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuanwenlianjie",
+      "expected": "原文链接",
+      "source": "5500",
+      "lookup_us": 8536,
+      "candidates": [
+        "原文链接",
+        "原文连接",
+        "原文连结",
+        "元文链接",
+        "元文连接",
+        "愿闻链接",
+        "原文廉洁",
+        "愿闻连接",
+        "原文"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yujingwudu",
+      "expected": "语境误读",
+      "source": "5500",
+      "lookup_us": 4574,
+      "candidates": [
+        "语境误读",
+        "预警无度",
+        "预警无毒",
+        "预警误读",
+        "语境无度",
+        "与警务都",
+        "与警务度",
+        "与警务读",
+        "预警"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuyinben",
+      "expected": "预印本",
+      "source": "5500",
+      "lookup_us": 2644,
+      "candidates": [
+        "预印本",
+        "语音本",
+        "语音笨",
+        "语音奔",
+        "与印本",
+        "语音苯",
+        "于印本",
+        "与因本",
+        "语音"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zanweizhengshi",
+      "expected": "暂未证实",
+      "source": "5500",
+      "lookup_us": 6759,
+      "candidates": [
+        "暂未证实",
+        "暂未正式",
+        "暂未正是",
+        "暂未正视",
+        "暂未正事",
+        "咱未证实",
+        "暂未证时",
+        "暂未政事",
+        "暂未"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhengjuzhichi",
+      "expected": "证据支持",
+      "source": "5500",
+      "lookup_us": 4489,
+      "candidates": [
+        "证据支持",
+        "政局支持",
+        "整句支持",
+        "正局支持",
+        "证据只吃",
+        "正据支持",
+        "郑居支持",
+        "证据直尺",
+        "证据"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhengshihuiying",
+      "expected": "正式回应",
+      "source": "5500",
+      "lookup_us": 7972,
+      "candidates": [
+        "正式回应",
+        "正是回应",
+        "证实回应",
+        "正视回应",
+        "正式会赢",
+        "正式辉映",
+        "正事回应",
+        "正时回应",
+        "正式"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhengshishengming",
+      "expected": "正式声明",
+      "source": "5500",
+      "lookup_us": 6504,
+      "candidates": [
+        "正式声明",
+        "正是生命",
+        "正式生命",
+        "正是声明",
+        "证实声明",
+        "证实生命",
+        "正视生命",
+        "正视声明",
+        "正式"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhiqingrenshi",
+      "expected": "知情人士",
+      "source": "5500",
+      "lookup_us": 5133,
+      "candidates": [
+        "知情人士",
+        "知情人事",
+        "知情人是",
+        "知情人时",
+        "知情人世",
+        "知情认识",
+        "知情人氏",
+        "之情人士",
+        "知情人"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhiqingrenshuofa",
+      "expected": "知情人说法",
+      "source": "5500",
+      "lookup_us": 5194,
+      "candidates": [
+        "知情人说法",
+        "之情人说法",
+        "知情人说发",
+        "知情人数法",
+        "知情认说法",
+        "知情人数发",
+        "知情人说罚",
+        "知情仁说法",
+        "知情人"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuanjiaguandian",
+      "expected": "专家观点",
+      "source": "5500",
+      "lookup_us": 8181,
+      "candidates": [
+        "专家观点",
+        "转嫁观点",
+        "专家关店",
+        "专家冠店",
+        "专家馆店",
+        "专家关点",
+        "专家观店",
+        "专家管点",
+        "专家"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuanjiajiedu",
+      "expected": "专家解读",
+      "source": "5500",
+      "lookup_us": 6951,
+      "candidates": [
+        "专家解读",
+        "专家解毒",
+        "专家戒毒",
+        "转嫁解读",
+        "专家解度",
+        "专家节度",
+        "专家解都",
+        "专家解独",
+        "专家"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuanjiapinglun",
+      "expected": "专家评论",
+      "source": "5500",
+      "lookup_us": 5739,
+      "candidates": [
+        "专家评论",
+        "转嫁评论",
+        "专辑啊评论",
+        "转家评论",
+        "专家评伦",
+        "专家评轮",
+        "转加评论",
+        "专家平伦",
+        "专家"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuanshuneirong",
+      "expected": "转述内容",
+      "source": "5500",
+      "lookup_us": 3472,
+      "candidates": [
+        "转述内容",
+        "专属内容",
+        "篆书内容",
+        "专书内容",
+        "传输内容",
+        "转属内容",
+        "专署内容",
+        "转数内容",
+        "篆书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ziliaoshipin",
+      "expected": "资料视频",
+      "source": "5500",
+      "lookup_us": 5658,
+      "candidates": [
+        "资料视频",
+        "资料食品",
+        "资料饰品",
+        "字了食品",
+        "自了食品",
+        "字了视频",
+        "自了视频",
+        "资料是品",
+        "资料室"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ziliaotu",
+      "expected": "资料图",
+      "source": "5500",
+      "lookup_us": 3248,
+      "candidates": [
+        "资料图",
+        "资料土",
+        "资料兔",
+        "资料突",
+        "资料途",
+        "资料吐",
+        "资料涂",
+        "资料徒",
+        "资料"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zuizhongjielun",
+      "expected": "最终结论",
+      "source": "5500",
+      "lookup_us": 4577,
+      "candidates": [
+        "最终结论",
+        "最终杰伦",
+        "最重结论",
+        "最终结伦",
+        "最终接伦",
+        "最终接论",
+        "最终结轮",
+        "最终接轮",
+        "最终"
+      ],
+      "expected_rank": 1
+    }
+  ]
+}
