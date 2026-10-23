@@ -1,5 +1,9 @@
 # 词库覆盖率评估
 
+## 第34轮重测（批次 414–419）
+
+使用原生引擎、Unicode 官方 Unihan 17.0.0 与 jieba 0.42.1，在本轮全部词冻结后测量；没有依据测量缺词补词。三层词库共 284129 个拼音词面组合，283631 个不同词面。完整结果见 [lexicon-coverage.json](lexicon-coverage.json)；候选与准确率见 [本轮报告](lexicon-keep-adding-round34.md)。仓库外 Tatoeba 日常句子和中文维基新闻未重测。
+
 ## 第33轮重测（自查修正批次 231、239、318；无新增批次）
 
 使用原生引擎、Unicode 官方 Unihan 17.0.0 与 jieba 0.42.1，在本轮全部词冻结后测量；没有依据测量缺词补词。三层词库共 283665 个拼音词面组合，283167 个不同词面。完整结果见 [lexicon-coverage.json](lexicon-coverage.json)；候选与准确率见 [本轮报告](lexicon-keep-adding-round33.md)。仓库外 Tatoeba 日常句子和中文维基新闻未重测。
