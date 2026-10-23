@@ -1,0 +1,5450 @@
+{
+  "batch": "lexicon_batch_358",
+  "evaluation": "native_engine_candidate_coverage",
+  "evaluated_at_utc": "2026-10-23T18:35:08.678728+00:00",
+  "engine_sha256": "f386e80d11e8702d30292f79af26e7f43f879aeb68e65fa7679b117eef673734",
+  "resource_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "b546ad394b8cee3c549c2f93b9124b5598f012081cbfaae8f710b8bd846a12ff",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+    "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+    "continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e"
+  },
+  "frozen_batch_sha256": "6aa6ff41e0151453dd2c226e1df0423b04c41628caa4d83f3ab961e8676c8d99",
+  "personal_data_isolated": true,
+  "expected_answers_learned": false,
+  "summary": {
+    "cases": 301,
+    "top1_correct": 260,
+    "top9_present": 301,
+    "top1_percent": 86.38,
+    "top9_percent": 100.0,
+    "character_error_rate": 0.0719,
+    "p50_lookup_ms": 3.548,
+    "p95_lookup_ms": 7.166,
+    "max_lookup_ms": 9.752,
+    "missing_from_top9_count": 0,
+    "missing_from_top9": [],
+    "max_returned_candidate_count": 9
+  },
+  "rows": [
+    {
+      "pinyin": "beikou",
+      "expected": "杯口",
+      "source": "5000",
+      "lookup_us": 3933,
+      "candidates": [
+        "被扣",
+        "杯口",
+        "备扣",
+        "北口",
+        "被口",
+        "贝口",
+        "北扣",
+        "倍口",
+        "北"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "ganpi",
+      "expected": "干坯",
+      "source": "5000",
+      "lookup_us": 2059,
+      "candidates": [
+        "擀皮",
+        "干皮",
+        "干坯",
+        "甘皮",
+        "干批",
+        "感皮",
+        "甘批",
+        "敢皮",
+        "干"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "pingjian",
+      "expected": "瓶肩",
+      "source": "5000",
+      "lookup_us": 5260,
+      "candidates": [
+        "平剪",
+        "瓶肩",
+        "平间",
+        "平肩",
+        "评鉴",
+        "平见",
+        "平建",
+        "平健",
+        "评价"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "shiyou",
+      "expected": "施釉",
+      "source": "5000",
+      "lookup_us": 1433,
+      "candidates": [
+        "是由",
+        "石油",
+        "是有",
+        "室友",
+        "时有",
+        "事由",
+        "史游",
+        "施釉",
+        "是"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "supi",
+      "expected": "素坯",
+      "source": "5000",
+      "lookup_us": 921,
+      "candidates": [
+        "酥皮",
+        "素坯",
+        "苏皮",
+        "素皮",
+        "苏批",
+        "苏啤",
+        "素批",
+        "速批",
+        "素"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zhanjie",
+      "expected": "粘接",
+      "source": "5000",
+      "lookup_us": 3127,
+      "candidates": [
+        "粘接",
+        "站姐",
+        "站接",
+        "战结",
+        "展结",
+        "站结",
+        "站解",
+        "占街",
+        "战绩"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "beiba",
+      "expected": "杯把",
+      "source": "5500",
+      "lookup_us": 1050,
+      "candidates": [
+        "杯把",
+        "被罢",
+        "被吧",
+        "北吧",
+        "被巴",
+        "背吧",
+        "贝吧",
+        "被把",
+        "北"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "beidi",
+      "expected": "杯底",
+      "source": "5500",
+      "lookup_us": 988,
+      "candidates": [
+        "贝蒂",
+        "杯底",
+        "被第",
+        "倍的",
+        "被地",
+        "北地",
+        "北的",
+        "北迪",
+        "北"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "beier",
+      "expected": "杯耳",
+      "source": "5500",
+      "lookup_us": 1316,
+      "candidates": [
+        "贝尔",
+        "杯耳",
+        "北二",
+        "贝儿",
+        "被二",
+        "被而",
+        "被儿",
+        "卑尔",
+        "北"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "beishen",
+      "expected": "杯身",
+      "source": "5500",
+      "lookup_us": 1636,
+      "candidates": [
+        "背身",
+        "杯身",
+        "北深",
+        "被深",
+        "杯申",
+        "被审",
+        "被身",
+        "被神",
+        "北"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "bolangbian",
+      "expected": "波浪边",
+      "source": "5500",
+      "lookup_us": 4792,
+      "candidates": [
+        "波浪边",
+        "波浪变",
+        "波浪便",
+        "波浪编",
+        "波浪辩",
+        "波浪遍",
+        "波浪扁",
+        "波浪辨",
+        "波浪"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "cainibaocun",
+      "expected": "彩泥保存",
+      "source": "5500",
+      "lookup_us": 3548,
+      "candidates": [
+        "彩泥保存",
+        "才你保存",
+        "蔡倪保存",
+        "猜你保存",
+        "才呢保存",
+        "菜呢保存",
+        "才尼保存",
+        "才拟保存",
+        "彩泥"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "cainimuju",
+      "expected": "彩泥模具",
+      "source": "5500",
+      "lookup_us": 2500,
+      "candidates": [
+        "彩泥模具",
+        "蔡倪模具",
+        "才你模具",
+        "猜你模具",
+        "才逆模具",
+        "才呢模具",
+        "才尼模具",
+        "菜呢模具",
+        "彩泥"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "cainishougong",
+      "expected": "彩泥手工",
+      "source": "5500",
+      "lookup_us": 1987,
+      "candidates": [
+        "彩泥手工",
+        "才你收工",
+        "才你手工",
+        "蔡倪收工",
+        "蔡倪手工",
+        "猜你收工",
+        "猜你手工",
+        "才呢收工",
+        "彩泥"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "cainitaozhuang",
+      "expected": "彩泥套装",
+      "source": "5500",
+      "lookup_us": 5067,
+      "candidates": [
+        "彩泥套装",
+        "蔡倪套装",
+        "才你套装",
+        "猜你套装",
+        "才尼套装",
+        "才呢套装",
+        "才拟套装",
+        "才妮套装",
+        "彩泥"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "cainiwanju",
+      "expected": "彩泥玩具",
+      "source": "5500",
+      "lookup_us": 3938,
+      "candidates": [
+        "彩泥玩具",
+        "才你玩具",
+        "猜你玩具",
+        "蔡倪玩具",
+        "才呢玩具",
+        "菜呢玩具",
+        "才尼玩具",
+        "蔡倪婉拒",
+        "彩泥"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "cainizhizuo",
+      "expected": "彩泥制作",
+      "source": "5500",
+      "lookup_us": 3143,
+      "candidates": [
+        "彩泥制作",
+        "踩你之作",
+        "蔡倪制作",
+        "才你制作",
+        "才你之作",
+        "才尼制作",
+        "蔡倪之作",
+        "才呢制作",
+        "彩泥"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caiseniantu",
+      "expected": "彩色黏土",
+      "source": "5500",
+      "lookup_us": 3341,
+      "candidates": [
+        "彩色黏土",
+        "彩色粘土",
+        "彩色年图",
+        "彩色年土",
+        "彩色念图",
+        "才色黏土",
+        "彩色年兔",
+        "彩色年徒",
+        "彩色"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caisu",
+      "expected": "彩塑",
+      "source": "5500",
+      "lookup_us": 646,
+      "candidates": [
+        "彩塑",
+        "蔡素",
+        "才素",
+        "才苏",
+        "才速",
+        "蔡苏",
+        "才诉",
+        "蔡速",
+        "才"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chaiyao",
+      "expected": "柴窑",
+      "source": "5500",
+      "lookup_us": 1023,
+      "candidates": [
+        "柴窑",
+        "差要",
+        "柴要",
+        "拆要",
+        "柴药",
+        "拆药",
+        "差药",
+        "柴腰",
+        "拆"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chaoqingniantu",
+      "expected": "超轻黏土",
+      "source": "5500",
+      "lookup_us": 5962,
+      "candidates": [
+        "超轻黏土",
+        "炒青年土",
+        "炒青年图",
+        "超青年土",
+        "超青年图",
+        "炒青年兔",
+        "炒青年徒",
+        "炒青黏土",
+        "超清"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chuyao",
+      "expected": "出窑",
+      "source": "5500",
+      "lookup_us": 2018,
+      "candidates": [
+        "出窑",
+        "除要",
+        "出要",
+        "处要",
+        "初要",
+        "除药",
+        "楚要",
+        "出药",
+        "出芽"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "cini",
+      "expected": "瓷泥",
+      "source": "5500",
+      "lookup_us": 956,
+      "candidates": [
+        "瓷泥",
+        "次呢",
+        "此你",
+        "此呢",
+        "次你",
+        "词呢",
+        "刺呢",
+        "词你",
+        "次"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "citu",
+      "expected": "瓷土",
+      "source": "5500",
+      "lookup_us": 653,
+      "candidates": [
+        "瓷土",
+        "此图",
+        "次图",
+        "此土",
+        "次土",
+        "次突",
+        "此突",
+        "此兔",
+        "次"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "cuochang",
+      "expected": "搓长",
+      "source": "5500",
+      "lookup_us": 2809,
+      "candidates": [
+        "搓长",
+        "错长",
+        "错唱",
+        "错场",
+        "错厂",
+        "错常",
+        "错昌",
+        "错肠",
+        "错"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "cuonitiao",
+      "expected": "搓泥条",
+      "source": "5500",
+      "lookup_us": 3660,
+      "candidates": [
+        "搓泥条",
+        "错你条",
+        "错你跳",
+        "错你调",
+        "错你挑",
+        "错呢条",
+        "错呢调",
+        "错泥条",
+        "搓泥"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "damobeikou",
+      "expected": "打磨杯口",
+      "source": "5500",
+      "lookup_us": 2645,
+      "candidates": [
+        "打磨杯口",
+        "达摩被扣",
+        "打磨被扣",
+        "达摩北口",
+        "打磨北口",
+        "大莫被扣",
+        "打莫被扣",
+        "大魔被扣",
+        "打磨"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "damodibu",
+      "expected": "打磨底部",
+      "source": "5500",
+      "lookup_us": 3352,
+      "candidates": [
+        "打磨底部",
+        "达摩地步",
+        "达摩底部",
+        "打磨地步",
+        "大漠地步",
+        "打磨的不",
+        "大么地步",
+        "大莫底部",
+        "打磨"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "damomaobian",
+      "expected": "打磨毛边",
+      "source": "5500",
+      "lookup_us": 6505,
+      "candidates": [
+        "打磨毛边",
+        "打磨冒遍",
+        "达摩毛边",
+        "打磨毛变",
+        "打磨毛扁",
+        "打磨猫褊",
+        "打磨毛便",
+        "达摩毛变",
+        "打磨"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "diandongzhuantai",
+      "expected": "电动转台",
+      "source": "5500",
+      "lookup_us": 6873,
+      "candidates": [
+        "电动转台",
+        "电动砖台",
+        "电动转太",
+        "电动传台",
+        "电动转泰",
+        "电动传太",
+        "电动专台",
+        "电动专太",
+        "电动"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dianyao",
+      "expected": "电窑",
+      "source": "5500",
+      "lookup_us": 2835,
+      "candidates": [
+        "电窑",
+        "点要",
+        "点药",
+        "店要",
+        "电要",
+        "点遥",
+        "点腰",
+        "点邀",
+        "电压"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "diaosudao",
+      "expected": "雕塑刀",
+      "source": "5500",
+      "lookup_us": 3531,
+      "candidates": [
+        "雕塑刀",
+        "雕塑到",
+        "雕塑道",
+        "雕塑倒",
+        "雕塑岛",
+        "雕塑导",
+        "雕塑盗",
+        "雕塑稻",
+        "雕塑"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "diaosugongju",
+      "expected": "雕塑工具",
+      "source": "5500",
+      "lookup_us": 3802,
+      "candidates": [
+        "雕塑工具",
+        "调速工具",
+        "吊酥工具",
+        "调苏工具",
+        "雕塑工局",
+        "调素工具",
+        "吊速工具",
+        "雕塑供居",
+        "雕塑"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "diaosuni",
+      "expected": "雕塑泥",
+      "source": "5500",
+      "lookup_us": 3178,
+      "candidates": [
+        "雕塑泥",
+        "雕塑你",
+        "雕塑呢",
+        "雕塑尼",
+        "雕塑妮",
+        "雕塑拟",
+        "雕塑腻",
+        "雕塑逆",
+        "雕塑"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "diwenshaozhi",
+      "expected": "低温烧制",
+      "source": "5500",
+      "lookup_us": 4327,
+      "candidates": [
+        "低温烧制",
+        "低温烧纸",
+        "低温烧至",
+        "低温少至",
+        "的温烧制",
+        "低温烧汁",
+        "低温少之",
+        "低温少指",
+        "低温"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "diwenyou",
+      "expected": "低温釉",
+      "source": "5500",
+      "lookup_us": 2552,
+      "candidates": [
+        "低温釉",
+        "低温有",
+        "的问囿",
+        "低温由",
+        "低温油",
+        "低温又",
+        "低温游",
+        "低温友",
+        "低温"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ertongtaoyi",
+      "expected": "儿童陶艺",
+      "source": "5500",
+      "lookup_us": 3227,
+      "candidates": [
+        "儿童陶艺",
+        "儿童逃逸",
+        "而同逃逸",
+        "儿童套以",
+        "儿童套衣",
+        "儿童套一",
+        "儿童讨以",
+        "儿童陶伊",
+        "儿童"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "feini",
+      "expected": "废泥",
+      "source": "5500",
+      "lookup_us": 1150,
+      "candidates": [
+        "废泥",
+        "菲尼",
+        "费你",
+        "非你",
+        "非呢",
+        "费呢",
+        "菲呢",
+        "腓尼",
+        "非"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fengganniantu",
+      "expected": "风干黏土",
+      "source": "5500",
+      "lookup_us": 4584,
+      "candidates": [
+        "风干黏土",
+        "丰干黏土",
+        "风干粘土",
+        "风感念图",
+        "风感黏土",
+        "封感念图",
+        "封感黏土",
+        "风杆黏土",
+        "风干"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganni",
+      "expected": "干泥",
+      "source": "5500",
+      "lookup_us": 1228,
+      "candidates": [
+        "干泥",
+        "肝泥",
+        "干你",
+        "咁你",
+        "甘尼",
+        "感呢",
+        "甘你",
+        "赶你",
+        "干"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gannibang",
+      "expected": "擀泥棒",
+      "source": "5500",
+      "lookup_us": 3330,
+      "candidates": [
+        "擀泥棒",
+        "干你帮",
+        "咁你帮",
+        "干你棒",
+        "干你邦",
+        "干你榜",
+        "甘你帮",
+        "感你帮",
+        "肝泥"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gannipian",
+      "expected": "擀泥片",
+      "source": "5500",
+      "lookup_us": 3240,
+      "candidates": [
+        "擀泥片",
+        "干你骗",
+        "干你便",
+        "干你片",
+        "干你篇",
+        "干你偏",
+        "咁你骗",
+        "咁你便",
+        "肝泥"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gannizhang",
+      "expected": "擀泥杖",
+      "source": "5500",
+      "lookup_us": 3624,
+      "candidates": [
+        "擀泥杖",
+        "干你长",
+        "干你掌",
+        "干你张",
+        "干你章",
+        "干你涨",
+        "咁你长",
+        "干你丈",
+        "肝泥"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganpian",
+      "expected": "擀片",
+      "source": "5500",
+      "lookup_us": 2320,
+      "candidates": [
+        "擀片",
+        "干片",
+        "肝片",
+        "甘片",
+        "干篇",
+        "敢片",
+        "感片",
+        "甘篇",
+        "擀皮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganping",
+      "expected": "擀平",
+      "source": "5500",
+      "lookup_us": 1805,
+      "candidates": [
+        "擀平",
+        "干平",
+        "甘平",
+        "干评",
+        "甘评",
+        "敢平",
+        "感平",
+        "干凭",
+        "擀皮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganzaoguocheng",
+      "expected": "干燥过程",
+      "source": "5500",
+      "lookup_us": 4877,
+      "candidates": [
+        "干燥过程",
+        "赶早过程",
+        "感造过程",
+        "干造过程",
+        "干早过程",
+        "干燥国城",
+        "干燥过成",
+        "干燥过称",
+        "干燥"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganzaoshijian",
+      "expected": "干燥时间",
+      "source": "5500",
+      "lookup_us": 7118,
+      "candidates": [
+        "干燥时间",
+        "干燥事件",
+        "干燥实践",
+        "干燥世间",
+        "干燥尸检",
+        "赶早时间",
+        "赶早事件",
+        "干燥是件",
+        "干燥"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gaolingtu",
+      "expected": "高岭土",
+      "source": "5500",
+      "lookup_us": 3312,
+      "candidates": [
+        "高岭土",
+        "高领土",
+        "搞领土",
+        "高龄图",
+        "高龄土",
+        "告领土",
+        "高龄兔",
+        "高龄突",
+        "高龄"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gaowenshaozhi",
+      "expected": "高温烧制",
+      "source": "5500",
+      "lookup_us": 4508,
+      "candidates": [
+        "高温烧制",
+        "高温烧纸",
+        "高温烧至",
+        "高温烧汁",
+        "高温烧指",
+        "高温烧之",
+        "高温少至",
+        "高温烧值",
+        "高温"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gaowenyou",
+      "expected": "高温釉",
+      "source": "5500",
+      "lookup_us": 3699,
+      "candidates": [
+        "高温釉",
+        "高温有",
+        "高温由",
+        "高温油",
+        "高温又",
+        "高温游",
+        "高温友",
+        "高温优",
+        "高温"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gaozu",
+      "expected": "高足",
+      "source": "5500",
+      "lookup_us": 907,
+      "candidates": [
+        "高足",
+        "高卒",
+        "高祖",
+        "高组",
+        "高租",
+        "搞组",
+        "高族",
+        "高阻",
+        "高"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guandi",
+      "expected": "罐底",
+      "source": "5500",
+      "lookup_us": 1928,
+      "candidates": [
+        "官邸",
+        "罐底",
+        "管的",
+        "关地",
+        "馆的",
+        "观的",
+        "官的",
+        "关的",
+        "管"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "guangai",
+      "expected": "罐盖",
+      "source": "5500",
+      "lookup_us": 2716,
+      "candidates": [
+        "灌溉",
+        "罐盖",
+        "光爱",
+        "关改",
+        "官改",
+        "管该",
+        "管改",
+        "关该",
+        "光"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "guanidao",
+      "expected": "刮泥刀",
+      "source": "5500",
+      "lookup_us": 3621,
+      "candidates": [
+        "刮泥刀",
+        "刮腻到",
+        "刮腻道",
+        "刮腻倒",
+        "刮腻岛",
+        "刮腻刀",
+        "刮腻导",
+        "瓜你到",
+        "刮腻"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guankou",
+      "expected": "罐口",
+      "source": "5500",
+      "lookup_us": 1498,
+      "candidates": [
+        "关口",
+        "管口",
+        "贯口",
+        "罐口",
+        "关扣",
+        "官口",
+        "冠口",
+        "观口",
+        "管"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "guapian",
+      "expected": "刮片",
+      "source": "5500",
+      "lookup_us": 3005,
+      "candidates": [
+        "刮片",
+        "瓜片",
+        "挂片",
+        "瓜篇",
+        "挂篇",
+        "胍片",
+        "瓜便",
+        "瓜偏",
+        "刮皮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "houbobuyun",
+      "expected": "厚薄不匀",
+      "source": "5500",
+      "lookup_us": 3696,
+      "candidates": [
+        "厚薄不匀",
+        "后播不孕",
+        "后波不孕",
+        "后播不允",
+        "后拨不孕",
+        "后播不匀",
+        "后博不孕",
+        "后薄不孕",
+        "后拨"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huazhuangtu",
+      "expected": "化妆土",
+      "source": "5500",
+      "lookup_us": 3921,
+      "candidates": [
+        "化妆土",
+        "化妆图",
+        "化妆兔",
+        "化妆突",
+        "化妆途",
+        "化妆吐",
+        "化妆涂",
+        "化妆徒",
+        "化妆"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huba",
+      "expected": "壶把",
+      "source": "5500",
+      "lookup_us": 1149,
+      "candidates": [
+        "壶把",
+        "壶八",
+        "湖吧",
+        "胡吧",
+        "许吧",
+        "户吧",
+        "虎吧",
+        "呼吧",
+        "Hub"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huniu",
+      "expected": "壶钮",
+      "source": "5500",
+      "lookup_us": 1273,
+      "candidates": [
+        "壶钮",
+        "胡牛",
+        "湖牛",
+        "户牛",
+        "虎牛",
+        "许牛",
+        "护牛",
+        "互牛",
+        "混"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "hushen",
+      "expected": "壶身",
+      "source": "5500",
+      "lookup_us": 1552,
+      "candidates": [
+        "沪深",
+        "壶身",
+        "胡什",
+        "胡神",
+        "护身",
+        "胡深",
+        "胡身",
+        "护神",
+        "Hush"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "huzui",
+      "expected": "壶嘴",
+      "source": "5500",
+      "lookup_us": 909,
+      "candidates": [
+        "壶嘴",
+        "户觜",
+        "胡最",
+        "湖最",
+        "胡罪",
+        "户最",
+        "许最",
+        "胡嘴",
+        "胡"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiehe",
+      "expected": "接合",
+      "source": "5500",
+      "lookup_us": 1784,
+      "candidates": [
+        "结合",
+        "结核",
+        "接合",
+        "饥饿和",
+        "届和",
+        "杰和",
+        "街和",
+        "接和",
+        "接"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "jiejingyou",
+      "expected": "结晶釉",
+      "source": "5500",
+      "lookup_us": 4503,
+      "candidates": [
+        "结晶釉",
+        "结晶有",
+        "洁净有",
+        "洁净油",
+        "洁净又",
+        "捷径有",
+        "洁净由",
+        "结晶由",
+        "接警"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jinyou",
+      "expected": "浸釉",
+      "source": "5500",
+      "lookup_us": 1298,
+      "candidates": [
+        "仅有",
+        "浸釉",
+        "仅由",
+        "近有",
+        "金由",
+        "金有",
+        "今有",
+        "近优",
+        "近"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "kaikong",
+      "expected": "开孔",
+      "source": "5500",
+      "lookup_us": 567,
+      "candidates": [
+        "开孔",
+        "开空",
+        "开控",
+        "凯空",
+        "开恐",
+        "凯控",
+        "凯孔",
+        "凯恐",
+        "开"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kaipianyou",
+      "expected": "开片釉",
+      "source": "5500",
+      "lookup_us": 2867,
+      "candidates": [
+        "开片釉",
+        "开篇有",
+        "开篇由",
+        "开片有",
+        "开片由",
+        "开便有",
+        "开篇又",
+        "开篇游",
+        "开篇"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kewen",
+      "expected": "刻纹",
+      "source": "5500",
+      "lookup_us": 950,
+      "candidates": [
+        "课文",
+        "刻纹",
+        "可问",
+        "柯文",
+        "克文",
+        "可文",
+        "科文",
+        "科问",
+        "课"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "kezhen",
+      "expected": "刻针",
+      "source": "5500",
+      "lookup_us": 1993,
+      "candidates": [
+        "可真",
+        "刻针",
+        "科镇",
+        "克镇",
+        "柯震",
+        "科真",
+        "可针",
+        "可镇",
+        "可这"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "lapichengxing",
+      "expected": "拉坯成型",
+      "source": "5500",
+      "lookup_us": 5497,
+      "candidates": [
+        "拉坯成型",
+        "拉皮成行",
+        "拉坯成行",
+        "拉皮成形",
+        "拉皮成型",
+        "拉坯成形",
+        "拉批成行",
+        "拉批成形",
+        "拉坯"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lapiji",
+      "expected": "拉坯机",
+      "source": "5500",
+      "lookup_us": 1869,
+      "candidates": [
+        "拉坯机",
+        "拉皮及",
+        "拉皮鸡",
+        "拉皮记",
+        "拉皮机",
+        "拉坯及",
+        "拉皮集",
+        "拉皮基",
+        "拉坯"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lapilianxi",
+      "expected": "拉坯练习",
+      "source": "5500",
+      "lookup_us": 5380,
+      "candidates": [
+        "拉坯练习",
+        "拉皮联系",
+        "拉坯联系",
+        "拉皮练习",
+        "拉批联系",
+        "拉批练习",
+        "拉匹联系",
+        "拉披联系",
+        "拉坯"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lapizhuanpan",
+      "expected": "拉坯转盘",
+      "source": "5500",
+      "lookup_us": 5044,
+      "candidates": [
+        "拉坯转盘",
+        "拉皮转盘",
+        "拉批转盘",
+        "拉匹转盘",
+        "拉披转盘",
+        "拉屁转盘",
+        "拉辟转盘",
+        "辣皮转盘",
+        "拉坯"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "liangguangyou",
+      "expected": "亮光釉",
+      "source": "5500",
+      "lookup_us": 4950,
+      "candidates": [
+        "亮光釉",
+        "亮光有",
+        "两广有",
+        "两广由",
+        "亮光又",
+        "亮光游",
+        "亮光油",
+        "亮光由",
+        "亮光"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "liangpi",
+      "expected": "晾坯",
+      "source": "5500",
+      "lookup_us": 2043,
+      "candidates": [
+        "凉皮",
+        "晾坯",
+        "两批",
+        "两匹",
+        "两皮",
+        "梁皮",
+        "梁批",
+        "量批",
+        "两"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "lianni",
+      "expected": "练泥",
+      "source": "5500",
+      "lookup_us": 1694,
+      "candidates": [
+        "练泥",
+        "连你",
+        "连呢",
+        "连尼",
+        "李安你",
+        "李安妮",
+        "脸呢",
+        "脸你",
+        "立案"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "liekou",
+      "expected": "裂口",
+      "source": "5500",
+      "lookup_us": 1211,
+      "candidates": [
+        "裂口",
+        "列口",
+        "列扣",
+        "猎口",
+        "烈口",
+        "猎扣",
+        "烈扣",
+        "裂扣",
+        "列"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "linyou",
+      "expected": "淋釉",
+      "source": "5500",
+      "lookup_us": 1292,
+      "candidates": [
+        "淋釉",
+        "林有",
+        "林又",
+        "林宥",
+        "膦有",
+        "林由",
+        "林优",
+        "林游",
+        "林"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "miansu",
+      "expected": "面塑",
+      "source": "5500",
+      "lookup_us": 1924,
+      "candidates": [
+        "面塑",
+        "免俗",
+        "面速",
+        "面素",
+        "面苏",
+        "免素",
+        "免苏",
+        "面酥",
+        "面"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "miansutiyan",
+      "expected": "面塑体验",
+      "source": "5500",
+      "lookup_us": 4645,
+      "candidates": [
+        "面塑体验",
+        "面宿体验",
+        "免宿体验",
+        "面素体验",
+        "免俗体验",
+        "面速体验",
+        "免素体验",
+        "面苏体验",
+        "面塑"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "miansuzuopin",
+      "expected": "面塑作品",
+      "source": "5500",
+      "lookup_us": 5122,
+      "candidates": [
+        "面塑作品",
+        "面素作品",
+        "免素作品",
+        "面速作品",
+        "免俗作品",
+        "面苏作品",
+        "免速作品",
+        "免苏作品",
+        "面塑"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mudao",
+      "expected": "木刀",
+      "source": "5500",
+      "lookup_us": 1341,
+      "candidates": [
+        "墓道",
+        "木刀",
+        "母到",
+        "母道",
+        "木到",
+        "慕到",
+        "木倒",
+        "穆到",
+        "Mud"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "mujuchengxing",
+      "expected": "模具成型",
+      "source": "5500",
+      "lookup_us": 5936,
+      "candidates": [
+        "模具成型",
+        "模具成行",
+        "模具成形",
+        "母聚成行",
+        "母据称性",
+        "模据称幸",
+        "模具盛行",
+        "母局成行",
+        "模具"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "naiyouniantu",
+      "expected": "奶油黏土",
+      "source": "5500",
+      "lookup_us": 4746,
+      "candidates": [
+        "奶油黏土",
+        "奶油粘土",
+        "奶油年图",
+        "奶油年土",
+        "奶油念图",
+        "奶油年兔",
+        "奶油年徒",
+        "奶油年突",
+        "奶油"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niantubaijian",
+      "expected": "黏土摆件",
+      "source": "5500",
+      "lookup_us": 6044,
+      "candidates": [
+        "黏土摆件",
+        "年土拜见",
+        "黏土拜见",
+        "年徒拜见",
+        "年图拜见",
+        "年突拜见",
+        "年吐拜见",
+        "年土百件",
+        "粘土"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niantubaocun",
+      "expected": "黏土保存",
+      "source": "5500",
+      "lookup_us": 4292,
+      "candidates": [
+        "黏土保存",
+        "年图保存",
+        "年土保存",
+        "年徒保存",
+        "念图保存",
+        "年突保存",
+        "年吐保存",
+        "年途保存",
+        "粘土"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niantudangao",
+      "expected": "黏土蛋糕",
+      "source": "5500",
+      "lookup_us": 5818,
+      "candidates": [
+        "黏土蛋糕",
+        "年土蛋糕",
+        "年徒蛋糕",
+        "年图蛋糕",
+        "年突蛋糕",
+        "年吐蛋糕",
+        "年途蛋糕",
+        "年涂蛋糕",
+        "粘土"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niantudongwu",
+      "expected": "黏土动物",
+      "source": "5500",
+      "lookup_us": 3216,
+      "candidates": [
+        "黏土动物",
+        "年土动物",
+        "年徒动物",
+        "年图动物",
+        "年土动武",
+        "年突动物",
+        "黏土动武",
+        "年吐动物",
+        "粘土"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niantugongju",
+      "expected": "黏土工具",
+      "source": "5500",
+      "lookup_us": 2802,
+      "candidates": [
+        "黏土工具",
+        "年土工具",
+        "年徒工具",
+        "年图工具",
+        "年突工具",
+        "年吐工具",
+        "年途工具",
+        "年涂工具",
+        "粘土"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niantuguajian",
+      "expected": "黏土挂件",
+      "source": "5500",
+      "lookup_us": 6696,
+      "candidates": [
+        "黏土挂件",
+        "年土挂件",
+        "年图挂件",
+        "年徒挂件",
+        "年突挂件",
+        "年土瓜见",
+        "年吐挂件",
+        "年途挂件",
+        "粘土"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niantuhuaduo",
+      "expected": "黏土花朵",
+      "source": "5500",
+      "lookup_us": 4857,
+      "candidates": [
+        "黏土花朵",
+        "年土花朵",
+        "年徒花朵",
+        "年图花朵",
+        "年突花朵",
+        "年图画多",
+        "年吐花朵",
+        "年途花朵",
+        "粘土"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niantuhunse",
+      "expected": "黏土混色",
+      "source": "5500",
+      "lookup_us": 3080,
+      "candidates": [
+        "黏土混色",
+        "年土混色",
+        "年土婚色",
+        "年图混色",
+        "年徒混色",
+        "年土魂色",
+        "年土昏色",
+        "黏土婚色",
+        "粘土"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niantujiaocheng",
+      "expected": "黏土教程",
+      "source": "5500",
+      "lookup_us": 8386,
+      "candidates": [
+        "黏土教程",
+        "年土教程",
+        "年徒教程",
+        "年图教程",
+        "年突教程",
+        "年吐教程",
+        "年途教程",
+        "年涂教程",
+        "粘土"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niantukailie",
+      "expected": "黏土开裂",
+      "source": "5500",
+      "lookup_us": 4656,
+      "candidates": [
+        "黏土开裂",
+        "年土开裂",
+        "年图开裂",
+        "年徒开裂",
+        "年突开裂",
+        "年途开裂",
+        "年吐开裂",
+        "年涂开裂",
+        "粘土"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niantumifeng",
+      "expected": "黏土密封",
+      "source": "5500",
+      "lookup_us": 4305,
+      "candidates": [
+        "黏土密封",
+        "年土蜜蜂",
+        "黏土蜜蜂",
+        "年徒蜜蜂",
+        "年图蜜蜂",
+        "年土密封",
+        "年徒密封",
+        "年突蜜蜂",
+        "粘土"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niantumuju",
+      "expected": "黏土模具",
+      "source": "5500",
+      "lookup_us": 3174,
+      "candidates": [
+        "黏土模具",
+        "年土模具",
+        "年徒模具",
+        "年图模具",
+        "年土木局",
+        "年土木居",
+        "年土木剧",
+        "年土木具",
+        "粘土"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niantupeise",
+      "expected": "黏土配色",
+      "source": "5500",
+      "lookup_us": 2351,
+      "candidates": [
+        "黏土配色",
+        "年土配色",
+        "年徒配色",
+        "年图配色",
+        "年突配色",
+        "年吐配色",
+        "年途配色",
+        "年涂配色",
+        "粘土"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nianturumen",
+      "expected": "黏土入门",
+      "source": "5500",
+      "lookup_us": 3885,
+      "candidates": [
+        "黏土入门",
+        "年土入门",
+        "年徒入门",
+        "年突入门",
+        "年图入门",
+        "年吐入门",
+        "年途入门",
+        "年涂入门",
+        "粘土"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niantushipin",
+      "expected": "黏土饰品",
+      "source": "5500",
+      "lookup_us": 4336,
+      "candidates": [
+        "黏土饰品",
+        "年图视频",
+        "年土视频",
+        "年土食品",
+        "黏土视频",
+        "年徒视频",
+        "黏土食品",
+        "年徒食品",
+        "粘土"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niantushougong",
+      "expected": "黏土手工",
+      "source": "5500",
+      "lookup_us": 2995,
+      "candidates": [
+        "黏土手工",
+        "年徒手工",
+        "年土收工",
+        "年徒手共",
+        "黏土收工",
+        "年土手工",
+        "年图收工",
+        "年徒收工",
+        "粘土"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niantushouna",
+      "expected": "黏土收纳",
+      "source": "5500",
+      "lookup_us": 3059,
+      "candidates": [
+        "黏土收纳",
+        "年徒手拿",
+        "年土收纳",
+        "年徒手那",
+        "年图收纳",
+        "年徒手纳",
+        "年徒收纳",
+        "年徒手娜",
+        "粘土"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niantushuiguo",
+      "expected": "黏土水果",
+      "source": "5500",
+      "lookup_us": 4045,
+      "candidates": [
+        "黏土水果",
+        "年土水果",
+        "年徒水果",
+        "年图水果",
+        "年突水果",
+        "年土睡过",
+        "年吐水果",
+        "年途水果",
+        "粘土"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niantusuxing",
+      "expected": "黏土塑形",
+      "source": "5500",
+      "lookup_us": 4361,
+      "candidates": [
+        "黏土塑形",
+        "年土苏醒",
+        "黏土塑性",
+        "黏土苏醒",
+        "年徒苏醒",
+        "年图苏醒",
+        "年屠苏醒",
+        "年突苏醒",
+        "粘土"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niantutaozhuang",
+      "expected": "黏土套装",
+      "source": "5500",
+      "lookup_us": 5655,
+      "candidates": [
+        "黏土套装",
+        "年土套装",
+        "年徒套装",
+        "年图套装",
+        "年突套装",
+        "年吐套装",
+        "年途套装",
+        "年涂套装",
+        "粘土"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niantutiaose",
+      "expected": "黏土调色",
+      "source": "5500",
+      "lookup_us": 4468,
+      "candidates": [
+        "黏土调色",
+        "年土调色",
+        "年图调色",
+        "年徒调色",
+        "年突调色",
+        "年途调色",
+        "年吐调色",
+        "年涂调色",
+        "粘土"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niantutiyan",
+      "expected": "黏土体验",
+      "source": "5500",
+      "lookup_us": 4238,
+      "candidates": [
+        "黏土体验",
+        "年土体验",
+        "年徒体验",
+        "年图体验",
+        "年突体验",
+        "年吐体验",
+        "年途体验",
+        "年涂体验",
+        "粘土"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niantuwanou",
+      "expected": "黏土玩偶",
+      "source": "5500",
+      "lookup_us": 3427,
+      "candidates": [
+        "黏土玩偶",
+        "年土玩偶",
+        "年徒玩偶",
+        "年图玩偶",
+        "年突玩偶",
+        "年吐玩偶",
+        "年途玩偶",
+        "年涂玩偶",
+        "粘土"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niantuzhizuo",
+      "expected": "黏土制作",
+      "source": "5500",
+      "lookup_us": 4104,
+      "candidates": [
+        "黏土制作",
+        "年土制作",
+        "年土之作",
+        "年图制作",
+        "黏土之作",
+        "年徒制作",
+        "年徒之作",
+        "年突制作",
+        "粘土"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niantuzuopin",
+      "expected": "黏土作品",
+      "source": "5500",
+      "lookup_us": 4478,
+      "candidates": [
+        "黏土作品",
+        "年土作品",
+        "年徒作品",
+        "年图作品",
+        "年突作品",
+        "年吐作品",
+        "年途作品",
+        "年涂作品",
+        "粘土"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niban",
+      "expected": "泥板",
+      "source": "5500",
+      "lookup_us": 1388,
+      "candidates": [
+        "泥板",
+        "你班",
+        "你办",
+        "你搬",
+        "你半",
+        "泥版",
+        "你版",
+        "你板",
+        "泥巴"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nibanchengxing",
+      "expected": "泥板成型",
+      "source": "5500",
+      "lookup_us": 5933,
+      "candidates": [
+        "泥板成型",
+        "你办成行",
+        "你班成行",
+        "你办成形",
+        "你办成型",
+        "你半成行",
+        "你班成形",
+        "你班成型",
+        "泥板"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niebao",
+      "expected": "捏薄",
+      "source": "5500",
+      "lookup_us": 3735,
+      "candidates": [
+        "捏薄",
+        "捏报",
+        "你恶报",
+        "涅报",
+        "涅包",
+        "聂报",
+        "捏包",
+        "聂包",
+        "捏"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niesu",
+      "expected": "捏塑",
+      "source": "5500",
+      "lookup_us": 1672,
+      "candidates": [
+        "捏塑",
+        "你恶俗",
+        "涅素",
+        "涅苏",
+        "涅速",
+        "捏素",
+        "捏苏",
+        "聂素",
+        "捏"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nietao",
+      "expected": "捏陶",
+      "source": "5500",
+      "lookup_us": 2286,
+      "candidates": [
+        "捏陶",
+        "涅套",
+        "捏套",
+        "聂套",
+        "涅逃",
+        "涅讨",
+        "捏逃",
+        "聂逃",
+        "捏"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nieyuan",
+      "expected": "捏圆",
+      "source": "5500",
+      "lookup_us": 3451,
+      "candidates": [
+        "聂远",
+        "捏圆",
+        "涅元",
+        "涅远",
+        "捏元",
+        "聂元",
+        "捏远",
+        "涅原",
+        "捏"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "nijiangzhanjie",
+      "expected": "泥浆粘接",
+      "source": "5500",
+      "lookup_us": 8568,
+      "candidates": [
+        "泥浆粘接",
+        "你将展结",
+        "你将展街",
+        "你将展节",
+        "你将站街",
+        "你将战街",
+        "你将占街",
+        "你将站接",
+        "你将"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nijiangzhuangshi",
+      "expected": "泥浆装饰",
+      "source": "5500",
+      "lookup_us": 7099,
+      "candidates": [
+        "泥浆装饰",
+        "你将装饰",
+        "你讲装饰",
+        "你将装时",
+        "拟将装饰",
+        "你将装是",
+        "你酱装饰",
+        "你江装饰",
+        "你将"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nikuai",
+      "expected": "泥块",
+      "source": "5500",
+      "lookup_us": 1937,
+      "candidates": [
+        "泥块",
+        "你会",
+        "你快",
+        "你块",
+        "拟快",
+        "尼快",
+        "拟块",
+        "你酷爱",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niliao",
+      "expected": "泥料",
+      "source": "5500",
+      "lookup_us": 2690,
+      "candidates": [
+        "泥料",
+        "你了",
+        "你聊",
+        "拟了",
+        "你料",
+        "你里奥",
+        "腻了",
+        "尼了",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nipian",
+      "expected": "泥片",
+      "source": "5500",
+      "lookup_us": 2177,
+      "candidates": [
+        "泥片",
+        "你骗",
+        "你便",
+        "你片",
+        "你篇",
+        "你偏",
+        "拟片",
+        "尼片",
+        "泥坯"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nipianchengxing",
+      "expected": "泥片成型",
+      "source": "5500",
+      "lookup_us": 6645,
+      "candidates": [
+        "泥片成型",
+        "你骗成行",
+        "你便成行",
+        "你骗成形",
+        "你骗成型",
+        "你片成行",
+        "你便成形",
+        "你便成型",
+        "泥片"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niqiu",
+      "expected": "泥球",
+      "source": "5500",
+      "lookup_us": 1441,
+      "candidates": [
+        "泥鳅",
+        "泥球",
+        "你求",
+        "你球",
+        "你秋",
+        "你丘",
+        "你囚",
+        "你仇",
+        "你"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "nishui",
+      "expected": "泥水",
+      "source": "5500",
+      "lookup_us": 1040,
+      "candidates": [
+        "溺水",
+        "泥水",
+        "逆水",
+        "你说",
+        "你睡",
+        "你水",
+        "你谁",
+        "尼说",
+        "你"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "nisudao",
+      "expected": "泥塑刀",
+      "source": "5500",
+      "lookup_us": 2541,
+      "candidates": [
+        "泥塑刀",
+        "你速到",
+        "你溯到",
+        "你素到",
+        "你苏到",
+        "你诉到",
+        "你苏道",
+        "你速道",
+        "泥塑"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nitiao",
+      "expected": "泥条",
+      "source": "5500",
+      "lookup_us": 2975,
+      "candidates": [
+        "泥条",
+        "你挑",
+        "你条",
+        "你跳",
+        "你调",
+        "拟条",
+        "拟调",
+        "拟跳",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nitiaopanzhu",
+      "expected": "泥条盘筑",
+      "source": "5500",
+      "lookup_us": 4833,
+      "candidates": [
+        "泥条盘筑",
+        "你挑盘住",
+        "你挑盘著",
+        "你挑盘主",
+        "你挑盼著",
+        "你挑判住",
+        "你挑判著",
+        "你挑盘猪",
+        "泥条"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nituan",
+      "expected": "泥团",
+      "source": "5500",
+      "lookup_us": 1763,
+      "candidates": [
+        "泥团",
+        "你团",
+        "你图案",
+        "尼团",
+        "拟团",
+        "拟图案",
+        "尼图案",
+        "倪团",
+        "泥土"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "pandi",
+      "expected": "盘底",
+      "source": "5500",
+      "lookup_us": 1100,
+      "candidates": [
+        "潘翟",
+        "盘底",
+        "番地",
+        "潘的",
+        "盘的",
+        "潘迪",
+        "潘地",
+        "潘第",
+        "盘"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "pannitiao",
+      "expected": "盘泥条",
+      "source": "5500",
+      "lookup_us": 3445,
+      "candidates": [
+        "盘泥条",
+        "叛逆条",
+        "叛逆调",
+        "叛逆跳",
+        "叛逆挑",
+        "潘尼条",
+        "潘尼调",
+        "潘尼跳",
+        "叛逆"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "panyan",
+      "expected": "盘沿",
+      "source": "5500",
+      "lookup_us": 2006,
+      "candidates": [
+        "攀岩",
+        "盘沿",
+        "潘彦",
+        "潘眼",
+        "潘言",
+        "潘演",
+        "潘烟",
+        "番言",
+        "盘"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "penyou",
+      "expected": "喷釉",
+      "source": "5500",
+      "lookup_us": 539,
+      "candidates": [
+        "喷釉",
+        "盆有",
+        "喷油",
+        "喷有",
+        "喷由",
+        "盆由",
+        "喷又",
+        "喷游",
+        "喷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "pingdi",
+      "expected": "瓶底",
+      "source": "5500",
+      "lookup_us": 1173,
+      "candidates": [
+        "平地",
+        "平底",
+        "瓶底",
+        "平的",
+        "凭第",
+        "平第",
+        "平低",
+        "坪地",
+        "平"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "pingkou",
+      "expected": "瓶口",
+      "source": "5500",
+      "lookup_us": 841,
+      "candidates": [
+        "瓶口",
+        "平口",
+        "平扣",
+        "凭口",
+        "屏扣",
+        "评口",
+        "凭扣",
+        "屏口",
+        "平"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "pingshen",
+      "expected": "瓶身",
+      "source": "5500",
+      "lookup_us": 2022,
+      "candidates": [
+        "评审",
+        "瓶身",
+        "凭身",
+        "凭什",
+        "平身",
+        "平神",
+        "平深",
+        "平甚",
+        "平舌"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "piti",
+      "expected": "坯体",
+      "source": "5500",
+      "lookup_us": 1092,
+      "candidates": [
+        "坯体",
+        "批踢",
+        "皮体",
+        "皮提",
+        "皮替",
+        "批提",
+        "皮题",
+        "批体",
+        "皮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "pitibianxing",
+      "expected": "坯体变形",
+      "source": "5500",
+      "lookup_us": 6601,
+      "candidates": [
+        "坯体变形",
+        "批踢变形",
+        "皮体变形",
+        "批踢变性",
+        "皮替变形",
+        "皮题变形",
+        "皮提变形",
+        "批提变形",
+        "坯体"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "pitikailie",
+      "expected": "坯体开裂",
+      "source": "5500",
+      "lookup_us": 3963,
+      "candidates": [
+        "坯体开裂",
+        "批踢开裂",
+        "批踢凯咧",
+        "皮体开裂",
+        "皮替开裂",
+        "皮踢开裂",
+        "皮提开裂",
+        "皮题开裂",
+        "坯体"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qiaobian",
+      "expected": "翘边",
+      "source": "5500",
+      "lookup_us": 4650,
+      "candidates": [
+        "翘边",
+        "桥边",
+        "敲边",
+        "乔变",
+        "乔边",
+        "桥变",
+        "巧辩",
+        "乔便",
+        "峭壁"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qiegemu",
+      "expected": "切割模",
+      "source": "5500",
+      "lookup_us": 2954,
+      "candidates": [
+        "切割模",
+        "切割目",
+        "切割木",
+        "切割母",
+        "切割姆",
+        "切割墓",
+        "切割幕",
+        "切割穆",
+        "切割"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qienidao",
+      "expected": "切泥刀",
+      "source": "5500",
+      "lookup_us": 3770,
+      "candidates": [
+        "切泥刀",
+        "且你到",
+        "切尼到",
+        "切尼道",
+        "切尼岛",
+        "切尼倒",
+        "切你到",
+        "切尼刀",
+        "切尼"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qienikuai",
+      "expected": "切泥块",
+      "source": "5500",
+      "lookup_us": 3810,
+      "candidates": [
+        "切泥块",
+        "切尼快",
+        "切尼会",
+        "且你快",
+        "切尼块",
+        "切你快",
+        "且你会",
+        "切你会",
+        "切尼"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qienixian",
+      "expected": "切泥线",
+      "source": "5500",
+      "lookup_us": 5438,
+      "candidates": [
+        "切泥线",
+        "切尼县",
+        "切尼先",
+        "切尼线",
+        "且呢贤",
+        "切尼现",
+        "切尼贤",
+        "切尼西安",
+        "切尼"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "rouyuan",
+      "expected": "揉圆",
+      "source": "5500",
+      "lookup_us": 1725,
+      "candidates": [
+        "肉圆",
+        "揉圆",
+        "肉元",
+        "肉远",
+        "肉原",
+        "肉源",
+        "肉园",
+        "肉员",
+        "肉"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "ruantaodamo",
+      "expected": "软陶打磨",
+      "source": "5500",
+      "lookup_us": 3959,
+      "candidates": [
+        "软陶打磨",
+        "阮套打磨",
+        "软套打磨",
+        "阮讨打磨",
+        "软讨打磨",
+        "阮陶打磨",
+        "软陶大漠",
+        "阮桃打磨",
+        "软陶"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ruantaodiaozhui",
+      "expected": "软陶吊坠",
+      "source": "5500",
+      "lookup_us": 5874,
+      "candidates": [
+        "软陶吊坠",
+        "阮套吊坠",
+        "软套吊坠",
+        "阮讨吊坠",
+        "软讨吊坠",
+        "阮陶吊坠",
+        "阮桃吊坠",
+        "阮逃吊坠",
+        "软陶"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ruantaoershi",
+      "expected": "软陶耳饰",
+      "source": "5500",
+      "lookup_us": 5079,
+      "candidates": [
+        "软陶耳饰",
+        "软陶二世",
+        "软陶二十",
+        "阮套二世",
+        "软套二世",
+        "阮套二十",
+        "软套二十",
+        "软陶而是",
+        "软陶"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ruantaogongju",
+      "expected": "软陶工具",
+      "source": "5500",
+      "lookup_us": 3404,
+      "candidates": [
+        "软陶工具",
+        "阮套工具",
+        "阮讨工具",
+        "软套工具",
+        "软讨工具",
+        "阮陶工具",
+        "阮桃工具",
+        "阮逃工具",
+        "软陶"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ruantaohongkao",
+      "expected": "软陶烘烤",
+      "source": "5500",
+      "lookup_us": 3586,
+      "candidates": [
+        "软陶烘烤",
+        "阮套烘烤",
+        "软套烘烤",
+        "阮讨烘烤",
+        "软讨烘烤",
+        "软陶宏考",
+        "阮陶烘烤",
+        "阮套红考",
+        "软陶"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ruantaokaoxiang",
+      "expected": "软陶烤箱",
+      "source": "5500",
+      "lookup_us": 7236,
+      "candidates": [
+        "软陶烤箱",
+        "阮套烤箱",
+        "软套烤箱",
+        "阮讨烤箱",
+        "软讨烤箱",
+        "阮陶烤箱",
+        "阮桃烤箱",
+        "阮逃烤箱",
+        "软陶"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ruantaoni",
+      "expected": "软陶泥",
+      "source": "5500",
+      "lookup_us": 4153,
+      "candidates": [
+        "软陶泥",
+        "阮套呢",
+        "软陶你",
+        "软套呢",
+        "软陶呢",
+        "阮套你",
+        "阮淘你",
+        "软套你",
+        "软陶"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ruantaopaoguang",
+      "expected": "软陶抛光",
+      "source": "5500",
+      "lookup_us": 6915,
+      "candidates": [
+        "软陶抛光",
+        "阮逃跑光",
+        "软逃跑光",
+        "阮套抛光",
+        "软套抛光",
+        "阮逃跑广",
+        "软逃跑广",
+        "阮讨抛光",
+        "软陶"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ruantaoqiepian",
+      "expected": "软陶切片",
+      "source": "5500",
+      "lookup_us": 8948,
+      "candidates": [
+        "软陶切片",
+        "阮套切片",
+        "软套切片",
+        "阮讨切片",
+        "软讨切片",
+        "阮陶切片",
+        "阮桃切片",
+        "阮逃切片",
+        "软陶"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ruantaoshangse",
+      "expected": "软陶上色",
+      "source": "5500",
+      "lookup_us": 4756,
+      "candidates": [
+        "软陶上色",
+        "阮套上色",
+        "软套上色",
+        "阮讨上色",
+        "软讨上色",
+        "阮陶上色",
+        "阮桃上色",
+        "阮套上塞",
+        "软陶"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ruantaoshipin",
+      "expected": "软陶饰品",
+      "source": "5500",
+      "lookup_us": 4518,
+      "candidates": [
+        "软陶饰品",
+        "软陶视频",
+        "软陶食品",
+        "阮套视频",
+        "软套视频",
+        "阮套食品",
+        "软套食品",
+        "阮讨视频",
+        "软陶"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ruantaoshougong",
+      "expected": "软陶手工",
+      "source": "5500",
+      "lookup_us": 3296,
+      "candidates": [
+        "软陶手工",
+        "阮套收工",
+        "软套收工",
+        "阮套手工",
+        "软陶收工",
+        "软套手工",
+        "阮讨收工",
+        "软讨收工",
+        "软陶"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ruantaozhizuo",
+      "expected": "软陶制作",
+      "source": "5500",
+      "lookup_us": 4212,
+      "candidates": [
+        "软陶制作",
+        "软陶之作",
+        "阮套制作",
+        "软套制作",
+        "阮讨制作",
+        "阮逃之作",
+        "阮讨之作",
+        "软讨制作",
+        "软陶"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ruantaozhuzi",
+      "expected": "软陶珠子",
+      "source": "5500",
+      "lookup_us": 4201,
+      "candidates": [
+        "软陶珠子",
+        "软陶注资",
+        "阮套注资",
+        "软套注资",
+        "软陶柱子",
+        "阮讨注资",
+        "软陶竹子",
+        "软讨注资",
+        "软陶"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ruyao",
+      "expected": "入窑",
+      "source": "5500",
+      "lookup_us": 1350,
+      "candidates": [
+        "如要",
+        "入窑",
+        "如姚",
+        "入药",
+        "如药",
+        "入要",
+        "如腰",
+        "如耀",
+        "儒雅"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "sejiang",
+      "expected": "色浆",
+      "source": "5500",
+      "lookup_us": 2549,
+      "candidates": [
+        "色浆",
+        "色将",
+        "塞将",
+        "瑟将",
+        "塞讲",
+        "塞奖",
+        "色讲",
+        "涩江",
+        "色"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "seni",
+      "expected": "色泥",
+      "source": "5500",
+      "lookup_us": 579,
+      "candidates": [
+        "色泥",
+        "色呢",
+        "塞你",
+        "色你",
+        "塞呢",
+        "瑟你",
+        "涩呢",
+        "瑟呢",
+        "森"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "seyou",
+      "expected": "色釉",
+      "source": "5500",
+      "lookup_us": 579,
+      "candidates": [
+        "色诱",
+        "色釉",
+        "色有",
+        "塞有",
+        "色油",
+        "瑟有",
+        "色由",
+        "塞由",
+        "色"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "shangyou",
+      "expected": "上釉",
+      "source": "5500",
+      "lookup_us": 1547,
+      "candidates": [
+        "上有",
+        "上游",
+        "尚有",
+        "商友",
+        "上油",
+        "上釉",
+        "上由",
+        "上又",
+        "上"
+      ],
+      "expected_rank": 6
+    },
+    {
+      "pinyin": "shaoyao",
+      "expected": "烧窑",
+      "source": "5500",
+      "lookup_us": 2081,
+      "candidates": [
+        "芍药",
+        "烧窑",
+        "少要",
+        "少药",
+        "烧药",
+        "烧要",
+        "绍要",
+        "邵要",
+        "少"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "shengpi",
+      "expected": "生坯",
+      "source": "5500",
+      "lookup_us": 1229,
+      "candidates": [
+        "生啤",
+        "生坯",
+        "圣皮",
+        "生批",
+        "省皮",
+        "生僻",
+        "生皮",
+        "圣批",
+        "省"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "shifenniantu",
+      "expected": "石粉黏土",
+      "source": "5500",
+      "lookup_us": 3593,
+      "candidates": [
+        "石粉黏土",
+        "十分黏土",
+        "十分粘土",
+        "十份黏土",
+        "十分年图",
+        "十分年土",
+        "时分黏土",
+        "十分念图",
+        "十分"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shigaomu",
+      "expected": "石膏模",
+      "source": "5500",
+      "lookup_us": 2027,
+      "candidates": [
+        "石膏模",
+        "是高目",
+        "是高木",
+        "史高目",
+        "室高木",
+        "是高母",
+        "石膏目",
+        "石膏木",
+        "石膏"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shigaomuju",
+      "expected": "石膏模具",
+      "source": "5500",
+      "lookup_us": 4081,
+      "candidates": [
+        "石膏模具",
+        "是高模具",
+        "是搞模具",
+        "史高模具",
+        "是告模具",
+        "诗稿模具",
+        "是糕模具",
+        "石皋模具",
+        "石膏模"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shipi",
+      "expected": "湿坯",
+      "source": "5500",
+      "lookup_us": 1041,
+      "candidates": [
+        "湿坯",
+        "是皮",
+        "是批",
+        "时批",
+        "使皮",
+        "是披",
+        "时皮",
+        "使批",
+        "是"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shiyoupian",
+      "expected": "试釉片",
+      "source": "5500",
+      "lookup_us": 3337,
+      "candidates": [
+        "试釉片",
+        "是由片",
+        "石油片",
+        "是由骗",
+        "是由篇",
+        "是由便",
+        "是由偏",
+        "是有偏",
+        "石油"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shougongchengxing",
+      "expected": "手工成型",
+      "source": "5500",
+      "lookup_us": 5130,
+      "candidates": [
+        "手工成型",
+        "手工成行",
+        "手工成形",
+        "手工称行",
+        "手工程行",
+        "手工程性",
+        "手工程星",
+        "收工成行",
+        "手工"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shougongtaobei",
+      "expected": "手工陶杯",
+      "source": "5500",
+      "lookup_us": 2641,
+      "candidates": [
+        "手工陶杯",
+        "手工套呗",
+        "手工套杯",
+        "手工韬备",
+        "手工逃被",
+        "手工套被",
+        "手工讨北",
+        "手工桃被",
+        "手工"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shougongtaoyi",
+      "expected": "手工陶艺",
+      "source": "5500",
+      "lookup_us": 2859,
+      "candidates": [
+        "手工陶艺",
+        "手工逃逸",
+        "收工逃逸",
+        "手工套以",
+        "手工讨以",
+        "手工陶伊",
+        "守宫逃逸",
+        "手工套衣",
+        "手工"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shouhuicipan",
+      "expected": "手绘瓷盘",
+      "source": "5500",
+      "lookup_us": 3232,
+      "candidates": [
+        "手绘瓷盘",
+        "受贿磁盘",
+        "收回磁盘",
+        "受惠磁盘",
+        "手绘磁盘",
+        "收回此番",
+        "收回此判",
+        "受贿此番",
+        "收回"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shouhuihuaping",
+      "expected": "手绘花瓶",
+      "source": "5500",
+      "lookup_us": 4460,
+      "candidates": [
+        "手绘花瓶",
+        "受贿花瓶",
+        "收回花瓶",
+        "受惠花瓶",
+        "受会花瓶",
+        "手会花瓶",
+        "受贿花屏",
+        "收回花屏",
+        "收回"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shouhuitaobei",
+      "expected": "手绘陶杯",
+      "source": "5500",
+      "lookup_us": 3242,
+      "candidates": [
+        "手绘陶杯",
+        "受贿套杯",
+        "收回套杯",
+        "受贿陶杯",
+        "收回陶杯",
+        "受贿逃被",
+        "收回逃被",
+        "受惠套杯",
+        "收回"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shouhuitaoci",
+      "expected": "手绘陶瓷",
+      "source": "5500",
+      "lookup_us": 4346,
+      "candidates": [
+        "手绘陶瓷",
+        "受贿陶瓷",
+        "收回陶瓷",
+        "受惠陶瓷",
+        "受会陶瓷",
+        "手会陶瓷",
+        "首回陶瓷",
+        "收贿陶瓷",
+        "收回"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shouniebei",
+      "expected": "手捏杯",
+      "source": "5500",
+      "lookup_us": 3047,
+      "candidates": [
+        "手捏杯",
+        "手捏被",
+        "手捏呗",
+        "受涅被",
+        "受捏被",
+        "手捏北",
+        "手蹑被",
+        "手涅被",
+        "手"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shouniechengxing",
+      "expected": "手捏成型",
+      "source": "5500",
+      "lookup_us": 6016,
+      "candidates": [
+        "手捏成型",
+        "手捏成行",
+        "手捏成形",
+        "受捏成行",
+        "受捏成形",
+        "受捏成型",
+        "受涅成行",
+        "手蹑成行",
+        "手"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shouniehuaping",
+      "expected": "手捏花瓶",
+      "source": "5500",
+      "lookup_us": 4956,
+      "candidates": [
+        "手捏花瓶",
+        "受涅花瓶",
+        "受捏花瓶",
+        "手蹑花瓶",
+        "手涅花瓶",
+        "受聂花瓶",
+        "手聂花瓶",
+        "受镍花瓶",
+        "手"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shouniepan",
+      "expected": "手捏盘",
+      "source": "5500",
+      "lookup_us": 3728,
+      "candidates": [
+        "手捏盘",
+        "受涅磐",
+        "手涅磐",
+        "首涅磐",
+        "收涅磐",
+        "授涅磐",
+        "守涅磐",
+        "受涅槃",
+        "手"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shounietao",
+      "expected": "手捏陶",
+      "source": "5500",
+      "lookup_us": 3305,
+      "candidates": [
+        "手捏陶",
+        "手捏套",
+        "受捏陶",
+        "手捏逃",
+        "手捏讨",
+        "受涅套",
+        "受捏套",
+        "手蹑套",
+        "手"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shouniewan",
+      "expected": "手捏碗",
+      "source": "5500",
+      "lookup_us": 3548,
+      "candidates": [
+        "手捏碗",
+        "手捏玩",
+        "手捏完",
+        "手捏万",
+        "手捏晚",
+        "受涅玩",
+        "受捏玩",
+        "受涅完",
+        "手"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuayou",
+      "expected": "刷釉",
+      "source": "5500",
+      "lookup_us": 2314,
+      "candidates": [
+        "刷油",
+        "刷釉",
+        "刷有",
+        "耍有",
+        "刷由",
+        "耍由",
+        "刷又",
+        "刷游",
+        "刷"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "shuzhiniantu",
+      "expected": "树脂黏土",
+      "source": "5500",
+      "lookup_us": 3912,
+      "candidates": [
+        "树脂黏土",
+        "树枝黏土",
+        "数值黏土",
+        "树枝粘土",
+        "熟知黏土",
+        "树枝年图",
+        "树枝年土",
+        "树脂粘土",
+        "数值"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "supicaihui",
+      "expected": "素坯彩绘",
+      "source": "5500",
+      "lookup_us": 3427,
+      "candidates": [
+        "素坯彩绘",
+        "酥皮彩绘",
+        "酥皮才会",
+        "苏皮彩绘",
+        "酥皮才回",
+        "苏批彩绘",
+        "苏皮才会",
+        "苏批才会",
+        "酥皮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "supidamo",
+      "expected": "素坯打磨",
+      "source": "5500",
+      "lookup_us": 2689,
+      "candidates": [
+        "素坯打磨",
+        "酥皮打磨",
+        "苏皮打磨",
+        "酥皮大漠",
+        "苏批打磨",
+        "酥皮达摩",
+        "苏啤打磨",
+        "苏毗打磨",
+        "酥皮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "sushao",
+      "expected": "素烧",
+      "source": "5500",
+      "lookup_us": 1188,
+      "candidates": [
+        "素烧",
+        "苏少",
+        "素少",
+        "苏烧",
+        "苏绍",
+        "宿少",
+        "酥烧",
+        "速少",
+        "素"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "suxingbang",
+      "expected": "塑形棒",
+      "source": "5500",
+      "lookup_us": 4284,
+      "candidates": [
+        "塑形棒",
+        "苏醒帮",
+        "苏醒棒",
+        "苏醒邦",
+        "苏醒榜",
+        "素兴帮",
+        "苏醒绑",
+        "苏醒磅",
+        "苏醒"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "suxingdao",
+      "expected": "塑形刀",
+      "source": "5500",
+      "lookup_us": 3112,
+      "candidates": [
+        "塑形刀",
+        "苏醒到",
+        "苏醒道",
+        "苏醒倒",
+        "苏醒岛",
+        "苏醒刀",
+        "苏醒导",
+        "素兴到",
+        "苏醒"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taocibaijian",
+      "expected": "陶瓷摆件",
+      "source": "5500",
+      "lookup_us": 7166,
+      "candidates": [
+        "陶瓷摆件",
+        "陶瓷拜见",
+        "陶瓷百件",
+        "陶瓷百间",
+        "陶瓷白见",
+        "陶瓷白剑",
+        "陶瓷白间",
+        "陶瓷白健",
+        "陶瓷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taocibaoyang",
+      "expected": "陶瓷保养",
+      "source": "5500",
+      "lookup_us": 6442,
+      "candidates": [
+        "陶瓷保养",
+        "陶瓷包养",
+        "陶瓷褒扬",
+        "陶瓷保阳",
+        "陶瓷保扬",
+        "陶瓷保羊",
+        "陶瓷保样",
+        "陶瓷保洋",
+        "陶瓷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taocibaozhuang",
+      "expected": "陶瓷包装",
+      "source": "5500",
+      "lookup_us": 8163,
+      "candidates": [
+        "陶瓷包装",
+        "陶瓷报装",
+        "陶瓷保状",
+        "陶瓷保装",
+        "陶瓷爆装",
+        "陶瓷保庄",
+        "套次包装",
+        "陶次包装",
+        "陶瓷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taocibeidian",
+      "expected": "陶瓷杯垫",
+      "source": "5500",
+      "lookup_us": 4843,
+      "candidates": [
+        "陶瓷杯垫",
+        "陶瓷北电",
+        "陶瓷被点",
+        "陶瓷被电",
+        "陶瓷北店",
+        "陶瓷备点",
+        "陶瓷被店",
+        "陶瓷北点",
+        "陶瓷杯"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taocibianxing",
+      "expected": "陶瓷变形",
+      "source": "5500",
+      "lookup_us": 6815,
+      "candidates": [
+        "陶瓷变形",
+        "陶瓷变性",
+        "陶瓷变型",
+        "陶瓷变星",
+        "陶瓷边形",
+        "陶瓷边星",
+        "套次变形",
+        "陶瓷边行",
+        "陶瓷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taocibitong",
+      "expected": "陶瓷笔筒",
+      "source": "5500",
+      "lookup_us": 3095,
+      "candidates": [
+        "陶瓷笔筒",
+        "陶瓷比通",
+        "陶瓷比同",
+        "陶瓷比痛",
+        "陶瓷必通",
+        "陶瓷笔桶",
+        "陶瓷笔通",
+        "陶瓷比桶",
+        "陶瓷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taocicaihui",
+      "expected": "陶瓷彩绘",
+      "source": "5500",
+      "lookup_us": 3854,
+      "candidates": [
+        "陶瓷彩绘",
+        "陶瓷才会",
+        "陶瓷才回",
+        "陶瓷材回",
+        "陶瓷材会",
+        "陶瓷材辉",
+        "陶瓷踩灰",
+        "陶瓷材惠",
+        "陶瓷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taocicanju",
+      "expected": "陶瓷餐具",
+      "source": "5500",
+      "lookup_us": 2799,
+      "candidates": [
+        "陶瓷餐具",
+        "陶瓷惨剧",
+        "陶瓷残局",
+        "陶瓷餐聚",
+        "套次惨剧",
+        "陶次惨剧",
+        "陶瓷餐局",
+        "套此餐具",
+        "陶瓷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taocichabei",
+      "expected": "陶瓷茶杯",
+      "source": "5500",
+      "lookup_us": 2701,
+      "candidates": [
+        "陶瓷茶杯",
+        "陶瓷茶呗",
+        "陶瓷查呗",
+        "陶瓷差呗",
+        "陶瓷查被",
+        "陶瓷差被",
+        "陶瓷查杯",
+        "陶瓷察被",
+        "陶瓷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taocichaguan",
+      "expected": "陶瓷茶罐",
+      "source": "5500",
+      "lookup_us": 5825,
+      "candidates": [
+        "陶瓷茶罐",
+        "陶瓷茶馆",
+        "陶瓷差馆",
+        "陶瓷插管",
+        "陶瓷查官",
+        "陶瓷查管",
+        "陶瓷查关",
+        "陶瓷差关",
+        "陶瓷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taocichahu",
+      "expected": "陶瓷茶壶",
+      "source": "5500",
+      "lookup_us": 2914,
+      "candidates": [
+        "陶瓷茶壶",
+        "陶瓷查户",
+        "陶瓷查湖",
+        "陶瓷差湖",
+        "陶瓷查虎",
+        "陶瓷差虎",
+        "陶瓷茶湖",
+        "陶瓷察湖",
+        "陶瓷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taocichaqi",
+      "expected": "陶瓷茶器",
+      "source": "5500",
+      "lookup_us": 2839,
+      "candidates": [
+        "陶瓷茶器",
+        "陶瓷岔气",
+        "陶瓷查其",
+        "陶瓷查期",
+        "陶瓷茶气",
+        "陶瓷查起",
+        "陶瓷查器",
+        "陶瓷茶起",
+        "陶瓷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taocidamo",
+      "expected": "陶瓷打磨",
+      "source": "5500",
+      "lookup_us": 2905,
+      "candidates": [
+        "陶瓷打磨",
+        "陶瓷大漠",
+        "陶瓷达摩",
+        "陶瓷大魔",
+        "陶瓷达莫",
+        "陶瓷大模",
+        "陶瓷大么",
+        "陶瓷打莫",
+        "陶瓷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taocidiaohua",
+      "expected": "陶瓷雕花",
+      "source": "5500",
+      "lookup_us": 6536,
+      "candidates": [
+        "陶瓷雕花",
+        "陶瓷吊花",
+        "陶瓷调花",
+        "陶瓷掉花",
+        "陶瓷调话",
+        "陶瓷掉话",
+        "陶瓷调化",
+        "陶瓷掉化",
+        "陶瓷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taocidiaosu",
+      "expected": "陶瓷雕塑",
+      "source": "5500",
+      "lookup_us": 4404,
+      "candidates": [
+        "陶瓷雕塑",
+        "陶瓷吊酥",
+        "套此雕塑",
+        "套磁雕塑",
+        "陶此雕塑",
+        "陶瓷调速",
+        "套次雕塑",
+        "陶次雕塑",
+        "陶瓷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taocifengling",
+      "expected": "陶瓷风铃",
+      "source": "5500",
+      "lookup_us": 6478,
+      "candidates": [
+        "陶瓷风铃",
+        "陶瓷凤玲",
+        "陶瓷风灵",
+        "陶瓷风令",
+        "陶瓷峰岭",
+        "陶瓷奉令",
+        "陶瓷封令",
+        "陶瓷峰令",
+        "陶瓷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taocifudiao",
+      "expected": "陶瓷浮雕",
+      "source": "5500",
+      "lookup_us": 6195,
+      "candidates": [
+        "陶瓷浮雕",
+        "套磁浮雕",
+        "陶瓷服掉",
+        "陶瓷复掉",
+        "陶瓷福掉",
+        "陶瓷副掉",
+        "陶瓷夫掉",
+        "陶瓷富掉",
+        "陶瓷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taociguajian",
+      "expected": "陶瓷挂件",
+      "source": "5500",
+      "lookup_us": 6756,
+      "candidates": [
+        "陶瓷挂件",
+        "陶瓷挂见",
+        "陶瓷挂剑",
+        "陶瓷挂建",
+        "陶瓷挂间",
+        "陶瓷瓜见",
+        "陶瓷挂健",
+        "陶瓷瓜尖",
+        "陶瓷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taocihuahua",
+      "expected": "陶瓷划花",
+      "source": "5500",
+      "lookup_us": 5218,
+      "candidates": [
+        "陶瓷划花",
+        "陶瓷花花",
+        "陶瓷画画",
+        "陶瓷畫花",
+        "陶瓷畫话",
+        "陶瓷畫化",
+        "陶瓷畫华",
+        "陶瓷畫画",
+        "陶瓷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taocihuaqi",
+      "expected": "陶瓷花器",
+      "source": "5500",
+      "lookup_us": 4015,
+      "candidates": [
+        "陶瓷花器",
+        "陶瓷花旗",
+        "陶瓷花期",
+        "陶瓷畫起",
+        "陶瓷畫气",
+        "陶瓷畫器",
+        "陶瓷畫其",
+        "陶瓷畫期",
+        "陶瓷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taocikailie",
+      "expected": "陶瓷开裂",
+      "source": "5500",
+      "lookup_us": 4098,
+      "candidates": [
+        "陶瓷开裂",
+        "陶瓷开烈",
+        "陶瓷开列",
+        "陶瓷开咧",
+        "陶瓷开猎",
+        "陶瓷凯列",
+        "套次开裂",
+        "陶次开裂",
+        "陶瓷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taocikehua",
+      "expected": "陶瓷刻花",
+      "source": "5500",
+      "lookup_us": 4557,
+      "candidates": [
+        "陶瓷刻花",
+        "陶瓷刻画",
+        "陶瓷科花",
+        "陶瓷可化",
+        "陶瓷可花",
+        "陶瓷可话",
+        "陶瓷科华",
+        "陶瓷克花",
+        "陶瓷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taociloukong",
+      "expected": "陶瓷镂空",
+      "source": "5500",
+      "lookup_us": 2599,
+      "candidates": [
+        "陶瓷镂空",
+        "陶瓷楼空",
+        "陶瓷露空",
+        "陶瓷楼孔",
+        "陶瓷楼控",
+        "陶瓷漏空",
+        "陶瓷露孔",
+        "陶瓷露控",
+        "陶瓷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taocipan",
+      "expected": "陶瓷盘",
+      "source": "5500",
+      "lookup_us": 2537,
+      "candidates": [
+        "陶瓷盘",
+        "陶瓷判",
+        "陶瓷潘",
+        "陶瓷胖",
+        "陶瓷番",
+        "陶瓷叛",
+        "陶瓷盼",
+        "陶瓷攀",
+        "陶瓷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taociqingjie",
+      "expected": "陶瓷清洁",
+      "source": "5500",
+      "lookup_us": 7468,
+      "candidates": [
+        "陶瓷清洁",
+        "陶瓷情节",
+        "陶瓷情结",
+        "陶瓷轻捷",
+        "陶瓷庆节",
+        "陶瓷请街",
+        "陶瓷请节",
+        "陶瓷清节",
+        "陶瓷器"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taocishaozhi",
+      "expected": "陶瓷烧制",
+      "source": "5500",
+      "lookup_us": 3777,
+      "candidates": [
+        "陶瓷烧制",
+        "陶瓷烧纸",
+        "陶瓷少至",
+        "陶瓷烧至",
+        "陶瓷少之",
+        "陶瓷少指",
+        "陶瓷烧汁",
+        "陶瓷少值",
+        "陶瓷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taocishoushi",
+      "expected": "陶瓷首饰",
+      "source": "5500",
+      "lookup_us": 3952,
+      "candidates": [
+        "陶瓷首饰",
+        "陶瓷收拾",
+        "陶瓷手势",
+        "陶瓷收视",
+        "陶瓷收市",
+        "陶瓷首诗",
+        "陶瓷手是",
+        "陶瓷手时",
+        "陶瓷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taocitiehua",
+      "expected": "陶瓷贴花",
+      "source": "5500",
+      "lookup_us": 6953,
+      "candidates": [
+        "陶瓷贴花",
+        "陶瓷贴画",
+        "陶瓷铁花",
+        "陶瓷铁话",
+        "陶瓷铁化",
+        "陶瓷贴话",
+        "陶瓷贴化",
+        "陶瓷铁华",
+        "陶瓷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taociwan",
+      "expected": "陶瓷碗",
+      "source": "5500",
+      "lookup_us": 2619,
+      "candidates": [
+        "陶瓷碗",
+        "陶瓷玩",
+        "陶瓷完",
+        "陶瓷万",
+        "陶瓷晚",
+        "陶瓷湾",
+        "陶瓷丸",
+        "陶瓷弯",
+        "陶瓷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taociwanou",
+      "expected": "陶瓷玩偶",
+      "source": "5500",
+      "lookup_us": 4088,
+      "candidates": [
+        "陶瓷玩偶",
+        "陶瓷万欧",
+        "陶瓷湾区",
+        "陶瓷玩区",
+        "陶瓷万区",
+        "陶瓷玩欧",
+        "陶瓷完欧",
+        "陶瓷完区",
+        "陶瓷碗"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taociwenli",
+      "expected": "陶瓷纹理",
+      "source": "5500",
+      "lookup_us": 4293,
+      "candidates": [
+        "陶瓷纹理",
+        "陶瓷文理",
+        "陶瓷文里",
+        "陶瓷闻里",
+        "陶瓷文礼",
+        "陶瓷问里",
+        "陶瓷文立",
+        "陶瓷文力",
+        "陶瓷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taocixiangcha",
+      "expected": "陶瓷香插",
+      "source": "5500",
+      "lookup_us": 9239,
+      "candidates": [
+        "陶瓷香插",
+        "陶瓷相差",
+        "陶瓷香茶",
+        "陶瓷想查",
+        "陶瓷像差",
+        "陶瓷向差",
+        "陶瓷乡差",
+        "陶瓷箱刹",
+        "陶瓷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taocixiubu",
+      "expected": "陶瓷修补",
+      "source": "5500",
+      "lookup_us": 4514,
+      "candidates": [
+        "陶瓷修补",
+        "陶瓷秀部",
+        "陶瓷绣布",
+        "陶瓷修不",
+        "陶瓷羞布",
+        "陶瓷修部",
+        "陶瓷秀不",
+        "陶瓷休不",
+        "陶瓷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taocixiufu",
+      "expected": "陶瓷修复",
+      "source": "5500",
+      "lookup_us": 4440,
+      "candidates": [
+        "陶瓷修复",
+        "陶瓷秀夫",
+        "套此修复",
+        "套次修复",
+        "陶此修复",
+        "陶次修复",
+        "陶瓷修服",
+        "套磁修复",
+        "陶瓷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taociyanliao",
+      "expected": "陶瓷颜料",
+      "source": "5500",
+      "lookup_us": 8151,
+      "candidates": [
+        "陶瓷颜料",
+        "陶瓷眼了",
+        "陶瓷盐了",
+        "陶瓷烟了",
+        "陶瓷演了",
+        "陶瓷言了",
+        "陶瓷验了",
+        "陶瓷延了",
+        "陶瓷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taociyao",
+      "expected": "陶瓷窑",
+      "source": "5500",
+      "lookup_us": 4598,
+      "candidates": [
+        "陶瓷窑",
+        "陶瓷要",
+        "陶瓷药",
+        "陶瓷腰",
+        "陶瓷耀",
+        "陶瓷摇",
+        "陶瓷咬",
+        "陶瓷邀",
+        "陶瓷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taociyinhua",
+      "expected": "陶瓷印花",
+      "source": "5500",
+      "lookup_us": 5186,
+      "candidates": [
+        "陶瓷印花",
+        "陶瓷银华",
+        "陶瓷银花",
+        "陶瓷音话",
+        "陶瓷因华",
+        "陶瓷因花",
+        "陶瓷因话",
+        "陶瓷因化",
+        "陶瓷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taociyoumian",
+      "expected": "陶瓷釉面",
+      "source": "5500",
+      "lookup_us": 4772,
+      "candidates": [
+        "陶瓷釉面",
+        "陶瓷有面",
+        "陶瓷有免",
+        "陶瓷右面",
+        "陶瓷有棉",
+        "陶瓷莜面",
+        "陶瓷有眠",
+        "陶瓷又面",
+        "陶瓷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taocizaodie",
+      "expected": "陶瓷皂碟",
+      "source": "5500",
+      "lookup_us": 4602,
+      "candidates": [
+        "陶瓷皂碟",
+        "陶瓷早跌",
+        "陶瓷造跌",
+        "陶瓷遭跌",
+        "陶瓷早碟",
+        "陶瓷造碟",
+        "陶瓷遭碟",
+        "陶瓷藻跌",
+        "陶瓷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taoni",
+      "expected": "陶泥",
+      "source": "5500",
+      "lookup_us": 1074,
+      "candidates": [
+        "陶泥",
+        "套呢",
+        "淘你",
+        "套你",
+        "陶你",
+        "陶呢",
+        "桃你",
+        "逃你",
+        "套"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taonibaocun",
+      "expected": "陶泥保存",
+      "source": "5500",
+      "lookup_us": 3618,
+      "candidates": [
+        "陶泥保存",
+        "淘你保存",
+        "套你保存",
+        "套呢保存",
+        "逃匿保存",
+        "套尼保存",
+        "陶呢保存",
+        "陶尼保存",
+        "陶泥"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taonibaoshi",
+      "expected": "陶泥保湿",
+      "source": "5500",
+      "lookup_us": 4038,
+      "candidates": [
+        "陶泥保湿",
+        "淘你宝石",
+        "套你宝石",
+        "陶泥宝石",
+        "套呢宝石",
+        "逃匿宝石",
+        "套尼宝石",
+        "陶尼宝石",
+        "陶泥"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taonibushui",
+      "expected": "陶泥补水",
+      "source": "5500",
+      "lookup_us": 3535,
+      "candidates": [
+        "陶泥补水",
+        "淘你不说",
+        "套你不说",
+        "淘你不睡",
+        "套你不睡",
+        "套呢不睡",
+        "淘你补水",
+        "套你补水",
+        "陶泥"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taonihuishou",
+      "expected": "陶泥回收",
+      "source": "5500",
+      "lookup_us": 3701,
+      "candidates": [
+        "陶泥回收",
+        "淘你回收",
+        "套你回收",
+        "淘你挥手",
+        "套呢回收",
+        "套你挥手",
+        "套尼回收",
+        "陶尼回收",
+        "陶泥"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taonikailie",
+      "expected": "陶泥开裂",
+      "source": "5500",
+      "lookup_us": 4007,
+      "candidates": [
+        "陶泥开裂",
+        "淘你开裂",
+        "套你开裂",
+        "套呢开裂",
+        "套拟开裂",
+        "陶拟开裂",
+        "逃匿开裂",
+        "套尼开裂",
+        "陶泥"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taonimifeng",
+      "expected": "陶泥密封",
+      "source": "5500",
+      "lookup_us": 3849,
+      "candidates": [
+        "陶泥密封",
+        "淘你蜜蜂",
+        "套你蜜蜂",
+        "陶泥蜜蜂",
+        "套呢蜜蜂",
+        "淘你密封",
+        "套你密封",
+        "逃匿蜜蜂",
+        "陶泥"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taonitaigan",
+      "expected": "陶泥太干",
+      "source": "5500",
+      "lookup_us": 4866,
+      "candidates": [
+        "陶泥太干",
+        "淘你太干",
+        "套你太干",
+        "淘你抬杆",
+        "淘你太感",
+        "套你抬杆",
+        "套你太感",
+        "陶泥抬杆",
+        "陶泥"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taopi",
+      "expected": "陶坯",
+      "source": "5500",
+      "lookup_us": 1186,
+      "candidates": [
+        "陶坯",
+        "套皮",
+        "陶皮",
+        "套批",
+        "陶批",
+        "桃皮",
+        "桃批",
+        "套劈",
+        "套"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taopiganzao",
+      "expected": "陶坯干燥",
+      "source": "5500",
+      "lookup_us": 3377,
+      "candidates": [
+        "陶坯干燥",
+        "套皮干燥",
+        "陶皮干燥",
+        "套劈干燥",
+        "套批干燥",
+        "陶批干燥",
+        "套匹干燥",
+        "陶匹干燥",
+        "陶坯"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taotu",
+      "expected": "陶土",
+      "source": "5500",
+      "lookup_us": 858,
+      "candidates": [
+        "陶土",
+        "套图",
+        "陶图",
+        "桃图",
+        "套土",
+        "逃图",
+        "桃土",
+        "讨图",
+        "套"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taoyicailiao",
+      "expected": "陶艺材料",
+      "source": "5500",
+      "lookup_us": 4856,
+      "candidates": [
+        "陶艺材料",
+        "逃逸材料",
+        "套以材料",
+        "桃异材料",
+        "套一材料",
+        "陶一材料",
+        "套已踩了",
+        "套衣材料",
+        "逃逸"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taoyichuangzuo",
+      "expected": "陶艺创作",
+      "source": "5500",
+      "lookup_us": 5538,
+      "candidates": [
+        "陶艺创作",
+        "逃逸创作",
+        "套以创作",
+        "陶以创作",
+        "套一创作",
+        "陶一创作",
+        "套已创作",
+        "套衣创作",
+        "逃逸"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taoyigongju",
+      "expected": "陶艺工具",
+      "source": "5500",
+      "lookup_us": 2904,
+      "candidates": [
+        "陶艺工具",
+        "逃逸工具",
+        "套以工具",
+        "套一工具",
+        "陶一工具",
+        "陶以工具",
+        "套衣工具",
+        "套已工具",
+        "逃逸"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taoyigongzuoshi",
+      "expected": "陶艺工作室",
+      "source": "5500",
+      "lookup_us": 4120,
+      "candidates": [
+        "陶艺工作室",
+        "逃逸工作室",
+        "逃逸工作时",
+        "逃逸工作是",
+        "陶艺工作时",
+        "陶艺工作是",
+        "逃逸工作使",
+        "逃逸工作十",
+        "逃逸"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taoyiguapian",
+      "expected": "陶艺刮片",
+      "source": "5500",
+      "lookup_us": 6894,
+      "candidates": [
+        "陶艺刮片",
+        "逃逸刮片",
+        "逃逸挂片",
+        "逃逸瓜片",
+        "逃逸胍片",
+        "逃逸挂篇",
+        "陶伊瓜片",
+        "逃逸瓜篇",
+        "逃逸"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taoyihaimian",
+      "expected": "陶艺海绵",
+      "source": "5500",
+      "lookup_us": 4724,
+      "candidates": [
+        "陶艺海绵",
+        "逃逸海面",
+        "逃逸海绵",
+        "逃逸嘿面",
+        "陶艺海面",
+        "套以海面",
+        "陶以海面",
+        "逃逸嘿免",
+        "逃逸"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taoyijiaoshi",
+      "expected": "陶艺教室",
+      "source": "5500",
+      "lookup_us": 9158,
+      "candidates": [
+        "陶艺教室",
+        "逃逸教师",
+        "逃逸教室",
+        "陶艺教师",
+        "套以教师",
+        "套一教师",
+        "桃异教师",
+        "陶一教师",
+        "逃逸"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taoyikecheng",
+      "expected": "陶艺课程",
+      "source": "5500",
+      "lookup_us": 4592,
+      "candidates": [
+        "陶艺课程",
+        "逃逸课程",
+        "套一课程",
+        "陶一课程",
+        "套以课程",
+        "套衣课程",
+        "陶以课程",
+        "陶伊课程",
+        "逃逸"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taoyirumen",
+      "expected": "陶艺入门",
+      "source": "5500",
+      "lookup_us": 3781,
+      "candidates": [
+        "陶艺入门",
+        "逃逸入门",
+        "套移入门",
+        "套一入门",
+        "陶一入门",
+        "套以入门",
+        "套已入门",
+        "陶已入门",
+        "逃逸"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taoyiweiqun",
+      "expected": "陶艺围裙",
+      "source": "5500",
+      "lookup_us": 3928,
+      "candidates": [
+        "陶艺围裙",
+        "逃逸围裙",
+        "套衣围裙",
+        "套以围裙",
+        "套一围裙",
+        "陶一围裙",
+        "套一位群",
+        "陶一位群",
+        "逃逸"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taoyizhizuo",
+      "expected": "陶艺制作",
+      "source": "5500",
+      "lookup_us": 6562,
+      "candidates": [
+        "陶艺制作",
+        "逃逸制作",
+        "逃逸之作",
+        "套以制作",
+        "套抑制作",
+        "陶以制作",
+        "陶抑制作",
+        "陶艺之作",
+        "逃逸"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taoyizhuantai",
+      "expected": "陶艺转台",
+      "source": "5500",
+      "lookup_us": 5391,
+      "candidates": [
+        "陶艺转台",
+        "逃逸转台",
+        "套一转台",
+        "套已转台",
+        "陶一转台",
+        "套移转台",
+        "陶已转台",
+        "逃逸砖台",
+        "逃逸"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taoyizuopin",
+      "expected": "陶艺作品",
+      "source": "5500",
+      "lookup_us": 4587,
+      "candidates": [
+        "陶艺作品",
+        "逃逸作品",
+        "套以作品",
+        "陶以作品",
+        "套一作品",
+        "陶一作品",
+        "套已作品",
+        "陶已作品",
+        "逃逸"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "toumingyou",
+      "expected": "透明釉",
+      "source": "5500",
+      "lookup_us": 2117,
+      "candidates": [
+        "透明釉",
+        "透明有",
+        "透明由",
+        "透明又",
+        "透明游",
+        "透明油",
+        "透明友",
+        "透明优",
+        "透明"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tuomoji",
+      "expected": "脱模剂",
+      "source": "5500",
+      "lookup_us": 2424,
+      "candidates": [
+        "脱模剂",
+        "脱墨迹",
+        "唾沫及",
+        "唾沫机",
+        "托墨迹",
+        "唾沫记",
+        "唾沫集",
+        "唾沫基",
+        "唾沫"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wanbi",
+      "expected": "碗壁",
+      "source": "5500",
+      "lookup_us": 1141,
+      "candidates": [
+        "完毕",
+        "完璧",
+        "碗壁",
+        "万比",
+        "万笔",
+        "玩比",
+        "晚比",
+        "万必",
+        "晚"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "wandi",
+      "expected": "碗底",
+      "source": "5500",
+      "lookup_us": 1241,
+      "candidates": [
+        "万敌",
+        "碗底",
+        "玩的",
+        "万的",
+        "晚的",
+        "万地",
+        "万第",
+        "玩地",
+        "晚"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "wankou",
+      "expected": "碗口",
+      "source": "5500",
+      "lookup_us": 547,
+      "candidates": [
+        "碗口",
+        "万口",
+        "万扣",
+        "玩口",
+        "弯口",
+        "晚口",
+        "玩扣",
+        "湾口",
+        "晚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wenlidian",
+      "expected": "纹理垫",
+      "source": "5500",
+      "lookup_us": 3723,
+      "candidates": [
+        "纹理垫",
+        "纹理店",
+        "纹理点",
+        "纹理电",
+        "文理店",
+        "文理点",
+        "纹理殿",
+        "纹理典",
+        "纹理"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wenliguntong",
+      "expected": "纹理滚筒",
+      "source": "5500",
+      "lookup_us": 3228,
+      "candidates": [
+        "纹理滚筒",
+        "文理滚筒",
+        "温力滚筒",
+        "纹理滚通",
+        "纹理滚痛",
+        "问李滚筒",
+        "问里滚筒",
+        "纹理滚同",
+        "纹理"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xishuihaimian",
+      "expected": "吸水海绵",
+      "source": "5500",
+      "lookup_us": 4160,
+      "candidates": [
+        "吸水海绵",
+        "溪水海面",
+        "戏水海面",
+        "溪水海绵",
+        "戏水海绵",
+        "西说海面",
+        "溪水还面",
+        "细说海面",
+        "溪水"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiudi",
+      "expected": "修底",
+      "source": "5500",
+      "lookup_us": 913,
+      "candidates": [
+        "修底",
+        "宿敌",
+        "修地",
+        "修的",
+        "秀的",
+        "休的",
+        "宿的",
+        "秀地",
+        "修"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiupi",
+      "expected": "修坯",
+      "source": "5500",
+      "lookup_us": 824,
+      "candidates": [
+        "修坯",
+        "修皮",
+        "修批",
+        "秀皮",
+        "秀批",
+        "休皮",
+        "休批",
+        "宿皮",
+        "修"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiupidao",
+      "expected": "修坯刀",
+      "source": "5500",
+      "lookup_us": 2432,
+      "candidates": [
+        "修坯刀",
+        "修批到",
+        "秀批到",
+        "修皮到",
+        "修皮刀",
+        "秀皮到",
+        "休批到",
+        "修批刀",
+        "修坯"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiuzhengbeikou",
+      "expected": "修整杯口",
+      "source": "5500",
+      "lookup_us": 2825,
+      "candidates": [
+        "修整杯口",
+        "修正被扣",
+        "修正北口",
+        "修正被口",
+        "修整被扣",
+        "休整被扣",
+        "修正杯口",
+        "修整北口",
+        "修正"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiuzhengbianyuan",
+      "expected": "修整边缘",
+      "source": "5500",
+      "lookup_us": 7278,
+      "candidates": [
+        "修整边缘",
+        "修正边缘",
+        "休整边缘",
+        "修正边远",
+        "修争边缘",
+        "秀争边缘",
+        "修整边远",
+        "秀正边缘",
+        "修正"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yabian",
+      "expected": "压边",
+      "source": "5500",
+      "lookup_us": 2875,
+      "candidates": [
+        "压边",
+        "亚变",
+        "亚边",
+        "亚苄",
+        "压扁",
+        "雅便",
+        "雅变",
+        "雅边",
+        "呀"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yaguangyou",
+      "expected": "哑光釉",
+      "source": "5500",
+      "lookup_us": 5192,
+      "candidates": [
+        "哑光釉",
+        "亚光有",
+        "雅光有",
+        "压光有",
+        "哑光有",
+        "鸭光有",
+        "亚广有",
+        "牙光有",
+        "亚冠"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yahuamu",
+      "expected": "压花模",
+      "source": "5500",
+      "lookup_us": 3060,
+      "candidates": [
+        "压花模",
+        "雅花木",
+        "亚花木",
+        "压花木",
+        "亚桦木",
+        "牙花木",
+        "雅桦木",
+        "鸭花木",
+        "压花"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yaolu",
+      "expected": "窑炉",
+      "source": "5500",
+      "lookup_us": 1245,
+      "candidates": [
+        "姚橹",
+        "窑炉",
+        "要路",
+        "要露",
+        "要录",
+        "要绿",
+        "要鲁",
+        "要陆",
+        "要"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "yaowen",
+      "expected": "窑温",
+      "source": "5500",
+      "lookup_us": 1337,
+      "candidates": [
+        "要问",
+        "要闻",
+        "窑温",
+        "要稳",
+        "咬文",
+        "要文",
+        "要温",
+        "要吻",
+        "要"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "yapian",
+      "expected": "压片",
+      "source": "5500",
+      "lookup_us": 3259,
+      "candidates": [
+        "鸦片",
+        "压片",
+        "牙片",
+        "亚片",
+        "雅片",
+        "压扁",
+        "雅便",
+        "亚篇",
+        "呀"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "yawen",
+      "expected": "压纹",
+      "source": "5500",
+      "lookup_us": 1210,
+      "candidates": [
+        "压纹",
+        "雅雯",
+        "丫纹",
+        "雅文",
+        "亚文",
+        "亚问",
+        "牙文",
+        "压问",
+        "呀"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yawenban",
+      "expected": "压纹板",
+      "source": "5500",
+      "lookup_us": 3319,
+      "candidates": [
+        "压纹板",
+        "雅文版",
+        "亚文版",
+        "雅雯版",
+        "雅雯办",
+        "丫纹版",
+        "雅雯半",
+        "压文版",
+        "压纹"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youceng",
+      "expected": "釉层",
+      "source": "5500",
+      "lookup_us": 1333,
+      "candidates": [
+        "釉层",
+        "又曾",
+        "有曾",
+        "由曾",
+        "有层",
+        "由层",
+        "又层",
+        "右曾",
+        "右侧"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youcengguohou",
+      "expected": "釉层过厚",
+      "source": "5500",
+      "lookup_us": 3382,
+      "candidates": [
+        "釉层过厚",
+        "又曾过后",
+        "由曾过后",
+        "有层过后",
+        "又曾国后",
+        "由层过后",
+        "又曾果后",
+        "由曾国后",
+        "釉层"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youjiang",
+      "expected": "釉浆",
+      "source": "5500",
+      "lookup_us": 6269,
+      "candidates": [
+        "又将",
+        "有奖",
+        "有将",
+        "釉浆",
+        "由将",
+        "有讲",
+        "有江",
+        "有酱",
+        "右键"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "youliao",
+      "expected": "釉料",
+      "source": "5500",
+      "lookup_us": 3659,
+      "candidates": [
+        "油料",
+        "釉料",
+        "有了",
+        "由了",
+        "又了",
+        "油了",
+        "有料",
+        "有聊",
+        "有力"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "youliaochendian",
+      "expected": "釉料沉淀",
+      "source": "5500",
+      "lookup_us": 7380,
+      "candidates": [
+        "釉料沉淀",
+        "有了沉淀",
+        "又了沉淀",
+        "由廖沉淀",
+        "有了陈点",
+        "油料沉淀",
+        "有聊沉淀",
+        "疣廖沉淀",
+        "油料"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youliaojiaoban",
+      "expected": "釉料搅拌",
+      "source": "5500",
+      "lookup_us": 8638,
+      "candidates": [
+        "釉料搅拌",
+        "有了交办",
+        "有了搅拌",
+        "有了叫板",
+        "有了交班",
+        "有了脚板",
+        "有了较版",
+        "有了交版",
+        "油料"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youmiankailie",
+      "expected": "釉面开裂",
+      "source": "5500",
+      "lookup_us": 5133,
+      "candidates": [
+        "釉面开裂",
+        "右面开裂",
+        "有面开裂",
+        "有免开裂",
+        "由免开裂",
+        "右面开烈",
+        "有棉开裂",
+        "右面开列",
+        "右面"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youmianqipao",
+      "expected": "釉面气泡",
+      "source": "5500",
+      "lookup_us": 4763,
+      "candidates": [
+        "釉面气泡",
+        "右面起跑",
+        "右面旗袍",
+        "右面气泡",
+        "有面起跑",
+        "右面起泡",
+        "有面旗袍",
+        "有免起跑",
+        "右面"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youmiantuoluo",
+      "expected": "釉面脱落",
+      "source": "5500",
+      "lookup_us": 5458,
+      "candidates": [
+        "釉面脱落",
+        "右面脱落",
+        "有面脱落",
+        "有免脱落",
+        "右面陀螺",
+        "由免脱落",
+        "右面拖罗",
+        "有棉脱落",
+        "右面"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youmianxiaoguo",
+      "expected": "釉面效果",
+      "source": "5500",
+      "lookup_us": 8238,
+      "candidates": [
+        "釉面效果",
+        "右面效果",
+        "有面效果",
+        "有免效果",
+        "右面小国",
+        "由免效果",
+        "有棉效果",
+        "由棉效果",
+        "右面"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youmianzhenkong",
+      "expected": "釉面针孔",
+      "source": "5500",
+      "lookup_us": 4861,
+      "candidates": [
+        "釉面针孔",
+        "右面真空",
+        "有面真空",
+        "有免真空",
+        "由免真空",
+        "有棉真空",
+        "由棉真空",
+        "有绵真空",
+        "右面"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yousedapei",
+      "expected": "釉色搭配",
+      "source": "5500",
+      "lookup_us": 1872,
+      "candidates": [
+        "釉色搭配",
+        "有色搭配",
+        "由色搭配",
+        "有塞搭配",
+        "由塞搭配",
+        "有瑟搭配",
+        "由瑟搭配",
+        "有涩搭配",
+        "有色"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youshangcai",
+      "expected": "釉上彩",
+      "source": "5500",
+      "lookup_us": 2720,
+      "candidates": [
+        "釉上彩",
+        "有上菜",
+        "由上菜",
+        "有上才",
+        "右上才",
+        "由上才",
+        "右上菜",
+        "忧伤才",
+        "忧伤"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youshangyanliao",
+      "expected": "釉上颜料",
+      "source": "5500",
+      "lookup_us": 7126,
+      "candidates": [
+        "釉上颜料",
+        "有上演了",
+        "由上演了",
+        "忧伤颜料",
+        "有上颜料",
+        "右上颜料",
+        "有伤颜料",
+        "忧伤眼了",
+        "忧伤"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youshao",
+      "expected": "釉烧",
+      "source": "5500",
+      "lookup_us": 1803,
+      "candidates": [
+        "釉烧",
+        "有少",
+        "有烧",
+        "又少",
+        "右少",
+        "由少",
+        "由烧",
+        "又烧",
+        "有啥"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youxiacai",
+      "expected": "釉下彩",
+      "source": "5500",
+      "lookup_us": 2868,
+      "candidates": [
+        "釉下彩",
+        "右下才",
+        "又下才",
+        "有下才",
+        "由下才",
+        "右下菜",
+        "又下菜",
+        "游侠才",
+        "游侠"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youxiacaihui",
+      "expected": "釉下彩绘",
+      "source": "5500",
+      "lookup_us": 4634,
+      "candidates": [
+        "釉下彩绘",
+        "右下才会",
+        "又下才会",
+        "游侠彩绘",
+        "右下彩绘",
+        "游侠才会",
+        "又下彩绘",
+        "右下才回",
+        "釉下彩"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youxiayanliao",
+      "expected": "釉下颜料",
+      "source": "5500",
+      "lookup_us": 7600,
+      "candidates": [
+        "釉下颜料",
+        "由夏嫣了",
+        "右下颜料",
+        "游侠颜料",
+        "又下颜料",
+        "右下眼了",
+        "又下眼了",
+        "由夏嫣聊",
+        "游侠"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youxingniantu",
+      "expected": "油性黏土",
+      "source": "5500",
+      "lookup_us": 5251,
+      "candidates": [
+        "油性黏土",
+        "游行黏土",
+        "有幸黏土",
+        "有型黏土",
+        "有形黏土",
+        "游行粘土",
+        "有形粘土",
+        "游行年图",
+        "有幸"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaoxingbang",
+      "expected": "造型棒",
+      "source": "5500",
+      "lookup_us": 4990,
+      "candidates": [
+        "造型棒",
+        "造型帮",
+        "造型邦",
+        "造型榜",
+        "造型绑",
+        "造型磅",
+        "造型浜",
+        "造型傍",
+        "造型"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaoxingdao",
+      "expected": "造型刀",
+      "source": "5500",
+      "lookup_us": 4450,
+      "candidates": [
+        "造型刀",
+        "造型到",
+        "造型道",
+        "造型岛",
+        "造型导",
+        "造型倒",
+        "造型盗",
+        "早醒到",
+        "造型"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhanyou",
+      "expected": "蘸釉",
+      "source": "5500",
+      "lookup_us": 1201,
+      "candidates": [
+        "占有",
+        "战友",
+        "占优",
+        "蘸釉",
+        "站有",
+        "战有",
+        "展有",
+        "沾有",
+        "站"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "zhiniantu",
+      "expected": "纸黏土",
+      "source": "5500",
+      "lookup_us": 2746,
+      "candidates": [
+        "纸黏土",
+        "纸粘土",
+        "至黏土",
+        "只黏土",
+        "指黏土",
+        "之黏土",
+        "直黏土",
+        "致黏土",
+        "知"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuangyao",
+      "expected": "装窑",
+      "source": "5500",
+      "lookup_us": 2685,
+      "candidates": [
+        "装窑",
+        "装要",
+        "庄要",
+        "庄药",
+        "撞要",
+        "装药",
+        "壮要",
+        "幢要",
+        "装"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhujiang",
+      "expected": "注浆",
+      "source": "5500",
+      "lookup_us": 4012,
+      "candidates": [
+        "珠江",
+        "主讲",
+        "主将",
+        "朱江",
+        "注浆",
+        "朱将",
+        "主奖",
+        "朱讲",
+        "逐渐"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "zhujiangchengxing",
+      "expected": "注浆成型",
+      "source": "5500",
+      "lookup_us": 9752,
+      "candidates": [
+        "注浆成型",
+        "珠江成行",
+        "珠江成形",
+        "珠江成型",
+        "主将成行",
+        "主将成形",
+        "主将成型",
+        "主讲成行",
+        "珠江"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ziranyingan",
+      "expected": "自然阴干",
+      "source": "5500",
+      "lookup_us": 6029,
+      "candidates": [
+        "自然阴干",
+        "自然应按",
+        "自然因感",
+        "自然因干",
+        "自然因肝",
+        "自然音感",
+        "自然应安",
+        "自然应案",
+        "自然音"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zishani",
+      "expected": "紫砂泥",
+      "source": "5500",
+      "lookup_us": 3180,
+      "candidates": [
+        "紫砂泥",
+        "自杀你",
+        "自杀呢",
+        "自杀尼",
+        "自杀妮",
+        "自杀泥",
+        "自杀拟",
+        "紫砂铌",
+        "自杀"
+      ],
+      "expected_rank": 1
+    }
+  ]
+}
