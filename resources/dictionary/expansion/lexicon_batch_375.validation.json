@@ -1,0 +1,5450 @@
+{
+  "batch": "lexicon_batch_375",
+  "evaluation": "native_engine_candidate_coverage",
+  "evaluated_at_utc": "2026-10-23T19:10:18.153121+00:00",
+  "engine_sha256": "f386e80d11e8702d30292f79af26e7f43f879aeb68e65fa7679b117eef673734",
+  "resource_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "214270008a919d4de1362ed7a47e587a4b99b68f37d51ac3d83a304cfcdb536e",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+    "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+    "continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e"
+  },
+  "frozen_batch_sha256": "575cd53af43f84044b3a07d66a4fbfef75e9d4d3192be0cb04e76f1c7d06ba17",
+  "personal_data_isolated": true,
+  "expected_answers_learned": false,
+  "summary": {
+    "cases": 301,
+    "top1_correct": 286,
+    "top9_present": 301,
+    "top1_percent": 95.02,
+    "top9_percent": 100.0,
+    "character_error_rate": 0.0316,
+    "p50_lookup_ms": 4.561,
+    "p95_lookup_ms": 7.632,
+    "max_lookup_ms": 10.404,
+    "missing_from_top9_count": 0,
+    "missing_from_top9": [],
+    "max_returned_candidate_count": 9
+  },
+  "rows": [
+    {
+      "pinyin": "dengbi",
+      "expected": "灯臂",
+      "source": "5000",
+      "lookup_us": 4833,
+      "candidates": [
+        "蹬壁",
+        "等比",
+        "灯臂",
+        "等弊",
+        "等必",
+        "等笔",
+        "登比",
+        "邓比",
+        "等"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "anzhuangtongdeng",
+      "expected": "暗装筒灯",
+      "source": "5500",
+      "lookup_us": 6085,
+      "candidates": [
+        "暗装筒灯",
+        "安装同等",
+        "安装通等",
+        "安装铜灯",
+        "安装痛等",
+        "安装桶等",
+        "安装统等",
+        "安装童等",
+        "安装"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "baichideng",
+      "expected": "白炽灯",
+      "source": "5500",
+      "lookup_us": 2143,
+      "candidates": [
+        "白炽灯",
+        "白痴等",
+        "白痴灯",
+        "白痴登",
+        "白痴邓",
+        "白吃等",
+        "百吃等",
+        "白痴澄",
+        "白痴"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bataidiaodeng",
+      "expected": "吧台吊灯",
+      "source": "5500",
+      "lookup_us": 4646,
+      "candidates": [
+        "吧台吊灯",
+        "把太吊灯",
+        "把台吊灯",
+        "把台调等",
+        "把太调等",
+        "巴泰吊灯",
+        "把太掉等",
+        "把台掉等",
+        "吧台"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "beicanzhaoming",
+      "expected": "备餐照明",
+      "source": "5500",
+      "lookup_us": 4780,
+      "candidates": [
+        "备餐照明",
+        "悲惨照明",
+        "被参照明",
+        "北参照明",
+        "悲惨照名",
+        "被残照明",
+        "被餐照明",
+        "被参照名",
+        "悲惨"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biansedeng",
+      "expected": "变色灯",
+      "source": "5500",
+      "lookup_us": 2752,
+      "candidates": [
+        "变色灯",
+        "变色等",
+        "变色登",
+        "变色邓",
+        "变色澄",
+        "变色凳",
+        "便色等",
+        "变色瞪",
+        "变色"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bolidengzhao",
+      "expected": "玻璃灯罩",
+      "source": "5500",
+      "lookup_us": 4164,
+      "candidates": [
+        "玻璃灯罩",
+        "玻璃等着",
+        "波里等着",
+        "剥离等着",
+        "伯里等着",
+        "玻璃瞪着",
+        "玻璃等照",
+        "玻璃灯照",
+        "玻璃"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bolidiaodeng",
+      "expected": "玻璃吊灯",
+      "source": "5500",
+      "lookup_us": 4856,
+      "candidates": [
+        "玻璃吊灯",
+        "玻璃掉等",
+        "玻璃吊等",
+        "玻璃调等",
+        "玻璃钓等",
+        "玻璃掉灯",
+        "玻璃鸟等",
+        "玻璃掉登",
+        "玻璃"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "buyidengzhao",
+      "expected": "布艺灯罩",
+      "source": "5500",
+      "lookup_us": 3577,
+      "candidates": [
+        "布艺灯罩",
+        "不宜等着",
+        "不易等着",
+        "不宜灯罩",
+        "不以等着",
+        "不一等着",
+        "部一等着",
+        "不已等着",
+        "不宜"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caideng",
+      "expected": "彩灯",
+      "source": "5500",
+      "lookup_us": 1296,
+      "candidates": [
+        "彩灯",
+        "菜等",
+        "才等",
+        "蔡等",
+        "财等",
+        "才登",
+        "彩等",
+        "裁等",
+        "才得"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caisedeng",
+      "expected": "彩色灯",
+      "source": "5500",
+      "lookup_us": 1922,
+      "candidates": [
+        "彩色灯",
+        "彩色等",
+        "彩色登",
+        "彩色邓",
+        "彩色澄",
+        "彩色凳",
+        "彩色瞪",
+        "才色等",
+        "彩色"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caiseguang",
+      "expected": "彩色光",
+      "source": "5500",
+      "lookup_us": 4109,
+      "candidates": [
+        "彩色光",
+        "彩色广",
+        "彩色逛",
+        "才色光",
+        "蔡色光",
+        "菜色光",
+        "彩色洸",
+        "彩色胱",
+        "彩色"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "cantingdiaodeng",
+      "expected": "餐厅吊灯",
+      "source": "5500",
+      "lookup_us": 4667,
+      "candidates": [
+        "餐厅吊灯",
+        "餐厅调等",
+        "餐厅掉等",
+        "餐厅钓等",
+        "餐厅鸟等",
+        "餐厅吊等",
+        "餐厅雕等",
+        "餐厅调灯",
+        "餐厅"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "cantingzhaoming",
+      "expected": "餐厅照明",
+      "source": "5500",
+      "lookup_us": 5144,
+      "candidates": [
+        "餐厅照明",
+        "餐厅赵铭",
+        "餐厅着名",
+        "餐厅朝明",
+        "餐厅照名",
+        "餐厅兆铭",
+        "餐厅兆明",
+        "餐厅招明",
+        "餐厅"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caopingdeng",
+      "expected": "草坪灯",
+      "source": "5500",
+      "lookup_us": 2812,
+      "candidates": [
+        "草坪灯",
+        "草坪等",
+        "曹平等",
+        "草平等",
+        "草坪登",
+        "操平等",
+        "糙平等",
+        "槽平等",
+        "草坪"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "cengbandeng",
+      "expected": "层板灯",
+      "source": "5500",
+      "lookup_us": 3021,
+      "candidates": [
+        "层板灯",
+        "层板凳",
+        "曾板凳",
+        "层板等",
+        "曾办鄧",
+        "曾版等",
+        "曾板等",
+        "曾办等",
+        "层板"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "changbitaideng",
+      "expected": "长臂台灯",
+      "source": "5500",
+      "lookup_us": 3540,
+      "candidates": [
+        "长臂台灯",
+        "长鼻台灯",
+        "场比台灯",
+        "长比台灯",
+        "长鼻台等",
+        "场比台等",
+        "长比台等",
+        "长臂台等",
+        "长"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "changtiaodiaodeng",
+      "expected": "长条吊灯",
+      "source": "5500",
+      "lookup_us": 6393,
+      "candidates": [
+        "长条吊灯",
+        "长条掉等",
+        "长条调等",
+        "长条钓等",
+        "长条鸟等",
+        "长条吊等",
+        "长调调等",
+        "长条雕等",
+        "长条"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chaobaotongdeng",
+      "expected": "超薄筒灯",
+      "source": "5500",
+      "lookup_us": 4212,
+      "candidates": [
+        "超薄筒灯",
+        "超薄同等",
+        "超报同等",
+        "超薄通等",
+        "超包同等",
+        "朝报同等",
+        "炒包同等",
+        "超宝同等",
+        "超薄"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chaobaoxidingdeng",
+      "expected": "超薄吸顶灯",
+      "source": "5500",
+      "lookup_us": 6373,
+      "candidates": [
+        "超薄吸顶灯",
+        "超薄熙定等",
+        "超包吸顶灯",
+        "超保熙定等",
+        "超薄西定等",
+        "超薄系定等",
+        "超薄熙丁等",
+        "超薄希丁等",
+        "超薄"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chazuoyedeng",
+      "expected": "插座夜灯",
+      "source": "5500",
+      "lookup_us": 3130,
+      "candidates": [
+        "插座夜灯",
+        "查作业等",
+        "茶作业等",
+        "插座业等",
+        "插座也等",
+        "插座叶等",
+        "插座页等",
+        "插座野等",
+        "插座"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chongdiantaideng",
+      "expected": "充电台灯",
+      "source": "5500",
+      "lookup_us": 4663,
+      "candidates": [
+        "充电台灯",
+        "充电台等",
+        "重点台灯",
+        "冲电台等",
+        "充电台登",
+        "重点台等",
+        "充电太等",
+        "充电泰等",
+        "充电"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chongdianyedeng",
+      "expected": "充电夜灯",
+      "source": "5500",
+      "lookup_us": 3478,
+      "candidates": [
+        "充电夜灯",
+        "充电业等",
+        "重点也等",
+        "重点业等",
+        "充电也等",
+        "重点夜灯",
+        "充电叶等",
+        "充电夜等",
+        "充电"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chongdianyingjideng",
+      "expected": "充电应急灯",
+      "source": "5500",
+      "lookup_us": 6919,
+      "candidates": [
+        "充电影集等",
+        "充电影机等",
+        "充电应急灯",
+        "充电影及等",
+        "充电影记等",
+        "重点应急灯",
+        "充电应急等",
+        "重点应急等",
+        "充电"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "chuangtoubideng",
+      "expected": "床头壁灯",
+      "source": "5500",
+      "lookup_us": 4336,
+      "candidates": [
+        "床头壁灯",
+        "创投币等",
+        "床头比等",
+        "创投比等",
+        "床头笔等",
+        "创投笔等",
+        "床头壁等",
+        "创投壁等",
+        "床头"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chuangtouzhaoming",
+      "expected": "床头照明",
+      "source": "5500",
+      "lookup_us": 5543,
+      "candidates": [
+        "床头照明",
+        "创投照明",
+        "创投着命",
+        "床头朝明",
+        "床头朝名",
+        "床头赵铭",
+        "床头朝命",
+        "创投赵铭",
+        "床头"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chuguizhaoming",
+      "expected": "橱柜照明",
+      "source": "5500",
+      "lookup_us": 5511,
+      "candidates": [
+        "橱柜照明",
+        "出轨照明",
+        "出柜照明",
+        "除贵照明",
+        "出鬼照明",
+        "除归照明",
+        "出规照明",
+        "除鬼照明",
+        "橱柜"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "cixishedeng",
+      "expected": "磁吸射灯",
+      "source": "5500",
+      "lookup_us": 3759,
+      "candidates": [
+        "磁吸射灯",
+        "慈禧社等",
+        "慈溪社等",
+        "慈禧射灯",
+        "慈禧舍等",
+        "慈禧设等",
+        "慈禧射等",
+        "慈溪射灯",
+        "慈禧"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "daoguangban",
+      "expected": "导光板",
+      "source": "5500",
+      "lookup_us": 5196,
+      "candidates": [
+        "导光板",
+        "道光板",
+        "道光斑",
+        "道光版",
+        "道光办",
+        "道光半",
+        "道光班",
+        "道光伴",
+        "道光"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengban",
+      "expected": "灯板",
+      "source": "5500",
+      "lookup_us": 2076,
+      "candidates": [
+        "灯板",
+        "等版",
+        "等办",
+        "等半",
+        "等班",
+        "登板",
+        "等板",
+        "等般",
+        "等"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengdaicaijian",
+      "expected": "灯带裁剪",
+      "source": "5500",
+      "lookup_us": 6400,
+      "candidates": [
+        "灯带裁剪",
+        "等待裁减",
+        "等待裁剪",
+        "等待才见",
+        "等待采检",
+        "等待才剑",
+        "等待才建",
+        "等待才间",
+        "等待"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengdaifahuang",
+      "expected": "灯带发黄",
+      "source": "5500",
+      "lookup_us": 5707,
+      "candidates": [
+        "灯带发黄",
+        "等待发黄",
+        "等待发慌",
+        "等待法黄",
+        "等待法荒",
+        "等待法皇",
+        "等待法晃",
+        "等待发皇",
+        "等待"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengdaihanjie",
+      "expected": "灯带焊接",
+      "source": "5500",
+      "lookup_us": 5173,
+      "candidates": [
+        "灯带焊接",
+        "等待焊接",
+        "等待汉街",
+        "等待含节",
+        "等待韩街",
+        "等待含街",
+        "等待汉节",
+        "等待韩节",
+        "等待"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengdaikakou",
+      "expected": "灯带卡扣",
+      "source": "5500",
+      "lookup_us": 2184,
+      "candidates": [
+        "灯带卡扣",
+        "等待卡扣",
+        "等待卡口",
+        "等带卡扣",
+        "等待卡寇",
+        "等待喀口",
+        "等待咖口",
+        "等待喀扣",
+        "等待"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengdailianjieqi",
+      "expected": "灯带连接器",
+      "source": "5500",
+      "lookup_us": 8982,
+      "candidates": [
+        "等待连接起",
+        "等待链接器",
+        "等待链接起",
+        "等待连接器",
+        "等待链接期",
+        "等待连接其",
+        "等待连接期",
+        "灯带连接器",
+        "等待"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "dengdaipinjie",
+      "expected": "灯带拼接",
+      "source": "5500",
+      "lookup_us": 5675,
+      "candidates": [
+        "灯带拼接",
+        "等待拼接",
+        "等待品街",
+        "等待频节",
+        "等待拼捷",
+        "等待品节",
+        "等待品结",
+        "等待频街",
+        "等待"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengdaisecha",
+      "expected": "灯带色差",
+      "source": "5500",
+      "lookup_us": 2814,
+      "candidates": [
+        "灯带色差",
+        "等待色差",
+        "等待色茶",
+        "等待色查",
+        "等待塞差",
+        "等待瑟差",
+        "等待塞茶",
+        "等待塞查",
+        "等待"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengdaituoluo",
+      "expected": "灯带脱落",
+      "source": "5500",
+      "lookup_us": 5288,
+      "candidates": [
+        "灯带脱落",
+        "等待脱落",
+        "等待陀螺",
+        "等待拖罗",
+        "等待托罗",
+        "等大脱落",
+        "等待托洛",
+        "等带脱落",
+        "等待"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengguanchangdu",
+      "expected": "灯管长度",
+      "source": "5500",
+      "lookup_us": 6536,
+      "candidates": [
+        "灯管长度",
+        "等管长度",
+        "等关长度",
+        "等官长度",
+        "灯关长度",
+        "等馆长度",
+        "等观长度",
+        "等冠长度",
+        "灯管"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengguangbuju",
+      "expected": "灯光布局",
+      "source": "5500",
+      "lookup_us": 5258,
+      "candidates": [
+        "灯光布局",
+        "灯光不具",
+        "灯光不惧",
+        "灯光不居",
+        "等光布局",
+        "等广布局",
+        "灯光不局",
+        "灯光不巨",
+        "灯光"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengguangcengci",
+      "expected": "灯光层次",
+      "source": "5500",
+      "lookup_us": 4673,
+      "candidates": [
+        "灯光层次",
+        "等光层次",
+        "等广层次",
+        "灯光曾词",
+        "灯光层词",
+        "灯光曾次",
+        "灯光曾此",
+        "灯光曾辞",
+        "灯光"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengguangchangjing",
+      "expected": "灯光场景",
+      "source": "5500",
+      "lookup_us": 8463,
+      "candidates": [
+        "灯光场景",
+        "等广场景",
+        "登广场景",
+        "灯光长颈",
+        "等广场经",
+        "等广场静",
+        "等广场精",
+        "等广场惊",
+        "灯光"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengguangciyan",
+      "expected": "灯光刺眼",
+      "source": "5500",
+      "lookup_us": 5819,
+      "candidates": [
+        "灯光刺眼",
+        "灯光此言",
+        "等光刺眼",
+        "灯光次演",
+        "灯光此眼",
+        "灯光此演",
+        "灯光次眼",
+        "灯光此烟",
+        "灯光"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengguangdapei",
+      "expected": "灯光搭配",
+      "source": "5500",
+      "lookup_us": 4726,
+      "candidates": [
+        "灯光搭配",
+        "等光搭配",
+        "等广搭配",
+        "灯光大配",
+        "灯光大佩",
+        "灯光大赔",
+        "灯光大培",
+        "等逛搭配",
+        "灯光"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengguangdingshi",
+      "expected": "灯光定时",
+      "source": "5500",
+      "lookup_us": 5651,
+      "candidates": [
+        "灯光定时",
+        "灯光定是",
+        "灯光定式",
+        "灯光定势",
+        "灯光定事",
+        "灯光定市",
+        "灯光顶是",
+        "灯光町是",
+        "灯光"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengguangfahuang",
+      "expected": "灯光发黄",
+      "source": "5500",
+      "lookup_us": 8389,
+      "candidates": [
+        "灯光发黄",
+        "灯光发慌",
+        "等广发黄",
+        "灯光法黄",
+        "灯光发皇",
+        "灯光法荒",
+        "灯光发晃",
+        "等光发黄",
+        "灯光"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengguangfenwei",
+      "expected": "灯光氛围",
+      "source": "5500",
+      "lookup_us": 5451,
+      "candidates": [
+        "灯光氛围",
+        "灯光分为",
+        "等广分为",
+        "等光氛围",
+        "等广氛围",
+        "等光分为",
+        "灯光分位",
+        "灯光份为",
+        "灯光"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengguangpianse",
+      "expected": "灯光偏色",
+      "source": "5500",
+      "lookup_us": 6239,
+      "candidates": [
+        "灯光偏色",
+        "灯光片色",
+        "灯光片塞",
+        "灯光片瑟",
+        "灯光便色",
+        "灯光篇色",
+        "灯光骗色",
+        "灯光偏塞",
+        "灯光"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengguangpinshan",
+      "expected": "灯光频闪",
+      "source": "5500",
+      "lookup_us": 6061,
+      "candidates": [
+        "灯光频闪",
+        "灯光品山",
+        "灯光频山",
+        "灯光拼山",
+        "灯光聘山",
+        "灯光贫山",
+        "灯光品善",
+        "灯光品单",
+        "灯光"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengguangyaokongqi",
+      "expected": "灯光遥控器",
+      "source": "5500",
+      "lookup_us": 6203,
+      "candidates": [
+        "灯光遥控器",
+        "灯光要空气",
+        "等光遥控器",
+        "灯光耀空气",
+        "灯光药空气",
+        "灯光遥控其",
+        "灯光遥控起",
+        "灯光遥控气",
+        "灯光"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengguangzidonghua",
+      "expected": "灯光自动化",
+      "source": "5500",
+      "lookup_us": 6623,
+      "candidates": [
+        "灯光自动化",
+        "灯光自动画",
+        "灯光子动画",
+        "灯光自动花",
+        "等广自动化",
+        "灯光自动话",
+        "灯光字动画",
+        "灯光自动华",
+        "灯光"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengguanzhijia",
+      "expected": "灯管支架",
+      "source": "5500",
+      "lookup_us": 6254,
+      "candidates": [
+        "灯管支架",
+        "灯管之家",
+        "等关之家",
+        "等管之家",
+        "等官之家",
+        "灯管指甲",
+        "等管支架",
+        "等官指甲",
+        "灯管"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengjubaoyang",
+      "expected": "灯具保养",
+      "source": "5500",
+      "lookup_us": 5692,
+      "candidates": [
+        "灯具保养",
+        "等具保养",
+        "等局保养",
+        "等举保养",
+        "等据保养",
+        "等举报阳",
+        "等距保养",
+        "等举报扬",
+        "灯具"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengjucaizhi",
+      "expected": "灯具材质",
+      "source": "5500",
+      "lookup_us": 3310,
+      "candidates": [
+        "灯具材质",
+        "等具材质",
+        "等举材质",
+        "等据材质",
+        "等局材质",
+        "等距材质",
+        "邓裾材质",
+        "等居材质",
+        "灯具"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengjuchaixie",
+      "expected": "灯具拆卸",
+      "source": "5500",
+      "lookup_us": 4797,
+      "candidates": [
+        "灯具拆卸",
+        "等具拆卸",
+        "等举拆卸",
+        "等局拆卸",
+        "等据拆卸",
+        "等距拆卸",
+        "邓裾拆卸",
+        "等居拆卸",
+        "灯具"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengjuchicun",
+      "expected": "灯具尺寸",
+      "source": "5500",
+      "lookup_us": 3047,
+      "candidates": [
+        "灯具尺寸",
+        "等具尺寸",
+        "等距尺寸",
+        "等举尺寸",
+        "等局尺寸",
+        "等据尺寸",
+        "邓裾尺寸",
+        "等居尺寸",
+        "灯具"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengjufangchao",
+      "expected": "灯具防潮",
+      "source": "5500",
+      "lookup_us": 6432,
+      "candidates": [
+        "灯具防潮",
+        "等具防潮",
+        "等举防潮",
+        "等局防潮",
+        "等据防潮",
+        "等距防潮",
+        "邓裾防潮",
+        "等居防潮",
+        "灯具"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengjufangshui",
+      "expected": "灯具防水",
+      "source": "5500",
+      "lookup_us": 4375,
+      "candidates": [
+        "灯具防水",
+        "灯具放水",
+        "等局方说",
+        "等具防水",
+        "等具放水",
+        "等举防水",
+        "等局防水",
+        "等局方水",
+        "灯具"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengjufare",
+      "expected": "灯具发热",
+      "source": "5500",
+      "lookup_us": 1912,
+      "candidates": [
+        "灯具发热",
+        "等局发热",
+        "等举发热",
+        "等具发热",
+        "等据发热",
+        "等剧发热",
+        "等距发热",
+        "等拒发热",
+        "灯具"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengjufengge",
+      "expected": "灯具风格",
+      "source": "5500",
+      "lookup_us": 3592,
+      "candidates": [
+        "灯具风格",
+        "等具风格",
+        "等飓风格",
+        "邓飓风格",
+        "等剧风格",
+        "等举风格",
+        "等居风格",
+        "等局风格",
+        "灯具"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengjugaodu",
+      "expected": "灯具高度",
+      "source": "5500",
+      "lookup_us": 3569,
+      "candidates": [
+        "灯具高度",
+        "等具高度",
+        "等举高度",
+        "等据高度",
+        "等局高度",
+        "等居高度",
+        "等距高度",
+        "邓裾高度",
+        "灯具"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengjugenghuan",
+      "expected": "灯具更换",
+      "source": "5500",
+      "lookup_us": 5247,
+      "candidates": [
+        "灯具更换",
+        "等举更换",
+        "等局更换",
+        "等具更换",
+        "等据更换",
+        "等距更换",
+        "邓裾更换",
+        "等剧更换",
+        "灯具"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengjuguding",
+      "expected": "灯具固定",
+      "source": "5500",
+      "lookup_us": 3695,
+      "candidates": [
+        "灯具固定",
+        "等具固定",
+        "等举固定",
+        "等局固定",
+        "等距固定",
+        "等据固定",
+        "邓裾固定",
+        "等居固定",
+        "灯具"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengjuhaodian",
+      "expected": "灯具耗电",
+      "source": "5500",
+      "lookup_us": 4941,
+      "candidates": [
+        "灯具耗电",
+        "等居好点",
+        "灯具好点",
+        "等具好点",
+        "等举好点",
+        "邓居好点",
+        "等局好点",
+        "等距好点",
+        "灯具"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengjujiexian",
+      "expected": "灯具接线",
+      "source": "5500",
+      "lookup_us": 7719,
+      "candidates": [
+        "灯具接线",
+        "等剧界限",
+        "灯具界限",
+        "等剧界线",
+        "灯具界线",
+        "等具界限",
+        "等举界限",
+        "等具界线",
+        "灯具"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengjukongzhiqi",
+      "expected": "灯具控制器",
+      "source": "5500",
+      "lookup_us": 3258,
+      "candidates": [
+        "灯具控制器",
+        "等矩控制器",
+        "灯具控制其",
+        "灯具控制启",
+        "等矩控制其",
+        "等矩控制启",
+        "灯具控制起",
+        "等矩控制起",
+        "灯具"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengjukuanshi",
+      "expected": "灯具款式",
+      "source": "5500",
+      "lookup_us": 3695,
+      "candidates": [
+        "灯具款式",
+        "等巨款式",
+        "等巨款时",
+        "等巨款是",
+        "等具款式",
+        "等举款式",
+        "灯巨款式",
+        "等局款式",
+        "灯具"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengjupeijian",
+      "expected": "灯具配件",
+      "source": "5500",
+      "lookup_us": 5063,
+      "candidates": [
+        "灯具配件",
+        "等具配件",
+        "等举配件",
+        "等局配件",
+        "等距配件",
+        "等据配件",
+        "邓裾配件",
+        "等居配件",
+        "灯具"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengjuqingdan",
+      "expected": "灯具清单",
+      "source": "5500",
+      "lookup_us": 5021,
+      "candidates": [
+        "灯具清单",
+        "等具清单",
+        "等举清单",
+        "等居清单",
+        "等据清单",
+        "等局清单",
+        "等距清单",
+        "灯具清淡",
+        "灯具"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengjuqudongqi",
+      "expected": "灯具驱动器",
+      "source": "5500",
+      "lookup_us": 3504,
+      "candidates": [
+        "灯具驱动器",
+        "等据驱动器",
+        "灯具驱动起",
+        "灯具驱动气",
+        "灯具驱动其",
+        "等据驱动起",
+        "灯具驱动期",
+        "等据驱动气",
+        "灯具"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengjusanre",
+      "expected": "灯具散热",
+      "source": "5500",
+      "lookup_us": 2472,
+      "candidates": [
+        "灯具散热",
+        "等具散热",
+        "等聚散热",
+        "等举散热",
+        "等局散热",
+        "等距散热",
+        "等据散热",
+        "邓裾散热",
+        "灯具"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengjushiliang",
+      "expected": "灯具试亮",
+      "source": "5500",
+      "lookup_us": 7793,
+      "candidates": [
+        "灯具试亮",
+        "灯具适量",
+        "等巨石亮",
+        "等局势良",
+        "灯具食量",
+        "等局势亮",
+        "等具适量",
+        "等局势量",
+        "灯具"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengjuxuangou",
+      "expected": "灯具选购",
+      "source": "5500",
+      "lookup_us": 5273,
+      "candidates": [
+        "灯具选购",
+        "等具选购",
+        "等举选购",
+        "等据选购",
+        "等局选购",
+        "等距选购",
+        "登据选购",
+        "邓裾选购",
+        "灯具"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengjuxuanxing",
+      "expected": "灯具选型",
+      "source": "5500",
+      "lookup_us": 7443,
+      "candidates": [
+        "灯具选型",
+        "等具选型",
+        "灯具选行",
+        "等举选型",
+        "等据选型",
+        "等局选型",
+        "灯具选性",
+        "等距选型",
+        "灯具"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengjuyanshou",
+      "expected": "灯具验收",
+      "source": "5500",
+      "lookup_us": 3937,
+      "candidates": [
+        "灯具验收",
+        "等局验收",
+        "等具验收",
+        "等举验收",
+        "等据验收",
+        "等距验收",
+        "邓裾验收",
+        "等居验收",
+        "灯具"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengjuyaokongqi",
+      "expected": "灯具遥控器",
+      "source": "5500",
+      "lookup_us": 4259,
+      "candidates": [
+        "灯具遥控器",
+        "等距遥控器",
+        "灯具要空气",
+        "等局要空气",
+        "灯具遥控其",
+        "灯具遥控起",
+        "灯具遥控气",
+        "灯具遥控期",
+        "灯具"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengkouguige",
+      "expected": "灯口规格",
+      "source": "5500",
+      "lookup_us": 4008,
+      "candidates": [
+        "灯口规格",
+        "等口规格",
+        "等扣规格",
+        "邓扣规格",
+        "等寇规格",
+        "等抠规格",
+        "等叩规格",
+        "等蔻规格",
+        "灯口"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengpaoanzhuang",
+      "expected": "灯泡安装",
+      "source": "5500",
+      "lookup_us": 4853,
+      "candidates": [
+        "灯泡安装",
+        "等跑安装",
+        "等泡安装",
+        "等炮安装",
+        "等抛安装",
+        "邓跑安装",
+        "灯炮安装",
+        "等袍安装",
+        "灯泡"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengpaofahei",
+      "expected": "灯泡发黑",
+      "source": "5500",
+      "lookup_us": 2906,
+      "candidates": [
+        "灯泡发黑",
+        "等泡发黑",
+        "灯泡法黑",
+        "等跑发黑",
+        "灯泡发嗨",
+        "灯泡发嘿",
+        "灯泡发黒",
+        "灯泡罚黑",
+        "灯泡"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengpaofare",
+      "expected": "灯泡发热",
+      "source": "5500",
+      "lookup_us": 2173,
+      "candidates": [
+        "灯泡发热",
+        "等泡发热",
+        "等跑发热",
+        "灯泡发惹",
+        "灯泡法热",
+        "等炮发热",
+        "等抛发热",
+        "邓跑发热",
+        "灯泡"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengpaogonglv",
+      "expected": "灯泡功率",
+      "source": "5500",
+      "lookup_us": 2709,
+      "candidates": [
+        "灯泡功率",
+        "灯跑功率",
+        "等跑功率",
+        "等泡功率",
+        "灯泡工率",
+        "灯泡共率",
+        "等炮功率",
+        "等抛功率",
+        "灯泡"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengpaokakou",
+      "expected": "灯泡卡口",
+      "source": "5500",
+      "lookup_us": 1868,
+      "candidates": [
+        "灯泡卡口",
+        "灯泡卡扣",
+        "灯泡咖口",
+        "灯泡咖扣",
+        "灯泡喀口",
+        "灯泡卡寇",
+        "等跑卡扣",
+        "灯泡喀扣",
+        "灯泡"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengpaoluokou",
+      "expected": "灯泡螺口",
+      "source": "5500",
+      "lookup_us": 3364,
+      "candidates": [
+        "灯泡螺口",
+        "灯泡落口",
+        "灯泡罗口",
+        "灯泡洛口",
+        "灯泡罗扣",
+        "灯泡落扣",
+        "灯泡洛扣",
+        "灯泡裸口",
+        "灯泡"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengpaoshouming",
+      "expected": "灯泡寿命",
+      "source": "5500",
+      "lookup_us": 3920,
+      "candidates": [
+        "灯泡寿命",
+        "灯泡受命",
+        "灯泡首名",
+        "等跑寿命",
+        "等泡寿命",
+        "灯泡手名",
+        "灯泡手明",
+        "等抛售明",
+        "灯泡"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengpaoxinghao",
+      "expected": "灯泡型号",
+      "source": "5500",
+      "lookup_us": 4770,
+      "candidates": [
+        "灯泡型号",
+        "灯泡行灏",
+        "灯泡醒壕",
+        "灯泡行好",
+        "灯泡幸好",
+        "灯泡醒好",
+        "灯泡性好",
+        "灯泡星号",
+        "灯泡"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengpaozhalie",
+      "expected": "灯泡炸裂",
+      "source": "5500",
+      "lookup_us": 4021,
+      "candidates": [
+        "灯泡炸裂",
+        "灯泡扎列",
+        "灯泡炸列",
+        "灯泡炸咧",
+        "灯泡扎咧",
+        "灯泡炸烈",
+        "灯泡扎烈",
+        "灯泡查列",
+        "灯泡"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengsheng",
+      "expected": "灯绳",
+      "source": "5500",
+      "lookup_us": 2416,
+      "candidates": [
+        "灯绳",
+        "等甥",
+        "等省",
+        "等生",
+        "邓生",
+        "等声",
+        "邓声",
+        "等升",
+        "等"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengsideng",
+      "expected": "灯丝灯",
+      "source": "5500",
+      "lookup_us": 2303,
+      "candidates": [
+        "灯丝灯",
+        "等四等",
+        "等寺等",
+        "等斯等",
+        "等死等",
+        "等食等",
+        "登斯等",
+        "登寺等",
+        "等死"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengtouxinghao",
+      "expected": "灯头型号",
+      "source": "5500",
+      "lookup_us": 4787,
+      "candidates": [
+        "灯头型号",
+        "等头型号",
+        "等投型号",
+        "等偷型号",
+        "等透型号",
+        "邓投型号",
+        "登偷型号",
+        "等头行好",
+        "灯头"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengweitu",
+      "expected": "灯位图",
+      "source": "5500",
+      "lookup_us": 1896,
+      "candidates": [
+        "灯位图",
+        "等位图",
+        "等为土",
+        "等为图",
+        "登位图",
+        "邓位图",
+        "等微图",
+        "等为突",
+        "灯位"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengxian",
+      "expected": "灯线",
+      "source": "5500",
+      "lookup_us": 5015,
+      "candidates": [
+        "等闲",
+        "等线",
+        "灯线",
+        "等现",
+        "等县",
+        "等先",
+        "登仙",
+        "邓先",
+        "灯下"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "dengxin",
+      "expected": "灯芯",
+      "source": "5500",
+      "lookup_us": 2330,
+      "candidates": [
+        "灯芯",
+        "等新",
+        "等心",
+        "等信",
+        "灯心",
+        "等欣",
+        "登新",
+        "邓新",
+        "等"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengzhaogenghuan",
+      "expected": "灯罩更换",
+      "source": "5500",
+      "lookup_us": 6882,
+      "candidates": [
+        "灯罩更换",
+        "等着更换",
+        "等找更换",
+        "瞪着更换",
+        "等照更换",
+        "等召更换",
+        "灯照更换",
+        "等朝更换",
+        "灯罩"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengzhaokailie",
+      "expected": "灯罩开裂",
+      "source": "5500",
+      "lookup_us": 5067,
+      "candidates": [
+        "灯罩开裂",
+        "等着开裂",
+        "等召开裂",
+        "邓召开裂",
+        "等召开烈",
+        "等召开列",
+        "等朝开裂",
+        "等召开咧",
+        "灯罩"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengzhaoqingjie",
+      "expected": "灯罩清洁",
+      "source": "5500",
+      "lookup_us": 7821,
+      "candidates": [
+        "灯罩清洁",
+        "等着清洁",
+        "等着情节",
+        "灯罩情节",
+        "等着情结",
+        "等照情节",
+        "等找清洁",
+        "等照清洁",
+        "灯罩"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengzhu",
+      "expected": "灯柱",
+      "source": "5500",
+      "lookup_us": 1254,
+      "candidates": [
+        "灯柱",
+        "灯珠",
+        "等主",
+        "等著",
+        "等住",
+        "等诸",
+        "等猪",
+        "等注",
+        "等"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengzhugenghuan",
+      "expected": "灯珠更换",
+      "source": "5500",
+      "lookup_us": 6528,
+      "candidates": [
+        "灯珠更换",
+        "等著更换",
+        "等主更换",
+        "灯柱更换",
+        "等诸更换",
+        "等住更换",
+        "等注更换",
+        "等猪更换",
+        "灯珠"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dianyuangonglv",
+      "expected": "电源功率",
+      "source": "5500",
+      "lookup_us": 5561,
+      "candidates": [
+        "电源功率",
+        "店员功率",
+        "店员工率",
+        "店员工绿",
+        "店员工律",
+        "店员工旅",
+        "店员工履",
+        "店员工吕",
+        "电源"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dianzizhenliuqi",
+      "expected": "电子镇流器",
+      "source": "5500",
+      "lookup_us": 5909,
+      "candidates": [
+        "电子镇流器",
+        "电子真六七",
+        "电子镇六七",
+        "点子镇流器",
+        "电子真六期",
+        "电子针六七",
+        "电子振六七",
+        "电子真六起",
+        "电子"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "diaoxiandeng",
+      "expected": "吊线灯",
+      "source": "5500",
+      "lookup_us": 6106,
+      "candidates": [
+        "吊线灯",
+        "掉线等",
+        "掉线灯",
+        "掉线登",
+        "调先等",
+        "调线等",
+        "调县等",
+        "吊先等",
+        "掉线"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "diaoyuluodideng",
+      "expected": "钓鱼落地灯",
+      "source": "5500",
+      "lookup_us": 5950,
+      "candidates": [
+        "钓鱼落地灯",
+        "钓鱼落地等",
+        "钓鱼落地登",
+        "钓鱼罗地等",
+        "钓鱼洛地等",
+        "钓鱼罗低等",
+        "钓鱼落低等",
+        "调于落地灯",
+        "钓鱼"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dichadeng",
+      "expected": "地插灯",
+      "source": "5500",
+      "lookup_us": 2368,
+      "candidates": [
+        "地插灯",
+        "的插等",
+        "的查等",
+        "地插等",
+        "的差等",
+        "地查等",
+        "的茶等",
+        "蒂察等",
+        "地插"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dimaideng",
+      "expected": "地埋灯",
+      "source": "5500",
+      "lookup_us": 4065,
+      "candidates": [
+        "地埋灯",
+        "的迈等",
+        "的卖等",
+        "地卖等",
+        "地买等",
+        "的买等",
+        "的麦等",
+        "低卖等",
+        "地"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "diyadengdai",
+      "expected": "低压灯带",
+      "source": "5500",
+      "lookup_us": 3774,
+      "candidates": [
+        "低压灯带",
+        "迪亚等待",
+        "抵押等待",
+        "低压等待",
+        "蒂亚等待",
+        "的呀等待",
+        "的压等待",
+        "的雅等待",
+        "抵押"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "doudandeng",
+      "expected": "斗胆灯",
+      "source": "5500",
+      "lookup_us": 2259,
+      "candidates": [
+        "斗胆灯",
+        "都弹等",
+        "都丹等",
+        "都单等",
+        "都但等",
+        "都担等",
+        "都蛋等",
+        "都淡等",
+        "都打"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ejingtaideng",
+      "expected": "鹅颈台灯",
+      "source": "5500",
+      "lookup_us": 5152,
+      "candidates": [
+        "鹅颈台灯",
+        "俄静态等",
+        "额静态等",
+        "俄经台灯",
+        "俄经台等",
+        "俄静态灯",
+        "俄景台灯",
+        "哦景台灯",
+        "额"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ertongfangzhaoming",
+      "expected": "儿童房照明",
+      "source": "5500",
+      "lookup_us": 7301,
+      "candidates": [
+        "儿童房照明",
+        "儿童仿照明",
+        "而同房照明",
+        "儿童方照明",
+        "儿童放照明",
+        "儿童防照明",
+        "儿童坊照明",
+        "而同方照明",
+        "儿童房"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangchaodeng",
+      "expected": "防潮灯",
+      "source": "5500",
+      "lookup_us": 2925,
+      "candidates": [
+        "防潮灯",
+        "防潮等",
+        "防潮登",
+        "方超等",
+        "放超等",
+        "防潮邓",
+        "房超等",
+        "防超等",
+        "防潮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangdajingtaideng",
+      "expected": "放大镜台灯",
+      "source": "5500",
+      "lookup_us": 6272,
+      "candidates": [
+        "放大镜台灯",
+        "放大镜台等",
+        "放大镜太等",
+        "放大镜泰等",
+        "放大静态等",
+        "放大镜态等",
+        "放大镜胎等",
+        "放大镜肽等",
+        "放大镜"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangshuideng",
+      "expected": "防水灯",
+      "source": "5500",
+      "lookup_us": 2726,
+      "candidates": [
+        "防水灯",
+        "放水灯",
+        "防水等",
+        "放水等",
+        "防水登",
+        "防水邓",
+        "方水等",
+        "防水澄",
+        "防水"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangshuitongdeng",
+      "expected": "防水筒灯",
+      "source": "5500",
+      "lookup_us": 3060,
+      "candidates": [
+        "防水筒灯",
+        "防水同等",
+        "防水桶等",
+        "防水通等",
+        "防水铜灯",
+        "放水同等",
+        "防水痛等",
+        "防水统等",
+        "防水"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fanguangmo",
+      "expected": "反光膜",
+      "source": "5500",
+      "lookup_us": 4304,
+      "candidates": [
+        "反光膜",
+        "反光没",
+        "反光墨",
+        "反光魔",
+        "反光莫",
+        "反光模",
+        "反光摩",
+        "反光末",
+        "反光"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fanguangzhao",
+      "expected": "反光罩",
+      "source": "5500",
+      "lookup_us": 4647,
+      "candidates": [
+        "反光罩",
+        "反光照",
+        "反光着",
+        "反光找",
+        "反光招",
+        "反光朝",
+        "反光兆",
+        "反光召",
+        "反光"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangxuan",
+      "expected": "防眩",
+      "source": "5500",
+      "lookup_us": 3134,
+      "candidates": [
+        "防眩",
+        "方绚",
+        "方选",
+        "放选",
+        "方宣",
+        "仿轩",
+        "房选",
+        "防选",
+        "放"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangxuanguang",
+      "expected": "防眩光",
+      "source": "5500",
+      "lookup_us": 6454,
+      "candidates": [
+        "防眩光",
+        "放眩光",
+        "方眩光",
+        "房眩光",
+        "芳眩光",
+        "仿眩光",
+        "放炫光",
+        "访眩光",
+        "方绚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangxuantongdeng",
+      "expected": "防眩筒灯",
+      "source": "5500",
+      "lookup_us": 4128,
+      "candidates": [
+        "防眩筒灯",
+        "防眩同等",
+        "方选同等",
+        "放选同等",
+        "方绚同等",
+        "仿轩同等",
+        "放旋同等",
+        "放玄潼等",
+        "方绚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangxuanzhao",
+      "expected": "防眩罩",
+      "source": "5500",
+      "lookup_us": 4286,
+      "candidates": [
+        "防眩罩",
+        "防眩着",
+        "防眩找",
+        "防眩照",
+        "防眩招",
+        "方选着",
+        "方选找",
+        "防眩朝",
+        "方绚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fenduantiaoguang",
+      "expected": "分段调光",
+      "source": "5500",
+      "lookup_us": 9045,
+      "candidates": [
+        "分段调光",
+        "分段条光",
+        "分段跳广",
+        "分段调广",
+        "分段跳光",
+        "分段条广",
+        "分段调逛",
+        "分段挑光",
+        "分段"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fengrendeng",
+      "expected": "缝纫灯",
+      "source": "5500",
+      "lookup_us": 2128,
+      "candidates": [
+        "缝纫灯",
+        "凤仁等",
+        "缝纫等",
+        "风人等",
+        "冯人等",
+        "丰人等",
+        "疯人等",
+        "封人等",
+        "缝纫"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fenweizhaoming",
+      "expected": "氛围照明",
+      "source": "5500",
+      "lookup_us": 5270,
+      "candidates": [
+        "氛围照明",
+        "分为照明",
+        "分位照明",
+        "分为赵铭",
+        "分为赵明",
+        "份为照明",
+        "氛围着名",
+        "分为朝明",
+        "分为"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fuzhuzhaoming",
+      "expected": "辅助照明",
+      "source": "5500",
+      "lookup_us": 5243,
+      "candidates": [
+        "辅助照明",
+        "付诸照明",
+        "扶助照明",
+        "腐竹照明",
+        "扶住照明",
+        "父朱照明",
+        "副主照明",
+        "福住照明",
+        "辅助"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gaoxiansedeng",
+      "expected": "高显色灯",
+      "source": "5500",
+      "lookup_us": 4610,
+      "candidates": [
+        "高显色灯",
+        "高显色等",
+        "高线色等",
+        "搞显色等",
+        "高线塞等",
+        "高先色等",
+        "高先塞等",
+        "高线瑟等",
+        "高宪"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gaoyadengdai",
+      "expected": "高压灯带",
+      "source": "5500",
+      "lookup_us": 4040,
+      "candidates": [
+        "高压灯带",
+        "高压等待",
+        "高雅等待",
+        "高呀等待",
+        "高亚等待",
+        "高压等大",
+        "高压等带",
+        "高雅灯带",
+        "高压"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guangshujiao",
+      "expected": "光束角",
+      "source": "5500",
+      "lookup_us": 6424,
+      "candidates": [
+        "光束角",
+        "光束脚",
+        "光束教",
+        "光束叫",
+        "光束交",
+        "光束较",
+        "光束觉",
+        "光束胶",
+        "光束"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guangtongliang",
+      "expected": "光通量",
+      "source": "5500",
+      "lookup_us": 5361,
+      "candidates": [
+        "光通量",
+        "光通两",
+        "光通亮",
+        "光通良",
+        "光同两",
+        "光通凉",
+        "光通梁",
+        "光同量",
+        "光"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guangxiao",
+      "expected": "光效",
+      "source": "5500",
+      "lookup_us": 4675,
+      "candidates": [
+        "光效",
+        "广西奧",
+        "光小",
+        "广西奥",
+        "光笑",
+        "光校",
+        "广小",
+        "广效",
+        "广西"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "hengliudianyuan",
+      "expected": "恒流电源",
+      "source": "5500",
+      "lookup_us": 7250,
+      "candidates": [
+        "恒流电源",
+        "衡柳电源",
+        "横流电源",
+        "衡柳店员",
+        "横流店员",
+        "横留电源",
+        "横六点远",
+        "横六电源",
+        "亨利"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "hengyadianyuan",
+      "expected": "恒压电源",
+      "source": "5500",
+      "lookup_us": 6110,
+      "candidates": [
+        "恒压电源",
+        "恒牙电源",
+        "恒牙店员",
+        "横呀电源",
+        "恒呀电源",
+        "横亚电源",
+        "横压电源",
+        "恒亚电源",
+        "恒牙"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "hongwaiganyingdeng",
+      "expected": "红外感应灯",
+      "source": "5500",
+      "lookup_us": 6905,
+      "candidates": [
+        "红外感应灯",
+        "红外感应等",
+        "洪外感应灯",
+        "红外感应登",
+        "洪外感应等",
+        "红外干应等",
+        "红外感影等",
+        "红外干英等",
+        "红外"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huangguang",
+      "expected": "黄光",
+      "source": "5500",
+      "lookup_us": 4723,
+      "candidates": [
+        "黄光",
+        "黄广",
+        "黄逛",
+        "皇光",
+        "荒光",
+        "皇广",
+        "荒广",
+        "皇逛",
+        "皇冠"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huanxingbuguangdeng",
+      "expected": "环形补光灯",
+      "source": "5500",
+      "lookup_us": 8135,
+      "candidates": [
+        "还行不光等",
+        "缓刑补光灯",
+        "环形补光灯",
+        "缓刑不光等",
+        "还行不光灯",
+        "缓刑不光灯",
+        "缓刑补光等",
+        "唤醒补光等",
+        "唤醒"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "huwaibideng",
+      "expected": "户外壁灯",
+      "source": "5500",
+      "lookup_us": 2825,
+      "candidates": [
+        "户外壁灯",
+        "户外币等",
+        "户外壁等",
+        "户外比等",
+        "户外必等",
+        "户外避等",
+        "户外笔等",
+        "户外币灯",
+        "户外"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huwaidideng",
+      "expected": "户外地灯",
+      "source": "5500",
+      "lookup_us": 2927,
+      "candidates": [
+        "户外地灯",
+        "户外地等",
+        "户外的等",
+        "户外低等",
+        "户外的灯",
+        "户外地登",
+        "胡外地等",
+        "户外的登",
+        "户外"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huwaitouguangdeng",
+      "expected": "户外投光灯",
+      "source": "5500",
+      "lookup_us": 5059,
+      "candidates": [
+        "户外透光等",
+        "户外透光灯",
+        "户外投光灯",
+        "户外透光登",
+        "户外头光等",
+        "户外头光灯",
+        "户外投光等",
+        "户外头广等",
+        "户外"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "huyanluodideng",
+      "expected": "护眼落地灯",
+      "source": "5500",
+      "lookup_us": 5503,
+      "candidates": [
+        "护眼落地灯",
+        "胡燕落地灯",
+        "胡燕落地等",
+        "许艳落地等",
+        "胡盐罗地等",
+        "胡燕落地登",
+        "许艳落地登",
+        "胡盐罗的等",
+        "虎牙"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jianguangbujiandeng",
+      "expected": "见光不见灯",
+      "source": "5500",
+      "lookup_us": 9434,
+      "candidates": [
+        "见光部件等",
+        "见光不见等",
+        "见光不见灯",
+        "见光不见登",
+        "见光不减等",
+        "见光补件等",
+        "见光部件登",
+        "间光部件等",
+        "见光"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "jianjiezhaoming",
+      "expected": "间接照明",
+      "source": "5500",
+      "lookup_us": 7830,
+      "candidates": [
+        "间接照明",
+        "简介照明",
+        "简洁照明",
+        "见解照明",
+        "间接着名",
+        "间接着明",
+        "间接着命",
+        "间接着鸣",
+        "简介"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jianliangjianan",
+      "expected": "渐亮渐暗",
+      "source": "5500",
+      "lookup_us": 9770,
+      "candidates": [
+        "渐亮渐暗",
+        "减量渐暗",
+        "见谅建安",
+        "见谅渐暗",
+        "减量建安",
+        "见两家难",
+        "渐亮建安",
+        "建两家难",
+        "见谅"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiaodeng",
+      "expected": "脚灯",
+      "source": "5500",
+      "lookup_us": 2356,
+      "candidates": [
+        "脚灯",
+        "脚蹬",
+        "叫等",
+        "角等",
+        "教等",
+        "较等",
+        "交等",
+        "叫灯",
+        "叫得"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiaotakaiguan",
+      "expected": "脚踏开关",
+      "source": "5500",
+      "lookup_us": 4970,
+      "candidates": [
+        "脚踏开关",
+        "叫他开关",
+        "叫她开关",
+        "教她开关",
+        "教他开关",
+        "叫他开馆",
+        "脚踏开馆",
+        "叫它开关",
+        "教他"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiashitaideng",
+      "expected": "夹式台灯",
+      "source": "5500",
+      "lookup_us": 3589,
+      "candidates": [
+        "夹式台灯",
+        "假使台灯",
+        "驾驶台灯",
+        "家事态等",
+        "假使台等",
+        "驾驶台等",
+        "家事态燈",
+        "家事台灯",
+        "驾驶"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingzhaoming",
+      "expected": "家庭照明",
+      "source": "5500",
+      "lookup_us": 7413,
+      "candidates": [
+        "家庭照明",
+        "家庭照名",
+        "家庭赵铭",
+        "家庭照命",
+        "家庭着名",
+        "家庭兆铭",
+        "家庭兆明",
+        "家庭照鸣",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiayongzhaoming",
+      "expected": "家用照明",
+      "source": "5500",
+      "lookup_us": 5565,
+      "candidates": [
+        "家用照明",
+        "加用照明",
+        "加永照明",
+        "嘉永照明",
+        "家用赵铭",
+        "家用着名",
+        "家佣照明",
+        "家用照名",
+        "家用"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiazideng",
+      "expected": "夹子灯",
+      "source": "5500",
+      "lookup_us": 2289,
+      "candidates": [
+        "夹子灯",
+        "甲子等",
+        "夹子等",
+        "架子等",
+        "加兹等",
+        "茄子等",
+        "甲子登",
+        "夹子登",
+        "夹子"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jichengdiaodingdeng",
+      "expected": "集成吊顶灯",
+      "source": "5500",
+      "lookup_us": 7305,
+      "candidates": [
+        "集成吊顶灯",
+        "继承吊顶灯",
+        "继承吊顶等",
+        "集成吊顶等",
+        "继承调定等",
+        "集成调定等",
+        "继承掉定等",
+        "集成掉定等",
+        "集成"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jichuzhaoming",
+      "expected": "基础照明",
+      "source": "5500",
+      "lookup_us": 4979,
+      "candidates": [
+        "基础照明",
+        "挤出照明",
+        "寄出照明",
+        "基础肇铭",
+        "几处照明",
+        "基础赵铭",
+        "基础着名",
+        "基础照名",
+        "基础"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jierideng",
+      "expected": "节日灯",
+      "source": "5500",
+      "lookup_us": 2511,
+      "candidates": [
+        "节日灯",
+        "节日等",
+        "节日登",
+        "节日邓",
+        "节日澄",
+        "节日凳",
+        "届日等",
+        "节日瞪",
+        "节日"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jingguandeng",
+      "expected": "景观灯",
+      "source": "5500",
+      "lookup_us": 4106,
+      "candidates": [
+        "景观灯",
+        "警官等",
+        "景观等",
+        "经关灯",
+        "经管等",
+        "景观登",
+        "警官登",
+        "警官灯",
+        "景观"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jingqianzhaoming",
+      "expected": "镜前照明",
+      "source": "5500",
+      "lookup_us": 6809,
+      "candidates": [
+        "镜前照明",
+        "经前照明",
+        "经钱照明",
+        "经签照明",
+        "景气按照明",
+        "惊奇按照明",
+        "经千照明",
+        "井千照明",
+        "惊奇"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jinshudengzhao",
+      "expected": "金属灯罩",
+      "source": "5500",
+      "lookup_us": 3352,
+      "candidates": [
+        "金属灯罩",
+        "金属等着",
+        "金属瞪着",
+        "金属等照",
+        "金属等找",
+        "尽数等着",
+        "金属灯照",
+        "金属等招",
+        "金属"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiucanmoshi",
+      "expected": "就餐模式",
+      "source": "5500",
+      "lookup_us": 3138,
+      "candidates": [
+        "就餐模式",
+        "就餐漠视",
+        "就参模式",
+        "就餐没事",
+        "就残模式",
+        "就惨模式",
+        "就灿模式",
+        "旧餐模式",
+        "就餐"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jubuzhaoming",
+      "expected": "局部照明",
+      "source": "5500",
+      "lookup_us": 6229,
+      "candidates": [
+        "局部照明",
+        "拘捕照明",
+        "拒不照明",
+        "据不照明",
+        "据部照明",
+        "据补照明",
+        "据布照明",
+        "局部赵铭",
+        "局部"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kaiguankongzhi",
+      "expected": "开关控制",
+      "source": "5500",
+      "lookup_us": 3497,
+      "candidates": [
+        "开关控制",
+        "开管控制",
+        "开馆控制",
+        "凯管控制",
+        "开关空置",
+        "开官控制",
+        "凯关控制",
+        "开观控制",
+        "开关"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ketingxidingdeng",
+      "expected": "客厅吸顶灯",
+      "source": "5500",
+      "lookup_us": 5124,
+      "candidates": [
+        "客厅吸顶灯",
+        "克汀吸顶灯",
+        "客厅系定等",
+        "客厅西定等",
+        "客厅希丁等",
+        "客厅戏定等",
+        "客厅希定等",
+        "客厅洗定等",
+        "客厅"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ketingzhaoming",
+      "expected": "客厅照明",
+      "source": "5500",
+      "lookup_us": 5938,
+      "candidates": [
+        "客厅照明",
+        "可挺照明",
+        "客厅赵铭",
+        "可停照明",
+        "客厅着名",
+        "客厅朝明",
+        "可听照明",
+        "客厅照名",
+        "客厅"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kuosanban",
+      "expected": "扩散板",
+      "source": "5500",
+      "lookup_us": 2741,
+      "candidates": [
+        "扩散板",
+        "扩散版",
+        "扩散办",
+        "扩散半",
+        "扩散班",
+        "扩散般",
+        "扩散搬",
+        "扩散斑",
+        "扩散"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kuosanmo",
+      "expected": "扩散膜",
+      "source": "5500",
+      "lookup_us": 2204,
+      "candidates": [
+        "扩散膜",
+        "扩散没",
+        "扩散莫",
+        "扩散模",
+        "扩散魔",
+        "扩散末",
+        "扩散默",
+        "扩散摩",
+        "扩散"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "laidianjiyi",
+      "expected": "来电记忆",
+      "source": "5500",
+      "lookup_us": 5005,
+      "candidates": [
+        "来电记忆",
+        "来点记忆",
+        "来电技艺",
+        "来点技艺",
+        "来电机翼",
+        "来点击以",
+        "来点机翼",
+        "来点即以",
+        "来电"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "languangdengji",
+      "expected": "蓝光等级",
+      "source": "5500",
+      "lookup_us": 5155,
+      "candidates": [
+        "蓝光等级",
+        "蓝光登记",
+        "蓝光登基",
+        "蓝光登机",
+        "蓝光等机",
+        "蓝光等及",
+        "蓝光等基",
+        "蓝光等几",
+        "蓝光"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "laweideng",
+      "expected": "拉尾灯",
+      "source": "5500",
+      "lookup_us": 2262,
+      "candidates": [
+        "拉尾灯",
+        "拉维等",
+        "辣味等",
+        "拉韦等",
+        "拉为等",
+        "拉维登",
+        "拉威等",
+        "拉位等",
+        "辣味"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "laxiankaiguan",
+      "expected": "拉线开关",
+      "source": "5500",
+      "lookup_us": 6168,
+      "candidates": [
+        "拉线开关",
+        "拉先开关",
+        "拉县开关",
+        "蜡线开关",
+        "拉掀开关",
+        "辣先开关",
+        "拉现开关",
+        "拉掀开馆",
+        "蜡线"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "leidaganyingdeng",
+      "expected": "雷达感应灯",
+      "source": "5500",
+      "lookup_us": 6141,
+      "candidates": [
+        "雷达感应灯",
+        "雷达感应等",
+        "雷打感应灯",
+        "雷达感应登",
+        "雷打感应等",
+        "雷达干应等",
+        "雷达感影等",
+        "雷达感应邓",
+        "雷达"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lengbaiguang",
+      "expected": "冷白光",
+      "source": "5500",
+      "lookup_us": 5260,
+      "candidates": [
+        "冷白光",
+        "愣白光",
+        "冷柏光",
+        "楞白光",
+        "棱白光",
+        "冷白广",
+        "冷百光",
+        "冷拜光",
+        "冷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lengseguang",
+      "expected": "冷色光",
+      "source": "5500",
+      "lookup_us": 3995,
+      "candidates": [
+        "冷色光",
+        "冷色广",
+        "冷色逛",
+        "愣色光",
+        "冷塞光",
+        "楞色光",
+        "棱色光",
+        "冷瑟光",
+        "冷色"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "liangdubuzu",
+      "expected": "亮度不足",
+      "source": "5500",
+      "lookup_us": 3298,
+      "candidates": [
+        "亮度不足",
+        "两度不足",
+        "量都不足",
+        "两都不足",
+        "两度补足",
+        "两度部族",
+        "两读不足",
+        "梁读不足",
+        "亮度"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "loutibideng",
+      "expected": "楼梯壁灯",
+      "source": "5500",
+      "lookup_us": 3549,
+      "candidates": [
+        "楼梯壁灯",
+        "楼梯比等",
+        "楼梯壁等",
+        "楼梯必等",
+        "楼梯笔等",
+        "楼梯币等",
+        "楼梯闭等",
+        "楼梯逼等",
+        "楼梯"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "loutideng",
+      "expected": "楼梯灯",
+      "source": "5500",
+      "lookup_us": 1828,
+      "candidates": [
+        "楼梯灯",
+        "楼梯等",
+        "楼梯登",
+        "楼梯邓",
+        "楼梯澄",
+        "楼梯凳",
+        "漏题等",
+        "楼体等",
+        "楼梯"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "loutiyedeng",
+      "expected": "楼梯夜灯",
+      "source": "5500",
+      "lookup_us": 2633,
+      "candidates": [
+        "楼梯夜灯",
+        "楼梯业等",
+        "楼梯也等",
+        "楼梯叶等",
+        "楼梯页等",
+        "楼梯野等",
+        "楼梯夜等",
+        "楼梯耶等",
+        "楼梯"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "loutizhaoming",
+      "expected": "楼梯照明",
+      "source": "5500",
+      "lookup_us": 4551,
+      "candidates": [
+        "楼梯照明",
+        "楼梯照名",
+        "漏题照明",
+        "楼梯赵铭",
+        "楼体照明",
+        "露梯照明",
+        "楼梯着名",
+        "楼梯照命",
+        "楼梯"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "luorideng",
+      "expected": "落日灯",
+      "source": "5500",
+      "lookup_us": 1599,
+      "candidates": [
+        "落日灯",
+        "落日等",
+        "罗日等",
+        "落日登",
+        "洛日等",
+        "罗日登",
+        "罗日灯",
+        "裸日等",
+        "落日"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lutaideng",
+      "expected": "露台灯",
+      "source": "5500",
+      "lookup_us": 2953,
+      "candidates": [
+        "露台灯",
+        "露台等",
+        "陆台灯",
+        "路台灯",
+        "卢台灯",
+        "鲁台灯",
+        "陆台等",
+        "路台等",
+        "露台"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "manshezhaoming",
+      "expected": "漫射照明",
+      "source": "5500",
+      "lookup_us": 4950,
+      "candidates": [
+        "漫射照明",
+        "满摄照明",
+        "满设照明",
+        "满社照明",
+        "满射照明",
+        "曼摄照明",
+        "满涉照明",
+        "曼设照明",
+        "慢"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "menkongganyingdeng",
+      "expected": "门控感应灯",
+      "source": "5500",
+      "lookup_us": 6610,
+      "candidates": [
+        "门控感应灯",
+        "门空感应灯",
+        "门空感应等",
+        "门控感应等",
+        "门空感应登",
+        "门控感应登",
+        "门空干应等",
+        "门控干应等",
+        "门"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "menlangdeng",
+      "expected": "门廊灯",
+      "source": "5500",
+      "lookup_us": 4194,
+      "candidates": [
+        "门廊灯",
+        "门廊等",
+        "门廊登",
+        "门廊邓",
+        "门廊澄",
+        "门廊凳",
+        "门廊瞪",
+        "门廊蹬",
+        "门廊"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "menpaideng",
+      "expected": "门牌灯",
+      "source": "5500",
+      "lookup_us": 2433,
+      "candidates": [
+        "门牌灯",
+        "门牌等",
+        "门派等",
+        "门牌登",
+        "门派登",
+        "门派灯",
+        "门排等",
+        "们排等",
+        "门派"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mentoudeng",
+      "expected": "门头灯",
+      "source": "5500",
+      "lookup_us": 1777,
+      "candidates": [
+        "门头灯",
+        "门头等",
+        "们头等",
+        "门头登",
+        "们头灯",
+        "们偷等",
+        "门投等",
+        "门偷等",
+        "门"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mianbandeng",
+      "expected": "面板灯",
+      "source": "5500",
+      "lookup_us": 3623,
+      "candidates": [
+        "面板灯",
+        "面板等",
+        "面伴等",
+        "面板凳",
+        "面伴登",
+        "面伴灯",
+        "面板登",
+        "面伴邓",
+        "面板"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mingantiaojie",
+      "expected": "明暗调节",
+      "source": "5500",
+      "lookup_us": 7430,
+      "candidates": [
+        "明暗调节",
+        "敏感调节",
+        "敏感调解",
+        "命案调节",
+        "命案调解",
+        "明暗调解",
+        "名安调节",
+        "敏感条街",
+        "敏感"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mingzhuangshedeng",
+      "expected": "明装射灯",
+      "source": "5500",
+      "lookup_us": 5058,
+      "candidates": [
+        "明装射灯",
+        "名状社等",
+        "名状射灯",
+        "名状舌等",
+        "名状舍等",
+        "名状设等",
+        "名状射等",
+        "名装设等",
+        "名状"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mingzhuangtongdeng",
+      "expected": "明装筒灯",
+      "source": "5500",
+      "lookup_us": 4751,
+      "candidates": [
+        "明装筒灯",
+        "名状同等",
+        "名装同等",
+        "名状通等",
+        "名庄同等",
+        "明装同等",
+        "名状铜灯",
+        "名状痛等",
+        "名状"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "moshadengpao",
+      "expected": "磨砂灯泡",
+      "source": "5500",
+      "lookup_us": 2924,
+      "candidates": [
+        "磨砂灯泡",
+        "莫莎灯泡",
+        "没啥灯泡",
+        "抹杀灯泡",
+        "抹杀等跑",
+        "默沙灯泡",
+        "摩沙灯泡",
+        "没杀灯泡",
+        "磨砂"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "moshadengzhao",
+      "expected": "磨砂灯罩",
+      "source": "5500",
+      "lookup_us": 4146,
+      "candidates": [
+        "磨砂灯罩",
+        "抹杀等着",
+        "没啥等着",
+        "磨砂等着",
+        "磨砂灯爪",
+        "莫莎灯罩",
+        "没啥灯罩",
+        "抹杀灯罩",
+        "磨砂"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nuanbaiguang",
+      "expected": "暖白光",
+      "source": "5500",
+      "lookup_us": 5761,
+      "candidates": [
+        "暖白光",
+        "暖白广",
+        "暖柏光",
+        "暖白逛",
+        "暖百光",
+        "暖拜光",
+        "暖百广",
+        "暖摆光",
+        "暖白"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nuanhuangguang",
+      "expected": "暖黄光",
+      "source": "5500",
+      "lookup_us": 8634,
+      "candidates": [
+        "暖黄光",
+        "暖黄广",
+        "暖皇光",
+        "暖黄逛",
+        "暖晃光",
+        "暖皇广",
+        "暖荒光",
+        "暖晃广",
+        "暖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nuanseguang",
+      "expected": "暖色光",
+      "source": "5500",
+      "lookup_us": 4500,
+      "candidates": [
+        "暖色光",
+        "暖色广",
+        "暖色逛",
+        "暖塞光",
+        "暖瑟光",
+        "暖塞广",
+        "暖瑟广",
+        "暖色洸",
+        "暖色"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "pingbandeng",
+      "expected": "平板灯",
+      "source": "5500",
+      "lookup_us": 3251,
+      "candidates": [
+        "平板凳",
+        "平板灯",
+        "平板等",
+        "平板登",
+        "平版等",
+        "平搬等",
+        "平板邓",
+        "平板澄",
+        "平板"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "pinshan",
+      "expected": "频闪",
+      "source": "5500",
+      "lookup_us": 1970,
+      "candidates": [
+        "频闪",
+        "品山",
+        "拼山",
+        "频山",
+        "贫山",
+        "拼单",
+        "品删",
+        "品单",
+        "拼杀"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "pinshanceshi",
+      "expected": "频闪测试",
+      "source": "5500",
+      "lookup_us": 3469,
+      "candidates": [
+        "频闪测试",
+        "品山测试",
+        "拼山测试",
+        "拼单测试",
+        "品善测试",
+        "品单测试",
+        "品删测试",
+        "拼善测试",
+        "频闪"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qianrushishedeng",
+      "expected": "嵌入式射灯",
+      "source": "5500",
+      "lookup_us": 5905,
+      "candidates": [
+        "嵌入式社等",
+        "嵌入式设等",
+        "嵌入式射灯",
+        "嵌入式舍等",
+        "嵌入式射等",
+        "嵌入式摄等",
+        "嵌入式涉等",
+        "嵌入式折凳",
+        "嵌入式"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "qianrushitongdeng",
+      "expected": "嵌入式筒灯",
+      "source": "5500",
+      "lookup_us": 4380,
+      "candidates": [
+        "嵌入式同等",
+        "嵌入式通等",
+        "嵌入式铜灯",
+        "嵌入式统等",
+        "嵌入式痛等",
+        "嵌入式童等",
+        "嵌入式筒灯",
+        "嵌入式彤等",
+        "嵌入式"
+      ],
+      "expected_rank": 7
+    },
+    {
+      "pinyin": "qihuiqi",
+      "expected": "启辉器",
+      "source": "5500",
+      "lookup_us": 2752,
+      "candidates": [
+        "启辉器",
+        "其会期",
+        "其会起",
+        "其会其",
+        "其回其",
+        "其晦气",
+        "其会旗",
+        "齐会期",
+        "奇虎"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qiuxingdengpao",
+      "expected": "球形灯泡",
+      "source": "5500",
+      "lookup_us": 3904,
+      "candidates": [
+        "球形灯泡",
+        "球星灯泡",
+        "球星等跑",
+        "球星等炮",
+        "邱姓灯泡",
+        "丘行灯泡",
+        "球星等泡",
+        "球星灯炮",
+        "球星"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qiuxingdengzhao",
+      "expected": "球形灯罩",
+      "source": "5500",
+      "lookup_us": 4371,
+      "candidates": [
+        "球形灯罩",
+        "球星等着",
+        "球星灯罩",
+        "球形等着",
+        "球星等照",
+        "球星瞪着",
+        "球星等找",
+        "球星等招",
+        "球星"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qudongdianyuan",
+      "expected": "驱动电源",
+      "source": "5500",
+      "lookup_us": 6008,
+      "candidates": [
+        "驱动电源",
+        "驱动店员",
+        "去东电源",
+        "去动电源",
+        "去东店员",
+        "区东电源",
+        "驱动点远",
+        "去懂电源",
+        "驱动"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "rouguangzhao",
+      "expected": "柔光罩",
+      "source": "5500",
+      "lookup_us": 3484,
+      "candidates": [
+        "柔光罩",
+        "柔光照",
+        "肉光照",
+        "揉光照",
+        "柔光着",
+        "柔光找",
+        "肉光着",
+        "揉光着",
+        "柔光"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "rouxingdengdai",
+      "expected": "柔性灯带",
+      "source": "5500",
+      "lookup_us": 3667,
+      "candidates": [
+        "柔性灯带",
+        "柔性等待",
+        "肉性等待",
+        "肉星等待",
+        "肉行等待",
+        "肉型等待",
+        "柔性等大",
+        "柔性等带",
+        "柔性"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ruandengdai",
+      "expected": "软灯带",
+      "source": "5500",
+      "lookup_us": 3222,
+      "candidates": [
+        "软灯带",
+        "软等待",
+        "阮等待",
+        "阮灯带",
+        "软等大",
+        "阮等大",
+        "软等带",
+        "阮等带",
+        "软"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "rubaidengzhao",
+      "expected": "乳白灯罩",
+      "source": "5500",
+      "lookup_us": 3126,
+      "candidates": [
+        "乳白灯罩",
+        "如白等着",
+        "如拜登着",
+        "如拜登照",
+        "乳白等着",
+        "如拜登找",
+        "如拜等着",
+        "如拜登招",
+        "如"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "sandangtiaoguang",
+      "expected": "三档调光",
+      "source": "5500",
+      "lookup_us": 7085,
+      "candidates": [
+        "三档调光",
+        "三党条光",
+        "三党调光",
+        "三党挑光",
+        "三党跳广",
+        "三党跳光",
+        "三党挑广",
+        "三党条广",
+        "三大"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "sanseqiehuan",
+      "expected": "三色切换",
+      "source": "5500",
+      "lookup_us": 6634,
+      "candidates": [
+        "三色切换",
+        "三塞切换",
+        "三瑟切换",
+        "散色切换",
+        "散塞切换",
+        "三色且还",
+        "三涩切换",
+        "三色且换",
+        "三色"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "sewenxuanze",
+      "expected": "色温选择",
+      "source": "5500",
+      "lookup_us": 3757,
+      "candidates": [
+        "色温选择",
+        "塞文选择",
+        "色文选择",
+        "塞问选择",
+        "色问选择",
+        "塞温选择",
+        "塞闻选择",
+        "色闻选择",
+        "色温"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shenbeitongdeng",
+      "expected": "深杯筒灯",
+      "source": "5500",
+      "lookup_us": 2765,
+      "candidates": [
+        "深杯筒灯",
+        "神悲痛等",
+        "沈悲痛等",
+        "身被同等",
+        "神被同等",
+        "身背痛等",
+        "神背痛等",
+        "神杯同等",
+        "身"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shengdandeng",
+      "expected": "圣诞灯",
+      "source": "5500",
+      "lookup_us": 2988,
+      "candidates": [
+        "圣诞灯",
+        "圣诞等",
+        "圣诞登",
+        "圣但等",
+        "圣丹等",
+        "圣诞邓",
+        "圣诞澄",
+        "圣诞凳",
+        "圣诞"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "sheyingbuguangdeng",
+      "expected": "摄影补光灯",
+      "source": "5500",
+      "lookup_us": 7509,
+      "candidates": [
+        "摄影补光灯",
+        "摄影不光等",
+        "摄影不光灯",
+        "摄影补光等",
+        "设瑛补光灯",
+        "摄影不光登",
+        "摄影布光等",
+        "摄影布光灯",
+        "摄影"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shineizhaoming",
+      "expected": "室内照明",
+      "source": "5500",
+      "lookup_us": 5359,
+      "candidates": [
+        "室内照明",
+        "市内照明",
+        "是那照明",
+        "是哪照明",
+        "室内赵铭",
+        "时那照明",
+        "室内照名",
+        "市内赵铭",
+        "室内"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shiwaizhaoming",
+      "expected": "室外照明",
+      "source": "5500",
+      "lookup_us": 5139,
+      "candidates": [
+        "室外照明",
+        "是外照明",
+        "室外赵铭",
+        "室外找明",
+        "室外找名",
+        "是歪照明",
+        "室外着名",
+        "室外朝明",
+        "室外"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shoujibuguangdeng",
+      "expected": "手机补光灯",
+      "source": "5500",
+      "lookup_us": 5967,
+      "candidates": [
+        "手机补光灯",
+        "收集补光灯",
+        "手机不光等",
+        "手机不光灯",
+        "手机补光等",
+        "收集不光等",
+        "收集不光灯",
+        "收集补光等",
+        "手机"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shousaodeng",
+      "expected": "手扫灯",
+      "source": "5500",
+      "lookup_us": 1843,
+      "candidates": [
+        "手扫灯",
+        "受扫等",
+        "手扫等",
+        "首扫等",
+        "收扫等",
+        "受骚等",
+        "手骚等",
+        "授扫等",
+        "手"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shoutideng",
+      "expected": "手提灯",
+      "source": "5500",
+      "lookup_us": 1851,
+      "candidates": [
+        "手提灯",
+        "受体等",
+        "手提等",
+        "受体登",
+        "手提登",
+        "受体灯",
+        "手体等",
+        "首体等",
+        "手提"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shufangzhaoming",
+      "expected": "书房照明",
+      "source": "5500",
+      "lookup_us": 6195,
+      "candidates": [
+        "书房照明",
+        "署方照明",
+        "树仿照明",
+        "属房照明",
+        "属仿照明",
+        "属放照明",
+        "数方照明",
+        "书放照明",
+        "书房"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuijingdeng",
+      "expected": "水晶灯",
+      "source": "5500",
+      "lookup_us": 2678,
+      "candidates": [
+        "水晶灯",
+        "水晶等",
+        "水井等",
+        "水井灯",
+        "水晶登",
+        "水景等",
+        "水井登",
+        "水晶邓",
+        "水晶"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuijingdiaodeng",
+      "expected": "水晶吊灯",
+      "source": "5500",
+      "lookup_us": 4375,
+      "candidates": [
+        "水晶吊灯",
+        "水井吊灯",
+        "水晶调等",
+        "水井调等",
+        "水晶掉等",
+        "水井掉等",
+        "水晶钓等",
+        "水井钓等",
+        "水晶"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuzhuangzhaoming",
+      "expected": "梳妆照明",
+      "source": "5500",
+      "lookup_us": 7427,
+      "candidates": [
+        "梳妆照明",
+        "书装照明",
+        "属装照明",
+        "树状照明",
+        "淑庄照明",
+        "属状照明",
+        "属庄照明",
+        "属撞照明",
+        "书"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuzhuotaideng",
+      "expected": "书桌台灯",
+      "source": "5500",
+      "lookup_us": 3889,
+      "candidates": [
+        "书桌台灯",
+        "书桌台等",
+        "书桌泰等",
+        "书桌太等",
+        "书桌态等",
+        "书桌胎等",
+        "书桌台登",
+        "书桌肽等",
+        "书桌"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taiyangnengdeng",
+      "expected": "太阳能灯",
+      "source": "5500",
+      "lookup_us": 3699,
+      "candidates": [
+        "太阳能灯",
+        "太阳能等",
+        "太阳能瞪",
+        "太阳能登",
+        "太阳能邓",
+        "太阳能凳",
+        "太阳能澄",
+        "太阳能蹬",
+        "太阳能"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taiyangnengtingyuandeng",
+      "expected": "太阳能庭院灯",
+      "source": "5500",
+      "lookup_us": 9013,
+      "candidates": [
+        "太阳能庭院等",
+        "太阳能挺远等",
+        "太阳能停园等",
+        "太阳能听园等",
+        "太阳能庭园等",
+        "太阳能挺园等",
+        "太阳能听院等",
+        "太阳能庭院灯",
+        "太阳能"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "taocidengzhao",
+      "expected": "陶瓷灯罩",
+      "source": "5500",
+      "lookup_us": 3740,
+      "candidates": [
+        "陶瓷灯罩",
+        "陶瓷等着",
+        "陶瓷瞪着",
+        "陶瓷等照",
+        "陶瓷灯照",
+        "陶瓷等找",
+        "陶瓷等招",
+        "陶瓷等朝",
+        "陶瓷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tengbiandengzhao",
+      "expected": "藤编灯罩",
+      "source": "5500",
+      "lookup_us": 4547,
+      "candidates": [
+        "藤编灯罩",
+        "藤边等着",
+        "腾边等着",
+        "疼变等招",
+        "藤便等着",
+        "腾便等着",
+        "藤变等着",
+        "腾变等着",
+        "疼"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tianhuashedeng",
+      "expected": "天花射灯",
+      "source": "5500",
+      "lookup_us": 3950,
+      "candidates": [
+        "天花射灯",
+        "天花社等",
+        "天华社等",
+        "天花舍等",
+        "天花设等",
+        "天花射等",
+        "天花蛇等",
+        "天华射灯",
+        "天花"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tiaoguangdengpao",
+      "expected": "调光灯泡",
+      "source": "5500",
+      "lookup_us": 6372,
+      "candidates": [
+        "调光灯泡",
+        "条光灯泡",
+        "跳广灯泡",
+        "条广灯泡",
+        "条逛灯泡",
+        "条光灯炮",
+        "跳广等跑",
+        "条光等跑",
+        "调鼓"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tiaoguangqi",
+      "expected": "调光器",
+      "source": "5500",
+      "lookup_us": 5037,
+      "candidates": [
+        "调光器",
+        "跳广汽",
+        "跳广起",
+        "跳广其",
+        "条光器",
+        "条光起",
+        "跳广气",
+        "跳广期",
+        "调鼓"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tiaosedengpao",
+      "expected": "调色灯泡",
+      "source": "5500",
+      "lookup_us": 3002,
+      "candidates": [
+        "调色灯泡",
+        "调色等跑",
+        "条色灯泡",
+        "调色灯炮",
+        "调色等炮",
+        "调色登跑",
+        "条塞灯泡",
+        "调色等泡",
+        "调色"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tiaoseqi",
+      "expected": "调色器",
+      "source": "5500",
+      "lookup_us": 2293,
+      "candidates": [
+        "调色器",
+        "调色漆",
+        "调色旗",
+        "调色起",
+        "调色其",
+        "调色气",
+        "调色期",
+        "调色奇",
+        "调色"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tingyuandeng",
+      "expected": "庭院灯",
+      "source": "5500",
+      "lookup_us": 5124,
+      "candidates": [
+        "庭院灯",
+        "庭院等",
+        "庭院登",
+        "挺远等",
+        "庭园等",
+        "停园等",
+        "庭院邓",
+        "挺园等",
+        "庭院"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "touguangban",
+      "expected": "透光板",
+      "source": "5500",
+      "lookup_us": 4180,
+      "candidates": [
+        "透光板",
+        "透光斑",
+        "偷光斑",
+        "透光版",
+        "透光办",
+        "透光半",
+        "头光斑",
+        "透光班",
+        "透光"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "toumingdengpao",
+      "expected": "透明灯泡",
+      "source": "5500",
+      "lookup_us": 2867,
+      "candidates": [
+        "透明灯泡",
+        "透明等跑",
+        "透明灯炮",
+        "透明等炮",
+        "透明灯跑",
+        "透明等泡",
+        "透明登跑",
+        "头明灯泡",
+        "透明"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "touyingdeng",
+      "expected": "投影灯",
+      "source": "5500",
+      "lookup_us": 2309,
+      "candidates": [
+        "投影灯",
+        "投影等",
+        "投影登",
+        "投影邓",
+        "投影澄",
+        "投影凳",
+        "头应等",
+        "头英等",
+        "投影"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "weishengjianzhaoming",
+      "expected": "卫生间照明",
+      "source": "5500",
+      "lookup_us": 10404,
+      "candidates": [
+        "卫生间照明",
+        "卫生检照明",
+        "卫生监照明",
+        "卫生健照明",
+        "卫生间赵铭",
+        "卫生间照名",
+        "威盛间照明",
+        "卫生间找明",
+        "卫生间"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woshixidingdeng",
+      "expected": "卧室吸顶灯",
+      "source": "5500",
+      "lookup_us": 4461,
+      "candidates": [
+        "我是吸顶灯",
+        "我是西定等",
+        "卧室吸顶灯",
+        "我是戏定等",
+        "我是希丁等",
+        "我是西丁等",
+        "我是西顶灯",
+        "我是西顶等",
+        "卧室"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "woshizhaoming",
+      "expected": "卧室照明",
+      "source": "5500",
+      "lookup_us": 4960,
+      "candidates": [
+        "卧室照明",
+        "我是照明",
+        "我市照明",
+        "我是赵铭",
+        "我时照明",
+        "我试照明",
+        "我试着名",
+        "我十照明",
+        "卧室"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wujitiaoguang",
+      "expected": "无极调光",
+      "source": "5500",
+      "lookup_us": 6463,
+      "candidates": [
+        "无极调光",
+        "无级调光",
+        "无几条光",
+        "吴几条光",
+        "无机条光",
+        "无机跳广",
+        "五级调光",
+        "屋脊条光",
+        "无极"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wujitiaose",
+      "expected": "无极调色",
+      "source": "5500",
+      "lookup_us": 3927,
+      "candidates": [
+        "无极调色",
+        "无级调色",
+        "五级跳色",
+        "五级调色",
+        "无机调色",
+        "无计调色",
+        "无忌调色",
+        "屋脊调色",
+        "无极"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wupinshan",
+      "expected": "无频闪",
+      "source": "5500",
+      "lookup_us": 3192,
+      "candidates": [
+        "无频闪",
+        "物品山",
+        "物品删",
+        "物品单",
+        "物品善",
+        "物品珊",
+        "物品衫",
+        "物品闪",
+        "物品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wusideng",
+      "expected": "钨丝灯",
+      "source": "5500",
+      "lookup_us": 2295,
+      "candidates": [
+        "钨丝灯",
+        "无私等",
+        "五四等",
+        "乌斯等",
+        "吴斯等",
+        "无私登",
+        "无私灯",
+        "伍斯等",
+        "无私"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wuzhudengsheji",
+      "expected": "无主灯设计",
+      "source": "5500",
+      "lookup_us": 3929,
+      "candidates": [
+        "无助等设计",
+        "无助等涉及",
+        "无主等设计",
+        "无主等涉及",
+        "无主灯设计",
+        "无助灯设计",
+        "无助登设计",
+        "无助等射击",
+        "无主灯"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "wuzhudengzhaoming",
+      "expected": "无主灯照明",
+      "source": "5500",
+      "lookup_us": 5523,
+      "candidates": [
+        "无主灯照明",
+        "无助灯照明",
+        "无助等照明",
+        "无主等照明",
+        "无助登照明",
+        "无助邓照明",
+        "无主登照明",
+        "无助凳照明",
+        "无主灯"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiankongkaiguan",
+      "expected": "线控开关",
+      "source": "5500",
+      "lookup_us": 4679,
+      "candidates": [
+        "线控开关",
+        "先控开关",
+        "现空开关",
+        "先空开关",
+        "线孔开关",
+        "先孔开关",
+        "现恐开关",
+        "先恐开关",
+        "线控"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiansexing",
+      "expected": "显色性",
+      "source": "5500",
+      "lookup_us": 4227,
+      "candidates": [
+        "显色性",
+        "显色行",
+        "显色星",
+        "显色形",
+        "显色型",
+        "显色兴",
+        "显色姓",
+        "显色刑",
+        "显色"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiansezhishu",
+      "expected": "显色指数",
+      "source": "5500",
+      "lookup_us": 3685,
+      "candidates": [
+        "显色指数",
+        "先色指数",
+        "显色植树",
+        "显色直属",
+        "显色之术",
+        "显色质数",
+        "显色之树",
+        "显色之数",
+        "显色"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiantiaodeng",
+      "expected": "线条灯",
+      "source": "5500",
+      "lookup_us": 4980,
+      "candidates": [
+        "线条灯",
+        "线条等",
+        "线条登",
+        "线条邓",
+        "先调等",
+        "先条等",
+        "线条澄",
+        "先跳等",
+        "线条"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianxingzhaoming",
+      "expected": "线性照明",
+      "source": "5500",
+      "lookup_us": 6869,
+      "candidates": [
+        "线性照明",
+        "现行照明",
+        "先行照明",
+        "显性照明",
+        "线形照明",
+        "先星照明",
+        "现行赵铭",
+        "现行着名",
+        "现行"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiaoshoudian",
+      "expected": "小手电",
+      "source": "5500",
+      "lookup_us": 4231,
+      "candidates": [
+        "销售点",
+        "小手电",
+        "销售店",
+        "销售电",
+        "销售淀",
+        "销售垫",
+        "销售殿",
+        "销售典",
+        "销售"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "xingkongdeng",
+      "expected": "星空灯",
+      "source": "5500",
+      "lookup_us": 1633,
+      "candidates": [
+        "星空灯",
+        "星空等",
+        "星空登",
+        "星空澄",
+        "星空邓",
+        "星空凳",
+        "行空等",
+        "型空等",
+        "星空"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiqiangshedeng",
+      "expected": "洗墙射灯",
+      "source": "5500",
+      "lookup_us": 5523,
+      "candidates": [
+        "洗墙射灯",
+        "西枪射灯",
+        "西强社等",
+        "西枪射等",
+        "系强社等",
+        "西墙设等",
+        "西墙社等",
+        "系枪射灯",
+        "洗钱"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiqiangzhaoming",
+      "expected": "洗墙照明",
+      "source": "5500",
+      "lookup_us": 6710,
+      "candidates": [
+        "洗墙照明",
+        "西强照明",
+        "西墙照明",
+        "系强照明",
+        "西枪照明",
+        "西羌照明",
+        "西抢照明",
+        "系枪照明",
+        "洗钱"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiuxianmoshi",
+      "expected": "休闲模式",
+      "source": "5500",
+      "lookup_us": 5490,
+      "candidates": [
+        "休闲模式",
+        "休闲漠视",
+        "绣线模式",
+        "秀贤模式",
+        "修宪模式",
+        "休闲没事",
+        "秀线模式",
+        "休闲末时",
+        "休闲"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xuanguanzhaoming",
+      "expected": "玄关照明",
+      "source": "5500",
+      "lookup_us": 7623,
+      "candidates": [
+        "玄关照明",
+        "选管照明",
+        "玄关照名",
+        "玄关着名",
+        "玄关赵铭",
+        "选关照明",
+        "玄关着明",
+        "玄关照命",
+        "玄关"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xuanniukaiguan",
+      "expected": "旋钮开关",
+      "source": "5500",
+      "lookup_us": 5229,
+      "candidates": [
+        "旋钮开关",
+        "旋钮开馆",
+        "选牛开关",
+        "选扭开关",
+        "需按钮开关",
+        "玄牛开关",
+        "旋钮开管",
+        "旋钮开官",
+        "旋钮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xueximoshi",
+      "expected": "学习模式",
+      "source": "5500",
+      "lookup_us": 4532,
+      "candidates": [
+        "学习模式",
+        "学习漠视",
+        "学习没事",
+        "学西模式",
+        "学系模式",
+        "学戏模式",
+        "学习模时",
+        "学习模是",
+        "学习"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xuexitaideng",
+      "expected": "学习台灯",
+      "source": "5500",
+      "lookup_us": 4610,
+      "candidates": [
+        "学习台灯",
+        "学习台等",
+        "学习态等",
+        "学习太等",
+        "学习泰等",
+        "学习胎等",
+        "学习肽等",
+        "学习钛等",
+        "学习"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xuexizhaoming",
+      "expected": "学习照明",
+      "source": "5500",
+      "lookup_us": 6390,
+      "candidates": [
+        "学习照明",
+        "学习赵铭",
+        "学西照明",
+        "学习着名",
+        "学习照名",
+        "学习兆铭",
+        "学习兆明",
+        "学习着明",
+        "学习"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yakelidengzhao",
+      "expected": "亚克力灯罩",
+      "source": "5500",
+      "lookup_us": 4537,
+      "candidates": [
+        "雅克里等着",
+        "亚克里等着",
+        "亚可力等着",
+        "亚克力等着",
+        "亚克力灯罩",
+        "亚可力灯罩",
+        "亚可力等照",
+        "亚克利等着",
+        "亚克力"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "yangtaizhaoming",
+      "expected": "阳台照明",
+      "source": "5500",
+      "lookup_us": 4870,
+      "candidates": [
+        "阳台照明",
+        "杨台照明",
+        "杨太照明",
+        "杨泰照明",
+        "阳台赵铭",
+        "阳太照明",
+        "阳台照名",
+        "阳台着名",
+        "阳台"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yanshixideng",
+      "expected": "延时熄灯",
+      "source": "5500",
+      "lookup_us": 3328,
+      "candidates": [
+        "延时熄灯",
+        "演示熄灯",
+        "岩石熄灯",
+        "掩饰熄灯",
+        "演示系等",
+        "岩石系等",
+        "厌食熄灯",
+        "烟是熄灯",
+        "演示"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yaokongkaiguan",
+      "expected": "遥控开关",
+      "source": "5500",
+      "lookup_us": 3812,
+      "candidates": [
+        "遥控开关",
+        "要控开关",
+        "遥控开馆",
+        "要空开关",
+        "要恐开关",
+        "要孔开关",
+        "遥控开管",
+        "要空开馆",
+        "遥控"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yiguizhaoming",
+      "expected": "衣柜照明",
+      "source": "5500",
+      "lookup_us": 5191,
+      "candidates": [
+        "衣柜照明",
+        "以贵照明",
+        "一归照明",
+        "以规照明",
+        "以归照明",
+        "依规照明",
+        "以鬼照明",
+        "一贵照明",
+        "衣柜"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yingdengtiao",
+      "expected": "硬灯条",
+      "source": "5500",
+      "lookup_us": 3616,
+      "candidates": [
+        "硬灯条",
+        "应等条",
+        "应等调",
+        "应等跳",
+        "应等挑",
+        "应灯条",
+        "英等条",
+        "应等眺",
+        "营灯"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yingguangdeng",
+      "expected": "荧光灯",
+      "source": "5500",
+      "lookup_us": 4692,
+      "candidates": [
+        "荧光灯",
+        "荧光等",
+        "荧光登",
+        "萤光等",
+        "萤光灯",
+        "应光等",
+        "荧光邓",
+        "英光等",
+        "荧光"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yishudeng",
+      "expected": "艺术灯",
+      "source": "5500",
+      "lookup_us": 2106,
+      "candidates": [
+        "艺术灯",
+        "艺术等",
+        "一书等",
+        "遗书等",
+        "艺术登",
+        "一束等",
+        "一书登",
+        "艺术邓",
+        "艺术"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuanhuandiaodeng",
+      "expected": "圆环吊灯",
+      "source": "5500",
+      "lookup_us": 7632,
+      "candidates": [
+        "圆环吊灯",
+        "元换掉等",
+        "原换掉等",
+        "元还吊灯",
+        "元换掉灯",
+        "圆环掉等",
+        "元换掉登",
+        "元还调等",
+        "渊环"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yueduluodideng",
+      "expected": "阅读落地灯",
+      "source": "5500",
+      "lookup_us": 5843,
+      "candidates": [
+        "阅读落地灯",
+        "阅读落地等",
+        "阅读裸低等",
+        "月度落地灯",
+        "月度落地等",
+        "阅读落地登",
+        "阅读罗地等",
+        "阅读洛地等",
+        "阅读"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuedutaideng",
+      "expected": "阅读台灯",
+      "source": "5500",
+      "lookup_us": 5941,
+      "candidates": [
+        "阅读台灯",
+        "阅读台等",
+        "阅读太等",
+        "阅读泰等",
+        "月度台灯",
+        "阅读态等",
+        "阅读胎等",
+        "阅读肽等",
+        "阅读"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yueduzhaoming",
+      "expected": "阅读照明",
+      "source": "5500",
+      "lookup_us": 5488,
+      "candidates": [
+        "阅读照明",
+        "月度照明",
+        "月都照明",
+        "乐渡照明",
+        "阅读着名",
+        "阅读赵铭",
+        "余额度照明",
+        "阅读着明",
+        "阅读"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yueqiudeng",
+      "expected": "月球灯",
+      "source": "5500",
+      "lookup_us": 3387,
+      "candidates": [
+        "月球灯",
+        "月球等",
+        "月球登",
+        "月球邓",
+        "月球澄",
+        "月球凳",
+        "月求等",
+        "月球瞪",
+        "月球"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yumideng",
+      "expected": "玉米灯",
+      "source": "5500",
+      "lookup_us": 2066,
+      "candidates": [
+        "玉米灯",
+        "玉米等",
+        "玉米登",
+        "余米等",
+        "玉米邓",
+        "于密等",
+        "玉米澄",
+        "玉米凳",
+        "玉米"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yushideng",
+      "expected": "浴室灯",
+      "source": "5500",
+      "lookup_us": 2425,
+      "candidates": [
+        "浴室灯",
+        "于是等",
+        "浴室等",
+        "于是灯",
+        "于是邓",
+        "于是登",
+        "预示等",
+        "雨势等",
+        "于是"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaoxingdeng",
+      "expected": "造型灯",
+      "source": "5500",
+      "lookup_us": 3371,
+      "candidates": [
+        "造型灯",
+        "造型等",
+        "造型登",
+        "造型邓",
+        "早醒等",
+        "造型澄",
+        "造型凳",
+        "噪省等",
+        "造型"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhaodu",
+      "expected": "照度",
+      "source": "5500",
+      "lookup_us": 1287,
+      "candidates": [
+        "照度",
+        "朝都",
+        "赵度",
+        "赵都",
+        "找度",
+        "找都",
+        "赵读",
+        "找读",
+        "找"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhaohuadeng",
+      "expected": "照画灯",
+      "source": "5500",
+      "lookup_us": 3127,
+      "candidates": [
+        "照画灯",
+        "兆华等",
+        "赵化等",
+        "找化等",
+        "照华等",
+        "赵华等",
+        "找华等",
+        "赵花等",
+        "招呼"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhaomingfangan",
+      "expected": "照明方案",
+      "source": "5500",
+      "lookup_us": 6711,
+      "candidates": [
+        "照明方案",
+        "照明反感",
+        "赵铭方案",
+        "赵明方案",
+        "照名方案",
+        "赵名方案",
+        "赵铭反感",
+        "赵命方案",
+        "照明"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhaomingfenqu",
+      "expected": "照明分区",
+      "source": "5500",
+      "lookup_us": 4130,
+      "candidates": [
+        "照明分区",
+        "赵铭分区",
+        "照明分去",
+        "赵明分区",
+        "照名分区",
+        "赵名分区",
+        "兆铭分区",
+        "赵命分区",
+        "照明"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhaomingjieneng",
+      "expected": "照明节能",
+      "source": "5500",
+      "lookup_us": 6955,
+      "candidates": [
+        "照明节能",
+        "赵铭节能",
+        "赵明节能",
+        "兆铭节能",
+        "照名节能",
+        "赵名节能",
+        "赵命节能",
+        "找命节能",
+        "照明"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhaomingjunyundu",
+      "expected": "照明均匀度",
+      "source": "5500",
+      "lookup_us": 6249,
+      "candidates": [
+        "照明均匀度",
+        "照明均匀读",
+        "照明均匀都",
+        "照明均匀毒",
+        "照明均匀堵",
+        "照明均匀独",
+        "照明均匀肚",
+        "照明均匀杜",
+        "照明"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhaomingkongzhi",
+      "expected": "照明控制",
+      "source": "5500",
+      "lookup_us": 3320,
+      "candidates": [
+        "照明控制",
+        "赵铭控制",
+        "赵明控制",
+        "照明空置",
+        "兆铭控制",
+        "照名控制",
+        "赵名控制",
+        "赵命控制",
+        "照明"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhaomingsheji",
+      "expected": "照明设计",
+      "source": "5500",
+      "lookup_us": 4140,
+      "candidates": [
+        "照明设计",
+        "照明涉及",
+        "照明射击",
+        "赵铭涉及",
+        "赵铭设计",
+        "赵明涉及",
+        "照名设计",
+        "赵名设计",
+        "照明"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhaomingxiaoguotu",
+      "expected": "照明效果图",
+      "source": "5500",
+      "lookup_us": 8400,
+      "candidates": [
+        "照明效果图",
+        "照明小国土",
+        "照明效果土",
+        "照明效果兔",
+        "照明效果途",
+        "照明效果吐",
+        "照明效果徒",
+        "照明效果突",
+        "照明"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhaoshefanwei",
+      "expected": "照射范围",
+      "source": "5500",
+      "lookup_us": 3216,
+      "candidates": [
+        "照射范围",
+        "诏赦范围",
+        "找社范围",
+        "赵设范围",
+        "找设范围",
+        "赵社范围",
+        "赵射范围",
+        "赵奢范围",
+        "照射"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhaoshejiaodu",
+      "expected": "照射角度",
+      "source": "5500",
+      "lookup_us": 5196,
+      "candidates": [
+        "照射角度",
+        "赵射角度",
+        "赵折角度",
+        "赵蛇角度",
+        "找社角度",
+        "找蛇角度",
+        "赵设角度",
+        "找设角度",
+        "照射"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhaoshejuli",
+      "expected": "照射距离",
+      "source": "5500",
+      "lookup_us": 2909,
+      "candidates": [
+        "照射距离",
+        "照射举例",
+        "赵摄距离",
+        "找摄距离",
+        "找社距离",
+        "赵设距离",
+        "找设距离",
+        "赵社距离",
+        "照射"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhaoshemianji",
+      "expected": "照射面积",
+      "source": "5500",
+      "lookup_us": 5916,
+      "candidates": [
+        "照射面积",
+        "诏赦免及",
+        "找社面积",
+        "赵射面积",
+        "赵设面积",
+        "找设面积",
+        "赵社面积",
+        "赵奢面积",
+        "照射"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhedietaideng",
+      "expected": "折叠台灯",
+      "source": "5500",
+      "lookup_us": 3987,
+      "candidates": [
+        "折叠台灯",
+        "折叠太等",
+        "折叠台等",
+        "折叠泰等",
+        "折叠态等",
+        "折叠太灯",
+        "折叠胎等",
+        "折叠太登",
+        "折叠态"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zheguangjiao",
+      "expected": "遮光角",
+      "source": "5500",
+      "lookup_us": 6671,
+      "candidates": [
+        "遮光角",
+        "这广角",
+        "遮光脚",
+        "这光脚",
+        "着广角",
+        "遮光交",
+        "着光脚",
+        "折光脚",
+        "这股"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhengbaiguang",
+      "expected": "正白光",
+      "source": "5500",
+      "lookup_us": 5305,
+      "candidates": [
+        "正白光",
+        "郑白光",
+        "整白光",
+        "郑白广",
+        "争白光",
+        "政白光",
+        "征白光",
+        "正白广",
+        "正白"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhenliuqi",
+      "expected": "镇流器",
+      "source": "5500",
+      "lookup_us": 2749,
+      "candidates": [
+        "镇流器",
+        "真六七",
+        "镇六七",
+        "珍六七",
+        "震六七",
+        "振六七",
+        "阵六七",
+        "朕六七",
+        "真理"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhibobuguangdeng",
+      "expected": "直播补光灯",
+      "source": "5500",
+      "lookup_us": 6834,
+      "candidates": [
+        "直播补光灯",
+        "直播不光等",
+        "直播不光灯",
+        "直播补光等",
+        "直播布光等",
+        "直播不光登",
+        "直播布光灯",
+        "只播补光灯",
+        "直播"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhideng",
+      "expected": "纸灯",
+      "source": "5500",
+      "lookup_us": 1228,
+      "candidates": [
+        "纸灯",
+        "指等",
+        "只等",
+        "直登",
+        "至等",
+        "之等",
+        "制等",
+        "直等",
+        "值得"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhidengzhao",
+      "expected": "纸灯罩",
+      "source": "5500",
+      "lookup_us": 3097,
+      "candidates": [
+        "纸灯罩",
+        "只等着",
+        "指等着",
+        "直等着",
+        "至等着",
+        "之等着",
+        "只灯罩",
+        "治等着",
+        "纸灯"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhijiezhaoming",
+      "expected": "直接照明",
+      "source": "5500",
+      "lookup_us": 6564,
+      "candidates": [
+        "直接照明",
+        "直接找明",
+        "直接找名",
+        "直接找命",
+        "直接着名",
+        "直接找鸣",
+        "直接找铭",
+        "直接着明",
+        "直接"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhongdianzhaoming",
+      "expected": "重点照明",
+      "source": "5500",
+      "lookup_us": 5737,
+      "candidates": [
+        "重点照明",
+        "终点照明",
+        "中电照明",
+        "中殿照明",
+        "中甸照明",
+        "重点赵铭",
+        "重点着名",
+        "重点照名",
+        "重点"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuangshideng",
+      "expected": "装饰灯",
+      "source": "5500",
+      "lookup_us": 3183,
+      "candidates": [
+        "装饰灯",
+        "装饰等",
+        "装饰登",
+        "壮士等",
+        "庄士等",
+        "装饰邓",
+        "壮实等",
+        "庄是等",
+        "装饰"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuangshitaideng",
+      "expected": "装饰台灯",
+      "source": "5500",
+      "lookup_us": 4435,
+      "candidates": [
+        "装饰台灯",
+        "装饰台等",
+        "装饰太等",
+        "装饰泰等",
+        "装饰态等",
+        "撞事态等",
+        "装饰台登",
+        "装饰胎等",
+        "装饰"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuangshizhaoming",
+      "expected": "装饰照明",
+      "source": "5500",
+      "lookup_us": 5518,
+      "candidates": [
+        "装饰照明",
+        "庄市照明",
+        "庄是照明",
+        "壮士照明",
+        "装饰着名",
+        "庄士照明",
+        "装是照明",
+        "壮实照明",
+        "装饰"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhubiandengzhao",
+      "expected": "竹编灯罩",
+      "source": "5500",
+      "lookup_us": 5250,
+      "candidates": [
+        "竹编灯罩",
+        "主编等着",
+        "主编灯罩",
+        "主编瞪着",
+        "朱边等着",
+        "柱边等着",
+        "主编等照",
+        "主编灯照",
+        "主编"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuomianzhaoming",
+      "expected": "桌面照明",
+      "source": "5500",
+      "lookup_us": 6820,
+      "candidates": [
+        "桌面照明",
+        "桌面罩明",
+        "桌面赵铭",
+        "桌面罩名",
+        "桌面朝明",
+        "桌面找明",
+        "桌面找名",
+        "桌面罩命",
+        "桌面"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuxingdengpao",
+      "expected": "烛形灯泡",
+      "source": "5500",
+      "lookup_us": 3859,
+      "candidates": [
+        "烛形灯泡",
+        "柱形灯泡",
+        "助兴灯泡",
+        "助行灯泡",
+        "住行灯泡",
+        "朱姓灯泡",
+        "主形灯泡",
+        "主星灯泡",
+        "助兴"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zidongguandeng",
+      "expected": "自动关灯",
+      "source": "5500",
+      "lookup_us": 5382,
+      "candidates": [
+        "自动关灯",
+        "自动关等",
+        "自动馆等",
+        "自动管等",
+        "自东关灯",
+        "自动观等",
+        "自动官等",
+        "自东莞等",
+        "自动"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zidongkaideng",
+      "expected": "自动开灯",
+      "source": "5500",
+      "lookup_us": 3184,
+      "candidates": [
+        "自动开灯",
+        "自动开等",
+        "自动凯等",
+        "自东开灯",
+        "自动凯登",
+        "自动开登",
+        "自动楷等",
+        "自动恺等",
+        "自动"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ziranbai",
+      "expected": "自然白",
+      "source": "5500",
+      "lookup_us": 1854,
+      "candidates": [
+        "自然白",
+        "自然呗",
+        "自然百",
+        "自然摆",
+        "自然拜",
+        "自然柏",
+        "自然败",
+        "自然伯",
+        "自然"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zoulangbideng",
+      "expected": "走廊壁灯",
+      "source": "5500",
+      "lookup_us": 2644,
+      "candidates": [
+        "走廊壁灯",
+        "走廊比等",
+        "走廊壁等",
+        "走廊必等",
+        "走廊笔等",
+        "走廊币等",
+        "走廊闭等",
+        "走廊逼等",
+        "走廊"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zoulangyedeng",
+      "expected": "走廊夜灯",
+      "source": "5500",
+      "lookup_us": 2681,
+      "candidates": [
+        "走廊夜灯",
+        "走廊也等",
+        "走廊业等",
+        "走廊叶等",
+        "走廊页等",
+        "走廊野等",
+        "走廊也灯",
+        "走廊夜等",
+        "走廊"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zoulangzhaoming",
+      "expected": "走廊照明",
+      "source": "5500",
+      "lookup_us": 4561,
+      "candidates": [
+        "走廊照明",
+        "走廊赵铭",
+        "走廊着名",
+        "走廊照名",
+        "走廊兆铭",
+        "走廊兆明",
+        "走廊着明",
+        "走廊肇铭",
+        "走廊"
+      ],
+      "expected_rank": 1
+    }
+  ]
+}
