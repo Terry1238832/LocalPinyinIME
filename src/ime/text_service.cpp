@@ -1842,6 +1842,17 @@ bool TextService::handle_chinese_key(ITfContext* context, WPARAM wparam, BOOL* e
         *eaten = TRUE;
         return true;
     }
+    // = ends a v calculation (v55+15=): the result goes in, as with Space,
+    // without a stray =.
+    if (wparam == VK_OEM_PLUS && !modifiers.shift && composing_.size() > 1 && tool_key_character(L'0', false) &&
+        !candidates_.empty()) {
+        if (candidate_ui_element_session_.host_managed())
+            selected_index_ = candidate_ui_element_session_.selected_index();
+        const HRESULT hr = commit_selected(context);
+        if (FAILED(hr)) log_status(L"composition", L"calculation commit failed " + hresult_hex(hr));
+        *eaten = TRUE;
+        return true;
+    }
     if (const wchar_t symbol = composing_.empty() ? 0 : composing_symbol_for_key(wparam, modifiers.shift)) {
         const HRESULT hr = commit_punctuation(context, symbol);
         if (FAILED(hr)) log_status(L"composition", L"symbol failed " + hresult_hex(hr));
