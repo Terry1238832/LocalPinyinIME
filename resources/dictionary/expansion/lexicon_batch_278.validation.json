@@ -1,0 +1,9032 @@
+{
+  "batch": "lexicon_batch_278",
+  "evaluation": "native_engine_candidate_coverage",
+  "evaluated_at_utc": "2026-10-23T15:35:04.836794+00:00",
+  "engine_sha256": "f386e80d11e8702d30292f79af26e7f43f879aeb68e65fa7679b117eef673734",
+  "resource_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "a4db9b574f19ad29dac50ab9ebc6172f064391aa9933f46eadb81edbed2b8700",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+    "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+    "continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e"
+  },
+  "frozen_batch_sha256": "1a095311460382384c45f8e84a1f6c627831a42673efe8cd140ffae617d4a53c",
+  "personal_data_isolated": true,
+  "expected_answers_learned": false,
+  "summary": {
+    "cases": 500,
+    "top1_correct": 477,
+    "top9_present": 500,
+    "top1_percent": 95.4,
+    "top9_percent": 100.0,
+    "character_error_rate": 0.0199,
+    "p50_lookup_ms": 6.966,
+    "p95_lookup_ms": 15.06,
+    "max_lookup_ms": 37.542,
+    "missing_from_top9_count": 0,
+    "missing_from_top9": [],
+    "max_returned_candidate_count": 9
+  },
+  "rows": [
+    {
+      "pinyin": "butai",
+      "expected": "布台",
+      "source": "5000",
+      "lookup_us": 4523,
+      "candidates": [
+        "不太",
+        "补胎",
+        "步态",
+        "布台",
+        "不台",
+        "不泰",
+        "布太",
+        "部太",
+        "不"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "baitai",
+      "expected": "摆台",
+      "source": "5500",
+      "lookup_us": 1121,
+      "candidates": [
+        "百态",
+        "摆台",
+        "百太",
+        "百台",
+        "白台",
+        "白太",
+        "摆太",
+        "白泰",
+        "白"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "baoxiangdixiao",
+      "expected": "包厢低消",
+      "source": "5500",
+      "lookup_us": 12003,
+      "candidates": [
+        "包厢低消",
+        "包饷的小",
+        "包饷抵消",
+        "包饷的笑",
+        "包饷地笑",
+        "宝箱的小",
+        "包厢地笑",
+        "包饷地小",
+        "包厢"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "baoxiangfeiyong",
+      "expected": "包厢费用",
+      "source": "5500",
+      "lookup_us": 7807,
+      "candidates": [
+        "包厢费用",
+        "包饷费用",
+        "宝箱费用",
+        "爆香费用",
+        "包箱费用",
+        "保项费用",
+        "宝向费用",
+        "宝相费用",
+        "包厢"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "baoxiangfuwu",
+      "expected": "包厢服务",
+      "source": "5500",
+      "lookup_us": 7274,
+      "candidates": [
+        "包厢服务",
+        "包饷服务",
+        "宝箱服务",
+        "保项服务",
+        "报项服务",
+        "爆香服务",
+        "宝向服务",
+        "报向服务",
+        "包厢"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "baoxiangpaiqi",
+      "expected": "包厢排期",
+      "source": "5500",
+      "lookup_us": 6661,
+      "candidates": [
+        "包厢排期",
+        "包饷排期",
+        "包饷排气",
+        "宝箱排期",
+        "包饷排起",
+        "宝箱排气",
+        "包厢排气",
+        "宝箱排起",
+        "包厢"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "baoxiangshiyongfei",
+      "expected": "包厢使用费",
+      "source": "5500",
+      "lookup_us": 9359,
+      "candidates": [
+        "包饷使用费",
+        "包饷使用非",
+        "包饷使用飞",
+        "包厢使用费",
+        "包饷使用菲",
+        "包厢使用非",
+        "包饷使用肥",
+        "包饷使用废",
+        "包厢"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "baoxiangyuding",
+      "expected": "包厢预订",
+      "source": "5500",
+      "lookup_us": 8984,
+      "candidates": [
+        "包厢预订",
+        "包饷预订",
+        "包饷预定",
+        "宝箱预订",
+        "宝箱预定",
+        "包厢预定",
+        "爆香预订",
+        "爆香预定",
+        "包厢"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "beicaigang",
+      "expected": "备菜岗",
+      "source": "5500",
+      "lookup_us": 4014,
+      "candidates": [
+        "备菜岗",
+        "被才刚",
+        "北才刚",
+        "贝才刚",
+        "备才刚",
+        "倍才刚",
+        "被裁港",
+        "背才刚",
+        "备菜"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "beicanjian",
+      "expected": "备餐间",
+      "source": "5500",
+      "lookup_us": 5347,
+      "candidates": [
+        "备餐间",
+        "被参见",
+        "悲惨见",
+        "悲惨建",
+        "悲惨间",
+        "悲惨剑",
+        "悲惨健",
+        "悲惨检",
+        "悲惨"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "beihuobuzu",
+      "expected": "备货不足",
+      "source": "5500",
+      "lookup_us": 3387,
+      "candidates": [
+        "备货不足",
+        "被获不足",
+        "倍或不足",
+        "被或不足",
+        "被火不足",
+        "被活不足",
+        "被和不足",
+        "北和不足",
+        "备货"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "beihuoguoliang",
+      "expected": "备货过量",
+      "source": "5500",
+      "lookup_us": 8752,
+      "candidates": [
+        "备货过量",
+        "被火锅量",
+        "被火锅凉",
+        "倍或过量",
+        "被获过量",
+        "被火锅里昂",
+        "被或过量",
+        "被火锅亮",
+        "备货"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "beihuojihua",
+      "expected": "备货计划",
+      "source": "5500",
+      "lookup_us": 5409,
+      "candidates": [
+        "备货计划",
+        "被火计划",
+        "倍或计划",
+        "被活计划",
+        "被和计划",
+        "被或计划",
+        "北火计划",
+        "被伙计划",
+        "备货"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "beiliaogang",
+      "expected": "备料岗",
+      "source": "5500",
+      "lookup_us": 6176,
+      "candidates": [
+        "备料岗",
+        "背了港",
+        "背了刚",
+        "背了钢",
+        "被了港",
+        "被了刚",
+        "背了岗",
+        "倍了港",
+        "备料"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "beiliaojian",
+      "expected": "备料间",
+      "source": "5500",
+      "lookup_us": 7147,
+      "candidates": [
+        "备料间",
+        "背了建",
+        "背了见",
+        "背了件",
+        "背了简",
+        "背了检",
+        "背了间",
+        "背了监",
+        "备料"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "beiyongjinjiaojie",
+      "expected": "备用金交接",
+      "source": "5500",
+      "lookup_us": 11077,
+      "candidates": [
+        "备用金交接",
+        "备用金交界",
+        "被佣金交接",
+        "被用尽交接",
+        "被佣金交界",
+        "备用进交接",
+        "被涌进交接",
+        "备用近交接",
+        "备用金"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biaozhuncaipu",
+      "expected": "标准菜谱",
+      "source": "5500",
+      "lookup_us": 4285,
+      "candidates": [
+        "标准菜谱",
+        "标准猜瀑",
+        "标准才普",
+        "标准才谱",
+        "标准才扑",
+        "标准彩铺",
+        "标准才铺",
+        "标准材铺",
+        "标准"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biaozhunchupin",
+      "expected": "标准出品",
+      "source": "5500",
+      "lookup_us": 5151,
+      "candidates": [
+        "标准出品",
+        "标准除品",
+        "标准出拼",
+        "标准处品",
+        "标准出频",
+        "标准除聘",
+        "标准除拼",
+        "标准初品",
+        "标准"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biaozhunpeifang",
+      "expected": "标准配方",
+      "source": "5500",
+      "lookup_us": 4686,
+      "candidates": [
+        "标准配方",
+        "标准配房",
+        "标准配放",
+        "标准配访",
+        "标准配芳",
+        "标准配防",
+        "标准配坊",
+        "标准培方",
+        "标准"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biaozhunyongliang",
+      "expected": "标准用量",
+      "source": "5500",
+      "lookup_us": 8180,
+      "candidates": [
+        "标准用量",
+        "标准用两",
+        "标准用亮",
+        "标准用良",
+        "标准用凉",
+        "标准永亮",
+        "标准用梁",
+        "标准用粮",
+        "标准"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bingdan",
+      "expected": "并单",
+      "source": "5500",
+      "lookup_us": 2704,
+      "candidates": [
+        "并单",
+        "冰弹",
+        "并担",
+        "丙淡",
+        "并蛋",
+        "并丹",
+        "并但",
+        "并弹",
+        "并"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bingtai",
+      "expected": "并台",
+      "source": "5500",
+      "lookup_us": 1717,
+      "candidates": [
+        "病态",
+        "并台",
+        "并太",
+        "并泰",
+        "柄苔",
+        "并态",
+        "冰太",
+        "并胎",
+        "并"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "bucanju",
+      "expected": "补餐具",
+      "source": "5500",
+      "lookup_us": 2334,
+      "candidates": [
+        "补餐具",
+        "不惨剧",
+        "不餐具",
+        "布惨剧",
+        "布餐具",
+        "部惨剧",
+        "部餐具",
+        "步惨剧",
+        "不"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bufengxitong",
+      "expected": "补风系统",
+      "source": "5500",
+      "lookup_us": 3224,
+      "candidates": [
+        "补风系统",
+        "不风系统",
+        "布冯系统",
+        "不峰系统",
+        "不奉系统",
+        "部风系统",
+        "不封系统",
+        "不锋系统",
+        "布冯"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caigoupinci",
+      "expected": "采购频次",
+      "source": "5500",
+      "lookup_us": 3222,
+      "candidates": [
+        "采购频次",
+        "采购品词",
+        "采购频刺",
+        "采购频词",
+        "采购品次",
+        "采购品此",
+        "采购品辞",
+        "采购拼词",
+        "采购"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caigouzhouqi",
+      "expected": "采购周期",
+      "source": "5500",
+      "lookup_us": 2752,
+      "candidates": [
+        "采购周期",
+        "才够周期",
+        "采购周起",
+        "采购骤起",
+        "采购轴器",
+        "采购周岐",
+        "采购周其",
+        "采购周气",
+        "采购"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caipinbaipan",
+      "expected": "菜品摆盘",
+      "source": "5500",
+      "lookup_us": 3807,
+      "candidates": [
+        "菜品摆盘",
+        "菜品白盘",
+        "菜品白胖",
+        "菜品百盘",
+        "菜品拜盘",
+        "菜品白判",
+        "菜品摆判",
+        "菜品柏盘",
+        "菜品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caipinbaosun",
+      "expected": "菜品报损",
+      "source": "5500",
+      "lookup_us": 5080,
+      "candidates": [
+        "菜品报损",
+        "菜品包损",
+        "菜品包孙",
+        "菜品保孙",
+        "菜品保损",
+        "菜品报孙",
+        "菜品剥笋",
+        "菜品包笋",
+        "菜品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caipinbiaozhun",
+      "expected": "菜品标准",
+      "source": "5500",
+      "lookup_us": 5130,
+      "candidates": [
+        "菜品标准",
+        "才品标准",
+        "才频标准",
+        "才拼标准",
+        "蔡频标准",
+        "菜拼标准",
+        "才聘标准",
+        "才贫标准",
+        "菜品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caipinchengben",
+      "expected": "菜品成本",
+      "source": "5500",
+      "lookup_us": 3614,
+      "candidates": [
+        "菜品成本",
+        "才品成本",
+        "才聘成本",
+        "才拼成本",
+        "菜拼成本",
+        "蔡聘成本",
+        "菜品称本",
+        "才频成本",
+        "菜品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caipinchongzuo",
+      "expected": "菜品重做",
+      "source": "5500",
+      "lookup_us": 3334,
+      "candidates": [
+        "菜品重做",
+        "菜品崇左",
+        "菜品重作",
+        "菜品冲做",
+        "菜品充做",
+        "菜品重座",
+        "菜品重坐",
+        "菜品重昨",
+        "菜品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caipinchupin",
+      "expected": "菜品出品",
+      "source": "5500",
+      "lookup_us": 3609,
+      "candidates": [
+        "菜品出品",
+        "才品出品",
+        "才频出品",
+        "才拼出品",
+        "菜品处品",
+        "菜品出拼",
+        "菜品除品",
+        "菜拼出品",
+        "菜品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caipincuidan",
+      "expected": "菜品催单",
+      "source": "5500",
+      "lookup_us": 3874,
+      "candidates": [
+        "菜品催单",
+        "菜品翠单",
+        "菜品崔单",
+        "菜品翠蛋",
+        "菜品崔蛋",
+        "菜品催蛋",
+        "菜品翠丹",
+        "菜品崔丹",
+        "菜品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caipincuozuo",
+      "expected": "菜品错做",
+      "source": "5500",
+      "lookup_us": 3462,
+      "candidates": [
+        "菜品错做",
+        "菜品错作",
+        "菜品错座",
+        "菜品错坐",
+        "菜品错昨",
+        "菜品错左",
+        "菜品措做",
+        "菜品错佐",
+        "菜品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caipindapei",
+      "expected": "菜品搭配",
+      "source": "5500",
+      "lookup_us": 3023,
+      "candidates": [
+        "菜品搭配",
+        "才拼搭配",
+        "菜拼搭配",
+        "才品搭配",
+        "菜品打配",
+        "才频搭配",
+        "菜品大配",
+        "蔡频搭配",
+        "菜品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caipindingjia",
+      "expected": "菜品定价",
+      "source": "5500",
+      "lookup_us": 6246,
+      "candidates": [
+        "菜品定价",
+        "菜品订家",
+        "菜品定家",
+        "菜品订价",
+        "菜品定假",
+        "菜品定加",
+        "菜品丁家",
+        "菜品定架",
+        "菜品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caipinfure",
+      "expected": "菜品复热",
+      "source": "5500",
+      "lookup_us": 2423,
+      "candidates": [
+        "菜品复热",
+        "菜品副热",
+        "菜品服热",
+        "菜品付热",
+        "菜品富热",
+        "菜品福热",
+        "菜品夫热",
+        "菜品弗热",
+        "菜品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caipingailiang",
+      "expected": "菜品改良",
+      "source": "5500",
+      "lookup_us": 9779,
+      "candidates": [
+        "菜品改良",
+        "才品改良",
+        "菜品该量",
+        "菜品改亮",
+        "菜品该两",
+        "菜品该亮",
+        "菜品改量",
+        "菜品该良",
+        "彩屏"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caipinguqing",
+      "expected": "菜品沽清",
+      "source": "5500",
+      "lookup_us": 6352,
+      "candidates": [
+        "菜品沽清",
+        "菜品孤清",
+        "菜品股清",
+        "菜品股轻",
+        "菜品股情",
+        "菜品故请",
+        "菜品股青",
+        "菜品股庆",
+        "彩屏"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caipinjiare",
+      "expected": "菜品加热",
+      "source": "5500",
+      "lookup_us": 3973,
+      "candidates": [
+        "菜品加热",
+        "菜品家热",
+        "菜品价热",
+        "才品加热",
+        "菜品嘉热",
+        "菜品假热",
+        "菜品架热",
+        "菜品夹热",
+        "菜品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caipinjieshao",
+      "expected": "菜品介绍",
+      "source": "5500",
+      "lookup_us": 6657,
+      "candidates": [
+        "菜品介绍",
+        "才品介绍",
+        "才频介绍",
+        "才拼介绍",
+        "菜拼介绍",
+        "蔡频介绍",
+        "才聘介绍",
+        "才贫介绍",
+        "菜品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caipinkezhong",
+      "expected": "菜品克重",
+      "source": "5500",
+      "lookup_us": 2632,
+      "candidates": [
+        "菜品克重",
+        "菜品科中",
+        "菜品可中",
+        "菜品课中",
+        "菜品客中",
+        "菜品可重",
+        "菜品可钟",
+        "菜品克中",
+        "菜品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caipinlouzuo",
+      "expected": "菜品漏做",
+      "source": "5500",
+      "lookup_us": 3544,
+      "candidates": [
+        "菜品漏做",
+        "菜品楼坐",
+        "菜品楼做",
+        "菜品楼作",
+        "菜品漏作",
+        "菜品露做",
+        "菜品楼座",
+        "菜品漏座",
+        "菜品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caipinmaidian",
+      "expected": "菜品卖点",
+      "source": "5500",
+      "lookup_us": 6635,
+      "candidates": [
+        "菜品卖点",
+        "菜品买点",
+        "菜品卖店",
+        "菜品埋点",
+        "菜品买电",
+        "菜品买店",
+        "菜品卖电",
+        "菜品麦点",
+        "菜品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caipinmaoli",
+      "expected": "菜品毛利",
+      "source": "5500",
+      "lookup_us": 5202,
+      "candidates": [
+        "菜品毛利",
+        "菜品毛里",
+        "菜品毛力",
+        "菜品贸里",
+        "菜品猫里",
+        "菜品冒里",
+        "菜品茂里",
+        "菜品毛礼",
+        "菜品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caipinpaizhao",
+      "expected": "菜品拍照",
+      "source": "5500",
+      "lookup_us": 3595,
+      "candidates": [
+        "菜品拍照",
+        "菜品牌照",
+        "才品牌照",
+        "菜品牌找",
+        "菜品牌着",
+        "菜品牌招",
+        "菜品牌朝",
+        "菜品牌兆",
+        "菜品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caipinpeifang",
+      "expected": "菜品配方",
+      "source": "5500",
+      "lookup_us": 4238,
+      "candidates": [
+        "菜品配方",
+        "菜品配房",
+        "才品配方",
+        "菜品配放",
+        "菜品配访",
+        "菜品配芳",
+        "菜品配防",
+        "菜品配坊",
+        "菜品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caipinpeixun",
+      "expected": "菜品培训",
+      "source": "5500",
+      "lookup_us": 3528,
+      "candidates": [
+        "菜品培训",
+        "才品培训",
+        "才频培训",
+        "才拼培训",
+        "菜拼培训",
+        "蔡频培训",
+        "才聘培训",
+        "才贫培训",
+        "菜品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caipinpingjia",
+      "expected": "菜品评价",
+      "source": "5500",
+      "lookup_us": 5714,
+      "candidates": [
+        "菜品评价",
+        "菜品平价",
+        "才品评价",
+        "才频评价",
+        "菜品评家",
+        "蔡频评价",
+        "才拼评价",
+        "菜品平家",
+        "菜品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caipinshangxin",
+      "expected": "菜品上新",
+      "source": "5500",
+      "lookup_us": 6367,
+      "candidates": [
+        "菜品上新",
+        "菜品伤心",
+        "菜品上心",
+        "菜品上信",
+        "菜品商信",
+        "菜品商新",
+        "菜品商心",
+        "才品伤心",
+        "菜品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caipinshichi",
+      "expected": "菜品试吃",
+      "source": "5500",
+      "lookup_us": 3393,
+      "candidates": [
+        "菜品试吃",
+        "菜品是吃",
+        "菜品时吃",
+        "菜品是赤",
+        "菜品是迟",
+        "菜品是持",
+        "菜品时迟",
+        "菜品实吃",
+        "菜品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caipinshimai",
+      "expected": "菜品试卖",
+      "source": "5500",
+      "lookup_us": 4673,
+      "candidates": [
+        "菜品试卖",
+        "菜品是买",
+        "菜品是卖",
+        "菜品是麦",
+        "菜品时买",
+        "菜品市买",
+        "菜品是迈",
+        "菜品时卖",
+        "菜品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caipinshizuo",
+      "expected": "菜品试做",
+      "source": "5500",
+      "lookup_us": 3915,
+      "candidates": [
+        "菜品试做",
+        "菜品是做",
+        "菜品视作",
+        "菜品实作",
+        "菜品事做",
+        "菜品时做",
+        "菜品是坐",
+        "菜品是作",
+        "菜品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caipinshoujia",
+      "expected": "菜品售价",
+      "source": "5500",
+      "lookup_us": 4435,
+      "candidates": [
+        "菜品售价",
+        "菜品首家",
+        "菜品收集啊",
+        "才品售价",
+        "菜品收家",
+        "菜品手加",
+        "菜品收价",
+        "菜品受家",
+        "菜品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caipinshouqing",
+      "expected": "菜品售罄",
+      "source": "5500",
+      "lookup_us": 4984,
+      "candidates": [
+        "菜品售罄",
+        "菜品收清",
+        "菜品收情",
+        "菜品受青",
+        "菜品收请",
+        "菜品受轻",
+        "菜品手清",
+        "菜品受清",
+        "菜品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caipinshudu",
+      "expected": "菜品熟度",
+      "source": "5500",
+      "lookup_us": 3256,
+      "candidates": [
+        "菜品熟度",
+        "菜品数度",
+        "菜品书读",
+        "菜品数都",
+        "菜品书都",
+        "菜品数读",
+        "菜品书度",
+        "菜品数毒",
+        "菜品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caipintiaozheng",
+      "expected": "菜品调整",
+      "source": "5500",
+      "lookup_us": 6619,
+      "candidates": [
+        "菜品调整",
+        "才频调整",
+        "蔡频调整",
+        "才品调整",
+        "才拼调整",
+        "菜拼调整",
+        "才聘调整",
+        "才贫调整",
+        "菜品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caipintihuan",
+      "expected": "菜品替换",
+      "source": "5500",
+      "lookup_us": 6293,
+      "candidates": [
+        "菜品替换",
+        "菜品体换",
+        "才品替换",
+        "菜品体环",
+        "菜品体还",
+        "才频替换",
+        "菜品题换",
+        "才拼替换",
+        "菜品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caipintingshou",
+      "expected": "菜品停售",
+      "source": "5500",
+      "lookup_us": 4649,
+      "candidates": [
+        "菜品停售",
+        "菜品停手",
+        "菜品听收",
+        "菜品挺熟",
+        "菜品停收",
+        "菜品挺受",
+        "菜品挺手",
+        "菜品听手",
+        "菜品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caipintousu",
+      "expected": "菜品投诉",
+      "source": "5500",
+      "lookup_us": 3336,
+      "candidates": [
+        "菜品投诉",
+        "才品投诉",
+        "才频投诉",
+        "才拼投诉",
+        "蔡频投诉",
+        "菜品头酥",
+        "菜品投宿",
+        "菜拼投诉",
+        "菜品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caipintuidan",
+      "expected": "菜品退单",
+      "source": "5500",
+      "lookup_us": 3790,
+      "candidates": [
+        "菜品退单",
+        "菜品腿蛋",
+        "菜品推单",
+        "菜品推蛋",
+        "菜品退蛋",
+        "菜品推丹",
+        "菜品退丹",
+        "菜品推弹",
+        "菜品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caipintuihui",
+      "expected": "菜品退回",
+      "source": "5500",
+      "lookup_us": 4424,
+      "candidates": [
+        "菜品退回",
+        "菜品推回",
+        "菜品退会",
+        "菜品推会",
+        "才品退回",
+        "菜品退汇",
+        "菜品推辉",
+        "菜品腿会",
+        "菜品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caipinwendu",
+      "expected": "菜品温度",
+      "source": "5500",
+      "lookup_us": 3165,
+      "candidates": [
+        "菜品温度",
+        "才品温度",
+        "菜品问度",
+        "菜品问都",
+        "菜品问读",
+        "才频温度",
+        "菜品文都",
+        "才拼温度",
+        "菜品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caipinxiajia",
+      "expected": "菜品下架",
+      "source": "5500",
+      "lookup_us": 6055,
+      "candidates": [
+        "菜品下架",
+        "才品下架",
+        "菜品下家",
+        "菜品下加",
+        "菜品下价",
+        "菜品下佳",
+        "菜品下甲",
+        "菜品夏家",
+        "菜品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caipinyanfa",
+      "expected": "菜品研发",
+      "source": "5500",
+      "lookup_us": 3884,
+      "candidates": [
+        "菜品研发",
+        "才品研发",
+        "才频研发",
+        "才拼研发",
+        "菜品验发",
+        "菜品烟法",
+        "菜品验法",
+        "菜品演发",
+        "菜品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caipinzhongliang",
+      "expected": "菜品重量",
+      "source": "5500",
+      "lookup_us": 6039,
+      "candidates": [
+        "菜品重量",
+        "菜品种粮",
+        "菜品中粮",
+        "菜品种亮",
+        "菜品种量",
+        "才品重量",
+        "菜品种两",
+        "菜品中亮",
+        "菜品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "caipinzuhe",
+      "expected": "菜品组合",
+      "source": "5500",
+      "lookup_us": 2860,
+      "candidates": [
+        "菜品组合",
+        "菜品组和",
+        "菜品族和",
+        "才品组合",
+        "菜品足和",
+        "菜品租和",
+        "才频组合",
+        "才拼组合",
+        "菜品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canhouqingjie",
+      "expected": "餐后清洁",
+      "source": "5500",
+      "lookup_us": 7208,
+      "candidates": [
+        "餐后清洁",
+        "餐后情节",
+        "餐后情结",
+        "惨后情节",
+        "餐后请街",
+        "餐后请节",
+        "餐后轻捷",
+        "惨后清洁",
+        "餐后"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canhoushouwei",
+      "expected": "餐后收尾",
+      "source": "5500",
+      "lookup_us": 2335,
+      "candidates": [
+        "餐后收尾",
+        "餐后首位",
+        "餐后守卫",
+        "惨后首位",
+        "餐后收为",
+        "餐后手为",
+        "餐后受为",
+        "餐后首为",
+        "餐后"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canhouzhengli",
+      "expected": "餐后整理",
+      "source": "5500",
+      "lookup_us": 5091,
+      "candidates": [
+        "餐后整理",
+        "惨后整理",
+        "餐后正里",
+        "餐后整里",
+        "餐候整理",
+        "餐后争里",
+        "餐后证里",
+        "餐后郑丽",
+        "餐后"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canjubaojie",
+      "expected": "餐具保洁",
+      "source": "5500",
+      "lookup_us": 7416,
+      "candidates": [
+        "餐具保洁",
+        "惨剧保洁",
+        "餐具包捷",
+        "残局保洁",
+        "惨剧宝洁",
+        "餐具宝洁",
+        "餐具包街",
+        "餐具包节",
+        "餐具"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canjucunfang",
+      "expected": "餐具存放",
+      "source": "5500",
+      "lookup_us": 5081,
+      "candidates": [
+        "餐具存放",
+        "惨剧存放",
+        "残局存放",
+        "惨剧村芳",
+        "餐具村芳",
+        "惨剧村方",
+        "惨剧村房",
+        "餐具存方",
+        "餐具"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canjuhuishou",
+      "expected": "餐具回收",
+      "source": "5500",
+      "lookup_us": 4902,
+      "candidates": [
+        "餐具回收",
+        "惨剧回收",
+        "惨剧挥手",
+        "餐具挥手",
+        "残局回收",
+        "餐具回首",
+        "惨剧回首",
+        "残局挥手",
+        "餐具"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canjupandian",
+      "expected": "餐具盘点",
+      "source": "5500",
+      "lookup_us": 5215,
+      "candidates": [
+        "餐具盘点",
+        "惨剧盘点",
+        "残局盘点",
+        "餐聚盘点",
+        "惨剧胖点",
+        "餐具胖点",
+        "惨剧盘垫",
+        "惨剧盘店",
+        "餐具"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canjuposun",
+      "expected": "餐具破损",
+      "source": "5500",
+      "lookup_us": 3331,
+      "candidates": [
+        "餐具破损",
+        "惨剧破损",
+        "残局破损",
+        "餐聚破损",
+        "惨具破损",
+        "惨举破损",
+        "餐举破损",
+        "惨据破损",
+        "餐具"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canjuqingxi",
+      "expected": "餐具清洗",
+      "source": "5500",
+      "lookup_us": 5336,
+      "candidates": [
+        "餐具清洗",
+        "餐具清晰",
+        "惨剧清晰",
+        "惨剧清洗",
+        "惨剧情系",
+        "残局清晰",
+        "残局清洗",
+        "惨剧情戏",
+        "餐具"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canjuxiaodugui",
+      "expected": "餐具消毒柜",
+      "source": "5500",
+      "lookup_us": 8819,
+      "candidates": [
+        "餐具消毒柜",
+        "餐具消毒贵",
+        "餐具消毒鬼",
+        "餐具消毒归",
+        "餐具消毒规",
+        "惨剧消毒柜",
+        "餐具消毒轨",
+        "餐具消毒龟",
+        "餐具消毒"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canqianjiancha",
+      "expected": "餐前检查",
+      "source": "5500",
+      "lookup_us": 8230,
+      "candidates": [
+        "餐前检查",
+        "惨前检查",
+        "餐前监察",
+        "惨钱检查",
+        "餐钱检查",
+        "惨千检查",
+        "惨签检查",
+        "餐千检查",
+        "惨"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canqianzhunbei",
+      "expected": "餐前准备",
+      "source": "5500",
+      "lookup_us": 5270,
+      "candidates": [
+        "餐前准备",
+        "惨前准备",
+        "惨签准备",
+        "餐签准备",
+        "惨钱准备",
+        "餐钱准备",
+        "惨千准备",
+        "餐千准备",
+        "惨"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinbaobiao",
+      "expected": "餐饮报表",
+      "source": "5500",
+      "lookup_us": 7607,
+      "candidates": [
+        "餐饮报表",
+        "餐饮保镖",
+        "餐饮爆表",
+        "餐饮包标",
+        "餐饮包表",
+        "餐饮抱表",
+        "餐饮保镳",
+        "餐饮报标",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyincaidan",
+      "expected": "餐饮菜单",
+      "source": "5500",
+      "lookup_us": 4563,
+      "candidates": [
+        "餐饮菜单",
+        "餐饮彩蛋",
+        "餐饮菜蛋",
+        "餐饮才单",
+        "餐饮才蛋",
+        "餐饮才丹",
+        "餐饮才旦",
+        "餐饮才弹",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyincaigou",
+      "expected": "餐饮采购",
+      "source": "5500",
+      "lookup_us": 3049,
+      "candidates": [
+        "餐饮采购",
+        "餐饮才够",
+        "餐饮才狗",
+        "餐饮财狗",
+        "惨因采购",
+        "惨音采购",
+        "餐饮才沟",
+        "餐因采购",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinchengben",
+      "expected": "餐饮成本",
+      "source": "5500",
+      "lookup_us": 5075,
+      "candidates": [
+        "餐饮成本",
+        "餐饮称本",
+        "惨因成本",
+        "餐因成本",
+        "餐饮程本",
+        "餐饮成笨",
+        "餐饮成奔",
+        "惨印成本",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinchoubei",
+      "expected": "餐饮筹备",
+      "source": "5500",
+      "lookup_us": 3072,
+      "candidates": [
+        "餐饮筹备",
+        "惨因筹备",
+        "餐因筹备",
+        "餐饮抽呗",
+        "餐饮抽被",
+        "餐饮抽杯",
+        "餐饮臭被",
+        "餐饮丑被",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinchuangye",
+      "expected": "餐饮创业",
+      "source": "5500",
+      "lookup_us": 6981,
+      "candidates": [
+        "餐饮创业",
+        "惨因创业",
+        "餐因创业",
+        "餐饮创也",
+        "餐饮床也",
+        "餐饮创页",
+        "餐饮创耶",
+        "餐饮窗也",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinchupin",
+      "expected": "餐饮出品",
+      "source": "5500",
+      "lookup_us": 4384,
+      "candidates": [
+        "餐饮出品",
+        "餐饮除品",
+        "餐饮除聘",
+        "餐饮出拼",
+        "餐饮除拼",
+        "餐饮出频",
+        "餐饮初品",
+        "餐饮处品",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyindanji",
+      "expected": "餐饮淡季",
+      "source": "5500",
+      "lookup_us": 4491,
+      "candidates": [
+        "餐饮淡季",
+        "餐饮但及",
+        "餐饮但机",
+        "餐饮单机",
+        "餐饮但集",
+        "餐饮但记",
+        "餐饮但鸡",
+        "餐饮但继",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyindingjia",
+      "expected": "餐饮定价",
+      "source": "5500",
+      "lookup_us": 8113,
+      "candidates": [
+        "餐饮定价",
+        "餐饮丁家",
+        "餐饮订家",
+        "餐饮定家",
+        "餐饮定假",
+        "餐饮订价",
+        "餐饮顶夹",
+        "餐饮定加",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinfantailv",
+      "expected": "餐饮翻台率",
+      "source": "5500",
+      "lookup_us": 4824,
+      "candidates": [
+        "餐饮翻台率",
+        "餐饮饭太率",
+        "餐饮饭太绿",
+        "餐饮返台率",
+        "餐饮反台率",
+        "餐饮饭台率",
+        "餐饮饭太律",
+        "餐饮反太率",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinfugou",
+      "expected": "餐饮复购",
+      "source": "5500",
+      "lookup_us": 3668,
+      "candidates": [
+        "餐饮复购",
+        "餐饮服狗",
+        "餐饮服沟",
+        "餐饮服购",
+        "餐饮服够",
+        "餐饮服钩",
+        "餐饮服构",
+        "餐饮服勾",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinfuwu",
+      "expected": "餐饮服务",
+      "source": "5500",
+      "lookup_us": 3501,
+      "candidates": [
+        "餐饮服务",
+        "餐饮服物",
+        "餐饮服无",
+        "惨音服务",
+        "餐饮服舞",
+        "餐饮服五",
+        "餐饮服屋",
+        "惨因服务",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyingaofeng",
+      "expected": "餐饮高峰",
+      "source": "5500",
+      "lookup_us": 5678,
+      "candidates": [
+        "餐饮高峰",
+        "餐饮高风",
+        "餐饮高锋",
+        "餐饮告风",
+        "餐饮高凤",
+        "餐饮高封",
+        "餐饮告峰",
+        "餐饮搞疯",
+        "残影"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyingongyinglian",
+      "expected": "餐饮供应链",
+      "source": "5500",
+      "lookup_us": 9361,
+      "candidates": [
+        "餐饮供应链",
+        "惨因供应链",
+        "餐饮供应连",
+        "餐饮供应联",
+        "餐饮供应立案",
+        "餐饮公映连",
+        "餐饮供应脸",
+        "餐饮公映脸",
+        "残影"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinguanli",
+      "expected": "餐饮管理",
+      "source": "5500",
+      "lookup_us": 6817,
+      "candidates": [
+        "餐饮管理",
+        "餐饮惯例",
+        "餐饮管里",
+        "餐饮官吏",
+        "餐饮股案例",
+        "餐饮馆里",
+        "餐饮观礼",
+        "餐饮管力",
+        "残影"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinhuifang",
+      "expected": "餐饮回访",
+      "source": "5500",
+      "lookup_us": 5875,
+      "candidates": [
+        "餐饮回访",
+        "餐饮回放",
+        "餐饮会放",
+        "餐饮烩坊",
+        "餐饮会方",
+        "餐饮回防",
+        "餐饮会房",
+        "餐饮回房",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinhuiyuan",
+      "expected": "餐饮会员",
+      "source": "5500",
+      "lookup_us": 6722,
+      "candidates": [
+        "餐饮会员",
+        "餐饮汇源",
+        "餐饮会远",
+        "餐饮回原",
+        "餐饮会预案",
+        "餐饮会圆",
+        "餐饮会元",
+        "餐饮会原",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinhuodong",
+      "expected": "餐饮活动",
+      "source": "5500",
+      "lookup_us": 4433,
+      "candidates": [
+        "餐饮活动",
+        "惨因活动",
+        "餐饮或东",
+        "餐因活动",
+        "餐饮或动",
+        "惨引活动",
+        "惨音活动",
+        "餐饮或洞",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinjiameng",
+      "expected": "餐饮加盟",
+      "source": "5500",
+      "lookup_us": 6671,
+      "candidates": [
+        "餐饮加盟",
+        "餐饮加梦",
+        "餐饮加蒙",
+        "餐饮价梦",
+        "餐饮家梦",
+        "餐饮价蒙",
+        "餐饮家蒙",
+        "餐饮假梦",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinjiaoban",
+      "expected": "餐饮交班",
+      "source": "5500",
+      "lookup_us": 7691,
+      "candidates": [
+        "餐饮交班",
+        "餐饮交办",
+        "餐饮搅拌",
+        "餐饮叫板",
+        "餐饮教版",
+        "餐饮脚板",
+        "餐饮叫版",
+        "餐饮交版",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinjiezhang",
+      "expected": "餐饮结账",
+      "source": "5500",
+      "lookup_us": 8005,
+      "candidates": [
+        "餐饮结账",
+        "餐饮结帐",
+        "餐饮接掌",
+        "餐饮届长",
+        "餐饮届章",
+        "餐饮届涨",
+        "餐饮接长",
+        "餐饮截长",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinjingying",
+      "expected": "餐饮经营",
+      "source": "5500",
+      "lookup_us": 8255,
+      "candidates": [
+        "餐饮经营",
+        "餐饮精英",
+        "餐饮晶莹",
+        "餐饮菁英",
+        "惨因经营",
+        "餐因经营",
+        "餐饮经赢",
+        "餐饮景影",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinkaidian",
+      "expected": "餐饮开店",
+      "source": "5500",
+      "lookup_us": 5107,
+      "candidates": [
+        "餐饮开店",
+        "餐饮开点",
+        "餐饮开电",
+        "餐饮凯点",
+        "餐饮凯店",
+        "餐饮开殿",
+        "餐饮开典",
+        "餐饮开垫",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinkedanjia",
+      "expected": "餐饮客单价",
+      "source": "5500",
+      "lookup_us": 7388,
+      "candidates": [
+        "餐饮可单价",
+        "餐饮科单价",
+        "餐饮客单价",
+        "餐饮克单价",
+        "餐饮可担架",
+        "餐饮柯单价",
+        "餐饮课单价",
+        "餐饮克担架",
+        "餐饮"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "canyinkeliu",
+      "expected": "餐饮客流",
+      "source": "5500",
+      "lookup_us": 4889,
+      "candidates": [
+        "餐饮客流",
+        "餐饮可流",
+        "餐饮可留",
+        "餐饮可六",
+        "餐饮科瘤",
+        "餐饮客留",
+        "餐饮科流",
+        "餐饮可刘",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinkucun",
+      "expected": "餐饮库存",
+      "source": "5500",
+      "lookup_us": 3641,
+      "candidates": [
+        "餐饮库存",
+        "餐饮库村",
+        "餐饮苦村",
+        "餐饮哭村",
+        "餐饮酷村",
+        "惨因库存",
+        "餐因库存",
+        "餐饮裤村",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinliansuo",
+      "expected": "餐饮连锁",
+      "source": "5500",
+      "lookup_us": 6287,
+      "candidates": [
+        "餐饮连锁",
+        "餐饮联所",
+        "餐饮连所",
+        "餐饮联锁",
+        "餐饮练所",
+        "餐饮连索",
+        "餐饮链锁",
+        "餐饮脸所",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinlirun",
+      "expected": "餐饮利润",
+      "source": "5500",
+      "lookup_us": 3874,
+      "candidates": [
+        "餐饮利润",
+        "餐饮李润",
+        "惨因利润",
+        "餐饮里润",
+        "餐因利润",
+        "餐饮立润",
+        "餐饮莉润",
+        "餐饮例润",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinliushui",
+      "expected": "餐饮流水",
+      "source": "5500",
+      "lookup_us": 5227,
+      "candidates": [
+        "餐饮流水",
+        "餐饮六说",
+        "餐饮刘水",
+        "餐饮刘说",
+        "餐饮六水",
+        "餐饮留水",
+        "餐饮刘睡",
+        "餐饮刘谁",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinmaoli",
+      "expected": "餐饮毛利",
+      "source": "5500",
+      "lookup_us": 6001,
+      "candidates": [
+        "餐饮毛利",
+        "餐饮毛里",
+        "餐饮猫里",
+        "餐饮毛力",
+        "餐饮猫力",
+        "餐饮毛礼",
+        "餐饮猫利",
+        "餐饮毛立",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinmendian",
+      "expected": "餐饮门店",
+      "source": "5500",
+      "lookup_us": 6308,
+      "candidates": [
+        "餐饮门店",
+        "餐饮门垫",
+        "餐饮门点",
+        "餐饮门电",
+        "餐饮们点",
+        "餐饮们店",
+        "餐饮门殿",
+        "餐饮门典",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinpaiban",
+      "expected": "餐饮排班",
+      "source": "5500",
+      "lookup_us": 5752,
+      "candidates": [
+        "餐饮排班",
+        "餐饮排版",
+        "餐饮拍板",
+        "餐饮拍版",
+        "餐饮派版",
+        "餐饮牌版",
+        "餐饮排办",
+        "餐饮排板",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinpandian",
+      "expected": "餐饮盘点",
+      "source": "5500",
+      "lookup_us": 6079,
+      "candidates": [
+        "餐饮盘点",
+        "餐饮胖点",
+        "餐饮潘点",
+        "餐饮盘垫",
+        "餐饮潘店",
+        "餐饮盘店",
+        "餐饮盘电",
+        "餐饮判点",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinpeisong",
+      "expected": "餐饮配送",
+      "source": "5500",
+      "lookup_us": 3178,
+      "candidates": [
+        "餐饮配送",
+        "餐饮配松",
+        "餐饮配颂",
+        "餐饮配宋",
+        "餐饮佩送",
+        "餐饮佩松",
+        "餐饮配诵",
+        "餐饮配嵩",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinpeixun",
+      "expected": "餐饮培训",
+      "source": "5500",
+      "lookup_us": 4346,
+      "candidates": [
+        "餐饮培训",
+        "惨因培训",
+        "餐因培训",
+        "餐饮配训",
+        "餐饮配讯",
+        "惨音培训",
+        "餐饮配勋",
+        "餐音培训",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinpingjia",
+      "expected": "餐饮评价",
+      "source": "5500",
+      "lookup_us": 6977,
+      "candidates": [
+        "餐饮评价",
+        "餐饮平价",
+        "餐饮评家",
+        "餐饮评加",
+        "餐饮平家",
+        "餐饮评甲",
+        "餐饮评假",
+        "餐饮评架",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinpingxiao",
+      "expected": "餐饮坪效",
+      "source": "5500",
+      "lookup_us": 8902,
+      "candidates": [
+        "餐饮坪效",
+        "餐饮评小",
+        "餐饮评笑",
+        "餐饮平小",
+        "餐饮平校",
+        "餐饮平笑",
+        "餐饮评校",
+        "餐饮评效",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinpinpai",
+      "expected": "餐饮品牌",
+      "source": "5500",
+      "lookup_us": 4315,
+      "candidates": [
+        "餐饮品牌",
+        "餐饮品拍",
+        "餐饮品派",
+        "餐饮品排",
+        "惨饮品牌",
+        "惨因品牌",
+        "餐因品牌",
+        "惨音品牌",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinrenxiao",
+      "expected": "餐饮人效",
+      "source": "5500",
+      "lookup_us": 6832,
+      "candidates": [
+        "餐饮人效",
+        "餐饮人笑",
+        "餐饮人小",
+        "餐饮认孝",
+        "餐饮任小",
+        "餐饮人校",
+        "餐饮人肖",
+        "餐饮人消",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinshebei",
+      "expected": "餐饮设备",
+      "source": "5500",
+      "lookup_us": 3733,
+      "candidates": [
+        "餐饮设备",
+        "惨音设备",
+        "餐音设备",
+        "惨因设备",
+        "餐因设备",
+        "餐饮社呗",
+        "餐饮射被",
+        "惨印设备",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinshicai",
+      "expected": "餐饮食材",
+      "source": "5500",
+      "lookup_us": 3564,
+      "candidates": [
+        "餐饮食材",
+        "餐饮时才",
+        "餐饮食菜",
+        "餐饮食才",
+        "餐饮是才",
+        "餐饮是菜",
+        "餐饮石材",
+        "餐饮是彩",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinshouru",
+      "expected": "餐饮收入",
+      "source": "5500",
+      "lookup_us": 3375,
+      "candidates": [
+        "餐饮收入",
+        "餐饮受辱",
+        "餐饮受如",
+        "惨因收入",
+        "餐饮手如",
+        "餐因收入",
+        "餐饮收如",
+        "餐饮首如",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinshouyin",
+      "expected": "餐饮收银",
+      "source": "5500",
+      "lookup_us": 6020,
+      "candidates": [
+        "餐饮收银",
+        "餐饮收音",
+        "餐饮手印",
+        "餐饮手淫",
+        "餐饮首音",
+        "餐饮手因",
+        "餐饮首因",
+        "餐饮收因",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinsunhao",
+      "expected": "餐饮损耗",
+      "source": "5500",
+      "lookup_us": 4083,
+      "candidates": [
+        "餐饮损耗",
+        "餐饮孙昊",
+        "餐饮孙好",
+        "餐饮孙号",
+        "餐饮孙浩",
+        "餐饮损好",
+        "餐饮孙镐",
+        "餐饮隼豪",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyintaizhang",
+      "expected": "餐饮台账",
+      "source": "5500",
+      "lookup_us": 6398,
+      "candidates": [
+        "餐饮台账",
+        "餐饮台长",
+        "餐饮太长",
+        "餐饮台帐",
+        "餐饮台章",
+        "餐饮台张",
+        "餐饮台涨",
+        "餐饮太章",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyintangshi",
+      "expected": "餐饮堂食",
+      "source": "5500",
+      "lookup_us": 5401,
+      "candidates": [
+        "餐饮堂食",
+        "餐饮唐诗",
+        "餐饮汤时",
+        "餐饮汤是",
+        "餐饮汤市",
+        "餐饮唐氏",
+        "餐饮汤史",
+        "餐饮汤事",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyintaocan",
+      "expected": "餐饮套餐",
+      "source": "5500",
+      "lookup_us": 4191,
+      "candidates": [
+        "餐饮套餐",
+        "惨因套餐",
+        "餐因套餐",
+        "餐饮桃餐",
+        "惨音套餐",
+        "餐饮讨餐",
+        "餐音套餐",
+        "惨引套餐",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyintousu",
+      "expected": "餐饮投诉",
+      "source": "5500",
+      "lookup_us": 2898,
+      "candidates": [
+        "餐饮投诉",
+        "惨音投诉",
+        "餐音投诉",
+        "惨因投诉",
+        "餐因投诉",
+        "餐饮头酥",
+        "餐饮投宿",
+        "惨引投诉",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyintuangou",
+      "expected": "餐饮团购",
+      "source": "5500",
+      "lookup_us": 5161,
+      "candidates": [
+        "餐饮团购",
+        "餐饮团狗",
+        "餐饮团沟",
+        "餐饮团够",
+        "餐饮图案狗",
+        "惨因团购",
+        "餐饮团钩",
+        "餐饮团构",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyintuiguang",
+      "expected": "餐饮推广",
+      "source": "5500",
+      "lookup_us": 7926,
+      "candidates": [
+        "餐饮推广",
+        "餐饮推光",
+        "惨因推广",
+        "餐因推广",
+        "餐饮推逛",
+        "惨音推广",
+        "餐饮退光",
+        "餐音推广",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinwaimai",
+      "expected": "餐饮外卖",
+      "source": "5500",
+      "lookup_us": 4146,
+      "candidates": [
+        "餐饮外卖",
+        "餐饮外买",
+        "餐饮外脉",
+        "餐饮外埋",
+        "餐饮外麦",
+        "餐饮外迈",
+        "惨因外卖",
+        "餐因外卖",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinwangji",
+      "expected": "餐饮旺季",
+      "source": "5500",
+      "lookup_us": 5193,
+      "candidates": [
+        "餐饮旺季",
+        "餐饮忘记",
+        "餐饮王及",
+        "餐饮王籍",
+        "餐饮网及",
+        "餐饮王寂",
+        "餐饮王绩",
+        "餐饮王集",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinweisheng",
+      "expected": "餐饮卫生",
+      "source": "5500",
+      "lookup_us": 7443,
+      "candidates": [
+        "餐饮卫生",
+        "餐饮为生",
+        "餐饮尾声",
+        "餐饮维生",
+        "餐饮为胜",
+        "餐饮为牲",
+        "餐饮威盛",
+        "餐饮为圣",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinxuanzhi",
+      "expected": "餐饮选址",
+      "source": "5500",
+      "lookup_us": 6153,
+      "candidates": [
+        "餐饮选址",
+        "餐饮宣纸",
+        "餐饮选制",
+        "餐饮选之",
+        "餐饮选指",
+        "餐饮选至",
+        "餐饮选值",
+        "餐饮选只",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinxuke",
+      "expected": "餐饮许可",
+      "source": "5500",
+      "lookup_us": 4575,
+      "candidates": [
+        "餐饮许可",
+        "餐饮徐克",
+        "餐饮许课",
+        "餐饮许克",
+        "餐饮需克",
+        "餐饮许科",
+        "餐饮需课",
+        "餐饮许客",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinyingxiao",
+      "expected": "餐饮营销",
+      "source": "5500",
+      "lookup_us": 11618,
+      "candidates": [
+        "餐饮营销",
+        "餐饮应小",
+        "餐饮英小",
+        "餐饮营小",
+        "餐饮应笑",
+        "餐饮应校",
+        "餐饮应晓",
+        "餐饮英笑",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinyunying",
+      "expected": "餐饮运营",
+      "source": "5500",
+      "lookup_us": 8164,
+      "candidates": [
+        "餐饮运营",
+        "餐饮云影",
+        "餐饮云鹰",
+        "惨因运营",
+        "餐饮云英",
+        "餐因运营",
+        "餐饮云赢",
+        "餐饮云缨",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinzhaogong",
+      "expected": "餐饮招工",
+      "source": "5500",
+      "lookup_us": 4428,
+      "candidates": [
+        "餐饮招工",
+        "餐饮招供",
+        "餐饮朝贡",
+        "餐饮找工",
+        "餐饮找共",
+        "餐饮着共",
+        "餐饮朝共",
+        "餐饮找功",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canyinzhuangxiu",
+      "expected": "餐饮装修",
+      "source": "5500",
+      "lookup_us": 6282,
+      "candidates": [
+        "餐饮装修",
+        "餐饮装秀",
+        "餐饮状秀",
+        "餐饮装休",
+        "餐饮庄秀",
+        "惨因装修",
+        "惨银装修",
+        "餐因装修",
+        "餐饮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canzhongfuwu",
+      "expected": "餐中服务",
+      "source": "5500",
+      "lookup_us": 3229,
+      "candidates": [
+        "餐中服务",
+        "惨重服务",
+        "参众服务",
+        "惨众服务",
+        "惨种服务",
+        "餐种服务",
+        "惨中服务",
+        "餐重服务",
+        "惨重"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "canzhuoxiaodu",
+      "expected": "餐桌消毒",
+      "source": "5500",
+      "lookup_us": 7006,
+      "candidates": [
+        "餐桌消毒",
+        "参酌消毒",
+        "餐桌小度",
+        "餐桌小读",
+        "餐桌小都",
+        "餐桌小肚",
+        "餐桌校读",
+        "餐桌小赌",
+        "餐桌"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "cesuoqingjie",
+      "expected": "厕所清洁",
+      "source": "5500",
+      "lookup_us": 7641,
+      "candidates": [
+        "厕所清洁",
+        "厕所情节",
+        "厕所情结",
+        "厕所请街",
+        "厕所轻捷",
+        "厕所请节",
+        "厕所庆节",
+        "厕所请解",
+        "厕所"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chaoguogang",
+      "expected": "炒锅岗",
+      "source": "5500",
+      "lookup_us": 4339,
+      "candidates": [
+        "炒锅岗",
+        "超过港",
+        "超过刚",
+        "超过钢",
+        "超过冈",
+        "超过岗",
+        "超过纲",
+        "超过缸",
+        "超过"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chenjianjilu",
+      "expected": "晨检记录",
+      "source": "5500",
+      "lookup_us": 6338,
+      "candidates": [
+        "晨检记录",
+        "陈建记录",
+        "陈健记录",
+        "陈建纪录",
+        "陈健纪录",
+        "陈件记录",
+        "陈见记录",
+        "晨间记录",
+        "晨间"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chepan",
+      "expected": "撤盘",
+      "source": "5500",
+      "lookup_us": 732,
+      "candidates": [
+        "撤盘",
+        "车盘",
+        "车判",
+        "车潘",
+        "车胖",
+        "车番",
+        "车叛",
+        "车盼",
+        "车"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chetai",
+      "expected": "撤台",
+      "source": "5500",
+      "lookup_us": 1060,
+      "candidates": [
+        "撤台",
+        "车胎",
+        "车太",
+        "车台",
+        "车泰",
+        "彻太",
+        "车态",
+        "撤太",
+        "车"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chuancaifuwu",
+      "expected": "传菜服务",
+      "source": "5500",
+      "lookup_us": 4361,
+      "candidates": [
+        "传菜服务",
+        "川菜服务",
+        "川彩服务",
+        "船才服务",
+        "传才服务",
+        "船材服务",
+        "船彩服务",
+        "传材服务",
+        "川菜"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chuancaigang",
+      "expected": "传菜岗",
+      "source": "5500",
+      "lookup_us": 4055,
+      "candidates": [
+        "传菜岗",
+        "川菜刚",
+        "川菜港",
+        "船才刚",
+        "川菜岗",
+        "川菜钢",
+        "传才刚",
+        "穿才刚",
+        "川菜"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chuancaikou",
+      "expected": "传菜口",
+      "source": "5500",
+      "lookup_us": 2332,
+      "candidates": [
+        "传菜口",
+        "川菜口",
+        "川菜扣",
+        "川菜寇",
+        "川菜抠",
+        "川菜叩",
+        "川菜蔻",
+        "船菜口",
+        "川菜"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chuancailiucheng",
+      "expected": "传菜流程",
+      "source": "5500",
+      "lookup_us": 6441,
+      "candidates": [
+        "传菜流程",
+        "川菜流程",
+        "川菜六成",
+        "船才流程",
+        "传才流程",
+        "川彩流程",
+        "船材流程",
+        "传材流程",
+        "川菜"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chuancairenyuan",
+      "expected": "传菜人员",
+      "source": "5500",
+      "lookup_us": 6768,
+      "candidates": [
+        "传菜人员",
+        "川菜人员",
+        "川菜人缘",
+        "船才人员",
+        "传才人员",
+        "川彩人员",
+        "船材人员",
+        "川菜人远",
+        "川菜"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chuancaiyuan",
+      "expected": "传菜员",
+      "source": "5500",
+      "lookup_us": 5206,
+      "candidates": [
+        "传菜员",
+        "川菜园",
+        "川菜元",
+        "船裁员",
+        "传裁员",
+        "穿裁员",
+        "川裁员",
+        "川菜远",
+        "川菜"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chucaijiezou",
+      "expected": "出菜节奏",
+      "source": "5500",
+      "lookup_us": 5572,
+      "candidates": [
+        "出菜节奏",
+        "出彩节奏",
+        "除才节奏",
+        "出才节奏",
+        "除彩节奏",
+        "除菜节奏",
+        "除采节奏",
+        "除蔡节奏",
+        "出彩"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chucaishijian",
+      "expected": "出菜时间",
+      "source": "5500",
+      "lookup_us": 8358,
+      "candidates": [
+        "出菜时间",
+        "出彩事件",
+        "出彩时间",
+        "除菜时间",
+        "出彩实践",
+        "除才时间",
+        "除才事件",
+        "出才时间",
+        "出彩"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chucaishunxu",
+      "expected": "出菜顺序",
+      "source": "5500",
+      "lookup_us": 4335,
+      "candidates": [
+        "出菜顺序",
+        "出彩顺序",
+        "除菜顺序",
+        "除才顺序",
+        "出才顺序",
+        "除彩顺序",
+        "除采顺序",
+        "除蔡顺序",
+        "出彩"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chucaisudu",
+      "expected": "出菜速度",
+      "source": "5500",
+      "lookup_us": 3074,
+      "candidates": [
+        "出菜速度",
+        "出彩速度",
+        "除菜速度",
+        "除才速度",
+        "出才速度",
+        "除彩速度",
+        "除采速度",
+        "除蔡速度",
+        "出彩"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chucangang",
+      "expected": "出餐岗",
+      "source": "5500",
+      "lookup_us": 4409,
+      "candidates": [
+        "出餐岗",
+        "储藏昂",
+        "出舱昂",
+        "出餐刚",
+        "出餐港",
+        "除沧昂",
+        "出餐钢",
+        "出餐纲",
+        "储藏"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chucankou",
+      "expected": "出餐口",
+      "source": "5500",
+      "lookup_us": 1218,
+      "candidates": [
+        "出餐口",
+        "出餐扣",
+        "除餐口",
+        "除参口",
+        "除残口",
+        "出惨口",
+        "除参扣",
+        "除残扣",
+        "出餐"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chufangdayinji",
+      "expected": "厨房打印机",
+      "source": "5500",
+      "lookup_us": 5911,
+      "candidates": [
+        "厨房打印机",
+        "厨房打印记",
+        "出访打印机",
+        "厨房打印及",
+        "出访打印记",
+        "厨房大印记",
+        "厨房打印集",
+        "厨房打印鸡",
+        "处方"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chufangmiehuotan",
+      "expected": "厨房灭火毯",
+      "source": "5500",
+      "lookup_us": 8207,
+      "candidates": [
+        "厨房灭火炭",
+        "厨房灭火谈",
+        "厨房灭火毯",
+        "厨房灭火弹",
+        "出访灭火炭",
+        "厨房灭火探",
+        "出访灭火谈",
+        "厨房灭火潭",
+        "处方"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "chufangxiaopiao",
+      "expected": "厨房小票",
+      "source": "5500",
+      "lookup_us": 9383,
+      "candidates": [
+        "厨房小票",
+        "出访小票",
+        "处方小票",
+        "厨房效票",
+        "厨房销票",
+        "厨房小飘",
+        "除仿效票",
+        "厨房校票",
+        "处方"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chupinbaguan",
+      "expected": "出品把关",
+      "source": "5500",
+      "lookup_us": 6415,
+      "candidates": [
+        "出品把关",
+        "出品拔贯",
+        "出品巴管",
+        "出品罢官",
+        "出品吧官",
+        "出品吧关",
+        "出品吧观",
+        "出品吧管",
+        "出品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chupinbiaozhun",
+      "expected": "出品标准",
+      "source": "5500",
+      "lookup_us": 7284,
+      "candidates": [
+        "出品标准",
+        "除品标准",
+        "除频标准",
+        "出频标准",
+        "除聘标准",
+        "除拼标准",
+        "出拼标准",
+        "除贫标准",
+        "出品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chupinjiancha",
+      "expected": "出品检查",
+      "source": "5500",
+      "lookup_us": 7386,
+      "candidates": [
+        "出品检查",
+        "出品监察",
+        "出品检察",
+        "除品检查",
+        "除频检查",
+        "出频检查",
+        "除聘检查",
+        "除拼检查",
+        "出品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chupinsudu",
+      "expected": "出品速度",
+      "source": "5500",
+      "lookup_us": 3520,
+      "candidates": [
+        "出品速度",
+        "出品速读",
+        "除频速度",
+        "出频速度",
+        "除品速度",
+        "除聘速度",
+        "除拼速度",
+        "出拼速度",
+        "出品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chupinwendingxing",
+      "expected": "出品稳定性",
+      "source": "5500",
+      "lookup_us": 8374,
+      "candidates": [
+        "出品稳定性",
+        "出品稳定型",
+        "出品稳定行",
+        "出品稳定星",
+        "除品稳定性",
+        "出品稳定形",
+        "出品问定性",
+        "出品稳定姓",
+        "出品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chupinzhiliang",
+      "expected": "出品质量",
+      "source": "5500",
+      "lookup_us": 8013,
+      "candidates": [
+        "出品质量",
+        "除品质量",
+        "出品质亮",
+        "出品质梁",
+        "出品质良",
+        "出品质凉",
+        "出品质两",
+        "出品质粮",
+        "出品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chuyuhuishou",
+      "expected": "厨余回收",
+      "source": "5500",
+      "lookup_us": 5379,
+      "candidates": [
+        "厨余回收",
+        "处于回收",
+        "出于回收",
+        "处于挥手",
+        "出于挥手",
+        "出狱回收",
+        "处于回首",
+        "出于回首",
+        "处于"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "cuicaixiaopiao",
+      "expected": "催菜小票",
+      "source": "5500",
+      "lookup_us": 7917,
+      "candidates": [
+        "催菜小票",
+        "崔才小票",
+        "崔菜小票",
+        "翠才小票",
+        "崔材小票",
+        "翠材小票",
+        "崔彩小票",
+        "崔采小票",
+        "催"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "cujiagongjian",
+      "expected": "粗加工间",
+      "source": "5500",
+      "lookup_us": 6299,
+      "candidates": [
+        "粗加工间",
+        "醋加工见",
+        "促加工件",
+        "粗家工剑",
+        "促加工见",
+        "促加工建",
+        "粗加工件",
+        "促加攻坚",
+        "粗"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dabaogang",
+      "expected": "打包岗",
+      "source": "5500",
+      "lookup_us": 4017,
+      "candidates": [
+        "打包岗",
+        "打包港",
+        "打包刚",
+        "打包钢",
+        "大宝钢",
+        "大包钢",
+        "大包刚",
+        "大宝刚",
+        "打包"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "daheyuan",
+      "expected": "打荷员",
+      "source": "5500",
+      "lookup_us": 4239,
+      "candidates": [
+        "打荷员",
+        "大河原",
+        "大河源",
+        "打和元",
+        "大河园",
+        "大河元",
+        "大和原",
+        "大和远",
+        "大河"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "daiweifuwu",
+      "expected": "带位服务",
+      "source": "5500",
+      "lookup_us": 3241,
+      "candidates": [
+        "带位服务",
+        "戴维服务",
+        "代为服务",
+        "大为服务",
+        "代位服务",
+        "大卫服务",
+        "大围服务",
+        "大尾服务",
+        "代为"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "daiweiyuan",
+      "expected": "带位员",
+      "source": "5500",
+      "lookup_us": 4373,
+      "candidates": [
+        "带位员",
+        "歹委员",
+        "大委员",
+        "戴维园",
+        "带委员",
+        "戴维元",
+        "代为元",
+        "戴委员",
+        "代为"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "danjikeliu",
+      "expected": "淡季客流",
+      "source": "5500",
+      "lookup_us": 6038,
+      "candidates": [
+        "淡季客流",
+        "但及客流",
+        "但即客流",
+        "但即可流",
+        "但基客流",
+        "但几颗瘤",
+        "但几客流",
+        "但即可留",
+        "单击"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "daohaoruzuo",
+      "expected": "到号入座",
+      "source": "5500",
+      "lookup_us": 3445,
+      "candidates": [
+        "到号入座",
+        "到好入座",
+        "盗号入座",
+        "倒好入座",
+        "到好如做",
+        "到好如坐",
+        "到好如昨",
+        "到好入做",
+        "盗号"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengweiquyu",
+      "expected": "等位区域",
+      "source": "5500",
+      "lookup_us": 4305,
+      "candidates": [
+        "等位区域",
+        "等为区域",
+        "等围区域",
+        "灯位区域",
+        "等微区域",
+        "邓为区域",
+        "等威区域",
+        "等未区域",
+        "灯位"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengweishunxu",
+      "expected": "等位顺序",
+      "source": "5500",
+      "lookup_us": 5711,
+      "candidates": [
+        "等位顺序",
+        "等为顺序",
+        "等微顺序",
+        "灯位顺序",
+        "等未顺序",
+        "邓韦顺序",
+        "邓为顺序",
+        "等威顺序",
+        "灯位"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengweizuoyi",
+      "expected": "等位座椅",
+      "source": "5500",
+      "lookup_us": 4571,
+      "candidates": [
+        "等位座椅",
+        "等为左翼",
+        "等为座椅",
+        "等微左翼",
+        "等位左翼",
+        "灯位左翼",
+        "等微座椅",
+        "等未作以",
+        "灯位"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "diancaixitong",
+      "expected": "点菜系统",
+      "source": "5500",
+      "lookup_us": 5499,
+      "candidates": [
+        "点菜系统",
+        "点才系统",
+        "点财系统",
+        "点采系统",
+        "电菜系统",
+        "点踩系统",
+        "点彩系统",
+        "店才系统",
+        "点菜"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "diancanxitong",
+      "expected": "点餐系统",
+      "source": "5500",
+      "lookup_us": 4166,
+      "candidates": [
+        "点餐系统",
+        "店灿系统",
+        "点参系统",
+        "点残系统",
+        "店餐系统",
+        "点惨系统",
+        "点灿系统",
+        "点蚕系统",
+        "点餐"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "diandangang",
+      "expected": "点单岗",
+      "source": "5500",
+      "lookup_us": 6566,
+      "candidates": [
+        "点单岗",
+        "电单杠",
+        "点单杠",
+        "点担纲",
+        "店单杠",
+        "电担纲",
+        "滇单杠",
+        "店担纲",
+        "典当"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "diandanpingban",
+      "expected": "点单平板",
+      "source": "5500",
+      "lookup_us": 6820,
+      "candidates": [
+        "点单平板",
+        "点但平板",
+        "电单平板",
+        "店但平板",
+        "点蛋平板",
+        "电单凭版",
+        "点丹平板",
+        "点单凭版",
+        "电大"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "diandanshebei",
+      "expected": "点单设备",
+      "source": "5500",
+      "lookup_us": 4266,
+      "candidates": [
+        "点单设备",
+        "点但设备",
+        "电单设备",
+        "点蛋设备",
+        "店但设备",
+        "点丹设备",
+        "点胆设备",
+        "点淡设备",
+        "电大"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "diandanxiaopiao",
+      "expected": "点单小票",
+      "source": "5500",
+      "lookup_us": 9074,
+      "candidates": [
+        "点单小票",
+        "点胆小票",
+        "点但小票",
+        "电单小票",
+        "电胆小票",
+        "点蛋小票",
+        "点弹小票",
+        "点胆小飘",
+        "电大"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dianhuadingcan",
+      "expected": "电话订餐",
+      "source": "5500",
+      "lookup_us": 5939,
+      "candidates": [
+        "电话订餐",
+        "电话订惨",
+        "电话订参",
+        "电话订残",
+        "电话定餐",
+        "电话定惨",
+        "电话定参",
+        "电话订灿",
+        "电话"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dianhuadingwei",
+      "expected": "电话订位",
+      "source": "5500",
+      "lookup_us": 6329,
+      "candidates": [
+        "电话订位",
+        "电话定位",
+        "电话订为",
+        "电话定为",
+        "点话定位",
+        "电话订维",
+        "电话订味",
+        "电话订伟",
+        "电话"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "digou",
+      "expected": "地沟",
+      "source": "5500",
+      "lookup_us": 995,
+      "candidates": [
+        "地沟",
+        "的狗",
+        "的沟",
+        "的购",
+        "的够",
+        "的构",
+        "地狗",
+        "地购",
+        "地"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "digougaiban",
+      "expected": "地沟盖板",
+      "source": "5500",
+      "lookup_us": 3747,
+      "candidates": [
+        "地沟盖板",
+        "的狗改版",
+        "的构改版",
+        "的狗盖板",
+        "地构改版",
+        "的够改版",
+        "的购改版",
+        "地沟改版",
+        "地沟"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dimianqingjie",
+      "expected": "地面清洁",
+      "source": "5500",
+      "lookup_us": 8619,
+      "candidates": [
+        "地面清洁",
+        "地面情节",
+        "地面情结",
+        "底面清洁",
+        "底面情节",
+        "地面轻捷",
+        "地面庆节",
+        "地面清节",
+        "地面"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dingcandianhua",
+      "expected": "订餐电话",
+      "source": "5500",
+      "lookup_us": 6468,
+      "candidates": [
+        "订餐电话",
+        "订餐点花",
+        "定餐电话",
+        "订餐电化",
+        "订餐点话",
+        "订餐电华",
+        "订餐电花",
+        "订餐点化",
+        "订餐"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dudaojiancha",
+      "expected": "督导检查",
+      "source": "5500",
+      "lookup_us": 7046,
+      "candidates": [
+        "督导检查",
+        "独到检查",
+        "读到检查",
+        "都島检查",
+        "独到监察",
+        "读到监察",
+        "独岛检查",
+        "都道检查",
+        "读到"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dudaopeixun",
+      "expected": "督导培训",
+      "source": "5500",
+      "lookup_us": 4266,
+      "candidates": [
+        "督导培训",
+        "独到培训",
+        "读到培训",
+        "都島培训",
+        "独岛培训",
+        "都道培训",
+        "杜导培训",
+        "杜道培训",
+        "读到"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dudaoxundian",
+      "expected": "督导巡店",
+      "source": "5500",
+      "lookup_us": 7330,
+      "candidates": [
+        "督导巡店",
+        "独到询点",
+        "读到询点",
+        "督导寻点",
+        "督导讯点",
+        "督导训点",
+        "独到讯点",
+        "读到讯点",
+        "读到"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fanghuadizhuan",
+      "expected": "防滑地砖",
+      "source": "5500",
+      "lookup_us": 5556,
+      "candidates": [
+        "防滑地砖",
+        "访华的转",
+        "防滑地转",
+        "访华的传",
+        "访华地砖",
+        "访华的专",
+        "访华地转",
+        "访华的赚",
+        "防滑底"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangzuchengben",
+      "expected": "房租成本",
+      "source": "5500",
+      "lookup_us": 3359,
+      "candidates": [
+        "房租成本",
+        "放组成本",
+        "方组成本",
+        "方足成本",
+        "放足成本",
+        "房祖成本",
+        "放祖成本",
+        "房租称本",
+        "房租"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fantai",
+      "expected": "翻台",
+      "source": "5500",
+      "lookup_us": 1563,
+      "candidates": [
+        "翻台",
+        "返台",
+        "反台",
+        "饭太",
+        "反太",
+        "范台",
+        "反泰",
+        "凡台",
+        "饭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fantaicishu",
+      "expected": "翻台次数",
+      "source": "5500",
+      "lookup_us": 4280,
+      "candidates": [
+        "翻台次数",
+        "反台次数",
+        "返台次数",
+        "返台此书",
+        "反台此书",
+        "反台词书",
+        "反台词数",
+        "返台词书",
+        "翻台"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fantaijilu",
+      "expected": "翻台记录",
+      "source": "5500",
+      "lookup_us": 5124,
+      "candidates": [
+        "翻台记录",
+        "反台记录",
+        "返台记录",
+        "反台纪录",
+        "返台纪录",
+        "饭太记录",
+        "反太记录",
+        "饭太纪录",
+        "翻台"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fantaishijian",
+      "expected": "翻台时间",
+      "source": "5500",
+      "lookup_us": 8140,
+      "candidates": [
+        "翻台时间",
+        "反台时间",
+        "返台时间",
+        "反台事件",
+        "返台事件",
+        "反台实践",
+        "饭太事件",
+        "饭太时间",
+        "翻台"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fantaisudu",
+      "expected": "翻台速度",
+      "source": "5500",
+      "lookup_us": 3538,
+      "candidates": [
+        "翻台速度",
+        "反台速度",
+        "返台速度",
+        "饭太速度",
+        "反太速度",
+        "反泰速度",
+        "返泰速度",
+        "反态速度",
+        "翻台"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "feiyoudengji",
+      "expected": "废油登记",
+      "source": "5500",
+      "lookup_us": 4691,
+      "candidates": [
+        "废油登记",
+        "非有登记",
+        "非友登记",
+        "非友等级",
+        "费有登记",
+        "斐尢登记",
+        "非有等级",
+        "非由登记",
+        "非"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "feiyouhuishou",
+      "expected": "废油回收",
+      "source": "5500",
+      "lookup_us": 5444,
+      "candidates": [
+        "废油回收",
+        "非有回收",
+        "非友回收",
+        "非又回收",
+        "非有挥手",
+        "费有回收",
+        "斐尢回收",
+        "非友挥手",
+        "非"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fenchudayin",
+      "expected": "分厨打印",
+      "source": "5500",
+      "lookup_us": 4727,
+      "candidates": [
+        "分厨打印",
+        "分出打印",
+        "分处打印",
+        "分出大因",
+        "分出大音",
+        "份处打印",
+        "分除打印",
+        "分出大尹",
+        "分出"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fendandayin",
+      "expected": "分单打印",
+      "source": "5500",
+      "lookup_us": 4510,
+      "candidates": [
+        "分单打印",
+        "分但打印",
+        "分担打印",
+        "份单打印",
+        "分蛋打印",
+        "分弹打印",
+        "分但大银",
+        "分担大因",
+        "分担"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fuliaochengben",
+      "expected": "辅料成本",
+      "source": "5500",
+      "lookup_us": 6043,
+      "candidates": [
+        "辅料成本",
+        "服了成本",
+        "福了成本",
+        "符憭成本",
+        "福聊成本",
+        "弗里奥成本",
+        "父廖成本",
+        "福利奥成本",
+        "辅料"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fuwugang",
+      "expected": "服务岗",
+      "source": "5500",
+      "lookup_us": 3796,
+      "candidates": [
+        "服务岗",
+        "服务港",
+        "服务刚",
+        "服务杠",
+        "服务钢",
+        "服务纲",
+        "服务冈",
+        "服务缸",
+        "服务"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganshifenkai",
+      "expected": "干湿分开",
+      "source": "5500",
+      "lookup_us": 2752,
+      "candidates": [
+        "干湿分开",
+        "干事分开",
+        "干十分开",
+        "赶时分开",
+        "感是分开",
+        "感十分开",
+        "干事愤慨",
+        "干是分开",
+        "干事"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganshuichuli",
+      "expected": "泔水处理",
+      "source": "5500",
+      "lookup_us": 4273,
+      "candidates": [
+        "泔水处理",
+        "干水处理",
+        "敢说处理",
+        "干谁处理",
+        "甘谁处理",
+        "甘说处理",
+        "泔水矗立",
+        "干睡处理",
+        "泔水"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gaofengkeliu",
+      "expected": "高峰客流",
+      "source": "5500",
+      "lookup_us": 4947,
+      "candidates": [
+        "高峰客流",
+        "高凤客流",
+        "搞封客流",
+        "高风客流",
+        "高峰科瘤",
+        "高峰可流",
+        "高峰客留",
+        "高锋客流",
+        "高峰"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gaofengyingdui",
+      "expected": "高峰应对",
+      "source": "5500",
+      "lookup_us": 8652,
+      "candidates": [
+        "高峰应对",
+        "高凤应对",
+        "搞封应对",
+        "高风应对",
+        "高锋应对",
+        "诰封应对",
+        "高峰鹰队",
+        "高冯应对",
+        "高峰"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gengyijian",
+      "expected": "更衣间",
+      "source": "5500",
+      "lookup_us": 6757,
+      "candidates": [
+        "更衣间",
+        "更意见",
+        "更一件",
+        "更一间",
+        "更一见",
+        "更易建",
+        "更易见",
+        "更衣肩",
+        "更易"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "geyoushebei",
+      "expected": "隔油设备",
+      "source": "5500",
+      "lookup_us": 3173,
+      "candidates": [
+        "隔油设备",
+        "各有设备",
+        "葛优设备",
+        "个有设备",
+        "个由设备",
+        "个游设备",
+        "个油设备",
+        "个又设备",
+        "各有"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gongyingshangzizhi",
+      "expected": "供应商资质",
+      "source": "5500",
+      "lookup_us": 6582,
+      "candidates": [
+        "供应商自治",
+        "供应商自制",
+        "供应商资质",
+        "供应商自知",
+        "供应上自治",
+        "供应上自制",
+        "供应商子之",
+        "供应商子指",
+        "供应"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "guazhangquanxian",
+      "expected": "挂账权限",
+      "source": "5500",
+      "lookup_us": 11220,
+      "candidates": [
+        "挂账权限",
+        "挂掌权限",
+        "瓜掌权限",
+        "挂账全线",
+        "瓜长权限",
+        "挂长权限",
+        "挂账全县",
+        "瓜张权限",
+        "挂账"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guohaobaoliu",
+      "expected": "过号保留",
+      "source": "5500",
+      "lookup_us": 7285,
+      "candidates": [
+        "过号保留",
+        "过好保留",
+        "国好保留",
+        "国号保留",
+        "国豪保留",
+        "过浩保留",
+        "过豪保留",
+        "郭浩保留",
+        "过好"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "helibeihuo",
+      "expected": "合理备货",
+      "source": "5500",
+      "lookup_us": 5113,
+      "candidates": [
+        "合理备货",
+        "合理被火",
+        "河里备货",
+        "合力备货",
+        "合理被活",
+        "合理被获",
+        "合理被或",
+        "河里被火",
+        "合理"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "houchubeihuo",
+      "expected": "后厨备货",
+      "source": "5500",
+      "lookup_us": 4359,
+      "candidates": [
+        "后厨备货",
+        "后储备货",
+        "后出备货",
+        "后储备或",
+        "后储备和",
+        "后储备火",
+        "后储备获",
+        "后储备活",
+        "候"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "houchuchengben",
+      "expected": "后厨成本",
+      "source": "5500",
+      "lookup_us": 4612,
+      "candidates": [
+        "后厨成本",
+        "后出成本",
+        "后处成本",
+        "后初成本",
+        "后除成本",
+        "后触成本",
+        "厚处成本",
+        "后楚成本",
+        "候"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "houchuchupin",
+      "expected": "后厨出品",
+      "source": "5500",
+      "lookup_us": 5907,
+      "candidates": [
+        "后厨出品",
+        "后出出品",
+        "后初出品",
+        "后处出品",
+        "后除出品",
+        "后出处品",
+        "厚处出品",
+        "后触出品",
+        "候"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "houchudayang",
+      "expected": "后厨打烊",
+      "source": "5500",
+      "lookup_us": 5590,
+      "candidates": [
+        "后厨打烊",
+        "后出大洋",
+        "后初大洋",
+        "后处大洋",
+        "后出打样",
+        "后除大洋",
+        "侯出大洋",
+        "后出大阳",
+        "候"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "houchudayinji",
+      "expected": "后厨打印机",
+      "source": "5500",
+      "lookup_us": 4633,
+      "candidates": [
+        "后出打印机",
+        "后处打印机",
+        "后出打印记",
+        "后处打印记",
+        "后出大印记",
+        "后出打印及",
+        "后出达印记",
+        "后厨打印机",
+        "候"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "houchudongxian",
+      "expected": "后厨动线",
+      "source": "5500",
+      "lookup_us": 7476,
+      "candidates": [
+        "后厨动线",
+        "后出动线",
+        "后触动线",
+        "后出东线",
+        "后出动县",
+        "后出动先",
+        "后出动现",
+        "后出动贤",
+        "候"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "houchuguanli",
+      "expected": "后厨管理",
+      "source": "5500",
+      "lookup_us": 7721,
+      "candidates": [
+        "后厨管理",
+        "后出管理",
+        "后处管理",
+        "厚处管理",
+        "后除管理",
+        "后初管理",
+        "后出惯例",
+        "后储管理",
+        "候"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "houchujiaojie",
+      "expected": "后厨交接",
+      "source": "5500",
+      "lookup_us": 9655,
+      "candidates": [
+        "后厨交接",
+        "后出交接",
+        "后出交界",
+        "后处交接",
+        "后处交界",
+        "后初交接",
+        "后除交接",
+        "后初交界",
+        "候"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "houchupaiban",
+      "expected": "后厨排班",
+      "source": "5500",
+      "lookup_us": 3520,
+      "candidates": [
+        "后厨排班",
+        "后出排版",
+        "后出拍板",
+        "后出排班",
+        "后初排版",
+        "后处排版",
+        "后触排版",
+        "后除排版",
+        "候"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "houchupaishui",
+      "expected": "后厨排水",
+      "source": "5500",
+      "lookup_us": 3749,
+      "candidates": [
+        "后厨排水",
+        "后出排水",
+        "后初排水",
+        "后处排水",
+        "后触排水",
+        "后出牌水",
+        "后除排水",
+        "侯出排水",
+        "候"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "houchupandian",
+      "expected": "后厨盘点",
+      "source": "5500",
+      "lookup_us": 5840,
+      "candidates": [
+        "后厨盘点",
+        "后出盘点",
+        "后初盘点",
+        "后处盘点",
+        "后除盘点",
+        "后触盘点",
+        "后楚盘点",
+        "厚处盘点",
+        "候"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "houchupeixun",
+      "expected": "后厨培训",
+      "source": "5500",
+      "lookup_us": 4994,
+      "candidates": [
+        "后厨培训",
+        "后出培训",
+        "后初培训",
+        "后处培训",
+        "后除培训",
+        "后触培训",
+        "后楚培训",
+        "厚处培训",
+        "候"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "houchurenyuan",
+      "expected": "后厨人员",
+      "source": "5500",
+      "lookup_us": 5464,
+      "candidates": [
+        "后厨人员",
+        "后出人员",
+        "后处人员",
+        "厚处人员",
+        "后出任元",
+        "后出任远",
+        "后出任院",
+        "后出任园",
+        "候"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "houchushebei",
+      "expected": "后厨设备",
+      "source": "5500",
+      "lookup_us": 4208,
+      "candidates": [
+        "后厨设备",
+        "后出设备",
+        "后处设备",
+        "后除设备",
+        "后初设备",
+        "后储设备",
+        "厚处设备",
+        "侯出设备",
+        "候"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "houchushicai",
+      "expected": "后厨试菜",
+      "source": "5500",
+      "lookup_us": 3245,
+      "candidates": [
+        "后厨试菜",
+        "后出时才",
+        "后厨师才",
+        "后出示才",
+        "后初时才",
+        "后出食材",
+        "后出事才",
+        "后出示菜",
+        "候"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "houchusunhao",
+      "expected": "后厨损耗",
+      "source": "5500",
+      "lookup_us": 4332,
+      "candidates": [
+        "后厨损耗",
+        "后出损耗",
+        "后处损耗",
+        "后初损耗",
+        "后出孙昊",
+        "后除损耗",
+        "后触损耗",
+        "厚处损耗",
+        "候"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "houchuweisheng",
+      "expected": "后厨卫生",
+      "source": "5500",
+      "lookup_us": 6299,
+      "candidates": [
+        "后厨卫生",
+        "后出卫生",
+        "后出为生",
+        "后出尾声",
+        "后初卫生",
+        "后处为生",
+        "后处卫生",
+        "后初为生",
+        "候"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "houchuzhuguan",
+      "expected": "后厨主管",
+      "source": "5500",
+      "lookup_us": 6054,
+      "candidates": [
+        "后厨主管",
+        "后出主管",
+        "后处主管",
+        "后出主观",
+        "后初主管",
+        "厚处主管",
+        "后除主管",
+        "后触主管",
+        "候"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huacaiyuan",
+      "expected": "划菜员",
+      "source": "5500",
+      "lookup_us": 5451,
+      "candidates": [
+        "划菜员",
+        "花裁员",
+        "华裁员",
+        "花菜园",
+        "话裁员",
+        "划裁员",
+        "化裁员",
+        "画裁员",
+        "花菜"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huandie",
+      "expected": "换碟",
+      "source": "5500",
+      "lookup_us": 4040,
+      "candidates": [
+        "换碟",
+        "还跌",
+        "环蝶",
+        "换跌",
+        "环跌",
+        "还碟",
+        "幻蝶",
+        "还蝶",
+        "欢"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huankuai",
+      "expected": "换筷",
+      "source": "5500",
+      "lookup_us": 4086,
+      "candidates": [
+        "欢快",
+        "换筷",
+        "还会",
+        "还快",
+        "环快",
+        "换快",
+        "还块",
+        "换块",
+        "欢"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "huanpan",
+      "expected": "换盘",
+      "source": "5500",
+      "lookup_us": 3083,
+      "candidates": [
+        "换盘",
+        "还胖",
+        "还判",
+        "还盘",
+        "环盘",
+        "换判",
+        "还潘",
+        "缓判",
+        "欢"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huifutangshi",
+      "expected": "恢复堂食",
+      "source": "5500",
+      "lookup_us": 7456,
+      "candidates": [
+        "恢复堂食",
+        "恢复唐诗",
+        "回复唐诗",
+        "回复堂食",
+        "恢复堂时",
+        "恢复堂是",
+        "恢复汤时",
+        "恢复汤是",
+        "回复"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huishoukou",
+      "expected": "回收口",
+      "source": "5500",
+      "lookup_us": 1798,
+      "candidates": [
+        "回收口",
+        "回首扣",
+        "回收扣",
+        "回首口",
+        "会收口",
+        "挥手口",
+        "回守口",
+        "会受口",
+        "回收"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huiyuanchuzhi",
+      "expected": "会员储值",
+      "source": "5500",
+      "lookup_us": 5301,
+      "candidates": [
+        "会员储值",
+        "会员处置",
+        "汇源处置",
+        "回原处置",
+        "会远处置",
+        "会员出至",
+        "会愿处置",
+        "会员处指",
+        "会员"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "hunsufenkai",
+      "expected": "荤素分开",
+      "source": "5500",
+      "lookup_us": 3141,
+      "candidates": [
+        "荤素分开",
+        "混素分开",
+        "混苏分开",
+        "混速分开",
+        "婚苏分开",
+        "婚速分开",
+        "混诉分开",
+        "婚诉分开",
+        "混"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiacaixiaopiao",
+      "expected": "加菜小票",
+      "source": "5500",
+      "lookup_us": 9361,
+      "candidates": [
+        "加菜小票",
+        "夹菜小票",
+        "家才小票",
+        "加才小票",
+        "加才嚣票",
+        "夹菜小飘",
+        "家蔡小票",
+        "加材小票",
+        "夹菜"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiacanju",
+      "expected": "加餐具",
+      "source": "5500",
+      "lookup_us": 3861,
+      "candidates": [
+        "加餐具",
+        "家餐具",
+        "加惨剧",
+        "家惨剧",
+        "假惨剧",
+        "架惨剧",
+        "假餐具",
+        "贾惨剧",
+        "加餐"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiagongchufang",
+      "expected": "加工厨房",
+      "source": "5500",
+      "lookup_us": 7812,
+      "candidates": [
+        "加工厨房",
+        "加工出访",
+        "加工处方",
+        "加工出房",
+        "加工出方",
+        "加共厨房",
+        "家共厨房",
+        "家公厨房",
+        "加工"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiankangzhengguanli",
+      "expected": "健康证管理",
+      "source": "5500",
+      "lookup_us": 13384,
+      "candidates": [
+        "健康证管理",
+        "健康政管理",
+        "健康正管理",
+        "健康征管理",
+        "健康整管理",
+        "健康争管理",
+        "健康证惯例",
+        "健康郑管理",
+        "健康"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiaobanqingdian",
+      "expected": "交班清点",
+      "source": "5500",
+      "lookup_us": 13088,
+      "candidates": [
+        "交班清点",
+        "搅拌庆典",
+        "搅拌清点",
+        "搅拌轻点",
+        "叫板庆典",
+        "交办庆典",
+        "搅拌青店",
+        "叫板清点",
+        "搅拌"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiaohaoxitong",
+      "expected": "叫号系统",
+      "source": "5500",
+      "lookup_us": 7384,
+      "candidates": [
+        "叫号系统",
+        "较好系统",
+        "叫好系统",
+        "较号系统",
+        "角蒿系统",
+        "叫豪系统",
+        "叫浩系统",
+        "焦浩系统",
+        "较好"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jindiankeliu",
+      "expected": "进店客流",
+      "source": "5500",
+      "lookup_us": 10151,
+      "candidates": [
+        "进店客流",
+        "金点客流",
+        "近点客流",
+        "近店客流",
+        "金典客流",
+        "金电客流",
+        "进电客流",
+        "金殿客流",
+        "金典"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jingjiagongjian",
+      "expected": "精加工间",
+      "source": "5500",
+      "lookup_us": 11820,
+      "candidates": [
+        "精加工间",
+        "经加工件",
+        "竞价攻坚",
+        "经加工见",
+        "经加工建",
+        "竞价工件",
+        "竞价弓箭",
+        "经加工减",
+        "竞价"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jingwufenkai",
+      "expected": "净污分开",
+      "source": "5500",
+      "lookup_us": 4017,
+      "candidates": [
+        "净污分开",
+        "警务分开",
+        "警务愤慨",
+        "景物分开",
+        "经武分开",
+        "经五分开",
+        "敬勿分开",
+        "经无分开",
+        "景物"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jinhuochayan",
+      "expected": "进货查验",
+      "source": "5500",
+      "lookup_us": 10666,
+      "candidates": [
+        "进货查验",
+        "金或查验",
+        "进火查验",
+        "近或查验",
+        "金和查验",
+        "近火查验",
+        "仅获查验",
+        "近霍查验",
+        "进货"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kaidianchengben",
+      "expected": "开店成本",
+      "source": "5500",
+      "lookup_us": 8616,
+      "candidates": [
+        "开店成本",
+        "开电成本",
+        "开典成本",
+        "开点成本",
+        "凯电成本",
+        "凯点成本",
+        "凯店成本",
+        "开垫成本",
+        "开店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kaidianliucheng",
+      "expected": "开店流程",
+      "source": "5500",
+      "lookup_us": 12913,
+      "candidates": [
+        "开店流程",
+        "开电流程",
+        "开点流程",
+        "开典流程",
+        "凯电流程",
+        "开店六成",
+        "凯点流程",
+        "开电流成",
+        "开店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kaidianqingdan",
+      "expected": "开店清单",
+      "source": "5500",
+      "lookup_us": 13204,
+      "candidates": [
+        "开店清单",
+        "开点清单",
+        "开典清单",
+        "开电清单",
+        "凯点清单",
+        "开点清淡",
+        "开垫清单",
+        "开店清淡",
+        "开店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kaidianyusuan",
+      "expected": "开店预算",
+      "source": "5500",
+      "lookup_us": 7198,
+      "candidates": [
+        "开店预算",
+        "开电预算",
+        "开典预算",
+        "开点预算",
+        "凯点预算",
+        "凯电预算",
+        "凯店预算",
+        "开垫预算",
+        "开店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kaidianzhunbei",
+      "expected": "开店准备",
+      "source": "5500",
+      "lookup_us": 5953,
+      "candidates": [
+        "开店准备",
+        "开点准备",
+        "凯点准备",
+        "开典准备",
+        "开电准备",
+        "开垫准备",
+        "凯店准备",
+        "凯电准备",
+        "开店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kaiyechoubei",
+      "expected": "开业筹备",
+      "source": "5500",
+      "lookup_us": 3500,
+      "candidates": [
+        "开业筹备",
+        "凯耶筹备",
+        "开也筹备",
+        "开夜筹备",
+        "凯也筹备",
+        "开叶筹备",
+        "开页筹备",
+        "开野筹备",
+        "开业"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kaiyefangan",
+      "expected": "开业方案",
+      "source": "5500",
+      "lookup_us": 7517,
+      "candidates": [
+        "开业方案",
+        "开业反感",
+        "凯耶方案",
+        "开也方案",
+        "凯耶反感",
+        "开夜方案",
+        "凯也方案",
+        "开野方案",
+        "开业"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kaiyehaibao",
+      "expected": "开业海报",
+      "source": "5500",
+      "lookup_us": 5718,
+      "candidates": [
+        "开业海报",
+        "凯耶海报",
+        "开业海豹",
+        "凯耶海豹",
+        "开业还报",
+        "开也海报",
+        "开业还包",
+        "开夜海报",
+        "开业"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kaiyehuodong",
+      "expected": "开业活动",
+      "source": "5500",
+      "lookup_us": 5677,
+      "candidates": [
+        "开业活动",
+        "开夜活动",
+        "凯耶活动",
+        "开也活动",
+        "凯业活动",
+        "凯也活动",
+        "凯夜活动",
+        "开叶活动",
+        "开业"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kaiyeshichi",
+      "expected": "开业试吃",
+      "source": "5500",
+      "lookup_us": 4896,
+      "candidates": [
+        "开业试吃",
+        "开业时吃",
+        "凯也是吃",
+        "开业是吃",
+        "开业时迟",
+        "开也是吃",
+        "开业时持",
+        "开业时池",
+        "开业"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kaiyeshijian",
+      "expected": "开业时间",
+      "source": "5500",
+      "lookup_us": 10086,
+      "candidates": [
+        "开业时间",
+        "开业事件",
+        "开业实践",
+        "开业世间",
+        "开夜市剑",
+        "凯耶事件",
+        "凯耶时间",
+        "开业尸检",
+        "开业"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kaiyewuliao",
+      "expected": "开业物料",
+      "source": "5500",
+      "lookup_us": 9299,
+      "candidates": [
+        "开业物料",
+        "开业无聊",
+        "开业务了",
+        "开也无聊",
+        "凯也无聊",
+        "凯耶无聊",
+        "开业务聊",
+        "开业务料",
+        "开业"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kaiyexuanchuan",
+      "expected": "开业宣传",
+      "source": "5500",
+      "lookup_us": 10523,
+      "candidates": [
+        "开业宣传",
+        "凯耶宣传",
+        "开也宣传",
+        "凯也宣传",
+        "开页宣传",
+        "开夜宣传",
+        "开叶宣传",
+        "凯页宣传",
+        "开业"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kaiyeyinliu",
+      "expected": "开业引流",
+      "source": "5500",
+      "lookup_us": 6291,
+      "candidates": [
+        "开业引流",
+        "开业因流",
+        "开业因留",
+        "开业因六",
+        "开业音流",
+        "开业银流",
+        "开也因流",
+        "开业音留",
+        "开业"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kaiyeyouhui",
+      "expected": "开业优惠",
+      "source": "5500",
+      "lookup_us": 5332,
+      "candidates": [
+        "开业优惠",
+        "开业又会",
+        "凯耶优惠",
+        "开业有会",
+        "开也优惠",
+        "开野优惠",
+        "开业有回",
+        "开夜优惠",
+        "开业"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kaiyeyure",
+      "expected": "开业预热",
+      "source": "5500",
+      "lookup_us": 2103,
+      "candidates": [
+        "开业预热",
+        "开业余热",
+        "开业与热",
+        "开业于热",
+        "凯耶预热",
+        "开也预热",
+        "开业余惹",
+        "开业宇热",
+        "开业"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kedanjiafenxi",
+      "expected": "客单价分析",
+      "source": "5500",
+      "lookup_us": 8011,
+      "candidates": [
+        "可单价分析",
+        "科单价分析",
+        "可担架分析",
+        "可单家分析",
+        "克担架分析",
+        "可单加分析",
+        "可但家分析",
+        "客单价分析",
+        "客单价"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "kejunjine",
+      "expected": "客均金额",
+      "source": "5500",
+      "lookup_us": 7817,
+      "candidates": [
+        "客均金额",
+        "克军机呢",
+        "可军金额",
+        "可均金额",
+        "可君金额",
+        "可军机呢",
+        "克郡金额",
+        "克军金额",
+        "科举"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "keliutongji",
+      "expected": "客流统计",
+      "source": "5500",
+      "lookup_us": 5464,
+      "candidates": [
+        "客流统计",
+        "客流通缉",
+        "客流同级",
+        "可流通缉",
+        "可留统计",
+        "客流同济",
+        "可流统计",
+        "客流通及",
+        "客流"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "keliuzhuanhua",
+      "expected": "客流转化",
+      "source": "5500",
+      "lookup_us": 8470,
+      "candidates": [
+        "客流转化",
+        "客流传话",
+        "可流转化",
+        "客流转花",
+        "客流转话",
+        "客流传花",
+        "客流传化",
+        "客流转华",
+        "客流"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lengchu",
+      "expected": "冷厨",
+      "source": "5500",
+      "lookup_us": 1855,
+      "candidates": [
+        "冷厨",
+        "冷处",
+        "冷出",
+        "冷除",
+        "冷初",
+        "冷楚",
+        "愣出",
+        "冷触",
+        "冷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lengrefenkai",
+      "expected": "冷热分开",
+      "source": "5500",
+      "lookup_us": 2944,
+      "candidates": [
+        "冷热分开",
+        "冷热愤慨",
+        "愣热分开",
+        "冷惹分开",
+        "冷热分凯",
+        "冷惹愤慨",
+        "冷热分楷",
+        "冷热粉开",
+        "冷热"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "liangcaigang",
+      "expected": "凉菜岗",
+      "source": "5500",
+      "lookup_us": 5198,
+      "candidates": [
+        "凉菜岗",
+        "两才刚",
+        "梁才刚",
+        "量才刚",
+        "凉菜港",
+        "凉菜刚",
+        "辆才刚",
+        "良才刚",
+        "凉菜"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "liangcaijian",
+      "expected": "凉菜间",
+      "source": "5500",
+      "lookup_us": 7976,
+      "candidates": [
+        "凉菜间",
+        "两裁减",
+        "梁裁减",
+        "辆裁减",
+        "量裁减",
+        "凉菜见",
+        "良裁减",
+        "两裁剪",
+        "凉菜"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "liuyangjilu",
+      "expected": "留样记录",
+      "source": "5500",
+      "lookup_us": 5320,
+      "candidates": [
+        "留样记录",
+        "浏阳记录",
+        "刘洋记录",
+        "浏阳纪录",
+        "刘洋纪录",
+        "柳徉记录",
+        "柳徉纪录",
+        "留洋记录",
+        "刘洋"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "luzaogang",
+      "expected": "炉灶岗",
+      "source": "5500",
+      "lookup_us": 3649,
+      "candidates": [
+        "炉灶岗",
+        "绿藻纲",
+        "路遭刚",
+        "路遭港",
+        "路噪刚",
+        "路早刚",
+        "路噪港",
+        "路早港",
+        "路噪"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meiribeihuo",
+      "expected": "每日备货",
+      "source": "5500",
+      "lookup_us": 3952,
+      "candidates": [
+        "每日备货",
+        "每日被火",
+        "美日备货",
+        "每日被活",
+        "每日被获",
+        "每日被或",
+        "美日被火",
+        "每日被货",
+        "每日"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meiriyingyee",
+      "expected": "每日营业额",
+      "source": "5500",
+      "lookup_us": 6202,
+      "candidates": [
+        "每日营业额",
+        "每日营业哦",
+        "美日营业额",
+        "美日营业哦",
+        "每日营业饿",
+        "每日营业恶",
+        "每日营业俄",
+        "每日营业厄",
+        "每日"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meiyueyingyee",
+      "expected": "每月营业额",
+      "source": "5500",
+      "lookup_us": 10462,
+      "candidates": [
+        "每月营业额",
+        "每月营业哦",
+        "美乐营业额",
+        "美乐营业哦",
+        "每月营业饿",
+        "每月营业恶",
+        "每月营业俄",
+        "每月营业厄",
+        "每月"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendiananquan",
+      "expected": "门店安全",
+      "source": "5500",
+      "lookup_us": 11191,
+      "candidates": [
+        "门店安全",
+        "门垫安全",
+        "门点安全",
+        "门电安全",
+        "们点安全",
+        "们店安全",
+        "们电安全",
+        "门典安全",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianbaobiao",
+      "expected": "门店报表",
+      "source": "5500",
+      "lookup_us": 8577,
+      "candidates": [
+        "门店报表",
+        "门店保镖",
+        "门垫保镖",
+        "门电报表",
+        "门垫报表",
+        "门店爆表",
+        "门点保镖",
+        "们电报表",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianbaojie",
+      "expected": "门店保洁",
+      "source": "5500",
+      "lookup_us": 13140,
+      "candidates": [
+        "门店保洁",
+        "门垫保洁",
+        "门店宝洁",
+        "们店宝洁",
+        "门店包捷",
+        "门点保洁",
+        "门电报捷",
+        "门电报界",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianbiaozhun",
+      "expected": "门店标准",
+      "source": "5500",
+      "lookup_us": 10863,
+      "candidates": [
+        "门店标准",
+        "门垫标准",
+        "门点标准",
+        "们点标准",
+        "门电标准",
+        "们垫标准",
+        "们店标准",
+        "门典标准",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianbidian",
+      "expected": "门店闭店",
+      "source": "5500",
+      "lookup_us": 12546,
+      "candidates": [
+        "门店闭店",
+        "门店笔电",
+        "门店必点",
+        "门店比点",
+        "门店比店",
+        "门店比电",
+        "门电笔电",
+        "门垫笔电",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianbuju",
+      "expected": "门店布局",
+      "source": "5500",
+      "lookup_us": 10247,
+      "candidates": [
+        "门店布局",
+        "门垫布局",
+        "门店不具",
+        "门店不惧",
+        "门点布局",
+        "门电布局",
+        "门店不居",
+        "们点布局",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendiancaigou",
+      "expected": "门店采购",
+      "source": "5500",
+      "lookup_us": 10133,
+      "candidates": [
+        "门店采购",
+        "门垫采购",
+        "门点采购",
+        "们点采购",
+        "门店才够",
+        "门电采购",
+        "们店采购",
+        "门典采购",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianceliang",
+      "expected": "门店测量",
+      "source": "5500",
+      "lookup_us": 11657,
+      "candidates": [
+        "门店测量",
+        "门垫测量",
+        "门点测量",
+        "门电测量",
+        "们点测量",
+        "们店测量",
+        "门典测量",
+        "们电测量",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianchengben",
+      "expected": "门店成本",
+      "source": "5500",
+      "lookup_us": 8740,
+      "candidates": [
+        "门店成本",
+        "门电成本",
+        "门垫成本",
+        "们电成本",
+        "门点成本",
+        "们点成本",
+        "们店成本",
+        "门典成本",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianchenhui",
+      "expected": "门店晨会",
+      "source": "5500",
+      "lookup_us": 9660,
+      "candidates": [
+        "门店晨会",
+        "门店称会",
+        "门店陈慧",
+        "门店陈会",
+        "门店陈辉",
+        "门店陈惠",
+        "门店陈回",
+        "门店晨回",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianchoubei",
+      "expected": "门店筹备",
+      "source": "5500",
+      "lookup_us": 7186,
+      "candidates": [
+        "门店筹备",
+        "门垫筹备",
+        "门点筹备",
+        "门电筹备",
+        "们点筹备",
+        "们店筹备",
+        "门典筹备",
+        "们电筹备",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendiandayang",
+      "expected": "门店打烊",
+      "source": "5500",
+      "lookup_us": 11095,
+      "candidates": [
+        "门店打烊",
+        "门店大洋",
+        "门店打样",
+        "门垫大洋",
+        "门店达养",
+        "门店打羊",
+        "门点大洋",
+        "门店大阳",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendiandianzhang",
+      "expected": "门店店长",
+      "source": "5500",
+      "lookup_us": 14322,
+      "candidates": [
+        "门店店长",
+        "门垫店长",
+        "门店点长",
+        "门点店长",
+        "门店店章",
+        "们店店长",
+        "门店店涨",
+        "门店店张",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendiandongxian",
+      "expected": "门店动线",
+      "source": "5500",
+      "lookup_us": 12554,
+      "candidates": [
+        "门店动线",
+        "门店东线",
+        "门电动线",
+        "门店东县",
+        "门垫东线",
+        "门店东西安",
+        "们电动线",
+        "门点东线",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianfangchong",
+      "expected": "门店防虫",
+      "source": "5500",
+      "lookup_us": 7449,
+      "candidates": [
+        "门店防虫",
+        "门垫防虫",
+        "门店方重",
+        "门店方冲",
+        "门店方虫",
+        "门店房重",
+        "门店防重",
+        "门店放重",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianfangshu",
+      "expected": "门店防鼠",
+      "source": "5500",
+      "lookup_us": 9589,
+      "candidates": [
+        "门店防鼠",
+        "门店方数",
+        "门店方树",
+        "门店方书",
+        "门店芳树",
+        "门店放书",
+        "门店方属",
+        "门店房署",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianfangzu",
+      "expected": "门店房租",
+      "source": "5500",
+      "lookup_us": 11284,
+      "candidates": [
+        "门店房租",
+        "门垫房租",
+        "门店方组",
+        "门点房租",
+        "门电房租",
+        "们店房租",
+        "门店方足",
+        "们点房租",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianfeiyong",
+      "expected": "门店费用",
+      "source": "5500",
+      "lookup_us": 9857,
+      "candidates": [
+        "门店费用",
+        "门电费用",
+        "门垫费用",
+        "们电费用",
+        "门点费用",
+        "们点费用",
+        "们店费用",
+        "门店非灉",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianfudianzhang",
+      "expected": "门店副店长",
+      "source": "5500",
+      "lookup_us": 22938,
+      "candidates": [
+        "门颠覆店长",
+        "门店服店长",
+        "门店付店长",
+        "门店福店长",
+        "门店副店长",
+        "门店符店长",
+        "们颠覆店长",
+        "门店富店长",
+        "门店"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "mendianfupan",
+      "expected": "门店复盘",
+      "source": "5500",
+      "lookup_us": 10915,
+      "candidates": [
+        "门店复盘",
+        "门垫复盘",
+        "门店附盘",
+        "门殿复盘",
+        "门颠覆盘",
+        "门点复盘",
+        "门店服盘",
+        "门店付盘",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianfuwuyuan",
+      "expected": "门店服务员",
+      "source": "5500",
+      "lookup_us": 12918,
+      "candidates": [
+        "门店服务员",
+        "门垫服务员",
+        "门店服务元",
+        "门店服婺源",
+        "门店服务院",
+        "门店服务远",
+        "门店服务圆",
+        "门店服务源",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianfuye",
+      "expected": "门店复业",
+      "source": "5500",
+      "lookup_us": 9038,
+      "candidates": [
+        "门店复业",
+        "门颠覆叶",
+        "门店副业",
+        "门店复也",
+        "们颠覆叶",
+        "门店服业",
+        "门店夫也",
+        "门颠覆也",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianguanmen",
+      "expected": "门店关门",
+      "source": "5500",
+      "lookup_us": 16514,
+      "candidates": [
+        "门店关门",
+        "门点关门",
+        "们点关门",
+        "门垫关门",
+        "门电关门",
+        "们店关门",
+        "们电关门",
+        "门典关门",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianhaocai",
+      "expected": "门店耗材",
+      "source": "5500",
+      "lookup_us": 14514,
+      "candidates": [
+        "门店耗材",
+        "门店好菜",
+        "门垫好菜",
+        "门店好彩",
+        "门店好才",
+        "门点好菜",
+        "门店号才",
+        "们点好菜",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianhuifuyingye",
+      "expected": "门店恢复营业",
+      "source": "5500",
+      "lookup_us": 27737,
+      "candidates": [
+        "门店恢复营业",
+        "门垫恢复营业",
+        "门店会赋营业",
+        "门店恢复影业",
+        "门店恢复营也",
+        "门店回复影业",
+        "门店会副营业",
+        "门店恢复营页",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianjiancha",
+      "expected": "门店检查",
+      "source": "5500",
+      "lookup_us": 36177,
+      "candidates": [
+        "门店检查",
+        "门垫检查",
+        "门店监察",
+        "门电检查",
+        "门点检查",
+        "门店检察",
+        "们点检查",
+        "们电检查",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianjiangcheng",
+      "expected": "门店奖惩",
+      "source": "5500",
+      "lookup_us": 37542,
+      "candidates": [
+        "门店奖惩",
+        "门店将成",
+        "门店江城",
+        "门店将称",
+        "门店将城",
+        "门店将乘",
+        "门店将呈",
+        "门垫江城",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianjiaojie",
+      "expected": "门店交接",
+      "source": "5500",
+      "lookup_us": 24557,
+      "candidates": [
+        "门店交接",
+        "门店交界",
+        "门垫交接",
+        "门垫交界",
+        "门店皎洁",
+        "门点交接",
+        "门店叫杰",
+        "门电交接",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianjieshou",
+      "expected": "门店接手",
+      "source": "5500",
+      "lookup_us": 15404,
+      "candidates": [
+        "门店接手",
+        "门店接受",
+        "门店接收",
+        "门垫接受",
+        "门点接受",
+        "们点接受",
+        "门垫接收",
+        "门电接受",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianjixiao",
+      "expected": "门店绩效",
+      "source": "5500",
+      "lookup_us": 18420,
+      "candidates": [
+        "门店绩效",
+        "门店技校",
+        "门店极小",
+        "门店及小",
+        "门店讥笑",
+        "门电极小",
+        "门店及校",
+        "门店及笑",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendiankaimen",
+      "expected": "门店开门",
+      "source": "5500",
+      "lookup_us": 10971,
+      "candidates": [
+        "门店开门",
+        "门点开门",
+        "们店开门",
+        "们点开门",
+        "门垫开门",
+        "门电开门",
+        "们电开门",
+        "门典开门",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendiankaiye",
+      "expected": "门店开业",
+      "source": "5500",
+      "lookup_us": 8238,
+      "candidates": [
+        "门店开业",
+        "门垫开业",
+        "门点开业",
+        "们点开业",
+        "门电开业",
+        "们店开业",
+        "门店开夜",
+        "门店开也",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendiankaocha",
+      "expected": "门店考察",
+      "source": "5500",
+      "lookup_us": 7854,
+      "candidates": [
+        "门店考察",
+        "门颠考察",
+        "门垫考察",
+        "门点考察",
+        "门电考察",
+        "们点考察",
+        "门店考查",
+        "们店考察",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendiankaohe",
+      "expected": "门店考核",
+      "source": "5500",
+      "lookup_us": 8865,
+      "candidates": [
+        "门店考核",
+        "门颠考核",
+        "门垫考核",
+        "门点考核",
+        "门电考核",
+        "们点考核",
+        "门店考和",
+        "门店靠和",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendiankucun",
+      "expected": "门店库存",
+      "source": "5500",
+      "lookup_us": 7737,
+      "candidates": [
+        "门店库存",
+        "门垫库存",
+        "门点库存",
+        "门电库存",
+        "们点库存",
+        "们店库存",
+        "门典库存",
+        "们电库存",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianlihui",
+      "expected": "门店例会",
+      "source": "5500",
+      "lookup_us": 12801,
+      "candidates": [
+        "门店例会",
+        "门店理会",
+        "门店里会",
+        "门店里回",
+        "门电力会",
+        "们店里会",
+        "门垫理会",
+        "们店里回",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianlingban",
+      "expected": "门店领班",
+      "source": "5500",
+      "lookup_us": 12894,
+      "candidates": [
+        "门店领班",
+        "门垫羚版",
+        "门垫羚办",
+        "门垫羚班",
+        "门店令版",
+        "门店另版",
+        "门垫羚板",
+        "门垫羚半",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianlirun",
+      "expected": "门店利润",
+      "source": "5500",
+      "lookup_us": 10253,
+      "candidates": [
+        "门店利润",
+        "门垫利润",
+        "门点利润",
+        "门电利润",
+        "们点利润",
+        "们店利润",
+        "门店里润",
+        "门典利润",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianliucheng",
+      "expected": "门店流程",
+      "source": "5500",
+      "lookup_us": 14525,
+      "candidates": [
+        "门店流程",
+        "门电流程",
+        "门垫流程",
+        "门店六成",
+        "门点流程",
+        "们电流程",
+        "们点流程",
+        "门垫六成",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianliushui",
+      "expected": "门店流水",
+      "source": "5500",
+      "lookup_us": 11516,
+      "candidates": [
+        "门店流水",
+        "门电流水",
+        "门垫流水",
+        "门点流水",
+        "们电流水",
+        "们点流水",
+        "门电流说",
+        "门电流睡",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianmaoli",
+      "expected": "门店毛利",
+      "source": "5500",
+      "lookup_us": 14223,
+      "candidates": [
+        "门店毛利",
+        "门店毛里",
+        "门垫毛利",
+        "门点毛利",
+        "门店毛力",
+        "门店猫里",
+        "门电毛利",
+        "们点毛利",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianmentou",
+      "expected": "门店门头",
+      "source": "5500",
+      "lookup_us": 9705,
+      "candidates": [
+        "门店门头",
+        "门店门投",
+        "门店门透",
+        "门店们头",
+        "门垫门头",
+        "门店门偷",
+        "门店们投",
+        "门店们透",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianpaiban",
+      "expected": "门店排班",
+      "source": "5500",
+      "lookup_us": 10320,
+      "candidates": [
+        "门店排班",
+        "门店排版",
+        "门店派伴",
+        "门店拍板",
+        "门垫排版",
+        "门点排版",
+        "门电排版",
+        "门垫拍板",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianpandian",
+      "expected": "门店盘点",
+      "source": "5500",
+      "lookup_us": 12073,
+      "candidates": [
+        "门店盘点",
+        "门垫盘点",
+        "门点盘点",
+        "门电盘点",
+        "们垫盘点",
+        "们点盘点",
+        "们店盘点",
+        "门店胖点",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianpeixun",
+      "expected": "门店培训",
+      "source": "5500",
+      "lookup_us": 7909,
+      "candidates": [
+        "门店培训",
+        "门垫培训",
+        "门点培训",
+        "门电培训",
+        "们点培训",
+        "门奠培训",
+        "门典培训",
+        "们店培训",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianribao",
+      "expected": "门店日报",
+      "source": "5500",
+      "lookup_us": 7419,
+      "candidates": [
+        "门店日报",
+        "门垫日报",
+        "门点日报",
+        "门电日报",
+        "们点日报",
+        "门店日包",
+        "门典日报",
+        "门店日爆",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianshebei",
+      "expected": "门店设备",
+      "source": "5500",
+      "lookup_us": 8611,
+      "candidates": [
+        "门店设备",
+        "门电设备",
+        "门垫设备",
+        "门点设备",
+        "们点设备",
+        "们电设备",
+        "们店设备",
+        "门典设备",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendiansheji",
+      "expected": "门店设计",
+      "source": "5500",
+      "lookup_us": 9196,
+      "candidates": [
+        "门店设计",
+        "门店涉及",
+        "门店射击",
+        "门点设计",
+        "门垫设计",
+        "们点设计",
+        "门垫涉及",
+        "门电设计",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianshiyingye",
+      "expected": "门店试营业",
+      "source": "5500",
+      "lookup_us": 16076,
+      "candidates": [
+        "门店是营业",
+        "门店时营业",
+        "门店试营业",
+        "门电视营业",
+        "门店市营业",
+        "门垫是营业",
+        "门店式营业",
+        "们电视营业",
+        "门店"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "mendianshouru",
+      "expected": "门店收入",
+      "source": "5500",
+      "lookup_us": 6037,
+      "candidates": [
+        "门店收入",
+        "门垫收入",
+        "门点收入",
+        "们点收入",
+        "门电收入",
+        "们店收入",
+        "们垫收入",
+        "门店受辱",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianshouyin",
+      "expected": "门店收银",
+      "source": "5500",
+      "lookup_us": 8430,
+      "candidates": [
+        "门店收银",
+        "门店收音",
+        "门店受垠",
+        "门垫收音",
+        "门店手印",
+        "门垫收银",
+        "门店受瘾",
+        "门点收音",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianshouyinyuan",
+      "expected": "门店收银员",
+      "source": "5500",
+      "lookup_us": 11873,
+      "candidates": [
+        "门店收银员",
+        "门垫收银员",
+        "门店收银元",
+        "门店收音员",
+        "门店收音远",
+        "门店收音源",
+        "门垫收银元",
+        "门店收音元",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianshuidian",
+      "expected": "门店水电",
+      "source": "5500",
+      "lookup_us": 11187,
+      "candidates": [
+        "门店水电",
+        "门店睡垫",
+        "门垫水电",
+        "门点水电",
+        "门店水点",
+        "们点水电",
+        "门点水点",
+        "门店睡点",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendiansunhao",
+      "expected": "门店损耗",
+      "source": "5500",
+      "lookup_us": 10034,
+      "candidates": [
+        "门店损耗",
+        "门店孙昊",
+        "门垫损耗",
+        "门店孙好",
+        "门点损耗",
+        "门店损好",
+        "门店孙号",
+        "门店孙浩",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendiantingye",
+      "expected": "门店停业",
+      "source": "5500",
+      "lookup_us": 9206,
+      "candidates": [
+        "门店停业",
+        "门垫停业",
+        "门点停业",
+        "门电停业",
+        "们点停业",
+        "门店听也",
+        "们店停业",
+        "门店挺也",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianweisheng",
+      "expected": "门店卫生",
+      "source": "5500",
+      "lookup_us": 10692,
+      "candidates": [
+        "门店卫生",
+        "门店为生",
+        "门店尾声",
+        "门垫卫生",
+        "门店维生",
+        "门垫为生",
+        "门店为胜",
+        "门垫尾声",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianwuliao",
+      "expected": "门店物料",
+      "source": "5500",
+      "lookup_us": 12005,
+      "candidates": [
+        "门店物料",
+        "门店无聊",
+        "门点无聊",
+        "门垫无聊",
+        "门玷污了",
+        "们点无聊",
+        "们玷污了",
+        "门店五了",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianxiaofang",
+      "expected": "门店消防",
+      "source": "5500",
+      "lookup_us": 15106,
+      "candidates": [
+        "门店消防",
+        "门店效仿",
+        "门店校方",
+        "门店小芳",
+        "门垫效仿",
+        "门垫消防",
+        "门店小方",
+        "门点消防",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianxiaosha",
+      "expected": "门店消杀",
+      "source": "5500",
+      "lookup_us": 12288,
+      "candidates": [
+        "门店消杀",
+        "门店小杀",
+        "门店小啥",
+        "门店小沙",
+        "门店小傻",
+        "门店小莎",
+        "门店销杀",
+        "门店肖杀",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianxieye",
+      "expected": "门店歇业",
+      "source": "5500",
+      "lookup_us": 11926,
+      "candidates": [
+        "门店歇业",
+        "门店血液",
+        "门店鞋业",
+        "门店谢耶",
+        "门店谢也",
+        "门垫歇业",
+        "门店谢页",
+        "门店协也",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianxuanzhi",
+      "expected": "门店选址",
+      "source": "5500",
+      "lookup_us": 11325,
+      "candidates": [
+        "门店选址",
+        "门店宣纸",
+        "门垫选址",
+        "门点选址",
+        "门电玄指",
+        "们点选址",
+        "门店选制",
+        "门电玄之",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianxuncha",
+      "expected": "门店巡查",
+      "source": "5500",
+      "lookup_us": 9713,
+      "candidates": [
+        "门店巡查",
+        "门垫巡查",
+        "门点巡查",
+        "门电巡查",
+        "们点巡查",
+        "门典巡查",
+        "门电讯差",
+        "门电讯茶",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianxunjian",
+      "expected": "门店巡检",
+      "source": "5500",
+      "lookup_us": 14675,
+      "candidates": [
+        "门店巡检",
+        "门电讯见",
+        "门电讯剑",
+        "门垫巡检",
+        "门店寻见",
+        "门电讯建",
+        "门电讯监",
+        "门电讯检",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianyajin",
+      "expected": "门店押金",
+      "source": "5500",
+      "lookup_us": 10598,
+      "candidates": [
+        "门店押金",
+        "门垫押金",
+        "门店呀近",
+        "门电压紧",
+        "门店呀今",
+        "门店呀金",
+        "门电压近",
+        "门店亚近",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianyanshou",
+      "expected": "门店验收",
+      "source": "5500",
+      "lookup_us": 10918,
+      "candidates": [
+        "门店验收",
+        "门垫验收",
+        "门店延寿",
+        "门店严守",
+        "门点验收",
+        "门电验收",
+        "门店岩手",
+        "门店眼熟",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianyuangong",
+      "expected": "门店员工",
+      "source": "5500",
+      "lookup_us": 12127,
+      "candidates": [
+        "门店员工",
+        "门垫员工",
+        "们店员工",
+        "门点员工",
+        "门店员共",
+        "门电员工",
+        "们点员工",
+        "门典员工",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianyuebao",
+      "expected": "门店月报",
+      "source": "5500",
+      "lookup_us": 12347,
+      "candidates": [
+        "门店月报",
+        "门店越报",
+        "门垫月报",
+        "门店越饱",
+        "门店越包",
+        "门店阅报",
+        "门店月包",
+        "门店约报",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianzhaopai",
+      "expected": "门店招牌",
+      "source": "5500",
+      "lookup_us": 8112,
+      "candidates": [
+        "门店招牌",
+        "门垫招牌",
+        "门点招牌",
+        "们点招牌",
+        "门电招牌",
+        "门店照牌",
+        "们店招牌",
+        "门典招牌",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianzhenggai",
+      "expected": "门店整改",
+      "source": "5500",
+      "lookup_us": 11043,
+      "candidates": [
+        "门店整改",
+        "闷店整改",
+        "门垫整改",
+        "门点整改",
+        "门店政改",
+        "们点整改",
+        "门电整改",
+        "门店正改",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianzhengshiyingye",
+      "expected": "门店正式营业",
+      "source": "5500",
+      "lookup_us": 20542,
+      "candidates": [
+        "门店正式营业",
+        "门店正是营业",
+        "门店证实营业",
+        "门店正视营业",
+        "门垫正式营业",
+        "门店正式影业",
+        "门垫正是营业",
+        "门店正事营业",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianzhengzhao",
+      "expected": "门店证照",
+      "source": "5500",
+      "lookup_us": 12544,
+      "candidates": [
+        "门店证照",
+        "门店征兆",
+        "门店征召",
+        "门店正着",
+        "门垫征兆",
+        "门店正照",
+        "门店正找",
+        "门垫证照",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianzhiban",
+      "expected": "门店值班",
+      "source": "5500",
+      "lookup_us": 7279,
+      "candidates": [
+        "门店值班",
+        "门垫纸板",
+        "门店纸板",
+        "门点值班",
+        "门垫值班",
+        "门店制版",
+        "们点值班",
+        "门店直板",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianzhidu",
+      "expected": "门店制度",
+      "source": "5500",
+      "lookup_us": 9916,
+      "candidates": [
+        "门店制度",
+        "门店之都",
+        "门垫制度",
+        "门店只读",
+        "门点制度",
+        "门电制度",
+        "们点制度",
+        "门典制度",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianzhoubao",
+      "expected": "门店周报",
+      "source": "5500",
+      "lookup_us": 10988,
+      "candidates": [
+        "门店周报",
+        "门垫周报",
+        "门点周报",
+        "门电周报",
+        "们点周报",
+        "们店周报",
+        "门殿周报",
+        "门店周包",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianzhuangxiu",
+      "expected": "门店装修",
+      "source": "5500",
+      "lookup_us": 13092,
+      "candidates": [
+        "门店装修",
+        "门垫装修",
+        "门电装修",
+        "门点装修",
+        "们点装修",
+        "们电装修",
+        "们店装修",
+        "们垫装修",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianzhuanrang",
+      "expected": "门店转让",
+      "source": "5500",
+      "lookup_us": 10225,
+      "candidates": [
+        "门店转让",
+        "门垫转让",
+        "门点转让",
+        "门电转让",
+        "们点转让",
+        "门殿转让",
+        "们电转让",
+        "们店转让",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianzhuanzu",
+      "expected": "门店转租",
+      "source": "5500",
+      "lookup_us": 9803,
+      "candidates": [
+        "门店转租",
+        "门店专组",
+        "门垫转租",
+        "门店撰组",
+        "门店赚足",
+        "门店转组",
+        "门点转租",
+        "门店砖组",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianzhuguan",
+      "expected": "门店主管",
+      "source": "5500",
+      "lookup_us": 14301,
+      "candidates": [
+        "门店主管",
+        "门店主观",
+        "门垫主管",
+        "门点主管",
+        "门电主管",
+        "们店主管",
+        "们点主管",
+        "门垫主观",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mendianzujin",
+      "expected": "门店租金",
+      "source": "5500",
+      "lookup_us": 10105,
+      "candidates": [
+        "门店租金",
+        "门垫租金",
+        "门点租金",
+        "们店租金",
+        "门电租金",
+        "们点租金",
+        "门店组近",
+        "门店组进",
+        "门店"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "miandanshenpi",
+      "expected": "免单审批",
+      "source": "5500",
+      "lookup_us": 9889,
+      "candidates": [
+        "免单审批",
+        "面蛋审批",
+        "面单审批",
+        "面但审批",
+        "免但审批",
+        "面丹审批",
+        "免丹审批",
+        "绵蛋审批",
+        "面单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "miandiangang",
+      "expected": "面点岗",
+      "source": "5500",
+      "lookup_us": 11940,
+      "candidates": [
+        "面点岗",
+        "缅甸刚",
+        "缅甸港",
+        "缅甸岗",
+        "缅甸钢",
+        "缅甸纲",
+        "缅甸冈",
+        "缅甸缸",
+        "缅甸"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "miandianjian",
+      "expected": "面点间",
+      "source": "5500",
+      "lookup_us": 15251,
+      "candidates": [
+        "面点间",
+        "缅甸见",
+        "缅甸建",
+        "缅甸间",
+        "缅甸剑",
+        "缅甸健",
+        "缅甸检",
+        "缅甸减",
+        "缅甸"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mingchuliangzao",
+      "expected": "明厨亮灶",
+      "source": "5500",
+      "lookup_us": 11050,
+      "candidates": [
+        "明厨亮灶",
+        "名储量早",
+        "名储量造",
+        "名储量遭",
+        "名储量噪",
+        "名储量糟",
+        "明储量早",
+        "名储量藻",
+        "明"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "molingquanxian",
+      "expected": "抹零权限",
+      "source": "5500",
+      "lookup_us": 14019,
+      "candidates": [
+        "抹零权限",
+        "魔灵权限",
+        "莫令全线",
+        "魔灵全线",
+        "莫令权限",
+        "莫领权限",
+        "莫灵权限",
+        "没令全线",
+        "魔力"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "paiduidengwei",
+      "expected": "排队等位",
+      "source": "5500",
+      "lookup_us": 4855,
+      "candidates": [
+        "排队等位",
+        "排队等为",
+        "排队等威",
+        "排队等维",
+        "排队等危",
+        "派对等为",
+        "排队等味",
+        "排队等卫",
+        "排队"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "paiyanfengji",
+      "expected": "排烟风机",
+      "source": "5500",
+      "lookup_us": 6266,
+      "candidates": [
+        "排烟风机",
+        "排眼风机",
+        "排眼风级",
+        "派言风机",
+        "排演风机",
+        "拍岩风己",
+        "牌眼风机",
+        "拍言风机",
+        "排眼"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "paiyanguandao",
+      "expected": "排烟管道",
+      "source": "5500",
+      "lookup_us": 9710,
+      "candidates": [
+        "排烟管道",
+        "排烟管到",
+        "拍烟管道",
+        "排眼管道",
+        "排烟管岛",
+        "排烟管刀",
+        "排烟管倒",
+        "排烟管导",
+        "排烟管"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "paiyanshebei",
+      "expected": "排烟设备",
+      "source": "5500",
+      "lookup_us": 4760,
+      "candidates": [
+        "排烟设备",
+        "排眼设备",
+        "牌眼设备",
+        "排演设备",
+        "牌颜设备",
+        "派言设备",
+        "拍颜设备",
+        "拍言设备",
+        "排眼"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "paocaiyuan",
+      "expected": "跑菜员",
+      "source": "5500",
+      "lookup_us": 7545,
+      "candidates": [
+        "跑菜员",
+        "泡菜园",
+        "泡菜元",
+        "跑裁员",
+        "泡裁员",
+        "泡菜远",
+        "泡菜原",
+        "泡菜源",
+        "泡菜"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "peicaigang",
+      "expected": "配菜岗",
+      "source": "5500",
+      "lookup_us": 4485,
+      "candidates": [
+        "配菜岗",
+        "佩才刚",
+        "配才刚",
+        "配菜刚",
+        "配菜港",
+        "培才刚",
+        "裴才刚",
+        "陪才刚",
+        "配菜"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "pinzhuoanpai",
+      "expected": "拼桌安排",
+      "source": "5500",
+      "lookup_us": 7070,
+      "candidates": [
+        "拼桌安排",
+        "品着安排",
+        "拼着安排",
+        "品著安排",
+        "品桌安排",
+        "拼著安排",
+        "品卓安排",
+        "拼卓安排",
+        "品"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qiandanquanxian",
+      "expected": "签单权限",
+      "source": "5500",
+      "lookup_us": 15503,
+      "candidates": [
+        "签单权限",
+        "前但权限",
+        "钱但权限",
+        "前单权限",
+        "前担权限",
+        "前丹权限",
+        "前蛋权限",
+        "前但全线",
+        "签单"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qiantingfuwu",
+      "expected": "前厅服务",
+      "source": "5500",
+      "lookup_us": 8138,
+      "candidates": [
+        "前厅服务",
+        "潜艇服务",
+        "前停服务",
+        "钱停服务",
+        "前庭服务",
+        "前听服务",
+        "前挺服务",
+        "钱庭服务",
+        "潜艇"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qiantingguanli",
+      "expected": "前厅管理",
+      "source": "5500",
+      "lookup_us": 12275,
+      "candidates": [
+        "前厅管理",
+        "潜艇管理",
+        "潜艇惯例",
+        "潜艇官吏",
+        "前停管理",
+        "前听管理",
+        "前庭管理",
+        "潜艇管里",
+        "潜艇"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qiantingjingli",
+      "expected": "前厅经理",
+      "source": "5500",
+      "lookup_us": 11601,
+      "candidates": [
+        "前厅经理",
+        "潜艇经历",
+        "潜艇经理",
+        "潜艇敬礼",
+        "潜艇精力",
+        "潜艇警力",
+        "潜艇静里",
+        "前停经历",
+        "潜艇"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qiantinglingban",
+      "expected": "前厅领班",
+      "source": "5500",
+      "lookup_us": 11546,
+      "candidates": [
+        "前厅领班",
+        "潜艇领班",
+        "潜艇令版",
+        "潜艇领版",
+        "潜艇灵版",
+        "潜艇另版",
+        "潜艇令办",
+        "潜艇灵斑",
+        "潜艇"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qiantingzhuguan",
+      "expected": "前厅主管",
+      "source": "5500",
+      "lookup_us": 10725,
+      "candidates": [
+        "前厅主管",
+        "潜艇主管",
+        "潜艇主观",
+        "前停主管",
+        "前听主管",
+        "前庭主管",
+        "前廷主管",
+        "前挺主管",
+        "潜艇"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qianxiangjiaojie",
+      "expected": "钱箱交接",
+      "source": "5500",
+      "lookup_us": 21678,
+      "candidates": [
+        "钱箱交接",
+        "前乡交界",
+        "钱乡交界",
+        "前向交接",
+        "前项交接",
+        "前向交界",
+        "前想交接",
+        "前相交接",
+        "前线"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qianxiangqingdian",
+      "expected": "钱箱清点",
+      "source": "5500",
+      "lookup_us": 19758,
+      "candidates": [
+        "钱箱清点",
+        "前项庆典",
+        "前向庆典",
+        "前相庆典",
+        "前向清点",
+        "前想庆典",
+        "前项清点",
+        "钱项庆典",
+        "前线"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qianxiangyue",
+      "expected": "钱箱余额",
+      "source": "5500",
+      "lookup_us": 14530,
+      "candidates": [
+        "钱箱余额",
+        "前相约",
+        "钱相约",
+        "千相约",
+        "前向约",
+        "前想说",
+        "前项约",
+        "前项说",
+        "前线"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qiepeigang",
+      "expected": "切配岗",
+      "source": "5500",
+      "lookup_us": 5773,
+      "candidates": [
+        "切配岗",
+        "且配刚",
+        "且配港",
+        "且配岗",
+        "且配钢",
+        "且佩冈",
+        "且佩刚",
+        "且佩港",
+        "且"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qingjiejilu",
+      "expected": "清洁记录",
+      "source": "5500",
+      "lookup_us": 9682,
+      "candidates": [
+        "清洁记录",
+        "情节记录",
+        "清洁纪录",
+        "情节纪录",
+        "请借记录",
+        "清洁剂路",
+        "情结记录",
+        "请接记录",
+        "清洁剂"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qingtai",
+      "expected": "清台",
+      "source": "5500",
+      "lookup_us": 2822,
+      "candidates": [
+        "青苔",
+        "清台",
+        "清太",
+        "请台",
+        "情态",
+        "请太",
+        "亲台",
+        "请泰",
+        "请他"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "qingxichi",
+      "expected": "清洗池",
+      "source": "5500",
+      "lookup_us": 4568,
+      "candidates": [
+        "清洗池",
+        "清晰吃",
+        "清洗吃",
+        "清晰持",
+        "清晰池",
+        "清晰尺",
+        "清晰赤",
+        "清晰迟",
+        "清晰"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ranqichengben",
+      "expected": "燃气成本",
+      "source": "5500",
+      "lookup_us": 5291,
+      "candidates": [
+        "燃气成本",
+        "燃起成本",
+        "然其成本",
+        "然七成本",
+        "然起成本",
+        "然气成本",
+        "然期成本",
+        "燃其成本",
+        "燃气"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "recaijian",
+      "expected": "热菜间",
+      "source": "5500",
+      "lookup_us": 6847,
+      "candidates": [
+        "热菜间",
+        "热裁减",
+        "热裁剪",
+        "惹裁减",
+        "惹裁剪",
+        "热采检",
+        "热菜见",
+        "热才见",
+        "热"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "rechu",
+      "expected": "热厨",
+      "source": "5500",
+      "lookup_us": 1137,
+      "candidates": [
+        "热厨",
+        "热出",
+        "热处",
+        "热除",
+        "惹出",
+        "热初",
+        "惹处",
+        "热楚",
+        "热"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "rengongchengben",
+      "expected": "人工成本",
+      "source": "5500",
+      "lookup_us": 7338,
+      "candidates": [
+        "人工成本",
+        "人工程本",
+        "人共成本",
+        "任供成本",
+        "人工程笨",
+        "人功成本",
+        "人供成本",
+        "人工程奔",
+        "人工"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "renjunxiaofei",
+      "expected": "人均消费",
+      "source": "5500",
+      "lookup_us": 11880,
+      "candidates": [
+        "人均消费",
+        "人均小费",
+        "人均小飞",
+        "人均小非",
+        "任均消费",
+        "人均小肥",
+        "人均消飞",
+        "人军消费",
+        "人均"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ribeihuoliang",
+      "expected": "日备货量",
+      "source": "5500",
+      "lookup_us": 10853,
+      "candidates": [
+        "日备货量",
+        "日被火亮",
+        "日被货量",
+        "日被或量",
+        "日被获良",
+        "日被火量",
+        "日被获两",
+        "日被获量",
+        "日"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ricaigoudan",
+      "expected": "日采购单",
+      "source": "5500",
+      "lookup_us": 5189,
+      "candidates": [
+        "日采购单",
+        "日采购但",
+        "日采购蛋",
+        "日采购丹",
+        "日采购弹",
+        "日采购淡",
+        "日采购胆",
+        "日采购担",
+        "日"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ricaigouliang",
+      "expected": "日采购量",
+      "source": "5500",
+      "lookup_us": 8950,
+      "candidates": [
+        "日采购量",
+        "日采购两",
+        "日采购亮",
+        "日才够亮",
+        "日采购良",
+        "日才狗粮",
+        "日采购凉",
+        "日采购梁",
+        "日"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "rixiaohaoliang",
+      "expected": "日消耗量",
+      "source": "5500",
+      "lookup_us": 11518,
+      "candidates": [
+        "日消耗量",
+        "日消耗亮",
+        "日消耗良",
+        "日消耗凉",
+        "日消耗两",
+        "日消耗梁",
+        "日消耗粮",
+        "日消耗里昂",
+        "日系"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "rixiaoshouliang",
+      "expected": "日销售量",
+      "source": "5500",
+      "lookup_us": 12099,
+      "candidates": [
+        "日销售量",
+        "日销售亮",
+        "日销售良",
+        "日销售两",
+        "日销售凉",
+        "日销售梁",
+        "日销售粮",
+        "日销售里昂",
+        "日系"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "riyingyee",
+      "expected": "日营业额",
+      "source": "5500",
+      "lookup_us": 3791,
+      "candidates": [
+        "日营业额",
+        "日营业哦",
+        "日营业饿",
+        "日营业恶",
+        "日营业俄",
+        "日营业厄",
+        "日营业鹅",
+        "日营业诶",
+        "日益"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "sanlianchi",
+      "expected": "三联池",
+      "source": "5500",
+      "lookup_us": 6149,
+      "candidates": [
+        "三联池",
+        "三连吃",
+        "三廉耻",
+        "三联吃",
+        "三连池",
+        "散廉耻",
+        "三联持",
+        "三连持",
+        "三联"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangcaijiezou",
+      "expected": "上菜节奏",
+      "source": "5500",
+      "lookup_us": 10187,
+      "candidates": [
+        "上菜节奏",
+        "上才节奏",
+        "上彩节奏",
+        "上采节奏",
+        "上蔡节奏",
+        "上菜街走",
+        "上材节奏",
+        "上财节奏",
+        "上菜"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shicaibaofei",
+      "expected": "食材报废",
+      "source": "5500",
+      "lookup_us": 7343,
+      "candidates": [
+        "食材报废",
+        "时才报废",
+        "事蔡报废",
+        "是才报废",
+        "是财报废",
+        "事蔡保费",
+        "时才保费",
+        "是蔡报废",
+        "石材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shicaibaosun",
+      "expected": "食材报损",
+      "source": "5500",
+      "lookup_us": 8978,
+      "candidates": [
+        "食材报损",
+        "时才报孙",
+        "事蔡包损",
+        "是财报孙",
+        "事蔡包孙",
+        "是财宝孙",
+        "事蔡报孙",
+        "时才报损",
+        "石材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shicaibaoxian",
+      "expected": "食材保鲜",
+      "source": "5500",
+      "lookup_us": 14960,
+      "candidates": [
+        "食材保鲜",
+        "事蔡保险",
+        "时才保险",
+        "食材保险",
+        "石材保险",
+        "是蔡保险",
+        "是才保险",
+        "是彩保险",
+        "石材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shicaibiaoqian",
+      "expected": "食材标签",
+      "source": "5500",
+      "lookup_us": 16140,
+      "candidates": [
+        "食材标签",
+        "事蔡标签",
+        "石材标签",
+        "时才标签",
+        "是蔡标签",
+        "是彩标签",
+        "是才标签",
+        "是菜标签",
+        "石材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shicaibuhuo",
+      "expected": "食材补货",
+      "source": "5500",
+      "lookup_us": 11117,
+      "candidates": [
+        "食材补货",
+        "事蔡捕获",
+        "时才捕获",
+        "事蔡补货",
+        "时才补货",
+        "时才不和",
+        "时才不活",
+        "是蔡捕获",
+        "石材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shicaichengzhong",
+      "expected": "食材称重",
+      "source": "5500",
+      "lookup_us": 9887,
+      "candidates": [
+        "食材称重",
+        "事蔡城中",
+        "事蔡承重",
+        "时才城中",
+        "事蔡称重",
+        "事蔡晟中",
+        "时才成中",
+        "时才承重",
+        "石材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shicaichucun",
+      "expected": "食材储存",
+      "source": "5500",
+      "lookup_us": 6055,
+      "candidates": [
+        "食材储存",
+        "事蔡储存",
+        "时才储存",
+        "是彩储存",
+        "是蔡储存",
+        "石材储存",
+        "是才储存",
+        "事蔡楚村",
+        "石材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shicaifenqu",
+      "expected": "食材分区",
+      "source": "5500",
+      "lookup_us": 5431,
+      "candidates": [
+        "食材分区",
+        "事蔡分区",
+        "时才分区",
+        "石材分区",
+        "是彩分区",
+        "是蔡分区",
+        "是才分区",
+        "是菜分区",
+        "石材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shicaikucun",
+      "expected": "食材库存",
+      "source": "5500",
+      "lookup_us": 3914,
+      "candidates": [
+        "食材库存",
+        "事蔡库存",
+        "时才库存",
+        "石材库存",
+        "是蔡库存",
+        "是彩库存",
+        "是才库存",
+        "是菜库存",
+        "石材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shicailengcang",
+      "expected": "食材冷藏",
+      "source": "5500",
+      "lookup_us": 6515,
+      "candidates": [
+        "食材冷藏",
+        "事蔡冷藏",
+        "时才冷藏",
+        "是菜冷藏",
+        "是蔡冷藏",
+        "使菜冷藏",
+        "是彩冷藏",
+        "石材冷藏",
+        "石材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shicailengdong",
+      "expected": "食材冷冻",
+      "source": "5500",
+      "lookup_us": 6793,
+      "candidates": [
+        "食材冷冻",
+        "事蔡冷冻",
+        "时才冷冻",
+        "是蔡冷冻",
+        "是彩冷冻",
+        "是菜冷冻",
+        "石材冷冻",
+        "是才冷冻",
+        "石材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shicailingliao",
+      "expected": "食材领料",
+      "source": "5500",
+      "lookup_us": 19659,
+      "candidates": [
+        "食材领料",
+        "是彩铃了",
+        "事蔡领了",
+        "事蔡灵了",
+        "时才领了",
+        "事蔡零了",
+        "事蔡龄了",
+        "时才令了",
+        "石材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shicailingyong",
+      "expected": "食材领用",
+      "source": "5500",
+      "lookup_us": 9060,
+      "candidates": [
+        "食材领用",
+        "事蔡领用",
+        "时才领用",
+        "是彩铃用",
+        "是蔡领用",
+        "事蔡零用",
+        "时才令用",
+        "是彩领用",
+        "石材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shicaipandian",
+      "expected": "食材盘点",
+      "source": "5500",
+      "lookup_us": 10104,
+      "candidates": [
+        "食材盘点",
+        "事蔡盘点",
+        "时才盘点",
+        "是蔡盘点",
+        "是彩盘点",
+        "石材盘点",
+        "是才盘点",
+        "是菜盘点",
+        "石材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shicaipici",
+      "expected": "食材批次",
+      "source": "5500",
+      "lookup_us": 5941,
+      "candidates": [
+        "食材批次",
+        "事蔡批次",
+        "时才批次",
+        "是蔡批次",
+        "是彩批次",
+        "是才批次",
+        "石材批次",
+        "事蔡匹兹",
+        "石材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shicairiqi",
+      "expected": "食材日期",
+      "source": "5500",
+      "lookup_us": 3439,
+      "candidates": [
+        "食材日期",
+        "事蔡日期",
+        "时才日期",
+        "是蔡日期",
+        "事蔡日起",
+        "是彩日期",
+        "石材日期",
+        "时才日起",
+        "石材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shicaishengou",
+      "expected": "食材申购",
+      "source": "5500",
+      "lookup_us": 10966,
+      "candidates": [
+        "食材申购",
+        "事蔡申购",
+        "时才申购",
+        "事蔡晟欧",
+        "是蔡申购",
+        "事蔡晟区",
+        "是彩申购",
+        "石材申购",
+        "石材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shicaishenling",
+      "expected": "食材申领",
+      "source": "5500",
+      "lookup_us": 11658,
+      "candidates": [
+        "食材申领",
+        "事蔡申领",
+        "事蔡神灵",
+        "时才申领",
+        "时才神灵",
+        "事蔡伸令",
+        "事蔡伸灵",
+        "是财神灵",
+        "石材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shicaisunhao",
+      "expected": "食材损耗",
+      "source": "5500",
+      "lookup_us": 4905,
+      "candidates": [
+        "食材损耗",
+        "事蔡损耗",
+        "时才损耗",
+        "事蔡孙昊",
+        "是蔡损耗",
+        "是彩损耗",
+        "时才孙昊",
+        "石材损耗",
+        "石材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shicaiyanshou",
+      "expected": "食材验收",
+      "source": "5500",
+      "lookup_us": 10812,
+      "candidates": [
+        "食材验收",
+        "事蔡验收",
+        "时才验收",
+        "是蔡验收",
+        "是彩验收",
+        "事蔡延寿",
+        "事蔡严守",
+        "石材验收",
+        "石材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shicaizhouzhuan",
+      "expected": "食材周转",
+      "source": "5500",
+      "lookup_us": 8042,
+      "candidates": [
+        "食材周转",
+        "事蔡周转",
+        "时才周转",
+        "是菜周转",
+        "是蔡周转",
+        "是彩周转",
+        "使菜周转",
+        "石材周转",
+        "石材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shicaizhuisu",
+      "expected": "食材追溯",
+      "source": "5500",
+      "lookup_us": 6861,
+      "candidates": [
+        "食材追溯",
+        "事蔡追溯",
+        "时才追溯",
+        "事蔡追诉",
+        "时才追诉",
+        "是蔡追溯",
+        "是彩追溯",
+        "是才追溯",
+        "石材"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shipinliuyanggui",
+      "expected": "食品留样柜",
+      "source": "5500",
+      "lookup_us": 14350,
+      "candidates": [
+        "食品浏阳贵",
+        "食品浏阳轨",
+        "食品浏阳归",
+        "视频浏阳贵",
+        "食品浏阳鬼",
+        "视频浏阳轨",
+        "视频浏阳归",
+        "食品留样柜",
+        "视频"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "shipinliuyanghe",
+      "expected": "食品留样盒",
+      "source": "5500",
+      "lookup_us": 15395,
+      "candidates": [
+        "食品浏阳河",
+        "视频浏阳河",
+        "食品浏阳和",
+        "视频浏阳和",
+        "视频刘洋和",
+        "食品刘洋和",
+        "视频留洋和",
+        "食品留样盒",
+        "视频"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "shiyingyefankui",
+      "expected": "试营业反馈",
+      "source": "5500",
+      "lookup_us": 11441,
+      "candidates": [
+        "是营业反馈",
+        "试营业反馈",
+        "十英也反馈",
+        "适应也反馈",
+        "适应夜反馈",
+        "适应叶反馈",
+        "适应页反馈",
+        "适应野反馈",
+        "试营业"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "shiyingyehuodong",
+      "expected": "试营业活动",
+      "source": "5500",
+      "lookup_us": 9638,
+      "candidates": [
+        "是营业活动",
+        "时营业活动",
+        "十英也活动",
+        "适应夜活动",
+        "适应也活动",
+        "适应叶活动",
+        "适应页活动",
+        "试营业活动",
+        "试营业"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "shiyingyeyouhui",
+      "expected": "试营业优惠",
+      "source": "5500",
+      "lookup_us": 10268,
+      "candidates": [
+        "是营业优惠",
+        "时营业优惠",
+        "十英也优惠",
+        "适应也优惠",
+        "是营业又会",
+        "适应野优惠",
+        "十英也有会",
+        "试营业优惠",
+        "试营业"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "shoukuanhedui",
+      "expected": "收款核对",
+      "source": "5500",
+      "lookup_us": 6603,
+      "candidates": [
+        "收款核对",
+        "首款核对",
+        "首款和对",
+        "收款和对",
+        "首款和队",
+        "收款和队",
+        "首款合对",
+        "收髋核对",
+        "收款"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shoutai",
+      "expected": "收台",
+      "source": "5500",
+      "lookup_us": 1527,
+      "candidates": [
+        "收台",
+        "受台",
+        "首台",
+        "手太",
+        "受太",
+        "手台",
+        "首太",
+        "受泰",
+        "手"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shouyingang",
+      "expected": "收银岗",
+      "source": "5500",
+      "lookup_us": 8161,
+      "candidates": [
+        "收银岗",
+        "收银釭",
+        "收音刚",
+        "首映昂",
+        "收银刚",
+        "收银港",
+        "收音港",
+        "受银釭",
+        "首映"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shouyinjiaojie",
+      "expected": "收银交接",
+      "source": "5500",
+      "lookup_us": 14327,
+      "candidates": [
+        "收银交接",
+        "收音交接",
+        "收音交界",
+        "收银交界",
+        "手印交接",
+        "手印交界",
+        "手淫交接",
+        "手因交接",
+        "收音机"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuidianchengben",
+      "expected": "水电成本",
+      "source": "5500",
+      "lookup_us": 8290,
+      "candidates": [
+        "水电成本",
+        "谁电成本",
+        "水点成本",
+        "睡垫成本",
+        "谁点成本",
+        "水垫成本",
+        "谁店成本",
+        "水店成本",
+        "水电"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "suozhengsuopiao",
+      "expected": "索证索票",
+      "source": "5500",
+      "lookup_us": 12224,
+      "candidates": [
+        "索证索票",
+        "所证所票",
+        "所正所票",
+        "所争所票",
+        "所正锁票",
+        "所正索票",
+        "所整所票",
+        "所证所飘",
+        "锁帧"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tangshikeliu",
+      "expected": "堂食客流",
+      "source": "5500",
+      "lookup_us": 9068,
+      "candidates": [
+        "堂食客流",
+        "唐诗客流",
+        "倘使客流",
+        "唐是客流",
+        "堂是客流",
+        "唐氏客流",
+        "唐食客流",
+        "唐时客流",
+        "唐诗"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tangshizhanbi",
+      "expected": "堂食占比",
+      "source": "5500",
+      "lookup_us": 7902,
+      "candidates": [
+        "堂食占比",
+        "唐诗占比",
+        "倘使占比",
+        "唐诗占闭",
+        "唐是占比",
+        "堂是占比",
+        "唐氏占比",
+        "唐时占比",
+        "唐诗"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tianshui",
+      "expected": "添水",
+      "source": "5500",
+      "lookup_us": 4229,
+      "candidates": [
+        "天水",
+        "添水",
+        "天睡",
+        "天说",
+        "天谁",
+        "田水",
+        "天税",
+        "甜水",
+        "天数"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "tiaoliaochengben",
+      "expected": "调料成本",
+      "source": "5500",
+      "lookup_us": 11353,
+      "candidates": [
+        "调料成本",
+        "条聊成本",
+        "跳了成本",
+        "条了成本",
+        "条料成本",
+        "调料称本",
+        "调聊成本",
+        "条寮成本",
+        "调料"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tuicaixiaopiao",
+      "expected": "退菜小票",
+      "source": "5500",
+      "lookup_us": 12751,
+      "candidates": [
+        "退菜小票",
+        "退才小票",
+        "推才小票",
+        "腿材小票",
+        "推菜小票",
+        "退材小票",
+        "退彩小票",
+        "推彩小票",
+        "退"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tuidanshenpi",
+      "expected": "退单审批",
+      "source": "5500",
+      "lookup_us": 7440,
+      "candidates": [
+        "退单审批",
+        "推单审批",
+        "退但审批",
+        "推但审批",
+        "退丹审批",
+        "腿蛋审批",
+        "推丹审批",
+        "退蛋审批",
+        "退"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimaizhanbi",
+      "expected": "外卖占比",
+      "source": "5500",
+      "lookup_us": 6842,
+      "candidates": [
+        "外卖占比",
+        "外卖站比",
+        "外卖展比",
+        "外卖战比",
+        "外买占比",
+        "外卖站笔",
+        "外卖展笔",
+        "外卖战笔",
+        "外卖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianjinjiaojie",
+      "expected": "现金交接",
+      "source": "5500",
+      "lookup_us": 20186,
+      "candidates": [
+        "现金交接",
+        "现金交界",
+        "现今交接",
+        "先进交接",
+        "现今交界",
+        "先进交界",
+        "现今皎洁",
+        "现金皎洁",
+        "先进"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianshangdingcan",
+      "expected": "线上订餐",
+      "source": "5500",
+      "lookup_us": 10198,
+      "candidates": [
+        "线上订餐",
+        "献上订餐",
+        "县赏订餐",
+        "线上顶餐",
+        "线上定餐",
+        "先商订餐",
+        "线上定惨",
+        "线上定参",
+        "线上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianshangdingwei",
+      "expected": "线上订位",
+      "source": "5500",
+      "lookup_us": 9058,
+      "candidates": [
+        "线上订位",
+        "线上定位",
+        "线上定为",
+        "线上订为",
+        "献上定位",
+        "献上定为",
+        "先商定位",
+        "先商定为",
+        "线上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiaoduchi",
+      "expected": "消毒池",
+      "source": "5500",
+      "lookup_us": 4479,
+      "candidates": [
+        "消毒池",
+        "消毒吃",
+        "消毒持",
+        "消毒尺",
+        "消毒赤",
+        "消毒迟",
+        "消毒齿",
+        "消毒斥",
+        "消毒"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiaodujilu",
+      "expected": "消毒记录",
+      "source": "5500",
+      "lookup_us": 7188,
+      "candidates": [
+        "消毒记录",
+        "消毒纪录",
+        "小都记录",
+        "小度记录",
+        "小读记录",
+        "小度纪录",
+        "小毒记录",
+        "小都纪录",
+        "消毒"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiaodushijian",
+      "expected": "消毒时间",
+      "source": "5500",
+      "lookup_us": 14398,
+      "candidates": [
+        "消毒时间",
+        "消毒事件",
+        "消毒实践",
+        "小读时间",
+        "消毒世间",
+        "小毒事件",
+        "小赌事件",
+        "小顿时间",
+        "消毒"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiaoduwendu",
+      "expected": "消毒温度",
+      "source": "5500",
+      "lookup_us": 7061,
+      "candidates": [
+        "消毒温度",
+        "小都温度",
+        "小度温度",
+        "小赌温度",
+        "小读温度",
+        "小毒温度",
+        "小杜温度",
+        "小独温度",
+        "消毒"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiaoduyegenghuan",
+      "expected": "消毒液更换",
+      "source": "5500",
+      "lookup_us": 12541,
+      "candidates": [
+        "消毒也更换",
+        "消毒液更换",
+        "消毒业更换",
+        "消毒叶更换",
+        "消毒夜更换",
+        "消毒页更换",
+        "消毒野更换",
+        "小度也更换",
+        "消毒液"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "xiaoduyepeibi",
+      "expected": "消毒液配比",
+      "source": "5500",
+      "lookup_us": 7314,
+      "candidates": [
+        "消毒也配比",
+        "消毒液配比",
+        "消毒业配比",
+        "消毒叶配比",
+        "消毒页配比",
+        "消毒野配比",
+        "消毒夜配比",
+        "消毒耶配比",
+        "消毒液"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "xinfengshebei",
+      "expected": "新风设备",
+      "source": "5500",
+      "lookup_us": 5079,
+      "candidates": [
+        "新风设备",
+        "信奉设备",
+        "信封设备",
+        "新丰设备",
+        "信丰设备",
+        "心风设备",
+        "新封设备",
+        "新峰设备",
+        "信封"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiwangang",
+      "expected": "洗碗岗",
+      "source": "5500",
+      "lookup_us": 8897,
+      "candidates": [
+        "洗碗岗",
+        "希望昂",
+        "洗完刚",
+        "洗完港",
+        "希望盎",
+        "洗碗刚",
+        "洗碗港",
+        "希望肮",
+        "希望"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiwanjian",
+      "expected": "洗碗间",
+      "source": "5500",
+      "lookup_us": 11665,
+      "candidates": [
+        "洗碗间",
+        "西晚间",
+        "洗完见",
+        "洗完建",
+        "洗碗见",
+        "洗碗建",
+        "洗完间",
+        "系晚间",
+        "洗碗机"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xixiaojian",
+      "expected": "洗消间",
+      "source": "5500",
+      "lookup_us": 15060,
+      "candidates": [
+        "洗消间",
+        "细小见",
+        "细小建",
+        "西宵见",
+        "细小间",
+        "细小煎",
+        "西宵建",
+        "细小剪",
+        "细小"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xubei",
+      "expected": "续杯",
+      "source": "5500",
+      "lookup_us": 2069,
+      "candidates": [
+        "续杯",
+        "徐蓓",
+        "徐悲",
+        "许被",
+        "须被",
+        "徐被",
+        "需被",
+        "徐呗",
+        "需"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xundianbaogao",
+      "expected": "巡店报告",
+      "source": "5500",
+      "lookup_us": 11348,
+      "candidates": [
+        "巡店报告",
+        "讯电报告",
+        "寻电报告",
+        "寻甸报告",
+        "寻点报告",
+        "讯点报告",
+        "寻店报告",
+        "寻垫报告",
+        "巡镝"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xundianjiancha",
+      "expected": "巡店检查",
+      "source": "5500",
+      "lookup_us": 15292,
+      "candidates": [
+        "巡店检查",
+        "寻点检查",
+        "讯电检查",
+        "寻电检查",
+        "寻甸检查",
+        "寻店检查",
+        "讯点检查",
+        "寻垫检查",
+        "巡镝"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xundianjilu",
+      "expected": "巡店记录",
+      "source": "5500",
+      "lookup_us": 8789,
+      "candidates": [
+        "巡店记录",
+        "寻点记录",
+        "讯点记录",
+        "讯电记录",
+        "寻电记录",
+        "寻店记录",
+        "寻甸记录",
+        "寻惦记录",
+        "巡镝"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xundianzhenggai",
+      "expected": "巡店整改",
+      "source": "5500",
+      "lookup_us": 11619,
+      "candidates": [
+        "巡店整改",
+        "寻点整改",
+        "讯点整改",
+        "寻甸整改",
+        "讯电整改",
+        "寻店整改",
+        "寻电整改",
+        "寻垫整改",
+        "巡镝"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yingbinfuwu",
+      "expected": "迎宾服务",
+      "source": "5500",
+      "lookup_us": 7935,
+      "candidates": [
+        "迎宾服务",
+        "应宾服务",
+        "应彬服务",
+        "英斌服务",
+        "迎宾夫無",
+        "应斌服务",
+        "应滨服务",
+        "英彬服务",
+        "迎宾"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yingbingang",
+      "expected": "迎宾岗",
+      "source": "5500",
+      "lookup_us": 9792,
+      "candidates": [
+        "迎宾岗",
+        "迎宾刚",
+        "迎宾港",
+        "迎宾钢",
+        "迎宾纲",
+        "迎宾冈",
+        "迎宾缸",
+        "迎宾杠",
+        "迎宾"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yingbinhuashu",
+      "expected": "迎宾话术",
+      "source": "5500",
+      "lookup_us": 8096,
+      "candidates": [
+        "迎宾话术",
+        "迎宾桦树",
+        "迎宾花树",
+        "迎宾华书",
+        "迎宾桦述",
+        "迎宾划书",
+        "迎宾花属",
+        "迎宾画书",
+        "迎宾"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yingbintai",
+      "expected": "迎宾台",
+      "source": "5500",
+      "lookup_us": 6341,
+      "candidates": [
+        "迎宾台",
+        "迎宾太",
+        "迎宾泰",
+        "迎宾态",
+        "迎宾胎",
+        "迎宾抬",
+        "迎宾苔",
+        "迎宾肽",
+        "迎宾"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yingbinyuan",
+      "expected": "迎宾员",
+      "source": "5500",
+      "lookup_us": 9126,
+      "candidates": [
+        "迎宾员",
+        "迎宾元",
+        "迎宾远",
+        "迎宾原",
+        "迎宾源",
+        "迎宾园",
+        "迎宾圆",
+        "迎宾院",
+        "迎宾"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yingshouhedui",
+      "expected": "营收核对",
+      "source": "5500",
+      "lookup_us": 6509,
+      "candidates": [
+        "营收核对",
+        "应受核对",
+        "应收核对",
+        "营收和对",
+        "应收和对",
+        "应守和对",
+        "应手核对",
+        "英守和对",
+        "应收"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yingyedigu",
+      "expected": "营业低谷",
+      "source": "5500",
+      "lookup_us": 6966,
+      "candidates": [
+        "营业低谷",
+        "营业低估",
+        "营业的骨",
+        "营业的股",
+        "营业的古",
+        "营业的鼓",
+        "营业的谷",
+        "营业的故",
+        "营业"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yingyegaofeng",
+      "expected": "营业高峰",
+      "source": "5500",
+      "lookup_us": 7191,
+      "candidates": [
+        "营业高峰",
+        "应也高峰",
+        "英也高峰",
+        "英业高峰",
+        "硬叶高峰",
+        "营业高风",
+        "营业高锋",
+        "应夜高峰",
+        "营业"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yingyeliushui",
+      "expected": "营业流水",
+      "source": "5500",
+      "lookup_us": 8740,
+      "candidates": [
+        "营业流水",
+        "英业流水",
+        "硬叶流水",
+        "应也流水",
+        "英也流水",
+        "营业留水",
+        "营业留说",
+        "营业六说",
+        "营业"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yingyeribao",
+      "expected": "营业日报",
+      "source": "5500",
+      "lookup_us": 6459,
+      "candidates": [
+        "营业日报",
+        "英业日报",
+        "营业日包",
+        "硬叶日报",
+        "应也日报",
+        "英也日报",
+        "营业日爆",
+        "营业日暴",
+        "营业"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yingyeyuebao",
+      "expected": "营业月报",
+      "source": "5500",
+      "lookup_us": 13614,
+      "candidates": [
+        "营业月报",
+        "营业月包",
+        "营业余额报",
+        "营业余额宝",
+        "营业余额保",
+        "营业月保",
+        "营业月宝",
+        "营业余额暴",
+        "营业"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yingyezhoubao",
+      "expected": "营业周报",
+      "source": "5500",
+      "lookup_us": 8225,
+      "candidates": [
+        "营业周报",
+        "营业周包",
+        "英业周报",
+        "硬叶周报",
+        "营业周宝",
+        "应也周报",
+        "英也周报",
+        "营业周爆",
+        "营业"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yinweifuwu",
+      "expected": "引位服务",
+      "source": "5500",
+      "lookup_us": 6754,
+      "candidates": [
+        "引位服务",
+        "因为服务",
+        "因位服务",
+        "因未服务",
+        "因为副舞",
+        "音位服务",
+        "因威服务",
+        "音为服务",
+        "因为"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youhaochengben",
+      "expected": "油耗成本",
+      "source": "5500",
+      "lookup_us": 7453,
+      "candidates": [
+        "油耗成本",
+        "有好成本",
+        "友好成本",
+        "由号成本",
+        "有号成本",
+        "有豪成本",
+        "有浩成本",
+        "由浩成本",
+        "友好"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youshuifenliqi",
+      "expected": "油水分离器",
+      "source": "5500",
+      "lookup_us": 6480,
+      "candidates": [
+        "有水分离奇",
+        "由水分离奇",
+        "有水分利器",
+        "有水分里奇",
+        "有水分离其",
+        "有谁分离其",
+        "有谁奋力气",
+        "油水分离器",
+        "有谁"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "youyanjinghuaqi",
+      "expected": "油烟净化器",
+      "source": "5500",
+      "lookup_us": 15892,
+      "candidates": [
+        "有眼镜花旗",
+        "有眼睛花旗",
+        "右眼净化器",
+        "有眼镜花期",
+        "有眼睛花期",
+        "右眼睛花旗",
+        "油烟净化器",
+        "右眼镜花旗",
+        "油烟机"
+      ],
+      "expected_rank": 7
+    },
+    {
+      "pinyin": "youyanqingxi",
+      "expected": "油烟清洗",
+      "source": "5500",
+      "lookup_us": 11030,
+      "candidates": [
+        "油烟清洗",
+        "右眼清晰",
+        "右眼清洗",
+        "有眼清晰",
+        "有眼清洗",
+        "有烟清晰",
+        "有烟清洗",
+        "油烟清晰",
+        "油烟"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuanliaochengben",
+      "expected": "原料成本",
+      "source": "5500",
+      "lookup_us": 13283,
+      "candidates": [
+        "原料成本",
+        "远了成本",
+        "元了成本",
+        "原料称本",
+        "元聊成本",
+        "元料成本",
+        "原辽成本",
+        "原聊成本",
+        "原料"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yudingbaoliu",
+      "expected": "预订保留",
+      "source": "5500",
+      "lookup_us": 11026,
+      "candidates": [
+        "预订保留",
+        "预定保留",
+        "与丁保留",
+        "与定保留",
+        "玉鼎保留",
+        "与订保留",
+        "与顶保留",
+        "于丁保留",
+        "预订"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yudingbeizhu",
+      "expected": "预订备注",
+      "source": "5500",
+      "lookup_us": 9024,
+      "candidates": [
+        "预订备注",
+        "预定备注",
+        "与丁备注",
+        "预定悖住",
+        "预定悖著",
+        "预定悖主",
+        "预定悖猪",
+        "预定北住",
+        "预订"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yudingdengji",
+      "expected": "预订登记",
+      "source": "5500",
+      "lookup_us": 9482,
+      "candidates": [
+        "预订登记",
+        "预定登记",
+        "预定等级",
+        "预订等级",
+        "预定登基",
+        "预定登机",
+        "预订登基",
+        "与丁登记",
+        "预订"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yueyingyee",
+      "expected": "月营业额",
+      "source": "5500",
+      "lookup_us": 12741,
+      "candidates": [
+        "月营业额",
+        "月营业哦",
+        "乐营业额",
+        "乐营业哦",
+        "月营业饿",
+        "月营业恶",
+        "月营业俄",
+        "月营业厄",
+        "月影"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zantingyingye",
+      "expected": "暂停营业",
+      "source": "5500",
+      "lookup_us": 11432,
+      "candidates": [
+        "暂停营业",
+        "暂停营也",
+        "暂停影业",
+        "暂停营页",
+        "暂停营耶",
+        "暂停营夜",
+        "暂停营叶",
+        "暂停营野",
+        "暂停"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhenbangang",
+      "expected": "砧板岗",
+      "source": "5500",
+      "lookup_us": 16911,
+      "candidates": [
+        "砧板岗",
+        "砧板刚",
+        "真棒昂",
+        "砧板港",
+        "砧板纲",
+        "砧板钢",
+        "砧板冈",
+        "针板刚",
+        "真棒"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhengshikaiye",
+      "expected": "正式开业",
+      "source": "5500",
+      "lookup_us": 9873,
+      "candidates": [
+        "正式开业",
+        "正是开业",
+        "证实开业",
+        "正视开业",
+        "正式开夜",
+        "正式开也",
+        "正式开页",
+        "正式开耶",
+        "正式"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhongyangchufang",
+      "expected": "中央厨房",
+      "source": "5500",
+      "lookup_us": 12385,
+      "candidates": [
+        "中央厨房",
+        "中央处方",
+        "中央出访",
+        "重阳厨房",
+        "中央出房",
+        "中央处房",
+        "中央出方",
+        "中央处放",
+        "中央"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuanjianzhuanyong",
+      "expected": "专间专用",
+      "source": "5500",
+      "lookup_us": 16582,
+      "candidates": [
+        "专间专用",
+        "转件专用",
+        "转间专用",
+        "转见专用",
+        "专辑案专用",
+        "专辑安专用",
+        "专辑按专用",
+        "专家嗯专用",
+        "转件"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuanrenzhuangang",
+      "expected": "专人专岗",
+      "source": "5500",
+      "lookup_us": 13332,
+      "candidates": [
+        "专人专岗",
+        "专人转岗",
+        "转任转岗",
+        "专人转港",
+        "专人转刚",
+        "转任装昂",
+        "转任转港",
+        "转任转刚",
+        "专人"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuanyongdaoju",
+      "expected": "专用刀具",
+      "source": "5500",
+      "lookup_us": 8384,
+      "candidates": [
+        "专用刀具",
+        "专用道具",
+        "专用道局",
+        "转用刀具",
+        "专用道据",
+        "专用道居",
+        "专用道举",
+        "专用道剧",
+        "专用"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuanyongrongqi",
+      "expected": "专用容器",
+      "source": "5500",
+      "lookup_us": 8615,
+      "candidates": [
+        "专用容器",
+        "转用容器",
+        "转喁容器",
+        "专用荣期",
+        "专用容其",
+        "专用容起",
+        "专用容气",
+        "专用荣泣",
+        "专用"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuanyongzhenban",
+      "expected": "专用砧板",
+      "source": "5500",
+      "lookup_us": 11467,
+      "candidates": [
+        "专用砧板",
+        "转用砧板",
+        "专用侦办",
+        "专用针板",
+        "专用真版",
+        "转喁砧板",
+        "专用真办",
+        "专用真半",
+        "专用"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuohaopai",
+      "expected": "桌号牌",
+      "source": "5500",
+      "lookup_us": 4274,
+      "candidates": [
+        "桌号牌",
+        "卓号牌",
+        "着号牌",
+        "著号牌",
+        "捉号牌",
+        "着好拍",
+        "着好派",
+        "桌号排",
+        "着"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuojunjine",
+      "expected": "桌均金额",
+      "source": "5500",
+      "lookup_us": 8895,
+      "candidates": [
+        "桌均金额",
+        "涿郡金额",
+        "卓钧金额",
+        "着军金额",
+        "卓军金额",
+        "卓均金额",
+        "着军机呢",
+        "卓君金额",
+        "着"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuojunrenshu",
+      "expected": "桌均人数",
+      "source": "5500",
+      "lookup_us": 8620,
+      "candidates": [
+        "桌均人数",
+        "涿郡人数",
+        "着军人数",
+        "卓军人数",
+        "卓钧人数",
+        "涿郡认输",
+        "卓钧认输",
+        "卓均认输",
+        "着"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuojunxiaofei",
+      "expected": "桌均消费",
+      "source": "5500",
+      "lookup_us": 13519,
+      "candidates": [
+        "桌均消费",
+        "卓均消费",
+        "涿郡消费",
+        "卓钧消费",
+        "着军消费",
+        "卓军消费",
+        "涿郡小费",
+        "卓君消费",
+        "着"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuomianqingjie",
+      "expected": "桌面清洁",
+      "source": "5500",
+      "lookup_us": 16721,
+      "candidates": [
+        "桌面清洁",
+        "桌面情节",
+        "桌面情结",
+        "桌面轻捷",
+        "着面清洁",
+        "桌面庆节",
+        "桌面清节",
+        "桌面清街",
+        "桌面"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuotaibianhao",
+      "expected": "桌台编号",
+      "source": "5500",
+      "lookup_us": 10749,
+      "candidates": [
+        "桌台编号",
+        "着台编号",
+        "着太编号",
+        "卓太编号",
+        "卓态编号",
+        "着态编号",
+        "卓泰编号",
+        "着泰编号",
+        "着"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuotaichaifen",
+      "expected": "桌台拆分",
+      "source": "5500",
+      "lookup_us": 5510,
+      "candidates": [
+        "桌台拆分",
+        "着太拆分",
+        "卓太拆分",
+        "着台拆分",
+        "卓泰拆分",
+        "着泰拆分",
+        "着抬拆分",
+        "卓态拆分",
+        "着"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuotaiguanli",
+      "expected": "桌台管理",
+      "source": "5500",
+      "lookup_us": 12634,
+      "candidates": [
+        "桌台管理",
+        "着台管理",
+        "着太管理",
+        "着太惯例",
+        "卓太管理",
+        "卓太惯例",
+        "卓泰管理",
+        "着泰管理",
+        "着"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuotaihebing",
+      "expected": "桌台合并",
+      "source": "5500",
+      "lookup_us": 9766,
+      "candidates": [
+        "桌台合并",
+        "着台合并",
+        "着太合并",
+        "卓太合并",
+        "卓泰合并",
+        "着泰合并",
+        "卓胎合并",
+        "着胎合并",
+        "着"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuotaishezhi",
+      "expected": "桌台设置",
+      "source": "5500",
+      "lookup_us": 6276,
+      "candidates": [
+        "桌台设置",
+        "着台设置",
+        "着太设置",
+        "卓太设置",
+        "卓态设置",
+        "着态设置",
+        "卓泰设置",
+        "着泰设置",
+        "着"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuotaishu",
+      "expected": "桌台数",
+      "source": "5500",
+      "lookup_us": 5048,
+      "candidates": [
+        "桌台数",
+        "着太熟",
+        "卓太熟",
+        "着太书",
+        "著太熟",
+        "着太数",
+        "桌太熟",
+        "着太属",
+        "着"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuoyiqingjie",
+      "expected": "桌椅清洁",
+      "source": "5500",
+      "lookup_us": 11113,
+      "candidates": [
+        "桌椅清洁",
+        "桌椅情节",
+        "桌椅情结",
+        "着疫情节",
+        "卓疫情节",
+        "着一清洁",
+        "着疫情结",
+        "著一清洁",
+        "桌椅"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zuoweishu",
+      "expected": "座位数",
+      "source": "5500",
+      "lookup_us": 4133,
+      "candidates": [
+        "座位数",
+        "作为抒",
+        "作为数",
+        "作为书",
+        "作为输",
+        "作为鼠",
+        "作为树",
+        "作为属",
+        "作为"
+      ],
+      "expected_rank": 1
+    }
+  ]
+}
