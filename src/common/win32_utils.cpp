@@ -19,13 +19,43 @@ std::wstring module_path(HINSTANCE instance) {
     return buffer;
 }
 
+namespace {
+
+// Where the installer put the current version (it records it for Windows'
+// list of installed programs), or empty.
+std::wstring current_install_directory() {
+    constexpr wchar_t kUninstallKey[] =
+        L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\{7C0B4B75-80B0-4E1F-A4A5-4D49A5440D8A}_is1";
+    wchar_t buffer[MAX_PATH * 2]{};
+    DWORD size = sizeof(buffer);
+    if (RegGetValueW(HKEY_LOCAL_MACHINE, kUninstallKey, L"InstallLocation", RRF_RT_REG_SZ | RRF_SUBKEY_WOW6464KEY,
+                     nullptr, buffer, &size) != ERROR_SUCCESS)
+        return L"";
+    std::wstring directory(buffer);
+    while (!directory.empty() && (directory.back() == L'\\' || directory.back() == L'/')) directory.pop_back();
+    return directory;
+}
+
+}  // namespace
+
 std::wstring install_file_path(HINSTANCE instance, const std::wstring& name) {
+    // Beside this module, or one folder up (the 32-bit input method is in
+    // <release>\x86).
     std::wstring directory = module_path(instance);
     for (int level = 0; level < 2; ++level) {
         const size_t slash = directory.find_last_of(L"\\/");
-        if (slash == std::wstring::npos) return L"";
+        if (slash == std::wstring::npos) break;
         directory.resize(slash);
         const std::wstring candidate = directory + L"\\" + name;
+        if (GetFileAttributesW(candidate.c_str()) != INVALID_FILE_ATTRIBUTES) return candidate;
+    }
+    // An input method loaded before an update keeps running from its old
+    // release folder, which the update empties: the current release has the
+    // program. (Without this the settings button did nothing until the app
+    // was restarted.)
+    const std::wstring current = current_install_directory();
+    if (!current.empty()) {
+        const std::wstring candidate = current + L"\\" + name;
         if (GetFileAttributesW(candidate.c_str()) != INVALID_FILE_ATTRIBUTES) return candidate;
     }
     return L"";

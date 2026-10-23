@@ -134,6 +134,18 @@ wchar_t us_key_character(WPARAM key, bool shift) noexcept {
     }
 }
 
+// A symbol key with no Chinese form (= - \ ` @ # $ % ^ & * + _ | ~). While
+// pinyin is being typed it puts in the current choice and then the symbol,
+// as the punctuation keys do. Let through, the application typed the symbol
+// after the open composition, and ending the composition (Enter) put the
+// caret back before the symbol. Digits still choose candidates and the
+// apostrophe still separates syllables.
+wchar_t composing_symbol_for_key(WPARAM key, bool shift) noexcept {
+    if (!shift && ((key >= L'0' && key <= L'9') || key == VK_OEM_7)) return 0;
+    if (key >= VK_NUMPAD0 && key <= VK_NUMPAD9) return 0;
+    return us_key_character(key, shift);
+}
+
 bool is_modifier_key(unsigned long key) noexcept {
     switch (key) {
         case VK_SHIFT: case VK_LSHIFT: case VK_RSHIFT: case VK_CONTROL: case VK_LCONTROL: case VK_RCONTROL:
@@ -1332,6 +1344,10 @@ HRESULT TextService::test_key_down(ITfContext* context, WPARAM wparam, BOOL* eat
         *eaten = TRUE;
         return S_OK;
     }
+    if (mode_ == InputMode::Chinese && !composing_.empty() && composing_symbol_for_key(wparam, modifiers.shift)) {
+        *eaten = TRUE;
+        return S_OK;
+    }
     if (wparam >= L'1' && wparam <= L'9') {
         *eaten = can_select_candidate_by_digit(key, current_candidate_page_count(), !composing_.empty(),
             candidate_window_.is_visible() || candidate_ui_element_session_.host_managed());
@@ -1823,6 +1839,12 @@ bool TextService::handle_chinese_key(ITfContext* context, WPARAM wparam, BOOL* e
     if (punctuation) {
         const HRESULT hr = commit_punctuation(context, punctuation);
         if (FAILED(hr)) log_status(L"composition", L"punctuation failed " + hresult_hex(hr));
+        *eaten = TRUE;
+        return true;
+    }
+    if (const wchar_t symbol = composing_.empty() ? 0 : composing_symbol_for_key(wparam, modifiers.shift)) {
+        const HRESULT hr = commit_punctuation(context, symbol);
+        if (FAILED(hr)) log_status(L"composition", L"symbol failed " + hresult_hex(hr));
         *eaten = TRUE;
         return true;
     }

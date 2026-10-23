@@ -253,6 +253,7 @@ public:
     HRESULT STDMETHODCALLTYPE OnUpdateComposition(ITfCompositionView*, ITfRange*) override { return S_OK; }
     HRESULT STDMETHODCALLTYPE OnEndComposition(ITfCompositionView*) override { ++composition_ends; return S_OK; }
     std::wstring text;
+    LONG caret() const { return selection_.acpEnd; }
     void move_selection(LONG start, LONG end) {
         require(valid(start, end), "test selection bounds");
         selection_.acpStart = start; selection_.acpEnd = end;
@@ -712,6 +713,24 @@ int wmain(int argc, wchar_t** argv) {
             require(s.store->text == L"你好ni你好随便，", "punctuation converts then inserts");
             s.key(VK_OEM_PERIOD);
             require(s.store->text == L"你好ni你好随便，。", "idle punctuation insertion");
+            // A symbol with no Chinese form (= -) during pinyin puts in the
+            // choice and then the symbol, with the caret after it; let through,
+            // the app typed it after the open composition and Enter left the
+            // caret before it.
+            {
+                const std::wstring start = s.store->text;
+                for (const auto letter : std::wstring(L"SUIBIAN")) s.key(letter);
+                s.key(VK_OEM_PLUS);
+                require(s.store->text == start + L"随便=", "= puts in the choice, then =");
+                require(s.store->caret() == static_cast<LONG>(s.store->text.size()), "the caret follows the =");
+                s.key(VK_RETURN, false);
+                require(s.store->caret() == static_cast<LONG>(s.store->text.size()), "Enter after = leaves the caret after it");
+                for (const auto letter : std::wstring(L"NI")) s.key(letter);
+                s.key(VK_OEM_MINUS);
+                require(s.store->text.size() > start.size() + 3 && s.store->text.back() == L'-', "- puts in the choice, then -");
+                require(s.store->caret() == static_cast<LONG>(s.store->text.size()), "the caret follows the -");
+                s.store->host_replace(start);
+            }
             // After a digit the application typed, the period key is a
             // decimal point (3.14); after anything else it stays 。.
             const std::wstring before_digit = s.store->text;
