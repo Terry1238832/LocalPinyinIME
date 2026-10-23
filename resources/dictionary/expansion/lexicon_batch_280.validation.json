@@ -1,0 +1,7232 @@
+{
+  "batch": "lexicon_batch_280",
+  "evaluation": "native_engine_candidate_coverage",
+  "evaluated_at_utc": "2026-10-23T15:35:15.003867+00:00",
+  "engine_sha256": "f386e80d11e8702d30292f79af26e7f43f879aeb68e65fa7679b117eef673734",
+  "resource_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "a4db9b574f19ad29dac50ab9ebc6172f064391aa9933f46eadb81edbed2b8700",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+    "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+    "continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e"
+  },
+  "frozen_batch_sha256": "9d6ab4b368f00181142c62d874f15936e3a0931d24a2e97c00ed0fbb7962efaf",
+  "personal_data_isolated": true,
+  "expected_answers_learned": false,
+  "summary": {
+    "cases": 400,
+    "top1_correct": 394,
+    "top9_present": 400,
+    "top1_percent": 98.5,
+    "top9_percent": 100.0,
+    "character_error_rate": 0.0063,
+    "p50_lookup_ms": 6.589,
+    "p95_lookup_ms": 12.018,
+    "max_lookup_ms": 25.049,
+    "missing_from_top9_count": 0,
+    "missing_from_top9": [],
+    "max_returned_candidate_count": 9
+  },
+  "rows": [
+    {
+      "pinyin": "jiatinghuiyi",
+      "expected": "家庭回忆",
+      "source": "5000",
+      "lookup_us": 11089,
+      "candidates": [
+        "家庭会议",
+        "家庭回忆",
+        "家庭会以",
+        "家庭悔意",
+        "家庭会一",
+        "家庭会已",
+        "家庭回一",
+        "家庭回以",
+        "家庭户"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "babanabian",
+      "expected": "爸爸那边",
+      "source": "5500",
+      "lookup_us": 5582,
+      "candidates": [
+        "爸爸那边",
+        "爸爸哪边",
+        "巴巴那边",
+        "把把那边",
+        "把吧那边",
+        "爸爸那变",
+        "巴巴哪边",
+        "爸爸那编",
+        "爸爸"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "banlvguanxi",
+      "expected": "伴侣关系",
+      "source": "5500",
+      "lookup_us": 6787,
+      "candidates": [
+        "伴侣关系",
+        "伴侣关西",
+        "班律关系",
+        "半律关系",
+        "班率关系",
+        "半率关系",
+        "班绿关系",
+        "半绿关系",
+        "伴侣"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "beifenchenghu",
+      "expected": "辈分称呼",
+      "source": "5500",
+      "lookup_us": 6398,
+      "candidates": [
+        "辈分称呼",
+        "备份称呼",
+        "悲愤称呼",
+        "被分称呼",
+        "被分成虎",
+        "被分成湖",
+        "被分成呼",
+        "北分称呼",
+        "备份"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "beifendaxiao",
+      "expected": "辈分大小",
+      "source": "5500",
+      "lookup_us": 6940,
+      "candidates": [
+        "备份大小",
+        "辈分大小",
+        "备份大笑",
+        "悲愤大小",
+        "被分大小",
+        "被分大笑",
+        "备份大校",
+        "悲愤大笑",
+        "备份"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "beifenguanxi",
+      "expected": "辈分关系",
+      "source": "5500",
+      "lookup_us": 7023,
+      "candidates": [
+        "辈分关系",
+        "备份关系",
+        "被分关系",
+        "悲愤关系",
+        "北分关系",
+        "备份关西",
+        "被焚关系",
+        "被纷关系",
+        "被封"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "beifenshunxu",
+      "expected": "辈分顺序",
+      "source": "5500",
+      "lookup_us": 4816,
+      "candidates": [
+        "辈分顺序",
+        "备份顺序",
+        "悲愤顺序",
+        "被分顺序",
+        "北分顺序",
+        "被焚顺序",
+        "被粉顺序",
+        "被纷顺序",
+        "备份"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biaojiedi",
+      "expected": "表姐弟",
+      "source": "5500",
+      "lookup_us": 6799,
+      "candidates": [
+        "表姐弟",
+        "表姐的",
+        "表姐地",
+        "表姐第",
+        "表姐低",
+        "表姐底",
+        "表姐迪",
+        "表接地",
+        "表姐"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biaojiemei",
+      "expected": "表姐妹",
+      "source": "5500",
+      "lookup_us": 7496,
+      "candidates": [
+        "表姐妹",
+        "表姐没",
+        "表姐每",
+        "表姐美",
+        "标姐妹",
+        "表姐梅",
+        "表姐媒",
+        "表姐煤",
+        "表姐"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biaoxiongdi",
+      "expected": "表兄弟",
+      "source": "5500",
+      "lookup_us": 4431,
+      "candidates": [
+        "表兄弟",
+        "标兄弟",
+        "镖兄弟",
+        "彪兄弟",
+        "婊兄弟",
+        "飙兄弟",
+        "表兄地",
+        "表兄第",
+        "表"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biaoxiongmei",
+      "expected": "表兄妹",
+      "source": "5500",
+      "lookup_us": 5148,
+      "candidates": [
+        "表兄妹",
+        "标兄妹",
+        "镖兄妹",
+        "表兄没",
+        "表兄美",
+        "彪兄妹",
+        "婊兄妹",
+        "表兄每",
+        "表"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bobojia",
+      "expected": "伯伯家",
+      "source": "5500",
+      "lookup_us": 3479,
+      "candidates": [
+        "伯伯家",
+        "波波家",
+        "波波加",
+        "伯伯加",
+        "波波价",
+        "伯伯佳",
+        "波波假",
+        "波波甲",
+        "钵钵鸡"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chenghuxiguan",
+      "expected": "称呼习惯",
+      "source": "5500",
+      "lookup_us": 8313,
+      "candidates": [
+        "称呼习惯",
+        "称呼吸管",
+        "称呼吸关",
+        "成呼吸管",
+        "称呼吸官",
+        "称呼吸观",
+        "称呼习馆",
+        "称呼吸馆",
+        "称呼"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chengweiguanxi",
+      "expected": "称谓关系",
+      "source": "5500",
+      "lookup_us": 5905,
+      "candidates": [
+        "称谓关系",
+        "成为关系",
+        "称为关系",
+        "成为关西",
+        "称未关系",
+        "称为关西",
+        "成为管系",
+        "成为冠希",
+        "成为"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chongzujiating",
+      "expected": "重组家庭",
+      "source": "5500",
+      "lookup_us": 5734,
+      "candidates": [
+        "重组家庭",
+        "虫族家庭",
+        "充足家庭",
+        "重族家庭",
+        "重组家听",
+        "重组加听",
+        "冲组家庭",
+        "重祖家庭",
+        "重组"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "danqinjiating",
+      "expected": "单亲家庭",
+      "source": "5500",
+      "lookup_us": 8061,
+      "candidates": [
+        "单亲家庭",
+        "但亲家庭",
+        "单亲家听",
+        "但琴家庭",
+        "弹琴家庭",
+        "但秦家庭",
+        "单亲家停",
+        "单亲家亭",
+        "单亲"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "didijia",
+      "expected": "弟弟家",
+      "source": "5500",
+      "lookup_us": 5119,
+      "candidates": [
+        "弟弟家",
+        "的低价",
+        "弟弟加",
+        "弟弟价",
+        "弟弟假",
+        "弟弟甲",
+        "弟弟架",
+        "低地伽",
+        "弟弟"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dujufumu",
+      "expected": "独居父母",
+      "source": "5500",
+      "lookup_us": 3747,
+      "candidates": [
+        "独居父母",
+        "独具父母",
+        "都具父母",
+        "都举父母",
+        "赌局父母",
+        "度举父母",
+        "都据父母",
+        "杜据父母",
+        "独具"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dujuzhangbei",
+      "expected": "独居长辈",
+      "source": "5500",
+      "lookup_us": 5332,
+      "candidates": [
+        "独居长辈",
+        "独具长辈",
+        "赌局长辈",
+        "赌局长被",
+        "都局长辈",
+        "都局长被",
+        "赌局长呗",
+        "赌局长臂",
+        "独具"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dulijuzhu",
+      "expected": "独立居住",
+      "source": "5500",
+      "lookup_us": 3677,
+      "candidates": [
+        "独立居住",
+        "独立巨著",
+        "独立举著",
+        "肚里居住",
+        "都离居住",
+        "都丽居住",
+        "杜里居住",
+        "杜丽居住",
+        "独立"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "duodaijiating",
+      "expected": "多代家庭",
+      "source": "5500",
+      "lookup_us": 7596,
+      "candidates": [
+        "多代家庭",
+        "多大家庭",
+        "多带家庭",
+        "多待家庭",
+        "夺大家庭",
+        "多戴家庭",
+        "多袋家庭",
+        "多贷家庭",
+        "多带"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fenkaijuzhu",
+      "expected": "分开居住",
+      "source": "5500",
+      "lookup_us": 4266,
+      "candidates": [
+        "分开居住",
+        "愤慨居住",
+        "分开举著",
+        "份开居住",
+        "分开巨著",
+        "分开居著",
+        "分开居主",
+        "分开局主",
+        "分开"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fumudingning",
+      "expected": "父母叮咛",
+      "source": "5500",
+      "lookup_us": 7218,
+      "candidates": [
+        "父母叮咛",
+        "父母鼎宁",
+        "父母耵聍",
+        "父母定宁",
+        "父母丁宁",
+        "父母顶宁",
+        "父母订宁",
+        "父母定凝",
+        "父母"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fumuenqing",
+      "expected": "父母恩情",
+      "source": "5500",
+      "lookup_us": 6897,
+      "candidates": [
+        "父母恩情",
+        "父母恩庆",
+        "父母恩清",
+        "父母恩青",
+        "父母恩请",
+        "父母恩轻",
+        "父母恩顷",
+        "父母恩晴",
+        "父母"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fumuguanhuai",
+      "expected": "父母关怀",
+      "source": "5500",
+      "lookup_us": 9991,
+      "candidates": [
+        "父母关怀",
+        "父母关槐",
+        "父母关坏",
+        "父母管坏",
+        "父母官坏",
+        "父母惯坏",
+        "父母观坏",
+        "父母管怀",
+        "父母"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fumujiaoyang",
+      "expected": "父母教养",
+      "source": "5500",
+      "lookup_us": 25049,
+      "candidates": [
+        "父母教养",
+        "父母校样",
+        "父母骄阳",
+        "父母教阳",
+        "父母教扬",
+        "父母教羊",
+        "父母教样",
+        "父母教洋",
+        "父母"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fumulaifang",
+      "expected": "父母来访",
+      "source": "5500",
+      "lookup_us": 9178,
+      "candidates": [
+        "父母来访",
+        "父母来放",
+        "父母来方",
+        "父母来房",
+        "父母来芳",
+        "父母来防",
+        "父母来坊",
+        "父母来仿",
+        "父母"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fumulaodao",
+      "expected": "父母唠叨",
+      "source": "5500",
+      "lookup_us": 9421,
+      "candidates": [
+        "父母唠叨",
+        "父母老道",
+        "父母老到",
+        "父母老岛",
+        "父母落到",
+        "父母劳道",
+        "父母老刀",
+        "父母老倒",
+        "父母"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fumulijie",
+      "expected": "父母理解",
+      "source": "5500",
+      "lookup_us": 9187,
+      "candidates": [
+        "父母理解",
+        "父母礼节",
+        "父母历届",
+        "父母李杰",
+        "父母离街",
+        "父母离节",
+        "父母离杰",
+        "父母李诫",
+        "父母"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fumupeiban",
+      "expected": "父母陪伴",
+      "source": "5500",
+      "lookup_us": 5690,
+      "candidates": [
+        "父母陪伴",
+        "父母配版",
+        "父母配办",
+        "父母佩版",
+        "父母陪版",
+        "父母配班",
+        "父母培版",
+        "父母配板",
+        "父母"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fumuqiangua",
+      "expected": "父母牵挂",
+      "source": "5500",
+      "lookup_us": 12018,
+      "candidates": [
+        "父母牵挂",
+        "父母前挂",
+        "父母前瓜",
+        "父母千古啊",
+        "父母钱挂",
+        "父母钱瓜",
+        "福目牵挂",
+        "父母迁挂",
+        "父母"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fumuqidai",
+      "expected": "父母期待",
+      "source": "5500",
+      "lookup_us": 5844,
+      "candidates": [
+        "父母期待",
+        "父母脐带",
+        "父母其大",
+        "父母其带",
+        "父母起带",
+        "父母七大",
+        "父母其代",
+        "父母七代",
+        "父母"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fumutanwang",
+      "expected": "父母探望",
+      "source": "5500",
+      "lookup_us": 8279,
+      "candidates": [
+        "父母探望",
+        "父母谈网",
+        "父母谈王",
+        "父母坦王",
+        "父母坦网",
+        "父母谈旺",
+        "父母弹网",
+        "父母弹王",
+        "父母"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fumutuanju",
+      "expected": "父母团聚",
+      "source": "5500",
+      "lookup_us": 6506,
+      "candidates": [
+        "父母团聚",
+        "父母团举",
+        "父母团局",
+        "父母团剧",
+        "父母团居",
+        "父母团拒",
+        "父母团具",
+        "父母团句",
+        "父母"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fumuxinyuan",
+      "expected": "父母心愿",
+      "source": "5500",
+      "lookup_us": 10404,
+      "candidates": [
+        "父母心愿",
+        "父母心园",
+        "父母新园",
+        "父母心远",
+        "父母心元",
+        "父母心源",
+        "父母新元",
+        "父母心原",
+        "父母"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fumuyangyu",
+      "expected": "父母养育",
+      "source": "5500",
+      "lookup_us": 10189,
+      "candidates": [
+        "父母养育",
+        "父母养鱼",
+        "副模样语",
+        "父母养于",
+        "父母杨宇",
+        "父母养与",
+        "父母杨于",
+        "父母样与",
+        "父母"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fumuzhaogu",
+      "expected": "父母照顾",
+      "source": "5500",
+      "lookup_us": 6995,
+      "candidates": [
+        "父母照顾",
+        "父母招股",
+        "父母沼骨",
+        "父母赵嘏",
+        "父母赵股",
+        "父母找股",
+        "父母着股",
+        "父母照股",
+        "父母"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fumuzhichi",
+      "expected": "父母支持",
+      "source": "5500",
+      "lookup_us": 7605,
+      "candidates": [
+        "父母支持",
+        "父母只吃",
+        "父母咫尺",
+        "父母直尺",
+        "父母智齿",
+        "父母直斥",
+        "父母质炽",
+        "父母直吃",
+        "父母"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fumuzhufu",
+      "expected": "父母嘱咐",
+      "source": "5500",
+      "lookup_us": 5833,
+      "candidates": [
+        "父母嘱咐",
+        "父母祝福",
+        "父母主妇",
+        "父母住服",
+        "父母住夫",
+        "父母住福",
+        "父母住负",
+        "父母住扶",
+        "父母"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fumuzinv",
+      "expected": "父母子女",
+      "source": "5500",
+      "lookup_us": 4381,
+      "candidates": [
+        "父母子女",
+        "父母自女",
+        "父母字女",
+        "父母仔女",
+        "父母资女",
+        "父母紫女",
+        "父母兹女",
+        "福母子女",
+        "父母"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "funvguanxi",
+      "expected": "父女关系",
+      "source": "5500",
+      "lookup_us": 6401,
+      "candidates": [
+        "父女关系",
+        "妇女关系",
+        "妇女关西",
+        "妇女管系",
+        "父女关西",
+        "妇女管西",
+        "妇女关戏",
+        "妇女冠希",
+        "妇女"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fuqinnabian",
+      "expected": "父亲那边",
+      "source": "5500",
+      "lookup_us": 8104,
+      "candidates": [
+        "父亲那边",
+        "父亲哪边",
+        "父亲那变",
+        "父亲那编",
+        "父亲那便",
+        "父亲那辩",
+        "父亲那遍",
+        "父亲那扁",
+        "父亲"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fuxiqinshu",
+      "expected": "父系亲属",
+      "source": "5500",
+      "lookup_us": 7178,
+      "candidates": [
+        "父系亲属",
+        "复习亲属",
+        "伏羲亲属",
+        "富西亲属",
+        "福系亲属",
+        "氟西亲属",
+        "傅希亲属",
+        "复习亲疏",
+        "复习"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fuyangguanxi",
+      "expected": "抚养关系",
+      "source": "5500",
+      "lookup_us": 10840,
+      "candidates": [
+        "抚养关系",
+        "阜阳关系",
+        "富阳关系",
+        "扶养关系",
+        "阜阳关西",
+        "负样关系",
+        "抚养关西",
+        "福样关系",
+        "抚养"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fuziguanxi",
+      "expected": "父子关系",
+      "source": "5500",
+      "lookup_us": 9197,
+      "candidates": [
+        "父子关系",
+        "父子关西",
+        "富子关系",
+        "福字关系",
+        "福兹关系",
+        "负资关系",
+        "福资关系",
+        "福自关系",
+        "福字"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gedaifuyang",
+      "expected": "隔代抚养",
+      "source": "5500",
+      "lookup_us": 8062,
+      "candidates": [
+        "隔代抚养",
+        "各大抚养",
+        "个大抚养",
+        "个代抚养",
+        "各代抚养",
+        "个大夫养",
+        "个大夫阳",
+        "各大夫养",
+        "各大"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gedaijiaoyu",
+      "expected": "隔代教育",
+      "source": "5500",
+      "lookup_us": 7946,
+      "candidates": [
+        "隔代教育",
+        "个大教育",
+        "各大教育",
+        "个代教育",
+        "各代教育",
+        "个带教育",
+        "个待教育",
+        "个袋教育",
+        "各大"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gedaiqin",
+      "expected": "隔代亲",
+      "source": "5500",
+      "lookup_us": 3996,
+      "candidates": [
+        "隔代亲",
+        "哥带親",
+        "个带亲",
+        "各大亲",
+        "个大亲",
+        "个代琴",
+        "个代亲",
+        "各代琴",
+        "各大"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gedaiyangyu",
+      "expected": "隔代养育",
+      "source": "5500",
+      "lookup_us": 9495,
+      "candidates": [
+        "隔代养育",
+        "个大养鱼",
+        "个大养育",
+        "各大养鱼",
+        "个代养鱼",
+        "个带养鱼",
+        "各代养鱼",
+        "各大洋芋",
+        "各大"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gedaizhaogu",
+      "expected": "隔代照顾",
+      "source": "5500",
+      "lookup_us": 6864,
+      "candidates": [
+        "隔代照顾",
+        "各大照顾",
+        "个大照顾",
+        "个带照顾",
+        "个代照顾",
+        "各代照顾",
+        "各大招股",
+        "个大招股",
+        "各大"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gedaizhaoliao",
+      "expected": "隔代照料",
+      "source": "5500",
+      "lookup_us": 8450,
+      "candidates": [
+        "隔代照料",
+        "个带着了",
+        "个戴着了",
+        "个带找了",
+        "格带着了",
+        "各大照料",
+        "个大照料",
+        "各大找了",
+        "各大"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gegejia",
+      "expected": "哥哥家",
+      "source": "5500",
+      "lookup_us": 4339,
+      "candidates": [
+        "哥哥家",
+        "哥哥佳",
+        "各个家",
+        "各个加",
+        "各个假",
+        "各个价",
+        "哥哥假",
+        "个个家",
+        "哥哥"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gonggongpopo",
+      "expected": "公公婆婆",
+      "source": "5500",
+      "lookup_us": 2757,
+      "candidates": [
+        "公公婆婆",
+        "公共婆婆",
+        "公共鄱破",
+        "公共鄱坡",
+        "公共破破",
+        "公共鄱迫",
+        "公共鄱婆",
+        "公共鄱魄",
+        "公共"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gongtongfuyang",
+      "expected": "共同抚养",
+      "source": "5500",
+      "lookup_us": 5358,
+      "candidates": [
+        "共同抚养",
+        "共同富阳",
+        "共同阜阳",
+        "共同富养",
+        "共通抚养",
+        "共同富扬",
+        "共同负样",
+        "共同富羊",
+        "共同"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gongtongjianhu",
+      "expected": "共同监护",
+      "source": "5500",
+      "lookup_us": 7066,
+      "candidates": [
+        "共同监护",
+        "共同建湖",
+        "共同建虎",
+        "共通监护",
+        "共同建户",
+        "共同剑虎",
+        "共同建呼",
+        "共同建护",
+        "共同"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gongtongyangyu",
+      "expected": "共同养育",
+      "source": "5500",
+      "lookup_us": 6666,
+      "candidates": [
+        "共同养育",
+        "共同样与",
+        "共同样于",
+        "共同养鱼",
+        "共同样鱼",
+        "共同样逾",
+        "共同样语",
+        "共同样雨",
+        "共同"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gongtongzhaogu",
+      "expected": "共同照顾",
+      "source": "5500",
+      "lookup_us": 4366,
+      "candidates": [
+        "共同照顾",
+        "共同招股",
+        "共通照顾",
+        "共同沼骨",
+        "共通招股",
+        "共同找股",
+        "共同着股",
+        "共同照股",
+        "共同"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gongtongzhaoliao",
+      "expected": "共同照料",
+      "source": "5500",
+      "lookup_us": 6649,
+      "candidates": [
+        "共同照料",
+        "共同找了",
+        "共同着了",
+        "共同招了",
+        "共同照了",
+        "共同召了",
+        "共同朝了",
+        "共通照料",
+        "共同"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guanaiwanbei",
+      "expected": "关爱晚辈",
+      "source": "5500",
+      "lookup_us": 5714,
+      "candidates": [
+        "关爱晚辈",
+        "关爱玩呗",
+        "关爱完备",
+        "关爱万倍",
+        "关爱玩北",
+        "关爱万呗",
+        "关爱万被",
+        "关爱玩被",
+        "关爱"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guanxinzhangbei",
+      "expected": "关心长辈",
+      "source": "5500",
+      "lookup_us": 6299,
+      "candidates": [
+        "关心长辈",
+        "关心张呗",
+        "关心长呗",
+        "关心长被",
+        "关心长臂",
+        "关心张被",
+        "关心章被",
+        "关心长贝",
+        "关心"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gusaoguanxi",
+      "expected": "姑嫂关系",
+      "source": "5500",
+      "lookup_us": 5855,
+      "candidates": [
+        "姑嫂关系",
+        "故扫关系",
+        "古扫关系",
+        "故骚关系",
+        "古骚关系",
+        "故嫂关系",
+        "故搔关系",
+        "古搔关系",
+        "股"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "hexinjiating",
+      "expected": "核心家庭",
+      "source": "5500",
+      "lookup_us": 6682,
+      "candidates": [
+        "核心家庭",
+        "和新家庭",
+        "和新加艇",
+        "何新家庭",
+        "和信家庭",
+        "何新加艇",
+        "和心家庭",
+        "何欣家庭",
+        "核心"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huzhuguanxi",
+      "expected": "户主关系",
+      "source": "5500",
+      "lookup_us": 6339,
+      "candidates": [
+        "户主关系",
+        "互助关系",
+        "护住关系",
+        "护主关系",
+        "互助关西",
+        "胡猪关系",
+        "护主管系",
+        "户住关系",
+        "互助"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jianhuguanxi",
+      "expected": "监护关系",
+      "source": "5500",
+      "lookup_us": 9127,
+      "candidates": [
+        "监护关系",
+        "间互关系",
+        "见互关系",
+        "间户关系",
+        "见胡关系",
+        "见户关系",
+        "剑虎关系",
+        "剑狐关系",
+        "监护"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiapubianxiu",
+      "expected": "家谱编修",
+      "source": "5500",
+      "lookup_us": 6905,
+      "candidates": [
+        "家谱编修",
+        "家普遍秀",
+        "加普遍秀",
+        "家普遍修",
+        "家普遍休",
+        "加普遍修",
+        "加普遍休",
+        "家普遍宿",
+        "家谱"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiapushixi",
+      "expected": "家谱世系",
+      "source": "5500",
+      "lookup_us": 4804,
+      "candidates": [
+        "家谱世系",
+        "家谱实习",
+        "加普世袭",
+        "加普实习",
+        "加朴实习",
+        "家朴实习",
+        "家普世袭",
+        "家谱世袭",
+        "家谱"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiapuxuxiu",
+      "expected": "家谱续修",
+      "source": "5500",
+      "lookup_us": 4299,
+      "candidates": [
+        "家谱续修",
+        "家谱需修",
+        "家谱需秀",
+        "家谱许秀",
+        "家谱需休",
+        "家谱徐秀",
+        "家谱须秀",
+        "家谱许修",
+        "家谱"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiapuziliao",
+      "expected": "家谱资料",
+      "source": "5500",
+      "lookup_us": 7625,
+      "candidates": [
+        "家谱资料",
+        "加普资料",
+        "家普资料",
+        "加扑资料",
+        "家堡资料",
+        "家谱子了",
+        "加铺资料",
+        "家铺资料",
+        "家谱"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiarenbangzhu",
+      "expected": "家人帮助",
+      "source": "5500",
+      "lookup_us": 5459,
+      "candidates": [
+        "家人帮助",
+        "佳人帮助",
+        "家人帮主",
+        "家人绑住",
+        "家人绑著",
+        "假韧帮助",
+        "佳人帮主",
+        "家人帮著",
+        "家人"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiarenchenghu",
+      "expected": "家人称呼",
+      "source": "5500",
+      "lookup_us": 4309,
+      "candidates": [
+        "家人称呼",
+        "佳人称呼",
+        "家人称湖",
+        "家人成虎",
+        "家人成湖",
+        "家人称许",
+        "家人称虎",
+        "家认称呼",
+        "家人"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiarenhaoma",
+      "expected": "家人号码",
+      "source": "5500",
+      "lookup_us": 4441,
+      "candidates": [
+        "家人号码",
+        "家人好吗",
+        "佳人好吗",
+        "家人好嘛",
+        "家人好么",
+        "家人号吗",
+        "佳人号码",
+        "佳人好嘛",
+        "家人"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiarenheying",
+      "expected": "家人合影",
+      "source": "5500",
+      "lookup_us": 7324,
+      "candidates": [
+        "家人合影",
+        "佳人合影",
+        "家人和英",
+        "家人和营",
+        "家人和应",
+        "家人和婴",
+        "家人和影",
+        "加任何英",
+        "家人"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiarenhuzhu",
+      "expected": "家人互助",
+      "source": "5500",
+      "lookup_us": 5224,
+      "candidates": [
+        "家人互助",
+        "佳人互助",
+        "家人户主",
+        "家人护住",
+        "家人户住",
+        "家人胡住",
+        "家人胡著",
+        "佳人户主",
+        "家人"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiarenjiankang",
+      "expected": "家人健康",
+      "source": "5500",
+      "lookup_us": 7347,
+      "candidates": [
+        "家人健康",
+        "佳人健康",
+        "假韧健康",
+        "家认健康",
+        "加任健康",
+        "家人肩扛",
+        "家任健康",
+        "家仁健康",
+        "家人"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiarenjinkuang",
+      "expected": "家人近况",
+      "source": "5500",
+      "lookup_us": 6856,
+      "candidates": [
+        "家人近况",
+        "家人金矿",
+        "佳人金矿",
+        "佳人近况",
+        "家人进矿",
+        "家人进狂",
+        "家人金狂",
+        "家人仅狂",
+        "家人"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiarenjucan",
+      "expected": "家人聚餐",
+      "source": "5500",
+      "lookup_us": 3396,
+      "candidates": [
+        "家人聚餐",
+        "佳人聚餐",
+        "假韧聚餐",
+        "家人居餐",
+        "家认聚餐",
+        "加任聚餐",
+        "家人据餐",
+        "家人举餐",
+        "家人"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiarenlaifang",
+      "expected": "家人来访",
+      "source": "5500",
+      "lookup_us": 4520,
+      "candidates": [
+        "家人来访",
+        "佳人来访",
+        "家人来放",
+        "家人来方",
+        "家人来房",
+        "家人来芳",
+        "家人来防",
+        "家人来坊",
+        "家人"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiarenlijie",
+      "expected": "家人理解",
+      "source": "5500",
+      "lookup_us": 7037,
+      "candidates": [
+        "家人理解",
+        "佳人理解",
+        "家人礼节",
+        "家人历届",
+        "家人李杰",
+        "家人李诫",
+        "佳人礼节",
+        "家人李解",
+        "家人"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiarenpeiban",
+      "expected": "家人陪伴",
+      "source": "5500",
+      "lookup_us": 5641,
+      "candidates": [
+        "家人陪伴",
+        "佳人陪伴",
+        "家人陪版",
+        "家人陪办",
+        "家人陪班",
+        "家人陪板",
+        "家人陪半",
+        "假韧陪伴",
+        "家人"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiarenpingan",
+      "expected": "家人平安",
+      "source": "5500",
+      "lookup_us": 6630,
+      "candidates": [
+        "家人平安",
+        "佳人平安",
+        "假韧平安",
+        "家认平安",
+        "加任平安",
+        "家任平安",
+        "家仁平安",
+        "加认平安",
+        "家人"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiarentanfang",
+      "expected": "家人探访",
+      "source": "5500",
+      "lookup_us": 6369,
+      "candidates": [
+        "家人探访",
+        "佳人探访",
+        "家人谈方",
+        "家人谈房",
+        "家人谈放",
+        "假韧探访",
+        "家人谈芳",
+        "家人弹方",
+        "家人"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiarentanwang",
+      "expected": "家人探望",
+      "source": "5500",
+      "lookup_us": 5265,
+      "candidates": [
+        "家人探望",
+        "佳人探望",
+        "家人谈网",
+        "家人谈王",
+        "假韧探望",
+        "家人坦王",
+        "家人弹网",
+        "加任探望",
+        "家人"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiarentongxunlu",
+      "expected": "家人通讯录",
+      "source": "5500",
+      "lookup_us": 4908,
+      "candidates": [
+        "家人通讯录",
+        "家人通讯路",
+        "佳人通讯录",
+        "家人通讯鲁",
+        "家人通讯鹿",
+        "家人通讯露",
+        "家人通讯炉",
+        "家人通讯陆",
+        "家人"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiarentuanyuan",
+      "expected": "家人团圆",
+      "source": "5500",
+      "lookup_us": 6737,
+      "candidates": [
+        "家人团圆",
+        "家人团员",
+        "佳人团员",
+        "佳人团圆",
+        "家人团远",
+        "家人团元",
+        "家人团原",
+        "家人团源",
+        "家人"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiarenxiangju",
+      "expected": "家人相聚",
+      "source": "5500",
+      "lookup_us": 10778,
+      "candidates": [
+        "家人相聚",
+        "家人相距",
+        "佳人相聚",
+        "佳人相距",
+        "家人想聚",
+        "家人想局",
+        "家人想剧",
+        "家人想居",
+        "家人"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiarenxiaoxi",
+      "expected": "家人消息",
+      "source": "5500",
+      "lookup_us": 8346,
+      "candidates": [
+        "家人消息",
+        "佳人消息",
+        "家人小溪",
+        "家人小西",
+        "家认消息",
+        "假韧消息",
+        "佳人小溪",
+        "加认消息",
+        "家人"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiarenzuoke",
+      "expected": "家人做客",
+      "source": "5500",
+      "lookup_us": 3918,
+      "candidates": [
+        "家人做客",
+        "家人作客",
+        "佳人做客",
+        "佳人作客",
+        "家人做课",
+        "家人做克",
+        "家人佐科",
+        "家人做科",
+        "家人"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiashubangmang",
+      "expected": "家属帮忙",
+      "source": "5500",
+      "lookup_us": 8802,
+      "candidates": [
+        "家属帮忙",
+        "家数帮忙",
+        "加数帮忙",
+        "家书帮忙",
+        "加属帮忙",
+        "加书帮忙",
+        "家树帮忙",
+        "加输帮忙",
+        "家属"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiashuqueren",
+      "expected": "家属确认",
+      "source": "5500",
+      "lookup_us": 7785,
+      "candidates": [
+        "家属确认",
+        "家数确认",
+        "加数确认",
+        "家书确认",
+        "家属缺人",
+        "加书确认",
+        "加属确认",
+        "家树确认",
+        "家属"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiashutanshi",
+      "expected": "家属探视",
+      "source": "5500",
+      "lookup_us": 6277,
+      "candidates": [
+        "家属探视",
+        "家属谈时",
+        "家属谈是",
+        "家属谈事",
+        "家属探时",
+        "家属探是",
+        "家属探事",
+        "家属弹时",
+        "家属"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiashutongzhi",
+      "expected": "家属通知",
+      "source": "5500",
+      "lookup_us": 4675,
+      "candidates": [
+        "家属通知",
+        "家属同志",
+        "家属统治",
+        "家属同知",
+        "家数通知",
+        "加数通知",
+        "家属同治",
+        "家属同之",
+        "家属"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiashuxieshang",
+      "expected": "家属协商",
+      "source": "5500",
+      "lookup_us": 7078,
+      "candidates": [
+        "家属协商",
+        "家属写上",
+        "家书写上",
+        "加书写上",
+        "家属鞋上",
+        "家数协商",
+        "加数协商",
+        "家属协上",
+        "家属"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiashuxingming",
+      "expected": "家属姓名",
+      "source": "5500",
+      "lookup_us": 9268,
+      "candidates": [
+        "家属姓名",
+        "家属性命",
+        "家属性名",
+        "家属性明",
+        "家数姓名",
+        "家属星明",
+        "加数姓名",
+        "家属性鸣",
+        "家属"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiashuxinxi",
+      "expected": "家属信息",
+      "source": "5500",
+      "lookup_us": 8291,
+      "candidates": [
+        "家属信息",
+        "家属欣喜",
+        "家书信息",
+        "家数信息",
+        "加数信息",
+        "加书信息",
+        "家属心系",
+        "加输信息",
+        "家属"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiashuyijian",
+      "expected": "家属意见",
+      "source": "5500",
+      "lookup_us": 10918,
+      "candidates": [
+        "家属意见",
+        "家属一件",
+        "家属一间",
+        "家属一见",
+        "家数意见",
+        "加数意见",
+        "家属已见",
+        "家属一剑",
+        "家属"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiashuzhichi",
+      "expected": "家属支持",
+      "source": "5500",
+      "lookup_us": 5954,
+      "candidates": [
+        "家属支持",
+        "家数支持",
+        "加数支持",
+        "家属只吃",
+        "家属直尺",
+        "家属咫尺",
+        "家书支持",
+        "家属直斥",
+        "家属"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatinganquangan",
+      "expected": "家庭安全感",
+      "source": "5500",
+      "lookup_us": 12671,
+      "candidates": [
+        "家庭安全感",
+        "家庭安全干",
+        "家挺安全感",
+        "家庭安全杆",
+        "家庭安全赶",
+        "家庭安全甘",
+        "家庭安全肝",
+        "家庭安全敢",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingbianjie",
+      "expected": "家庭边界",
+      "source": "5500",
+      "lookup_us": 12590,
+      "candidates": [
+        "家庭边界",
+        "家庭辩解",
+        "家庭便捷",
+        "家庭边街",
+        "家庭便接",
+        "家庭变节",
+        "家庭便街",
+        "家庭变街",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingchengwei",
+      "expected": "家庭称谓",
+      "source": "5500",
+      "lookup_us": 8395,
+      "candidates": [
+        "家庭称谓",
+        "家庭成为",
+        "家庭称为",
+        "家庭程为",
+        "家庭成位",
+        "家庭成威",
+        "家庭成味",
+        "家庭成维",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingchengyuanbiangeng",
+      "expected": "家庭成员变更",
+      "source": "5500",
+      "lookup_us": 19669,
+      "candidates": [
+        "家庭成员变更",
+        "家庭成塬变更",
+        "家庭成原变更",
+        "家庭乘员变更",
+        "家庭成元变更",
+        "家庭成员便更",
+        "家庭城垣变更",
+        "家庭成员边更",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingchengyuanbiao",
+      "expected": "家庭成员表",
+      "source": "5500",
+      "lookup_us": 15029,
+      "candidates": [
+        "家庭成员表",
+        "家庭成员标",
+        "家庭成员彪",
+        "家庭成员飙",
+        "家庭成员镖",
+        "家庭成员镳",
+        "家庭成员婊",
+        "家庭成员飚",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingchengyuanguanxi",
+      "expected": "家庭成员关系",
+      "source": "5500",
+      "lookup_us": 14516,
+      "candidates": [
+        "家庭成员关系",
+        "家庭成员关西",
+        "家庭成塬关系",
+        "家庭成缘关系",
+        "家庭成员管系",
+        "家庭成元关系",
+        "家庭成员观西",
+        "家庭乘员关系",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingchengyuanshu",
+      "expected": "家庭成员数",
+      "source": "5500",
+      "lookup_us": 11991,
+      "candidates": [
+        "家庭成员书",
+        "家庭成员数",
+        "家庭成员树",
+        "家庭成员属",
+        "家庭成员输",
+        "家庭成员熟",
+        "家庭成员鼠",
+        "家庭成员署",
+        "家庭"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "jiatingchongtu",
+      "expected": "家庭冲突",
+      "source": "5500",
+      "lookup_us": 6091,
+      "candidates": [
+        "家庭冲突",
+        "家听冲突",
+        "家停冲突",
+        "家庭重图",
+        "架停冲突",
+        "家庭重土",
+        "家挺冲突",
+        "加听冲突",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingchongzu",
+      "expected": "家庭重组",
+      "source": "5500",
+      "lookup_us": 5956,
+      "candidates": [
+        "家庭重组",
+        "家庭充足",
+        "家挺充足",
+        "加挺充足",
+        "家庭重祖",
+        "家庭冲组",
+        "家庭重足",
+        "家听充足",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingchuantong",
+      "expected": "家庭传统",
+      "source": "5500",
+      "lookup_us": 7099,
+      "candidates": [
+        "家庭传统",
+        "家庭串通",
+        "家庭传通",
+        "家庭传痛",
+        "家听传统",
+        "家挺传统",
+        "家庭传同",
+        "加听传统",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingdiwei",
+      "expected": "家庭地位",
+      "source": "5500",
+      "lookup_us": 4727,
+      "candidates": [
+        "家庭地位",
+        "家庭低位",
+        "家庭低为",
+        "家庭的为",
+        "家庭地为",
+        "家庭的胃",
+        "家庭的味",
+        "家庭的维",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingdizhi",
+      "expected": "家庭地址",
+      "source": "5500",
+      "lookup_us": 4999,
+      "candidates": [
+        "家庭地址",
+        "家庭抵制",
+        "家庭地质",
+        "家庭的指",
+        "家庭的值",
+        "家庭的纸",
+        "家庭的至",
+        "家庭的制",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingduihua",
+      "expected": "家庭对话",
+      "source": "5500",
+      "lookup_us": 6006,
+      "candidates": [
+        "家庭对话",
+        "家庭对华",
+        "家庭对花",
+        "家庭对化",
+        "家庭对画",
+        "家庭对滑",
+        "家听对话",
+        "家庭对划",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingfenqi",
+      "expected": "家庭分歧",
+      "source": "5500",
+      "lookup_us": 4190,
+      "candidates": [
+        "家庭分歧",
+        "家庭分期",
+        "家庭奋起",
+        "家庭分起",
+        "家庭芬奇",
+        "家庭粉器",
+        "家庭分器",
+        "家庭分气",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingfenwei",
+      "expected": "家庭氛围",
+      "source": "5500",
+      "lookup_us": 4030,
+      "candidates": [
+        "家庭氛围",
+        "家庭分为",
+        "家庭分位",
+        "家庭份为",
+        "家庭分卫",
+        "家庭芬为",
+        "家庭分委",
+        "家庭粉为",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingguan",
+      "expected": "家庭观",
+      "source": "5500",
+      "lookup_us": 6574,
+      "candidates": [
+        "家庭观",
+        "家庭关",
+        "家庭管",
+        "家庭官",
+        "家庭馆",
+        "家庭冠",
+        "家庭灌",
+        "家庭罐",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingguanai",
+      "expected": "家庭关爱",
+      "source": "5500",
+      "lookup_us": 7607,
+      "candidates": [
+        "家庭关爱",
+        "家庭观爱",
+        "家庭管爱",
+        "家庭关癌",
+        "家庭官爱",
+        "家庭官埃",
+        "家庭纶皑",
+        "家庭观埃",
+        "家庭观"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingguanhuai",
+      "expected": "家庭关怀",
+      "source": "5500",
+      "lookup_us": 9824,
+      "candidates": [
+        "家庭关怀",
+        "家庭关槐",
+        "家庭关坏",
+        "家庭管坏",
+        "家庭观坏",
+        "家庭观怀",
+        "家庭官坏",
+        "家听关怀",
+        "家庭观"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingguanxi",
+      "expected": "家庭关系",
+      "source": "5500",
+      "lookup_us": 7608,
+      "candidates": [
+        "家庭关系",
+        "家庭关西",
+        "家庭管系",
+        "家庭观西",
+        "家听关系",
+        "家庭观系",
+        "家庭观溪",
+        "家庭管西",
+        "家庭观"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingguishugan",
+      "expected": "家庭归属感",
+      "source": "5500",
+      "lookup_us": 6736,
+      "candidates": [
+        "家庭归属感",
+        "家庭桂树干",
+        "家庭归属干",
+        "家庭贵树干",
+        "家庭珪树干",
+        "家庭归树干",
+        "家庭鬼树干",
+        "家庭归属杆",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingguize",
+      "expected": "家庭规则",
+      "source": "5500",
+      "lookup_us": 5286,
+      "candidates": [
+        "家庭规则",
+        "家听规则",
+        "家挺规则",
+        "加听规则",
+        "家停规则",
+        "架停规则",
+        "加挺规则",
+        "家庭贵则",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatinggushi",
+      "expected": "家庭故事",
+      "source": "5500",
+      "lookup_us": 4817,
+      "candidates": [
+        "家庭故事",
+        "家庭股市",
+        "家庭古时",
+        "家庭古诗",
+        "家庭骨时",
+        "家庭谷是",
+        "家庭估是",
+        "家庭故时",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatinghejie",
+      "expected": "家庭和解",
+      "source": "5500",
+      "lookup_us": 6803,
+      "candidates": [
+        "家庭和解",
+        "家庭和街",
+        "家庭和杰",
+        "家庭和节",
+        "家庭和结",
+        "家庭和捷",
+        "家庭和接",
+        "家庭和饥饿",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatinghexie",
+      "expected": "家庭和谐",
+      "source": "5500",
+      "lookup_us": 6734,
+      "candidates": [
+        "家庭和谐",
+        "家庭河蟹",
+        "家庭和些",
+        "家庭和写",
+        "家庭和血",
+        "家庭和谢",
+        "家庭和鞋",
+        "家庭和蟹",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatinghuanjing",
+      "expected": "家庭环境",
+      "source": "5500",
+      "lookup_us": 11666,
+      "candidates": [
+        "家庭环境",
+        "家庭环景",
+        "家庭幻境",
+        "加庭环境",
+        "家听环境",
+        "家挺环境",
+        "家庭环劲",
+        "加听环境",
+        "家庭户"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatinghuodong",
+      "expected": "家庭活动",
+      "source": "5500",
+      "lookup_us": 6312,
+      "candidates": [
+        "家庭活动",
+        "家庭或东",
+        "家听活动",
+        "家庭和东",
+        "家庭或动",
+        "家庭和动",
+        "加听活动",
+        "家庭或洞",
+        "家庭户"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatinghuzhu",
+      "expected": "家庭互助",
+      "source": "5500",
+      "lookup_us": 4268,
+      "candidates": [
+        "家庭互助",
+        "家庭户主",
+        "家庭护住",
+        "家庭户住",
+        "家庭户著",
+        "家庭湖住",
+        "家庭户注",
+        "家庭户猪",
+        "家庭户"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingjiaoliu",
+      "expected": "家庭交流",
+      "source": "5500",
+      "lookup_us": 9202,
+      "candidates": [
+        "家庭交流",
+        "家庭教流",
+        "家庭焦溜",
+        "家庭教留",
+        "家庭教六",
+        "加亭交流",
+        "家听交流",
+        "家亭交流",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingjiazhiguan",
+      "expected": "家庭价值观",
+      "source": "5500",
+      "lookup_us": 9704,
+      "candidates": [
+        "家庭价值观",
+        "家庭价值管",
+        "家庭价值关",
+        "家庭价值官",
+        "家庭价值馆",
+        "家庭价值冠",
+        "家庭价值罐",
+        "家庭价值贯",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingjiegou",
+      "expected": "家庭结构",
+      "source": "5500",
+      "lookup_us": 6623,
+      "candidates": [
+        "家庭结构",
+        "家庭解构",
+        "家挺结构",
+        "家听结构",
+        "加庭结构",
+        "加挺结构",
+        "家庭接狗",
+        "家庭接沟",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingjuese",
+      "expected": "家庭角色",
+      "source": "5500",
+      "lookup_us": 5584,
+      "candidates": [
+        "家庭角色",
+        "家庭绝色",
+        "家听角色",
+        "家挺角色",
+        "加听角色",
+        "家停角色",
+        "架停角色",
+        "加挺角色",
+        "家庭剧"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatinglengzhan",
+      "expected": "家庭冷战",
+      "source": "5500",
+      "lookup_us": 4316,
+      "candidates": [
+        "家庭冷战",
+        "家庭冷站",
+        "家庭冷展",
+        "家庭冷占",
+        "家挺冷战",
+        "加挺冷战",
+        "家庭棱站",
+        "家听冷战",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatinglianxiren",
+      "expected": "家庭联系人",
+      "source": "5500",
+      "lookup_us": 8517,
+      "candidates": [
+        "家庭联系人",
+        "家庭联系任",
+        "家庭联系仁",
+        "家庭练习人",
+        "家庭联系认",
+        "家庭联系忍",
+        "家庭练习任",
+        "家庭练习仁",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingmaodun",
+      "expected": "家庭矛盾",
+      "source": "5500",
+      "lookup_us": 6825,
+      "candidates": [
+        "家庭矛盾",
+        "加庭矛盾",
+        "家庭茅盾",
+        "家听矛盾",
+        "家挺矛盾",
+        "加听矛盾",
+        "家停矛盾",
+        "架停矛盾",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingningjuli",
+      "expected": "家庭凝聚力",
+      "source": "5500",
+      "lookup_us": 7961,
+      "candidates": [
+        "家庭凝聚力",
+        "家庭宁距离",
+        "家庭凝聚里",
+        "家庭凝距离",
+        "家庭宁举例",
+        "家听凝聚力",
+        "家庭拧距离",
+        "家庭凝聚利",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingqingkuangbiao",
+      "expected": "家庭情况表",
+      "source": "5500",
+      "lookup_us": 13591,
+      "candidates": [
+        "家庭情况表",
+        "家庭情况标",
+        "家庭请狂飙",
+        "家庭轻狂飙",
+        "家庭亲狂飙",
+        "家庭卿狂飙",
+        "家庭情况彪",
+        "家庭清狂飙",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingqingkuangshuoming",
+      "expected": "家庭情况说明",
+      "source": "5500",
+      "lookup_us": 12410,
+      "candidates": [
+        "家庭情况说明",
+        "家听情况说明",
+        "家庭轻狂说明",
+        "家庭情况说名",
+        "家庭情况说鸣",
+        "家庭情况说命",
+        "家庭情况数名",
+        "家庭情况说铭",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingqun",
+      "expected": "家庭群",
+      "source": "5500",
+      "lookup_us": 5200,
+      "candidates": [
+        "家庭群",
+        "家庭裙",
+        "家庭夋",
+        "家听群",
+        "家挺群",
+        "加听群",
+        "家停群",
+        "架停群",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingqunshipin",
+      "expected": "家庭群视频",
+      "source": "5500",
+      "lookup_us": 7088,
+      "candidates": [
+        "家庭群视频",
+        "家庭群食品",
+        "家庭群饰品",
+        "家庭裙视频",
+        "家庭裙食品",
+        "家庭裙饰品",
+        "家庭夋视频",
+        "家庭夋食品",
+        "家庭群"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingquntongzhi",
+      "expected": "家庭群通知",
+      "source": "5500",
+      "lookup_us": 6368,
+      "candidates": [
+        "家庭群通知",
+        "家庭群同志",
+        "家庭群统治",
+        "家庭裙通知",
+        "家庭裙同志",
+        "家庭裙统治",
+        "家庭群同知",
+        "家庭夋通知",
+        "家庭群"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingqunxiangce",
+      "expected": "家庭群相册",
+      "source": "5500",
+      "lookup_us": 9735,
+      "candidates": [
+        "家庭群相册",
+        "家庭裙相册",
+        "家庭群向侧",
+        "家庭夋相册",
+        "家听群相册",
+        "家庭群箱侧",
+        "家庭群项测",
+        "家庭群向测",
+        "家庭群"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingqunxiaoxi",
+      "expected": "家庭群消息",
+      "source": "5500",
+      "lookup_us": 9445,
+      "candidates": [
+        "家庭群消息",
+        "家庭裙消息",
+        "家庭群小溪",
+        "家听群消息",
+        "家庭夋消息",
+        "家庭群小西",
+        "家庭裙小溪",
+        "家庭麇消息",
+        "家庭群"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingrenkou",
+      "expected": "家庭人口",
+      "source": "5500",
+      "lookup_us": 3603,
+      "candidates": [
+        "家庭人口",
+        "家听人口",
+        "家庭认口",
+        "加听人口",
+        "家庭人扣",
+        "家庭刃口",
+        "家庭任口",
+        "家庭认扣",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingrenshu",
+      "expected": "家庭人数",
+      "source": "5500",
+      "lookup_us": 3899,
+      "candidates": [
+        "家庭人数",
+        "家庭认输",
+        "家庭人书",
+        "家庭认书",
+        "家庭仁书",
+        "家庭人输",
+        "家庭人树",
+        "家庭人属",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingsuozaidi",
+      "expected": "家庭所在地",
+      "source": "5500",
+      "lookup_us": 7260,
+      "candidates": [
+        "家庭所在地",
+        "家庭所在的",
+        "家庭所在第",
+        "家庭所载的",
+        "家庭所在敌",
+        "家庭所在低",
+        "家庭锁在第",
+        "家庭所在迪",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingtaolun",
+      "expected": "家庭讨论",
+      "source": "5500",
+      "lookup_us": 6224,
+      "candidates": [
+        "家庭讨论",
+        "家听讨论",
+        "家挺讨论",
+        "加厅讨论",
+        "家厅讨论",
+        "加听讨论",
+        "家停讨论",
+        "架停讨论",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingtiaojie",
+      "expected": "家庭调解",
+      "source": "5500",
+      "lookup_us": 9201,
+      "candidates": [
+        "家庭调解",
+        "家庭调节",
+        "家庭条街",
+        "家庭调街",
+        "家庭调结",
+        "家庭调饥饿",
+        "家庭条捷",
+        "家庭调杰",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingtongxunlu",
+      "expected": "家庭通讯录",
+      "source": "5500",
+      "lookup_us": 6425,
+      "candidates": [
+        "家庭通讯录",
+        "家庭通讯路",
+        "家庭通讯鲁",
+        "家庭通讯鹿",
+        "家庭通讯露",
+        "家庭通讯炉",
+        "家庭通讯陆",
+        "家庭通讯卢",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingtuanyuan",
+      "expected": "家庭团圆",
+      "source": "5500",
+      "lookup_us": 7565,
+      "candidates": [
+        "家庭团圆",
+        "家庭团员",
+        "家庭团远",
+        "家庭团元",
+        "家庭团原",
+        "家庭团源",
+        "家庭团园",
+        "家庭团院",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingwenhua",
+      "expected": "家庭文化",
+      "source": "5500",
+      "lookup_us": 7004,
+      "candidates": [
+        "家庭文化",
+        "家庭问话",
+        "家庭文华",
+        "家听文化",
+        "家庭问花",
+        "家庭问化",
+        "家庭问华",
+        "加听文化",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingxiguan",
+      "expected": "家庭习惯",
+      "source": "5500",
+      "lookup_us": 9425,
+      "candidates": [
+        "家庭习惯",
+        "家庭吸管",
+        "家庭西关",
+        "家庭西官",
+        "家庭系馆",
+        "家庭系管",
+        "家庭系官",
+        "家庭细观",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingxingfugan",
+      "expected": "家庭幸福感",
+      "source": "5500",
+      "lookup_us": 10093,
+      "candidates": [
+        "家庭幸福感",
+        "家庭幸福干",
+        "家庭幸福杆",
+        "家挺幸福感",
+        "家庭幸福赶",
+        "家庭幸福甘",
+        "家庭幸福肝",
+        "家庭幸福敢",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingxinxibiao",
+      "expected": "家庭信息表",
+      "source": "5500",
+      "lookup_us": 8419,
+      "candidates": [
+        "家庭信息表",
+        "家庭信息标",
+        "家庭信息彪",
+        "家庭信息飙",
+        "家庭信息镖",
+        "家庭欣喜表",
+        "家庭欣喜标",
+        "家庭信息镳",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingxiufu",
+      "expected": "家庭修复",
+      "source": "5500",
+      "lookup_us": 5377,
+      "candidates": [
+        "家庭修复",
+        "家庭秀夫",
+        "家庭秀富",
+        "家庭秀服",
+        "家庭修服",
+        "家庭秀福",
+        "家庭秀负",
+        "家听修复",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingyiwu",
+      "expected": "家庭义务",
+      "source": "5500",
+      "lookup_us": 6244,
+      "candidates": [
+        "家庭义务",
+        "家庭衣物",
+        "家庭异物",
+        "家庭遗物",
+        "家庭一无",
+        "家庭已无",
+        "家庭亦无",
+        "家庭义乌",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingzeren",
+      "expected": "家庭责任",
+      "source": "5500",
+      "lookup_us": 4129,
+      "candidates": [
+        "家庭责任",
+        "家庭则人",
+        "家听责任",
+        "家庭泽人",
+        "家挺责任",
+        "加听责任",
+        "家停责任",
+        "架停责任",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingzhaopian",
+      "expected": "家庭照片",
+      "source": "5500",
+      "lookup_us": 7983,
+      "candidates": [
+        "家庭照片",
+        "家庭照骗",
+        "家听照片",
+        "家挺照片",
+        "家庭照篇",
+        "加听照片",
+        "家停照片",
+        "架停照片",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingzhengchao",
+      "expected": "家庭争吵",
+      "source": "5500",
+      "lookup_us": 7001,
+      "candidates": [
+        "家庭争吵",
+        "家庭整绰",
+        "家庭郑巢",
+        "家庭正朝",
+        "家庭正超",
+        "家庭正潮",
+        "家庭证超",
+        "家庭证潮",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingzhengzhi",
+      "expected": "家庭争执",
+      "source": "5500",
+      "lookup_us": 6350,
+      "candidates": [
+        "家庭争执",
+        "家庭政治",
+        "家庭正直",
+        "家庭整治",
+        "家庭正值",
+        "家庭政制",
+        "家庭正职",
+        "家庭郑智",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingzhichi",
+      "expected": "家庭支持",
+      "source": "5500",
+      "lookup_us": 5912,
+      "candidates": [
+        "家庭支持",
+        "家庭只吃",
+        "家庭直尺",
+        "家庭咫尺",
+        "家庭直斥",
+        "家庭智齿",
+        "家庭直吃",
+        "家庭之耻",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingzhuzhi",
+      "expected": "家庭住址",
+      "source": "5500",
+      "lookup_us": 4241,
+      "candidates": [
+        "家庭住址",
+        "家庭主旨",
+        "家庭主治",
+        "家庭主制",
+        "家庭主之",
+        "家庭主指",
+        "家庭煮制",
+        "家庭住之",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiatingzucheng",
+      "expected": "家庭组成",
+      "source": "5500",
+      "lookup_us": 4334,
+      "candidates": [
+        "家庭组成",
+        "家庭组称",
+        "家庭族称",
+        "家庭组城",
+        "家听组成",
+        "加厅组成",
+        "家厅组成",
+        "家庭足成",
+        "家庭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiazhongwanbei",
+      "expected": "家中晚辈",
+      "source": "5500",
+      "lookup_us": 4384,
+      "candidates": [
+        "家中晚辈",
+        "家中玩呗",
+        "家中完备",
+        "加重晚辈",
+        "家中万倍",
+        "加重玩呗",
+        "加重完备",
+        "加重万倍",
+        "家中"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiazhongzhangbei",
+      "expected": "家中长辈",
+      "source": "5500",
+      "lookup_us": 5032,
+      "candidates": [
+        "家中长辈",
+        "加重长辈",
+        "家中长呗",
+        "家中长被",
+        "家中张呗",
+        "家中长臂",
+        "架中长辈",
+        "家中张被",
+        "家中"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiazubeifen",
+      "expected": "家族辈分",
+      "source": "5500",
+      "lookup_us": 3027,
+      "candidates": [
+        "家族辈分",
+        "家族备份",
+        "家族悲愤",
+        "家族被分",
+        "甲组备份",
+        "加祖辈分",
+        "家组备份",
+        "家族北分",
+        "家族"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiazuchengwei",
+      "expected": "家族称谓",
+      "source": "5500",
+      "lookup_us": 4053,
+      "candidates": [
+        "家族称谓",
+        "家族称为",
+        "家族成为",
+        "甲组成为",
+        "家组成为",
+        "甲组称为",
+        "家组称为",
+        "家族程为",
+        "家族"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiazuchuantong",
+      "expected": "家族传统",
+      "source": "5500",
+      "lookup_us": 5872,
+      "candidates": [
+        "家族传统",
+        "家族串通",
+        "加族传统",
+        "甲组传统",
+        "家组传统",
+        "加祖传统",
+        "家祖传统",
+        "加租传统",
+        "家族"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiazufenzhi",
+      "expected": "家族分支",
+      "source": "5500",
+      "lookup_us": 3749,
+      "candidates": [
+        "家族分支",
+        "家族分值",
+        "家族分之",
+        "家族分至",
+        "家族分指",
+        "甲组分支",
+        "家族分制",
+        "家组分支",
+        "家族"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiazuguanxi",
+      "expected": "家族关系",
+      "source": "5500",
+      "lookup_us": 5876,
+      "candidates": [
+        "家族关系",
+        "家族关西",
+        "加族关系",
+        "甲组关系",
+        "家组关系",
+        "加足关系",
+        "甲足关系",
+        "加祖关系",
+        "家族"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiazugushi",
+      "expected": "家族故事",
+      "source": "5500",
+      "lookup_us": 4136,
+      "candidates": [
+        "家族故事",
+        "家族股市",
+        "家族古时",
+        "家族古诗",
+        "甲组故事",
+        "家组故事",
+        "家族骨时",
+        "家族谷是",
+        "家族"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiazuheying",
+      "expected": "家族合影",
+      "source": "5500",
+      "lookup_us": 5263,
+      "candidates": [
+        "家族合影",
+        "甲组合影",
+        "家组合影",
+        "家族和英",
+        "家族和营",
+        "家族和应",
+        "家族和影",
+        "家族和赢",
+        "家族"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiazuhuiyi",
+      "expected": "家族会议",
+      "source": "5500",
+      "lookup_us": 4031,
+      "candidates": [
+        "家族会议",
+        "家族回忆",
+        "甲组会议",
+        "家组会议",
+        "家族会以",
+        "家族悔意",
+        "家族毁以",
+        "家族毁一",
+        "家族"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiazuhuodong",
+      "expected": "家族活动",
+      "source": "5500",
+      "lookup_us": 3813,
+      "candidates": [
+        "家族活动",
+        "甲组活动",
+        "家组活动",
+        "加祖活动",
+        "加租活动",
+        "加足活动",
+        "甲足活动",
+        "加族活动",
+        "家族"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiazujiyi",
+      "expected": "家族记忆",
+      "source": "5500",
+      "lookup_us": 3802,
+      "candidates": [
+        "家族记忆",
+        "家族技艺",
+        "家族机翼",
+        "家族即以",
+        "家族极易",
+        "家族及以",
+        "家族几亿",
+        "甲组记忆",
+        "家族"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiazujucan",
+      "expected": "家族聚餐",
+      "source": "5500",
+      "lookup_us": 2861,
+      "candidates": [
+        "家族聚餐",
+        "甲组聚餐",
+        "家组聚餐",
+        "加族聚餐",
+        "家族居餐",
+        "加祖聚餐",
+        "加租聚餐",
+        "加足聚餐",
+        "家族"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiazujuhui",
+      "expected": "家族聚会",
+      "source": "5500",
+      "lookup_us": 4077,
+      "candidates": [
+        "家族聚会",
+        "甲组聚会",
+        "家组聚会",
+        "加族聚会",
+        "家族局会",
+        "加祖聚会",
+        "家族居会",
+        "加租聚会",
+        "家族"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiazulianluo",
+      "expected": "家族联络",
+      "source": "5500",
+      "lookup_us": 7547,
+      "candidates": [
+        "家族联络",
+        "甲组联络",
+        "家组联络",
+        "加足联络",
+        "甲足联络",
+        "加祖联络",
+        "家族连络",
+        "加租联络",
+        "家族"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiazulianxi",
+      "expected": "家族联系",
+      "source": "5500",
+      "lookup_us": 6433,
+      "candidates": [
+        "家族联系",
+        "家族练习",
+        "甲组联系",
+        "家组联系",
+        "加足联系",
+        "甲足联系",
+        "家族连系",
+        "甲组练习",
+        "家族"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiazulishi",
+      "expected": "家族历史",
+      "source": "5500",
+      "lookup_us": 5407,
+      "candidates": [
+        "家族历史",
+        "家族历时",
+        "家族理事",
+        "家族离世",
+        "家族力士",
+        "家族里时",
+        "家族李氏",
+        "家族利是",
+        "家族"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiazupaihang",
+      "expected": "家族排行",
+      "source": "5500",
+      "lookup_us": 4486,
+      "candidates": [
+        "家族排行",
+        "甲组排行",
+        "家组排行",
+        "家族派行",
+        "家族派航",
+        "家族牌行",
+        "家族拍行",
+        "加祖排行",
+        "家族"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiazupuxi",
+      "expected": "家族谱系",
+      "source": "5500",
+      "lookup_us": 3371,
+      "candidates": [
+        "家族谱系",
+        "家族浦西",
+        "家族扑熄",
+        "家族普西",
+        "加族谱系",
+        "家族谱西",
+        "家族谱戏",
+        "家族谱喜",
+        "家族"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiazuqun",
+      "expected": "家族群",
+      "source": "5500",
+      "lookup_us": 2483,
+      "candidates": [
+        "家族群",
+        "加族群",
+        "假族群",
+        "架族群",
+        "贾族群",
+        "嘉族群",
+        "家族裙",
+        "甲族群",
+        "家族"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiazuqunliao",
+      "expected": "家族群聊",
+      "source": "5500",
+      "lookup_us": 5842,
+      "candidates": [
+        "家族群聊",
+        "家族群了",
+        "家族群里奥",
+        "家族群料",
+        "加族群聊",
+        "加族群了",
+        "家族群寮",
+        "家族群辽",
+        "家族群"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiazurenqin",
+      "expected": "家族认亲",
+      "source": "5500",
+      "lookup_us": 4087,
+      "candidates": [
+        "家族认亲",
+        "家族人亲",
+        "家族人钦",
+        "家族人琴",
+        "家族人勤",
+        "家族人秦",
+        "家族人禽",
+        "家族人侵",
+        "家族"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiazushixi",
+      "expected": "家族世系",
+      "source": "5500",
+      "lookup_us": 3858,
+      "candidates": [
+        "家族世系",
+        "家族世袭",
+        "家族实习",
+        "家族是西",
+        "家族史系",
+        "家族市西",
+        "家族是戏",
+        "家族是系",
+        "家族史"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiazutongxunlu",
+      "expected": "家族通讯录",
+      "source": "5500",
+      "lookup_us": 7220,
+      "candidates": [
+        "家族通讯录",
+        "家族通讯路",
+        "家族通讯鲁",
+        "家族通讯鹿",
+        "家族通讯露",
+        "家族通讯炉",
+        "甲组通讯录",
+        "家族通讯陆",
+        "家族"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiazutuanju",
+      "expected": "家族团聚",
+      "source": "5500",
+      "lookup_us": 4946,
+      "candidates": [
+        "家族团聚",
+        "甲组团聚",
+        "家组团聚",
+        "家族团举",
+        "家族团局",
+        "家族团剧",
+        "家族团居",
+        "家族团拒",
+        "家族"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiazuwanbei",
+      "expected": "家族晚辈",
+      "source": "5500",
+      "lookup_us": 4240,
+      "candidates": [
+        "家族晚辈",
+        "家族玩呗",
+        "家族完备",
+        "家族万倍",
+        "家族万被",
+        "家族晚被",
+        "家族完被",
+        "家族完北",
+        "家族"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiazuwangshi",
+      "expected": "家族往事",
+      "source": "5500",
+      "lookup_us": 5519,
+      "candidates": [
+        "家族往事",
+        "家族王室",
+        "家族王氏",
+        "家族王世",
+        "家族望时",
+        "家族王时",
+        "家族王石",
+        "家族网时",
+        "家族"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiazuxingshi",
+      "expected": "家族姓氏",
+      "source": "5500",
+      "lookup_us": 6246,
+      "candidates": [
+        "家族姓氏",
+        "家族形式",
+        "家族形势",
+        "家族行驶",
+        "家族行事",
+        "家族行使",
+        "家族刑事",
+        "家族性是",
+        "家族"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiazuzhangbei",
+      "expected": "家族长辈",
+      "source": "5500",
+      "lookup_us": 5020,
+      "candidates": [
+        "家族长辈",
+        "家族长呗",
+        "家族长被",
+        "甲组长辈",
+        "家族长臂",
+        "家组长辈",
+        "家族长贝",
+        "家族长杯",
+        "家族"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiazuzibei",
+      "expected": "家族字辈",
+      "source": "5500",
+      "lookup_us": 3289,
+      "candidates": [
+        "家族字辈",
+        "家族自卑",
+        "家族自备",
+        "家族自呗",
+        "家族资呗",
+        "家族自被",
+        "家族自北",
+        "家族子被",
+        "家族"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiediguanxi",
+      "expected": "姐弟关系",
+      "source": "5500",
+      "lookup_us": 9375,
+      "candidates": [
+        "姐弟关系",
+        "饥饿的关系",
+        "接地关系",
+        "届的关系",
+        "届第关系",
+        "街地关系",
+        "接地关西",
+        "届低关系",
+        "接地"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiedihemu",
+      "expected": "姐弟和睦",
+      "source": "5500",
+      "lookup_us": 5888,
+      "candidates": [
+        "姐弟和睦",
+        "接地和木",
+        "接地和睦",
+        "接地和母",
+        "接地和墓",
+        "接地和穆",
+        "接地和姆",
+        "接地禾木",
+        "接地"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiedihuzhu",
+      "expected": "姐弟互助",
+      "source": "5500",
+      "lookup_us": 4672,
+      "candidates": [
+        "姐弟互助",
+        "接地互助",
+        "饥饿的互助",
+        "届的互助",
+        "接地护住",
+        "街地互助",
+        "届第互助",
+        "接地户主",
+        "接地"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiedijige",
+      "expected": "姐弟几个",
+      "source": "5500",
+      "lookup_us": 4853,
+      "candidates": [
+        "姐弟几个",
+        "接地几个",
+        "饥饿的几个",
+        "接地及格",
+        "届第几个",
+        "届的几个",
+        "接第几个",
+        "届低级戈",
+        "接地"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiedixiangju",
+      "expected": "姐弟相聚",
+      "source": "5500",
+      "lookup_us": 11128,
+      "candidates": [
+        "姐弟相聚",
+        "接地相聚",
+        "接地相距",
+        "饥饿的相聚",
+        "饥饿的相距",
+        "姐弟相距",
+        "届的相聚",
+        "届的相距",
+        "接地线"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiejiejia",
+      "expected": "姐姐家",
+      "source": "5500",
+      "lookup_us": 6526,
+      "candidates": [
+        "姐姐家",
+        "姐姐嫁",
+        "姐姐加",
+        "姐姐价",
+        "节节假",
+        "姐姐假",
+        "姐姐甲",
+        "姐姐架",
+        "姐姐"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiemeiguanxi",
+      "expected": "姐妹关系",
+      "source": "5500",
+      "lookup_us": 9083,
+      "candidates": [
+        "姐妹关系",
+        "皆没关系",
+        "接没关系",
+        "届美关系",
+        "接美关系",
+        "姐妹关西",
+        "届每关系",
+        "杰梅关系",
+        "姐妹"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiemeihemu",
+      "expected": "姐妹和睦",
+      "source": "5500",
+      "lookup_us": 6154,
+      "candidates": [
+        "姐妹和睦",
+        "姐妹和木",
+        "姐妹和目",
+        "姐妹和母",
+        "姐妹和墓",
+        "姐妹和穆",
+        "姐妹和姆",
+        "姐妹禾木",
+        "姐妹"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiemeihuzhu",
+      "expected": "姐妹互助",
+      "source": "5500",
+      "lookup_us": 6878,
+      "candidates": [
+        "姐妹互助",
+        "姐妹护住",
+        "姐妹户主",
+        "届美互助",
+        "届每互助",
+        "姐妹护著",
+        "届每户住",
+        "届每户主",
+        "姐妹"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiemeijige",
+      "expected": "姐妹几个",
+      "source": "5500",
+      "lookup_us": 6922,
+      "candidates": [
+        "姐妹几个",
+        "姐妹及格",
+        "皆没几个",
+        "接没几个",
+        "届美几个",
+        "皆没及格",
+        "接没及格",
+        "届每几个",
+        "姐妹"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiemeilia",
+      "expected": "姐妹俩",
+      "source": "5500",
+      "lookup_us": 6252,
+      "candidates": [
+        "姐妹俩",
+        "届美丽啊",
+        "姐妹里啊",
+        "接美丽啊",
+        "姐妹倆",
+        "姐妹李啊",
+        "姐妹力啊",
+        "届每俩",
+        "姐妹"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiemeipaihang",
+      "expected": "姐妹排行",
+      "source": "5500",
+      "lookup_us": 8935,
+      "candidates": [
+        "姐妹排行",
+        "届每排行",
+        "届美排行",
+        "皆没排行",
+        "姐妹牌行",
+        "接没排行",
+        "姐妹派行",
+        "杰梅排行",
+        "姐妹"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiemeiqinqing",
+      "expected": "姐妹亲情",
+      "source": "5500",
+      "lookup_us": 11289,
+      "candidates": [
+        "姐妹亲情",
+        "姐妹亲清",
+        "姐妹亲亲",
+        "皆没亲情",
+        "届每亲情",
+        "姐妹亲庆",
+        "届美亲情",
+        "接没亲情",
+        "姐妹"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiemeiqun",
+      "expected": "姐妹群",
+      "source": "5500",
+      "lookup_us": 7197,
+      "candidates": [
+        "姐妹群",
+        "姐妹裙",
+        "届美群",
+        "届每群",
+        "皆没群",
+        "接没群",
+        "接美群",
+        "届没群",
+        "姐妹"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiemeituanju",
+      "expected": "姐妹团聚",
+      "source": "5500",
+      "lookup_us": 8444,
+      "candidates": [
+        "姐妹团聚",
+        "届美团聚",
+        "接美团聚",
+        "届每团聚",
+        "皆没团聚",
+        "姐妹团举",
+        "届美团举",
+        "姐妹团局",
+        "姐妹"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiemeixiangju",
+      "expected": "姐妹相聚",
+      "source": "5500",
+      "lookup_us": 14091,
+      "candidates": [
+        "姐妹相聚",
+        "姐妹相距",
+        "姐妹项具",
+        "届每相距",
+        "姐妹项局",
+        "姐妹项举",
+        "姐妹香居",
+        "姐妹想聚",
+        "姐妹"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jifujimu",
+      "expected": "继父继母",
+      "source": "5500",
+      "lookup_us": 6063,
+      "candidates": [
+        "继父继母",
+        "继父吉姆",
+        "基辅吉姆",
+        "肌肤吉姆",
+        "基辅继母",
+        "极富吉姆",
+        "及父吉姆",
+        "基辅积木",
+        "肌肤"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jinqinguanxi",
+      "expected": "近亲关系",
+      "source": "5500",
+      "lookup_us": 10462,
+      "candidates": [
+        "近亲关系",
+        "近亲关西",
+        "金亲关系",
+        "金钦关系",
+        "近亲观席",
+        "金琴关系",
+        "金秦关系",
+        "金勤关系",
+        "尽情"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jinqinshu",
+      "expected": "近亲属",
+      "source": "5500",
+      "lookup_us": 6245,
+      "candidates": [
+        "近亲属",
+        "金亲属",
+        "近亲疏",
+        "近亲书",
+        "仅亲属",
+        "近亲数",
+        "近亲树",
+        "进亲属",
+        "近亲"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kongchaofumu",
+      "expected": "空巢父母",
+      "source": "5500",
+      "lookup_us": 6047,
+      "candidates": [
+        "空巢父母",
+        "孔朝父母",
+        "空超父母",
+        "空朝父母",
+        "孔超父母",
+        "空炒父母",
+        "空潮父母",
+        "孔炒父母",
+        "空"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kongchaojiating",
+      "expected": "空巢家庭",
+      "source": "5500",
+      "lookup_us": 6908,
+      "candidates": [
+        "空巢家庭",
+        "空抄家庭",
+        "孔抄家庭",
+        "孔朝家庭",
+        "空超家庭",
+        "空炒家庭",
+        "空朝家庭",
+        "孔超家庭",
+        "空"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kongchaolaoren",
+      "expected": "空巢老人",
+      "source": "5500",
+      "lookup_us": 4307,
+      "candidates": [
+        "空巢老人",
+        "孔朝老人",
+        "空炒老人",
+        "空超老人",
+        "空朝老人",
+        "孔炒老人",
+        "孔超老人",
+        "空潮老人",
+        "空"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "liangjiajianmian",
+      "expected": "两家见面",
+      "source": "5500",
+      "lookup_us": 15102,
+      "candidates": [
+        "两家见面",
+        "两架见面",
+        "梁家见面",
+        "两家减免",
+        "两架减免",
+        "梁嘉见面",
+        "两加见面",
+        "梁加见面",
+        "两家"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "liangjiajiaowang",
+      "expected": "两家交往",
+      "source": "5500",
+      "lookup_us": 15981,
+      "candidates": [
+        "两家交往",
+        "两架交往",
+        "梁家交往",
+        "两家叫王",
+        "梁嘉交往",
+        "粮价交往",
+        "两家角王",
+        "两家交网",
+        "两家"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "liangjiajucan",
+      "expected": "两家聚餐",
+      "source": "5500",
+      "lookup_us": 6010,
+      "candidates": [
+        "两家聚餐",
+        "两架聚餐",
+        "梁家聚餐",
+        "梁嘉聚餐",
+        "两家居餐",
+        "两家具餐",
+        "粮价聚餐",
+        "两家具惨",
+        "两家"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "liangjiaqinqi",
+      "expected": "两家亲戚",
+      "source": "5500",
+      "lookup_us": 6467,
+      "candidates": [
+        "两家亲戚",
+        "两架亲戚",
+        "梁家亲戚",
+        "梁嘉亲戚",
+        "两家禽起",
+        "两家禽气",
+        "两家禽器",
+        "两家禽其",
+        "梁嘉琪"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "liangjiaren",
+      "expected": "两家人",
+      "source": "5500",
+      "lookup_us": 5900,
+      "candidates": [
+        "两家人",
+        "梁家仁",
+        "梁家人",
+        "两架人",
+        "两家认",
+        "两家仁",
+        "两家任",
+        "靓家人",
+        "两家"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "liangjiawanglai",
+      "expected": "两家往来",
+      "source": "5500",
+      "lookup_us": 6343,
+      "candidates": [
+        "两家往来",
+        "两架往来",
+        "梁家往来",
+        "两家王莱",
+        "两家王来",
+        "两家网来",
+        "梁嘉往来",
+        "两架网来",
+        "两家"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "liangjiaxiangchu",
+      "expected": "两家相处",
+      "source": "5500",
+      "lookup_us": 10299,
+      "candidates": [
+        "两家相处",
+        "两架相处",
+        "梁家相处",
+        "两家想出",
+        "两家乡出",
+        "两家乡处",
+        "两家向出",
+        "两架想出",
+        "梁家贤"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "liangjiazhangbei",
+      "expected": "两家长辈",
+      "source": "5500",
+      "lookup_us": 7498,
+      "candidates": [
+        "两家长辈",
+        "两家璋呗",
+        "两架长辈",
+        "两家长呗",
+        "两家长被",
+        "梁家长辈",
+        "两家长臂",
+        "两家长贝",
+        "两家"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "liangjiazoudong",
+      "expected": "两家走动",
+      "source": "5500",
+      "lookup_us": 5144,
+      "candidates": [
+        "两家走动",
+        "两架走动",
+        "梁家走动",
+        "粮价走动",
+        "梁嘉走动",
+        "两家走东",
+        "两价走动",
+        "两家走洞",
+        "两家"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lianhejiating",
+      "expected": "联合家庭",
+      "source": "5500",
+      "lookup_us": 6057,
+      "candidates": [
+        "联合家庭",
+        "连和家庭",
+        "联和家庭",
+        "连合家庭",
+        "联合家听",
+        "联合家停",
+        "连何家庭",
+        "联合家亭",
+        "联合"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lianjinguanxi",
+      "expected": "连襟关系",
+      "source": "5500",
+      "lookup_us": 8747,
+      "candidates": [
+        "连襟关系",
+        "连进关系",
+        "连今关系",
+        "连尽管系",
+        "连近关系",
+        "连金关系",
+        "连仅关系",
+        "脸进关系",
+        "炼金"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "liushoujiating",
+      "expected": "留守家庭",
+      "source": "5500",
+      "lookup_us": 5802,
+      "candidates": [
+        "留守家庭",
+        "刘受家庭",
+        "刘守家庭",
+        "六受家庭",
+        "刘首家庭",
+        "六首家庭",
+        "刘寿家庭",
+        "刘手家庭",
+        "留守"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "liushoulaoren",
+      "expected": "留守老人",
+      "source": "5500",
+      "lookup_us": 4130,
+      "candidates": [
+        "留守老人",
+        "刘寿老人",
+        "刘守老人",
+        "刘受老人",
+        "刘手老人",
+        "刘首老人",
+        "六首老人",
+        "刘收老人",
+        "留守"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lunzipaibei",
+      "expected": "论资排辈",
+      "source": "5500",
+      "lookup_us": 4141,
+      "candidates": [
+        "论资排辈",
+        "轮子拍呗",
+        "轮子牌呗",
+        "轮子排呗",
+        "轮子拍背",
+        "轮子排辈",
+        "轮子牌被",
+        "轮子排被",
+        "轮子"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mamanabian",
+      "expected": "妈妈那边",
+      "source": "5500",
+      "lookup_us": 8490,
+      "candidates": [
+        "妈妈那边",
+        "妈妈哪边",
+        "马麻那边",
+        "马吗那边",
+        "妈妈那变",
+        "妈妈那编",
+        "妈妈那便",
+        "马马那边",
+        "妈妈"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meimeijia",
+      "expected": "妹妹家",
+      "source": "5500",
+      "lookup_us": 7150,
+      "candidates": [
+        "妹妹家",
+        "妹妹嫁",
+        "妹妹加",
+        "妹妹价",
+        "妹妹假",
+        "妹妹甲",
+        "妹妹架",
+        "妹妹嘉",
+        "妹妹"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "munvguanxi",
+      "expected": "母女关系",
+      "source": "5500",
+      "lookup_us": 5494,
+      "candidates": [
+        "母女关系",
+        "木女关系",
+        "母女关西",
+        "母女管系",
+        "母女管西",
+        "木女关西",
+        "母钕关系",
+        "母女关戏",
+        "母女"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "muqinnabian",
+      "expected": "母亲那边",
+      "source": "5500",
+      "lookup_us": 5898,
+      "candidates": [
+        "母亲那边",
+        "母亲哪边",
+        "母亲那变",
+        "母亲那编",
+        "母亲那便",
+        "母亲那辩",
+        "母亲那遍",
+        "母秦那边",
+        "母亲"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "muxiqinshu",
+      "expected": "母系亲属",
+      "source": "5500",
+      "lookup_us": 5411,
+      "candidates": [
+        "母系亲属",
+        "木系亲属",
+        "牧谿亲属",
+        "母希亲属",
+        "木希亲属",
+        "母西亲属",
+        "母喜亲属",
+        "母细亲属",
+        "牧谿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "muziguanxi",
+      "expected": "母子关系",
+      "source": "5500",
+      "lookup_us": 6589,
+      "candidates": [
+        "母子关系",
+        "木子关系",
+        "母资关系",
+        "母子关西",
+        "母兹关系",
+        "母自关系",
+        "木资关系",
+        "木自关系",
+        "母子"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nanfangjiaren",
+      "expected": "男方家人",
+      "source": "5500",
+      "lookup_us": 6843,
+      "candidates": [
+        "男方家人",
+        "南方家人",
+        "南方佳人",
+        "南方加人",
+        "南方嫁人",
+        "男方佳人",
+        "南方假人",
+        "南方家仁",
+        "南方"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nanfangqinshu",
+      "expected": "男方亲属",
+      "source": "5500",
+      "lookup_us": 5560,
+      "candidates": [
+        "男方亲属",
+        "南方亲属",
+        "南方亲疏",
+        "南方琴蜀",
+        "南方亲书",
+        "男方亲疏",
+        "南方芹属",
+        "南方亲树",
+        "南方"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niangjiafumu",
+      "expected": "娘家父母",
+      "source": "5500",
+      "lookup_us": 5829,
+      "candidates": [
+        "娘家父母",
+        "娘嫁父母",
+        "娘加父母",
+        "娘佳父母",
+        "酿家父母",
+        "娘价父母",
+        "酿加父母",
+        "娘假父母",
+        "娘家"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niangjiajiedi",
+      "expected": "娘家姐弟",
+      "source": "5500",
+      "lookup_us": 9943,
+      "candidates": [
+        "娘家姐弟",
+        "娘家接地",
+        "娘家杰的",
+        "娘家届第",
+        "娘家届低",
+        "娘家街的",
+        "娘家节的",
+        "娘家届的",
+        "娘家"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niangjiajiemei",
+      "expected": "娘家姐妹",
+      "source": "5500",
+      "lookup_us": 8954,
+      "candidates": [
+        "娘家姐妹",
+        "娘家杰梅",
+        "娘家接美",
+        "娘家接没",
+        "娘家解酶",
+        "娘家杰没",
+        "娘家届美",
+        "娘家杰美",
+        "娘家"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niangjiaqinqi",
+      "expected": "娘家亲戚",
+      "source": "5500",
+      "lookup_us": 9434,
+      "candidates": [
+        "娘家亲戚",
+        "娘家禽起",
+        "娘家禽气",
+        "娘家禽器",
+        "娘家禽其",
+        "娘家禽期",
+        "娘家禽奇",
+        "娘加亲戚",
+        "娘家"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niangjiaren",
+      "expected": "娘家人",
+      "source": "5500",
+      "lookup_us": 4827,
+      "candidates": [
+        "娘家人",
+        "娘家认",
+        "娘家仁",
+        "娘嫁人",
+        "娘家任",
+        "酿家人",
+        "娘家忍",
+        "娘佳人",
+        "娘家"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niangjiaxiongdi",
+      "expected": "娘家兄弟",
+      "source": "5500",
+      "lookup_us": 8539,
+      "candidates": [
+        "娘家兄弟",
+        "娘嫁兄弟",
+        "酿家兄弟",
+        "娘加兄弟",
+        "娘家雄的",
+        "娘价兄弟",
+        "酿加兄弟",
+        "娘假兄弟",
+        "娘家"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niangjiaxiongmei",
+      "expected": "娘家兄妹",
+      "source": "5500",
+      "lookup_us": 7355,
+      "candidates": [
+        "娘家兄妹",
+        "娘嫁兄妹",
+        "酿家兄妹",
+        "娘家熊没",
+        "娘家雄美",
+        "娘加兄妹",
+        "娘家雄没",
+        "娘家兄没",
+        "娘家"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nvfangjiaren",
+      "expected": "女方家人",
+      "source": "5500",
+      "lookup_us": 4864,
+      "candidates": [
+        "女方家人",
+        "女方佳人",
+        "女房价人",
+        "女房家人",
+        "女方加人",
+        "女方嫁人",
+        "女放假人",
+        "女房价仁",
+        "女方"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nvfangqinshu",
+      "expected": "女方亲属",
+      "source": "5500",
+      "lookup_us": 5423,
+      "candidates": [
+        "女方亲属",
+        "女房亲属",
+        "女方亲疏",
+        "女方琴蜀",
+        "女方亲书",
+        "女放亲属",
+        "女方芹属",
+        "女方亲树",
+        "女方"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "pangxiqinshu",
+      "expected": "旁系亲属",
+      "source": "5500",
+      "lookup_us": 5073,
+      "candidates": [
+        "旁系亲属",
+        "旁西芹属",
+        "庞系亲属",
+        "旁西芹书",
+        "旁西芹树",
+        "旁西芹数",
+        "旁西亲属",
+        "旁洗亲属",
+        "胖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "pangxixueqin",
+      "expected": "旁系血亲",
+      "source": "5500",
+      "lookup_us": 6534,
+      "candidates": [
+        "旁系血亲",
+        "庞系血亲",
+        "庞吸血亲",
+        "旁吸血亲",
+        "旁系学琴",
+        "旁系学勤",
+        "庞吸血琴",
+        "旁吸血琴",
+        "胖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "pojiaqinqi",
+      "expected": "婆家亲戚",
+      "source": "5500",
+      "lookup_us": 5108,
+      "candidates": [
+        "婆家亲戚",
+        "破甲亲戚",
+        "破家亲戚",
+        "破加亲戚",
+        "迫加亲戚",
+        "破驾亲戚",
+        "破价亲戚",
+        "破假亲戚",
+        "婆家"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "pojiaren",
+      "expected": "婆家人",
+      "source": "5500",
+      "lookup_us": 3047,
+      "candidates": [
+        "婆家人",
+        "破家人",
+        "迫家人",
+        "颇家人",
+        "坡家人",
+        "珀家人",
+        "泼家人",
+        "泊家人",
+        "婆家"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "pojiazhangbei",
+      "expected": "婆家长辈",
+      "source": "5500",
+      "lookup_us": 6182,
+      "candidates": [
+        "婆家长辈",
+        "破家长辈",
+        "破甲长辈",
+        "破家长呗",
+        "破家长被",
+        "破家长臂",
+        "破加长辈",
+        "婆家长呗",
+        "婆家"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "poxiguanxi",
+      "expected": "婆媳关系",
+      "source": "5500",
+      "lookup_us": 5620,
+      "candidates": [
+        "婆媳关系",
+        "珀西关系",
+        "破系关系",
+        "迫系关系",
+        "破西关系",
+        "破袭关系",
+        "破吸关系",
+        "破锡关系",
+        "婆媳"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinjiedi",
+      "expected": "亲姐弟",
+      "source": "5500",
+      "lookup_us": 4113,
+      "candidates": [
+        "亲姐弟",
+        "亲接地",
+        "亲接狄",
+        "秦接地",
+        "琴姐弟",
+        "勤接地",
+        "亲节的",
+        "秦姐弟",
+        "亲"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinjiemei",
+      "expected": "亲姐妹",
+      "source": "5500",
+      "lookup_us": 5472,
+      "candidates": [
+        "亲姐妹",
+        "琴姐妹",
+        "秦姐妹",
+        "勤姐妹",
+        "侵姐妹",
+        "钦姐妹",
+        "覃姐妹",
+        "寝姐妹",
+        "亲"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinqichenghu",
+      "expected": "亲戚称呼",
+      "source": "5500",
+      "lookup_us": 5010,
+      "candidates": [
+        "亲戚称呼",
+        "亲其称呼",
+        "秦其称呼",
+        "亲戚成虎",
+        "亲戚成湖",
+        "亲戚称湖",
+        "勤期称呼",
+        "亲戚城虎",
+        "亲戚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinqichengwei",
+      "expected": "亲戚称谓",
+      "source": "5500",
+      "lookup_us": 4674,
+      "candidates": [
+        "亲戚称谓",
+        "亲戚成为",
+        "亲戚称为",
+        "亲戚程为",
+        "勤期称为",
+        "亲起成为",
+        "亲其成为",
+        "亲器成为",
+        "亲戚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinqichuanmen",
+      "expected": "亲戚串门",
+      "source": "5500",
+      "lookup_us": 5929,
+      "candidates": [
+        "亲戚串门",
+        "亲戚传门",
+        "亲戚川门",
+        "亲戚穿门",
+        "亲戚船门",
+        "亲戚传们",
+        "亲戚传闷",
+        "亲戚川们",
+        "亲戚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinqiguanxi",
+      "expected": "亲戚关系",
+      "source": "5500",
+      "lookup_us": 6614,
+      "candidates": [
+        "亲戚关系",
+        "亲戚关西",
+        "亲其关系",
+        "秦启关系",
+        "秦其关系",
+        "勤期关系",
+        "亲起关系",
+        "秦起关系",
+        "亲戚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinqijianmian",
+      "expected": "亲戚见面",
+      "source": "5500",
+      "lookup_us": 9082,
+      "candidates": [
+        "亲戚见面",
+        "亲戚减免",
+        "亲起见面",
+        "秦起见面",
+        "亲戚建面",
+        "亲其见面",
+        "亲戚剪面",
+        "勤期见面",
+        "亲戚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinqijuhui",
+      "expected": "亲戚聚会",
+      "source": "5500",
+      "lookup_us": 4775,
+      "candidates": [
+        "亲戚聚会",
+        "亲齐聚会",
+        "秦齐聚会",
+        "亲起聚会",
+        "秦起聚会",
+        "勤期聚会",
+        "亲戚局会",
+        "亲期聚会",
+        "亲戚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinqilaiwang",
+      "expected": "亲戚来往",
+      "source": "5500",
+      "lookup_us": 4663,
+      "candidates": [
+        "亲戚来往",
+        "亲戚来王",
+        "亲戚来网",
+        "亲起来往",
+        "秦起来往",
+        "亲戚来旺",
+        "亲戚来忘",
+        "亲戚来望",
+        "亲戚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinqiqun",
+      "expected": "亲戚群",
+      "source": "5500",
+      "lookup_us": 2492,
+      "candidates": [
+        "亲戚群",
+        "亲戚裙",
+        "亲戚夋",
+        "亲起群",
+        "秦起群",
+        "亲其群",
+        "勤期群",
+        "秦启群",
+        "亲戚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinqiwanglai",
+      "expected": "亲戚往来",
+      "source": "5500",
+      "lookup_us": 5022,
+      "candidates": [
+        "亲戚往来",
+        "亲戚网来",
+        "亲戚王莱",
+        "亲戚王来",
+        "勤期望来",
+        "亲起往来",
+        "亲戚望来",
+        "秦起往来",
+        "亲戚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinqixiangju",
+      "expected": "亲戚相聚",
+      "source": "5500",
+      "lookup_us": 8177,
+      "candidates": [
+        "亲戚相聚",
+        "亲戚相距",
+        "亲气象局",
+        "秦气象局",
+        "亲戚响巨",
+        "亲戚相局",
+        "亲戚相剧",
+        "亲戚相居",
+        "亲戚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinqizoudong",
+      "expected": "亲戚走动",
+      "source": "5500",
+      "lookup_us": 2390,
+      "candidates": [
+        "亲戚走动",
+        "勤期走动",
+        "亲起走动",
+        "亲戚走东",
+        "亲期走动",
+        "亲气走动",
+        "亲其走动",
+        "秦起走动",
+        "亲戚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinqizoufang",
+      "expected": "亲戚走访",
+      "source": "5500",
+      "lookup_us": 3935,
+      "candidates": [
+        "亲戚走访",
+        "亲戚走房",
+        "亲戚走方",
+        "亲戚走放",
+        "亲戚走芳",
+        "亲戚奏方",
+        "亲戚走防",
+        "勤期走访",
+        "亲戚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinshengfumu",
+      "expected": "亲生父母",
+      "source": "5500",
+      "lookup_us": 4478,
+      "candidates": [
+        "亲生父母",
+        "琴声父母",
+        "秦生父母",
+        "亲圣父母",
+        "钦圣父母",
+        "亲声父母",
+        "亲省父母",
+        "亲升父母",
+        "亲生"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinshubeifen",
+      "expected": "亲属辈分",
+      "source": "5500",
+      "lookup_us": 3149,
+      "candidates": [
+        "亲属辈分",
+        "亲属备份",
+        "亲属悲愤",
+        "亲属被分",
+        "亲疏备份",
+        "秦属备份",
+        "亲属北分",
+        "亲属辈份",
+        "亲属"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinshuchenghu",
+      "expected": "亲属称呼",
+      "source": "5500",
+      "lookup_us": 4443,
+      "candidates": [
+        "亲属称呼",
+        "亲疏称呼",
+        "亲属称湖",
+        "秦属称呼",
+        "亲属称许",
+        "亲属称虎",
+        "亲属称户",
+        "亲属称胡",
+        "亲属"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinshuchengwei",
+      "expected": "亲属称谓",
+      "source": "5500",
+      "lookup_us": 4723,
+      "candidates": [
+        "亲属称谓",
+        "亲属称为",
+        "亲属成为",
+        "亲疏称为",
+        "秦属成为",
+        "秦属称为",
+        "亲疏成为",
+        "亲属程为",
+        "亲属"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinshuchengweibiao",
+      "expected": "亲属称谓表",
+      "source": "5500",
+      "lookup_us": 7313,
+      "candidates": [
+        "亲属称为表",
+        "亲属称为标",
+        "亲属成为表",
+        "亲属成为标",
+        "亲属称谓表",
+        "亲属称为镖",
+        "亲属称为彪",
+        "亲属称谓标",
+        "亲属"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "qinshudaiban",
+      "expected": "亲属代办",
+      "source": "5500",
+      "lookup_us": 5638,
+      "candidates": [
+        "亲属代办",
+        "亲属待办",
+        "亲属呆板",
+        "亲属带版",
+        "亲属大半",
+        "亲属大阪",
+        "亲属带板",
+        "亲属代版",
+        "亲属"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinshudailing",
+      "expected": "亲属代领",
+      "source": "5500",
+      "lookup_us": 7166,
+      "candidates": [
+        "亲属代领",
+        "亲属带领",
+        "秦属带领",
+        "亲疏带领",
+        "亲书带领",
+        "亲属带令",
+        "秦书带领",
+        "亲属带零",
+        "亲属"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinshudianhua",
+      "expected": "亲属电话",
+      "source": "5500",
+      "lookup_us": 7247,
+      "candidates": [
+        "亲属电话",
+        "秦属电话",
+        "亲疏电话",
+        "亲输电话",
+        "亲属点花",
+        "秦输电话",
+        "亲属点话",
+        "秦舒电话",
+        "亲属"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinshuguanxibiao",
+      "expected": "亲属关系表",
+      "source": "5500",
+      "lookup_us": 8945,
+      "candidates": [
+        "亲属关系表",
+        "亲属关系标",
+        "亲属关系彪",
+        "亲属关系飙",
+        "亲属关系镖",
+        "亲属关系镳",
+        "亲属关系婊",
+        "亲属关系比奥",
+        "亲属关系"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinshuguanxitu",
+      "expected": "亲属关系图",
+      "source": "5500",
+      "lookup_us": 7041,
+      "candidates": [
+        "亲属关系图",
+        "亲属关系土",
+        "亲属关系兔",
+        "亲属关系途",
+        "亲属关系吐",
+        "亲属关系徒",
+        "亲属关系突",
+        "亲属关系涂",
+        "亲属关系"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinshulianxiren",
+      "expected": "亲属联系人",
+      "source": "5500",
+      "lookup_us": 7195,
+      "candidates": [
+        "亲属联系人",
+        "秦属练习人",
+        "秦属联系人",
+        "亲属练习人",
+        "亲属联系任",
+        "秦属练习任",
+        "亲属联系仁",
+        "秦属练习仁",
+        "亲属"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinshupeitong",
+      "expected": "亲属陪同",
+      "source": "5500",
+      "lookup_us": 2620,
+      "candidates": [
+        "亲属陪同",
+        "秦属陪同",
+        "亲疏陪同",
+        "秦舒陪同",
+        "亲数陪同",
+        "亲书陪同",
+        "亲属佩通",
+        "秦数陪同",
+        "秦舒培"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinshuqun",
+      "expected": "亲属群",
+      "source": "5500",
+      "lookup_us": 3572,
+      "candidates": [
+        "亲属群",
+        "亲属裙",
+        "亲疏群",
+        "秦属群",
+        "亲数群",
+        "亲疏裙",
+        "秦数群",
+        "秦属裙",
+        "亲属"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinshutanfang",
+      "expected": "亲属探访",
+      "source": "5500",
+      "lookup_us": 5375,
+      "candidates": [
+        "亲属探访",
+        "秦属探访",
+        "亲属坦方",
+        "亲疏探访",
+        "亲属谈方",
+        "秦舒探访",
+        "亲属探房",
+        "亲数探访",
+        "亲属"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinshuxingming",
+      "expected": "亲属姓名",
+      "source": "5500",
+      "lookup_us": 7581,
+      "candidates": [
+        "亲属姓名",
+        "亲属性命",
+        "秦属性命",
+        "亲疏姓名",
+        "秦属姓名",
+        "亲属性名",
+        "亲疏性命",
+        "亲属性明",
+        "亲属"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinshuxinxi",
+      "expected": "亲属信息",
+      "source": "5500",
+      "lookup_us": 4824,
+      "candidates": [
+        "亲属信息",
+        "亲属欣喜",
+        "秦属信息",
+        "亲疏信息",
+        "亲书信息",
+        "秦书信息",
+        "亲属心系",
+        "亲输信息",
+        "亲属"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinshuxinxibiao",
+      "expected": "亲属信息表",
+      "source": "5500",
+      "lookup_us": 8058,
+      "candidates": [
+        "亲属信息表",
+        "亲属信息标",
+        "亲属信息彪",
+        "亲属信息飙",
+        "秦属信息表",
+        "亲属信息镖",
+        "亲属欣喜表",
+        "亲属信息镳",
+        "亲属信息"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinshuzhuzhi",
+      "expected": "亲属住址",
+      "source": "5500",
+      "lookup_us": 4762,
+      "candidates": [
+        "亲属住址",
+        "亲属主旨",
+        "亲属主治",
+        "亲属煮制",
+        "亲属主制",
+        "亲属主之",
+        "亲属主指",
+        "亲属煮至",
+        "亲属"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinxiongdi",
+      "expected": "亲兄弟",
+      "source": "5500",
+      "lookup_us": 3596,
+      "candidates": [
+        "亲兄弟",
+        "秦兄弟",
+        "勤兄弟",
+        "琴兄弟",
+        "侵兄弟",
+        "钦兄弟",
+        "覃兄弟",
+        "寝兄弟",
+        "侵袭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinxiongmei",
+      "expected": "亲兄妹",
+      "source": "5500",
+      "lookup_us": 4350,
+      "candidates": [
+        "亲兄妹",
+        "秦兄妹",
+        "勤兄妹",
+        "琴兄妹",
+        "侵兄妹",
+        "钦兄妹",
+        "覃兄妹",
+        "寝兄妹",
+        "侵袭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinyoubangmang",
+      "expected": "亲友帮忙",
+      "source": "5500",
+      "lookup_us": 6208,
+      "candidates": [
+        "亲友帮忙",
+        "亲有帮忙",
+        "秦有帮忙",
+        "亲又帮忙",
+        "亲由帮忙",
+        "秦又帮忙",
+        "秦由帮忙",
+        "亲油帮忙",
+        "亲友"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinyoujucan",
+      "expected": "亲友聚餐",
+      "source": "5500",
+      "lookup_us": 3783,
+      "candidates": [
+        "亲友聚餐",
+        "亲有聚餐",
+        "秦有聚餐",
+        "亲又聚餐",
+        "亲由聚餐",
+        "秦又聚餐",
+        "亲游聚餐",
+        "秦友聚餐",
+        "亲友"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinyoutongxunlu",
+      "expected": "亲友通讯录",
+      "source": "5500",
+      "lookup_us": 5618,
+      "candidates": [
+        "亲友通讯录",
+        "亲友通讯路",
+        "亲友通讯鲁",
+        "亲友通讯鹿",
+        "亲友通讯露",
+        "亲友通讯炉",
+        "亲有通讯录",
+        "亲友通讯陆",
+        "亲友"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinyoutuanju",
+      "expected": "亲友团聚",
+      "source": "5500",
+      "lookup_us": 4356,
+      "candidates": [
+        "亲友团聚",
+        "亲友团举",
+        "亲友团局",
+        "亲友团剧",
+        "亲友团居",
+        "亲有团聚",
+        "亲友团拒",
+        "亲友团具",
+        "亲友"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinyouwanglai",
+      "expected": "亲友往来",
+      "source": "5500",
+      "lookup_us": 4261,
+      "candidates": [
+        "亲友往来",
+        "亲有往来",
+        "秦有往来",
+        "亲又往来",
+        "亲游往来",
+        "秦又往来",
+        "秦游往来",
+        "亲由往来",
+        "亲友"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinyouxiangju",
+      "expected": "亲友相聚",
+      "source": "5500",
+      "lookup_us": 7953,
+      "candidates": [
+        "亲友相聚",
+        "亲友相距",
+        "亲有相聚",
+        "亲有相距",
+        "亲又相聚",
+        "亲又相距",
+        "秦有相距",
+        "亲友向剧",
+        "亲友"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinyouzhufu",
+      "expected": "亲友祝福",
+      "source": "5500",
+      "lookup_us": 3601,
+      "candidates": [
+        "亲友祝福",
+        "亲友嘱咐",
+        "亲友主妇",
+        "亲又祝福",
+        "亲有祝福",
+        "秦又祝福",
+        "秦有祝福",
+        "亲友著芙",
+        "亲友"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qinyouzuoke",
+      "expected": "亲友做客",
+      "source": "5500",
+      "lookup_us": 3594,
+      "candidates": [
+        "亲友做客",
+        "亲友作客",
+        "亲又做客",
+        "亲有做客",
+        "亲友作课",
+        "秦有做客",
+        "亲友作可",
+        "亲友作科",
+        "亲友"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "quanjiachifan",
+      "expected": "全家吃饭",
+      "source": "5500",
+      "lookup_us": 7146,
+      "candidates": [
+        "全家吃饭",
+        "全价吃饭",
+        "劝家吃饭",
+        "劝架吃饭",
+        "全加吃饭",
+        "全假吃饭",
+        "全架吃饭",
+        "全佳吃饭",
+        "全家"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "quanjiachuxing",
+      "expected": "全家出行",
+      "source": "5500",
+      "lookup_us": 7762,
+      "candidates": [
+        "全家出行",
+        "全价出行",
+        "全家雏形",
+        "全家出性",
+        "全价雏形",
+        "全家出星",
+        "全家出兴",
+        "全家出型",
+        "全家"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "quanjiadaxiao",
+      "expected": "全家大小",
+      "source": "5500",
+      "lookup_us": 8770,
+      "candidates": [
+        "全家大小",
+        "全家大笑",
+        "全价大小",
+        "全价大笑",
+        "全家大校",
+        "全家打消",
+        "全加大小",
+        "全家打小",
+        "全家"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "quanjiafuheying",
+      "expected": "全家福合影",
+      "source": "5500",
+      "lookup_us": 9181,
+      "candidates": [
+        "全家福合影",
+        "全家符合影",
+        "全价符合影",
+        "全家福和英",
+        "全家复合影",
+        "全家福和营",
+        "全家符合应",
+        "全家福和应",
+        "全家福"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "quanjiafupaishe",
+      "expected": "全家福拍摄",
+      "source": "5500",
+      "lookup_us": 6150,
+      "candidates": [
+        "全家福拍摄",
+        "全家服拍摄",
+        "全家富拍摄",
+        "全家复拍摄",
+        "全家副拍摄",
+        "全家赴拍摄",
+        "全家符拍摄",
+        "全家傅拍摄",
+        "全家福"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "quanjiafuzhaopian",
+      "expected": "全家福照片",
+      "source": "5500",
+      "lookup_us": 11472,
+      "candidates": [
+        "全家福照片",
+        "全家复照片",
+        "全家福照骗",
+        "全家服照片",
+        "全家富照片",
+        "全家福照篇",
+        "全家副照片",
+        "全家幅照片",
+        "全家福"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "quanjialaoxiao",
+      "expected": "全家老小",
+      "source": "5500",
+      "lookup_us": 9589,
+      "candidates": [
+        "全家老小",
+        "全家老笑",
+        "全家老校",
+        "全家老效",
+        "全家老晓",
+        "全家老销",
+        "全家老消",
+        "全家老肖",
+        "全家"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "quanjialvxing",
+      "expected": "全家旅行",
+      "source": "5500",
+      "lookup_us": 7754,
+      "candidates": [
+        "全家旅行",
+        "全家履行",
+        "全价旅行",
+        "全价履行",
+        "劝家旅行",
+        "全加旅行",
+        "劝架旅行",
+        "全家旅性",
+        "全家"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "quanjialvyou",
+      "expected": "全家旅游",
+      "source": "5500",
+      "lookup_us": 5913,
+      "candidates": [
+        "全家旅游",
+        "全价旅游",
+        "全家旅友",
+        "全家率有",
+        "全家驴友",
+        "全加旅游",
+        "全家率由",
+        "劝架旅游",
+        "全家"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "quanjiatuanju",
+      "expected": "全家团聚",
+      "source": "5500",
+      "lookup_us": 5746,
+      "candidates": [
+        "全家团聚",
+        "全价团聚",
+        "全家团举",
+        "全家团局",
+        "全家团剧",
+        "全家团居",
+        "全家团拒",
+        "全家团具",
+        "全家"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "quanjiaxiangju",
+      "expected": "全家相聚",
+      "source": "5500",
+      "lookup_us": 9745,
+      "candidates": [
+        "全家相聚",
+        "全家相距",
+        "全价相聚",
+        "全价相距",
+        "全家乡居",
+        "全家乡局",
+        "全家乡剧",
+        "全家乡具",
+        "全家"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "renjiamen",
+      "expected": "认家门",
+      "source": "5500",
+      "lookup_us": 3827,
+      "candidates": [
+        "认家门",
+        "人家门",
+        "人家们",
+        "任家门",
+        "人家闷",
+        "任家们",
+        "人家焖",
+        "仁家门",
+        "人家"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "renqinqi",
+      "expected": "认亲戚",
+      "source": "5500",
+      "lookup_us": 2903,
+      "candidates": [
+        "认亲戚",
+        "人亲戚",
+        "仁亲戚",
+        "任亲戚",
+        "忍亲戚",
+        "任琴七",
+        "人侵棋",
+        "壬亲戚",
+        "认亲"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "renzuguizong",
+      "expected": "认祖归宗",
+      "source": "5500",
+      "lookup_us": 3220,
+      "candidates": [
+        "认祖归宗",
+        "人组贵总",
+        "人组贵宗",
+        "人族贵总",
+        "人族贵宗",
+        "人组归宗",
+        "人族归宗",
+        "人组鬼宗",
+        "人族"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "sandaitongtang",
+      "expected": "三代同堂",
+      "source": "5500",
+      "lookup_us": 4798,
+      "candidates": [
+        "三代同堂",
+        "三代通汤",
+        "三代通堂",
+        "三代通糖",
+        "三代同汤",
+        "三代通唐",
+        "三代酮糖",
+        "三代同糖",
+        "三代"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "sankouzhijia",
+      "expected": "三口之家",
+      "source": "5500",
+      "lookup_us": 4791,
+      "candidates": [
+        "三口之家",
+        "三口支架",
+        "三口指甲",
+        "散口之家",
+        "三口制假",
+        "三扣之家",
+        "三扣支架",
+        "三口至加",
+        "三口"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shanyangguanxi",
+      "expected": "赡养关系",
+      "source": "5500",
+      "lookup_us": 7394,
+      "candidates": [
+        "赡养关系",
+        "山羊关系",
+        "山阳关系",
+        "山羊关西",
+        "山杨关系",
+        "山样关系",
+        "山洋关系",
+        "山养关系",
+        "山羊"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shengfushengmu",
+      "expected": "生父生母",
+      "source": "5500",
+      "lookup_us": 5061,
+      "candidates": [
+        "生父生母",
+        "升幅圣母",
+        "升幅声母",
+        "胜负声母",
+        "胜负圣母",
+        "升幅生母",
+        "省副省睦",
+        "胜负生母",
+        "胜负"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shengshenfumu",
+      "expected": "生身父母",
+      "source": "5500",
+      "lookup_us": 3579,
+      "candidates": [
+        "生身父母",
+        "圣神父母",
+        "省神父母",
+        "生什父母",
+        "生深父母",
+        "生审父母",
+        "圣身父母",
+        "圣审父母",
+        "省"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shouyangguanxi",
+      "expected": "收养关系",
+      "source": "5500",
+      "lookup_us": 6633,
+      "candidates": [
+        "收养关系",
+        "手杨关系",
+        "受养关系",
+        "手阳关系",
+        "受阳关系",
+        "收养关西",
+        "手洋关系",
+        "受样关系",
+        "收养"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shouzuguanxi",
+      "expected": "手足关系",
+      "source": "5500",
+      "lookup_us": 5837,
+      "candidates": [
+        "手足关系",
+        "受阻关系",
+        "受族关系",
+        "手族关系",
+        "手组关系",
+        "手足关西",
+        "受足关系",
+        "受组关系",
+        "受阻"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shouzuqingshen",
+      "expected": "手足情深",
+      "source": "5500",
+      "lookup_us": 8160,
+      "candidates": [
+        "手足情深",
+        "受阻情深",
+        "手组情深",
+        "受阻请神",
+        "受阻请深",
+        "受阻请审",
+        "受阻请身",
+        "受组情深",
+        "受阻"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shouzuqinqing",
+      "expected": "手足亲情",
+      "source": "5500",
+      "lookup_us": 6764,
+      "candidates": [
+        "手足亲情",
+        "受阻亲情",
+        "手组亲情",
+        "受族亲情",
+        "受组亲情",
+        "手族亲情",
+        "受足亲情",
+        "手租亲情",
+        "受阻"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuangfangjiating",
+      "expected": "双方家庭",
+      "source": "5500",
+      "lookup_us": 10359,
+      "candidates": [
+        "双方家庭",
+        "双方家听",
+        "双方家停",
+        "双方家亭",
+        "双方加听",
+        "双方家厅",
+        "双方家婷",
+        "双方家挺",
+        "双方"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuangfangjiazhang",
+      "expected": "双方家长",
+      "source": "5500",
+      "lookup_us": 13830,
+      "candidates": [
+        "双方家长",
+        "双方家张",
+        "双方加长",
+        "双方价涨",
+        "双方家章",
+        "双方家涨",
+        "双方家帐",
+        "双方假帐",
+        "双方"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuangfangqinshu",
+      "expected": "双方亲属",
+      "source": "5500",
+      "lookup_us": 10128,
+      "candidates": [
+        "双方亲属",
+        "双方亲疏",
+        "双方琴蜀",
+        "双方亲书",
+        "双方芹属",
+        "双方亲树",
+        "双方亲数",
+        "双方琴书",
+        "双方"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuangfangqinyou",
+      "expected": "双方亲友",
+      "source": "5500",
+      "lookup_us": 9417,
+      "candidates": [
+        "双方亲友",
+        "双方亲有",
+        "双方亲由",
+        "双方亲油",
+        "双方琴有",
+        "双方亲又",
+        "双方禽有",
+        "双方亲游",
+        "双方"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuangqinjiating",
+      "expected": "双亲家庭",
+      "source": "5500",
+      "lookup_us": 10886,
+      "candidates": [
+        "双亲家庭",
+        "双琴家庭",
+        "爽亲家庭",
+        "双亲家听",
+        "双秦家庭",
+        "双勤家庭",
+        "爽琴家庭",
+        "双钦家庭",
+        "双亲"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "sikouzhijia",
+      "expected": "四口之家",
+      "source": "5500",
+      "lookup_us": 5896,
+      "candidates": [
+        "四口之家",
+        "四口支架",
+        "四口指甲",
+        "死口之家",
+        "斯扣之家",
+        "死口支架",
+        "四扣之家",
+        "四口制假",
+        "四口"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "sishitongtang",
+      "expected": "四世同堂",
+      "source": "5500",
+      "lookup_us": 6017,
+      "candidates": [
+        "四世同堂",
+        "四是同汤",
+        "四十同汤",
+        "四是同堂",
+        "四十通汤",
+        "四是同糖",
+        "四十同堂",
+        "四十同糖",
+        "四十"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "suiqianfumu",
+      "expected": "随迁父母",
+      "source": "5500",
+      "lookup_us": 8878,
+      "candidates": [
+        "随迁父母",
+        "岁前父母",
+        "岁钱父母",
+        "岁千父母",
+        "随前父母",
+        "岁签父母",
+        "虽千父母",
+        "虽钱父母",
+        "岁"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "suiqianjiashu",
+      "expected": "随迁家属",
+      "source": "5500",
+      "lookup_us": 11821,
+      "candidates": [
+        "随迁家属",
+        "岁前家属",
+        "岁钱家属",
+        "岁千家属",
+        "随前家属",
+        "岁前家书",
+        "虽千家属",
+        "岁前家数",
+        "岁"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tangbiaoguanxi",
+      "expected": "堂表关系",
+      "source": "5500",
+      "lookup_us": 8982,
+      "candidates": [
+        "堂表关系",
+        "唐表关系",
+        "唐标关系",
+        "汤标关系",
+        "堂表关西",
+        "唐彪关系",
+        "唐飙关系",
+        "唐镖关系",
+        "汤"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tangbiaojiemei",
+      "expected": "堂表姐妹",
+      "source": "5500",
+      "lookup_us": 9797,
+      "candidates": [
+        "堂表姐妹",
+        "唐表姐妹",
+        "堂表姐没",
+        "堂表姐美",
+        "唐标姐妹",
+        "堂表姐每",
+        "唐表姐没",
+        "汤标姐妹",
+        "汤"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tangbiaoxiongdi",
+      "expected": "堂表兄弟",
+      "source": "5500",
+      "lookup_us": 6558,
+      "candidates": [
+        "堂表兄弟",
+        "唐表兄弟",
+        "唐标兄弟",
+        "汤标兄弟",
+        "唐彪兄弟",
+        "唐飙兄弟",
+        "唐镖兄弟",
+        "汤彪兄弟",
+        "汤"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tangjiedi",
+      "expected": "堂姐弟",
+      "source": "5500",
+      "lookup_us": 6554,
+      "candidates": [
+        "堂姐弟",
+        "唐接地",
+        "汤接地",
+        "糖接地",
+        "唐姐弟",
+        "堂接地",
+        "倘接地",
+        "唐街的",
+        "堂姐"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tangjiemei",
+      "expected": "堂姐妹",
+      "source": "5500",
+      "lookup_us": 6702,
+      "candidates": [
+        "堂姐妹",
+        "唐姐妹",
+        "汤姐妹",
+        "糖姐妹",
+        "倘姐妹",
+        "塘姐妹",
+        "躺姐妹",
+        "趟姐妹",
+        "堂姐"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tangxiongdi",
+      "expected": "堂兄弟",
+      "source": "5500",
+      "lookup_us": 3021,
+      "candidates": [
+        "堂兄弟",
+        "唐兄弟",
+        "汤兄弟",
+        "糖兄弟",
+        "倘兄弟",
+        "塘兄弟",
+        "躺兄弟",
+        "趟兄弟",
+        "汤"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tangxiongmei",
+      "expected": "堂兄妹",
+      "source": "5500",
+      "lookup_us": 6286,
+      "candidates": [
+        "堂兄妹",
+        "唐兄妹",
+        "汤兄妹",
+        "糖兄妹",
+        "倘兄妹",
+        "塘兄妹",
+        "躺兄妹",
+        "堂兄没",
+        "汤"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tanwangzhangbei",
+      "expected": "探望长辈",
+      "source": "5500",
+      "lookup_us": 10074,
+      "candidates": [
+        "探望长辈",
+        "探望丈呗",
+        "探望张呗",
+        "探望丈被",
+        "探望长被",
+        "探望张被",
+        "探望丈杯",
+        "探望长臂",
+        "探望"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tixiewanbei",
+      "expected": "提携晚辈",
+      "source": "5500",
+      "lookup_us": 9482,
+      "candidates": [
+        "提携晚辈",
+        "提携玩呗",
+        "提携完备",
+        "题写完备",
+        "体写完备",
+        "题写完呗",
+        "提携万倍",
+        "题写完被",
+        "提携"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tongbaojiedi",
+      "expected": "同胞姐弟",
+      "source": "5500",
+      "lookup_us": 11103,
+      "candidates": [
+        "同胞姐弟",
+        "通报接地",
+        "通报届第",
+        "通报姐弟",
+        "通报皆弟",
+        "通报界的",
+        "通报届低",
+        "同胞接地",
+        "通报"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tongbaojiemei",
+      "expected": "同胞姐妹",
+      "source": "5500",
+      "lookup_us": 11740,
+      "candidates": [
+        "同胞姐妹",
+        "通报姐妹",
+        "通宝姐妹",
+        "通报界没",
+        "通报届美",
+        "通报结美",
+        "通报接美",
+        "通报接没",
+        "通报"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tongbaoxiongdi",
+      "expected": "同胞兄弟",
+      "source": "5500",
+      "lookup_us": 7617,
+      "candidates": [
+        "同胞兄弟",
+        "通报兄弟",
+        "通宝兄弟",
+        "同堡兄弟",
+        "童包兄弟",
+        "同报兄弟",
+        "同保兄弟",
+        "痛包兄弟",
+        "通报"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tongbaoxiongmei",
+      "expected": "同胞兄妹",
+      "source": "5500",
+      "lookup_us": 10062,
+      "candidates": [
+        "同胞兄妹",
+        "通报兄妹",
+        "通宝兄妹",
+        "同胞兄没",
+        "同胞兄美",
+        "通报熊没",
+        "同堡兄妹",
+        "童包兄妹",
+        "通报"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tongbeiqinshu",
+      "expected": "同辈亲属",
+      "source": "5500",
+      "lookup_us": 7893,
+      "candidates": [
+        "同辈亲属",
+        "同被亲属",
+        "痛被亲属",
+        "同北亲属",
+        "同贝亲属",
+        "同背亲属",
+        "同备亲属",
+        "通贝亲属",
+        "同辈"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tongfutongmu",
+      "expected": "同父同母",
+      "source": "5500",
+      "lookup_us": 5826,
+      "candidates": [
+        "同父同母",
+        "童腹痛牟",
+        "痛腹痛目",
+        "同父同目",
+        "痛腹痛木",
+        "同父同木",
+        "痛腹痛母",
+        "同腹痛目",
+        "铜斧"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tongfuyimu",
+      "expected": "同父异母",
+      "source": "5500",
+      "lookup_us": 5901,
+      "candidates": [
+        "同父异母",
+        "同负一幕",
+        "铜斧一幕",
+        "同父一幕",
+        "同付一幕",
+        "同服一幕",
+        "同复一幕",
+        "通服一幕",
+        "铜斧"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tongmuyifu",
+      "expected": "同母异父",
+      "source": "5500",
+      "lookup_us": 5993,
+      "candidates": [
+        "同母异父",
+        "同母衣服",
+        "同木衣服",
+        "同目衣服",
+        "通目衣服",
+        "童木衣服",
+        "同母一幅",
+        "同牧衣服",
+        "同"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tongzhufumu",
+      "expected": "同住父母",
+      "source": "5500",
+      "lookup_us": 5693,
+      "candidates": [
+        "同住父母",
+        "同祝父母",
+        "同祝福木",
+        "同祝福目",
+        "同祝福母",
+        "同主父母",
+        "同著父母",
+        "同祝福墓",
+        "同住"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tongzhujiaren",
+      "expected": "同住家人",
+      "source": "5500",
+      "lookup_us": 8409,
+      "candidates": [
+        "同住家人",
+        "同住佳人",
+        "同祝家人",
+        "通住家人",
+        "同主家人",
+        "同朱家人",
+        "同著家人",
+        "同住嫁人",
+        "同住"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wanbeichenghu",
+      "expected": "晚辈称呼",
+      "source": "5500",
+      "lookup_us": 8116,
+      "candidates": [
+        "晚辈称呼",
+        "完备称呼",
+        "万被称呼",
+        "晚被称呼",
+        "万倍称呼",
+        "完背称呼",
+        "万北称呼",
+        "玩呗称呼",
+        "完备"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wengxuguanxi",
+      "expected": "翁婿关系",
+      "source": "5500",
+      "lookup_us": 9473,
+      "candidates": [
+        "翁婿关系",
+        "翁需关系",
+        "翁须关系",
+        "翁续关系",
+        "翁许关系",
+        "翁序关系",
+        "翁徐关系",
+        "翁虚关系",
+        "翁"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wukouzhijia",
+      "expected": "五口之家",
+      "source": "5500",
+      "lookup_us": 6476,
+      "candidates": [
+        "五口之家",
+        "无口之家",
+        "无口支架",
+        "五口支架",
+        "无扣之家",
+        "无口指甲",
+        "五口指甲",
+        "无扣支架",
+        "五"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wushitongtang",
+      "expected": "五世同堂",
+      "source": "5500",
+      "lookup_us": 6390,
+      "candidates": [
+        "五世同堂",
+        "无视同汤",
+        "无视同堂",
+        "无视同糖",
+        "无视同唐",
+        "无视通汤",
+        "无视同烫",
+        "无视通堂",
+        "五十"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiaojingzhangbei",
+      "expected": "孝敬长辈",
+      "source": "5500",
+      "lookup_us": 10508,
+      "candidates": [
+        "孝敬长辈",
+        "小径长辈",
+        "萧敬长辈",
+        "小静长辈",
+        "小景长辈",
+        "小警长辈",
+        "小精长辈",
+        "小经长辈",
+        "孝敬"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiaoshunzhangbei",
+      "expected": "孝顺长辈",
+      "source": "5500",
+      "lookup_us": 10936,
+      "candidates": [
+        "孝顺长辈",
+        "孝顺章呗",
+        "孝顺章被",
+        "孝顺张呗",
+        "孝顺长被",
+        "小顺长辈",
+        "孝顺长臂",
+        "孝顺章北",
+        "孝顺"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiongdiguanxi",
+      "expected": "兄弟关系",
+      "source": "5500",
+      "lookup_us": 12338,
+      "candidates": [
+        "兄弟关系",
+        "熊的关系",
+        "雄的关系",
+        "兄弟关西",
+        "熊地关系",
+        "凶地关系",
+        "兄弟管系",
+        "兄弟关戏",
+        "兄弟"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiongdihemu",
+      "expected": "兄弟和睦",
+      "source": "5500",
+      "lookup_us": 7413,
+      "candidates": [
+        "兄弟和睦",
+        "兄弟和木",
+        "兄弟和目",
+        "兄弟和母",
+        "兄弟和墓",
+        "兄弟和穆",
+        "兄弟和姆",
+        "兄弟和幕",
+        "兄弟"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiongdihuzhu",
+      "expected": "兄弟互助",
+      "source": "5500",
+      "lookup_us": 8192,
+      "candidates": [
+        "兄弟互助",
+        "兄弟护住",
+        "兄弟户主",
+        "兄弟护著",
+        "熊的互助",
+        "兄弟互住",
+        "兄弟互著",
+        "兄弟户住",
+        "兄弟"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiongdijige",
+      "expected": "兄弟几个",
+      "source": "5500",
+      "lookup_us": 7572,
+      "candidates": [
+        "兄弟几个",
+        "兄弟及格",
+        "兄弟及歌",
+        "熊的几个",
+        "兄弟及各",
+        "雄的几个",
+        "兄弟及个",
+        "兄弟及哥",
+        "兄弟"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiongdilia",
+      "expected": "兄弟俩",
+      "source": "5500",
+      "lookup_us": 5964,
+      "candidates": [
+        "兄弟俩",
+        "兄弟倆",
+        "兄弟里啊",
+        "兄弟李啊",
+        "兄弟力啊",
+        "兄弟利啊",
+        "兄弟理啊",
+        "兄弟里阿",
+        "兄弟"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiongdipaihang",
+      "expected": "兄弟排行",
+      "source": "5500",
+      "lookup_us": 7936,
+      "candidates": [
+        "兄弟排行",
+        "兄弟牌行",
+        "熊的排行",
+        "兄弟派行",
+        "兄弟派航",
+        "雄的排行",
+        "兄弟拍行",
+        "兄弟排航",
+        "兄弟"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiongdiqinqing",
+      "expected": "兄弟亲情",
+      "source": "5500",
+      "lookup_us": 12223,
+      "candidates": [
+        "兄弟亲情",
+        "兄弟秦罄",
+        "兄弟亲清",
+        "兄弟亲亲",
+        "兄弟亲庆",
+        "熊的亲情",
+        "兄弟琴清",
+        "兄弟勤情",
+        "兄弟"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiongdiqun",
+      "expected": "兄弟群",
+      "source": "5500",
+      "lookup_us": 6326,
+      "candidates": [
+        "兄弟群",
+        "兄弟裙",
+        "熊的群",
+        "雄的群",
+        "兄弟夋",
+        "凶的群",
+        "胸的群",
+        "熊地群",
+        "兄弟"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiongdituanju",
+      "expected": "兄弟团聚",
+      "source": "5500",
+      "lookup_us": 8445,
+      "candidates": [
+        "兄弟团聚",
+        "熊的团聚",
+        "雄的团聚",
+        "兄弟团举",
+        "兄弟团局",
+        "兄弟团剧",
+        "兄弟团居",
+        "兄弟团拒",
+        "兄弟"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiongdixiangju",
+      "expected": "兄弟相聚",
+      "source": "5500",
+      "lookup_us": 16860,
+      "candidates": [
+        "兄弟相聚",
+        "兄弟相距",
+        "兄弟象局",
+        "兄弟象剧",
+        "兄弟象居",
+        "兄弟象具",
+        "兄弟象句",
+        "兄弟象聚",
+        "兄弟"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiongmeiguanxi",
+      "expected": "兄妹关系",
+      "source": "5500",
+      "lookup_us": 14537,
+      "candidates": [
+        "兄妹关系",
+        "熊没关系",
+        "雄没关系",
+        "熊美关系",
+        "雄美关系",
+        "兄妹关西",
+        "熊媒关系",
+        "熊妹关系",
+        "兄妹"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiongmeihemu",
+      "expected": "兄妹和睦",
+      "source": "5500",
+      "lookup_us": 8820,
+      "candidates": [
+        "兄妹和睦",
+        "兄妹和木",
+        "兄妹和目",
+        "兄妹和母",
+        "兄妹和墓",
+        "兄妹和穆",
+        "兄妹禾木",
+        "兄妹和姆",
+        "兄妹"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiongmeihuzhu",
+      "expected": "兄妹互助",
+      "source": "5500",
+      "lookup_us": 9681,
+      "candidates": [
+        "兄妹互助",
+        "兄妹护住",
+        "兄妹户主",
+        "熊没互助",
+        "熊美互助",
+        "雄美互助",
+        "兄妹护著",
+        "兄妹户住",
+        "兄妹"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiongmeijige",
+      "expected": "兄妹几个",
+      "source": "5500",
+      "lookup_us": 7116,
+      "candidates": [
+        "兄妹几个",
+        "熊没几个",
+        "兄妹及格",
+        "雄没几个",
+        "熊没及格",
+        "雄没及格",
+        "熊美几个",
+        "雄美几个",
+        "兄妹"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiongmeixiangju",
+      "expected": "兄妹相聚",
+      "source": "5500",
+      "lookup_us": 10867,
+      "candidates": [
+        "兄妹相聚",
+        "兄妹相距",
+        "兄妹项具",
+        "兄妹项局",
+        "兄妹项举",
+        "兄妹想聚",
+        "兄妹想局",
+        "兄妹项剧",
+        "兄妹"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yangfuyangmu",
+      "expected": "养父养母",
+      "source": "5500",
+      "lookup_us": 7662,
+      "candidates": [
+        "养父养母",
+        "杨抚养母",
+        "阳抚养母",
+        "杨黼仰慕",
+        "养父仰慕",
+        "杨抚养目",
+        "杨阜阳墓",
+        "杨抚养木",
+        "杨黼"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yidijiating",
+      "expected": "异地家庭",
+      "source": "5500",
+      "lookup_us": 9511,
+      "candidates": [
+        "异地家庭",
+        "亿的家庭",
+        "一的家庭",
+        "一滴家庭",
+        "一地家庭",
+        "以低价听",
+        "以低家庭",
+        "异缔家庭",
+        "异地"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yidipeiban",
+      "expected": "异地陪伴",
+      "source": "5500",
+      "lookup_us": 6307,
+      "candidates": [
+        "异地陪伴",
+        "亿的陪伴",
+        "一滴陪伴",
+        "一的陪伴",
+        "一地陪伴",
+        "以低陪伴",
+        "异缔陪伴",
+        "疑嫡陪伴",
+        "异地"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yidiqinqing",
+      "expected": "异地亲情",
+      "source": "5500",
+      "lookup_us": 10578,
+      "candidates": [
+        "异地亲情",
+        "一滴亲情",
+        "一地亲情",
+        "亿的亲情",
+        "以低亲情",
+        "异缔亲情",
+        "一的亲情",
+        "疑嫡亲情",
+        "异地"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yidizhaogu",
+      "expected": "异地照顾",
+      "source": "5500",
+      "lookup_us": 6579,
+      "candidates": [
+        "异地照顾",
+        "一地照顾",
+        "一滴照顾",
+        "亿的照顾",
+        "一的照顾",
+        "一滴招股",
+        "以低照顾",
+        "异缔照顾",
+        "异地"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yifuyimu",
+      "expected": "异父异母",
+      "source": "5500",
+      "lookup_us": 4885,
+      "candidates": [
+        "异父异母",
+        "衣服一幕",
+        "一幅一幕",
+        "一夫一幕",
+        "衣服一目",
+        "以负一幕",
+        "衣服一亩",
+        "一副一幕",
+        "衣服"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yijiadaxiao",
+      "expected": "一家大小",
+      "source": "5500",
+      "lookup_us": 9640,
+      "candidates": [
+        "一家大小",
+        "一家大笑",
+        "宜家大小",
+        "宜家大笑",
+        "一架大小",
+        "一架大笑",
+        "一家大校",
+        "一加大小",
+        "一家"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yijialaoxiao",
+      "expected": "一家老小",
+      "source": "5500",
+      "lookup_us": 10090,
+      "candidates": [
+        "一家老小",
+        "一家老笑",
+        "一家老校",
+        "溢价嫪小",
+        "溢价嫪笑",
+        "一家老效",
+        "一家老晓",
+        "一架老小",
+        "一家"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yijiasankou",
+      "expected": "一家三口",
+      "source": "5500",
+      "lookup_us": 5348,
+      "candidates": [
+        "一家三口",
+        "宜家三口",
+        "一架三口",
+        "衣架三口",
+        "一家三扣",
+        "意甲三口",
+        "一加三口",
+        "一架散叩",
+        "一家"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yijiasikou",
+      "expected": "一家四口",
+      "source": "5500",
+      "lookup_us": 6468,
+      "candidates": [
+        "一家四口",
+        "一架四口",
+        "一家食口",
+        "宜家四口",
+        "一家司口",
+        "一家思口",
+        "一家私口",
+        "一家似口",
+        "一家"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yijiatuanju",
+      "expected": "一家团聚",
+      "source": "5500",
+      "lookup_us": 9186,
+      "candidates": [
+        "一家团聚",
+        "一架团聚",
+        "宜家团聚",
+        "衣架团聚",
+        "意甲团聚",
+        "溢价团聚",
+        "一加团聚",
+        "以加团聚",
+        "一家"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yijiatuanyuan",
+      "expected": "一家团圆",
+      "source": "5500",
+      "lookup_us": 11053,
+      "candidates": [
+        "一家团圆",
+        "一家团员",
+        "一架团员",
+        "宜家团圆",
+        "宜家团员",
+        "一架团圆",
+        "衣架团员",
+        "意甲团员",
+        "一家"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yijiawukou",
+      "expected": "一家五口",
+      "source": "5500",
+      "lookup_us": 4426,
+      "candidates": [
+        "一家五口",
+        "宜家五口",
+        "一架无口",
+        "一家务口",
+        "一家乌口",
+        "一家五扣",
+        "一家物口",
+        "一架无扣",
+        "一家"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yimajia",
+      "expected": "姨妈家",
+      "source": "5500",
+      "lookup_us": 6214,
+      "candidates": [
+        "姨妈家",
+        "医马甲",
+        "以马甲",
+        "伊马甲",
+        "一马甲",
+        "异马甲",
+        "亿马甲",
+        "亦马甲",
+        "姨妈"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yinqinguanxi",
+      "expected": "姻亲关系",
+      "source": "5500",
+      "lookup_us": 11938,
+      "candidates": [
+        "姻亲关系",
+        "因亲关系",
+        "殷勤关系",
+        "因禽关系",
+        "因侵关系",
+        "因琴关系",
+        "因秦关系",
+        "因勤关系",
+        "引擎"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuanfangbiaoqin",
+      "expected": "远房表亲",
+      "source": "5500",
+      "lookup_us": 12778,
+      "candidates": [
+        "远房表亲",
+        "院方表亲",
+        "远方表亲",
+        "院方表琴",
+        "院方表勤",
+        "院方表钦",
+        "院方表禽",
+        "院方表芹",
+        "远方"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuanfangqinqi",
+      "expected": "远房亲戚",
+      "source": "5500",
+      "lookup_us": 8331,
+      "candidates": [
+        "远房亲戚",
+        "院方亲戚",
+        "远方亲戚",
+        "元放亲戚",
+        "元芳亲戚",
+        "元房亲戚",
+        "原芳亲戚",
+        "愿放亲戚",
+        "远方"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuanfangqinshu",
+      "expected": "远房亲属",
+      "source": "5500",
+      "lookup_us": 9871,
+      "candidates": [
+        "远房亲属",
+        "院方亲属",
+        "远方亲属",
+        "院方亲疏",
+        "院方琴蜀",
+        "元放亲属",
+        "元芳亲属",
+        "元房亲属",
+        "远方"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuanfangtangqin",
+      "expected": "远房堂亲",
+      "source": "5500",
+      "lookup_us": 10668,
+      "candidates": [
+        "远房堂亲",
+        "院方堂琴",
+        "院方汤亲",
+        "院方堂亲",
+        "院方唐亲",
+        "远方汤亲",
+        "远方堂琴",
+        "院方汤琴",
+        "远方"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuanqinguanxi",
+      "expected": "远亲关系",
+      "source": "5500",
+      "lookup_us": 13019,
+      "candidates": [
+        "远亲关系",
+        "元亲关系",
+        "元琴关系",
+        "元秦关系",
+        "元勤关系",
+        "元钦关系",
+        "元侵关系",
+        "原琴关系",
+        "远期"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuefudaren",
+      "expected": "岳父大人",
+      "source": "5500",
+      "lookup_us": 6051,
+      "candidates": [
+        "岳父大人",
+        "岳父达人",
+        "月赴大人",
+        "岳父打人",
+        "月赴达人",
+        "月福大人",
+        "月付达人",
+        "月赴打人",
+        "岳父"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuefujia",
+      "expected": "岳父家",
+      "source": "5500",
+      "lookup_us": 7231,
+      "candidates": [
+        "岳父家",
+        "月附加",
+        "越附加",
+        "约附加",
+        "说附加",
+        "岳附加",
+        "阅附加",
+        "月赴加",
+        "岳父"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuemudaren",
+      "expected": "岳母大人",
+      "source": "5500",
+      "lookup_us": 6258,
+      "candidates": [
+        "岳母大人",
+        "岳母达人",
+        "岳母打人",
+        "月木达人",
+        "月目大人",
+        "岳母大任",
+        "月目达人",
+        "月慕达人",
+        "岳母"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuemujia",
+      "expected": "岳母家",
+      "source": "5500",
+      "lookup_us": 7422,
+      "candidates": [
+        "岳母家",
+        "岳母加",
+        "岳母价",
+        "岳母假",
+        "岳母甲",
+        "岳母架",
+        "岳母贾",
+        "岳母嘉",
+        "岳母"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuezhang",
+      "expected": "岳丈",
+      "source": "5500",
+      "lookup_us": 5923,
+      "candidates": [
+        "乐章",
+        "岳丈",
+        "越长",
+        "约章",
+        "月长",
+        "月涨",
+        "月张",
+        "说帐",
+        "约占"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "yufumutongzhu",
+      "expected": "与父母同住",
+      "source": "5500",
+      "lookup_us": 5931,
+      "candidates": [
+        "与父母同住",
+        "于父母同住",
+        "与父母通住",
+        "与父母通主",
+        "与父母同祝",
+        "与父母同主",
+        "与父母通著",
+        "与父母同著",
+        "预付"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yuhuzhuguanxi",
+      "expected": "与户主关系",
+      "source": "5500",
+      "lookup_us": 9946,
+      "candidates": [
+        "与互助关系",
+        "于互助关系",
+        "于护住关系",
+        "与户主关系",
+        "与护住关系",
+        "余户主关系",
+        "于护著关系",
+        "于护主管系",
+        "鱼护"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "zaihunjiating",
+      "expected": "再婚家庭",
+      "source": "5500",
+      "lookup_us": 7881,
+      "candidates": [
+        "再婚家庭",
+        "在婚家庭",
+        "在混家庭",
+        "在昏家庭",
+        "在魂家庭",
+        "在浑家庭",
+        "再混家庭",
+        "再魂家庭",
+        "再婚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhangbeichenghu",
+      "expected": "长辈称呼",
+      "source": "5500",
+      "lookup_us": 7562,
+      "candidates": [
+        "长辈称呼",
+        "张被称呼",
+        "长被称呼",
+        "张北称呼",
+        "长臂称呼",
+        "长辈成虎",
+        "长辈成湖",
+        "张背称呼",
+        "长辈"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhangyoushunxu",
+      "expected": "长幼顺序",
+      "source": "5500",
+      "lookup_us": 6554,
+      "candidates": [
+        "长幼顺序",
+        "张有顺序",
+        "长有顺序",
+        "张友顺序",
+        "张又顺序",
+        "长又顺序",
+        "长由顺序",
+        "张由顺序",
+        "张"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhaoguwanbei",
+      "expected": "照顾晚辈",
+      "source": "5500",
+      "lookup_us": 7040,
+      "candidates": [
+        "照顾晚辈",
+        "照顾玩呗",
+        "照顾完备",
+        "照顾万倍",
+        "招股晚辈",
+        "招股玩呗",
+        "照顾湾北",
+        "招股完备",
+        "照顾"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhixixueqin",
+      "expected": "直系血亲",
+      "source": "5500",
+      "lookup_us": 7717,
+      "candidates": [
+        "直系血亲",
+        "知悉学琴",
+        "窒息学琴",
+        "知悉血亲",
+        "只吸血亲",
+        "窒息血亲",
+        "指吸血亲",
+        "直系血琴",
+        "窒息"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhouliguanxi",
+      "expected": "妯娌关系",
+      "source": "5500",
+      "lookup_us": 9176,
+      "candidates": [
+        "妯娌关系",
+        "州里关系",
+        "周里关系",
+        "周立关系",
+        "州立关系",
+        "周例关系",
+        "周利关系",
+        "州利关系",
+        "周历"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuganjiating",
+      "expected": "主干家庭",
+      "source": "5500",
+      "lookup_us": 7285,
+      "candidates": [
+        "主干家庭",
+        "猪肝家庭",
+        "竹竿家庭",
+        "朱干家庭",
+        "朱甘家庭",
+        "主甘家庭",
+        "主感家庭",
+        "朱感家庭",
+        "主干"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuyaojiatingchengyuan",
+      "expected": "主要家庭成员",
+      "source": "5500",
+      "lookup_us": 18836,
+      "candidates": [
+        "主要家庭成员",
+        "猪腰家庭成员",
+        "主要家庭乘员",
+        "主要价挺成员",
+        "主要加挺成员",
+        "主要家庭城垣",
+        "主要家庭成塬",
+        "主要加停成员",
+        "主要"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zunzhongzhangbei",
+      "expected": "尊重长辈",
+      "source": "5500",
+      "lookup_us": 7839,
+      "candidates": [
+        "尊重长辈",
+        "尊重掌呗",
+        "尊重长被",
+        "尊重长臂",
+        "尊重障被",
+        "尊重掌被",
+        "尊重章被",
+        "尊重张被",
+        "尊重"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zupuxiuding",
+      "expected": "族谱修订",
+      "source": "5500",
+      "lookup_us": 6700,
+      "candidates": [
+        "族谱修订",
+        "组普修订",
+        "组朴修订",
+        "组铺修订",
+        "祖普修订",
+        "组扑修订",
+        "组浦修订",
+        "组谱修订",
+        "族谱"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zupuziliao",
+      "expected": "族谱资料",
+      "source": "5500",
+      "lookup_us": 6529,
+      "candidates": [
+        "族谱资料",
+        "组普资料",
+        "组铺资料",
+        "族谱子了",
+        "祖普资料",
+        "组扑资料",
+        "组浦资料",
+        "组谱资料",
+        "族谱"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zusunguanxi",
+      "expected": "祖孙关系",
+      "source": "5500",
+      "lookup_us": 7038,
+      "candidates": [
+        "祖孙关系",
+        "组孙关系",
+        "组损关系",
+        "祖损关系",
+        "组笋关系",
+        "组隼关系",
+        "组荪关系",
+        "祖笋关系",
+        "组"
+      ],
+      "expected_rank": 1
+    }
+  ]
+}
