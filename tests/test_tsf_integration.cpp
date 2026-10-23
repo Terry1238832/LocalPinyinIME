@@ -1366,6 +1366,15 @@ int wmain(int argc, wchar_t** argv) {
                 require(s.first_candidate() == L"70", "v55+15 offers 70");
                 s.key(VK_SPACE);
                 require(s.store->text == L"70", "Space types the result");
+                // = ends the calculation the same way, without a stray =.
+                s.store->host_replace(L"");
+                for (const auto key : std::vector<WPARAM>{L'V', L'5', L'5'}) s.key(key);
+                s.modifier_keys[VK_SHIFT] = true;
+                s.key(VK_OEM_PLUS);
+                s.modifier_keys[VK_SHIFT] = false;
+                for (const auto key : std::vector<WPARAM>{L'1', L'5'}) s.key(key);
+                s.key(VK_OEM_PLUS);
+                require(s.store->text == L"70" && s.store->caret() == 2, "= types the result");
                 s.store->host_replace(L"");
                 for (const auto key : std::vector<WPARAM>{L'V', L'1', L'2', L'3'}) s.key(key);
                 require(s.first_candidate() == L"壹佰贰拾叁", "v123 offers the amount in words");

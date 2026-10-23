@@ -41,14 +41,14 @@ async function check(name, fn) {
   process.stdout.write(`PASS ${name}\n`);
 }
 
-async function launch() {
+async function launch(extra = []) {
   const environment = { ...process.env };
   delete environment.ELECTRON_RUN_AS_NODE;
   delete environment.LOCALPINYINIME_USER_LEXICON_PATH;
   delete environment.LOCALPINYINIME_DIAGNOSTICS;
   app = await _electron.launch({
     executablePath: executable,
-    args: cli.packaged ? [] : [desktop],
+    args: (cli.packaged ? [] : [desktop]).concat(extra),
     cwd: desktop,
     env: {
       ...environment,
@@ -370,7 +370,9 @@ async function run() {
   process.env.LOCALPINYINIME_QA_BACKUP_FILE = path.join(output, 'backup.lpbackup');
   process.env.LOCALPINYINIME_NO_AUTOSTART = '1';
   fs.rmSync(process.env.LOCALPINYINIME_QA_BACKUP_FILE, { force: true });
-  await launch();
+  // The first start is the installer's: --first-run, which must open the
+  // window with the clipboard question (0.24.2 left it closed).
+  await launch(['--first-run']);
   await check('The clipboard question is asked once on a fresh install and answered', async () => {
     assert.equal(report.clipboardQuestionShown, 1);
     assert.equal((await state()).settings.clipboardHistory, 'off');

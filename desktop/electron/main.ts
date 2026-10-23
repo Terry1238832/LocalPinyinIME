@@ -344,6 +344,12 @@ else {
         !details.url.startsWith('blob:app://local/') });
     });
     installHandlers();
+    // Before the window: its first request for the update status gets the
+    // saved preferences (only a small file is read).
+    await initUpdates(status => window?.webContents.send('localpinyin:update-status', status));
+    // A plain launch opens the window at once. The installer's --first-run
+    // waits for the settings: it opens the window only while the clipboard
+    // question is unanswered (below).
     const settingsFirst = !initialPanel && !process.argv.includes('--first-run');
     if (settingsFirst) void openSettings();
     bootstrap = await initialState;
@@ -372,13 +378,14 @@ else {
         window?.webContents.send('localpinyin:settings-changed');
         return (await state()).settings;
       } });
-    await initUpdates(status => window?.webContents.send('localpinyin:update-status', status));
     if (initialPanel) {
       openPanel(initialPanel);
     } else if (process.argv.includes('--first-run') && bootstrap.settings.clipboardHistory !== 'ask') {
       // Started by the installer to ask about the clipboard: already answered.
       if (!panel.keepsApp()) app.quit();
     } else {
+      // --first-run with the clipboard question still to ask.
+      if (!settingsFirst) void openSettings();
       // Measurements of the packaged app (QA headless without a test feed) stay offline.
       if (!hidden || process.env.LOCALPINYINIME_UPDATE_FEED) scheduleAutoCheck();
     }
