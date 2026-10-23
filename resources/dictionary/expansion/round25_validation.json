@@ -1,0 +1,596 @@
+{
+  "round": 25,
+  "batch_min": 358,
+  "batch_max": 365,
+  "base_commit": "4fa2936af9fd6655bfc7fcbd840c1cd28890de03",
+  "engine_version": "1.1.0",
+  "audit": {
+    "before": 229511,
+    "after": 230848,
+    "added": 1337,
+    "existing_rows_preserved": true,
+    "all_layers_and_domains_surface_dedup": true,
+    "hashes_reviews_weights_formats_passed": true,
+    "batches": {
+      "358": {
+        "scope": "陶艺黏土与手工塑形",
+        "entries": 301,
+        "weights": {
+          "5000": 6,
+          "5500": 295
+        },
+        "reviews": 236,
+        "overrides": {
+          "压花模": "yahuamu",
+          "切割模": "qiegemu",
+          "石膏模": "shigaomu",
+          "搓长": "cuochang"
+        },
+        "sha256": "6aa6ff41e0151453dd2c226e1df0423b04c41628caa4d83f3ab961e8676c8d99"
+      },
+      "359": {
+        "scope": "录音配音与声音处理",
+        "entries": 305,
+        "weights": {
+          "5500": 305
+        },
+        "reviews": 194,
+        "overrides": {
+          "录音转文字": "luyinzhuanwenzi",
+          "台词重录": "taicichonglu",
+          "音色调整": "yinsetiaozheng"
+        },
+        "sha256": "ff3c0808d49c436092fc90d5b5e1dd7d75ae2c5451e8f690c6eef71087b9d536"
+      },
+      "360": {
+        "scope": "儿童玩具与益智玩具",
+        "entries": 321,
+        "weights": {
+          "5000": 1,
+          "5500": 320
+        },
+        "reviews": 235,
+        "overrides": {},
+        "sha256": "4bd5ccded44dd0b9f6d856df3c2671a06bd1f86719d0162414f2ec4da2e834d9"
+      },
+      "361": {
+        "scope": "食品保鲜储藏与包装标签",
+        "entries": 330,
+        "weights": {
+          "5500": 330
+        },
+        "reviews": 274,
+        "overrides": {
+          "气调包装": "qitiaobaozhuang",
+          "长保食品": "changbaoshipin"
+        },
+        "sha256": "534c3665e195f06fc738ef933f2ff5aa1b5013b60ed67dc220bbc762826820fe"
+      },
+      "362": {
+        "scope": "陶艺黏土与手工塑形较长说法",
+        "entries": 20,
+        "weights": {
+          "5500": 20
+        },
+        "reviews": 20,
+        "overrides": {},
+        "sha256": "7394e37c27d661b9b40eca9e9db18a68791278661caa3987c4704a98b342a418"
+      },
+      "363": {
+        "scope": "录音配音与声音处理较长说法",
+        "entries": 20,
+        "weights": {
+          "5500": 20
+        },
+        "reviews": 19,
+        "overrides": {},
+        "sha256": "9e9e0ba09788faa7f06aa1bfd62f6d95c22880e0ff3bca2eaee1e63a07ce4339"
+      },
+      "364": {
+        "scope": "儿童玩具与益智玩具较长说法",
+        "entries": 20,
+        "weights": {
+          "5500": 20
+        },
+        "reviews": 20,
+        "overrides": {},
+        "sha256": "88908aba764a23eada2a7ed0b4674e4b57f5ed83acf224e1c7c27c18a94deac8"
+      },
+      "365": {
+        "scope": "食品保鲜储藏与包装标签较长说法",
+        "entries": 20,
+        "weights": {
+          "5500": 20
+        },
+        "reviews": 20,
+        "overrides": {},
+        "sha256": "0db2b9af7fefbd6ea2c2776420ce4bfac1e4a4802e442bc1a9fbc1777a3d124e"
+      }
+    },
+    "local_core_sha256": "b546ad394b8cee3c549c2f93b9124b5598f012081cbfaae8f710b8bd846a12ff"
+  },
+  "probes": {
+    "358": {
+      "cases": 301,
+      "top1": 86.38,
+      "top9": 100.0,
+      "two_to_four_cases": 300,
+      "two_to_four_top9": 300,
+      "two_to_four_missing": [],
+      "other_missing": [],
+      "probe_sha256": "865a9fde574ad04eebb78fad8d42f4efd32413788f863d86eb5a5fb7f4371c81",
+      "raw_sha256": "d4b90be5c3272a0150e792194f4848f44eea63a769a44fe706ee8d864ae1e5c6"
+    },
+    "359": {
+      "cases": 305,
+      "top1": 94.43,
+      "top9": 100.0,
+      "two_to_four_cases": 261,
+      "two_to_four_top9": 261,
+      "two_to_four_missing": [],
+      "other_missing": [],
+      "probe_sha256": "05edfa0b407dc6544c29b147597fcccad4ff48bff5949e1c594126c5f58b3382",
+      "raw_sha256": "c4a8216170465c29798b45b628cf2a1b37960aa4b10b1f67e8838d3d238ba136"
+    },
+    "360": {
+      "cases": 321,
+      "top1": 95.02,
+      "top9": 100.0,
+      "two_to_four_cases": 280,
+      "two_to_four_top9": 280,
+      "two_to_four_missing": [],
+      "other_missing": [],
+      "probe_sha256": "d7b4ceba98dc92031ba15aa6d3a97222a5b2cb75cd6a05c9416d5998739bb00f",
+      "raw_sha256": "4e34b45ad98bcd130d8334db261bd3ba02abbee8848adaa5e56a1ca72bca3373"
+    },
+    "361": {
+      "cases": 330,
+      "top1": 93.03,
+      "top9": 100.0,
+      "two_to_four_cases": 280,
+      "two_to_four_top9": 280,
+      "two_to_four_missing": [],
+      "other_missing": [],
+      "probe_sha256": "3726d9641808dae3e1c34389a153195d3957bf37c0b83533594cd5a0e6b20b03",
+      "raw_sha256": "8e7b57bc0113e70216a58f7c6b7ec645a61dbacf1ab41147ac3e368f84d77c3c"
+    },
+    "362": {
+      "cases": 20,
+      "top1": 50.0,
+      "top9": 100.0,
+      "two_to_four_cases": 0,
+      "two_to_four_top9": 0,
+      "two_to_four_missing": [],
+      "other_missing": [],
+      "probe_sha256": "71d5d167f83d0e42273a34bfc324ce3c611ffbcdb040cd35b828ef843f774bdf",
+      "raw_sha256": "efe86439c8503b457a21e05c63da556ea4624a2f30b73ac56cbe42f1bf72ea56"
+    },
+    "363": {
+      "cases": 20,
+      "top1": 70.0,
+      "top9": 100.0,
+      "two_to_four_cases": 0,
+      "two_to_four_top9": 0,
+      "two_to_four_missing": [],
+      "other_missing": [],
+      "probe_sha256": "2a58d811c55b96f9d27d7c48a2977f3108d76c5270e5177de8d01bb29b8d49b9",
+      "raw_sha256": "38571d2910e7710d544d31695c9e0e79c7e937cfe075972acacfd029715f224b"
+    },
+    "364": {
+      "cases": 20,
+      "top1": 85.0,
+      "top9": 100.0,
+      "two_to_four_cases": 0,
+      "two_to_four_top9": 0,
+      "two_to_four_missing": [],
+      "other_missing": [],
+      "probe_sha256": "c6a49467bd2f08a7f34150507d281c2381d46e8c24647f1a9e1059ea66682328",
+      "raw_sha256": "3762370541ab58ed3f846d5e4b071cc05da8d28ecd7b6709ea22892193d77bde"
+    },
+    "365": {
+      "cases": 20,
+      "top1": 90.0,
+      "top9": 100.0,
+      "two_to_four_cases": 0,
+      "two_to_four_top9": 0,
+      "two_to_four_missing": [],
+      "other_missing": [],
+      "probe_sha256": "a05cc8e3c68085a6f20981859937654f78da517e3dd01eb2c714015d2982d891",
+      "raw_sha256": "45237948572e787bc1096c5a61f72d8975ca3519c8eab7cf2b674cb8392cf2e3"
+    }
+  },
+  "accuracy_before": {
+    "逐词输入·参考前文": {
+      "cases": 20626,
+      "top1": 85.96,
+      "top9": 98.09
+    },
+    "逐词输入·无前文": {
+      "cases": 20626,
+      "top1": 77.97,
+      "top9": 97.17
+    },
+    "留出整句": {
+      "cases": 4126,
+      "top1": 58.05,
+      "top9": 73.44
+    },
+    "口语对话·整句": {
+      "cases": 3368,
+      "top1": 80.43,
+      "top9": 91.81
+    },
+    "口语对话·逐词": {
+      "cases": 19504,
+      "top1": 94.12,
+      "top9": 99.5
+    },
+    "项目留出": {
+      "cases": 138,
+      "top1": 79.71,
+      "top9": 86.23
+    },
+    "新增用例": {
+      "cases": 67,
+      "top1": 62.69,
+      "top9": 77.61
+    },
+    "独立用例": {
+      "cases": 62,
+      "top1": 41.94,
+      "top9": 62.9
+    },
+    "日常口语·开发": {
+      "cases": 149,
+      "top1": 96.64,
+      "top9": 100.0
+    },
+    "日常口语·留出": {
+      "cases": 150,
+      "top1": 87.33,
+      "top9": 97.33
+    }
+  },
+  "accuracy_after": {
+    "逐词输入·参考前文": {
+      "cases": 20626,
+      "top1": 85.95,
+      "top9": 98.09
+    },
+    "逐词输入·无前文": {
+      "cases": 20626,
+      "top1": 77.97,
+      "top9": 97.17
+    },
+    "留出整句": {
+      "cases": 4126,
+      "top1": 58.05,
+      "top9": 73.44
+    },
+    "口语对话·整句": {
+      "cases": 3368,
+      "top1": 80.4,
+      "top9": 91.81
+    },
+    "口语对话·逐词": {
+      "cases": 19504,
+      "top1": 94.12,
+      "top9": 99.5
+    },
+    "项目留出": {
+      "cases": 138,
+      "top1": 79.71,
+      "top9": 86.23
+    },
+    "新增用例": {
+      "cases": 67,
+      "top1": 62.69,
+      "top9": 77.61
+    },
+    "独立用例": {
+      "cases": 62,
+      "top1": 41.94,
+      "top9": 62.9
+    },
+    "日常口语·开发": {
+      "cases": 149,
+      "top1": 96.64,
+      "top9": 100.0
+    },
+    "日常口语·留出": {
+      "cases": 150,
+      "top1": 87.33,
+      "top9": 97.33
+    }
+  },
+  "native_tests": {
+    "x64": {
+      "passed": 44,
+      "total": 44,
+      "log_sha256": "4f4cf3e1c2c4f3e91fe721a7d718747b49251c2010463bece8c54cd737e39280"
+    },
+    "x86": {
+      "passed": 44,
+      "total": 44,
+      "log_sha256": "61b9a9a33c8dc0e119354517fda7dea1b8f9f6c6035409699f9bc717afe1782b"
+    }
+  },
+  "max_entries": 231676,
+  "commits": {
+    "358": "b8abece1dc0706c01b6bb3cf8255041bc591e7db",
+    "359": "a2ca4ee9c431dacae7a592ec886985a318ac739e",
+    "360": "952519e14f2c5ece7178e55cfa92b626dae5184f",
+    "361": "334bb98749861225c64055bb74b2415eacf87500",
+    "362": "88570ba231144668f96d487f9b6794f05366b511",
+    "363": "51ff192e4892233acb20fe0374cd0565f509f534",
+    "364": "19c771e15864a1a8e783cc9eca2b16bcb5f2dc52",
+    "365": "7db7ea378e5bd4a92ec81c7b8557034963632078"
+  },
+  "rejections": {
+    "duplicate:local_core_zh_pinyin.tsv": 490,
+    "quality: overly technical, redundant description or unnatural everyday expression": 619,
+    "quality: narrow technical or name-derived label; unsuitable for everyday vocabulary": 20,
+    "duplicate:standard_zh_pinyin.tsv": 32,
+    "probe_top9: shiyou already has 5000-band homophones; new term capped at 5000 and absent from top nine": 1,
+    "batch_size_limit": 204,
+    "outside_batch_length_scope": 1
+  },
+  "whole_batch_withdrawals": [],
+  "status": "passed",
+  "coverage": {
+    "lexicon": {
+      "entries": 277726,
+      "distinct_words": 277228
+    },
+    "standard_characters": {
+      "一级 (1-3500)": {
+        "characters": 3500,
+        "typeable_by_standard_reading": 3500,
+        "percent": 100.0,
+        "single_entry_any_reading": 3500
+      },
+      "二级 (3501-6500)": {
+        "characters": 3000,
+        "typeable_by_standard_reading": 2997,
+        "percent": 99.9,
+        "single_entry_any_reading": 2997
+      },
+      "三级 (6501-8105)": {
+        "characters": 1605,
+        "typeable_by_standard_reading": 261,
+        "percent": 16.26,
+        "single_entry_any_reading": 267
+      }
+    },
+    "standard_characters_missing_examples": {
+      "一级 (1-3500)": [],
+      "二级 (3501-6500)": [
+        "𬉼(ou)",
+        "𠳐(bang)",
+        "𥻗(cha)"
+      ],
+      "三级 (6501-8105)": [
+        "尢(wang)",
+        "卬(ang)",
+        "𠙶(ou)",
+        "毌(guan)",
+        "邘(yu)",
+        "圢(ting)",
+        "伋(ji)",
+        "冮(gang)",
+        "氿(jiu)",
+        "汈(diao)",
+        "宄(gui)",
+        "𬣙(xu)",
+        "讱(ren)",
+        "扞(han)",
+        "圲(qian)",
+        "圫(tuo)",
+        "芏(du)",
+        "朳(ba)",
+        "朸(li)",
+        "𨙸(qi)",
+        "辿(chan)",
+        "伣(qian)",
+        "癿(bie)",
+        "犴(an/han)",
+        "冱(hu)",
+        "𬇕(wan)",
+        "汋(zhuo)",
+        "䜣(xin)",
+        "讻(xiong)",
+        "𬣞(zhu)",
+        "𬘓(xun)",
+        "纩(kuang)",
+        "玒(hong)",
+        "玓(di)",
+        "玘(qi)",
+        "玚(yang)",
+        "刬(chan)",
+        "𫭟(ou/qu)",
+        "坉(tun)",
+        "𫭢(lun)"
+      ]
+    },
+    "common_words": {
+      "top 1000": {
+        "words": 1000,
+        "in_lexicon": 999,
+        "percent": 99.9
+      },
+      "top 5000": {
+        "words": 5000,
+        "in_lexicon": 4900,
+        "percent": 98.0
+      },
+      "top 10000": {
+        "words": 10000,
+        "in_lexicon": 9567,
+        "percent": 95.67
+      },
+      "top 30000": {
+        "words": 30000,
+        "in_lexicon": 23379,
+        "percent": 77.93
+      },
+      "top 50000": {
+        "words": 50000,
+        "in_lexicon": 32376,
+        "percent": 64.75
+      },
+      "top 100000": {
+        "words": 100000,
+        "in_lexicon": 43710,
+        "percent": 43.71
+      }
+    },
+    "common_words_missing_examples": [
+      "甚么",
+      "洪山区",
+      "江夏区",
+      "本行政区域",
+      "袁承志",
+      "礼部",
+      "万公顷",
+      "胡秉宸",
+      "武昌区",
+      "李高成",
+      "鄂西",
+      "千步",
+      "郧阳",
+      "刑部",
+      "官军",
+      "陈家洛",
+      "职司",
+      "王琦瑶",
+      "万平方米",
+      "李莫愁",
+      "亲兵",
+      "江夏",
+      "十八年",
+      "马朝旭",
+      "大学士",
+      "行省",
+      "十五年",
+      "工部",
+      "万平方公里",
+      "适才",
+      "怎地",
+      "人口数",
+      "贡献者",
+      "王公",
+      "屈家岭",
+      "节度使",
+      "天鹅洲",
+      "亿立方米",
+      "欧阳锋",
+      "金殿",
+      "周伯通",
+      "明永乐",
+      "首辅",
+      "户部",
+      "解放区",
+      "中纺",
+      "义军",
+      "立法权",
+      "刘宗敏",
+      "琉璃瓦",
+      "清兵",
+      "湖广",
+      "福临",
+      "兵部",
+      "三藏",
+      "黄陂",
+      "极了",
+      "笔架山",
+      "文理学院",
+      "须弥座",
+      "池河",
+      "吏部",
+      "军马",
+      "丁能通",
+      "官家",
+      "二十年",
+      "老营",
+      "宋献策",
+      "国师",
+      "我会",
+      "起义军",
+      "子口",
+      "荆江",
+      "如果说",
+      "苏维埃政府",
+      "六部",
+      "黄依依",
+      "国徽",
+      "音乐堂",
+      "白嘉轩"
+    ],
+    "common_words_missing_but_typed": {
+      "words": 433,
+      "first_candidate": 136,
+      "within_nine": 282,
+      "percent_within_nine": 65.13
+    },
+    "running_text": {
+      "heldout_sentences.tsv": {
+        "lines": 4126,
+        "word_tokens": 13800,
+        "word_types": 7161,
+        "token_coverage_percent": 84.1,
+        "type_coverage_percent": 71.68,
+        "frequent_missing": [
+          "我会×11",
+          "萨米×8",
+          "教区×6",
+          "穿著×5",
+          "兰科×5",
+          "回家吧×4",
+          "和玛丽×4",
+          "乡试×4",
+          "神社×4",
+          "曾祖父×4",
+          "悬钩子×4",
+          "小檗×3",
+          "米纳斯吉拉斯州×3",
+          "登进士×3",
+          "瓷蟹×3",
+          "花为×3",
+          "鳗鲡×3",
+          "亚科×3",
+          "蛱蝶×3",
+          "维耶×3",
+          "这药×2",
+          "受够了×2",
+          "前有×2",
+          "二十年×2",
+          "我快×2",
+          "空房间×2",
+          "信神×2",
+          "谢谢您×2",
+          "无法形容×2",
+          "通晓×2",
+          "蓝线×2",
+          "他用×2",
+          "随著×2",
+          "十二个×2",
+          "非常高兴×2",
+          "玛莉×2",
+          "待在家里×2",
+          "神户×2",
+          "昨天上午×2",
+          "见证人×2"
+        ]
+      }
+    }
+  },
+  "repairs": [
+    {
+      "word": "试釉",
+      "pinyin": "shiyou",
+      "weight": 5000,
+      "reason": "absent from top nine and cannot raise above existing homophone minimum",
+      "action": "omit individual word and revalidate entire round"
+    }
+  ]
+}
