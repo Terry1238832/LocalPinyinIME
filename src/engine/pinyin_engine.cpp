@@ -71,6 +71,8 @@ struct ScoreWeights {
     // Cost of each token a sentence is cut into.
     int segment_penalty = 600;
     size_t beam = kSentenceBeamWidth;
+    // Readings of one span scored by the language model, best priors first.
+    size_t span_candidates = 32;
 };
 
 // Fixed in the IME; the evaluation tool may replace them to calibrate on the
@@ -297,7 +299,7 @@ std::vector<std::vector<SegmentPath>> decode(const Dictionary& dictionary, const
             std::stable_sort(prepared.begin(), prepared.end(), [](const auto& left, const auto& right) {
                 return left.prior > right.prior;
             });
-            if (prepared.size() > 32) prepared.resize(32);
+            if (prepared.size() > weights().span_candidates) prepared.resize(weights().span_candidates);
             std::unordered_map<std::wstring, size_t> indices;
             indices.reserve(paths.size() + dp[offset].size() * prepared.size());
             for (size_t index = 0; index < paths.size(); ++index) indices.emplace(paths[index].text, index);
@@ -566,6 +568,7 @@ bool PinyinEngine::set_evaluation_weights(const std::wstring& spec) {
         else if (key == L"long") next.long_word_prior = static_cast<int>(value);
         else if (key == L"segment") next.segment_penalty = static_cast<int>(value);
         else if (key == L"beam") next.beam = static_cast<size_t>(std::max(4.0, value));
+        else if (key == L"span") next.span_candidates = static_cast<size_t>(std::max(4.0, value));
         else return false;
         if (comma == std::wstring::npos) break;
         start = comma + 1;

@@ -5,6 +5,8 @@ Sources (see resources/dictionary/authoring/context_lm_sources.json):
   * Chinese Wikinews 2026-10-01 article dump, CC BY 2.5 / CC BY 4.0
   * Mozilla Common Voice zh-CN/zh-TW sentence text, CC0 1.0
   * KdConv and CrossWOZ dialogue utterances (Tsinghua thu-coai), Apache-2.0
+  * FineWeb-2 Mandarin web text (Hugging Face), ODC-By 1.0; spam sites and
+    Traditional-script pages dropped, lines deduplicated
 
 Every line is converted to simplified Chinese. One line in forty (chosen by a
 hash of its text) is held out of training; held-out Tatoeba and Common Voice
@@ -12,7 +14,7 @@ lines become the evaluation cases in tests/data, held-out dialogue lines the
 heldout_dialogue_* cases. Only n-gram statistics built from the remaining
 lines are distributed; no sentence text is packaged.
 
-Authoring-time requirements: opencc, plus pypinyin and jieba for --write-eval.
+Authoring-time requirements: opencc and pyarrow, plus pypinyin and jieba for --write-eval.
 
   python tools/fetch_context_corpus.py --work <dir> [--write-eval tests/data]
                                         [--write-dialogue-eval tests/data]
@@ -30,6 +32,7 @@ import zipfile
 from pathlib import Path
 
 import opencc
+import pyarrow.parquet as pq
 
 COMMON_VOICE_COMMIT = "7015419eb71f82ac8121f91d3f4c5338b83d6844"
 CV_BASE = f"https://raw.githubusercontent.com/common-voice/common-voice/{COMMON_VOICE_COMMIT}/server/data"
@@ -73,6 +76,20 @@ DIALOGUE_DOWNLOADS = {
            "test": "e57703894995211bba8638f130dc7df81e8992b71f3c05c10022ad23d6ca5310",
        }.items()},
 }
+# General web text: the 87 MB held-out shard of the Mandarin subset, which is
+# enough text to widen the model without a multi-gigabyte training shard.
+FINEWEB_DOWNLOADS = {
+    "fineweb2_cmn_Hani_test_000.parquet": (
+        "https://huggingface.co/datasets/HuggingFaceFW/fineweb-2/resolve/main/data/cmn_Hani/test/000_00000.parquet",
+        "22a90c471e09c8e938f3e070ff590864e74e01cc3c5cdf01c2713157fcdb43aa"),
+}
+# Gambling and adult spam, whose generated pages splice unrelated sentences.
+WEB_SPAM = re.compile(r"博彩|娱乐城|六合彩|时时彩|赌场|赌博|百家乐|彩票|开奖|真人视讯|老虎机|棋牌|色情|成人电影|av女优|威尼斯人|葡京|"
+                      r"皇冠体育|投注")
+# Characters written only in Traditional script: such pages read as Taiwan or
+# Hong Kong usage even after conversion.
+TRADITIONAL_ONLY = set("們這個說來時會對國過還麼為學無點東車問門開關書見長馬魚鳥體與從後經發現電話種當應實樣讓認識變處歡聽買賣錢"
+                       "讀寫親愛幾員聯網話機場內產業廣號歲區際線級頭聲夠斷雖單鐘傳險獨極態響質議請論辦謝備課語萬數價職權條領導裡")
 HELD_OUT_MODULO = 40
 
 
@@ -245,6 +262,37 @@ def crosswoz_lines(directory: Path) -> list[str]:
     return lines
 
 
+def generated_host(url: str) -> bool:
+    # Spam farms use generated host names such as l50ozqi.com or 7ij9cfdiw.com.
+    host = re.sub(r"^[a-z]+://", "", url.lower()).split("/", 1)[0]
+    return any(sum(ch.isdigit() for ch in label) >= 2 and sum(ch.isalpha() for ch in label) >= 3
+               for label in host.split("."))
+
+
+def fineweb_lines(directory: Path) -> list[str]:
+    lines, seen = [], set()
+    for path in sorted(directory.glob("fineweb2_*.parquet")):
+        table = pq.ParquetFile(path)
+        for group in range(table.num_row_groups):
+            for row in table.read_row_group(group, columns=["text", "url"]).to_pylist():
+                text = row["text"]
+                if generated_host(row["url"]) or WEB_SPAM.search(text):
+                    continue
+                han = HAN_CLAUSE.findall(text)
+                characters = sum(map(len, han))
+                if not characters or sum(ch in TRADITIONAL_ONLY for run in han for ch in run) > 0.01 * characters:
+                    continue
+                for line in text.splitlines():
+                    line = line.strip()
+                    # Prose lines only: menus, tables and link lists are mostly not Han text.
+                    count = sum(map(len, HAN_CLAUSE.findall(line)))
+                    if count < 6 or count < 0.5 * len(line) or line in seen:
+                        continue
+                    seen.add(line)
+                    lines.append(T2S.convert(line))
+    return lines
+
+
 def unseen(clauses: set[str], training: list[str]) -> set[str]:
     """The clauses that occur nowhere in the training text."""
     by_first: dict[str, list[str]] = {}
@@ -315,12 +363,15 @@ def main() -> int:
     download(downloads)
     dialogue = args.work / "dialogue"
     download(dialogue, DIALOGUE_DOWNLOADS)
+    web = args.work / "web"
+    download(web, FINEWEB_DOWNLOADS)
     sources = {
         "tatoeba": tatoeba_lines(downloads / "cmn_sentences.tsv.bz2"),
         "cv": common_voice_lines(downloads),
         "wikinews": wikinews_lines(downloads / "zhwikinews.xml.bz2"),
         "kdconv": kdconv_lines(dialogue),
         "crosswoz": crosswoz_lines(dialogue),
+        "fineweb": fineweb_lines(web),
     }
     train = args.work / "train"
     train.mkdir(parents=True, exist_ok=True)
