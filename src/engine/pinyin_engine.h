@@ -5,6 +5,7 @@
 #include "dictionary.h"
 #include "user_learning.h"
 #include "context_model.h"
+#include "word_model.h"
 #include "custom_phrases.h"
 #include "continuation_model.h"
 #include "domain_lexicon.h"
@@ -86,6 +87,7 @@ private:
     mutable CustomPhrases phrases_;
     mutable CustomPhrases emoji_;
     mutable ContextModel context_model_;
+    WordModel word_model_;
     mutable ContinuationModel continuation_model_;
     mutable size_t learning_revision_ = static_cast<size_t>(-1);
     std::wstring context_path_;

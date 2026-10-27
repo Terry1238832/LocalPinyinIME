@@ -6,7 +6,9 @@ Sources (see resources/dictionary/authoring/context_lm_sources.json):
   * Mozilla Common Voice zh-CN/zh-TW sentence text, CC0 1.0
   * KdConv and CrossWOZ dialogue utterances (Tsinghua thu-coai), Apache-2.0
   * FineWeb-2 Mandarin web text (Hugging Face), ODC-By 1.0; spam sites and
-    Traditional-script pages dropped, lines deduplicated
+    Traditional-script pages dropped, lines deduplicated. The held-out shard
+    trains the character model; it and every 16th row group of the first
+    training shard (read with HTTP range requests) train the word model.
 
 Every line is converted to simplified Chinese. One line in forty (chosen by a
 hash of its text) is held out of training; held-out Tatoeba and Common Voice
@@ -24,6 +26,7 @@ from __future__ import annotations
 import argparse
 import bz2
 import hashlib
+import io
 import json
 import re
 import urllib.request
@@ -83,6 +86,14 @@ FINEWEB_DOWNLOADS = {
         "https://huggingface.co/datasets/HuggingFaceFW/fineweb-2/resolve/main/data/cmn_Hani/test/000_00000.parquet",
         "22a90c471e09c8e938f3e070ff590864e74e01cc3c5cdf01c2713157fcdb43aa"),
 }
+# More web text for the word model: every 16th row group (1,000 pages each)
+# of the first 4.8 GB training shard, read with range requests, text and url
+# columns only (about 420 MB transferred).
+FINEWEB_TRAIN_SHARD = (
+    "https://huggingface.co/datasets/HuggingFaceFW/fineweb-2/resolve/main/data/cmn_Hani/train/000_00000.parquet",
+    4841624662, "3e43fefabc3ee500f9874655ece1776f96b81568cf33e0a6376835425ce42598")
+FINEWEB_TRAIN_STRIDE = 16
+FINEWEB_TRAIN_FILE = "fineweb2_cmn_Hani_train_000_every16.parquet"
 # Gambling and adult spam, whose generated pages splice unrelated sentences.
 WEB_SPAM = re.compile(r"博彩|娱乐城|六合彩|时时彩|赌场|赌博|百家乐|彩票|开奖|真人视讯|老虎机|棋牌|色情|成人电影|av女优|威尼斯人|葡京|"
                       r"皇冠体育|投注")
@@ -269,9 +280,69 @@ def generated_host(url: str) -> bool:
                for label in host.split("."))
 
 
-def fineweb_lines(directory: Path) -> list[str]:
+class RangeReader(io.RawIOBase):
+    """A seekable remote file read with HTTP range requests in 1 MB blocks."""
+
+    def __init__(self, url: str, size: int, block: int = 1 << 20) -> None:
+        self.url, self.size, self.block, self.position = url, size, block, 0
+        self.cache: dict[int, bytes] = {}
+
+    def readable(self) -> bool: return True
+    def seekable(self) -> bool: return True
+    def tell(self) -> int: return self.position
+
+    def seek(self, offset: int, whence: int = 0) -> int:
+        self.position = offset if whence == 0 else self.position + offset if whence == 1 else self.size + offset
+        return self.position
+
+    def fetch(self, start: int, end: int) -> bytes:
+        request = urllib.request.Request(self.url, headers={"Range": f"bytes={start}-{end - 1}"})
+        with urllib.request.urlopen(request, timeout=300) as response:
+            return response.read()
+
+    def read(self, count: int = -1) -> bytes:
+        count = self.size - self.position if count < 0 else max(0, min(count, self.size - self.position))
+        if count > self.block:
+            data = self.fetch(self.position, self.position + count)
+        else:
+            data = b""
+            while len(data) < count:
+                index = (self.position + len(data)) // self.block
+                if index not in self.cache:
+                    if len(self.cache) > 4:
+                        self.cache.clear()
+                    start = index * self.block
+                    self.cache[index] = self.fetch(start, min(self.size, start + self.block))
+                chunk = self.cache[index][self.position + len(data) - index * self.block:]
+                data += chunk[:count - len(data)]
+        self.position += len(data)
+        return data
+
+    def readinto(self, buffer) -> int:
+        data = self.read(len(buffer))
+        buffer[:len(data)] = data
+        return len(data)
+
+
+def download_row_groups(directory: Path) -> None:
+    target = directory / FINEWEB_TRAIN_FILE
+    if target.exists():
+        return
+    url, size, _ = FINEWEB_TRAIN_SHARD
+    print("download every", FINEWEB_TRAIN_STRIDE, "th row group of", url)
+    source = pq.ParquetFile(RangeReader(url, size))
+    writer = None
+    for group in range(0, source.metadata.num_row_groups, FINEWEB_TRAIN_STRIDE):
+        table = source.read_row_group(group, columns=["text", "url"])
+        if writer is None:
+            writer = pq.ParquetWriter(target, table.schema, compression="zstd")
+        writer.write_table(table)
+    writer.close()
+
+
+def fineweb_lines(paths: list[Path]) -> list[str]:
     lines, seen = [], set()
-    for path in sorted(directory.glob("fineweb2_*.parquet")):
+    for path in paths:
         table = pq.ParquetFile(path)
         for group in range(table.num_row_groups):
             for row in table.read_row_group(group, columns=["text", "url"]).to_pylist():
@@ -365,13 +436,15 @@ def main() -> int:
     download(dialogue, DIALOGUE_DOWNLOADS)
     web = args.work / "web"
     download(web, FINEWEB_DOWNLOADS)
+    download_row_groups(web)
     sources = {
         "tatoeba": tatoeba_lines(downloads / "cmn_sentences.tsv.bz2"),
         "cv": common_voice_lines(downloads),
         "wikinews": wikinews_lines(downloads / "zhwikinews.xml.bz2"),
         "kdconv": kdconv_lines(dialogue),
         "crosswoz": crosswoz_lines(dialogue),
-        "fineweb": fineweb_lines(web),
+        "fineweb": fineweb_lines([web / name for name in FINEWEB_DOWNLOADS]),
+        "fineweb_extra": fineweb_lines([web / FINEWEB_TRAIN_FILE]),
     }
     train = args.work / "train"
     train.mkdir(parents=True, exist_ok=True)

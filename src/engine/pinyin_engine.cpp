@@ -73,6 +73,9 @@ struct ScoreWeights {
     size_t beam = kSentenceBeamWidth;
     // Readings of one span scored by the language model, best priors first.
     size_t span_candidates = 32;
+    // Word association (word_zh.lm) bonus for each pair of adjacent words;
+    // chosen on the development half like the weights above (1.4.0).
+    double word_model = 0.35;
 };
 
 // Fixed in the IME; the evaluation tool may replace them to calibrate on the
@@ -179,6 +182,8 @@ struct SegmentPath {
     std::wstring text;
     // The last token is an English term (mixed input), not Chinese.
     bool english_end = false;
+    // The last Chinese word, for the word association model.
+    std::wstring last_word;
 };
 
 void prune_paths(std::vector<SegmentPath>& paths) {
@@ -215,7 +220,14 @@ struct DecodeOptions {
     const EnglishTerms* english = nullptr;
     // Non-null: words of the chosen usage scenes rank higher.
     const DomainLexicon* domains = nullptr;
+    // Non-null: adjacent word pairs seen together often score higher.
+    const WordModel* words = nullptr;
 };
+
+int word_bonus(const DecodeOptions& options, const std::wstring& previous, const std::wstring& word) {
+    if (!options.words || weights().word_model == 0.0) return 0;
+    return static_cast<int>(weights().word_model * options.words->pair_score(previous, word));
+}
 
 int english_prior(const EnglishTerms::Term& term, size_t length) {
     return kEnglishBase + term.weight * kEnglishWeightScale + kEnglishLengthBonus * static_cast<int>(std::min<size_t>(length, 8));
@@ -228,6 +240,7 @@ std::vector<std::vector<SegmentPath>> decode(const Dictionary& dictionary, const
     const auto& pinyin = input.pinyin;
     std::vector<std::vector<SegmentPath>> dp(pinyin.size() + 1);
     dp[0].push_back({});
+    if (options.words) dp[0].back().last_word = options.words->previous_word(preceding);
     std::vector<int> split_penalties(pinyin.size() + 1);
     for (size_t start = 0; start < pinyin.size(); ++start) {
         for (size_t length = 2; length <= 6 && start + length <= pinyin.size(); ++length) {
@@ -307,9 +320,11 @@ std::vector<std::vector<SegmentPath>> decode(const Dictionary& dictionary, const
                 const auto history = transition_history(preceding, path.text);
                 for (const auto& item : prepared) {
                     const int score = path.score + item.prior - split_penalties[next] - weights().segment_penalty +
-                                      static_cast<int>(weights().language_model * context.extend_score(history, item.candidate.text));
+                                      static_cast<int>(weights().language_model * context.extend_score(history, item.candidate.text)) +
+                                      word_bonus(options, path.last_word, item.candidate.text);
                     add_path(paths, indices, SegmentPath{score, path.segment_count + 1,
-                                                         join_text(path.text, item.candidate.text, path.english_end, false)});
+                                                         join_text(path.text, item.candidate.text, path.english_end, false),
+                                                         false, item.candidate.text});
                 }
             }
             if (paths.size() > weights().beam * 2) prune_paths(paths);
@@ -419,6 +434,8 @@ void PinyinEngine::rebuild_context_model(const std::wstring& context_path) {
         if (!std::filesystem::is_regular_file(binary, error) || !context_model_.load(binary.wstring()))
             context_model_.load(context_path);
     }
+    word_model_.reset();
+    if (!context_path.empty()) word_model_.load((std::filesystem::path(context_path).parent_path() / L"word_zh.lm").wstring());
     continuation_model_.reset(dictionary_);
     if (!context_path.empty()) continuation_model_.load((std::filesystem::path(context_path).parent_path() / L"continuations_zh.tsv").wstring());
     learning_revision_ = static_cast<size_t>(-1);
@@ -569,6 +586,7 @@ bool PinyinEngine::set_evaluation_weights(const std::wstring& spec) {
         else if (key == L"segment") next.segment_penalty = static_cast<int>(value);
         else if (key == L"beam") next.beam = static_cast<size_t>(std::max(4.0, value));
         else if (key == L"span") next.span_candidates = static_cast<size_t>(std::max(4.0, value));
+        else if (key == L"wm") next.word_model = value;
         else return false;
         if (comma == std::wstring::npos) break;
         start = comma + 1;
@@ -650,7 +668,7 @@ std::vector<Candidate> PinyinEngine::lookup_pinyin(const std::wstring& pinyin, c
     refresh_learning();
 
     const DomainLexicon* scenes = domains_.empty() ? nullptr : &domains_;
-    DecodeOptions decoding{options.fuzzy, nullptr, scenes};
+    DecodeOptions decoding{options.fuzzy, nullptr, scenes, word_model_.empty() ? nullptr : &word_model_};
     auto dp = decode(dictionary_, ranker_, learning_, context_model_, parsed, context, decoding);
     // Chinese first; English terms join only when Chinese cannot read the
     // whole input (Python, GitHub and most English words are not pinyin).
@@ -719,7 +737,8 @@ std::vector<Candidate> PinyinEngine::lookup_pinyin(const std::wstring& pinyin, c
                 const auto& word = completions[index];
                 SegmentPath completed{path.score + static_cast<int>(weights().lexical * lexical_score(word)) + word.user_frequency / 3 +
                                       static_cast<int>(weights().language_model *
-                                          context_model_.extend_score(transition_history(context, path.text), word.text)) - 600,
+                                          context_model_.extend_score(transition_history(context, path.text), word.text)) - 600 +
+                                      word_bonus(decoding, path.last_word, word.text),
                                       path.segment_count + 1, join_text(path.text, word.text, path.english_end, false)};
                 candidates.push_back(candidate_from_path(completed, context_model_));
             }
@@ -740,7 +759,7 @@ std::vector<Candidate> PinyinEngine::lookup_pinyin(const std::wstring& pinyin, c
                 if (!EnglishTerms::reads_as_pinyin(correction.pinyin)) continue;
                 ++decoded;
                 const auto corrected = parse_input(correction.pinyin);
-                auto corrected_dp = decode(dictionary_, ranker_, learning_, context_model_, corrected, context, {options.fuzzy, nullptr, scenes});
+                auto corrected_dp = decode(dictionary_, ranker_, learning_, context_model_, corrected, context, {options.fuzzy, nullptr, scenes, decoding.words});
                 for (size_t index = 0; index < std::min<size_t>(2, corrected_dp.back().size()); ++index) {
                     auto candidate = candidate_from_path(corrected_dp.back()[index], context_model_);
                     candidate.segmentation_penalty = correction.cost;
