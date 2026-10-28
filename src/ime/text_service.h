@@ -334,6 +334,9 @@ private:
     std::wstring recent_committed_text_;
     std::uintptr_t recent_committed_context_ = 0;
     ULONGLONG recent_committed_tick_ = 0;
+    // A field that showed its committed text when read: an empty read there
+    // means the field really is empty (a message just sent), not unreadable.
+    std::uintptr_t text_exposing_context_ = 0;
     // The host is a code editor, IDE or terminal: punctuation is ASCII there.
     bool code_application_ = false;
     // Whether the key before the one being handled was a digit, for 3. when

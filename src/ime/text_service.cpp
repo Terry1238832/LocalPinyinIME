@@ -1871,7 +1871,11 @@ bool TextService::handle_chinese_key(ITfContext* context, WPARAM wparam, BOOL* e
                 const HRESULT read = composition_.read_preceding_text(context, client_id_, &preceding_committed_text_);
                 if (read != S_OK) preceding_committed_text_.clear();
                 // S_FALSE marks a protected or read-only field: no fallback there.
-                if (FAILED(read) || (read == S_OK && preceding_committed_text_.empty()))
+                // An empty read falls back only where the field never showed
+                // its text: a cleared field starts afresh, not after the
+                // previous message.
+                if (FAILED(read) || (read == S_OK && preceding_committed_text_.empty() &&
+                                     reinterpret_cast<std::uintptr_t>(context) != text_exposing_context_))
                     preceding_committed_text_ = recent_committed_text(context);
             }
         }
@@ -2106,7 +2110,8 @@ bool TextService::handle_english_key(ITfContext* context, WPARAM wparam, BOOL* e
                 const std::wstring before = read == S_OK ? preceding_committed_text_ : recent_committed_text(context);
                 english_sentence_start_ = sentence_starts_after(before);
                 english_joined_ = joins_previous_text(before);
-                if (FAILED(read) || (read == S_OK && preceding_committed_text_.empty()))
+                if (FAILED(read) || (read == S_OK && preceding_committed_text_.empty() &&
+                                     reinterpret_cast<std::uintptr_t>(context) != text_exposing_context_))
                     preceding_committed_text_ = recent_committed_text(context);
             }
             composing_.push_back(character);
@@ -2735,7 +2740,7 @@ HRESULT TextService::commit_selected(ITfContext* context) {
         }
         return hr;
     }
-    engine_.learn(learned_pinyin, committed);
+    engine_.learn(learned_pinyin, committed, selected_index_ == 0, preceding_committed_text_);
     extend_phrase_run(context, learned_pinyin, committed, preceding_committed_text_);
     remember_committed_text(context, committed);
     reset_transient_input_state(L"commit");
@@ -2908,6 +2913,10 @@ void TextService::remember_committed_text(ITfContext* context, const std::wstrin
     recent_committed_context_ = identity;
     recent_committed_tick_ = GetTickCount64();
     recent_committed_text_ += text;
+    std::wstring shown;
+    if (composition_.read_preceding_text(context, client_id_, &shown) == S_OK && !shown.empty() &&
+        shown.size() >= text.size() && shown.compare(shown.size() - text.size(), text.size(), text) == 0)
+        text_exposing_context_ = identity;
     if (recent_committed_text_.size() > 32) recent_committed_text_.erase(0, recent_committed_text_.size() - 32);
 }
 

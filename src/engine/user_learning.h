@@ -26,6 +26,10 @@ public:
     static constexpr double kSpacedGrowth = 2.5;
     static constexpr int kFadeSteps = 4;
 
+    // A choice made right after the character `before` is also remembered
+    // under this key, so it can lead in that context without leading in
+    // every other one. Older versions skip such records.
+    [[nodiscard]] static std::wstring contextual_key(const std::wstring& pinyin, wchar_t before);
     bool open(const std::wstring& storage_path);
     int frequency(const std::wstring& pinyin, const std::wstring& word) const;
     // Seconds since the epoch of the latest selection, or 0.

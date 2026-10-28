@@ -21,10 +21,21 @@ std::wstring key_for(const std::wstring& pinyin, const std::wstring& word) {
     return pinyin + L"\t" + word;
 }
 
+constexpr wchar_t kContextMark = L'~';
+
+// Plain pinyin, or contextual: pinyin, the mark, then one character.
 bool valid_selection(const std::wstring& pinyin, const std::wstring& word) {
-    return !pinyin.empty() && pinyin.size() <= 256 && !word.empty() && word.size() <= 128 &&
-           pinyin.find_first_not_of(L"abcdefghijklmnopqrstuvwxyz0123456789") == std::wstring::npos &&
+    const auto mark = pinyin.find(kContextMark);
+    const auto keys = pinyin.substr(0, mark);
+    const bool context_ok = mark == std::wstring::npos ||
+                            (mark + 2 == pinyin.size() && pinyin[mark + 1] >= 0x3400 && pinyin[mark + 1] <= 0x9FFF);
+    return !keys.empty() && keys.size() <= 256 && context_ok && !word.empty() && word.size() <= 128 &&
+           keys.find_first_not_of(L"abcdefghijklmnopqrstuvwxyz0123456789") == std::wstring::npos &&
            word.find_first_of(L"\t\r\n") == std::wstring::npos;
+}
+
+bool contextual(const std::wstring& key, size_t tab) noexcept {
+    return key.find(kContextMark) < tab;
 }
 
 template<typename T>
@@ -95,12 +106,16 @@ int UserLearning::faded_steps(const std::wstring& pinyin, const std::wstring& wo
     return steps >= kFadeSteps ? -1 : static_cast<int>(steps);
 }
 
+std::wstring UserLearning::contextual_key(const std::wstring& pinyin, wchar_t before) {
+    return pinyin + kContextMark + before;
+}
+
 std::vector<std::pair<std::wstring, int>> UserLearning::selected_texts() const {
     std::vector<std::pair<std::wstring, int>> result;
     result.reserve(records_.size());
     for (const auto& [key, record] : records_) {
         const auto tab = key.find(L'\t');
-        if (tab != std::wstring::npos) result.emplace_back(key.substr(tab + 1), record.selection_count);
+        if (tab != std::wstring::npos && !contextual(key, tab)) result.emplace_back(key.substr(tab + 1), record.selection_count);
     }
     return result;
 }
@@ -127,7 +142,7 @@ void UserLearning::reindex() {
     longest_phrase_key_ = 0;
     for (const auto& [key, record] : records_) {
         const auto tab = key.find(L'\t');
-        if (tab == std::wstring::npos) continue;
+        if (tab == std::wstring::npos || contextual(key, tab)) continue;
         auto pinyin = key.substr(0, tab);
         const auto word = key.substr(tab + 1);
         // Two or more characters (a surrogate pair is one).
@@ -180,7 +195,7 @@ std::vector<UserLearning::Entry> UserLearning::entries() const {
     list.reserve(records_.size());
     for (const auto& [key, record] : records_) {
         const auto tab = key.find(L'\t');
-        if (tab != std::wstring::npos) list.push_back(Entry{key.substr(0, tab), key.substr(tab + 1), record.selection_count, record.last_selected_time});
+        if (tab != std::wstring::npos && !contextual(key, tab)) list.push_back(Entry{key.substr(0, tab), key.substr(tab + 1), record.selection_count, record.last_selected_time});
     }
     std::sort(list.begin(), list.end(), [](const Entry& left, const Entry& right) {
         return left.last_selected != right.last_selected ? left.last_selected > right.last_selected : left.pinyin < right.pinyin;
@@ -195,8 +210,10 @@ size_t UserLearning::forget(const std::wstring& word, const std::wstring& pinyin
     size_t forgotten = 0;
     for (auto it = records_.begin(); it != records_.end();) {
         const auto tab = it->first.find(L'\t');
+        // A contextual record goes with its plain pinyin.
+        const auto keys_end = std::min(tab, it->first.find(kContextMark));
         const bool match = tab != std::wstring::npos && it->first.compare(tab + 1, std::wstring::npos, word) == 0 &&
-                           (pinyin.empty() || it->first.compare(0, tab, pinyin) == 0);
+                           (pinyin.empty() || it->first.compare(0, keys_end, pinyin) == 0 && keys_end == pinyin.size());
         if (match) { it = records_.erase(it); ++forgotten; }
         else ++it;
     }
@@ -224,12 +241,17 @@ void UserLearning::refresh_if_changed() {
 }
 
 void UserLearning::prune() {
+    // Plain and contextual records each keep up to the capacity, so the
+    // settings app's count (plain choices) is measured against its own limit.
     if (records_.size() <= kMaxLearningRecords) return;
-    std::vector<std::pair<long long, std::wstring>> by_age;
-    by_age.reserve(records_.size());
-    for (const auto& [key, record] : records_) by_age.emplace_back(record.last_selected_time, key);
-    std::sort(by_age.begin(), by_age.end());
-    for (size_t i = 0; i < by_age.size() - kMaxLearningRecords; ++i) records_.erase(by_age[i].second);
+    std::vector<std::pair<long long, std::wstring>> plain, in_context;
+    for (const auto& [key, record] : records_)
+        (contextual(key, key.find(L'\t')) ? in_context : plain).emplace_back(record.last_selected_time, key);
+    for (auto* by_age : {&plain, &in_context}) {
+        if (by_age->size() <= kMaxLearningRecords) continue;
+        std::sort(by_age->begin(), by_age->end());
+        for (size_t i = 0; i < by_age->size() - kMaxLearningRecords; ++i) records_.erase((*by_age)[i].second);
+    }
 }
 
 bool UserLearning::load() {

@@ -89,6 +89,32 @@ int main() {
         }));
         REQUIRE_TRUE(reader.clear());
     }
+    // A committed first choice teaches nothing; a correction is remembered
+    // with the character before it. After other text, a single character
+    // chosen elsewhere does not override what that text implies.
+    {
+        localpinyin::PinyinEngine engine(localpinyin::DictionaryLoadMode::Empty);
+        REQUIRE_TRUE(engine.load_dictionary_resource_directory(resources.wstring(), user));
+        const auto plain_first = engine.lookup(L"ta").front().text;
+        const auto after_he_said = engine.lookup(L"ta", L"他说").front().text;
+        engine.learn(L"ta", plain_first, true, L"");
+        localpinyin::UserLearning reader;
+        REQUIRE_TRUE(reader.open((root / L"user_learning.tsv").wstring()));
+        REQUIRE_TRUE(reader.entries().empty());
+
+        const std::wstring chosen = plain_first == L"她" ? L"它" : L"她";
+        engine.learn(L"ta", chosen, false, L"我对");
+        REQUIRE_EQ(engine.lookup(L"ta", L"我对").front().text, chosen);
+        REQUIRE_EQ(engine.lookup(L"ta").front().text, chosen);
+        REQUIRE_EQ(engine.lookup(L"ta", L"他说").front().text, after_he_said);
+        // The settings list shows the choice once, without its context.
+        REQUIRE_TRUE(reader.open((root / L"user_learning.tsv").wstring()));
+        REQUIRE_EQ(reader.entries().size(), static_cast<size_t>(1));
+        REQUIRE_EQ(reader.frequency(localpinyin::UserLearning::contextual_key(L"ta", L'对'), chosen), 1);
+        // Forgetting the choice also forgets it in context.
+        REQUIRE_EQ(reader.forget(chosen, L"ta"), static_cast<size_t>(2));
+        REQUIRE_TRUE(reader.clear());
+    }
     std::filesystem::remove_all(root);
     return passed ? 0 : 1;
 }

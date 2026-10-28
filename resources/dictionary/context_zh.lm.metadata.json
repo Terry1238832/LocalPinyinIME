@@ -6,25 +6,19 @@
   "logprob_scale": 1000,
   "minimum_counts": [
     1,
+    1,
     2,
-    3,
     4
   ],
   "entries": {
-    "1": 6721,
-    "2": 537975,
-    "3": 1144789,
-    "4": 455563
+    "1": 8210,
+    "2": 1533437,
+    "3": 4103845,
+    "4": 1543474
   },
-  "han_characters": 13631389,
-  "excluded_clauses": 3900,
+  "han_characters": 44256207,
+  "excluded_clauses": 7538,
   "inputs": [
-    {
-      "file": "daily_chat.txt",
-      "weight": 8,
-      "clauses": 1047,
-      "sha256": "27e95babc80246f10ddbfd593b86915f038ad12f3bdd47969db8df92e0eb0213"
-    },
     {
       "file": "daily_context.txt",
       "weight": 8,
@@ -152,8 +146,14 @@
       "sha256": "e507d93a81a0cbb967e4df21978f2c88c5e383d48d8747b446d8e3529d0f5c99"
     },
     {
+      "file": "daily_chat.txt",
+      "weight": 8,
+      "clauses": 1047,
+      "sha256": "27e95babc80246f10ddbfd593b86915f038ad12f3bdd47969db8df92e0eb0213"
+    },
+    {
       "file": "wikinews.txt",
-      "weight": 1,
+      "weight": 2,
       "clauses": 495181,
       "sha256": "ec407a076ec88ebd025978dff806c2d831524887da337fc01b0d5119bcda8fe0"
     },
@@ -171,21 +171,27 @@
     },
     {
       "file": "kdconv.txt",
-      "weight": 1,
+      "weight": 2,
       "clauses": 195390,
       "sha256": "e9ce378dac6f29a16bcd25657ef60795e0ea69d20d3c28b00c803bdf40d8ed72"
     },
     {
       "file": "crosswoz.txt",
-      "weight": 1,
+      "weight": 2,
       "clauses": 282995,
       "sha256": "1178e521364afbe0702ddd58dfcd7e630547cf3c3f07ca6d543e3afe1a20f8d2"
     },
     {
+      "file": "fineweb.txt",
+      "weight": 1,
+      "clauses": 2501845,
+      "sha256": "4f6f630fc4f4bb6fd16c3493761d74979cedcffe3a2f585de971d038fc9a97b2"
+    },
+    {
       "file": "local_core_zh_pinyin.tsv",
       "weight": 2,
-      "fragments": 158845,
-      "sha256": "a5ca91976187fb9e3479b67b5e01b7faa98fd48b52bf55c1d8686e8bd7fdbfc7"
+      "fragments": 221648,
+      "sha256": "56fcb42c16ea86017c363f61ac4a570cc2678769f77206fe4ce1137d235c916f"
     },
     {
       "file": "standard_zh_pinyin.tsv",
@@ -230,5 +236,5 @@
       "sha256": "c00c4a4ecb1122aa6b04a4193fe6fb6cf69a77b977188e3229e282707bc7dfab"
     }
   ],
-  "sha256": "fad15906579fbd90cd3f9962940342ca64138baa7caa748d01a8cadd33fc2020"
+  "sha256": "fbc541b277f140c64d217a37dc3fe7a4ea1abd24e599910160eed8bb6cf82581"
 }

@@ -27,25 +27,33 @@ std::string json_string(const std::string& value) {
 
 // UTF-8 TSV input: pinyin<TAB>expected text<TAB>source/case ID[<TAB>preceding text].
 // The optional preceding text is the committed document text before the caret.
-// Evaluation is separate from training and never learns the expected answers.
+// Evaluation is separate from training and never learns the expected answers,
+// except with --learn: it then simulates one person typing the cases in order,
+// choosing the expected text each time (as committing it does), starting from
+// an empty learning record.
 int wmain(int argc, wchar_t** argv) {
-    bool keystrokes = false, use_context = true, scores = false, valid = argc >= 3;
+    bool keystrokes = false, use_context = true, scores = false, learn = false, valid = argc >= 3;
     unsigned domains = 0;
     for (int index = 3; index < argc; ++index) {
         const std::wstring flag = argv[index];
         if (flag == L"--keystrokes") keystrokes = true;
         else if (flag == L"--no-context") use_context = false;
         else if (flag == L"--scores") scores = true;
+        else if (flag == L"--learn") learn = true;
         else if (flag.starts_with(L"--weights=")) valid = valid && localpinyin::PinyinEngine::set_evaluation_weights(flag.substr(10));
         else if (flag.starts_with(L"--domains=")) domains = localpinyin::parse_usage_domains(flag.substr(10));
         else valid = false;
     }
     if (!valid) {
-        std::cerr << "Usage: LocalPinyinImeEval <directory containing dictionary/> <cases.tsv> [--keystrokes] [--no-context] [--scores] [--domains=coding,daily]\n";
+        std::cerr << "Usage: LocalPinyinImeEval <directory containing dictionary/> <cases.tsv> [--keystrokes] [--no-context] [--scores] [--learn] [--domains=coding,daily]\n";
         return 2;
     }
     localpinyin::PinyinEngine engine(localpinyin::DictionaryLoadMode::Empty);
     const auto isolated_user = std::filesystem::path(argv[2]).parent_path() / L"eval-user" / L"user_lexicon.tsv";
+    if (learn) {
+        std::error_code ignored;
+        std::filesystem::remove_all(isolated_user.parent_path(), ignored);
+    }
     if (!engine.load_dictionary_resource_directory(argv[1], isolated_user.wstring())) return 3;
     localpinyin::EngineInputOptions options;
     options.domains = domains;
@@ -95,6 +103,10 @@ int wmain(int argc, wchar_t** argv) {
             std::cout << ",\"scores\":[";
             for (size_t index = 0; index < candidates.size(); ++index)
                 std::cout << (index ? "," : "") << candidates[index].total_score();
+            // Typed letters each candidate reads (0: the whole input).
+            std::cout << "],\"consumed\":[";
+            for (size_t index = 0; index < candidates.size(); ++index)
+                std::cout << (index ? "," : "") << candidates[index].consumed_pinyin;
             std::cout << ']';
         }
         if (keystrokes) {
@@ -107,6 +119,7 @@ int wmain(int argc, wchar_t** argv) {
             std::cout << ']';
         }
         std::cout << "}\n";
+        if (learn) engine.learn(wide_pinyin, localpinyin::utf8_to_wide(expected), rank == 1, preceding);
     }
     return 0;
 }
