@@ -37,6 +37,10 @@ int main() {
     REQUIRE_TRUE(model.pair_score(L"专门", L"卖") > model.pair_score(L"专门", L"买"));
     REQUIRE_TRUE(model.pair_score(L"严密", L"监视") > 0);
     REQUIRE_EQ(model.pair_score(L"", L"监视"), 0);
+    // Runs of three: 帮 is likelier after 请你 than after 你 alone.
+    REQUIRE_TRUE(model.triple_score(L"请", L"你", L"帮") > 0);
+    REQUIRE_TRUE(model.triple_score(L"今天", L"天气", L"很") > 0);
+    REQUIRE_EQ(model.triple_score(L"", L"你", L"帮"), 0);
     // The previous word of committed text is its longest suffix that begins a pair.
     REQUIRE_EQ(model.previous_word(L"他们非常严密"), std::wstring(L"严密"));
     REQUIRE_EQ(model.previous_word(L""), std::wstring());
@@ -47,12 +51,12 @@ int main() {
     REQUIRE_EQ(missing.pair_score(L"专门", L"卖"), 0);
 
     // Held-out sentences (tests/data/heldout_sentences.tsv) that the character
-    // model alone read wrongly: 专门买, 眼睛掉在地上, 十点钟水饺, 倒到被子里.
+    // model alone read wrongly: 专门买, 把点叫我, 十点钟水饺, 倒到被子里.
     localpinyin::PinyinEngine engine(localpinyin::DictionaryLoadMode::Empty);
     REQUIRE_TRUE(engine.load_dictionary_resource_directory(resources.wstring(), (root / L"user_lexicon.tsv").wstring()));
     const std::vector<SentenceCase> cases = {
         {L"zhejiadianshizhuanmenmaichufangyongpinde", L"这家店是专门卖厨房用品的"},
-        {L"nideyanjingdiaozaidishangle", L"你的眼镜掉在地上了"},
+        {L"qingnibadianjiaowoqichuang", L"请你八点叫我起床"},
         {L"woshidianzhongshuijiao", L"我十点钟睡觉"},
         {L"tabaniunaidaodaobeizilile", L"他把牛奶倒到杯子里了"},
     };

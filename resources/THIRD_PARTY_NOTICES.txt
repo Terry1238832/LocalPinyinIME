@@ -236,14 +236,14 @@ The 4-gram language model used to rank candidates by the preceding text contains
   both by the Tsinghua University CoAI group and licensed under the Apache License 2.0 (full text above);
   only n-gram statistics derived from the utterances are included, no utterance text;
 - FineWeb-2 Mandarin web text (https://huggingface.co/datasets/HuggingFaceFW/fineweb-2, data/cmn_Hani/test/000_00000.parquet;
-  the word association model also uses every 16th row group of data/cmn_Hani/train/000_00000.parquet),
+  the word association model also uses every 8th row group of data/cmn_Hani/train/000_00000.parquet),
   by Hugging Face, made available under the Open Data Commons Attribution License v1.0
   (https://opendatacommons.org/licenses/by/1-0/); the underlying pages were collected by Common Crawl
   and are also subject to the Common Crawl terms of use (https://commoncrawl.org/terms-of-use);
   only n-gram statistics are included, no web text;
 - internal n-grams of the bundled dictionary words.
-The word association model (word_zh.lm) contains only association scores of adjacent lexicon word pairs, estimated
-from the same sources.
+The word association model (word_zh.lm) contains only association scores of adjacent lexicon word pairs and runs of
+three words, estimated from the same sources.
 Text was converted to simplified Chinese with OpenCC (Apache-2.0), which is used at authoring time only.
 Sources, downloads and checksums: resources/dictionary/authoring/context_lm_sources.json and resources/dictionary/context_zh.lm.metadata.json in the source repository.
 One line in forty and all evaluation sentences are held out of training.

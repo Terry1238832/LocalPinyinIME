@@ -1,15 +1,17 @@
 {
   "format": "LPWM",
-  "format_version": 1,
+  "format_version": 2,
   "score_scale": 1000,
   "discount": 0.5,
   "minimum_pair_count": 3,
+  "minimum_triple_count": 3,
   "minimum_score": 0.5,
   "maximum_score": 15.0,
-  "words": 72315,
-  "pairs": 2439155,
-  "tokens": 80483223,
-  "excluded_clauses": 20814,
+  "words": 79035,
+  "pairs": 3297925,
+  "triples": 4533535,
+  "tokens": 128246449,
+  "excluded_clauses": 33827,
   "inputs": [
     {
       "file": "daily_chat.txt",
@@ -184,6 +186,12 @@
       "weight": 1,
       "clauses": 8988177,
       "sha256": "2aa36a32fe04350bf9cde899892fd4406c9ffdd6d3e97e83c61a0d3c3272b7bc"
+    },
+    {
+      "file": "fineweb_extra2.txt",
+      "weight": 1,
+      "clauses": 8849854,
+      "sha256": "02f2cedc0735520d8eaecaa462a1ab8adcca9a24599f64609bd4ceda8ee960b2"
     }
   ],
   "lexicons": [
@@ -230,5 +238,5 @@
       "sha256": "c00c4a4ecb1122aa6b04a4193fe6fb6cf69a77b977188e3229e282707bc7dfab"
     }
   ],
-  "sha256": "d64227498df5a35a750a19e8a42aa5abff24eafe29bf3193c01c5b2ac63f09d4"
+  "sha256": "bcfdff3c333750f2a07041fc7e4fec7f29aaad5e67ff83015da77bb839005c4d"
 }

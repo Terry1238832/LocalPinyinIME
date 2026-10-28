@@ -11,16 +11,25 @@ occurs than its words would by chance:
 
     score(a, b) = ln((count(a b) - D) * N / (count(a) * count(b)))
 
+A run of three words also keeps how much more often its third word follows
+the first two than it follows the second alone:
+
+    score(a, b, c) = ln((count(a b c) - D) * count(b) / (count(a b) * count(b c)))
+
 Only positive associations are kept, so an unseen pair scores zero and a
 stored pair is a bonus. Clauses containing an evaluation sentence are skipped
-exactly as for the character model. Only pair statistics are packaged.
+exactly as for the character model. Only pair and triple statistics are
+packaged.
 
 Binary layout (little endian):
-  magic "LPWM", u32 version, u32 scale, u32 word_count, u32 pair_count,
+  magic "LPWM", u32 version (2), u32 scale, u32 word_count, u32 pair_count,
+  u32 triple_count,
   u32 word_keys[word_count] sorted ascending (words that begin a stored pair),
-  u32 pair_keys[pair_count] sorted ascending, i16 pair_scores[pair_count].
+  u32 pair_keys[pair_count] sorted ascending, u32 triple_keys[triple_count]
+  sorted ascending, i16 pair_scores[pair_count], i16 triple_scores[triple_count].
 Keys are the high 32 bits of 64-bit FNV-1a over UTF-16 code units; a pair
-hashes its first word, U+0001, then its second word.
+hashes its first word, U+0001, then its second word, and a triple its three
+words with U+0001 between them.
 
 Requires numpy at authoring time only.
 
@@ -45,7 +54,8 @@ sys.path.insert(0, str(Path(__file__).parent))
 from build_context_lm import HAN_RUN, excluded_texts  # noqa: E402
 
 MAGIC = b"LPWM"
-VERSION = 1
+VERSION = 2
+IDBITS = 21
 SCALE = 1000
 MAX_WORD = 8
 DISCOUNT = 0.5
@@ -67,15 +77,31 @@ def pair_key(first: str, second: str) -> int:
     return fnv(second, fnv("\x01", fnv(first))) >> 32
 
 
+def triple_key(first: str, second: str, third: str) -> int:
+    return fnv(third, fnv("\x01", fnv(second, fnv("\x01", fnv(first))))) >> 32
+
+
+def _aggregate(keys: list[int] | np.ndarray, weights: list[int] | np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+    keys = np.asarray(keys, dtype=np.uint64)
+    values = np.asarray(weights, dtype=np.int64)
+    if not len(keys):
+        return keys, values
+    order = np.argsort(keys, kind="stable")
+    keys, values = keys[order], values[order]
+    unique, start = np.unique(keys, return_index=True)
+    return unique, np.add.reduceat(values, start)
+
+
 # Worker state: word -> (id, cost); set once per process.
 _COSTS: dict[str, float] = {}
 _IDS: dict[str, int] = {}
 _UNKNOWN = 0.0
+_TRIPLES = False
 
 
-def _init(costs: dict[str, float], ids: dict[str, int], unknown: float) -> None:
-    global _COSTS, _IDS, _UNKNOWN
-    _COSTS, _IDS, _UNKNOWN = costs, ids, unknown
+def _init(costs: dict[str, float], ids: dict[str, int], unknown: float, triples: bool) -> None:
+    global _COSTS, _IDS, _UNKNOWN, _TRIPLES
+    _COSTS, _IDS, _UNKNOWN, _TRIPLES = costs, ids, unknown, triples
 
 
 def segment(clause: str) -> list[str]:
@@ -102,46 +128,48 @@ def segment(clause: str) -> list[str]:
     return tokens
 
 
-def _count(batch: list[tuple[str, int]]) -> tuple[Counter, np.ndarray, np.ndarray]:
-    """Weighted word counts and (first id << 32 | second id) pair counts."""
+def _count(batch: list[tuple[str, int]]):
+    """Weighted word counts, pair counts keyed (a << 32 | b) and, when
+    enabled, triple counts keyed by three IDBITS-bit word ids."""
     words: Counter = Counter()
     pairs: list[int] = []
-    weights: list[int] = []
+    pair_weights: list[int] = []
+    triples: list[int] = []
+    triple_weights: list[int] = []
     ids = _IDS
     for clause, weight in batch:
         tokens = segment(clause)
         for token in tokens:
             words[token] += weight
-        for first, second in zip(tokens, tokens[1:]):
-            a, b = ids.get(first), ids.get(second)
-            if a is not None and b is not None:
-                pairs.append(a << 32 | b)
-                weights.append(weight)
-    keys = np.asarray(pairs, dtype=np.uint64)
-    values = np.asarray(weights, dtype=np.int64)
-    if len(keys):
-        order = np.argsort(keys, kind="stable")
-        keys, values = keys[order], values[order]
-        unique, start = np.unique(keys, return_index=True)
-        return words, unique, np.add.reduceat(values, start)
-    return words, keys, values
+        token_ids = [ids.get(token) for token in tokens]
+        for index in range(len(token_ids) - 1):
+            a, b = token_ids[index], token_ids[index + 1]
+            if a is None or b is None:
+                continue
+            pairs.append(a << 32 | b)
+            pair_weights.append(weight)
+            if _TRIPLES and index + 2 < len(token_ids) and token_ids[index + 2] is not None:
+                triples.append((a << IDBITS | b) << IDBITS | token_ids[index + 2])
+                triple_weights.append(weight)
+    return words, _aggregate(pairs, pair_weights), _aggregate(triples, triple_weights)
 
 
-def count_all(clauses, costs, ids, unknown, workers):
+def count_all(clauses, costs, ids, unknown, workers, triples=False):
     batches = [clauses[index:index + 20000] for index in range(0, len(clauses), 20000)]
     words: Counter = Counter()
-    keys, values = [], []
-    with ProcessPoolExecutor(workers, initializer=_init, initargs=(costs, ids, unknown)) as pool:
-        for batch_words, batch_keys, batch_values in pool.map(_count, batches):
+    pair_parts, triple_parts = [], []
+    with ProcessPoolExecutor(workers, initializer=_init, initargs=(costs, ids, unknown, triples)) as pool:
+        for batch_words, batch_pairs, batch_triples in pool.map(_count, batches):
             words.update(batch_words)
-            keys.append(batch_keys)
-            values.append(batch_values)
-    keys = np.concatenate(keys)
-    values = np.concatenate(values)
-    order = np.argsort(keys, kind="stable")
-    keys, values = keys[order], values[order]
-    unique, start = np.unique(keys, return_index=True)
-    return words, unique, np.add.reduceat(values, start)
+            pair_parts.append(batch_pairs)
+            # Merge as they arrive, so memory holds one copy of the triples.
+            triple_parts.append(batch_triples)
+            if len(triple_parts) >= 16:
+                triple_parts = [_aggregate(np.concatenate([k for k, _ in triple_parts]),
+                                           np.concatenate([v for _, v in triple_parts]))]
+    pairs = _aggregate(np.concatenate([k for k, _ in pair_parts]), np.concatenate([v for _, v in pair_parts]))
+    triples_out = _aggregate(np.concatenate([k for k, _ in triple_parts]), np.concatenate([v for _, v in triple_parts]))
+    return words, pairs, triples_out
 
 
 def main() -> None:
@@ -152,6 +180,7 @@ def main() -> None:
     parser.add_argument("--min-pair-count", type=int, default=3)
     parser.add_argument("--min-score", type=float, default=0.5, help="smallest stored association, nats")
     parser.add_argument("--max-score", type=float, default=15.0, help="associations above this are clipped, nats")
+    parser.add_argument("--min-triple-count", type=int, default=3, help="0 stores no triples")
     parser.add_argument("--workers", type=int, default=16)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
@@ -167,6 +196,7 @@ def main() -> None:
                 frequency[word] = max(frequency.get(word, 0), int(parts[2]))
     ids = {word: index for index, word in enumerate(sorted(frequency))}
     words_by_id = sorted(frequency)
+    assert len(words_by_id) < 1 << IDBITS
 
     excluded = excluded_texts(args.exclude)
     by_first: dict[str, list[str]] = {}
@@ -203,8 +233,10 @@ def main() -> None:
     total = sum(words.values())
     costs = {word: -math.log((words.get(word, 0) + 0.1) / total) for word in frequency}
     unknown = -math.log(0.05 / total)
-    words, keys, values = count_all(clauses, costs, ids, unknown, args.workers)
+    words, (keys, values), (triple_keys_raw, triple_values) = count_all(
+        clauses, costs, ids, unknown, args.workers, args.min_triple_count > 0)
     total = sum(words.values())
+    all_pair_keys, all_pair_values = keys, values
 
     first_ids = (keys >> np.uint64(32)).astype(np.int64)
     second_ids = (keys & np.uint64(0xFFFFFFFF)).astype(np.int64)
@@ -225,17 +257,48 @@ def main() -> None:
         starts.add(word_key(words_by_id[a]))
     pair_keys = np.array(sorted(pair_scores), dtype="<u4")
     pair_values = np.array([pair_scores[int(key)] for key in pair_keys], dtype="<i2")
+
+    triple_scores: dict[int, int] = {}
+    if args.min_triple_count > 0 and len(triple_keys_raw):
+        keep = triple_values >= args.min_triple_count
+        packed, counts = triple_keys_raw[keep], triple_values[keep].astype(np.float64)
+        mask = np.uint64((1 << IDBITS) - 1)
+        a_ids = (packed >> np.uint64(2 * IDBITS)).astype(np.int64)
+        b_ids = ((packed >> np.uint64(IDBITS)) & mask).astype(np.int64)
+        c_ids = (packed & mask).astype(np.int64)
+
+        def pair_count(first, second):
+            wanted = (first.astype(np.uint64) << np.uint64(32)) | second.astype(np.uint64)
+            position = np.clip(np.searchsorted(all_pair_keys, wanted), 0, len(all_pair_keys) - 1)
+            return np.where(all_pair_keys[position] == wanted, all_pair_values[position], 0).astype(np.float64)
+
+        ab, bc = pair_count(a_ids, b_ids), pair_count(b_ids, c_ids)
+        with np.errstate(divide="ignore", invalid="ignore"):
+            scores = np.log((counts - DISCOUNT) * unigram[b_ids] / (ab * bc))
+        keep = np.isfinite(scores) & (scores >= args.min_score)
+        for a, b, c, score in zip(a_ids[keep].tolist(), b_ids[keep].tolist(), c_ids[keep].tolist(),
+                                  np.minimum(scores[keep], args.max_score).tolist()):
+            key = triple_key(words_by_id[a], words_by_id[b], words_by_id[c])
+            value = int(round(score * SCALE))
+            if value > triple_scores.get(key, -1):
+                triple_scores[key] = value
+            starts.add(word_key(words_by_id[a]))
+    triple_keys = np.array(sorted(triple_scores), dtype="<u4")
+    triple_out = np.array([triple_scores[int(key)] for key in triple_keys], dtype="<i2")
     word_keys = np.array(sorted(starts), dtype="<u4")
     with args.output.open("wb") as handle:
         handle.write(MAGIC)
-        handle.write(struct.pack("<IIII", VERSION, SCALE, len(word_keys), len(pair_keys)))
+        handle.write(struct.pack("<IIIII", VERSION, SCALE, len(word_keys), len(pair_keys), len(triple_keys)))
         handle.write(word_keys.tobytes())
         handle.write(pair_keys.tobytes())
+        handle.write(triple_keys.tobytes())
         handle.write(pair_values.tobytes())
+        handle.write(triple_out.tobytes())
     metadata = {
         "format": "LPWM", "format_version": VERSION, "score_scale": SCALE, "discount": DISCOUNT,
-        "minimum_pair_count": args.min_pair_count, "minimum_score": args.min_score, "maximum_score": args.max_score,
-        "words": int(len(word_keys)), "pairs": int(len(pair_keys)), "tokens": int(total),
+        "minimum_pair_count": args.min_pair_count, "minimum_triple_count": args.min_triple_count,
+        "minimum_score": args.min_score, "maximum_score": args.max_score,
+        "words": int(len(word_keys)), "pairs": int(len(pair_keys)), "triples": int(len(triple_keys)), "tokens": int(total),
         "excluded_clauses": skipped, "inputs": manifest,
         "lexicons": [{"file": path.name, "sha256": hashlib.sha256(path.read_bytes()).hexdigest()} for path in args.lexicon],
         "excluded_case_files": [{"file": path.name, "sha256": hashlib.sha256(path.read_bytes()).hexdigest()} for path in args.exclude],
@@ -243,7 +306,7 @@ def main() -> None:
     }
     args.output.with_name(args.output.name + ".metadata.json").write_text(
         json.dumps(metadata, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
-    print(json.dumps({key: metadata[key] for key in ("words", "pairs", "tokens", "excluded_clauses")}))
+    print(json.dumps({key: metadata[key] for key in ("words", "pairs", "triples", "tokens", "excluded_clauses")}))
 
 
 if __name__ == "__main__":

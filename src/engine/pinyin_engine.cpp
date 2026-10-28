@@ -74,8 +74,10 @@ struct ScoreWeights {
     // Readings of one span scored by the language model, best priors first.
     size_t span_candidates = 32;
     // Word association (word_zh.lm) bonus for each pair of adjacent words;
-    // chosen on the development half like the weights above (1.4.0).
+    // chosen on the development half like the weights above (1.4.0), and for
+    // each run of three (1.5.0).
     double word_model = 0.35;
+    double word_triples = 0.4;
 };
 
 // Fixed in the IME; the evaluation tool may replace them to calibrate on the
@@ -182,8 +184,9 @@ struct SegmentPath {
     std::wstring text;
     // The last token is an English term (mixed input), not Chinese.
     bool english_end = false;
-    // The last Chinese word, for the word association model.
+    // The last two Chinese words, for the word association model.
     std::wstring last_word;
+    std::wstring word_before_last;
 };
 
 void prune_paths(std::vector<SegmentPath>& paths) {
@@ -224,9 +227,16 @@ struct DecodeOptions {
     const WordModel* words = nullptr;
 };
 
-int word_bonus(const DecodeOptions& options, const std::wstring& previous, const std::wstring& word) {
-    if (!options.words || weights().word_model == 0.0) return 0;
-    return static_cast<int>(weights().word_model * options.words->pair_score(previous, word));
+int word_bonus(const DecodeOptions& options, const SegmentPath& path, const std::wstring& word, bool ends_input) {
+    if (!options.words) return 0;
+    int bonus = 0;
+    if (weights().word_model != 0.0) bonus += static_cast<int>(weights().word_model * options.words->pair_score(path.last_word, word));
+    // A run of three ending the input in a single character is mostly the
+    // start of a longer word (但是 是 自 from 但是是自己), which would favour
+    // loose characters over the word being typed (式子).
+    if (weights().word_triples != 0.0 && !(ends_input && character_count(word) == 1))
+        bonus += static_cast<int>(weights().word_triples * options.words->triple_score(path.word_before_last, path.last_word, word));
+    return bonus;
 }
 
 int english_prior(const EnglishTerms::Term& term, size_t length) {
@@ -240,7 +250,13 @@ std::vector<std::vector<SegmentPath>> decode(const Dictionary& dictionary, const
     const auto& pinyin = input.pinyin;
     std::vector<std::vector<SegmentPath>> dp(pinyin.size() + 1);
     dp[0].push_back({});
-    if (options.words) dp[0].back().last_word = options.words->previous_word(preceding);
+    if (options.words) {
+        auto& start = dp[0].back();
+        start.last_word = options.words->previous_word(preceding);
+        if (!start.last_word.empty())
+            start.word_before_last = options.words->previous_word(
+                std::wstring_view(preceding).substr(0, preceding.size() - start.last_word.size()));
+    }
     std::vector<int> split_penalties(pinyin.size() + 1);
     for (size_t start = 0; start < pinyin.size(); ++start) {
         for (size_t length = 2; length <= 6 && start + length <= pinyin.size(); ++length) {
@@ -321,10 +337,10 @@ std::vector<std::vector<SegmentPath>> decode(const Dictionary& dictionary, const
                 for (const auto& item : prepared) {
                     const int score = path.score + item.prior - split_penalties[next] - weights().segment_penalty +
                                       static_cast<int>(weights().language_model * context.extend_score(history, item.candidate.text)) +
-                                      word_bonus(options, path.last_word, item.candidate.text);
+                                      word_bonus(options, path, item.candidate.text, next == pinyin.size());
                     add_path(paths, indices, SegmentPath{score, path.segment_count + 1,
                                                          join_text(path.text, item.candidate.text, path.english_end, false),
-                                                         false, item.candidate.text});
+                                                         false, item.candidate.text, path.last_word});
                 }
             }
             if (paths.size() > weights().beam * 2) prune_paths(paths);
@@ -587,6 +603,7 @@ bool PinyinEngine::set_evaluation_weights(const std::wstring& spec) {
         else if (key == L"beam") next.beam = static_cast<size_t>(std::max(4.0, value));
         else if (key == L"span") next.span_candidates = static_cast<size_t>(std::max(4.0, value));
         else if (key == L"wm") next.word_model = value;
+        else if (key == L"wm3") next.word_triples = value;
         else return false;
         if (comma == std::wstring::npos) break;
         start = comma + 1;
@@ -738,7 +755,7 @@ std::vector<Candidate> PinyinEngine::lookup_pinyin(const std::wstring& pinyin, c
                 SegmentPath completed{path.score + static_cast<int>(weights().lexical * lexical_score(word)) + word.user_frequency / 3 +
                                       static_cast<int>(weights().language_model *
                                           context_model_.extend_score(transition_history(context, path.text), word.text)) - 600 +
-                                      word_bonus(decoding, path.last_word, word.text),
+                                      word_bonus(decoding, path, word.text, true),
                                       path.segment_count + 1, join_text(path.text, word.text, path.english_end, false)};
                 candidates.push_back(candidate_from_path(completed, context_model_));
             }
@@ -769,7 +786,9 @@ std::vector<Candidate> PinyinEngine::lookup_pinyin(const std::wstring& pinyin, c
             }
         }
     }
-    auto ranked = deduplicate_and_limit(ranker_.rank(normalized, std::move(candidates), &learning_));
+    const wchar_t before = !context.empty() && context.back() >= 0x3400 && context.back() <= 0x9FFF ? context.back() : 0;
+    auto ranked = deduplicate_and_limit(ranker_.rank(normalized, std::move(candidates), &learning_,
+                                                     before ? before : (context.empty() ? 0 : L' ')));
 
     // Keep complete long-word alternatives beside sentence decoding. A rescue
     // must not evict another complete word already in the last two slots.
@@ -1060,6 +1079,21 @@ size_t PinyinEngine::forget(const std::wstring& text) {
     }
     refresh_learning();
     return forgotten;
+}
+
+void PinyinEngine::learn(const std::wstring& typed, const std::wstring& selected_word, bool offered_first,
+                         const std::wstring& preceding_text) {
+    const auto normalized = normalize_input(full_pinyin(typed));
+    if (normalized.empty() || normalized == selected_word) return;
+    const wchar_t before = !preceding_text.empty() && preceding_text.back() >= 0x3400 && preceding_text.back() <= 0x9FFF
+                               ? preceding_text.back() : 0;
+    const auto in_context = before ? UserLearning::contextual_key(normalized, before) : std::wstring();
+    refresh_learning();
+    const long long now = static_cast<long long>(std::time(nullptr));
+    // The first choice only refreshes what was learned before.
+    if (!offered_first || learning_.faded_steps(normalized, selected_word, now) >= 0) learn(typed, selected_word);
+    if (before && (!offered_first || learning_.faded_steps(in_context, selected_word, now) >= 0))
+        learning_.record_selection(in_context, selected_word);
 }
 
 void PinyinEngine::learn(const std::wstring& typed, const std::wstring& selected_word) {

@@ -7,8 +7,9 @@ Sources (see resources/dictionary/authoring/context_lm_sources.json):
   * KdConv and CrossWOZ dialogue utterances (Tsinghua thu-coai), Apache-2.0
   * FineWeb-2 Mandarin web text (Hugging Face), ODC-By 1.0; spam sites and
     Traditional-script pages dropped, lines deduplicated. The held-out shard
-    trains the character model; it and every 16th row group of the first
-    training shard (read with HTTP range requests) train the word model.
+    trains the character model; it and every 8th row group of the first
+    training shard (read with HTTP range requests, two interleaved sets)
+    train the word model.
 
 Every line is converted to simplified Chinese. One line in forty (chosen by a
 hash of its text) is held out of training; held-out Tatoeba and Common Voice
@@ -86,14 +87,15 @@ FINEWEB_DOWNLOADS = {
         "https://huggingface.co/datasets/HuggingFaceFW/fineweb-2/resolve/main/data/cmn_Hani/test/000_00000.parquet",
         "22a90c471e09c8e938f3e070ff590864e74e01cc3c5cdf01c2713157fcdb43aa"),
 }
-# More web text for the word model: every 16th row group (1,000 pages each)
-# of the first 4.8 GB training shard, read with range requests, text and url
-# columns only (about 420 MB transferred).
+# More web text for the word model: every 8th row group (1,000 pages each)
+# of the first 4.8 GB training shard, as two sets starting at groups 0 and 8,
+# read with range requests, text and url columns only (about 830 MB
+# transferred).
 FINEWEB_TRAIN_SHARD = (
     "https://huggingface.co/datasets/HuggingFaceFW/fineweb-2/resolve/main/data/cmn_Hani/train/000_00000.parquet",
     4841624662, "3e43fefabc3ee500f9874655ece1776f96b81568cf33e0a6376835425ce42598")
 FINEWEB_TRAIN_STRIDE = 16
-FINEWEB_TRAIN_FILE = "fineweb2_cmn_Hani_train_000_every16.parquet"
+FINEWEB_TRAIN_SETS = {0: "fineweb2_cmn_Hani_train_000_every16.parquet", 8: "fineweb2_cmn_Hani_train_000_every16_from8.parquet"}
 # Gambling and adult spam, whose generated pages splice unrelated sentences.
 WEB_SPAM = re.compile(r"博彩|娱乐城|六合彩|时时彩|赌场|赌博|百家乐|彩票|开奖|真人视讯|老虎机|棋牌|色情|成人电影|av女优|威尼斯人|葡京|"
                       r"皇冠体育|投注")
@@ -324,15 +326,15 @@ class RangeReader(io.RawIOBase):
         return len(data)
 
 
-def download_row_groups(directory: Path) -> None:
-    target = directory / FINEWEB_TRAIN_FILE
+def download_row_groups(directory: Path, first: int, name: str) -> None:
+    target = directory / name
     if target.exists():
         return
     url, size, _ = FINEWEB_TRAIN_SHARD
-    print("download every", FINEWEB_TRAIN_STRIDE, "th row group of", url)
+    print("download every", FINEWEB_TRAIN_STRIDE, "th row group from", first, "of", url)
     source = pq.ParquetFile(RangeReader(url, size))
     writer = None
-    for group in range(0, source.metadata.num_row_groups, FINEWEB_TRAIN_STRIDE):
+    for group in range(first, source.metadata.num_row_groups, FINEWEB_TRAIN_STRIDE):
         table = source.read_row_group(group, columns=["text", "url"])
         if writer is None:
             writer = pq.ParquetWriter(target, table.schema, compression="zstd")
@@ -436,7 +438,8 @@ def main() -> int:
     download(dialogue, DIALOGUE_DOWNLOADS)
     web = args.work / "web"
     download(web, FINEWEB_DOWNLOADS)
-    download_row_groups(web)
+    for first, name in FINEWEB_TRAIN_SETS.items():
+        download_row_groups(web, first, name)
     sources = {
         "tatoeba": tatoeba_lines(downloads / "cmn_sentences.tsv.bz2"),
         "cv": common_voice_lines(downloads),
@@ -444,7 +447,8 @@ def main() -> int:
         "kdconv": kdconv_lines(dialogue),
         "crosswoz": crosswoz_lines(dialogue),
         "fineweb": fineweb_lines([web / name for name in FINEWEB_DOWNLOADS]),
-        "fineweb_extra": fineweb_lines([web / FINEWEB_TRAIN_FILE]),
+        "fineweb_extra": fineweb_lines([web / FINEWEB_TRAIN_SETS[0]]),
+        "fineweb_extra2": fineweb_lines([web / FINEWEB_TRAIN_SETS[8]]),
     }
     train = args.work / "train"
     train.mkdir(parents=True, exist_ok=True)

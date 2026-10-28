@@ -18,6 +18,9 @@ public:
     void reset() noexcept;
     [[nodiscard]] bool empty() const noexcept { return pair_count_ == 0; }
     [[nodiscard]] int pair_score(std::wstring_view previous, std::wstring_view word) const noexcept;
+    // How much likelier `word` is after both earlier words than after the
+    // nearer one alone (milli-nats); zero for an unstored run of three.
+    [[nodiscard]] int triple_score(std::wstring_view first, std::wstring_view second, std::wstring_view word) const noexcept;
     // The longest suffix (up to four characters) of committed text that begins
     // a stored pair: the previous word for the first word of new input.
     [[nodiscard]] std::wstring previous_word(std::wstring_view preceding) const;
@@ -27,8 +30,11 @@ private:
     const std::uint32_t* word_keys_ = nullptr;
     const std::uint32_t* pair_keys_ = nullptr;
     const std::int16_t* pair_scores_ = nullptr;
+    const std::uint32_t* triple_keys_ = nullptr;
+    const std::int16_t* triple_scores_ = nullptr;
     size_t word_count_ = 0;
     size_t pair_count_ = 0;
+    size_t triple_count_ = 0;
     std::shared_ptr<const Storage> storage_;
 };
 

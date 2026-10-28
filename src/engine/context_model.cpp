@@ -29,6 +29,8 @@ constexpr int kMinimumSequenceCount = 2;
 // stays close to uniform instead of favouring every character it mentions.
 constexpr double kHanVocabulary = 6000;
 constexpr int kNonHanPenalty = 2000;
+// Selections up to this many characters also teach their character pairs.
+constexpr size_t kLearnedPairMaxLength = 4;
 
 bool is_han(wchar_t ch) noexcept { return ch >= 0x3400 && ch <= 0x9FFF; }
 
@@ -238,8 +240,12 @@ void ContextModel::set_learning(const std::vector<std::pair<std::wstring, int>>&
     learned_.clear();
     for (const auto& [word, frequency] : selections) {
         if (frequency <= 0 || word.size() > 128) continue;
+        // In a chosen sentence most character pairs were never in doubt;
+        // learning them all would pull later, unrelated sentences towards it
+        // (他是 for 她是). A sentence teaches its longer runs only.
+        const size_t lowest = word.size() > kLearnedPairMaxLength ? 3 : 2;
         for (size_t end = 1; end < word.size(); ++end) {
-            for (size_t order = 2; order <= kMaxOrder && order <= end + 1; ++order) {
+            for (size_t order = lowest; order <= kMaxOrder && order <= end + 1; ++order) {
                 std::uint64_t key = 0;
                 bool han = true;
                 for (size_t index = end + 1 - order; index <= end; ++index) {

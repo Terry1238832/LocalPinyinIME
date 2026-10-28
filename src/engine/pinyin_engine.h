@@ -56,6 +56,13 @@ public:
     // (wo'yong python xie'dai'ma).
     [[nodiscard]] std::wstring display_input(const std::wstring& typed) const;
     void learn(const std::wstring& typed, const std::wstring& selected_word);
+    // A committed candidate: `offered_first` when it was already the first
+    // choice. Accepting the first choice teaches nothing new, and remembering
+    // it would put it first in every other context too (他 after 她说 as
+    // well), so it only refreshes a choice that was learned before.
+    // `preceding_text`: the committed text before it, for the contextual record.
+    void learn(const std::wstring& typed, const std::wstring& selected_word, bool offered_first,
+               const std::wstring& preceding_text = L"");
     // 造词: a phrase the user built by choosing its pieces one after another
     // (量 + 甲 + 成 for liang, jia, cheng) is remembered for the whole typed
     // pinyin, unless the engine would already offer it first there. Returns

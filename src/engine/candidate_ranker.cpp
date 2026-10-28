@@ -9,6 +9,11 @@ namespace {
 
 constexpr int kUserLearningScoreUnit = 1200;
 constexpr int kMaxUserLearningScore = 6000;
+constexpr int kOutOfContextDivisor = 4;
+
+bool is_single_character(const std::wstring& text) noexcept {
+    return text.size() == 1 || (text.size() == 2 && text[0] >= 0xD800 && text[0] <= 0xDBFF);
+}
 
 std::wstring key_for(const std::wstring& pinyin, const std::wstring& word) {
     return pinyin + L"\x1f" + word;
@@ -47,8 +52,18 @@ void CandidateRanker::apply_learning(const std::wstring& pinyin, std::vector<Can
 }
 
 std::vector<Candidate> CandidateRanker::rank(const std::wstring& pinyin, std::vector<Candidate> candidates,
-                                          const UserLearning* learning) const {
+                                          const UserLearning* learning, wchar_t before) const {
     apply_learning(pinyin, candidates, learning);
+    const auto in_context = before ? UserLearning::contextual_key(pinyin, before) : std::wstring();
+    const long long now = static_cast<long long>(std::time(nullptr));
+    if (before && learning) {
+        // After text, a single character chosen elsewhere keeps a quarter of
+        // its bonus: enough to break a near tie, not to override the text.
+        for (auto& candidate : candidates) {
+            if (is_single_character(candidate.text) && learning->faded_steps(in_context, candidate.text, now) < 0)
+                candidate.user_frequency /= kOutOfContextDivisor;
+        }
+    }
     // A word the user chose for exactly this input is placed by how much of
     // it is remembered, whatever its frequency or how it was found
     // (sentence, completion or spelling correction): first while fresh, a
@@ -58,7 +73,6 @@ std::vector<Candidate> CandidateRanker::rank(const std::wstring& pinyin, std::ve
     std::stable_sort(candidates.begin(), candidates.end(), [](const Candidate& left, const Candidate& right) {
         return left.total_score() > right.total_score();
     });
-    const long long now = static_cast<long long>(std::time(nullptr));
     struct Learned { size_t natural = 0; size_t place = 0; long long time = 0; int count = 0; };
     std::vector<std::pair<Learned, Candidate>> learned;
     std::vector<Candidate> others;
@@ -67,11 +81,17 @@ std::vector<Candidate> CandidateRanker::rank(const std::wstring& pinyin, std::ve
         Learned entry;
         entry.natural = index;
         int faded = -1;
+        bool chosen_here = false;
         if (learning) {
-            faded = learning->faded_steps(pinyin, candidates[index].text, now);
+            if (before) {
+                faded = learning->faded_steps(in_context, candidates[index].text, now);
+                chosen_here = faded >= 0;
+            }
+            const auto& key = chosen_here ? in_context : pinyin;
+            if (!chosen_here) faded = learning->faded_steps(pinyin, candidates[index].text, now);
             if (faded >= 0) {
-                entry.count = learning->frequency(pinyin, candidates[index].text);
-                entry.time = learning->last_selected(pinyin, candidates[index].text);
+                entry.count = learning->frequency(key, candidates[index].text);
+                entry.time = learning->last_selected(key, candidates[index].text);
             }
         }
         const auto found = frequency_.find(key_for(pinyin, candidates[index].text));
@@ -80,7 +100,7 @@ std::vector<Candidate> CandidateRanker::rank(const std::wstring& pinyin, std::ve
             faded = 0;
             entry.count = std::max(entry.count, found->second);
         }
-        if (faded < 0) {
+        if (faded < 0 || (before && is_single_character(candidates[index].text) && !chosen_here)) {
             others.push_back(std::move(candidates[index]));
             continue;
         }

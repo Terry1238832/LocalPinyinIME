@@ -2735,7 +2735,7 @@ HRESULT TextService::commit_selected(ITfContext* context) {
         }
         return hr;
     }
-    engine_.learn(learned_pinyin, committed);
+    engine_.learn(learned_pinyin, committed, selected_index_ == 0, preceding_committed_text_);
     extend_phrase_run(context, learned_pinyin, committed, preceding_committed_text_);
     remember_committed_text(context, committed);
     reset_transient_input_state(L"commit");
