@@ -101,5 +101,19 @@
       "Clauses containing any evaluation sentence are excluded, as for the character model."
     ],
     "build_command": "python tools/build_word_model.py --input resources/dictionary/authoring/daily_*.txt:8 <other authoring .txt>:1 <work>/train/wikinews.txt:3 <work>/train/tatoeba.txt:3 <work>/train/cv.txt:3 <work>/train/kdconv.txt:3 <work>/train/crosswoz.txt:3 <work>/train/fineweb.txt:1 <work>/train/fineweb_extra.txt:1 <work>/train/fineweb_extra2.txt:1 --lexicon resources/dictionary/core_zh_pinyin.tsv resources/dictionary/local_core_zh_pinyin.tsv resources/dictionary/standard_zh_pinyin.tsv --exclude tests/data/typing_holdout.tsv tests/data/typing_fresh.tsv tests/data/typing_independent.tsv tests/data/scenario_replay_076.tsv tests/data/common_word_order_079.tsv tests/data/heldout_sentences.tsv tests/data/heldout_dialogue_sentences.tsv --output resources/dictionary/word_zh.lm"
+  },
+  "neural_model": {
+    "artifact": "../neural_zh.lm",
+    "content": "Weights of a character GRU language model (8,000 characters, 256-wide embedding, 768-wide GRU, 4.6M parameters, half floats); no text is packaged.",
+    "authoring_scripts": [
+      "tools/train_neural_lm.py",
+      "tools/export_neural_lm.py"
+    ],
+    "processing": [
+      "Same training text and weights as the word model (authoring prose, Wikinews, Tatoeba, Common Voice, KdConv, CrossWOZ, the three FineWeb-2 files).",
+      "Clauses containing any evaluation sentence of four or more characters are skipped, including the word-level and everyday-chat evaluation files.",
+      "Two passes over 250.6M characters, sequences of 128, AdamW with a one-cycle schedule; held-out stream perplexity 32.5."
+    ],
+    "build_command": "python tools/train_neural_lm.py --work <work> --output model.pt && python tools/export_neural_lm.py model.pt resources/dictionary/neural_zh.lm"
   }
 }

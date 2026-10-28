@@ -103,6 +103,10 @@ int wmain(int argc, wchar_t** argv) {
             std::cout << ",\"scores\":[";
             for (size_t index = 0; index < candidates.size(); ++index)
                 std::cout << (index ? "," : "") << candidates[index].total_score();
+            // Typed letters each candidate reads (0: the whole input).
+            std::cout << "],\"consumed\":[";
+            for (size_t index = 0; index < candidates.size(); ++index)
+                std::cout << (index ? "," : "") << candidates[index].consumed_pinyin;
             std::cout << ']';
         }
         if (keystrokes) {

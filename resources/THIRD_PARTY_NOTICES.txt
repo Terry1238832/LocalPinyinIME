@@ -243,7 +243,8 @@ The 4-gram language model used to rank candidates by the preceding text contains
   only n-gram statistics are included, no web text;
 - internal n-grams of the bundled dictionary words.
 The word association model (word_zh.lm) contains only association scores of adjacent lexicon word pairs and runs of
-three words, estimated from the same sources.
+three words, estimated from the same sources. The neural character model (neural_zh.lm) contains only network
+weights trained on the same sources; no text is included.
 Text was converted to simplified Chinese with OpenCC (Apache-2.0), which is used at authoring time only.
 Sources, downloads and checksums: resources/dictionary/authoring/context_lm_sources.json and resources/dictionary/context_zh.lm.metadata.json in the source repository.
 One line in forty and all evaluation sentences are held out of training.

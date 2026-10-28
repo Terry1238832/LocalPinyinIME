@@ -510,7 +510,7 @@ int wmain(int argc, wchar_t** argv) {
             // Pin lexical behavior for the host integration contract. Full
             // production text quality is measured by the separate evaluations.
             std::ofstream core(native / L"dictionary" / L"core_zh_pinyin.tsv", std::ios::binary | std::ios::trunc);
-            core << "nihao\t你好\t9000\nsuibian\t随便\t9000\npengyou\t朋友\t9000\nni\t你\t9000\ntianqi\t天气\t9000\nweixing\t卫星\t9100\nweixing\t微信\t9000\n";
+            core << "nihao\t你好\t9000\nsuibian\t随便\t9000\npengyou\t朋友\t9000\nni\t你\t9000\ntianqi\t天气\t9000\nweixing\t卫星\t9100\nweixing\t微信\t9000\nfasong\t发送\t9000\n";
             for (int i = 0; i < 9; ++i)
                 core << "ceshi\t这是用于单行分页完整上屏验证的很长候选文字" << i + 1 << "\t" << 9000 - i * 100 << "\n";
             core << "fenye\t分页\t9000\n";
@@ -878,6 +878,17 @@ int wmain(int argc, wchar_t** argv) {
             s.store->move_selection(0, 0);
             for (const auto letter : std::wstring(L"WEIXING")) s.key(letter);
             require(s.first_candidate() == L"卫星", "lookup after caret movement does not use stale preceding text");
+            s.key(VK_ESCAPE);
+            // A field that showed what was typed and is then cleared (a
+            // message sent) starts afresh instead of after the old text.
+            s.store->host_replace(L"");
+            for (const auto letter : std::wstring(L"FASONG")) s.key(letter);
+            require(s.first_candidate() == L"发送", "commit before clearing");
+            s.key(VK_SPACE);
+            require(s.store->text == L"发送", "committed text is shown in the field");
+            s.store->host_replace(L"");
+            for (const auto letter : std::wstring(L"WEIXING")) s.key(letter);
+            require(s.first_candidate() == L"卫星", "a cleared field does not use the previous message as context");
             s.key(VK_ESCAPE);
             check(surrounding_reader.read_preceding_text(s.context.Get(), service_client, &actual_before), "read moved real caret");
             require(actual_before.empty(), "moving caret reads fresh front-of-document context");

@@ -23,6 +23,8 @@ constexpr int kFallbackScore = 1;
 constexpr int kStandaloneTieBreakDivisor = 10;
 constexpr size_t kSentenceBeamWidth = 32;
 constexpr size_t kMaxInputLength = 256;
+// Learned single characters inside a sentence: see decode().
+constexpr int kOutOfContextLearningDivisor = 4;
 // A fuzzy reading is a little less likely than the spelling as typed.
 constexpr int kFuzzyPenalty = 600;
 // A word of a chosen usage scene as a sentence token. Enough to lift an
@@ -78,6 +80,9 @@ struct ScoreWeights {
     // each run of three (1.5.0).
     double word_model = 0.35;
     double word_triples = 0.4;
+    // Neural rescoring of whole-input sentences (1.6.0): nats of the
+    // character GRU per milli-nat of the decoder, in thousandths.
+    double neural = 0.4;
 };
 
 // Fixed in the IME; the evaluation tool may replace them to calibrate on the
@@ -314,16 +319,22 @@ std::vector<std::vector<SegmentPath>> decode(const Dictionary& dictionary, const
             for (size_t boundary : input.boundaries) {
                 if (boundary > offset && boundary < next) boundaries.push_back(boundary - offset);
             }
-            struct PreparedCandidate { Candidate candidate; int prior; };
+            // A single character chosen elsewhere keeps a quarter of its
+            // learned bonus inside a sentence (把 for 我爸爸, 的 for 得奖), the
+            // rest only right after the character it was chosen after.
+            struct PreparedCandidate { Candidate candidate; int prior; int contextual_bonus; };
             std::vector<PreparedCandidate> prepared;
             prepared.reserve(part_candidates.size());
             for (auto& candidate : part_candidates) {
                 if (!can_compose_token(candidate, offset == 0 && next == pinyin.size())) continue;
                 // Fuzzy keys follow the typed syllables, so typed boundaries hold.
                 if (!fuzzy && !dictionary.reading_matches_boundaries(part_pinyin, candidate.text, boundaries)) continue;
-                const int prior = static_cast<int>(weights().lexical * lexical_score(candidate)) + candidate.user_frequency / 3 -
+                const bool single = character_count(candidate.text) == 1;
+                const int learned = candidate.user_frequency / 3;
+                const int kept = single ? learned / kOutOfContextLearningDivisor : learned;
+                const int prior = static_cast<int>(weights().lexical * lexical_score(candidate)) + kept -
                                   (fuzzy ? kFuzzyPenalty : 0) + (candidate.domain ? kDomainBonus : 0);
-                prepared.push_back({std::move(candidate), prior});
+                prepared.push_back({std::move(candidate), prior, learned - kept});
             }
             std::stable_sort(prepared.begin(), prepared.end(), [](const auto& left, const auto& right) {
                 return left.prior > right.prior;
@@ -332,10 +343,16 @@ std::vector<std::vector<SegmentPath>> decode(const Dictionary& dictionary, const
             std::unordered_map<std::wstring, size_t> indices;
             indices.reserve(paths.size() + dp[offset].size() * prepared.size());
             for (size_t index = 0; index < paths.size(); ++index) indices.emplace(paths[index].text, index);
+            const long long now = static_cast<long long>(std::time(nullptr));
             for (const auto& path : dp[offset]) {
                 const auto history = transition_history(preceding, path.text);
+                const wchar_t before = history.empty() ? 0 : history.back();
+                const bool han_before = before >= 0x3400 && before <= 0x9FFF;
                 for (const auto& item : prepared) {
-                    const int score = path.score + item.prior - split_penalties[next] - weights().segment_penalty +
+                    const int here = item.contextual_bonus > 0 && han_before &&
+                                     learning.faded_steps(UserLearning::contextual_key(part_pinyin, before), item.candidate.text, now) >= 0
+                                         ? item.contextual_bonus : 0;
+                    const int score = path.score + item.prior + here - split_penalties[next] - weights().segment_penalty +
                                       static_cast<int>(weights().language_model * context.extend_score(history, item.candidate.text)) +
                                       word_bonus(options, path, item.candidate.text, next == pinyin.size());
                     add_path(paths, indices, SegmentPath{score, path.segment_count + 1,
@@ -366,6 +383,40 @@ std::vector<std::vector<SegmentPath>> decode(const Dictionary& dictionary, const
     }
     prune_paths(dp.back());
     return dp;
+}
+
+bool all_han(const std::wstring& text) {
+    return !text.empty() && std::all_of(text.begin(), text.end(), [](wchar_t ch) { return ch >= 0x3400 && ch <= 0x9FFF; });
+}
+
+// Reorders the candidates that read the whole input by their decoder score
+// plus the neural model's probability of the sentence after the preceding
+// clause. A first choice the decoder did not rank first (placed there by
+// learning or kept as a whole word) keeps its place, as does every other kind
+// of candidate.
+void rescore_with_neural(const NeuralModel& model, std::vector<Candidate>& ranked, const std::wstring& preceding,
+                         bool first_is_word) {
+    if (model.empty() || weights().neural == 0.0 || ranked.size() < 2 || ranked.front().consumed_pinyin != 0) return;
+    // A word typed on its own keeps the lexicon order: a short one, or one
+    // the lexicon has for exactly this input (二项式定理, not 而像是定理).
+    if (preceding.empty() && (character_count(ranked.front().text) <= 2 || first_is_word)) return;
+    std::vector<size_t> slots;
+    for (size_t index = 0; index < ranked.size(); ++index)
+        if (ranked[index].consumed_pinyin == 0 && all_han(ranked[index].text)) slots.push_back(index);
+    if (slots.size() < 2 || slots.front() != 0) return;
+    int highest = std::numeric_limits<int>::min();
+    for (size_t slot : slots) highest = std::max(highest, ranked[slot].total_score());
+    if (ranked.front().total_score() < highest) return;
+    size_t start = preceding.size();
+    while (start > 0 && preceding.size() - start < 24 && preceding[start - 1] >= 0x3400 && preceding[start - 1] <= 0x9FFF) --start;
+    std::vector<std::wstring> texts;
+    for (size_t slot : slots) texts.push_back(ranked[slot].text);
+    const auto probabilities = model.score(std::wstring_view(preceding).substr(start), texts);
+    std::vector<std::pair<double, Candidate>> scored;
+    for (size_t i = 0; i < slots.size(); ++i)
+        scored.emplace_back(ranked[slots[i]].total_score() + weights().neural * 1000.0 * probabilities[i], ranked[slots[i]]);
+    std::stable_sort(scored.begin(), scored.end(), [](const auto& left, const auto& right) { return left.first > right.first; });
+    for (size_t i = 0; i < slots.size(); ++i) ranked[slots[i]] = std::move(scored[i].second);
 }
 
 Candidate candidate_from_path(const SegmentPath& path, const ContextModel& context) {
@@ -452,6 +503,8 @@ void PinyinEngine::rebuild_context_model(const std::wstring& context_path) {
     }
     word_model_.reset();
     if (!context_path.empty()) word_model_.load((std::filesystem::path(context_path).parent_path() / L"word_zh.lm").wstring());
+    neural_model_.reset();
+    if (!context_path.empty()) neural_model_.load((std::filesystem::path(context_path).parent_path() / L"neural_zh.lm").wstring());
     continuation_model_.reset(dictionary_);
     if (!context_path.empty()) continuation_model_.load((std::filesystem::path(context_path).parent_path() / L"continuations_zh.tsv").wstring());
     learning_revision_ = static_cast<size_t>(-1);
@@ -604,6 +657,7 @@ bool PinyinEngine::set_evaluation_weights(const std::wstring& spec) {
         else if (key == L"span") next.span_candidates = static_cast<size_t>(std::max(4.0, value));
         else if (key == L"wm") next.word_model = value;
         else if (key == L"wm3") next.word_triples = value;
+        else if (key == L"nn") next.neural = value;
         else return false;
         if (comma == std::wstring::npos) break;
         start = comma + 1;
@@ -789,6 +843,11 @@ std::vector<Candidate> PinyinEngine::lookup_pinyin(const std::wstring& pinyin, c
     const wchar_t before = !context.empty() && context.back() >= 0x3400 && context.back() <= 0x9FFF ? context.back() : 0;
     auto ranked = deduplicate_and_limit(ranker_.rank(normalized, std::move(candidates), &learning_,
                                                      before ? before : (context.empty() ? 0 : L' ')));
+    if (!mixed && !ranked.empty()) {
+        const auto exact = words_for(normalized);
+        const bool first_is_word = std::any_of(exact.begin(), exact.end(), [&](const auto& word) { return word.text == ranked.front().text; });
+        rescore_with_neural(neural_model_, ranked, context, first_is_word);
+    }
 
     // Keep complete long-word alternatives beside sentence decoding. A rescue
     // must not evict another complete word already in the last two slots.
