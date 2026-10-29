@@ -1,0 +1,5666 @@
+{
+  "batch": "lexicon_batch_486",
+  "evaluation": "native_engine_candidate_coverage",
+  "evaluated_at_utc": "2026-10-29T18:10:46.667495+00:00",
+  "engine_sha256": "ea9637ad9d51ec75d54777cc593885d03a38b98efc6b04c3d34616ccd86ef649",
+  "resource_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "b33cffcdf4584fd7702d511af3e1af0a588655907eedf1163f3df6211ef398e1",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+    "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+    "continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e"
+  },
+  "frozen_batch_sha256": "d11a977d03734fc155c00b3defc42b2ec77f539776a6caa60c1049ca2623e40f",
+  "personal_data_isolated": true,
+  "expected_answers_learned": false,
+  "summary": {
+    "cases": 313,
+    "top1_correct": 240,
+    "top9_present": 313,
+    "top1_percent": 76.68,
+    "top9_percent": 100.0,
+    "character_error_rate": 0.0655,
+    "p50_lookup_ms": 16.187,
+    "p95_lookup_ms": 35.168,
+    "max_lookup_ms": 47.897,
+    "missing_from_top9_count": 0,
+    "missing_from_top9": [],
+    "max_returned_candidate_count": 9
+  },
+  "rows": [
+    {
+      "pinyin": "diantizainabian",
+      "expected": "电梯在哪边",
+      "source": "5000",
+      "lookup_us": 24915,
+      "candidates": [
+        "电梯在那边",
+        "电梯在哪边",
+        "点题在那边",
+        "电梯在哪变",
+        "电梯在哪彼岸",
+        "电梯在哪编",
+        "电梯在哪便",
+        "电梯再那边",
+        "电梯"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "baitianlashajiuxing",
+      "expected": "白天拉纱就行",
+      "source": "5500",
+      "lookup_us": 44361,
+      "candidates": [
+        "白天拉沙就行",
+        "白天拉啥就行",
+        "白天拉砂就行",
+        "白天拉杀就行",
+        "白天拉莎就行",
+        "白天啦啥就行",
+        "白天拉纱就行",
+        "白天辣杀就行",
+        "白天"
+      ],
+      "expected_rank": 7
+    },
+    {
+      "pinyin": "bamenwanglituixia",
+      "expected": "把门往里推下",
+      "source": "5500",
+      "lookup_us": 18556,
+      "candidates": [
+        "把门往里推下",
+        "把门往里退下",
+        "把门往里推瑕",
+        "八门往里退下",
+        "把门王立退下",
+        "把门王丽退下",
+        "把门王力退下",
+        "八门往里推下",
+        "把门"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangwochaqingchuba",
+      "expected": "帮我查清楚吧",
+      "source": "5500",
+      "lookup_us": 14745,
+      "candidates": [
+        "帮我查清楚吧",
+        "帮我查清楚把",
+        "帮我查清楚霸",
+        "帮我查清楚巴",
+        "帮我查清楚八",
+        "帮我查清除吧",
+        "帮我查清楚罢",
+        "帮我查清楚爸",
+        "帮我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangwoduonajige",
+      "expected": "帮我多拿几个",
+      "source": "5500",
+      "lookup_us": 31549,
+      "candidates": [
+        "帮我躲那几个",
+        "帮我多拿几个",
+        "帮我多那几个",
+        "帮我躲哪几个",
+        "帮我多哪几个",
+        "帮我躲拿几个",
+        "帮我多纳几个",
+        "帮我躲娜几个",
+        "帮我"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "bangwohuanxiachuangdan",
+      "expected": "帮我换下床单",
+      "source": "5500",
+      "lookup_us": 26687,
+      "candidates": [
+        "帮我换下床单",
+        "帮我还下床单",
+        "帮我换下床但",
+        "帮我换下床丹",
+        "帮我换下床蛋",
+        "帮我换下床淡",
+        "帮我换下床弹",
+        "帮我换下床胆",
+        "帮我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "beiziyoudianbaole",
+      "expected": "被子有点薄了",
+      "source": "5500",
+      "lookup_us": 31200,
+      "candidates": [
+        "杯子有点薄了",
+        "被子有点薄了",
+        "杯子有点爆了",
+        "杯子有点饱了",
+        "杯子有点包了",
+        "杯子有点报了",
+        "杯子有点抱了",
+        "被子有点爆了",
+        "杯子"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "biebachuanghukaizhe",
+      "expected": "别把窗户开着",
+      "source": "5500",
+      "lookup_us": 13815,
+      "candidates": [
+        "别把窗户开着",
+        "别把窗户开这",
+        "别把窗户开者",
+        "别把床戏开者",
+        "别把床戏开着",
+        "别把床护开着",
+        "别把窗户开折",
+        "别把窗户开哲",
+        "别把"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biebakataonongdiu",
+      "expected": "别把卡套弄丢",
+      "source": "5500",
+      "lookup_us": 8936,
+      "candidates": [
+        "别把卡套弄丢",
+        "别把卡讨弄丢",
+        "别把咖套弄丢",
+        "别把卡逃弄丢",
+        "别把卡陶弄丢",
+        "别把卡桃弄丢",
+        "别把卡涛弄丢",
+        "别把卡淘弄丢",
+        "别把"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biebashachuangdakai",
+      "expected": "别把纱窗打开",
+      "source": "5500",
+      "lookup_us": 11647,
+      "candidates": [
+        "别把纱窗打开",
+        "别把沙窗打开",
+        "别把纱窗大开",
+        "别把沙床打开",
+        "别把沙创打开",
+        "别把杀创打开",
+        "别把杀床打开",
+        "别把沙床大开",
+        "别把"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biebatazuohuaile",
+      "expected": "别把它坐坏了",
+      "source": "5500",
+      "lookup_us": 33375,
+      "candidates": [
+        "别把它做坏了",
+        "别把他做坏了",
+        "别把它作坏了",
+        "别把它座坏了",
+        "别把它坐坏了",
+        "别把他作坏了",
+        "别把它做怀了",
+        "别把他座坏了",
+        "别把"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "biechaodaogebile",
+      "expected": "别吵到隔壁了",
+      "source": "5500",
+      "lookup_us": 14271,
+      "candidates": [
+        "别吵到隔壁了",
+        "别吵到戈壁了",
+        "别吵到隔壁乐",
+        "别吵到隔壁勒",
+        "别吵到格比了",
+        "别吵到个笔了",
+        "别吵到个比了",
+        "别吵到个币了",
+        "别"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biekaomalunamian",
+      "expected": "别靠马路那面",
+      "source": "5500",
+      "lookup_us": 12995,
+      "candidates": [
+        "别靠马路那面",
+        "别考马路那面",
+        "别靠嘛撸那面",
+        "别靠马路拿面",
+        "别靠吗露娜面",
+        "别靠马路那棉",
+        "别靠马路那免",
+        "别靠马路哪面",
+        "别"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bieliangzhangdounazou",
+      "expected": "别两张都拿走",
+      "source": "5500",
+      "lookup_us": 17428,
+      "candidates": [
+        "别两张都拿走",
+        "别两章都拿走",
+        "别两张豆拿走",
+        "别两张斗拿走",
+        "别两张兜拿走",
+        "别两张逗拿走",
+        "别两张抖拿走",
+        "别两张痘拿走",
+        "别离"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bienacuoyifule",
+      "expected": "别拿错衣服了",
+      "source": "5500",
+      "lookup_us": 11102,
+      "candidates": [
+        "别拿错衣服了",
+        "别拿搓衣服了",
+        "别拿错依附叻",
+        "别拿错已付了",
+        "别拿错一夫了",
+        "别拿错以父了",
+        "别拿错一付了",
+        "别拿错一副了",
+        "别拿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bieqiaocuofangjianle",
+      "expected": "别敲错房间了",
+      "source": "5500",
+      "lookup_us": 19540,
+      "candidates": [
+        "别敲错房间了",
+        "别瞧错房间了",
+        "别瞧错方见了",
+        "别敲错方见了",
+        "别瞧错坊间了",
+        "别敲错坊间了",
+        "别瞧错方剪了",
+        "别瞧错房间乐",
+        "憋气"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bierangxiangzidumen",
+      "expected": "别让箱子堵门",
+      "source": "5500",
+      "lookup_us": 32614,
+      "candidates": [
+        "别让箱子独门",
+        "别让箱子堵门",
+        "别让巷子独门",
+        "别让巷子堵门",
+        "别让箱子都门",
+        "别让巷子读焖",
+        "别让箱子读焖",
+        "别让巷子都门",
+        "别让"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "biesuishoufangzhuoshang",
+      "expected": "别随手放桌上",
+      "source": "5500",
+      "lookup_us": 18407,
+      "candidates": [
+        "别随手放桌上",
+        "别随手方桌上",
+        "必娥随手放桌上",
+        "别随手放灼伤",
+        "别随手放著赏",
+        "别随手房桌上",
+        "别随手放着上",
+        "别随手防桌上",
+        "别"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bieyixiaquananmie",
+      "expected": "别一下全按灭",
+      "source": "5500",
+      "lookup_us": 23162,
+      "candidates": [
+        "别一下全按灭",
+        "别一下全案灭",
+        "别一下全案咩",
+        "别一下全安灭",
+        "别一下全黯灭",
+        "别一下全案蔑",
+        "别一下去安安乜",
+        "别一下全案乜",
+        "别"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biezaimenkougandeng",
+      "expected": "别在门口干等",
+      "source": "5500",
+      "lookup_us": 10950,
+      "candidates": [
+        "别在门口干等",
+        "别在门口感等",
+        "别再门口干等",
+        "别再门口感等",
+        "别在门口杆等",
+        "别在门口干瞪",
+        "别在门口肝等",
+        "别在门口感灯",
+        "别再"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "buxingjiusuanleba",
+      "expected": "不行就算了吧",
+      "source": "5500",
+      "lookup_us": 11326,
+      "candidates": [
+        "不行就算了吧",
+        "步行就算了吧",
+        "不行就算了把",
+        "不行就算了罢",
+        "不行就酸了吧",
+        "不行就算了巴",
+        "不行就算了八",
+        "不行就算了霸",
+        "不行"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "buyongsongnameduo",
+      "expected": "不用送那么多",
+      "source": "5500",
+      "lookup_us": 8209,
+      "candidates": [
+        "不用送那么多",
+        "不拥颂那么多",
+        "不用送那么躲",
+        "不用送那么夺",
+        "不拥颂那么躲",
+        "不用送那么堕",
+        "不用送那么朵",
+        "不用送那么舵",
+        "不用"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "buyongzainadengzi",
+      "expected": "不用再拿凳子",
+      "source": "5500",
+      "lookup_us": 7754,
+      "candidates": [
+        "不用再拿凳子",
+        "不用再那凳子",
+        "不用再纳凳子",
+        "不用在哪凳子",
+        "不用在拿凳子",
+        "不用在那凳子",
+        "不用再哪凳子",
+        "不用再那等字",
+        "不用"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "buzijiqiaomenle",
+      "expected": "不自己敲门了",
+      "source": "5500",
+      "lookup_us": 13985,
+      "candidates": [
+        "不自己敲门了",
+        "不自己窍门了",
+        "部自己敲门了",
+        "不自己撬门了",
+        "不自己敲门勒",
+        "部自己窍门了",
+        "步子技巧门了",
+        "不自己敲门乐",
+        "步子"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chaoshizenmesuanqian",
+      "expected": "超时怎么算钱",
+      "source": "5500",
+      "lookup_us": 22105,
+      "candidates": [
+        "超市怎么算钱",
+        "超市怎么算前",
+        "超时怎么算钱",
+        "超时怎么算前",
+        "超市怎么算签",
+        "超市怎么算欠",
+        "超市怎么算千",
+        "超市怎么算谦",
+        "潮湿"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "chenengkaijinlaima",
+      "expected": "车能开进来吗",
+      "source": "5500",
+      "lookup_us": 10902,
+      "candidates": [
+        "车能开进来吗",
+        "彻能开进来吗",
+        "车能开进来嘛",
+        "车能开近来吗",
+        "车能开进来骂",
+        "车能开进来么",
+        "车能开进来马",
+        "彻能开进来嘛",
+        "陈"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "cheyuezailouxiale",
+      "expected": "车约在楼下了",
+      "source": "5500",
+      "lookup_us": 10425,
+      "candidates": [
+        "车约在楼下了",
+        "扯约在楼下了",
+        "车约在楼下乐",
+        "车约在楼下勒",
+        "扯约在楼下乐",
+        "车约在楼瞎了",
+        "扯约在楼下勒",
+        "车约在漏下了",
+        "车"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chongdianqibiewangba",
+      "expected": "充电器别忘拔",
+      "source": "5500",
+      "lookup_us": 26251,
+      "candidates": [
+        "充电器别忘吧",
+        "充电器别网吧",
+        "充电器别忘把",
+        "充电器别往吧",
+        "充电器别忘拔",
+        "充电器憋网吧",
+        "充电器别王吧",
+        "充电器别王八",
+        "充电器"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "chongshuishengyizhixiang",
+      "expected": "冲水声一直响",
+      "source": "5500",
+      "lookup_us": 35007,
+      "candidates": [
+        "充水生意志向",
+        "冲水生意志向",
+        "冲水生一直想",
+        "冲水声一直响",
+        "冲水生一直响",
+        "冲水声一直想",
+        "冲水声衣纸箱",
+        "冲水声衣之乡",
+        "冲水"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "chuanghunengdakaima",
+      "expected": "窗户能打开吗",
+      "source": "5500",
+      "lookup_us": 12232,
+      "candidates": [
+        "窗户能打开吗",
+        "窗户能打开么",
+        "窗户能打开嘛",
+        "窗户能打开骂",
+        "窗户能打开妈",
+        "窗户能打开马",
+        "窗户能打开码",
+        "窗户能大开吗",
+        "窗户"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chuangshangyougewudian",
+      "expected": "床上有个污点",
+      "source": "5500",
+      "lookup_us": 17632,
+      "candidates": [
+        "床上有个污点",
+        "床上有个误点",
+        "床上有个五点",
+        "床上有个五典",
+        "床上有个物点",
+        "创伤有个污点",
+        "床上有个无电",
+        "床上有个五殿",
+        "床上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chuangshapolegedong",
+      "expected": "窗纱破了个洞",
+      "source": "5500",
+      "lookup_us": 8831,
+      "candidates": [
+        "窗纱破了个洞",
+        "创杀破了个洞",
+        "窗纱破了个东",
+        "窗纱破了个懂",
+        "窗纱破了个动",
+        "窗纱破了个冬",
+        "窗纱破了个栋",
+        "窗纱破了个董",
+        "窗纱"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chuangtouyouyuedudeng",
+      "expected": "床头有阅读灯",
+      "source": "5500",
+      "lookup_us": 13653,
+      "candidates": [
+        "床头有阅读灯",
+        "床头有阅读等",
+        "创投有阅读等",
+        "创投有阅读灯",
+        "床头有月度等",
+        "创投有月度等",
+        "床头有阅读登",
+        "床头有余额度等",
+        "床头"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chuangyoudiantairuan",
+      "expected": "床有点太软",
+      "source": "5500",
+      "lookup_us": 13812,
+      "candidates": [
+        "床有点太软",
+        "创优点太软",
+        "创优垫太软",
+        "创优电太软",
+        "创邮电太软",
+        "创优店太软",
+        "创优典太软",
+        "创优点台软",
+        "床"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chuifengjizaichouti",
+      "expected": "吹风机在抽屉",
+      "source": "5500",
+      "lookup_us": 7691,
+      "candidates": [
+        "吹风机在抽屉",
+        "吹风机再抽屉",
+        "吹风机载抽屉",
+        "吹风记载抽屉",
+        "吹风机在抽提",
+        "吹风机仔抽屉",
+        "吹风机再抽提",
+        "吹风记在抽屉",
+        "吹风机"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chumenbakajiuxing",
+      "expected": "出门拔卡就行",
+      "source": "5500",
+      "lookup_us": 33582,
+      "candidates": [
+        "出门把卡就行",
+        "出门吧卡就行",
+        "出门把卡救星",
+        "出门把咖就行",
+        "出门吧卡救星",
+        "出门把喀就行",
+        "出门拔咖救星",
+        "出门拔卡就行",
+        "出门"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "chumenlayixiamen",
+      "expected": "出门拉一下门",
+      "source": "5500",
+      "lookup_us": 34192,
+      "candidates": [
+        "出门拉一下门",
+        "出门啦一下门",
+        "出门拉一下们",
+        "出门拉以厦门",
+        "出门拉伊厦门",
+        "出门啦以下门",
+        "出门啦一下们",
+        "出门啦以厦门",
+        "出门"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "congzhebianshangquma",
+      "expected": "从这边上去吗",
+      "source": "5500",
+      "lookup_us": 16409,
+      "candidates": [
+        "从这边上去吗",
+        "从这边上去嘛",
+        "从这边上去么",
+        "从这边上去马",
+        "从这便上去吗",
+        "从这边上去骂",
+        "从这边上区吗",
+        "从这边商去吗",
+        "从这"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dagaihaiyaoduojiu",
+      "expected": "大概还要多久",
+      "source": "5500",
+      "lookup_us": 14127,
+      "candidates": [
+        "大概还要多久",
+        "大概海要多久",
+        "大概还要多就",
+        "大概还要多酒",
+        "大概还要多九",
+        "大概还要多救",
+        "大概还要多旧",
+        "大概还要多臼",
+        "大概还要"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "daozhanghougenwoshuo",
+      "expected": "到账后跟我说",
+      "source": "5500",
+      "lookup_us": 11325,
+      "candidates": [
+        "到账后跟我说",
+        "到帐后跟我说",
+        "到账后根我说",
+        "到账后跟我数",
+        "到账后跟我硕",
+        "到账后跟我朔",
+        "到账后跟沃数",
+        "到账后跟我烁",
+        "到账"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "datangnengchongdianma",
+      "expected": "大堂能充电吗",
+      "source": "5500",
+      "lookup_us": 13618,
+      "candidates": [
+        "大堂能充电吗",
+        "大唐能充电吗",
+        "大唐能充电嘛",
+        "大堂能充电嘛",
+        "大唐能重点吗",
+        "大堂能重点吗",
+        "大唐能充电马",
+        "大堂能充电马",
+        "大唐"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengpaohaoxianghuaile",
+      "expected": "灯泡好像坏了",
+      "source": "5500",
+      "lookup_us": 21484,
+      "candidates": [
+        "灯泡好像坏了",
+        "灯泡好像怀了",
+        "灯泡好想坏了",
+        "灯泡好象坏了",
+        "等泡好像坏了",
+        "灯泡好箱坏了",
+        "灯泡好想怀了",
+        "灯泡好象怀了",
+        "灯泡"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengxiayitangdianti",
+      "expected": "等下一趟电梯",
+      "source": "5500",
+      "lookup_us": 16513,
+      "candidates": [
+        "等下一趟电梯",
+        "灯下一趟电梯",
+        "等下一堂电梯",
+        "灯下一堂电梯",
+        "等下一趟点题",
+        "等下一趟电体",
+        "灯下一趟点题",
+        "灯下一趟电体",
+        "灯下"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dianshizenmetouping",
+      "expected": "电视怎么投屏",
+      "source": "5500",
+      "lookup_us": 9717,
+      "candidates": [
+        "电视怎么投屏",
+        "点是怎么投屏",
+        "电视怎么透平",
+        "电视怎么投平",
+        "电视怎么投瓶",
+        "电视怎么头平",
+        "电视怎么投评",
+        "电视怎么投萍",
+        "电视"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "diantiliyoudianji",
+      "expected": "电梯里有点挤",
+      "source": "5500",
+      "lookup_us": 28775,
+      "candidates": [
+        "电梯里有电机",
+        "电梯里有点击",
+        "电梯里有点挤",
+        "电梯里有点急",
+        "电梯里有点几",
+        "电梯里有电极",
+        "点体力有点击",
+        "电梯里有电击",
+        "电梯里"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "dianxianbiepaoshuili",
+      "expected": "电线别泡水里",
+      "source": "5500",
+      "lookup_us": 18832,
+      "candidates": [
+        "电线别泡水里",
+        "电线别泡水利",
+        "癫痫别泡水里",
+        "癫痫别泡水利",
+        "电线别泡水力",
+        "电线别跑水里",
+        "电线别跑水利",
+        "癫痫别泡水力",
+        "电线"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dilouhaoxiangdule",
+      "expected": "地漏好像堵了",
+      "source": "5500",
+      "lookup_us": 13749,
+      "candidates": [
+        "地漏好像堵了",
+        "地漏好像都了",
+        "滴漏好像堵了",
+        "滴漏好像都了",
+        "地漏好像读了",
+        "滴漏好像读了",
+        "地漏好像度了",
+        "地漏好想读了",
+        "地漏"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dingdanhaogeinikan",
+      "expected": "订单号给你看",
+      "source": "5500",
+      "lookup_us": 9414,
+      "candidates": [
+        "订单号给你看",
+        "订单好给你看",
+        "订单号给你砍",
+        "订单号给你侃",
+        "订单号给你刊",
+        "订单号给你坎",
+        "订单号给你堪",
+        "订单号给你勘",
+        "订单号"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ditanhuishidea",
+      "expected": "地毯会湿的啊",
+      "source": "5500",
+      "lookup_us": 27991,
+      "candidates": [
+        "低碳汇市的啊",
+        "低碳会使得啊",
+        "低碳汇市的阿",
+        "地毯会使得啊",
+        "低碳会是的啊",
+        "低碳汇是的啊",
+        "地毯汇市的啊",
+        "地毯会湿的啊",
+        "低碳"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "dongxiwodounale",
+      "expected": "东西我都拿了",
+      "source": "5500",
+      "lookup_us": 6076,
+      "candidates": [
+        "东西我都拿了",
+        "东西我都那了",
+        "东西我都哪了",
+        "东西喔都拿了",
+        "东西我都纳了",
+        "东西我都拿勒",
+        "东西我都拿乐",
+        "东西我都那乐",
+        "东西"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "duochulaizenmeshou",
+      "expected": "多出来怎么收",
+      "source": "5500",
+      "lookup_us": 21296,
+      "candidates": [
+        "多出来怎么收",
+        "多出来怎么瘦",
+        "多出来怎么受",
+        "多出来怎么手",
+        "多出来怎么首",
+        "多出来怎么守",
+        "多出来怎么熟",
+        "多出来怎么兽",
+        "多出"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fanghaozaikataoshang",
+      "expected": "房号在卡套上",
+      "source": "5500",
+      "lookup_us": 11101,
+      "candidates": [
+        "房号在卡套上",
+        "放好在卡套上",
+        "房号在卡套商",
+        "房号在卡陶商",
+        "房号在卡套伤",
+        "放好在卡套商",
+        "房号在喀套上",
+        "放好在喀套上",
+        "房号"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangjianbixiangxiangxiao",
+      "expected": "房间比想象小",
+      "source": "5500",
+      "lookup_us": 47897,
+      "candidates": [
+        "房间比想像小",
+        "房间比想象小",
+        "房间比想象效",
+        "房间比想象消",
+        "房间比想象笑",
+        "房间比想象校",
+        "房间比想像笑",
+        "坊间比想像小",
+        "房间"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "fangjianhaimeihaoma",
+      "expected": "房间还没好吗",
+      "source": "5500",
+      "lookup_us": 14673,
+      "candidates": [
+        "房间还没好吗",
+        "房间还没好嘛",
+        "房间还没号码",
+        "房间还没好么",
+        "房间还没好马",
+        "房间还没号吗",
+        "仿间还没好吗",
+        "房间还美好吗",
+        "房间"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangjianhaolehanwo",
+      "expected": "房间好了喊我",
+      "source": "5500",
+      "lookup_us": 12225,
+      "candidates": [
+        "房间好了喊我",
+        "房间好了韩我",
+        "房间好了罕我",
+        "房间好了寒我",
+        "房间好了含我",
+        "房间好了汉我",
+        "房间好了韩喔",
+        "房间好了汗我",
+        "房间号"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangjianhaowowangle",
+      "expected": "房间号我忘了",
+      "source": "5500",
+      "lookup_us": 14650,
+      "candidates": [
+        "房间号我忘了",
+        "房间好我忘了",
+        "房间好挝忘了",
+        "房间号我望了",
+        "房间好我望了",
+        "房间号我往了",
+        "房间好我往了",
+        "房间好挝王了",
+        "房间号"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangjianlilianbushang",
+      "expected": "房间里连不上",
+      "source": "5500",
+      "lookup_us": 22864,
+      "candidates": [
+        "房间里连不上",
+        "方建立连不上",
+        "房间里脸部上",
+        "房间里链补上",
+        "房间里连补上",
+        "房间里脸不上",
+        "房间里脸部墒",
+        "房间里练不上",
+        "房间里"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangjianzaijiloua",
+      "expected": "房间在几楼啊",
+      "source": "5500",
+      "lookup_us": 11477,
+      "candidates": [
+        "房间在几楼啊",
+        "房间在几楼阿",
+        "坊间在几楼啊",
+        "房间在几楼呵",
+        "房间在几楼吖",
+        "房间在几楼腌",
+        "房间在几楼嗄",
+        "坊间在几楼阿",
+        "房间"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangkafangqiantaile",
+      "expected": "房卡放前台了",
+      "source": "5500",
+      "lookup_us": 12424,
+      "candidates": [
+        "房卡放前台了",
+        "放卡放前台了",
+        "房卡放前台乐",
+        "房卡放前泰勒",
+        "房卡放前台勒",
+        "房卡放前太了",
+        "房卡放前台肋",
+        "房卡放前胎了",
+        "房卡"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangkaninazheba",
+      "expected": "房卡你拿着吧",
+      "source": "5500",
+      "lookup_us": 6192,
+      "candidates": [
+        "房卡你拿着吧",
+        "放卡尼拿着吧",
+        "房卡你拿着把",
+        "放卡尼拿着把",
+        "房卡你拿这把",
+        "放卡尼拿这把",
+        "放卡尼娜这把",
+        "房卡尼娜这把",
+        "防砍"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangkashuanaera",
+      "expected": "房卡刷哪儿啊",
+      "source": "5500",
+      "lookup_us": 7912,
+      "candidates": [
+        "房卡刷哪儿啊",
+        "放卡刷哪儿啊",
+        "房卡刷那儿啊",
+        "放卡刷那儿啊",
+        "房卡刷哪儿阿",
+        "房卡刷纳尔啊",
+        "房卡刷那儿阿",
+        "房卡刷那二啊",
+        "房卡"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangkeyaodengjima",
+      "expected": "访客要登记吗",
+      "source": "5500",
+      "lookup_us": 27837,
+      "candidates": [
+        "访客要登记吗",
+        "方可要登记吗",
+        "访客要登记码",
+        "方可要等级吗",
+        "方可要登记码",
+        "访客要登机吗",
+        "方可要登机吗",
+        "访客要等级吗",
+        "方可"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fanglihaiyourenne",
+      "expected": "房里还有人呢",
+      "source": "5500",
+      "lookup_us": 10049,
+      "candidates": [
+        "房里还有人呢",
+        "房里嗨诱人呢",
+        "房里嗨有人呢",
+        "房里嗨友人呢",
+        "房里嗨游人呢",
+        "房里嗨由人呢",
+        "房里嗨又人呢",
+        "房里还有人哪",
+        "房里"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangmenmeiguanyana",
+      "expected": "房门没关严啊",
+      "source": "5500",
+      "lookup_us": 17534,
+      "candidates": [
+        "房门没关严啊",
+        "房门没关严阿",
+        "放门没关严啊",
+        "房门没关严呵",
+        "房门没关押那",
+        "房门没关亚娜",
+        "房门没关严吖",
+        "放门没关严阿",
+        "房门"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fengshengyoudiantaida",
+      "expected": "风声有点太大",
+      "source": "5500",
+      "lookup_us": 13912,
+      "candidates": [
+        "风声有点太大",
+        "丰盛有点太大",
+        "风声有点泰达",
+        "风声有点太打",
+        "风声有点太达",
+        "风声有点太搭",
+        "丰盛侑丶太大",
+        "风声有点太答",
+        "风声"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangcaidingdefangjian",
+      "expected": "刚才订的房间",
+      "source": "5500",
+      "lookup_us": 15309,
+      "candidates": [
+        "刚才订的房间",
+        "刚才顶的房间",
+        "刚才定得房间",
+        "刚才顶得房间",
+        "刚才定地房间",
+        "刚才定地方见",
+        "刚才订地方见",
+        "刚才顶地房间",
+        "刚才"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganjingdebienazou",
+      "expected": "干净的别拿走",
+      "source": "5500",
+      "lookup_us": 11007,
+      "candidates": [
+        "干净的别拿走",
+        "干净得别拿走",
+        "干净的憋拿走",
+        "干净的鳖拿走",
+        "干净的别那走",
+        "干净的别哪走",
+        "干净的瘪拿走",
+        "干净的别拿奏",
+        "干净"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gaoloucenghaiyouma",
+      "expected": "高楼层还有吗",
+      "source": "5500",
+      "lookup_us": 9553,
+      "candidates": [
+        "高楼层还有吗",
+        "高楼层还有么",
+        "高楼层还有马",
+        "高楼层还有嘛",
+        "搞楼层还有吗",
+        "高楼层还游吗",
+        "高楼层还有麻",
+        "高楼层还有玛",
+        "高楼层"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huangedengshishikan",
+      "expected": "换个灯试试看",
+      "source": "5500",
+      "lookup_us": 31941,
+      "candidates": [
+        "换个等试试看",
+        "换个灯试试看",
+        "换个等事实看",
+        "换个等实时看",
+        "换个等时事看",
+        "换个灯饰是看",
+        "欢歌等事实看",
+        "换个等实施看",
+        "换个"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "huannabiandiantiba",
+      "expected": "换那边电梯吧",
+      "source": "5500",
+      "lookup_us": 32633,
+      "candidates": [
+        "还那边电梯吧",
+        "还那边点提拔",
+        "还那边电梯把",
+        "还那边点题吧",
+        "环那边电梯吧",
+        "还那边店提拔",
+        "还那边电提拔",
+        "换那边电梯吧",
+        "换"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "huasawangnabianning",
+      "expected": "花洒往哪边拧",
+      "source": "5500",
+      "lookup_us": 24034,
+      "candidates": [
+        "花洒往那边宁",
+        "花洒往哪边拧",
+        "花洒往哪边宁",
+        "花洒往那边凝",
+        "花洒往那边拧",
+        "花洒往哪边凝",
+        "花洒网那边宁",
+        "花洒往那边柠",
+        "花洒"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "huzhaofangbaoliba",
+      "expected": "护照放包里吧",
+      "source": "5500",
+      "lookup_us": 28285,
+      "candidates": [
+        "护照防暴力吧",
+        "护照方包里吧",
+        "护照防暴力把",
+        "护照放包里吧",
+        "护照放暴力吧",
+        "护照防爆篱笆",
+        "护照防暴利吧",
+        "护照放保利吧",
+        "护照"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "jicundanwoliuzhe",
+      "expected": "寄存单我留着",
+      "source": "5500",
+      "lookup_us": 23876,
+      "candidates": [
+        "寄存但我留着",
+        "级村但我留着",
+        "寄存但我流着",
+        "寄存但我留这",
+        "寄存但我留者",
+        "级村但我流着",
+        "级村但我留这",
+        "寄存单我留着",
+        "寄存"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "jingziyouyicengwu",
+      "expected": "镜子有一层雾",
+      "source": "5500",
+      "lookup_us": 22058,
+      "candidates": [
+        "镜子有一层雾",
+        "精子有一层雾",
+        "镜子有一层无",
+        "精子有一层无",
+        "镜子有一层屋",
+        "镜子有一层物",
+        "精子有一层五",
+        "精子有一层物",
+        "镜子"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kachazheerjiuxing",
+      "expected": "卡插这儿就行",
+      "source": "5500",
+      "lookup_us": 26664,
+      "candidates": [
+        "咔嚓这儿就行",
+        "喀嚓这儿就行",
+        "咔嚓这二就行",
+        "咔嚓这儿救星",
+        "咔嚓这儿就性",
+        "咔嚓这儿就醒",
+        "咔嚓这而就行",
+        "卡插这儿就行",
+        "喀嚓"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "kageiniyizhang",
+      "expected": "卡给你一张",
+      "source": "5500",
+      "lookup_us": 8907,
+      "candidates": [
+        "卡给你一张",
+        "卡给你一章",
+        "卡给你一掌",
+        "卡给你一仗",
+        "卡给你一丈",
+        "咖给你一张",
+        "卡给你依仗",
+        "卡给你议长",
+        "卡"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kaihaofayouxiangba",
+      "expected": "开好发邮箱吧",
+      "source": "5500",
+      "lookup_us": 14053,
+      "candidates": [
+        "开好发邮箱吧",
+        "开蚝发邮箱吧",
+        "开蚝发邮箱把",
+        "开好发邮箱把",
+        "开蚝发邮箱罢",
+        "开蚝发邮箱八",
+        "开蚝发邮箱巴",
+        "开好发邮箱罢",
+        "开好"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kaiyihuizaikankan",
+      "expected": "开一会再看看",
+      "source": "5500",
+      "lookup_us": 9055,
+      "candidates": [
+        "开一会再看看",
+        "开一会在看看",
+        "开议会再看看",
+        "开议会在看看",
+        "开一会载看看",
+        "开议会載看看",
+        "开议会载看看",
+        "开一会在侃侃",
+        "开"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kalafangjianlile",
+      "expected": "卡落房间里了",
+      "source": "5500",
+      "lookup_us": 32246,
+      "candidates": [
+        "卡拉方建立了",
+        "卡拉房间里了",
+        "卡拉房建立了",
+        "喀喇房间里了",
+        "卡拉方简历了",
+        "卡拉房间离了",
+        "卡拉房间力了",
+        "卡落房间里了",
+        "卡拉"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "kankansuoshangmeiyou",
+      "expected": "看看锁上没有",
+      "source": "5500",
+      "lookup_us": 36657,
+      "candidates": [
+        "看看锁上没有",
+        "看看所上没有",
+        "看看所伤没有",
+        "看看莎尚没有",
+        "看看所尚没有",
+        "看看所商没有",
+        "看看索伤没有",
+        "看看所赏没有",
+        "看看"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "keyixianjicunma",
+      "expected": "可以先寄存吗",
+      "source": "5500",
+      "lookup_us": 14769,
+      "candidates": [
+        "可以先寄存吗",
+        "可以先寄存么",
+        "可以咁寄存吗",
+        "可以先寄存嘛",
+        "可以先积存吗",
+        "可以先机存吗",
+        "可以先寄存马",
+        "可以先寄存骂",
+        "可以"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "keyizaidatangliao",
+      "expected": "可以在大堂聊",
+      "source": "5500",
+      "lookup_us": 25553,
+      "candidates": [
+        "可以在大堂了",
+        "可以在大唐了",
+        "可以在大堂聊",
+        "可以在大堂里奥",
+        "可以在大堂料",
+        "可以在大汤料",
+        "可以再大躺了",
+        "可以在大堂撩",
+        "可以"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "keyizouleba",
+      "expected": "可以走了吧",
+      "source": "5500",
+      "lookup_us": 4871,
+      "candidates": [
+        "可以走了吧",
+        "可以走了把",
+        "可以走了罢",
+        "可以走了巴",
+        "可以走了八",
+        "刻意走了吧",
+        "可以走了霸",
+        "可以走了拔",
+        "可以"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kongtiaokaichushiba",
+      "expected": "空调开除湿吧",
+      "source": "5500",
+      "lookup_us": 26102,
+      "candidates": [
+        "空调开出十八",
+        "空调开除十八",
+        "空调开出是吧",
+        "空调开出事吧",
+        "空调开除是吧",
+        "空调开出史吧",
+        "空调开处事吧",
+        "空调开除湿吧",
+        "空调"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "kongtiaoyizhixianga",
+      "expected": "空调一直响啊",
+      "source": "5500",
+      "lookup_us": 32026,
+      "candidates": [
+        "空调一直想啊",
+        "空调一直响啊",
+        "空调一直向阿",
+        "空调一致想啊",
+        "空调一直像啊",
+        "空调一直香啊",
+        "空调一直向啊",
+        "空调一直闲嘎",
+        "空调"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "kongtiaozenmetiaoa",
+      "expected": "空调怎么调啊",
+      "source": "5500",
+      "lookup_us": 19880,
+      "candidates": [
+        "空调怎么调啊",
+        "空调怎么挑啊",
+        "空调怎么跳啊",
+        "空调怎么调阿",
+        "空调怎么条啊",
+        "空调怎么挑阿",
+        "空调怎么调呵",
+        "空调怎么调吖",
+        "空调"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "liangbianhebulonga",
+      "expected": "两边合不拢啊",
+      "source": "5500",
+      "lookup_us": 11246,
+      "candidates": [
+        "两边合不拢啊",
+        "两遍合不拢啊",
+        "两边合不拢阿",
+        "两边和布隆啊",
+        "两边和布龙啊",
+        "两边和不龙啊",
+        "两边和不弄啊",
+        "两边合不拢呵",
+        "两边"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lingyishuangzainaer",
+      "expected": "另一双在哪儿",
+      "source": "5500",
+      "lookup_us": 11145,
+      "candidates": [
+        "另一双在哪儿",
+        "另一双在那儿",
+        "凌一爽在哪儿",
+        "凌一爽在那儿",
+        "另一双在纳尔",
+        "另一双再那儿",
+        "另一双再哪儿",
+        "另一双再纳尔",
+        "另一"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "linyutouyoudianlou",
+      "expected": "淋浴头有点漏",
+      "source": "5500",
+      "lookup_us": 10086,
+      "candidates": [
+        "淋浴头有点漏",
+        "林芋头有点漏",
+        "淋浴头有点楼",
+        "淋浴头有点喽",
+        "淋浴头有点露",
+        "淋浴头有点陋",
+        "淋浴头有点篓",
+        "淋浴头有点搂",
+        "淋浴头"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mafanbangmanggoutong",
+      "expected": "麻烦帮忙沟通",
+      "source": "5500",
+      "lookup_us": 13771,
+      "candidates": [
+        "麻烦帮忙沟通",
+        "麻烦帮忙苟同",
+        "麻烦帮忙勾通",
+        "麻烦帮忙购通",
+        "麻烦帮忙购同",
+        "麻烦帮忙购痛",
+        "麻烦帮忙购统",
+        "麻烦帮忙购铜",
+        "麻烦"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mafanlaikankanba",
+      "expected": "麻烦来看看吧",
+      "source": "5500",
+      "lookup_us": 8469,
+      "candidates": [
+        "麻烦来看看吧",
+        "马凡来看看吧",
+        "麻烦来看看罢",
+        "麻烦来看看把",
+        "麻烦来看看巴",
+        "麻烦来看看八",
+        "麻烦来看看爸",
+        "麻烦来看看霸",
+        "麻烦"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mafanqidianjiaowo",
+      "expected": "麻烦七点叫我",
+      "source": "5500",
+      "lookup_us": 22262,
+      "candidates": [
+        "麻烦七点叫我",
+        "麻烦起点叫我",
+        "麻烦起点教我",
+        "麻烦七点教我",
+        "麻烦气垫叫我",
+        "麻烦七点脚我",
+        "麻烦气垫教我",
+        "麻烦旗店叫我",
+        "麻烦"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mafanxianbiejinlai",
+      "expected": "麻烦先别进来",
+      "source": "5500",
+      "lookup_us": 22747,
+      "candidates": [
+        "麻烦先别进来",
+        "麻烦现别进来",
+        "麻烦先别近来",
+        "麻烦先别劲来",
+        "麻烦先别金来",
+        "麻烦现别近来",
+        "麻烦先别紧来",
+        "麻烦县憋进来",
+        "麻烦"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mafanzaisongyidian",
+      "expected": "麻烦再送一点",
+      "source": "5500",
+      "lookup_us": 27133,
+      "candidates": [
+        "麻烦再送一点",
+        "麻烦再松一点",
+        "麻烦在松一点",
+        "麻烦在送一点",
+        "麻烦再送一店",
+        "麻烦再送医典",
+        "麻烦在宋一点",
+        "麻烦再宋一点",
+        "麻烦"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "maojinshaoleyitiao",
+      "expected": "毛巾少了一条",
+      "source": "5500",
+      "lookup_us": 16681,
+      "candidates": [
+        "毛巾少了一条",
+        "毛巾烧了一条",
+        "毛巾少了一跳",
+        "毛巾烧了一跳",
+        "毛巾少了一挑",
+        "毛巾烧了一挑",
+        "毛巾稍勒一条",
+        "毛巾稍勒一跳",
+        "毛巾"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "maojinwofangzheer",
+      "expected": "毛巾我放这儿",
+      "source": "5500",
+      "lookup_us": 13296,
+      "candidates": [
+        "毛巾我放这儿",
+        "毛巾我方这儿",
+        "毛巾我放着二",
+        "毛巾卧房这儿",
+        "毛巾我放着儿",
+        "毛巾我放着而",
+        "毛巾我放着耳",
+        "毛巾我房这儿",
+        "毛巾"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meibiaojiabugandong",
+      "expected": "没标价不敢动",
+      "source": "5500",
+      "lookup_us": 12744,
+      "candidates": [
+        "没标价不敢动",
+        "美标价不敢动",
+        "没标价不感动",
+        "美标价不感动",
+        "没标价部感动",
+        "没标价步感动",
+        "美标价部感动",
+        "美标价步感动",
+        "梅彪"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meikongfangjiusuanle",
+      "expected": "没空房就算了",
+      "source": "5500",
+      "lookup_us": 10929,
+      "candidates": [
+        "没空房就算了",
+        "没空方就算了",
+        "美孔芳厩算了",
+        "没空房就酸了",
+        "没空方就酸了",
+        "没空放久算了",
+        "没空防救算了",
+        "没空房旧算了",
+        "没空"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meiyoujiuzhejianba",
+      "expected": "没有就这间吧",
+      "source": "5500",
+      "lookup_us": 28066,
+      "candidates": [
+        "没有就这件吧",
+        "没有就这间吧",
+        "没有就这件笆",
+        "没有久这件吧",
+        "没有就这件把",
+        "没有就这间把",
+        "没有就这见吧",
+        "没有就着见吧",
+        "没有"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "menbashouwangxiaya",
+      "expected": "门把手往下压",
+      "source": "5500",
+      "lookup_us": 13657,
+      "candidates": [
+        "门把手往下压",
+        "们把手往下压",
+        "门把手往下呀",
+        "门把手网下呀",
+        "门把手网下压",
+        "门把手往下牙",
+        "门把手往下亚",
+        "门把手往下雅",
+        "门把手"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "menfengliyoufenga",
+      "expected": "门缝里有风啊",
+      "source": "5500",
+      "lookup_us": 11346,
+      "candidates": [
+        "门缝里有风啊",
+        "门缝里有峰啊",
+        "门缝里有丰啊",
+        "门缝里又逢啊",
+        "门缝里又风啊",
+        "门缝里有凤啊",
+        "门缝里有封啊",
+        "门缝里游风啊",
+        "门缝"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "menkoudengyizhiliang",
+      "expected": "门口灯一直亮",
+      "source": "5500",
+      "lookup_us": 18476,
+      "candidates": [
+        "门口灯一直亮",
+        "门口等以质量",
+        "门口等一质量",
+        "门口等异质量",
+        "门口等一直亮",
+        "门口等亿质量",
+        "门口等意质量",
+        "门口灯以质量",
+        "门口"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mensuoyoudianbuling",
+      "expected": "门锁有点不灵",
+      "source": "5500",
+      "lookup_us": 17408,
+      "candidates": [
+        "门锁有点不灵",
+        "门锁优点不灵",
+        "门锁有点不令",
+        "门锁邮电部令",
+        "门锁有点不领",
+        "门锁有点不另",
+        "门锁有点不零",
+        "门锁有点不凌",
+        "门锁"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mimazaifangkashang",
+      "expected": "密码在房卡上",
+      "source": "5500",
+      "lookup_us": 10666,
+      "candidates": [
+        "密码在房卡上",
+        "密码在放卡上",
+        "密码再放卡上",
+        "密码在防卡上",
+        "密码在方卡上",
+        "密码在仿卡上",
+        "密码在访卡上",
+        "密码再房卡上",
+        "密码"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mingtianbuxiangzaiban",
+      "expected": "明天不想再搬",
+      "source": "5500",
+      "lookup_us": 32900,
+      "candidates": [
+        "明天不想再版",
+        "明天不想再办",
+        "明天不想在办",
+        "明天不想在半",
+        "明天不想在班",
+        "明天不想在板",
+        "明天不想再班",
+        "明天不想再搬",
+        "明天"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "mingwankenengxuzhu",
+      "expected": "明晚可能续住",
+      "source": "5500",
+      "lookup_us": 13156,
+      "candidates": [
+        "明晚可能续住",
+        "明晚可能虚竹",
+        "明晚可能蓄祝",
+        "明晚可能需住",
+        "明晚可能须著",
+        "明晚可能需注",
+        "明晚可能须住",
+        "明晚可能须煮",
+        "明晚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "naozhongxianglehanwo",
+      "expected": "闹钟响了喊我",
+      "source": "5500",
+      "lookup_us": 16741,
+      "candidates": [
+        "闹钟响了喊我",
+        "闹钟响了罕我",
+        "闹钟响了寒我",
+        "闹钟响了汗我",
+        "闹钟响了韩我",
+        "闹钟响了汉我",
+        "闹钟响了韩喔",
+        "闹钟响了含我",
+        "闹钟"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nengaizheanpaima",
+      "expected": "能挨着安排吗",
+      "source": "5500",
+      "lookup_us": 10999,
+      "candidates": [
+        "能挨着安排吗",
+        "能爱着安排吗",
+        "能挨着安排馬",
+        "能挨着安排嘛",
+        "能挨着氨拍马",
+        "能挨着氨牌吗",
+        "能爱着安排馬",
+        "能挨着氨拍吗",
+        "能"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nengbunengxiaoyidian",
+      "expected": "能不能小一点",
+      "source": "5500",
+      "lookup_us": 19463,
+      "candidates": [
+        "能不能小一点",
+        "能不能笑一点",
+        "能不能效一点",
+        "能不能消一点",
+        "能不能削一点",
+        "能不能晓一点",
+        "能不能销一点",
+        "能不能笑意点",
+        "能不能"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nengchadaoyudingma",
+      "expected": "能查到预订吗",
+      "source": "5500",
+      "lookup_us": 25635,
+      "candidates": [
+        "能查到预定吗",
+        "能查到预订吗",
+        "能查到预定嘛",
+        "能查到预定马",
+        "能查到预定么",
+        "能查到预订嘛",
+        "能查到预定妈",
+        "能查到预定骂",
+        "能"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "nenghuanganjingdema",
+      "expected": "能换干净的吗",
+      "source": "5500",
+      "lookup_us": 38760,
+      "candidates": [
+        "能换干净的吗",
+        "能换干净的嘛",
+        "能换干净的马",
+        "能换干净的么",
+        "能缓干净的吗",
+        "能缓干净的嘛",
+        "能换干净的妈",
+        "能换干净地吗",
+        "能"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nenghuangedianchima",
+      "expected": "能换个电池吗",
+      "source": "5500",
+      "lookup_us": 23400,
+      "candidates": [
+        "能换个电池吗",
+        "能换个电池嘛",
+        "能换个垫尺码",
+        "能换个点吃吗",
+        "能换个电池么",
+        "能换个滇池吗",
+        "能换个店吃吗",
+        "能换个电池马",
+        "能"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nenghuangewangluoma",
+      "expected": "能换个网络吗",
+      "source": "5500",
+      "lookup_us": 21352,
+      "candidates": [
+        "能换个网络吗",
+        "能换个网络骂",
+        "能换个网络嘛",
+        "能换个往落马",
+        "能换个网罗马",
+        "能换个网络马",
+        "能换个往落嘛",
+        "能换个网络码",
+        "能"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nengyanchituifangma",
+      "expected": "能延迟退房吗",
+      "source": "5500",
+      "lookup_us": 12663,
+      "candidates": [
+        "能延迟退房吗",
+        "能延迟退房么",
+        "能延迟退房嘛",
+        "能延迟退房马",
+        "能延迟退房骂",
+        "能延迟退房麻",
+        "能延迟退房玛",
+        "能延迟退房码",
+        "能"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nibangwojiyixia",
+      "expected": "你帮我记一下",
+      "source": "5500",
+      "lookup_us": 12358,
+      "candidates": [
+        "你帮我记一下",
+        "你帮我寄一下",
+        "你帮我及以下",
+        "你帮我级以下",
+        "你帮我系一下",
+        "你帮我及一下",
+        "你帮我计一下",
+        "你帮我击一下",
+        "你帮我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nidaolouxiahanwo",
+      "expected": "你到楼下喊我",
+      "source": "5500",
+      "lookup_us": 10856,
+      "candidates": [
+        "你到楼下喊我",
+        "你到楼下寒我",
+        "你到楼下汗我",
+        "你到楼下含我",
+        "你到楼下罕我",
+        "你到楼下汉我",
+        "你到楼下汗喔",
+        "你到楼下韩我",
+        "你到"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nikanyoubiedemei",
+      "expected": "你看有别的没",
+      "source": "5500",
+      "lookup_us": 19268,
+      "candidates": [
+        "你看有别的美",
+        "你看有别的没",
+        "你看有别的每",
+        "你看有别的妹",
+        "你看有别的煤",
+        "你看有别的眉",
+        "你看有别的梅",
+        "你看有别的酶",
+        "你看"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "niliuzhezhanjiuhao",
+      "expected": "你留这盏就好",
+      "source": "5500",
+      "lookup_us": 27975,
+      "candidates": [
+        "你留着站就好",
+        "你留着战就好",
+        "你留着展就好",
+        "你留着沾就好",
+        "你留着占就好",
+        "你留着栈就好",
+        "你留着斩就好",
+        "你留这盏就好",
+        "逆流"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "nimenzhenengtouma",
+      "expected": "你们这能投吗",
+      "source": "5500",
+      "lookup_us": 12554,
+      "candidates": [
+        "你们这能投吗",
+        "你们这能偷吗",
+        "你们这能头吗",
+        "你们这能投嘛",
+        "你们这能透吗",
+        "你们这能头马",
+        "你们这能偷嘛",
+        "你们这能头嘛",
+        "你们"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nirangrenlaixiuba",
+      "expected": "你让人来修吧",
+      "source": "5500",
+      "lookup_us": 8676,
+      "candidates": [
+        "你让人来修吧",
+        "你让人来休吧",
+        "你让人来岫吧",
+        "你让人来秀吧",
+        "你让人来宿吧",
+        "你让人来修坝",
+        "你让人来休把",
+        "你让人来修把",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nixianbiejinquxi",
+      "expected": "你先别进去洗",
+      "source": "5500",
+      "lookup_us": 28699,
+      "candidates": [
+        "你先别进去洗",
+        "你先别进去西",
+        "你先别进去系",
+        "你先别进去喜",
+        "你先别进去细",
+        "你先别进去希",
+        "你先别进去兮",
+        "你先别禁区昔",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nixiandaixiangzizou",
+      "expected": "你先带箱子走",
+      "source": "5500",
+      "lookup_us": 19918,
+      "candidates": [
+        "你先带箱子走",
+        "你见岱像自走",
+        "你先大箱子走",
+        "你见岱像子走",
+        "你见岱巷子走",
+        "你现代巷子走",
+        "你见岱乡自走",
+        "你见岱乡子走",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nixianshangwodenghui",
+      "expected": "你先上我等会",
+      "source": "5500",
+      "lookup_us": 16028,
+      "candidates": [
+        "你先上我等会",
+        "你献上我灯会",
+        "你献上我等会",
+        "你先上我灯会",
+        "你献上我地唔会",
+        "你先上我地唔会",
+        "你先上窝灯会",
+        "你线上窝灯会",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nixiwanhanwoba",
+      "expected": "你洗完喊我吧",
+      "source": "5500",
+      "lookup_us": 22677,
+      "candidates": [
+        "你洗碗喊我吧",
+        "你洗完喊我吧",
+        "你洗碗喊我把",
+        "你洗碗喊我爸",
+        "你洗完喊我把",
+        "你洗碗寒我吧",
+        "你洗完喊我爸",
+        "你洗碗寒我爸",
+        "你"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "nizaibangwokanxia",
+      "expected": "你再帮我看下",
+      "source": "5500",
+      "lookup_us": 14845,
+      "candidates": [
+        "你再帮我看下",
+        "你在帮我看下",
+        "你再帮我砍下",
+        "你在帮我砍下",
+        "你再帮我看夏",
+        "你再帮我看吓",
+        "你在帮我看夏",
+        "你再帮我看虾",
+        "你在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nizaidatangdengwo",
+      "expected": "你在大堂等我",
+      "source": "5500",
+      "lookup_us": 9372,
+      "candidates": [
+        "你在大堂等我",
+        "拟在大堂等我",
+        "你在大堂等喔",
+        "你在大唐等我",
+        "你在大堂等窝",
+        "你在大堂等卧",
+        "你在大堂等沃",
+        "你在大堂灯喔",
+        "你在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nizaikanyanchuangdi",
+      "expected": "你再看眼床底",
+      "source": "5500",
+      "lookup_us": 13070,
+      "candidates": [
+        "你再看眼床底",
+        "你在勘验床底",
+        "你在看演床底",
+        "你在看验床底",
+        "你在看眼床底",
+        "你在看研创的",
+        "你在看烟床底",
+        "你在看演闯的",
+        "你在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nizaisongyitaoba",
+      "expected": "你再送一套吧",
+      "source": "5500",
+      "lookup_us": 8270,
+      "candidates": [
+        "你再送一套吧",
+        "你再送一套芭",
+        "你在送一套吧",
+        "你在送一套芭",
+        "你在宋亿套吧",
+        "你再送一套把",
+        "你再送一淘吧",
+        "你再送一套疤",
+        "你在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nuanfenghaimeichulai",
+      "expected": "暖风还没出来",
+      "source": "5500",
+      "lookup_us": 12525,
+      "candidates": [
+        "暖风还没出来",
+        "暖锋还没出来",
+        "暖风还美出来",
+        "暖风还没处来",
+        "暖风海美出来",
+        "暖风还梅出来",
+        "暖风海妹出来",
+        "暖风海梅出来",
+        "暖风"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qingsaowanguanhaomen",
+      "expected": "清扫完关好门",
+      "source": "5500",
+      "lookup_us": 15903,
+      "candidates": [
+        "清扫完关好门",
+        "清扫弯管豪门",
+        "清扫万关好门",
+        "清扫弯管壕们",
+        "清扫弯管好门",
+        "清扫弯管壕门",
+        "清扫完管好门",
+        "清扫完管豪门",
+        "清扫"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qingyidianguanmenba",
+      "expected": "轻一点关门吧",
+      "source": "5500",
+      "lookup_us": 18373,
+      "candidates": [
+        "轻一点关门吧",
+        "请一点关门吧",
+        "轻一点关门把",
+        "请一点关门把",
+        "轻一点关门巴",
+        "轻一点关门八",
+        "轻一点关门爸",
+        "轻一点关门罢",
+        "轻一点"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qudiancaozainaer",
+      "expected": "取电槽在哪儿",
+      "source": "5500",
+      "lookup_us": 27488,
+      "candidates": [
+        "去滇草在哪儿",
+        "去滇草在那儿",
+        "趣店操在哪儿",
+        "趣店操在那儿",
+        "去滇草在纳尔",
+        "去滇草在那二",
+        "去滇草再纳尔",
+        "取电槽在哪儿",
+        "取缔"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "quedinglegaosuni",
+      "expected": "确定了告诉你",
+      "source": "5500",
+      "lookup_us": 12216,
+      "candidates": [
+        "确定了告诉你",
+        "确定了高速你",
+        "却定了告诉你",
+        "确定了高速呢",
+        "确定了告诉呢",
+        "确定了高速尼",
+        "确定了告诉尼",
+        "确定了高速泥",
+        "确定了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "querenhaowozaifu",
+      "expected": "确认好我再付",
+      "source": "5500",
+      "lookup_us": 11659,
+      "candidates": [
+        "确认好我再付",
+        "确认好我在服",
+        "确认好我在福",
+        "确认好我在浮",
+        "确认好我在富",
+        "确认好我在府",
+        "确认好我在付",
+        "确认好我在负",
+        "确认好"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "quxingliyongshenme",
+      "expected": "取行李用什么",
+      "source": "5500",
+      "lookup_us": 12161,
+      "candidates": [
+        "取行李用什么",
+        "取行李永什么",
+        "取行李咏什么",
+        "取行李勇什么",
+        "去行利用什么",
+        "取行李泳什么",
+        "取行李拥什么",
+        "取行李涌什么",
+        "去腥"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "reshuihulenghure",
+      "expected": "热水忽冷忽热",
+      "source": "5500",
+      "lookup_us": 5148,
+      "candidates": [
+        "热水忽冷忽热",
+        "惹水忽冷忽热",
+        "热水忽冷忽惹",
+        "热水壶冷狐热",
+        "热水壶冷湖热",
+        "热水壶冷虎热",
+        "热水壶冷户热",
+        "热水壶冷护热",
+        "热水壶"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "reshuiyaofangduojiu",
+      "expected": "热水要放多久",
+      "source": "5500",
+      "lookup_us": 13117,
+      "candidates": [
+        "热水要放多久",
+        "热水姚放多久",
+        "热水药房多久",
+        "热水药方多久",
+        "热水要方多久",
+        "热水要房多久",
+        "热水要防多久",
+        "热水要访多久",
+        "热水"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shenfenyaoheshima",
+      "expected": "身份要核实吗",
+      "source": "5500",
+      "lookup_us": 23681,
+      "candidates": [
+        "身份要合适吗",
+        "身份咬合适吗",
+        "身份要合适么",
+        "身份要核实吗",
+        "身份要何时吗",
+        "身份要和是吗",
+        "身份吆喝是吗",
+        "身份要核实嘛",
+        "身份"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "shuawanhaishibukai",
+      "expected": "刷完还是不开",
+      "source": "5500",
+      "lookup_us": 9320,
+      "candidates": [
+        "刷完还是不开",
+        "刷碗还是不开",
+        "刷碗海事不开",
+        "刷完还时不开",
+        "刷完孩势不开",
+        "刷碗还时不开",
+        "刷完还使不开",
+        "刷完海事不开",
+        "刷碗"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuibeiyoudianzanga",
+      "expected": "水杯有点脏啊",
+      "source": "5500",
+      "lookup_us": 11207,
+      "candidates": [
+        "水杯有点脏啊",
+        "谁背有点脏啊",
+        "水杯有点赞噶",
+        "水杯有点赞嘎",
+        "水杯有点赞咖",
+        "水杯有点脏阿",
+        "水杯有点赞轧",
+        "水杯有点赞伽",
+        "水杯"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuibiezhuangtaimanle",
+      "expected": "水别装太满了",
+      "source": "5500",
+      "lookup_us": 17208,
+      "candidates": [
+        "水别装太满了",
+        "说别装太满了",
+        "水别装太慢了",
+        "水憋装太慢了",
+        "水憋状态慢了",
+        "水憋状态满了",
+        "水憋状态漫了",
+        "水别状态慢了",
+        "水笔"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuiyizhixiabuqu",
+      "expected": "水一直下不去",
+      "source": "5500",
+      "lookup_us": 24128,
+      "candidates": [
+        "睡衣之下不去",
+        "睡衣之下不屈",
+        "睡伊之下不去",
+        "睡衣之下不取",
+        "睡衣之下不娶",
+        "睡伊之下不屈",
+        "睡衣之下部曲",
+        "水一直下不去",
+        "睡衣"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "taiwanjiumingtianhuan",
+      "expected": "太晚就明天换",
+      "source": "5500",
+      "lookup_us": 33367,
+      "candidates": [
+        "台湾就明天还",
+        "台湾就明天换",
+        "台湾就明天欢",
+        "台湾就明天环",
+        "台湾就明天缓",
+        "台湾就明天患",
+        "台湾就明天桓",
+        "太晚就明天换",
+        "台湾"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "tingcheyaodengjima",
+      "expected": "停车要登记吗",
+      "source": "5500",
+      "lookup_us": 11990,
+      "candidates": [
+        "停车要登记吗",
+        "停车要登机吗",
+        "停车要等级吗",
+        "停车要登记码",
+        "停车药登记吗",
+        "停车要登记嘛",
+        "停车药等级吗",
+        "停车要登记马",
+        "停车"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tuifangdaojidiana",
+      "expected": "退房到几点啊",
+      "source": "5500",
+      "lookup_us": 14943,
+      "candidates": [
+        "退房到几点啊",
+        "腿放到几点啊",
+        "退房到极点啊",
+        "退房到几点阿",
+        "退房到极点阿",
+        "腿放到极点啊",
+        "退房到几点呵",
+        "退房到极点呵",
+        "退房"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tuifangkenengyaoyong",
+      "expected": "退房可能要用",
+      "source": "5500",
+      "lookup_us": 12495,
+      "candidates": [
+        "退房可能要用",
+        "退房可能药用",
+        "推肪可能要用",
+        "退房可能要勇",
+        "退房可能要永",
+        "退房可能要拥",
+        "退房可能要涌",
+        "退房可能要咏",
+        "退房"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waimianyouwenzine",
+      "expected": "外面有蚊子呢",
+      "source": "5500",
+      "lookup_us": 10886,
+      "candidates": [
+        "外面有蚊子呢",
+        "外面有文字呢",
+        "外面由蚊子呢",
+        "外面由文字呢",
+        "外面有文字哪",
+        "外面有稳字呢",
+        "外面有文字呐",
+        "外面有蚊子哪",
+        "外面"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wanglimianzouduiba",
+      "expected": "往里面走对吧",
+      "source": "5500",
+      "lookup_us": 11847,
+      "candidates": [
+        "往里面走对吧",
+        "往里面走兑吧",
+        "往里面走队吧",
+        "往里面走对巴",
+        "往里面走对罢",
+        "往里面走对把",
+        "往里面走对八",
+        "往里面走堆吧",
+        "往里"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wangzenmeliana",
+      "expected": "网怎么连啊",
+      "source": "5500",
+      "lookup_us": 8445,
+      "candidates": [
+        "网怎么连啊",
+        "王怎么练啊",
+        "网怎么练啊",
+        "王怎么连啊",
+        "王怎么脸啊",
+        "网怎么脸啊",
+        "王怎么恋啊",
+        "王怎么练阿",
+        "王泽"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "weishengjianyekankan",
+      "expected": "卫生间也看看",
+      "source": "5500",
+      "lookup_us": 18213,
+      "candidates": [
+        "卫生间也看看",
+        "卫生间页看看",
+        "卫生间夜看看",
+        "卫生间野看看",
+        "卫生间业看看",
+        "卫生间叶看看",
+        "卫生间爷看看",
+        "卫生监也看看",
+        "卫生间"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wendutiaobuxialai",
+      "expected": "温度调不下来",
+      "source": "5500",
+      "lookup_us": 17091,
+      "candidates": [
+        "温度调不下来",
+        "温度条不下来",
+        "温度调补下来",
+        "温度调部下来",
+        "温度调布下来",
+        "温度条布下来",
+        "温度条部下来",
+        "温度调步下来",
+        "温度"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woanlemeifanying",
+      "expected": "我按了没反应",
+      "source": "5500",
+      "lookup_us": 16023,
+      "candidates": [
+        "我按了没反应",
+        "我暗了没反应",
+        "我按了没反映",
+        "我暗了没反映",
+        "我按了镁反应",
+        "我按了美反应",
+        "我按了美反映",
+        "我安乐美反应",
+        "我啊"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wobachuangguanhuiqu",
+      "expected": "我把窗关回去",
+      "source": "5500",
+      "lookup_us": 18214,
+      "candidates": [
+        "我把窗关回去",
+        "我把闯关回去",
+        "我把窗关会去",
+        "我把闯关会去",
+        "我把床管回去",
+        "我把床官回去",
+        "我把床馆回去",
+        "我把窗官回去",
+        "我把"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wobachuanglianlashang",
+      "expected": "我把窗帘拉上",
+      "source": "5500",
+      "lookup_us": 17684,
+      "candidates": [
+        "我把窗帘拉上",
+        "握把窗帘拉上",
+        "我把窗帘拉伤",
+        "握把窗帘拉伤",
+        "我把窗帘拉商",
+        "我把窗帘拉尚",
+        "我把窗帘拉赏",
+        "我把窗帘拉墒",
+        "我把"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wobadizuofanghao",
+      "expected": "我把底座放好",
+      "source": "5500",
+      "lookup_us": 30330,
+      "candidates": [
+        "我把地做放好",
+        "我把底座放好",
+        "我把底座房号",
+        "我把地作放好",
+        "我把地做房号",
+        "我把地坐放好",
+        "我把地做放号",
+        "我爸底座放好",
+        "我把"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "wobafanghaofani",
+      "expected": "我把房号发你",
+      "source": "5500",
+      "lookup_us": 12085,
+      "candidates": [
+        "我把房号发你",
+        "我把放号发你",
+        "我把放好发你",
+        "我爸放好发你",
+        "我把房号发呢",
+        "我把房号发泥",
+        "我把房号罚你",
+        "我把房号法呢",
+        "我把"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wobashoujuliuhao",
+      "expected": "我把收据留好",
+      "source": "5500",
+      "lookup_us": 28808,
+      "candidates": [
+        "我把手拘留好",
+        "我把收据留好",
+        "我把手居留好",
+        "我把手拘留号",
+        "我把收据六号",
+        "我把手举六号",
+        "我把手居留号",
+        "我爸收据六号",
+        "我把"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "wobujieyilouceng",
+      "expected": "我不介意楼层",
+      "source": "5500",
+      "lookup_us": 13055,
+      "candidates": [
+        "我不介意楼层",
+        "我不接一楼层",
+        "我不解一楼层",
+        "我不介意露层",
+        "我不介意楼曾",
+        "我不介意漏层",
+        "喔不介意楼层",
+        "我不介意露曾",
+        "我不"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wobuzaifangjiana",
+      "expected": "我不在房间啊",
+      "source": "5500",
+      "lookup_us": 14737,
+      "candidates": [
+        "我不在房间啊",
+        "我不再放加纳",
+        "我不再放戛纳",
+        "我不在放假那",
+        "我不再访间啊",
+        "我不再房间啊",
+        "我不再放假那",
+        "我不在房间阿",
+        "我不在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wochayixiaduanxin",
+      "expected": "我查一下短信",
+      "source": "5500",
+      "lookup_us": 14560,
+      "candidates": [
+        "我查一下短信",
+        "我差一下短信",
+        "我查一下端新",
+        "我查一下端信",
+        "我查一下段新",
+        "我查一下断心",
+        "我查一下段心",
+        "我查一下段信",
+        "我查一下"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wodehaimeixiwan",
+      "expected": "我的还没洗完",
+      "source": "5500",
+      "lookup_us": 27583,
+      "candidates": [
+        "我的还没洗碗",
+        "我的还没洗完",
+        "我得还没洗完",
+        "我得还没洗碗",
+        "我的还没系完",
+        "我的还没洗玩",
+        "我的还没戏玩",
+        "我的还没洗万",
+        "我的"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "wodengxiazaiguolai",
+      "expected": "我等下再过来",
+      "source": "5500",
+      "lookup_us": 35205,
+      "candidates": [
+        "我等下载过来",
+        "我等下再过来",
+        "我等下在过来",
+        "我灯下再过来",
+        "我登下载过来",
+        "我等夏在过来",
+        "我等下载国来",
+        "我等下载果来",
+        "我等"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "wodingdewuyanfang",
+      "expected": "我订的无烟房",
+      "source": "5500",
+      "lookup_us": 14470,
+      "candidates": [
+        "我订的无烟房",
+        "我定的无烟房",
+        "我订的武严防",
+        "我订的武验房",
+        "我订的武验放",
+        "我定的无厌房",
+        "我定的无厌放",
+        "我定的无厌方",
+        "我顶"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wodouzhuangjinqule",
+      "expected": "我都装进去了",
+      "source": "5500",
+      "lookup_us": 13663,
+      "candidates": [
+        "我都装进去了",
+        "我都撞进去了",
+        "我都装进取了",
+        "我都装进去乐",
+        "我都装进娶了",
+        "我都装进取乐",
+        "我都装进去勒",
+        "我都装进区了",
+        "我都"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woduixiangweimingan",
+      "expected": "我对香味敏感",
+      "source": "5500",
+      "lookup_us": 40961,
+      "candidates": [
+        "我对象为敏感",
+        "我对香味敏感",
+        "我对象为命案",
+        "我对象为明暗",
+        "我对想为敏感",
+        "我对象伟敏感",
+        "我对象微敏感",
+        "我对象未敏感",
+        "我对"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "wofangchuangtouguishang",
+      "expected": "我放床头柜上",
+      "source": "5500",
+      "lookup_us": 30902,
+      "candidates": [
+        "我放床头柜上",
+        "我方床头柜上",
+        "我方创投柜上",
+        "我放床头柜商",
+        "我方床头柜商",
+        "我方床头柜伤",
+        "我放床头柜伤",
+        "我方床头柜尚",
+        "我方"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wofangkawangdaile",
+      "expected": "我房卡忘带了",
+      "source": "5500",
+      "lookup_us": 9445,
+      "candidates": [
+        "我房卡忘带了",
+        "卧房卡忘带了",
+        "我房卡网贷了",
+        "我房卡网带了",
+        "我方卡网贷了",
+        "我房卡忘呆了",
+        "我房卡忘带勒",
+        "我方卡网带了",
+        "我方"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wofanshenjiuxiang",
+      "expected": "我翻身就响",
+      "source": "5500",
+      "lookup_us": 30017,
+      "candidates": [
+        "我翻身就像",
+        "我翻身就想",
+        "我翻身就向",
+        "我翻身就象",
+        "我翻身就响",
+        "我翻身就相",
+        "我反身就像",
+        "我翻身就香",
+        "我发"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "wohaimeidongdongxi",
+      "expected": "我还没动东西",
+      "source": "5500",
+      "lookup_us": 10882,
+      "candidates": [
+        "我还没动东西",
+        "我还没东东西",
+        "我还没懂东西",
+        "我还没洞东西",
+        "我还没冻东西",
+        "我还没董东西",
+        "我还没冬东西",
+        "我还没栋东西",
+        "我还"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wohaiyaojiezheyong",
+      "expected": "我还要接着用",
+      "source": "5500",
+      "lookup_us": 14348,
+      "candidates": [
+        "我还要接着用",
+        "我还要接着勇",
+        "我还要借着用",
+        "我还要接着永",
+        "我还要接着拥",
+        "我还要接着涌",
+        "我还要接着泳",
+        "我还要接着咏",
+        "我还"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wohaiyiweihuaile",
+      "expected": "我还以为坏了",
+      "source": "5500",
+      "lookup_us": 18108,
+      "candidates": [
+        "我还以为坏了",
+        "我还以为怀了",
+        "我还一位坏了",
+        "我还意味坏了",
+        "我还以为怀勒",
+        "我还以为淮了",
+        "我还一味坏了",
+        "我还以为怀乐",
+        "我还"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wohuangeiqiantaiba",
+      "expected": "我还给前台吧",
+      "source": "5500",
+      "lookup_us": 20106,
+      "candidates": [
+        "我还给前台吧",
+        "我还给千台吧",
+        "我还给钱台吧",
+        "我还给钱太吧",
+        "我还给前台把",
+        "我还给前台八",
+        "我还给迁台吧",
+        "我还给前台罢",
+        "我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wojideshizhetai",
+      "expected": "我记得是这台",
+      "source": "5500",
+      "lookup_us": 8975,
+      "candidates": [
+        "我记得是这台",
+        "我记得是这太",
+        "我记得时这台",
+        "我记得事这台",
+        "我记得失这台",
+        "我记得是这泰",
+        "我记得是这胎",
+        "我记得师这台",
+        "我记得"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wokaichuangtoutouqi",
+      "expected": "我开窗透透气",
+      "source": "5500",
+      "lookup_us": 8800,
+      "candidates": [
+        "我开窗透透气",
+        "沃开窗透透气",
+        "我开窗透透起",
+        "我开窗透透其",
+        "我开窗透透期",
+        "我开窗透透器",
+        "我开窗透透齐",
+        "我开窗透透汽",
+        "我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wokanhaimeidaozhang",
+      "expected": "我看还没到账",
+      "source": "5500",
+      "lookup_us": 15811,
+      "candidates": [
+        "我看还没到账",
+        "我看还没到帐",
+        "我看还没到涨",
+        "我看还没道长",
+        "我看还没到长",
+        "我看还没到张",
+        "我看还没到章",
+        "我看还没到掌",
+        "我看"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wokanqingchuzaina",
+      "expected": "我看清楚再拿",
+      "source": "5500",
+      "lookup_us": 24753,
+      "candidates": [
+        "我看清楚在哪",
+        "我看清楚在那",
+        "我看清楚再拿",
+        "我看清除在哪",
+        "我看清楚再那",
+        "我看清除在那",
+        "我看清出在哪",
+        "我看清楚再纳",
+        "我看"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "wokanxiafangjianxian",
+      "expected": "我看下房间先",
+      "source": "5500",
+      "lookup_us": 44224,
+      "candidates": [
+        "我看下方艰险",
+        "我看下方剑仙",
+        "我看下房间现",
+        "我看下房间线",
+        "我看下房间先",
+        "我看下房间西安",
+        "我看下方剪线",
+        "我看下放艰险",
+        "我看下"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "wolaibanruzhu",
+      "expected": "我来办入住",
+      "source": "5500",
+      "lookup_us": 10619,
+      "candidates": [
+        "我来办入住",
+        "我来搬入住",
+        "我来搬入驻",
+        "我来搬入主",
+        "我来办入驻",
+        "我来拌入住",
+        "我来搬入珠",
+        "我来拌入驻",
+        "我来"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woliancuomingzile",
+      "expected": "我连错名字了",
+      "source": "5500",
+      "lookup_us": 14159,
+      "candidates": [
+        "我连错名字了",
+        "我莲错名字了",
+        "我连错名字乐",
+        "我连错名字勒",
+        "我莲错名字乐",
+        "我连错名子了",
+        "我连错名字肋",
+        "我莲错名字勒",
+        "我俩"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woliangyixiawazi",
+      "expected": "我晾一下袜子",
+      "source": "5500",
+      "lookup_us": 34072,
+      "candidates": [
+        "我俩一下袜子",
+        "我晾一下袜子",
+        "我俩一下娃子",
+        "我俩一下瓦兹",
+        "我俩一下洼子",
+        "我俩一夏袜子",
+        "我晾一下娃子",
+        "我晾一下瓦兹",
+        "窝量"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "woliuyizhangzaizhe",
+      "expected": "我留一张在这",
+      "source": "5500",
+      "lookup_us": 14094,
+      "candidates": [
+        "我留一张在这",
+        "我留一张载着",
+        "我留意长在这",
+        "我六一张在这",
+        "我留一章在这",
+        "我六议长在这",
+        "我留一张再者",
+        "我留一涨再者",
+        "涡流"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "womeipengguoshuixiang",
+      "expected": "我没碰过水箱",
+      "source": "5500",
+      "lookup_us": 20926,
+      "candidates": [
+        "我没碰过水箱",
+        "我没碰过水乡",
+        "我没碰过谁像",
+        "我没碰过税项",
+        "我没碰过谁想",
+        "我没碰过水巷",
+        "我没碰过水相",
+        "我没碰过水向",
+        "我没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "womeishuajinqua",
+      "expected": "我没刷进去啊",
+      "source": "5500",
+      "lookup_us": 13683,
+      "candidates": [
+        "我没刷进去啊",
+        "我没刷金曲啊",
+        "我没刷进去阿",
+        "我没刷禁区啊",
+        "我没刷金去啊",
+        "我没耍进去啊",
+        "我没刷进取啊",
+        "我没刷近去啊",
+        "我没"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "womenhuilaizaishuo",
+      "expected": "我们回来再说",
+      "source": "5500",
+      "lookup_us": 14517,
+      "candidates": [
+        "我们回来再说",
+        "我们会来再说",
+        "我们回来在说",
+        "我们会来在说",
+        "我们回来在数",
+        "我们回来再数",
+        "我们会赖再说",
+        "我们回来仔说",
+        "我们"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "womenjiuzhuyiwan",
+      "expected": "我们就住一晚",
+      "source": "5500",
+      "lookup_us": 16159,
+      "candidates": [
+        "我们就住一晚",
+        "我们就注意玩",
+        "我们久住一晚",
+        "我们就煮一碗",
+        "我们就住一碗",
+        "我们就住一万",
+        "我们就注意完",
+        "我们就逐一晚",
+        "我们"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "womenmeidianguocan",
+      "expected": "我们没点过餐",
+      "source": "5500",
+      "lookup_us": 19576,
+      "candidates": [
+        "我们没点过餐",
+        "我们没电过餐",
+        "我们没点过惨",
+        "我们没点过残",
+        "我们没点过参",
+        "我们没点过灿",
+        "我们没点国餐",
+        "我们没电锅餐",
+        "我们"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "womentiqiandaole",
+      "expected": "我们提前到了",
+      "source": "5500",
+      "lookup_us": 17215,
+      "candidates": [
+        "我们提前到了",
+        "我们提前到乐",
+        "我们提前倒了",
+        "我们提前到勒",
+        "我们梯前到了",
+        "我们提前道了",
+        "我们梯迁到了",
+        "我们梯签到了",
+        "我们"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "womentuiwanfangle",
+      "expected": "我们退完房了",
+      "source": "5500",
+      "lookup_us": 12617,
+      "candidates": [
+        "我们退完房了",
+        "我们推完房了",
+        "我们推完放了",
+        "我们推晚房了",
+        "我们退完放了",
+        "我们推万方了",
+        "我们腿弯放了",
+        "我们推碗放了",
+        "我们"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "womenwanyidianzou",
+      "expected": "我们晚一点走",
+      "source": "5500",
+      "lookup_us": 16850,
+      "candidates": [
+        "我们晚一点走",
+        "我们玩一点走",
+        "我们晚一点奏",
+        "我们晚一点揍",
+        "我们晚一点邹",
+        "我们晚一点驺",
+        "我们玩意点走",
+        "我们万亿点走",
+        "我们"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "womenxianzaixialou",
+      "expected": "我们现在下楼",
+      "source": "5500",
+      "lookup_us": 21200,
+      "candidates": [
+        "我们现在下楼",
+        "我们现在下喽",
+        "我们先在下楼",
+        "我们现在夏露",
+        "我们现在厦楼",
+        "我们现在下露",
+        "我们现在下漏",
+        "我们现在夏楼",
+        "我们"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "womenxuyaoliangtiao",
+      "expected": "我们需要两条",
+      "source": "5500",
+      "lookup_us": 25918,
+      "candidates": [
+        "我们需要两条",
+        "我们需要量条",
+        "我们需要量调",
+        "我们需要量挑",
+        "我们需要量跳",
+        "我们需要两跳",
+        "我们需要两调",
+        "我们需要两挑",
+        "我们"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "womenyiqixialou",
+      "expected": "我们一起下楼",
+      "source": "5500",
+      "lookup_us": 17324,
+      "candidates": [
+        "我们一起下楼",
+        "我们一起下喽",
+        "我们以其下楼",
+        "我们一齐下楼",
+        "我们一起下露",
+        "我们一起下漏",
+        "我们一起下搂",
+        "我们一起夏露",
+        "我们"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "womenyousangeren",
+      "expected": "我们有三个人",
+      "source": "5500",
+      "lookup_us": 19155,
+      "candidates": [
+        "我们有三个人",
+        "我们又三个人",
+        "我们有三个仁",
+        "我们有三个认",
+        "我们有三个忍",
+        "我们有三个任",
+        "我们有三个刃",
+        "我们有叁个人",
+        "我们"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "womenzaoshangganche",
+      "expected": "我们早上赶车",
+      "source": "5500",
+      "lookup_us": 14352,
+      "candidates": [
+        "我们早上赶车",
+        "我们早上感车",
+        "我们早上干车",
+        "我们早上甘车",
+        "我们早上干扯",
+        "我们早上感扯",
+        "我们早上赶扯",
+        "我们早上干撤",
+        "我们"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "womenzhengyaochumen",
+      "expected": "我们正要出门",
+      "source": "5500",
+      "lookup_us": 17677,
+      "candidates": [
+        "我们正要出门",
+        "我们政要出门",
+        "我们正耀出门",
+        "我们正要出们",
+        "我们正咬出门",
+        "我们正要触悗",
+        "我们正腰出门",
+        "我们正要出闷",
+        "我们"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "womenzouloutiba",
+      "expected": "我们走楼梯吧",
+      "source": "5500",
+      "lookup_us": 8131,
+      "candidates": [
+        "我们走楼梯吧",
+        "我们走楼梯把",
+        "我们走楼梯罢",
+        "我们走楼梯八",
+        "我们走楼梯巴",
+        "我们走楼梯霸",
+        "我们走楼梯拔",
+        "我们走楼梯爸",
+        "我们"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "womingzaojiuyaochuan",
+      "expected": "我明早就要穿",
+      "source": "5500",
+      "lookup_us": 16544,
+      "candidates": [
+        "我明早就要穿",
+        "我明早就谣传",
+        "我明早就要传",
+        "我明早就要船",
+        "我明早九谣传",
+        "我明早就要川",
+        "我明早就要串",
+        "我明早就要喘",
+        "我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woningfanfangxiangle",
+      "expected": "我拧反方向了",
+      "source": "5500",
+      "lookup_us": 36562,
+      "candidates": [
+        "我宁反方向了",
+        "我拧反方向了",
+        "我宁反芳香了",
+        "我宁反方向乐",
+        "我宁反方向勒",
+        "我宁反方响了",
+        "我宁反方享乐",
+        "我凝贩芳香了",
+        "我"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "wopaganbuhuilai",
+      "expected": "我怕赶不回来",
+      "source": "5500",
+      "lookup_us": 10929,
+      "candidates": [
+        "我怕赶不回来",
+        "我怕感不回来",
+        "我怕干部回来",
+        "我怕矸补回来",
+        "我怕感补回来",
+        "我怕感不会来",
+        "我怕干部会来",
+        "我怕敢不会来",
+        "我怕"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wopaigezhaojizhu",
+      "expected": "我拍个照记住",
+      "source": "5500",
+      "lookup_us": 10890,
+      "candidates": [
+        "我拍个照记住",
+        "我拍个照脊柱",
+        "我拍个照寄主",
+        "握拍个照记住",
+        "我拍个照几株",
+        "我拍隔着记住",
+        "我拍个找记住",
+        "我拍个着记住",
+        "我拍"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wopawanshangleng",
+      "expected": "我怕晚上冷",
+      "source": "5500",
+      "lookup_us": 10054,
+      "candidates": [
+        "我怕晚上冷",
+        "我怕晚上棱",
+        "我怕晚上楞",
+        "我怕晚上愣",
+        "我怕玩上冷",
+        "我怕晚上了嗯",
+        "我爬晚上冷",
+        "我怕万上冷",
+        "我怕"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wopawanshangtaichao",
+      "expected": "我怕晚上太吵",
+      "source": "5500",
+      "lookup_us": 12937,
+      "candidates": [
+        "我怕晚上太吵",
+        "我怕晚上太超",
+        "我怕晚上台超",
+        "我怕晚上太潮",
+        "我怕玩上太吵",
+        "我怕晚上台炒",
+        "我怕晚上台朝",
+        "我怕晚上太炒",
+        "我怕"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wopazijishuiguo",
+      "expected": "我怕自己睡过",
+      "source": "5500",
+      "lookup_us": 27303,
+      "candidates": [
+        "我怕自己说过",
+        "我怕自己睡过",
+        "我怕自己水果",
+        "我怕自己水过",
+        "我怕自己谁过",
+        "我怕自己说国",
+        "我怕自己睡国",
+        "我怕自己水国",
+        "我怕"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "woputiaomaojinba",
+      "expected": "我铺条毛巾吧",
+      "source": "5500",
+      "lookup_us": 35168,
+      "candidates": [
+        "我铺条毛巾吧",
+        "卧铺条毛巾吧",
+        "卧铺条毛巾把",
+        "沃普条毛巾把",
+        "卧铺条毛巾八",
+        "卧铺条毛巾巴",
+        "卧铺条毛巾罢",
+        "卧铺条毛巾拔",
+        "卧铺"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woqudatangshishi",
+      "expected": "我去大堂试试",
+      "source": "5500",
+      "lookup_us": 35929,
+      "candidates": [
+        "我去大堂实施",
+        "我去大唐实施",
+        "我区大堂实施",
+        "我去大唐事实",
+        "我去大唐实时",
+        "我去大唐逝世",
+        "我区大唐实施",
+        "我去大堂试试",
+        "我去"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "woqugenqiantaishuo",
+      "expected": "我去跟前台说",
+      "source": "5500",
+      "lookup_us": 16834,
+      "candidates": [
+        "我去跟前台说",
+        "我区跟前台说",
+        "我去跟前台数",
+        "我去跟前太说",
+        "我去跟前台硕",
+        "我去跟前泰说",
+        "我去跟前台朔",
+        "我去跟前台烁",
+        "我去"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woqupaiyixiadui",
+      "expected": "我去排一下队",
+      "source": "5500",
+      "lookup_us": 25888,
+      "candidates": [
+        "我去拍一下对",
+        "我去拍一下队",
+        "我去拍一下堆",
+        "我区拍一下对",
+        "我去拍一下兑",
+        "我去拍一下敦",
+        "我区拍一下队",
+        "我去排一下队",
+        "我去"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "woquqiantaibanba",
+      "expected": "我去前台办吧",
+      "source": "5500",
+      "lookup_us": 15102,
+      "candidates": [
+        "我去前台办吧",
+        "我去前台版吧",
+        "我去前台板吧",
+        "我去前台班吧",
+        "我去前台班巴",
+        "我去前台半吧",
+        "我去前台伴吧",
+        "我去前台般吧",
+        "我去"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woquwenxiaqiantai",
+      "expected": "我去问下前台",
+      "source": "5500",
+      "lookup_us": 16839,
+      "candidates": [
+        "我去问下前台",
+        "我去文芐前台",
+        "我去温下前台",
+        "我去问下潜台",
+        "我去问夏前台",
+        "我去问下千台",
+        "我去问下迁台",
+        "我去问下钱太",
+        "我去"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "worangqiantaihuanba",
+      "expected": "我让前台换吧",
+      "source": "5500",
+      "lookup_us": 18942,
+      "candidates": [
+        "我让前台换吧",
+        "我让前台还吧",
+        "我让前台环吧",
+        "我让前台欢吧",
+        "我让前台还把",
+        "我让前台缓吧",
+        "我让前台幻吧",
+        "我让前台焕吧",
+        "我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woshanglaikaimen",
+      "expected": "我上来开门",
+      "source": "5500",
+      "lookup_us": 8626,
+      "candidates": [
+        "我上来开门",
+        "我伤来开门",
+        "我上莱开门",
+        "我上赖开门",
+        "我上来开们",
+        "我上来开闷",
+        "我上濑开门",
+        "我上来凯门",
+        "我上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woshaohaolehanni",
+      "expected": "我烧好了喊你",
+      "source": "5500",
+      "lookup_us": 8104,
+      "candidates": [
+        "我烧好了喊你",
+        "我稍好了喊你",
+        "我烧好了汗呢",
+        "我烧好了韩呢",
+        "我烧好了含呢",
+        "我烧好了汉尼",
+        "我烧好了汉呢",
+        "我烧好了含泥",
+        "我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woshegenaozhongba",
+      "expected": "我设个闹钟吧",
+      "source": "5500",
+      "lookup_us": 9321,
+      "candidates": [
+        "我设个闹钟吧",
+        "我社个闹钟吧",
+        "我社跟澳中吧",
+        "我社个闹钟把",
+        "我设个闹钟把",
+        "我社个脑中吧",
+        "我舌根敖中吧",
+        "我社跟澳中把",
+        "我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woshuacuoweizhile",
+      "expected": "我刷错位置了",
+      "source": "5500",
+      "lookup_us": 8698,
+      "candidates": [
+        "我刷错位置了",
+        "我耍错位置了",
+        "我刷错为止了",
+        "我刷错位之乐",
+        "我刷错位值了",
+        "我刷错位知了",
+        "我刷错位之了",
+        "我刷错未知了",
+        "我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wotiaodiyidangba",
+      "expected": "我调低一档吧",
+      "source": "5500",
+      "lookup_us": 24609,
+      "candidates": [
+        "我挑第一档吧",
+        "我调第一档吧",
+        "我挑第一档把",
+        "我挑第一当吧",
+        "我调第一档把",
+        "我调低一铛吧",
+        "我调第一当吧",
+        "我调低一档吧",
+        "我"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "wowandianhuilaiqu",
+      "expected": "我晚点回来取",
+      "source": "5500",
+      "lookup_us": 15487,
+      "candidates": [
+        "我晚点回来取",
+        "我晚点回来去",
+        "我晚点回来区",
+        "我晚点回来曲",
+        "我晚点回来屈",
+        "我晚点回来娶",
+        "我晚点回来趣",
+        "我晚点会来去",
+        "我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wowennengbunengkai",
+      "expected": "我问能不能开",
+      "source": "5500",
+      "lookup_us": 8878,
+      "candidates": [
+        "我问能不能开",
+        "我问能不能凯",
+        "我温能不能开",
+        "我问能不能楷",
+        "我问能不能铠",
+        "我问能不能揩",
+        "我问能不能恺",
+        "我问能补能开",
+        "我问"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woxianbuchaixingli",
+      "expected": "我先不拆行李",
+      "source": "5500",
+      "lookup_us": 14916,
+      "candidates": [
+        "我先不拆行李",
+        "我先不差行李",
+        "我先不拆行礼",
+        "我先不差行礼",
+        "我先补差行李",
+        "我县哺拆行李",
+        "我先补差行礼",
+        "我县哺拆行礼",
+        "我先"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woxianbuzhetengle",
+      "expected": "我先不折腾了",
+      "source": "5500",
+      "lookup_us": 10033,
+      "candidates": [
+        "我先不折腾了",
+        "我县哺折腾了",
+        "我见不着疼了",
+        "我先不着疼了",
+        "我先不折腾乐",
+        "我先不折腾勒",
+        "我见不着腾了",
+        "我县哺这疼了",
+        "我先"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woxiancaganyidian",
+      "expected": "我先擦干一点",
+      "source": "5500",
+      "lookup_us": 14068,
+      "candidates": [
+        "我先擦干一点",
+        "我县擦干一点",
+        "我先擦干疑点",
+        "我先擦干一店",
+        "我先擦干衣店",
+        "我先擦干以点",
+        "我先擦干壹点",
+        "我先擦干伊甸",
+        "我先"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woxianfangxiaxingli",
+      "expected": "我先放下行李",
+      "source": "5500",
+      "lookup_us": 18479,
+      "candidates": [
+        "我先放下行李",
+        "我先放下行礼",
+        "我县放下行李",
+        "我先放下行力",
+        "我先放下姓李",
+        "我先放下行里",
+        "我县放下行礼",
+        "我先放下行立",
+        "我先"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woxiangshaodianreshui",
+      "expected": "我想烧点热水",
+      "source": "5500",
+      "lookup_us": 36013,
+      "candidates": [
+        "我想少点热水",
+        "我想少电热水",
+        "我想烧电热水",
+        "我想烧点热水",
+        "我想少丶热水",
+        "我想少店热水",
+        "我想烧店热水",
+        "我想少典热水",
+        "我想"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "woxiangyaoshuangchuangde",
+      "expected": "我想要双床的",
+      "source": "5500",
+      "lookup_us": 30370,
+      "candidates": [
+        "我想要双创的",
+        "我想要双床的",
+        "我想要双创地",
+        "我想要双床底",
+        "我想要双创得",
+        "我想要双闯的",
+        "我想要双创德",
+        "我想要双窗的",
+        "我想要"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "woxiankanjiamubiao",
+      "expected": "我先看价目表",
+      "source": "5500",
+      "lookup_us": 21519,
+      "candidates": [
+        "我先看价目表",
+        "我先看家目标",
+        "我先砍价目表",
+        "我先砍价目标",
+        "我县砍价目标",
+        "我先看加目标",
+        "我先看甲目标",
+        "我先看佳目标",
+        "我先"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woxianquerenxingcheng",
+      "expected": "我先确认行程",
+      "source": "5500",
+      "lookup_us": 24134,
+      "candidates": [
+        "我先确认行程",
+        "我先确认形成",
+        "我县确认行程",
+        "我县确认形成",
+        "我先确认行称",
+        "我先缺人形成",
+        "我先确认兴城",
+        "我先确认行成",
+        "我先确认"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woxianqunaxiangzi",
+      "expected": "我先去拿箱子",
+      "source": "5500",
+      "lookup_us": 18672,
+      "candidates": [
+        "我先去拿箱子",
+        "我先去拿巷子",
+        "我先去那箱子",
+        "我先去拿祥子",
+        "我先去哪箱子",
+        "我先去拿香子",
+        "我先去哪巷子",
+        "我先去那巷子",
+        "我先去"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woxianquqiantailing",
+      "expected": "我先去前台领",
+      "source": "5500",
+      "lookup_us": 19674,
+      "candidates": [
+        "我先去前台领",
+        "我先去前台铃",
+        "我先去前台灵",
+        "我先去前台令",
+        "我先去前台零",
+        "我先去前台玲",
+        "我先去前台菱",
+        "我先去前台岭",
+        "我先去"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woxianwenxiaqiantai",
+      "expected": "我先问下前台",
+      "source": "5500",
+      "lookup_us": 18981,
+      "candidates": [
+        "我先问下前台",
+        "我先问下潜台",
+        "我先问下千台",
+        "我先问下迁台",
+        "我先问下钱太",
+        "我先问下前太",
+        "我先问下前泰",
+        "我先问下潜太",
+        "我先"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woxianzaiwaimiandeng",
+      "expected": "我先在外面等",
+      "source": "5500",
+      "lookup_us": 21716,
+      "candidates": [
+        "我现在外面等",
+        "我先在外面等",
+        "我现在外面灯",
+        "我现在外面登",
+        "我现在外面瞪",
+        "我现在外面澄",
+        "我现在外面邓",
+        "我现在外面蹬",
+        "我现在"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "woxiaqujieniba",
+      "expected": "我下去接你吧",
+      "source": "5500",
+      "lookup_us": 13778,
+      "candidates": [
+        "我下去接你吧",
+        "我下去接你爸",
+        "我下去接你把",
+        "我下去接呢吧",
+        "我下去借你吧",
+        "我下去接泥巴",
+        "我下去解腻吧",
+        "我下去姐你吧",
+        "我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woyihuizijiti",
+      "expected": "我一会自己提",
+      "source": "5500",
+      "lookup_us": 22720,
+      "candidates": [
+        "我一会自己提",
+        "我一回自己提",
+        "我一会自己踢",
+        "我一回自己体",
+        "我一会自己体",
+        "我一回自己踢",
+        "我一会自己替",
+        "我一会自己题",
+        "我一"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woyougeyuding",
+      "expected": "我有个预订",
+      "source": "5500",
+      "lookup_us": 9623,
+      "candidates": [
+        "我有个预订",
+        "我有个预定",
+        "我有个玉鼎",
+        "我有格预订",
+        "我有个郁鼎",
+        "我有各预订",
+        "我又各预订",
+        "我又个预订",
+        "我有个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woyouwaitaoyaogua",
+      "expected": "我有外套要挂",
+      "source": "5500",
+      "lookup_us": 11712,
+      "candidates": [
+        "我有外套要挂",
+        "我又外套要挂",
+        "我有外套摇卦",
+        "我有外套谣挂",
+        "我有外套要刮",
+        "我有外逃要挂",
+        "我有外套要瓜",
+        "我有外套腰挂",
+        "我有"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozaidamenkoudeng",
+      "expected": "我在大门口等",
+      "source": "5500",
+      "lookup_us": 7146,
+      "candidates": [
+        "我在大门口等",
+        "我在打门口等",
+        "我在大门口灯",
+        "我在大门口凳",
+        "我在大门口登",
+        "我在大门口澄",
+        "我在大门口邓",
+        "我在大门口瞪",
+        "我在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozaidatangdengba",
+      "expected": "我在大堂等吧",
+      "source": "5500",
+      "lookup_us": 9972,
+      "candidates": [
+        "我在大堂等吧",
+        "我在大堂等八",
+        "我在大堂等把",
+        "我在大堂灯吧",
+        "我在大堂等罢",
+        "我在大堂等巴",
+        "我在大堂等爸",
+        "握在大堂等吧",
+        "我在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozailajinyidian",
+      "expected": "我再拉紧一点",
+      "source": "5500",
+      "lookup_us": 28950,
+      "candidates": [
+        "我在拉近一点",
+        "我在拉紧一点",
+        "我再拉近一点",
+        "我在拉进一点",
+        "我再拉紧一点",
+        "我再拉进一点",
+        "我在落尽一点",
+        "我在拉筋一点",
+        "我在"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "wozaoshanghuijiaoni",
+      "expected": "我早上会叫你",
+      "source": "5500",
+      "lookup_us": 31939,
+      "candidates": [
+        "我早上会教你",
+        "我早上会叫你",
+        "我早上回教你",
+        "我早上会觉呢",
+        "我早上会叫呢",
+        "我早上会窖你",
+        "我早上会窖泥",
+        "我早上会窖呢",
+        "我早"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "wozenmemeizhaodao",
+      "expected": "我怎么没找到",
+      "source": "5500",
+      "lookup_us": 13261,
+      "candidates": [
+        "我怎么没找到",
+        "我怎么没招到",
+        "我怎么没照到",
+        "握怎么没找到",
+        "我怎么没找道",
+        "我怎么没找刀",
+        "我怎么美找到",
+        "我怎么没着道",
+        "我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozhaoyixiadingdan",
+      "expected": "我找一下订单",
+      "source": "5500",
+      "lookup_us": 14277,
+      "candidates": [
+        "我找一下订单",
+        "我找以下订单",
+        "我找一下定单",
+        "我找以下定单",
+        "我找一下定胆",
+        "我找一下顶单",
+        "我找一下顶丹",
+        "我找一下顶蛋",
+        "我找一下"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozhengjianzaibaoli",
+      "expected": "我证件在包里",
+      "source": "5500",
+      "lookup_us": 38711,
+      "candidates": [
+        "我证件在包里",
+        "我正健在包里",
+        "我正健在暴力",
+        "我正建在暴力",
+        "我正健在保利",
+        "我正建在保利",
+        "我正减灾暴力",
+        "我正健在暴利",
+        "我正"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozhizhaodaoyishuang",
+      "expected": "我只找到一双",
+      "source": "5500",
+      "lookup_us": 16612,
+      "candidates": [
+        "我只找到一双",
+        "我之找到一双",
+        "我只找到一爽",
+        "我只找到一霜",
+        "我只找到以双",
+        "我之找到一爽",
+        "我之找到以双",
+        "我只找到以爽",
+        "我只"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozhuzhecengduima",
+      "expected": "我住这层对吗",
+      "source": "5500",
+      "lookup_us": 9917,
+      "candidates": [
+        "我住这层对吗",
+        "握住这层对吗",
+        "握住这曾对吗",
+        "我住着曾对吗",
+        "握住这层对骂",
+        "我住这层对骂",
+        "握住这层堆码",
+        "我住这层堆码",
+        "握住"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozijichongyixia",
+      "expected": "我自己冲一下",
+      "source": "5500",
+      "lookup_us": 11776,
+      "candidates": [
+        "我自己冲一下",
+        "我自己充一下",
+        "我自己重一下",
+        "我自己宠一下",
+        "我自己重以下",
+        "我自己虫一下",
+        "我自己冲以下",
+        "我自己充以下",
+        "我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wuliyouyanweia",
+      "expected": "屋里有烟味啊",
+      "source": "5500",
+      "lookup_us": 32742,
+      "candidates": [
+        "屋里有烟味啊",
+        "物理油烟味啊",
+        "屋里有烟味阿",
+        "屋里有盐味啊",
+        "物理油烟味阿",
+        "无理由燕尾啊",
+        "物理油烟为啊",
+        "无理由盐味啊",
+        "物理"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianbiebamendusi",
+      "expected": "先别把门堵死",
+      "source": "5500",
+      "lookup_us": 15869,
+      "candidates": [
+        "先别把门堵死",
+        "先别吧门堵死",
+        "先别吧门毒死",
+        "先别吧们堵死",
+        "先别吧们毒死",
+        "先别吧们都死",
+        "先别把门毒死",
+        "先别吧门都死",
+        "先别"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianbiepenghuzui",
+      "expected": "先别碰壶嘴",
+      "source": "5500",
+      "lookup_us": 11193,
+      "candidates": [
+        "先别碰壶嘴",
+        "先别蓬壶嘴",
+        "先别澎湖最",
+        "先别澎湖罪",
+        "先别澎湖嘴",
+        "先别澎湖醉",
+        "先别捧壶嘴",
+        "先别朋弧罪",
+        "先别"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianbieyonglibai",
+      "expected": "先别用力掰",
+      "source": "5500",
+      "lookup_us": 34435,
+      "candidates": [
+        "先别用礼拜",
+        "先别用力掰",
+        "先别用李白",
+        "先别用力摆",
+        "先别用力白",
+        "西安别用礼拜",
+        "先别永礼拜",
+        "先别勇礼拜",
+        "先别"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "xiangyaoanjingyidian",
+      "expected": "想要安静一点",
+      "source": "5500",
+      "lookup_us": 31326,
+      "candidates": [
+        "想要安静一点",
+        "像要安静一点",
+        "想要安静疑点",
+        "想要安静以点",
+        "想要安静伊甸",
+        "想要安静一店",
+        "想要按经一点",
+        "想要安静以电",
+        "想要"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianzaihainengxima",
+      "expected": "现在还能洗吗",
+      "source": "5500",
+      "lookup_us": 17105,
+      "candidates": [
+        "现在还能洗吗",
+        "现在还能戏码",
+        "现在还能吸吗",
+        "现在还能系吗",
+        "现在还能吸嘛",
+        "现在还能戏吗",
+        "现在还能系嘛",
+        "现在还能西吗",
+        "现在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianzainengshangwangle",
+      "expected": "现在能上网了",
+      "source": "5500",
+      "lookup_us": 22566,
+      "candidates": [
+        "现在能上网了",
+        "现在能上忘了",
+        "现在能伤亡了",
+        "现在能上望了",
+        "现在能上网乐",
+        "先在能上网了",
+        "现在能上网勒",
+        "现在能伤忘了",
+        "现在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiaoxindishangdahua",
+      "expected": "小心地上打滑",
+      "source": "5500",
+      "lookup_us": 27102,
+      "candidates": [
+        "小心地上打滑",
+        "小心地上大话",
+        "小心地上搭话",
+        "小心地上大华",
+        "小心地上大花",
+        "小心地上答话",
+        "小心地上大化",
+        "小心地上打花",
+        "小心"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiaoxinzhengqitangshou",
+      "expected": "小心蒸汽烫手",
+      "source": "5500",
+      "lookup_us": 23373,
+      "candidates": [
+        "小心蒸汽烫手",
+        "小心蒸汽烫熟",
+        "孝心蒸汽烫手",
+        "小心整齐烫手",
+        "小心蒸气烫手",
+        "小心正气烫手",
+        "小心政企烫手",
+        "小心蒸汽烫收",
+        "小心"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiaoyidiandejiuxing",
+      "expected": "小一点的就行",
+      "source": "5500",
+      "lookup_us": 27072,
+      "candidates": [
+        "小一点的就行",
+        "小一点的救星",
+        "小一点的酒醒",
+        "笑一点的就行",
+        "小一点地就行",
+        "小一点的酒行",
+        "小一点得就行",
+        "小一点的就性",
+        "效益"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiexiebangmangzhaokan",
+      "expected": "谢谢帮忙照看",
+      "source": "5500",
+      "lookup_us": 21632,
+      "candidates": [
+        "谢谢帮忙照看",
+        "谢谢帮忙着看",
+        "谢谢帮忙找看",
+        "写写帮忙照看",
+        "谢谢帮忙诏看",
+        "谢谢帮忙找砍",
+        "谢谢帮忙招看",
+        "谢谢帮忙着砍",
+        "谢谢"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xingliyedouqule",
+      "expected": "行李也都取了",
+      "source": "5500",
+      "lookup_us": 28208,
+      "candidates": [
+        "行李也都去了",
+        "星力也都去了",
+        "行李也都取了",
+        "行李也都区了",
+        "行李也都娶了",
+        "行李也逗趣了",
+        "行李也都取乐",
+        "行李也都曲了",
+        "行李"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "xishoujianyoujishui",
+      "expected": "洗手间有积水",
+      "source": "5500",
+      "lookup_us": 18833,
+      "candidates": [
+        "洗手间有积水",
+        "洗手间又积水",
+        "洗手间有技谁",
+        "洗手间游记说",
+        "吸收件有积水",
+        "洗手间由积水",
+        "洗手间有计税",
+        "洗手间游积水",
+        "洗手间"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiwanbiewangguanshui",
+      "expected": "洗完别忘关水",
+      "source": "5500",
+      "lookup_us": 36338,
+      "candidates": [
+        "洗完别忘关税",
+        "洗完别忘灌水",
+        "洗碗别忘关税",
+        "洗完别忘关水",
+        "洗碗别忘灌水",
+        "洗完别网关税",
+        "洗完别忘关说",
+        "洗完别往关税",
+        "洗碗"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "xiyifangzainaceng",
+      "expected": "洗衣房在哪层",
+      "source": "5500",
+      "lookup_us": 11114,
+      "candidates": [
+        "洗衣房在哪层",
+        "洗衣放在那层",
+        "洗衣房在那层",
+        "洗衣放在哪层",
+        "洗衣房在哪曾",
+        "洗衣房再那层",
+        "洗衣房在那蹭",
+        "洗衣房在哪蹭",
+        "西医"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiyijikongzhema",
+      "expected": "洗衣机空着吗",
+      "source": "5500",
+      "lookup_us": 8884,
+      "candidates": [
+        "洗衣机空着吗",
+        "西以及空着吗",
+        "洗衣机控者吗",
+        "洗衣机空着嘛",
+        "洗衣机空者吗",
+        "洗衣机空着罵",
+        "洗衣机控着吗",
+        "洗衣机空着马",
+        "洗衣机"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiyiyezenmequ",
+      "expected": "洗衣液怎么取",
+      "source": "5500",
+      "lookup_us": 16568,
+      "candidates": [
+        "洗衣液怎么去",
+        "洗衣业怎么去",
+        "洗衣液怎么取",
+        "洗衣液怎么区",
+        "洗衣业怎么取",
+        "洗衣液怎么曲",
+        "洗衣业怎么区",
+        "洗衣液怎么屈",
+        "洗衣液"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "yaochakaqudianma",
+      "expected": "要插卡取电吗",
+      "source": "5500",
+      "lookup_us": 10339,
+      "candidates": [
+        "要插卡取电吗",
+        "要插卡取电嘛",
+        "姚插卡取电吗",
+        "要插卡取点吗",
+        "要插卡取电马",
+        "要插卡取电码",
+        "要插卡取店吗",
+        "要插卡取电骂",
+        "要"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yaokongqifangnale",
+      "expected": "遥控器放哪了",
+      "source": "5500",
+      "lookup_us": 8561,
+      "candidates": [
+        "遥控器放哪了",
+        "摇控器放哪了",
+        "遥控器放那了",
+        "遥控器放拿了",
+        "遥控器方拿了",
+        "遥控器方那了",
+        "遥控器防拿了",
+        "遥控器房拿了",
+        "遥控器"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yaoshuafangkama",
+      "expected": "要刷房卡吗",
+      "source": "5500",
+      "lookup_us": 7781,
+      "candidates": [
+        "要刷房卡吗",
+        "要刷舫卡吗",
+        "要刷房卡马",
+        "要刷房卡嘛",
+        "要刷房卡玛",
+        "药刷房卡吗",
+        "要刷舫卡马",
+        "要刷房卡码",
+        "要"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yashuazainayizhi",
+      "expected": "牙刷再拿一支",
+      "source": "5500",
+      "lookup_us": 20365,
+      "candidates": [
+        "牙刷在那一直",
+        "牙刷在那一致",
+        "牙刷在哪一支",
+        "牙刷在那一只",
+        "牙刷在哪一直",
+        "牙刷在哪一致",
+        "牙刷在那一支",
+        "牙刷再拿一支",
+        "牙刷"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "yifumeidifanggua",
+      "expected": "衣服没地方挂",
+      "source": "5500",
+      "lookup_us": 14000,
+      "candidates": [
+        "衣服没地方挂",
+        "一副没地方挂",
+        "衣服没地方瓜",
+        "衣服没地方刮",
+        "衣服没地方寡",
+        "衣服没地方卦",
+        "衣服没地方褂",
+        "衣服没地方剐",
+        "衣服"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yiguilibugougua",
+      "expected": "衣柜里不够挂",
+      "source": "5500",
+      "lookup_us": 11807,
+      "candidates": [
+        "衣柜里不够挂",
+        "衣柜里不够瓜",
+        "衣柜里不够刮",
+        "衣柜里不够寡",
+        "衣柜里不够卦",
+        "衣柜里不够褂",
+        "衣柜里不够剐",
+        "衣柜力不够挂",
+        "衣柜"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yihuijidekaimen",
+      "expected": "一会记得开门",
+      "source": "5500",
+      "lookup_us": 10912,
+      "candidates": [
+        "一会记得开门",
+        "议会记得开门",
+        "一会计的开门",
+        "以汇集的开门",
+        "议会及地开门",
+        "以回击地开门",
+        "一会记得开们",
+        "一会记得开闷",
+        "一会"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yihuijiuxialaile",
+      "expected": "一会就下来了",
+      "source": "5500",
+      "lookup_us": 13516,
+      "candidates": [
+        "一会就下来了",
+        "一回就下来了",
+        "一会就下来乐",
+        "一会就下来勒",
+        "一会就吓来了",
+        "一会就夏来了",
+        "一会就下来肋",
+        "一会就瞎来了",
+        "一会"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yizhishiliangshuia",
+      "expected": "一直是凉水啊",
+      "source": "5500",
+      "lookup_us": 15016,
+      "candidates": [
+        "一直是凉水啊",
+        "一直是两谁啊",
+        "一直是俩谁啊",
+        "一支适量水啊",
+        "一直是梁谁啊",
+        "一直是量谁啊",
+        "一直是良谁啊",
+        "一直是亮谁啊",
+        "异质"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yongguodefangxiamian",
+      "expected": "用过的放下面",
+      "source": "5500",
+      "lookup_us": 14300,
+      "candidates": [
+        "用过的放下面",
+        "用过得放下面",
+        "用过的方下面",
+        "用过地方下面",
+        "用过的房下面",
+        "用过的防下面",
+        "用过的访下面",
+        "用过的仿下面",
+        "用过"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yongwanbaxialaiba",
+      "expected": "用完拔下来吧",
+      "source": "5500",
+      "lookup_us": 10760,
+      "candidates": [
+        "用完拔下来吧",
+        "用完扒下来吧",
+        "用完拔下来把",
+        "用完拔下来罢",
+        "用完扒下来把",
+        "用完扒下来罢",
+        "用完拔下来八",
+        "用完拔下来巴",
+        "用完"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yongzhegezhengjianma",
+      "expected": "用这个证件吗",
+      "source": "5500",
+      "lookup_us": 17214,
+      "candidates": [
+        "用这个证件吗",
+        "用这个证件嘛",
+        "用这个证件马",
+        "用这个证件码",
+        "用这个证件么",
+        "用这个证件玛",
+        "用这个证件妈",
+        "用这个政见吗",
+        "用着"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youbeijiedefangma",
+      "expected": "有背街的房吗",
+      "source": "5500",
+      "lookup_us": 33855,
+      "candidates": [
+        "有北街地方吗",
+        "又被接地方吗",
+        "有北饥饿的房吗",
+        "有背街的房吗",
+        "有北饥饿的方吗",
+        "有北饥饿的放吗",
+        "有被戒的放吗",
+        "有北饥饿的防吗",
+        "又被"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "youdiyidiandema",
+      "expected": "有低一点的吗",
+      "source": "5500",
+      "lookup_us": 12079,
+      "candidates": [
+        "有低一点的吗",
+        "又低一点的吗",
+        "有低一点的嘛",
+        "又低一点的嘛",
+        "有低一点的么",
+        "有低一点的马",
+        "又低一点的么",
+        "又低一点的马",
+        "邮递"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youshiguolaiqiaomen",
+      "expected": "有事过来敲门",
+      "source": "5500",
+      "lookup_us": 34235,
+      "candidates": [
+        "有时过来敲门",
+        "又是过来敲门",
+        "又是过来窍门",
+        "有时过来窍门",
+        "又是过来撬门",
+        "有时过来撬门",
+        "又是过来桥门",
+        "有事过来敲门",
+        "优势"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "youwuyanfangma",
+      "expected": "有无烟房吗",
+      "source": "5500",
+      "lookup_us": 13046,
+      "candidates": [
+        "有无烟房吗",
+        "有无烟房么",
+        "又无烟房吗",
+        "有无烟房马",
+        "有无烟房嘛",
+        "有无烟房麻",
+        "有无烟房玛",
+        "有无烟房妈",
+        "有无"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youxiaohaichuandema",
+      "expected": "有小孩穿的吗",
+      "source": "5500",
+      "lookup_us": 14874,
+      "candidates": [
+        "有小孩穿的吗",
+        "有小孩穿得吗",
+        "有小孩穿的嘛",
+        "有小孩传的吗",
+        "有小孩船的吗",
+        "有小孩川的吗",
+        "有效还穿的吗",
+        "有小孩传得吗",
+        "有效"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yujinhaimeifangma",
+      "expected": "浴巾还没放吗",
+      "source": "5500",
+      "lookup_us": 13210,
+      "candidates": [
+        "浴巾还没放吗",
+        "于禁还没放吗",
+        "浴巾还没房吗",
+        "预紧还没芳吗",
+        "于禁还没房吗",
+        "与紧还没芳吗",
+        "浴巾还没放嘛",
+        "与近海美方吗",
+        "浴巾"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yushimeiyouguagou",
+      "expected": "浴室没有挂钩",
+      "source": "5500",
+      "lookup_us": 30582,
+      "candidates": [
+        "于是没有挂钩",
+        "浴室没有挂钩",
+        "于是没有挂勾",
+        "于是没有挂狗",
+        "浴室没有挂勾",
+        "于是没有挂沟",
+        "于是煤油挂钩",
+        "于是没有挂苟",
+        "于是"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "yushimenguanbushang",
+      "expected": "浴室门关不上",
+      "source": "5500",
+      "lookup_us": 19660,
+      "candidates": [
+        "浴室门关不上",
+        "于是门关不上",
+        "浴室门关不伤",
+        "浴室门关补上",
+        "于是门关不伤",
+        "于是门关补上",
+        "于是们管不上",
+        "浴室门管不上",
+        "于是"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaixishoutaixiamian",
+      "expected": "在洗手台下面",
+      "source": "5500",
+      "lookup_us": 13358,
+      "candidates": [
+        "在洗手台下面",
+        "在吸收台下面",
+        "在吸收太下面",
+        "在吸收态下面",
+        "在洗手台下棉",
+        "在洗手抬下面",
+        "在洗手台下免",
+        "在吸收抬下面",
+        "在喜"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaocandaojidiana",
+      "expected": "早餐到几点啊",
+      "source": "5500",
+      "lookup_us": 14118,
+      "candidates": [
+        "早餐到几点啊",
+        "早餐到极点啊",
+        "早餐到几点阿",
+        "早餐刀几点啊",
+        "早餐到几点呵",
+        "早餐到极点阿",
+        "早餐到几点吖",
+        "早餐到极点呵",
+        "早餐"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaocanzainaerchi",
+      "expected": "早餐在哪儿吃",
+      "source": "5500",
+      "lookup_us": 9500,
+      "candidates": [
+        "早餐在哪儿吃",
+        "早餐在那儿吃",
+        "早餐在哪儿持",
+        "早餐在哪儿池",
+        "早餐在哪儿赤",
+        "早餐在哪儿尺",
+        "早餐在哪儿迟",
+        "早餐在哪儿齿",
+        "早餐"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaoshangnengjiaoxingma",
+      "expected": "早上能叫醒吗",
+      "source": "5500",
+      "lookup_us": 19511,
+      "candidates": [
+        "早上能叫醒吗",
+        "早上能觉行吗",
+        "早上能交行吗",
+        "早上能叫行吗",
+        "早上能教行吗",
+        "早上能较行吗",
+        "早上能觉醒吗",
+        "早上能侥幸吗",
+        "早上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhaogechazuojiuxing",
+      "expected": "找个插座就行",
+      "source": "5500",
+      "lookup_us": 13574,
+      "candidates": [
+        "找个插座就行",
+        "找个插座救星",
+        "找个差做就行",
+        "找个插座酒醒",
+        "找个茶做就行",
+        "找个插座就性",
+        "找个插座酒行",
+        "找个插座九行",
+        "找个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhaoqilaibufangbian",
+      "expected": "找起来不方便",
+      "source": "5500",
+      "lookup_us": 13624,
+      "candidates": [
+        "找起来不方便",
+        "罩起来不方便",
+        "找起来步方便",
+        "找起来补方便",
+        "找起来部方便",
+        "找起来布方便",
+        "找起来捕方便",
+        "找起来不妨便",
+        "沼气"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhebianchazuomeidian",
+      "expected": "这边插座没电",
+      "source": "5500",
+      "lookup_us": 16970,
+      "candidates": [
+        "这边插座没电",
+        "这便插座没电",
+        "这边插座煤电",
+        "这边插座没点",
+        "这边查作没电",
+        "这便插座煤电",
+        "这边查做没电",
+        "这边查做煤电",
+        "这边"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhebiandengnengguanma",
+      "expected": "这边灯能关吗",
+      "source": "5500",
+      "lookup_us": 18036,
+      "candidates": [
+        "这边灯能关吗",
+        "这边等能关吗",
+        "这边等能馆吗",
+        "这边等能管吗",
+        "这边等能观吗",
+        "这边等能官吗",
+        "这边登能馆吗",
+        "这边登能管吗",
+        "这边"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhebianwanshangtingchao",
+      "expected": "这边晚上挺吵",
+      "source": "5500",
+      "lookup_us": 29016,
+      "candidates": [
+        "这边晚上停潮",
+        "这边晚上听超",
+        "这边晚上挺吵",
+        "这边晚上听潮",
+        "这边晚上听朝",
+        "这边晚上停超",
+        "这边晚上停朝",
+        "这边晚上听炒",
+        "这边"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "zhebianxinhaotairuo",
+      "expected": "这边信号太弱",
+      "source": "5500",
+      "lookup_us": 16027,
+      "candidates": [
+        "这边信号太弱",
+        "这便信号太弱",
+        "这边心好太弱",
+        "这边新好太弱",
+        "这边新濠太弱",
+        "这边信号肽弱",
+        "这边信号肽若",
+        "这边信号太若",
+        "这边"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhechuangdanyoudianchao",
+      "expected": "这床单有点潮",
+      "source": "5500",
+      "lookup_us": 29887,
+      "candidates": [
+        "这床单有点吵",
+        "着床单有点吵",
+        "这床单有点潮",
+        "着床单有点潮",
+        "这床单有点超",
+        "着床单有点超",
+        "这床单有点钞",
+        "这床单有点炒",
+        "这"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "zhedengyoudianan",
+      "expected": "这灯有点暗",
+      "source": "5500",
+      "lookup_us": 26871,
+      "candidates": [
+        "这等有点暗",
+        "这等优点按",
+        "这灯有点暗",
+        "这等优点安",
+        "这等优点案",
+        "这等优点暗",
+        "这等有点按",
+        "折等优点按",
+        "这等"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "zheermeiyoutuoxie",
+      "expected": "这儿没有拖鞋",
+      "source": "5500",
+      "lookup_us": 31135,
+      "candidates": [
+        "这儿没有妥协",
+        "这儿没有拖鞋",
+        "这儿没有脱鞋",
+        "这而没有妥协",
+        "这儿没有脱屑",
+        "这而没有拖鞋",
+        "这儿没有脱卸",
+        "这而没有脱鞋",
+        "这儿"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zhegechuanglianlouguang",
+      "expected": "这个窗帘漏光",
+      "source": "5500",
+      "lookup_us": 21357,
+      "candidates": [
+        "这个窗帘漏光",
+        "这歌窗帘漏光",
+        "这个窗帘露光",
+        "这个窗帘露广",
+        "这个窗帘漏广",
+        "这个床连漏光",
+        "这个窗帘楼光",
+        "这个窗帘楼广",
+        "这个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhegechuangsuozhule",
+      "expected": "这个窗锁住了",
+      "source": "5500",
+      "lookup_us": 31673,
+      "candidates": [
+        "这个床锁住了",
+        "这个窗锁住了",
+        "这个床所住了",
+        "这个床所著了",
+        "这个创所住了",
+        "这个床所主了",
+        "这个创所著了",
+        "这个床所注了",
+        "这个"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zhegefangkageini",
+      "expected": "这个房卡给你",
+      "source": "5500",
+      "lookup_us": 9940,
+      "candidates": [
+        "这个房卡给你",
+        "这个放卡给你",
+        "这个房卡给呢",
+        "这个方咖给你",
+        "这个房咖给你",
+        "这个房卡给妮",
+        "这个房卡给尼",
+        "这个房卡给泥",
+        "这个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhegefengyoudiantang",
+      "expected": "这个风有点烫",
+      "source": "5500",
+      "lookup_us": 30814,
+      "candidates": [
+        "这个风有点汤",
+        "这个风有点烫",
+        "这个风有点糖",
+        "这个风有殿堂",
+        "这个奉佑殿堂",
+        "这个风有点樘",
+        "这个风又殿堂",
+        "这个封有点烫",
+        "这个"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zhegehuzenmekai",
+      "expected": "这个壶怎么开",
+      "source": "5500",
+      "lookup_us": 20203,
+      "candidates": [
+        "这个湖怎么开",
+        "这个虎怎么开",
+        "这个湖怎么凯",
+        "这个虎怎么凯",
+        "这个湖怎么楷",
+        "这个湖怎么铠",
+        "这个湖怎么揩",
+        "这个壶怎么开",
+        "这个"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zhegejineduima",
+      "expected": "这个金额对吗",
+      "source": "5500",
+      "lookup_us": 15869,
+      "candidates": [
+        "这个金额对吗",
+        "这个金额对骂",
+        "这个金额对嘛",
+        "这个金额对马",
+        "这个金额队吗",
+        "这个金额对么",
+        "这个金额对码",
+        "这个金额对玛",
+        "这个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhegekameifanying",
+      "expected": "这个卡没反应",
+      "source": "5500",
+      "lookup_us": 14842,
+      "candidates": [
+        "这个卡没反应",
+        "这个卡没反映",
+        "这个咖没反应",
+        "这个卡梅反应",
+        "这个卡梅反映",
+        "这个卡美反应",
+        "这个卡镁反应",
+        "这个卡美反映",
+        "这个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhegekaodiantima",
+      "expected": "这个靠电梯吗",
+      "source": "5500",
+      "lookup_us": 30870,
+      "candidates": [
+        "这个考点题吗",
+        "这个靠电梯吗",
+        "这个考点体吗",
+        "这个考点题嘛",
+        "这个考点提吗",
+        "这个考点踢吗",
+        "这个靠电梯嘛",
+        "这个考点替吗",
+        "这个"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zhegeshuiwentaitang",
+      "expected": "这个水温太烫",
+      "source": "5500",
+      "lookup_us": 16187,
+      "candidates": [
+        "这个水温太烫",
+        "这个水文太烫",
+        "这个水温太傥",
+        "这个水温台糖",
+        "这个水文台糖",
+        "这个水温太汤",
+        "这个水稳态汤",
+        "这个水温太堂",
+        "这个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhegeyaokongmeidian",
+      "expected": "这个遥控没电",
+      "source": "5500",
+      "lookup_us": 17205,
+      "candidates": [
+        "这个遥控没电",
+        "这个遥控煤电",
+        "这歌遥控没电",
+        "这个遥控没点",
+        "这个要空煤电",
+        "这个药控煤电",
+        "这个要空没电",
+        "这个遥控没店",
+        "这个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhejianshineichuangma",
+      "expected": "这间是内窗吗",
+      "source": "5500",
+      "lookup_us": 34527,
+      "candidates": [
+        "这件事那窗吗",
+        "这件事那床吗",
+        "这件事内窗吗",
+        "这件事那幢吗",
+        "这件事内床吗",
+        "这件事那创吗",
+        "这件事内创吗",
+        "这间是内窗吗",
+        "这件事"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zheliangjianshiwode",
+      "expected": "这两件是我的",
+      "source": "5500",
+      "lookup_us": 41043,
+      "candidates": [
+        "这两件事我的",
+        "这两件是我的",
+        "这两件事我得",
+        "这两间是我的",
+        "这两件使我的",
+        "这两件时我的",
+        "这两件式我的",
+        "这两件事我地",
+        "这两"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zheliangpingnenghema",
+      "expected": "这两瓶能喝吗",
+      "source": "5500",
+      "lookup_us": 17708,
+      "candidates": [
+        "这两瓶能喝吗",
+        "这辆苹能喝吗",
+        "这两瓶能喝骂",
+        "这两瓶能和吗",
+        "这两瓶能河马",
+        "这两瓶能合吗",
+        "这两瓶能盒马",
+        "这两瓶能和马",
+        "这两"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhetaiguanbudiaoa",
+      "expected": "这台关不掉啊",
+      "source": "5500",
+      "lookup_us": 17198,
+      "candidates": [
+        "这台关不掉啊",
+        "这太关不掉啊",
+        "这台关不掉阿",
+        "这太关簿掉啊",
+        "这台关步调啊",
+        "这太关不掉阿",
+        "这台关不掉呵",
+        "这台关不掉吖",
+        "这台"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhewuyoudianmenre",
+      "expected": "这屋有点闷热",
+      "source": "5500",
+      "lookup_us": 36151,
+      "candidates": [
+        "这无有点闷热",
+        "这五有点闷热",
+        "这无忧电闷热",
+        "这无忧店闷热",
+        "这无有点闷惹",
+        "这五邮电闷热",
+        "这五有点闷惹",
+        "这屋有点闷热",
+        "这"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zhexiadouduishangle",
+      "expected": "这下都对上了",
+      "source": "5500",
+      "lookup_us": 12906,
+      "candidates": [
+        "这下都对上了",
+        "遮瑕都对上了",
+        "这下都对伤了",
+        "这下都堆上了",
+        "这下都对商了",
+        "这下都队上了",
+        "这下都堆商了",
+        "这下都兑上了",
+        "这下"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhijinyongwanle",
+      "expected": "纸巾用完了",
+      "source": "5500",
+      "lookup_us": 33251,
+      "candidates": [
+        "至今用完了",
+        "纸巾用完了",
+        "至今拥完了",
+        "至今用晚了",
+        "至今用玩了",
+        "知金庸完了",
+        "知金庸玩了",
+        "知金庸晚了",
+        "至今"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zhiyaoanjingjiuxing",
+      "expected": "只要安静就行",
+      "source": "5500",
+      "lookup_us": 24000,
+      "candidates": [
+        "只要安静就行",
+        "只要安静救星",
+        "只要安静酒醒",
+        "只要安静就性",
+        "只要按经就行",
+        "只要安静酒行",
+        "制药安静就行",
+        "只要安静就醒",
+        "只要"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zoulangyourenshuohua",
+      "expected": "走廊有人说话",
+      "source": "5500",
+      "lookup_us": 13120,
+      "candidates": [
+        "走廊有人说话",
+        "走廊友人说话",
+        "走廊有任说话",
+        "走廊游刃说话",
+        "走廊有人说化",
+        "走廊有仁说话",
+        "走廊有人说花",
+        "走廊有认说话",
+        "走廊"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zuiwannengdaojidian",
+      "expected": "最晚能到几点",
+      "source": "5500",
+      "lookup_us": 37295,
+      "candidates": [
+        "最晚能到极点",
+        "最晚能到几点",
+        "最万能到极点",
+        "最万能到几点",
+        "最晚能到机电",
+        "最晚能到积淀",
+        "最晚能到基点",
+        "最晚能到祭奠",
+        "最晚"
+      ],
+      "expected_rank": 2
+    }
+  ]
+}
