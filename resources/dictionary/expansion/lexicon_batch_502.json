@@ -1,0 +1,69 @@
+{
+  "batch": "lexicon_batch_502",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "临时工作交接与协作聊天",
+  "author": "continuous-lexicon-author",
+  "review_scope": "One AI author reads every selected expression and full-pinyin key in context, then records positional character choices. Structural reconstruction is not an independent linguistic editor. Individually authored common vocabulary; no third-party lexicon or test-derived words.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 388,
+  "sha256": "d1e29ae20838190ddf33bbc9f54416a7089e7ac7b1f684e66f9da9f497ef872e",
+  "authoring_files_sha256": {
+    "lexicon_batch_502.authoring.json": "1d9afa052194c4d85abe451126550284c9e69239aee9eddcc1c5a6bf3ee17413",
+    "batch502_authored_draft.txt": "9862789e6845e53bdcacb870ffe838429571ac860c2458653a5dae2881f75f27",
+    "batch502_pronunciation_review.tsv": "bcfa06eb66991023de585850220e47541dd8ceb9be88383380c7f79ac5e9bb8e"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "272e95d320380a93ab25483448bf705ffafd00065585fdf09c39dcb14f02ddc6",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "b502_6000": 6000,
+    "b502_5500": 5500,
+    "b502_5000": 5000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "b502_5500": 388
+  },
+  "length_distribution": {
+    "6": 382,
+    "5": 6
+  },
+  "authoring_rejections": [],
+  "mandatory_polyphone_reviews": 359,
+  "manual_pronunciation_overrides": {
+    "别自己猜着做": "biezijicaizhezuo",
+    "我撤回重发吧": "wochehuichongfaba",
+    "我调一下行距": "wotiaoyixiahangju",
+    "这儿得保留着": "zheerdeibaoliuzhe",
+    "这个顺序得换": "zhegeshunxudeihuan",
+    "不是让你重做": "bushirangnichongzuo",
+    "我得重新问下": "wodeichongxinwenxia",
+    "我把边距调好": "wobabianjutiaohao",
+    "我怕填串行了": "wopatianchuanhangle",
+    "这行还有用呢": "zhehanghaiyouyongne",
+    "别每次都重来": "biemeicidouchonglai",
+    "这次就调这里": "zhecijiutiaozheli",
+    "不用整个重做": "buyongzhenggechongzuo",
+    "开玩笑不用还": "kaiwanxiaobuyonghuan"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 14,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}
