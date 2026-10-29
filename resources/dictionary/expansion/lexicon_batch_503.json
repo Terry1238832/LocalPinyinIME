@@ -1,0 +1,63 @@
+{
+  "batch": "lexicon_batch_503",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "现场排队等候与问询聊天",
+  "author": "continuous-lexicon-author",
+  "review_scope": "One AI author reads every selected expression and full-pinyin key in context, then records positional character choices. Structural reconstruction is not an independent linguistic editor. Individually authored common vocabulary; no third-party lexicon or test-derived words.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 340,
+  "sha256": "a066487fa2ec79365d2d46b050155d81ef4807a3cf5dfc2a59dfadb2d510aa70",
+  "authoring_files_sha256": {
+    "lexicon_batch_503.authoring.json": "7599f47c460a677f13b454554fb9b9e2289d6eb4c4e64a1e30b00b76188ae0df",
+    "batch503_authored_draft.txt": "577635bd7d737cb2de83082e98bb4db749637e805a9d43c12411e163a925ac70",
+    "batch503_pronunciation_review.tsv": "2d5107c9ab4141f67b2fac5f36a03446b6875e3a6dcff6e1501441ac98385e78"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "83a1cf519827c69467497a5f8d341e007fdc08f7501af2a2f35c42f148da174b",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "b503_6000": 6000,
+    "b503_5500": 5500,
+    "b503_5000": 5000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "b503_5500": 340
+  },
+  "length_distribution": {
+    "5": 32,
+    "6": 308
+  },
+  "authoring_rejections": [],
+  "mandatory_polyphone_reviews": 308,
+  "manual_pronunciation_overrides": {
+    "能划掉重写吗": "nenghuadiaochongxiema",
+    "还是得换一张": "haishideihuanyizhang",
+    "我得保留多久": "wodeibaoliuduojiu",
+    "我得再请个假": "wodeizaiqinggejia",
+    "这队挺长的": "zheduitingchangde",
+    "我得等一会儿": "wodeidengyihuier",
+    "谁的来拿一下": "shuidelainayixia",
+    "我看不清那行": "wokanbuqingnahang"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 8,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}
