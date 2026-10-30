@@ -13,6 +13,7 @@
 #include "english_terms.h"
 #include "input_options.h"
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -99,6 +100,13 @@ private:
     NeuralModel neural_model_;
     mutable ContinuationModel continuation_model_;
     mutable size_t learning_revision_ = static_cast<size_t>(-1);
+    // The previous keystroke's sentence lattice: typing one more letter
+    // leaves every position more than a syllable before it unchanged, so
+    // those are reused (see decode()). Anything that changes how input
+    // reads bumps the epoch and discards it.
+    struct DecodeCache;
+    mutable std::shared_ptr<DecodeCache> decode_cache_;
+    size_t decode_epoch_ = 0;
     std::wstring context_path_;
     EnglishTerms english_;
     EngineInputOptions options_;

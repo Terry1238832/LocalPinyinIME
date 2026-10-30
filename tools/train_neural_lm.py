@@ -50,10 +50,10 @@ class CharLM(nn.Module):
         return self.proj(out) @ self.embed.weight.t() + self.bias, state
 
 
-def training_clauses(work: Path) -> tuple[list[str], list[tuple[Path, int, int]]]:
+def training_clauses(work: Path, weights: dict[str, int], daily_weight: int) -> tuple[list[str], list[tuple[Path, int, int]]]:
     authoring = ROOT / "resources/dictionary/authoring"
-    sources = [(p, 8 if p.name.startswith("daily_") else 1) for p in sorted(authoring.glob("*.txt"))]
-    sources += [(work / "train" / f"{name}.txt", weight) for name, weight in WEIGHTS.items()]
+    sources = [(p, daily_weight if p.name.startswith("daily_") else 1) for p in sorted(authoring.glob("*.txt"))]
+    sources += [(work / "train" / f"{name}.txt", weight) for name, weight in weights.items() if weight]
     by_first: dict[str, list[str]] = {}
     for item in excluded_texts([ROOT / "tests/data" / name for name in EXCLUDE]):
         by_first.setdefault(item[0], []).append(item)
@@ -79,9 +79,13 @@ def main() -> None:
     parser.add_argument("--embed", type=int, default=256)
     parser.add_argument("--vocab", type=int, default=8000)
     parser.add_argument("--epochs", type=float, default=2.0)
+    parser.add_argument("--weights", default="", help="source=weight overrides, e.g. kdconv=8,crosswoz=8")
+    parser.add_argument("--daily-weight", type=int, default=8, help="weight of the authoring daily_* chat text")
     args = parser.parse_args()
     torch.manual_seed(0)
-    clauses, manifest = training_clauses(args.work)
+    weights = dict(WEIGHTS)
+    weights.update({key: int(value) for key, value in (item.split("=") for item in args.weights.split(",") if item)})
+    clauses, manifest = training_clauses(args.work, weights, args.daily_weight)
     counts = Counter(ch for clause in clauses for ch in clause)
     chars = [ch for ch, _ in counts.most_common(args.vocab - 4)]
     lookup = np.full(0x10000, UNK, dtype=np.uint16)
