@@ -75,8 +75,9 @@ struct ScoreWeights {
     // Cost of each token a sentence is cut into.
     int segment_penalty = 600;
     size_t beam = kSentenceBeamWidth;
-    // Readings of one span scored by the language model, best priors first.
-    size_t span_candidates = 32;
+    // Readings of one span scored by the language model, best priors first;
+    // 48 reaches rarer homophones (哈佛, 嬉水) for about 0.7 ms a keystroke (1.8.3).
+    size_t span_candidates = 48;
     // Word association (word_zh.lm) bonus for each pair of adjacent words;
     // chosen on the development half like the weights above (1.4.0), and for
     // each run of three (1.5.0).
