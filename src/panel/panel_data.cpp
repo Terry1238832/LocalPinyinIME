@@ -106,7 +106,13 @@ bool PanelUserState::save(const std::wstring& path) const {
         file.write(text.data(), static_cast<std::streamsize>(text.size()));
         if (!file) return false;
     }
-    return MoveFileExW(temporary.c_str(), path.c_str(), MOVEFILE_REPLACE_EXISTING) != FALSE;
+    // A virus scanner or the search indexer may hold the new file for a moment.
+    for (int attempt = 0; attempt < 10; ++attempt) {
+        if (MoveFileExW(temporary.c_str(), path.c_str(), MOVEFILE_REPLACE_EXISTING)) return true;
+        Sleep(15);
+    }
+    DeleteFileW(temporary.c_str());
+    return false;
 }
 
 void PanelUserState::remember(PanelKind kind, const std::vector<std::wstring>& picks) {
