@@ -23,6 +23,8 @@ constexpr int kFallbackScore = 1;
 constexpr int kStandaloneTieBreakDivisor = 10;
 constexpr size_t kSentenceBeamWidth = 32;
 constexpr size_t kMaxInputLength = 256;
+constexpr size_t kLongestSyllable = 6;
+constexpr size_t kNeuralCandidates = 5;
 // Learned single characters inside a sentence: see decode().
 constexpr int kOutOfContextLearningDivisor = 4;
 // A fuzzy reading is a little less likely than the spelling as typed.
@@ -248,14 +250,24 @@ int english_prior(const EnglishTerms::Term& term, size_t length) {
     return kEnglishBase + term.weight * kEnglishWeightScale + kEnglishLengthBonus * static_cast<int>(std::min<size_t>(length, 8));
 }
 
+// The lattice of an earlier input sharing this one's first `stable` letters:
+// its positions up to `stable` hold their final, pruned paths and are copied;
+// only words ending after `stable` are scored again.
+struct DecodeReuse {
+    const std::vector<std::vector<SegmentPath>>* lattice = nullptr;
+    size_t stable = 0;
+};
+
 std::vector<std::vector<SegmentPath>> decode(const Dictionary& dictionary, const CandidateRanker& ranker,
                                            const UserLearning& learning, const ContextModel& context,
                                            const ParsedInput& input, const std::wstring& preceding,
-                                           const DecodeOptions& options = {}) {
+                                           const DecodeOptions& options = {}, const DecodeReuse& reuse = {}) {
     const auto& pinyin = input.pinyin;
     std::vector<std::vector<SegmentPath>> dp(pinyin.size() + 1);
-    dp[0].push_back({});
-    if (options.words) {
+    const size_t stable = reuse.lattice && !options.english ? std::min(reuse.stable, pinyin.size()) : 0;
+    for (size_t position = 0; position <= stable && reuse.lattice && position < reuse.lattice->size(); ++position) dp[position] = (*reuse.lattice)[position];
+    if (stable == 0) dp[0].assign(1, SegmentPath{});
+    if (options.words && stable == 0) {
         auto& start = dp[0].back();
         start.last_word = options.words->previous_word(preceding);
         if (!start.last_word.empty())
@@ -275,7 +287,10 @@ std::vector<std::vector<SegmentPath>> decode(const Dictionary& dictionary, const
         if (dp[offset].empty()) {
             continue;
         }
-        prune_paths(dp[offset]);
+        // Copied positions are already pruned; from them, only words that
+        // end after the copied part add anything.
+        const size_t first_new_end = offset < stable ? stable + 1 : 0;
+        if (offset >= stable) prune_paths(dp[offset]);
 
         // Literal keys, then keys that use fuzzy partners (a small penalty).
         std::vector<std::pair<std::wstring, size_t>> parts;
@@ -294,6 +309,7 @@ std::vector<std::vector<SegmentPath>> decode(const Dictionary& dictionary, const
         for (auto& match : dictionary.fuzzy_matches_at(pinyin, offset, input.boundaries, options.fuzzy))
             parts.push_back(std::move(match));
         for (size_t part = 0; part < parts.size(); ++part) {
+            if (offset + parts[part].second < first_new_end) continue;
             const auto& part_pinyin = parts[part].first;
             const bool fuzzy = part >= literal_parts;
             auto part_candidates = dictionary.lookup(part_pinyin);
@@ -401,7 +417,9 @@ void rescore_with_neural(const NeuralModel& model, std::vector<Candidate>& ranke
     // the lexicon has for exactly this input (二项式定理, not 而像是定理).
     if (preceding.empty() && (character_count(ranked.front().text) <= 2 || first_is_word)) return;
     std::vector<size_t> slots;
-    for (size_t index = 0; index < ranked.size(); ++index)
+    // The first five sentences: further down the model rarely changes the
+    // first choice, and each one costs scoring on every keystroke.
+    for (size_t index = 0; index < ranked.size() && slots.size() < kNeuralCandidates; ++index)
         if (ranked[index].consumed_pinyin == 0 && all_han(ranked[index].text)) slots.push_back(index);
     if (slots.size() < 2 || slots.front() != 0) return;
     int highest = std::numeric_limits<int>::min();
@@ -491,6 +509,7 @@ PinyinEngine::PinyinEngine(DictionaryLoadMode dictionary_load_mode)
 }
 
 void PinyinEngine::rebuild_context_model(const std::wstring& context_path) {
+    ++decode_epoch_;
     context_path_ = context_path;
     context_model_.reset(dictionary_);
     context_model_.set_boundary_penalty(weights().boundary_penalty);
@@ -511,6 +530,7 @@ void PinyinEngine::rebuild_context_model(const std::wstring& context_path) {
 }
 
 bool PinyinEngine::load_context_model(const std::wstring& path) {
+    ++decode_epoch_;
     context_path_ = path;
     context_model_.reset(dictionary_);
     learning_revision_ = static_cast<size_t>(-1);
@@ -622,6 +642,9 @@ std::vector<Candidate> PinyinEngine::words_for(const std::wstring& pinyin) const
 }
 
 void PinyinEngine::set_input_options(const EngineInputOptions& options) noexcept {
+    // The text service passes the saved options on every key; only a change
+    // discards the cached lattice.
+    if (!(options == options_)) ++decode_epoch_;
     options_ = options;
     if (options.domains == domains_.mask()) return;
     try {
@@ -727,6 +750,16 @@ std::vector<Candidate> PinyinEngine::lookup(const std::wstring& typed, const std
     return candidates;
 }
 
+struct PinyinEngine::DecodeCache {
+    std::wstring pinyin;
+    std::vector<size_t> boundaries;
+    std::wstring context;
+    unsigned fuzzy = 0;
+    size_t learning_revision = 0;
+    size_t epoch = 0;
+    std::vector<std::vector<SegmentPath>> lattice;
+};
+
 std::vector<Candidate> PinyinEngine::lookup_pinyin(const std::wstring& pinyin, const std::wstring& preceding_text,
                                                    const EngineInputOptions& options) const {
     const auto context = ContinuationModel::context_suffix(preceding_text);
@@ -740,7 +773,26 @@ std::vector<Candidate> PinyinEngine::lookup_pinyin(const std::wstring& pinyin, c
 
     const DomainLexicon* scenes = domains_.empty() ? nullptr : &domains_;
     DecodeOptions decoding{options.fuzzy, nullptr, scenes, word_model_.empty() ? nullptr : &word_model_};
-    auto dp = decode(dictionary_, ranker_, learning_, context_model_, parsed, context, decoding);
+    DecodeReuse reuse;
+    if (decode_cache_ && decode_cache_->context == context && decode_cache_->fuzzy == options.fuzzy &&
+        decode_cache_->learning_revision == learning_.revision() && decode_cache_->epoch == decode_epoch_) {
+        size_t common = 0;
+        const auto& previous = decode_cache_->pinyin;
+        while (common < previous.size() && common < normalized.size() && previous[common] == normalized[common]) ++common;
+        // A syllable spans at most six letters: positions further back keep
+        // their split penalties and their words.
+        size_t stable = common > kLongestSyllable ? common - kLongestSyllable : 0;
+        const auto boundaries_before = [&](const std::vector<size_t>& all) {
+            std::vector<size_t> kept;
+            for (size_t boundary : all) if (boundary <= stable + kLongestSyllable) kept.push_back(boundary);
+            return kept;
+        };
+        if (boundaries_before(decode_cache_->boundaries) != boundaries_before(parsed.boundaries)) stable = 0;
+        if (stable > 0) reuse = DecodeReuse{&decode_cache_->lattice, stable};
+    }
+    auto dp = decode(dictionary_, ranker_, learning_, context_model_, parsed, context, decoding, reuse);
+    if (!decode_cache_) decode_cache_ = std::make_shared<DecodeCache>();
+    *decode_cache_ = DecodeCache{normalized, parsed.boundaries, context, options.fuzzy, learning_.revision(), decode_epoch_, dp};
     // Chinese first; English terms join only when Chinese cannot read the
     // whole input (Python, GitHub and most English words are not pinyin).
     bool mixed = false;
@@ -1116,7 +1168,7 @@ std::wstring PinyinEngine::display_input(const std::wstring& typed) const {
 
 UserLexiconRefreshResult PinyinEngine::refresh_user_lexicon_if_needed(bool composition_active) {
     auto result = dictionary_.refresh_user_lexicon_if_changed(composition_active);
-    if (result.reloaded) rebuild_context_model(context_path_);
+    if (result.reloaded) rebuild_context_model(context_path_);  // also discards the cached lattice
     return result;
 }
 
@@ -1156,6 +1208,7 @@ void PinyinEngine::learn(const std::wstring& typed, const std::wstring& selected
 }
 
 void PinyinEngine::learn(const std::wstring& typed, const std::wstring& selected_word) {
+    ++decode_epoch_;
     // Learning is keyed by full pinyin, whatever the typing scheme.
     const auto normalized = normalize_input(full_pinyin(typed));
     if (normalized.empty() || normalized == selected_word) return;

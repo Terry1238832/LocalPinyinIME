@@ -44,7 +44,20 @@ public:
     bool clear_learning_data() const;
 
 private:
+    [[nodiscard]] InputModeOptions read_input_mode_options() const;
+
     std::wstring data_dir_override_;
+    // The text service asks for the input options several times per key:
+    // the parsed file is kept until its size or write time changes.
+    struct InputModeCache {
+        std::wstring path;
+        unsigned long long write_time = 0;
+        unsigned long long size = 0;
+        bool exists = false;
+        bool valid = false;
+        InputModeOptions options;
+    };
+    mutable InputModeCache input_mode_cache_;
 };
 
 }  // namespace localpinyin

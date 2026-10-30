@@ -116,7 +116,11 @@ bool process_is_running(unsigned long process_id) {
 bool write_utf8_file_atomic(const std::wstring& path, const std::wstring& text) {
     const std::wstring temp_path = path + L".tmp";
     {
-        std::ofstream file(temp_path, std::ios::binary | std::ios::trunc);
+        std::ofstream file;
+        for (int attempt = 0; attempt < 20 && !file.is_open(); ++attempt) {
+            if (attempt) Sleep(25);
+            file.open(temp_path, std::ios::binary | std::ios::trunc);
+        }
         if (!file) {
             return false;
         }
@@ -126,8 +130,16 @@ bool write_utf8_file_atomic(const std::wstring& path, const std::wstring& text) 
             return false;
         }
     }
-    if (MoveFileExW(temp_path.c_str(), path.c_str(), MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH)) {
-        return true;
+    // A virus scanner or the search indexer may hold the file just written
+    // for a moment; replacing it then fails with a sharing error, so retry
+    // briefly before giving up.
+    for (int attempt = 0; attempt < 20; ++attempt) {
+        if (MoveFileExW(temp_path.c_str(), path.c_str(), MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH)) {
+            return true;
+        }
+        const DWORD error = GetLastError();
+        if (error != ERROR_ACCESS_DENIED && error != ERROR_SHARING_VIOLATION && error != ERROR_LOCK_VIOLATION) break;
+        Sleep(25);
     }
     DeleteFileW(temp_path.c_str());
     return false;
@@ -204,6 +216,20 @@ CandidateWindowOptions SettingsStore::load_candidate_options() const {
 }
 
 InputModeOptions SettingsStore::load_input_mode_options() const {
+    const auto path = settings_path();
+    WIN32_FILE_ATTRIBUTE_DATA data{};
+    const bool exists = GetFileAttributesExW(path.c_str(), GetFileExInfoStandard, &data) != FALSE;
+    const auto write_time = exists ? (static_cast<unsigned long long>(data.ftLastWriteTime.dwHighDateTime) << 32) |
+                                         data.ftLastWriteTime.dwLowDateTime : 0ULL;
+    const auto size = exists ? (static_cast<unsigned long long>(data.nFileSizeHigh) << 32) | data.nFileSizeLow : 0ULL;
+    auto& cache = input_mode_cache_;
+    if (cache.valid && cache.path == path && cache.exists == exists && cache.write_time == write_time && cache.size == size)
+        return cache.options;
+    cache = InputModeCache{path, write_time, size, exists, true, read_input_mode_options()};
+    return cache.options;
+}
+
+InputModeOptions SettingsStore::read_input_mode_options() const {
     InputModeOptions options;
     const std::wstring text = read_utf8_file(settings_path());
     if (text.empty()) {
