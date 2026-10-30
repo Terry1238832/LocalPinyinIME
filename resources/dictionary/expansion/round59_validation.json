@@ -1,0 +1,752 @@
+{
+  "round": 59,
+  "direction": "日常聊天：散场道别、老友重逢、睡前问候",
+  "continuation_stop_threshold": null,
+  "batch_min": 574,
+  "batch_max": 579,
+  "base_commit": "64fed7624d0fea3437de467c5669bbb330fc203f",
+  "engine_version": "1.8.3",
+  "audit": {
+    "before": 264633,
+    "after": 265694,
+    "added": 1061,
+    "existing_rows_preserved": true,
+    "all_layers_and_domains_surface_dedup": true,
+    "hashes_reviews_weights_formats_passed": true,
+    "batches": {
+      "574": {
+        "scope": "聚会散场后的道别与到家报平安",
+        "entries": 333,
+        "weights": {
+          "5500": 333
+        },
+        "reviews": 307,
+        "overrides": {
+          "我得走了": "wodeizoule",
+          "还得回家": "haideihuijia",
+          "我得去赶车": "wodeiquganche"
+        },
+        "sha256": "269db180a65825004b93358d28c952a478c9051e2675a32e0570584b95a5c025"
+      },
+      "575": {
+        "scope": "旧友重逢后的近况与共同回忆闲聊",
+        "entries": 328,
+        "weights": {
+          "5500": 328
+        },
+        "reviews": 315,
+        "overrides": {
+          "你现在做哪行": "nixianzaizuonahang"
+        },
+        "sha256": "0864ade4733a1b53343491239f5f05ec6131608767b7ffdaa9f36e55eca915d8"
+      },
+      "576": {
+        "scope": "睡前晚安、夜间关心与明早再聊",
+        "entries": 323,
+        "weights": {
+          "5500": 323
+        },
+        "reviews": 301,
+        "overrides": {
+          "今晚睡个好觉": "jinwanshuigehaojiao",
+          "睡个安稳觉": "shuigeanwenjiao",
+          "睡个踏实觉": "shuigetashijiao",
+          "今晚得早点睡": "jinwandeizaodianshui",
+          "明早还得早起": "mingzaohaideizaoqi",
+          "明天还得出门": "mingtianhaideichumen",
+          "今晚睡得着吗": "jinwanshuidezhaoma",
+          "睡个好觉吧": "shuigehaojiaoba"
+        },
+        "sha256": "dd08933436dcf8000a7779ff3c480596fa4568d40e7a7677ed266277bc251324"
+      },
+      "577": {
+        "scope": "散场后的告别、同行与到家报平安长句",
+        "entries": 28,
+        "weights": {
+          "5500": 28
+        },
+        "reviews": 28,
+        "overrides": {},
+        "sha256": "acc92697379970cb4dda3e6ed69ead8070bea9cafb61e8c3a0ecdeb32535c471"
+      },
+      "578": {
+        "scope": "久别重逢后的近况叙旧与共同回忆长句",
+        "entries": 24,
+        "weights": {
+          "5500": 24
+        },
+        "reviews": 24,
+        "overrides": {},
+        "sha256": "a941346092a68bdb7c96b8ffd2014d35908d50375afefd41400a732445e33171"
+      },
+      "579": {
+        "scope": "睡前互道晚安、关心休息与明早再聊长句",
+        "entries": 25,
+        "weights": {
+          "5500": 25
+        },
+        "reviews": 25,
+        "overrides": {
+          "晚安啦明天见面的时候再把剩下的话说完今晚先睡个好觉": "wananlamingtianjianmiandeshihouzaibashengxiadehuashuowanjinwanxianshuigehaojiao"
+        },
+        "sha256": "9fc0d218bba4ac745a6820fddde02c4d47642eb82308ab160bb1a2cf8e22f954"
+      }
+    },
+    "local_core_sha256": "185976e4eab55d402cb7934e9bdfc3dbaa2ce8d5cebf2241e29e6133153482a1"
+  },
+  "probes": {
+    "574": {
+      "cases": 333,
+      "top1": 91.59,
+      "top9": 100.0,
+      "two_to_four_cases": 61,
+      "two_to_four_top9": 61,
+      "two_to_four_missing": [],
+      "other_missing": [],
+      "probe_sha256": "90fc72782ac2b5d0692b51fc577a7b906ea3b68b1494440ed5b4da58b7505049",
+      "raw_sha256": "8c09505ea299be12520350c7be88ed25451954d0da5e55b9c332d45b35b58aaa"
+    },
+    "575": {
+      "cases": 328,
+      "top1": 82.62,
+      "top9": 100.0,
+      "two_to_four_cases": 5,
+      "two_to_four_top9": 5,
+      "two_to_four_missing": [],
+      "other_missing": [],
+      "probe_sha256": "e362ae717f3c712ed5590260e9bd688ec430d172f18607f9bec303b16f9f8a7e",
+      "raw_sha256": "df9d977d5fb841146116f7aa8f5cf0f0a98053ef46876e1a0fab9c6f3b205bea"
+    },
+    "576": {
+      "cases": 323,
+      "top1": 82.97,
+      "top9": 100.0,
+      "two_to_four_cases": 5,
+      "two_to_four_top9": 5,
+      "two_to_four_missing": [],
+      "other_missing": [],
+      "probe_sha256": "9b5522c1eadfd5753f4f0ed8b1958ec5465cc0faaba4465b37e78c4050a24e46",
+      "raw_sha256": "6040583b7c79e3ef84e28d654c740b7fbe86deae50d268ff0e6a9d5a90005302"
+    },
+    "577": {
+      "cases": 28,
+      "top1": 78.57,
+      "top9": 89.29,
+      "two_to_four_cases": 0,
+      "two_to_four_top9": 0,
+      "two_to_four_missing": [],
+      "other_missing": [
+        {
+          "word": "今晚时间过得真快大家都早点回家休息改天有空再约出来聚",
+          "pinyin": "jinwanshijianguodezhenkuaidajiadouzaodianhuijiaxiuxigaitianyoukongzaiyuechulaiju"
+        },
+        {
+          "word": "你要是顺路的话我们一起走到路口再各自打车回家",
+          "pinyin": "niyaoshishunludehuawomenyiqizoudaolukouzaigezidachehuijia"
+        },
+        {
+          "word": "这次我先回去啦下次再约大家一起出来吃个饭",
+          "pinyin": "zheciwoxianhuiqulaxiacizaiyuedajiayiqichulaichigefan"
+        }
+      ],
+      "probe_sha256": "4845369af238aa0c35eb3c8f1835451d97cec652312a28e17fd343cd843e8b34",
+      "raw_sha256": "90aed39df4ca503066995a9ffa885d46068d2c45cce79b5ab64a942a05149d34"
+    },
+    "578": {
+      "cases": 24,
+      "top1": 62.5,
+      "top9": 75.0,
+      "two_to_four_cases": 0,
+      "two_to_four_top9": 0,
+      "two_to_four_missing": [],
+      "other_missing": [
+        {
+          "word": "今天能在老地方碰见你真的挺巧感觉像是回到了以前的日子",
+          "pinyin": "jintiannengzailaodifangpengjiannizhendetingqiaoganjuexiangshihuidaoleyiqianderizi"
+        },
+        {
+          "word": "老同学见面一点都不生分聊了几句又跟以前一样熟悉了",
+          "pinyin": "laotongxuejianmianyidiandoubushengfenliaolejijuyougenyiqianyiyangshuxile"
+        },
+        {
+          "word": "一聊起以前在学校的事我们两个就像又回到了当年那段日子",
+          "pinyin": "yiliaoqiyiqianzaixuexiaodeshiwomenlianggejiuxiangyouhuidaoledangniannaduanrizi"
+        },
+        {
+          "word": "以前同班的那几个人现在还有联系吗下回有机会一起约出来见见",
+          "pinyin": "yiqiantongbandenajigerenxianzaihaiyoulianximaxiahuiyoujihuiyiqiyuechulaijianjian"
+        },
+        {
+          "word": "以前我们住得那么近放学一路走回家现在想起来还挺亲切的",
+          "pinyin": "yiqianwomenzhudenamejinfangxueyiluzouhuijiaxianzaixiangqilaihaitingqinqiede"
+        },
+        {
+          "word": "这些年变化挺大的不过我们一见面就有话聊这种感觉还真没变",
+          "pinyin": "zhexienianbianhuatingdadebuguowomenyijianmianjiuyouhualiaozhezhongganjuehaizhenmeibian"
+        }
+      ],
+      "probe_sha256": "41f4c82327eb4103ebb637a0f08292fe26797f2320d5a802447ca1c27b5f2f85",
+      "raw_sha256": "82076d29b9c65ed5eb40285898991396dab1b2232a3fc7ceeb19d54fd3b03f68"
+    },
+    "579": {
+      "cases": 25,
+      "top1": 72.0,
+      "top9": 80.0,
+      "two_to_four_cases": 0,
+      "two_to_four_top9": 0,
+      "two_to_four_missing": [],
+      "other_missing": [
+        {
+          "word": "你不用等我回消息了困了就先睡明早我看到以后再回复你",
+          "pinyin": "nibuyongdengwohuixiaoxilekunlejiuxianshuimingzaowokandaoyihouzaihuifuni"
+        },
+        {
+          "word": "你明天几点出门记得设好闹钟别睡过头了",
+          "pinyin": "nimingtianjidianchumenjideshehaonaozhongbieshuiguotoule"
+        },
+        {
+          "word": "晚安今天的事先不想了明天起来以后再看怎么安排",
+          "pinyin": "wananjintiandeshixianbuxianglemingtianqilaiyihouzaikanzenmeanpai"
+        },
+        {
+          "word": "我先下线睡觉了明天醒来再看你发来的消息",
+          "pinyin": "woxianxiaxianshuijiaolemingtianxinglaizaikannifalaidexiaoxi"
+        },
+        {
+          "word": "现在都快半夜了先把事情放一放睡醒以后再慢慢想办法",
+          "pinyin": "xianzaidoukuaibanyelexianbashiqingfangyifangshuixingyihouzaimanmanxiangbanfa"
+        }
+      ],
+      "probe_sha256": "f8b5693f96e5e5c72dbf07f0e7e7b9b22e0a2861cab0b0ee19c11a52da178934",
+      "raw_sha256": "5f74a612d63a6b8e0e3fd4ffae605be92d0e729519bf7910036e021dab209f85"
+    }
+  },
+  "accuracy_before": {
+    "逐词输入·参考前文": {
+      "cases": 20626,
+      "top1": 88.25,
+      "top9": 98.7
+    },
+    "逐词输入·无前文": {
+      "cases": 20626,
+      "top1": 79.65,
+      "top9": 97.56
+    },
+    "留出整句": {
+      "cases": 4126,
+      "top1": 64.49,
+      "top9": 77.61
+    },
+    "口语对话·整句": {
+      "cases": 3368,
+      "top1": 85.36,
+      "top9": 94.69
+    },
+    "口语对话·逐词": {
+      "cases": 19504,
+      "top1": 95.58,
+      "top9": 99.72
+    },
+    "项目留出": {
+      "cases": 138,
+      "top1": 84.78,
+      "top9": 89.13
+    },
+    "新增用例": {
+      "cases": 67,
+      "top1": 71.64,
+      "top9": 83.58
+    },
+    "独立用例": {
+      "cases": 62,
+      "top1": 53.23,
+      "top9": 79.03
+    },
+    "日常口语·开发": {
+      "cases": 149,
+      "top1": 97.32,
+      "top9": 99.33
+    },
+    "日常口语·留出": {
+      "cases": 150,
+      "top1": 90.0,
+      "top9": 96.67
+    }
+  },
+  "accuracy_after": {
+    "逐词输入·参考前文": {
+      "cases": 20626,
+      "top1": 88.25,
+      "top9": 98.7
+    },
+    "逐词输入·无前文": {
+      "cases": 20626,
+      "top1": 79.65,
+      "top9": 97.56
+    },
+    "留出整句": {
+      "cases": 4126,
+      "top1": 64.49,
+      "top9": 77.61
+    },
+    "口语对话·整句": {
+      "cases": 3368,
+      "top1": 85.36,
+      "top9": 94.69
+    },
+    "口语对话·逐词": {
+      "cases": 19504,
+      "top1": 95.58,
+      "top9": 99.72
+    },
+    "项目留出": {
+      "cases": 138,
+      "top1": 84.78,
+      "top9": 89.13
+    },
+    "新增用例": {
+      "cases": 67,
+      "top1": 71.64,
+      "top9": 83.58
+    },
+    "独立用例": {
+      "cases": 62,
+      "top1": 53.23,
+      "top9": 79.03
+    },
+    "日常口语·开发": {
+      "cases": 149,
+      "top1": 97.32,
+      "top9": 99.33
+    },
+    "日常口语·留出": {
+      "cases": 150,
+      "top1": 90.0,
+      "top9": 96.67
+    }
+  },
+  "native_tests": {
+    "x64": {
+      "passed": 47,
+      "total": 47,
+      "log_sha256": "03f1488ed86105afc25eb1e92205a77a045ebbf1877a0fa49fdf99afa5dab32d"
+    },
+    "x86": {
+      "passed": 47,
+      "total": 47,
+      "log_sha256": "650518006068534b9a6d717aeffd4323a72a8cd03e9f3a849334feeeee5e4e92"
+    }
+  },
+  "max_entries": 281456,
+  "commits": {
+    "574": "5771ec5ae04a9ba205115912842a810241597055",
+    "575": "f36bf95eb3205ecf74a94475aa660946627be826",
+    "576": "e5c3559926eaaf054fac3b72d2e585b6b52a04fb",
+    "577": "c2a84ea67a9141c7445212366976e8f83809578c",
+    "578": "6e44990f7e2c75700b5e54bdb320ce18fe175436",
+    "579": "b9f02c4f80c50d2f2a4984971652c926dd9a7f1c"
+  },
+  "rejections": {
+    "duplicate:local_core_zh_pinyin.tsv": 101,
+    "偏正式书面告别，和日常聚会聊天语气不符。": 1,
+    "表达不完整；通常说“到家给我说一声”或“到家告诉我”。": 1,
+    "表达不完整；缺少“消息”等宾语。": 1,
+    "表达残缺；没有说明回去后要说什么。": 1,
+    "语义重复，聊天里搭配生硬。": 1,
+    "语序不自然；常说“别忘了拿包”。": 1,
+    "表达别扭；通常说“不用送我下楼”。": 1,
+    "表达残缺；常说“我坐地铁回去”。": 1,
+    "表达残缺；常说“我坐公交回去”。": 1,
+    "搭配不自然；常说“到家再跟你说一声”。": 1,
+    "缺少“上了”等结果补语，表达残缺。": 1,
+    "语义含混，不是自然的AA或请客说法。": 1,
+    "搭配生硬；通常说“下次我请客”。": 1,
+    "表达残缺；常说“不知不觉就很晚了”。": 1,
+    "搭配不自然，日常通常说“时间过得真快”。": 1,
+    "outside_batch_length_scope": 192,
+    "语义不完整，缺少明确的聚会或活动。": 1,
+    "只是临时指示，没有形成常用聊天表达。": 1,
+    "搭配生硬；通常提醒“别把联系方式删了”。": 1,
+    "搭配不自然；常说“一路顺风”或“回去路上小心”。": 1,
+    "语序和搭配不自然，带有生硬的送客语气。": 1,
+    "表达不明确，不是常见固定提醒。": 1,
+    "搭配生硬；常说“这次聚得真开心”。": 1,
+    "与本批聚会散场语境关联弱，表达也缺少上下文。": 1,
+    "duplicate:batch574": 5,
+    "表达不完整；常说“我下楼等你的车”。": 1,
+    "“随身物”不自然，通常说“随身物品”。": 1,
+    "表达残缺；常说“走前看一下桌上有没有东西”。": 1,
+    "泛化的动作拼接，没有体现重逢叙旧的固定表达。": 1,
+    "泛化的活动拼接，聊天里缺少具体语境。": 1,
+    "语境不完整，搭配指向不清。": 1,
+    "搭配生硬，不是自然的叙旧说法。": 1,
+    "表达生硬，不是自然的叙旧说法。": 1,
+    "语义突兀，与重逢叙旧的常见表达关联弱。": 1,
+    "表达不完整；通常说“以前你教我做题”。": 1,
+    "语序生硬，不是常见自然说法。": 1,
+    "搭配不自然；常说“见到你觉得很亲切”。": 1,
+    "缺少结构助词“的”，表达不完整。": 1,
+    "语义不清，叙旧中不自然。": 1,
+    "书面色彩偏重，不像日常聊天用语。": 1,
+    "搭配不完整；常说“这些年辛苦了”。": 1,
+    "偏书面，日常通常说“还是很聊得来”。": 1,
+    "搭配不自然；常说“一见面就熟了”。": 1,
+    "语序不自然；常说“离远了真没认出来”。": 1,
+    "语序不自然；常说“咱俩变化都大”。": 1,
+    "搭配生硬，不是自然口语。": 1,
+    "表达含混且偏书面，不是常用聊天说法。": 1,
+    "语序不自然；常说“把以前的照片找出来”。": 1,
+    "表达不完整；常说“一路聊到家门口”。": 1,
+    "搭配不自然。": 1,
+    "表达残缺，缺少动作或判断。": 2,
+    "泛化活动拼接，没有叙旧语境。": 1,
+    "单纯名词短语，缺少聊天固定表达。": 2,
+    "搭配不自然；常说“回头联系”或“加个联系方式”。": 1,
+    "语序不自然，表达不完整。": 1,
+    "偏书面，不是常见聊天说法。": 1,
+    "偏书面文学表达，不像日常聊天。": 1,
+    "偏书面且语义含混，不是自然的聊天表达。": 1,
+    "语气词搭配不够自然，常说“早点休息呀”。": 1,
+    "搭配生硬；常说“祝你好梦”或“做个好梦”。": 1,
+    "搭配不自然；常说“你先睡吧”。": 1,
+    "表达残缺；常见说法是“困得睁不开眼”。": 1,
+    "偏书面，不是常见聊天表达。": 1,
+    "表达残缺；常说“明天提醒我起床”。": 1,
+    "表达残缺；缺少说明醒来后说什么。": 1,
+    "语序生硬；常说“睡醒了再回我”。": 1,
+    "语义不清，搭配不自然。": 1,
+    "像设备操作说明，不是自然的睡前聊天用语。": 1,
+    "语气词重复，表达不自然。": 1,
+    "搭配生硬；常说“困了就去睡吧”。": 1,
+    "语序不自然；通常说“你先睡，不用等我”。": 1,
+    "表达含混，不是自然提醒。": 1,
+    "像书面提示语，不是常见聊天整词。": 1,
+    "搭配不自然；常说“记得给手机充电”。": 1,
+    "语序生硬；常说“去洗把脸吧”。": 1,
+    "像标题或祝愿残句，不是自然聊天表达。": 1,
+    "语序不自然；常说“晚安，明早见”。": 1,
+    "搭配生硬，像生硬的劝告。": 1,
+    "与睡前问候关联弱，表达也依赖上下文。": 1,
+    "语法错误；常说“别玩到天亮”。": 1,
+    "语序不自然；常说“晚安，不聊了”。": 1,
+    "语义不合适，晚安应在睡前说。": 1,
+    "语境依赖强，容易被理解为已早睡的过去陈述。": 1,
+    "指短暂休息，不是本批的睡前告别表达。": 1,
+    "语序不自然；常说“下次再聊，晚安”。": 1,
+    "搭配不自然；常说“早点睡”或“睡个好觉”。": 1,
+    "重复生硬，不是稳定常见说法。": 1
+  },
+  "whole_batch_withdrawals": [],
+  "status": "passed",
+  "native_runtime_canonical_sha256": {
+    "x64": "185976e4eab55d402cb7934e9bdfc3dbaa2ce8d5cebf2241e29e6133153482a1",
+    "x86": "185976e4eab55d402cb7934e9bdfc3dbaa2ce8d5cebf2241e29e6133153482a1"
+  },
+  "protected_model_and_test_files_unchanged": {
+    "resources/dictionary/word_zh.lm": "bcfdff3c333750f2a07041fc7e4fec7f29aaad5e67ff83015da77bb839005c4d",
+    "resources/dictionary/neural_zh.lm": "a6f666c1310e0c11a8e544a01131e2d14a1bc6612c13a0f25d610da54ad42efd",
+    "tests/test_word_model.cpp": "938ea4d9c5852c55745c8420f9947ac8236f625e5dd18c8823a5beda3681cb10",
+    "tests/test_neural_model.cpp": "ec943a49d2ef26e097b6cbefc6067d4abd67685a8857ed4644e5164587c1ceea"
+  },
+  "accuracy_before_runtime_evidence": {
+    "engine_sha256": "207a471abe08c00695be58e22719d9375c100cbfec24e092e4b0c0cad012cba4",
+    "dictionary_files": {
+      "dictionary\\context_zh.lm": "fbc541b277f140c64d217a37dc3fe7a4ea1abd24e599910160eed8bb6cf82581",
+      "dictionary\\context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+      "dictionary\\continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e",
+      "dictionary\\core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+      "dictionary\\english_terms.tsv": "fb33a275b9b4057aba8e6632912ed995c586b89fc191182ab93b2ee2721ba453",
+      "dictionary\\english_words.tsv": "28d7afee035fadf5cab977ec452bc2aa3edbdbe69448dfbd91695cc22c07ac61",
+      "dictionary\\local_core_zh_pinyin.metadata.json": "9fe0712942c92a05661f6d3b2abc2ea2ab4304b8d160a1e8ebf4df396198d50d",
+      "dictionary\\local_core_zh_pinyin.tsv": "9d3ea33a7d0d9c52e4d8d58704a11cd9af6b34442d79951f79708fc9524a8fd5",
+      "dictionary\\neural_zh.lm": "a6f666c1310e0c11a8e544a01131e2d14a1bc6612c13a0f25d610da54ad42efd",
+      "dictionary\\standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+      "dictionary\\word_zh.lm": "bcfdff3c333750f2a07041fc7e4fec7f29aaad5e67ff83015da77bb839005c4d",
+      "dictionary\\domains\\coding.tsv": "8ed3e2e2aaddab952983bd4c070273ffc9dc018d8eb39bb1aa96c29a767e85f3",
+      "dictionary\\domains\\daily.tsv": "a30b3d4250e69e6b6acee49e114d262255d8314a3676c69e8290bd4238d6054e",
+      "dictionary\\domains\\games.tsv": "b0b9930107b27fc1342f10a9020b703b5da4c0cb1cfc3b33b9790ba9fbf80aaf",
+      "dictionary\\domains\\math.tsv": "863121f6ef89785dec628dfb7ab41de2ae1adf5066efbc714092343b62124a57",
+      "dictionary\\domains\\study.tsv": "bec679bc57c125c654c6a5191812e99121431c42e512f6fc3b84b5a01c1a87f2",
+      "dictionary\\domains\\work.tsv": "b7b8718ca54d6774be178c3bea5bf3f5c4d6c66a64942e7bb76490ebff2a1586",
+      "dictionary\\panel\\emoji.tsv": "f37e5435d9bc49ff1b85de701a547b859d7136c1c3478158e4376060d1755799",
+      "dictionary\\panel\\kaomoji.tsv": "ca8f6f24bf59551b34b4ed0e4546680b582814b28eb8aacf1f8f8a87abb97444",
+      "dictionary\\panel\\symbols.tsv": "b7ea522ba80cd96c1f69b24afe093dabd1d55a367ef046e4bb38511f4e9de6b8"
+    },
+    "canonical_sha256": "9d3ea33a7d0d9c52e4d8d58704a11cd9af6b34442d79951f79708fc9524a8fd5",
+    "note": "Immutable isolated resources captured before any round entries are applied; official accuracy_snapshot.py runs against this copy, so simultaneous native builds and candidate measurement cannot contaminate baseline."
+  },
+  "accuracy_after_runtime_evidence": {
+    "engine_sha256": "207a471abe08c00695be58e22719d9375c100cbfec24e092e4b0c0cad012cba4",
+    "dictionary_files": {
+      "dictionary\\context_zh.lm": "fbc541b277f140c64d217a37dc3fe7a4ea1abd24e599910160eed8bb6cf82581",
+      "dictionary\\context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+      "dictionary\\continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e",
+      "dictionary\\core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+      "dictionary\\english_terms.tsv": "fb33a275b9b4057aba8e6632912ed995c586b89fc191182ab93b2ee2721ba453",
+      "dictionary\\english_words.tsv": "28d7afee035fadf5cab977ec452bc2aa3edbdbe69448dfbd91695cc22c07ac61",
+      "dictionary\\local_core_zh_pinyin.metadata.json": "4d3d2b29590bdc5f0b88fb0efeded771ab142ecac1eecc73c0710ebbdd4a274e",
+      "dictionary\\local_core_zh_pinyin.tsv": "185976e4eab55d402cb7934e9bdfc3dbaa2ce8d5cebf2241e29e6133153482a1",
+      "dictionary\\neural_zh.lm": "a6f666c1310e0c11a8e544a01131e2d14a1bc6612c13a0f25d610da54ad42efd",
+      "dictionary\\standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+      "dictionary\\word_zh.lm": "bcfdff3c333750f2a07041fc7e4fec7f29aaad5e67ff83015da77bb839005c4d",
+      "dictionary\\domains\\coding.tsv": "8ed3e2e2aaddab952983bd4c070273ffc9dc018d8eb39bb1aa96c29a767e85f3",
+      "dictionary\\domains\\daily.tsv": "a30b3d4250e69e6b6acee49e114d262255d8314a3676c69e8290bd4238d6054e",
+      "dictionary\\domains\\games.tsv": "b0b9930107b27fc1342f10a9020b703b5da4c0cb1cfc3b33b9790ba9fbf80aaf",
+      "dictionary\\domains\\math.tsv": "863121f6ef89785dec628dfb7ab41de2ae1adf5066efbc714092343b62124a57",
+      "dictionary\\domains\\study.tsv": "bec679bc57c125c654c6a5191812e99121431c42e512f6fc3b84b5a01c1a87f2",
+      "dictionary\\domains\\work.tsv": "b7b8718ca54d6774be178c3bea5bf3f5c4d6c66a64942e7bb76490ebff2a1586",
+      "dictionary\\panel\\emoji.tsv": "f37e5435d9bc49ff1b85de701a547b859d7136c1c3478158e4376060d1755799",
+      "dictionary\\panel\\kaomoji.tsv": "ca8f6f24bf59551b34b4ed0e4546680b582814b28eb8aacf1f8f8a87abb97444",
+      "dictionary\\panel\\symbols.tsv": "b7ea522ba80cd96c1f69b24afe093dabd1d55a367ef046e4bb38511f4e9de6b8",
+      "dictionary\\sources\\lexicon_sources.json": "61c11e4d84c20d40d135f736cb144279211418466a1daad11a92f9a8567d7b58"
+    },
+    "note": "Full isolated runtime copy, with final authored canonical lexicon; native code and model assets unchanged. Compare all runtime file hashes after native build before accepting measured aggregates."
+  },
+  "coverage": {
+    "lexicon": {
+      "entries": 313608,
+      "distinct_words": 313110
+    },
+    "standard_characters": {
+      "一级 (1-3500)": {
+        "characters": 3500,
+        "typeable_by_standard_reading": 3500,
+        "percent": 100.0,
+        "single_entry_any_reading": 3500
+      },
+      "二级 (3501-6500)": {
+        "characters": 3000,
+        "typeable_by_standard_reading": 2997,
+        "percent": 99.9,
+        "single_entry_any_reading": 2997
+      },
+      "三级 (6501-8105)": {
+        "characters": 1605,
+        "typeable_by_standard_reading": 261,
+        "percent": 16.26,
+        "single_entry_any_reading": 267
+      }
+    },
+    "standard_characters_missing_examples": {
+      "一级 (1-3500)": [],
+      "二级 (3501-6500)": [
+        "𬉼(ou)",
+        "𠳐(bang)",
+        "𥻗(cha)"
+      ],
+      "三级 (6501-8105)": [
+        "尢(wang)",
+        "卬(ang)",
+        "𠙶(ou)",
+        "毌(guan)",
+        "邘(yu)",
+        "圢(ting)",
+        "伋(ji)",
+        "冮(gang)",
+        "氿(jiu)",
+        "汈(diao)",
+        "宄(gui)",
+        "𬣙(xu)",
+        "讱(ren)",
+        "扞(han)",
+        "圲(qian)",
+        "圫(tuo)",
+        "芏(du)",
+        "朳(ba)",
+        "朸(li)",
+        "𨙸(qi)",
+        "辿(chan)",
+        "伣(qian)",
+        "癿(bie)",
+        "犴(an/han)",
+        "冱(hu)",
+        "𬇕(wan)",
+        "汋(zhuo)",
+        "䜣(xin)",
+        "讻(xiong)",
+        "𬣞(zhu)",
+        "𬘓(xun)",
+        "纩(kuang)",
+        "玒(hong)",
+        "玓(di)",
+        "玘(qi)",
+        "玚(yang)",
+        "刬(chan)",
+        "𫭟(ou/qu)",
+        "坉(tun)",
+        "𫭢(lun)"
+      ]
+    },
+    "common_words": {
+      "top 1000": {
+        "words": 1000,
+        "in_lexicon": 999,
+        "percent": 99.9
+      },
+      "top 5000": {
+        "words": 5000,
+        "in_lexicon": 4900,
+        "percent": 98.0
+      },
+      "top 10000": {
+        "words": 10000,
+        "in_lexicon": 9567,
+        "percent": 95.67
+      },
+      "top 30000": {
+        "words": 30000,
+        "in_lexicon": 23390,
+        "percent": 77.97
+      },
+      "top 50000": {
+        "words": 50000,
+        "in_lexicon": 32430,
+        "percent": 64.86
+      },
+      "top 100000": {
+        "words": 100000,
+        "in_lexicon": 43891,
+        "percent": 43.89
+      }
+    },
+    "common_words_missing_examples": [
+      "甚么",
+      "洪山区",
+      "江夏区",
+      "本行政区域",
+      "袁承志",
+      "礼部",
+      "万公顷",
+      "胡秉宸",
+      "武昌区",
+      "李高成",
+      "鄂西",
+      "千步",
+      "郧阳",
+      "刑部",
+      "官军",
+      "陈家洛",
+      "职司",
+      "王琦瑶",
+      "万平方米",
+      "李莫愁",
+      "亲兵",
+      "江夏",
+      "十八年",
+      "马朝旭",
+      "大学士",
+      "行省",
+      "十五年",
+      "工部",
+      "万平方公里",
+      "适才",
+      "怎地",
+      "人口数",
+      "贡献者",
+      "王公",
+      "屈家岭",
+      "节度使",
+      "天鹅洲",
+      "亿立方米",
+      "欧阳锋",
+      "金殿",
+      "周伯通",
+      "明永乐",
+      "首辅",
+      "户部",
+      "解放区",
+      "中纺",
+      "义军",
+      "立法权",
+      "刘宗敏",
+      "琉璃瓦",
+      "清兵",
+      "湖广",
+      "福临",
+      "兵部",
+      "三藏",
+      "黄陂",
+      "极了",
+      "笔架山",
+      "文理学院",
+      "须弥座",
+      "池河",
+      "吏部",
+      "军马",
+      "丁能通",
+      "官家",
+      "二十年",
+      "老营",
+      "宋献策",
+      "国师",
+      "我会",
+      "起义军",
+      "子口",
+      "荆江",
+      "如果说",
+      "苏维埃政府",
+      "六部",
+      "黄依依",
+      "国徽",
+      "音乐堂",
+      "白嘉轩"
+    ],
+    "common_words_missing_but_typed": {
+      "words": 433,
+      "first_candidate": 172,
+      "within_nine": 330,
+      "percent_within_nine": 76.21
+    },
+    "running_text": {
+      "heldout_sentences.tsv": {
+        "lines": 4126,
+        "word_tokens": 13800,
+        "word_types": 7161,
+        "token_coverage_percent": 84.15,
+        "type_coverage_percent": 71.75,
+        "frequent_missing": [
+          "我会×11",
+          "萨米×8",
+          "教区×6",
+          "穿著×5",
+          "兰科×5",
+          "回家吧×4",
+          "和玛丽×4",
+          "乡试×4",
+          "神社×4",
+          "曾祖父×4",
+          "悬钩子×4",
+          "小檗×3",
+          "米纳斯吉拉斯州×3",
+          "登进士×3",
+          "瓷蟹×3",
+          "花为×3",
+          "鳗鲡×3",
+          "亚科×3",
+          "维耶×3",
+          "这药×2",
+          "受够了×2",
+          "前有×2",
+          "二十年×2",
+          "我快×2",
+          "空房间×2",
+          "信神×2",
+          "谢谢您×2",
+          "无法形容×2",
+          "通晓×2",
+          "蓝线×2",
+          "他用×2",
+          "随著×2",
+          "十二个×2",
+          "非常高兴×2",
+          "玛莉×2",
+          "待在家里×2",
+          "神户×2",
+          "昨天上午×2",
+          "见证人×2",
+          "更常×2"
+        ]
+      }
+    }
+  }
+}
