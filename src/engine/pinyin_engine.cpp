@@ -1166,6 +1166,10 @@ std::wstring PinyinEngine::display_input(const std::wstring& typed) const {
     return result;
 }
 
+bool PinyinEngine::warm_up_step() const {
+    return dictionary_.warm_prediction_index_step();
+}
+
 UserLexiconRefreshResult PinyinEngine::refresh_user_lexicon_if_needed(bool composition_active) {
     auto result = dictionary_.refresh_user_lexicon_if_changed(composition_active);
     if (result.reloaded) rebuild_context_model(context_path_);  // also discards the cached lattice

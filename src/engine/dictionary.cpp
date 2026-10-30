@@ -792,6 +792,16 @@ std::vector<std::wstring> Dictionary::matching_pinyins_at(const std::wstring& in
     return matches;
 }
 
+bool Dictionary::warm_prediction_index_step() const {
+    // Common initials first.
+    for (const wchar_t letter : std::wstring_view(L"syzjdhwxlbgtqmnckfpraeo")) {
+        if (!prediction_index_dirty_ && prediction_partitions_.contains(letter)) continue;
+        (void)rebuild_prediction_index(letter);
+        return true;
+    }
+    return false;
+}
+
 const Dictionary::PredictionPartition& Dictionary::rebuild_prediction_index(wchar_t first_letter) const {
     if (prediction_index_dirty_) {
         prediction_partitions_.clear();

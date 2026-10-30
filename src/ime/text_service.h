@@ -97,6 +97,9 @@ private:
     // Win + Space does; a CapsLock in the key is put back once released.
     void switch_profile(ITfContext* context);
     void restore_caps_after_switch();
+    // Prepares the engine's indexes in idle moments after activation, one
+    // letter at a time, so the first keystroke of each initial does not stall.
+    void schedule_warm_up(UINT delay_ms);
     static LRESULT CALLBACK thread_keyboard_hook_proc(int code, WPARAM wparam, LPARAM lparam);
     // A click in the application ends the run Tab would translate: the caret
     // may have moved where the input method cannot see it.
