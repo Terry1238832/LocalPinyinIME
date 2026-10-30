@@ -1,0 +1,5756 @@
+{
+  "batch": "lexicon_batch_552",
+  "evaluation": "native_engine_candidate_coverage",
+  "evaluated_at_utc": "2026-10-30T04:22:34.943235+00:00",
+  "engine_sha256": "4c34816a68c601b793c32ce6f25ab64209e5e4d7270ae13d45ab3887da78a4ff",
+  "resource_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "db4c63bdad7904ff27414e2817ef621052f280b8bf4740a9a8b0e6abd1b058a2",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+    "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+    "continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e"
+  },
+  "frozen_batch_sha256": "1ff2debdb5d86593c79b36b56051f74846f29ff410c56ae6a7b2499463c480e2",
+  "personal_data_isolated": true,
+  "expected_answers_learned": false,
+  "summary": {
+    "cases": 318,
+    "top1_correct": 250,
+    "top9_present": 318,
+    "top1_percent": 78.62,
+    "top9_percent": 100.0,
+    "character_error_rate": 0.0572,
+    "p50_lookup_ms": 14.867,
+    "p95_lookup_ms": 33.068,
+    "max_lookup_ms": 51.918,
+    "missing_from_top9_count": 0,
+    "missing_from_top9": [],
+    "max_returned_candidate_count": 9
+  },
+  "rows": [
+    {
+      "pinyin": "anzhiqiannagemai",
+      "expected": "按之前那个买",
+      "source": "5500",
+      "lookup_us": 51918,
+      "candidates": [
+        "按之前那个卖",
+        "安之前那个卖",
+        "按之前那个买",
+        "安之前那个买",
+        "按之前那个脉",
+        "安之前那个脉",
+        "按之前那个麦",
+        "安之前那个麦",
+        "安置"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "bangdaidianchide",
+      "expected": "帮带点吃的",
+      "source": "5500",
+      "lookup_us": 15088,
+      "candidates": [
+        "帮带点吃的",
+        "绑带点吃的",
+        "帮带电池的",
+        "绑带电池的",
+        "帮带电池底",
+        "绑带电池底",
+        "帮带点吃得",
+        "绑带点吃得",
+        "绑带"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangdaimenka",
+      "expected": "帮带门卡",
+      "source": "5500",
+      "lookup_us": 7263,
+      "candidates": [
+        "帮带门卡",
+        "帮大门卡",
+        "绑带门卡",
+        "棒呆门卡",
+        "邦大门卡",
+        "帮带们卡",
+        "绑带们卡",
+        "棒呆们卡",
+        "绑带"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangdaiwucan",
+      "expected": "帮带午餐",
+      "source": "5500",
+      "lookup_us": 7697,
+      "candidates": [
+        "帮带午餐",
+        "棒带午餐",
+        "棒呆午餐",
+        "帮大午餐",
+        "邦代午餐",
+        "帮代午餐",
+        "邦大午餐",
+        "帮待午餐",
+        "绑带"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangdaiyaoshi",
+      "expected": "帮带钥匙",
+      "source": "5500",
+      "lookup_us": 10595,
+      "candidates": [
+        "帮带钥匙",
+        "绑带钥匙",
+        "棒呆钥匙",
+        "帮带药师",
+        "帮大钥匙",
+        "绑带药师",
+        "帮带要是",
+        "棒呆要是",
+        "绑带"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangdaiyibasan",
+      "expected": "帮带一把伞",
+      "source": "5500",
+      "lookup_us": 9009,
+      "candidates": [
+        "帮带一把伞",
+        "绑带一把伞",
+        "棒呆一把三",
+        "帮带一把三",
+        "棒呆一八三",
+        "棒呆一把散",
+        "帮带一把散",
+        "帮带一八三",
+        "绑带"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangdaiziliao",
+      "expected": "帮带资料",
+      "source": "5500",
+      "lookup_us": 12916,
+      "candidates": [
+        "帮带资料",
+        "绑带资料",
+        "棒呆资料",
+        "帮大资料",
+        "棒呆子了",
+        "棒袋子了",
+        "邦大资料",
+        "邦代资料",
+        "绑带"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangmaidianchi",
+      "expected": "帮买电池",
+      "source": "5500",
+      "lookup_us": 14330,
+      "candidates": [
+        "帮买电池",
+        "帮买点吃",
+        "帮卖电池",
+        "邦买点吃",
+        "邦买电池",
+        "帮卖点吃",
+        "榜卖电池",
+        "榜卖点吃",
+        "帮买"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangmaidongxi",
+      "expected": "帮买东西",
+      "source": "5500",
+      "lookup_us": 8025,
+      "candidates": [
+        "帮买东西",
+        "帮卖东西",
+        "邦买东西",
+        "榜卖东西",
+        "帮脉东西",
+        "帮麦东西",
+        "棒埋东西",
+        "邦脉东西",
+        "帮买"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangmainiunai",
+      "expected": "帮买牛奶",
+      "source": "5500",
+      "lookup_us": 10725,
+      "candidates": [
+        "帮买牛奶",
+        "邦买牛奶",
+        "帮卖牛奶",
+        "榜卖牛奶",
+        "帮麦牛奶",
+        "邦麦牛奶",
+        "棒埋牛奶",
+        "帮脉牛奶",
+        "帮买"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangmaizaocan",
+      "expected": "帮买早餐",
+      "source": "5500",
+      "lookup_us": 8504,
+      "candidates": [
+        "帮买早餐",
+        "帮卖早餐",
+        "邦买早餐",
+        "榜卖早餐",
+        "帮麦早餐",
+        "棒埋早餐",
+        "帮脉早餐",
+        "帮迈早餐",
+        "帮买"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangmangcunyixia",
+      "expected": "帮忙存一下",
+      "source": "5500",
+      "lookup_us": 14463,
+      "candidates": [
+        "帮忙存一下",
+        "帮忙村一下",
+        "帮忙村以下",
+        "帮忙存以下",
+        "帮忙寸一下",
+        "帮忙邨一下",
+        "帮忙寸以下",
+        "帮忙存疑下",
+        "帮忙"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangmangdaiguolai",
+      "expected": "帮忙带过来",
+      "source": "5500",
+      "lookup_us": 14911,
+      "candidates": [
+        "帮忙带过来",
+        "帮忙大过来",
+        "帮忙待过来",
+        "帮忙戴过来",
+        "帮忙代过来",
+        "帮忙呆过来",
+        "帮忙袋过来",
+        "帮忙贷过来",
+        "帮忙带"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangmangdaiqu",
+      "expected": "帮忙代取",
+      "source": "5500",
+      "lookup_us": 10380,
+      "candidates": [
+        "帮忙代取",
+        "帮忙带去",
+        "帮忙带区",
+        "帮忙大区",
+        "帮忙带取",
+        "帮忙大曲",
+        "帮忙带曲",
+        "帮忙带渠",
+        "帮忙带"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangmangdaixingli",
+      "expected": "帮忙带行李",
+      "source": "5500",
+      "lookup_us": 16136,
+      "candidates": [
+        "帮忙带行李",
+        "帮忙带行礼",
+        "帮忙大行李",
+        "帮忙大行礼",
+        "帮忙代行李",
+        "帮忙带姓李",
+        "帮忙代行礼",
+        "帮忙带行里",
+        "帮忙带"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangmangnaguoqu",
+      "expected": "帮忙拿过去",
+      "source": "5500",
+      "lookup_us": 13598,
+      "candidates": [
+        "帮忙拿过去",
+        "帮忙那过去",
+        "帮忙纳过去",
+        "帮忙拿过曲",
+        "帮忙哪过去",
+        "帮忙拿过区",
+        "帮忙拿过取",
+        "帮忙娜过去",
+        "帮忙"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangmangshaodai",
+      "expected": "帮忙捎带",
+      "source": "5500",
+      "lookup_us": 11470,
+      "candidates": [
+        "帮忙捎带",
+        "帮忙稍大",
+        "帮忙少带",
+        "帮忙少代",
+        "帮忙烧带",
+        "帮忙稍待",
+        "帮忙稍带",
+        "帮忙少袋",
+        "帮忙"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangmangsongguolai",
+      "expected": "帮忙送过来",
+      "source": "5500",
+      "lookup_us": 11669,
+      "candidates": [
+        "帮忙送过来",
+        "帮忙松过来",
+        "帮忙宋过来",
+        "帮忙颂过来",
+        "帮忙松果来",
+        "帮忙讼过来",
+        "帮忙诵过来",
+        "帮忙送国来",
+        "帮忙"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangmangsonghuiqu",
+      "expected": "帮忙送回去",
+      "source": "5500",
+      "lookup_us": 10315,
+      "candidates": [
+        "帮忙送回去",
+        "帮忙松回去",
+        "帮忙送会去",
+        "帮忙宋回去",
+        "帮忙送回曲",
+        "帮忙送回区",
+        "帮忙颂回去",
+        "帮忙松会去",
+        "帮忙"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangnachongdianqi",
+      "expected": "帮拿充电器",
+      "source": "5500",
+      "lookup_us": 19822,
+      "candidates": [
+        "邦纳充电器",
+        "帮拿充电器",
+        "邦纳充电气",
+        "邦纳冲电器",
+        "邦纳充电起",
+        "帮那充电气",
+        "邦纳冲电气",
+        "邦纳重电器",
+        "帮"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "bangnachongdianxian",
+      "expected": "帮拿充电线",
+      "source": "5500",
+      "lookup_us": 22547,
+      "candidates": [
+        "邦纳充电线",
+        "帮那充电线",
+        "邦纳重点县",
+        "邦纳重癫痫",
+        "邦纳冲电线",
+        "邦纳充电限",
+        "邦纳重电线",
+        "帮拿充电线",
+        "帮"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "bangnashuiguo",
+      "expected": "帮拿水果",
+      "source": "5500",
+      "lookup_us": 7516,
+      "candidates": [
+        "帮拿水果",
+        "邦纳税过",
+        "邦纳水果",
+        "邦纳说过",
+        "邦纳税国",
+        "帮那水果",
+        "棒拿水果",
+        "邦纳睡过",
+        "帮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangnawenjian",
+      "expected": "帮拿文件",
+      "source": "5500",
+      "lookup_us": 12466,
+      "candidates": [
+        "帮拿文件",
+        "邦纳文件",
+        "棒拿稳健",
+        "邦纳稳健",
+        "帮那文件",
+        "帮拿稳健",
+        "棒拿文件",
+        "棒那文件",
+        "帮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangnayanjing",
+      "expected": "帮拿眼镜",
+      "source": "5500",
+      "lookup_us": 14337,
+      "candidates": [
+        "帮拿眼镜",
+        "邦纳眼睛",
+        "邦纳眼镜",
+        "帮那眼睛",
+        "帮那眼镜",
+        "邦纳燕京",
+        "帮拿眼睛",
+        "棒拿眼睛",
+        "帮"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangqukuaidi",
+      "expected": "帮取快递",
+      "source": "5500",
+      "lookup_us": 10674,
+      "candidates": [
+        "帮取快递",
+        "邦取快递",
+        "帮区快递",
+        "邦区快递",
+        "帮去快递",
+        "邦去快递",
+        "帮区块的",
+        "邦区块的",
+        "帮取"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangquyaopin",
+      "expected": "帮取药品",
+      "source": "5500",
+      "lookup_us": 11026,
+      "candidates": [
+        "帮取药品",
+        "帮去药品",
+        "邦去药品",
+        "帮区药品",
+        "邦区药品",
+        "邦取药品",
+        "膀蘧药品",
+        "帮曲药品",
+        "帮取"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangwodaidianshuiguo",
+      "expected": "帮我带点水果",
+      "source": "5500",
+      "lookup_us": 17763,
+      "candidates": [
+        "帮我带点水果",
+        "帮我带电水果",
+        "帮我大点水果",
+        "帮我带点水过",
+        "帮我带点说过",
+        "帮我带点睡过",
+        "帮我带店水果",
+        "帮我带点水国",
+        "帮我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangwodaifenhuntun",
+      "expected": "帮我带份馄饨",
+      "source": "5500",
+      "lookup_us": 10683,
+      "candidates": [
+        "帮我带份馄饨",
+        "帮我带分馄饨",
+        "帮我带粉馄饨",
+        "帮我带粪馄饨",
+        "帮我带芬馄饨",
+        "帮我带纷馄饨",
+        "帮我带愤馄饨",
+        "帮我带奋馄饨",
+        "帮我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangwodaifenwenjian",
+      "expected": "帮我带份文件",
+      "source": "5500",
+      "lookup_us": 14796,
+      "candidates": [
+        "帮我带份文件",
+        "帮我带分文件",
+        "帮我大份文件",
+        "帮我带分稳健",
+        "帮我带芬文件",
+        "帮我带粉文件",
+        "帮我带份稳健",
+        "帮我大分文件",
+        "帮我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangwodaifenzaocan",
+      "expected": "帮我带份早餐",
+      "source": "5500",
+      "lookup_us": 9815,
+      "candidates": [
+        "帮我带份早餐",
+        "帮我带分早餐",
+        "帮我大份早餐",
+        "帮我带粉早餐",
+        "帮我带粪早餐",
+        "帮我带氛早餐",
+        "帮我带芬早餐",
+        "帮我带纷早餐",
+        "帮我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangwodaigebao",
+      "expected": "帮我带个包",
+      "source": "5500",
+      "lookup_us": 11378,
+      "candidates": [
+        "帮我带个包",
+        "帮我带个宝",
+        "帮我带个报",
+        "帮我带个薄",
+        "帮我带个爆",
+        "帮我带个保",
+        "帮我带个饱",
+        "帮我带个抱",
+        "帮我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangwodaigewufan",
+      "expected": "帮我带个午饭",
+      "source": "5500",
+      "lookup_us": 12079,
+      "candidates": [
+        "帮我带个午饭",
+        "帮我带个戊钒",
+        "帮我戴个午饭",
+        "帮我带个无反",
+        "帮我带个捂钒",
+        "帮我带个屋饭",
+        "帮我带个无烦",
+        "帮我带个无犯",
+        "帮我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangwodaihuilai",
+      "expected": "帮我带回来",
+      "source": "5500",
+      "lookup_us": 10308,
+      "candidates": [
+        "帮我带回来",
+        "帮我带会来",
+        "帮我戴回来",
+        "帮我待回来",
+        "帮我待会来",
+        "帮我大回来",
+        "帮我代回来",
+        "帮我呆回来",
+        "帮我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangwodaimai",
+      "expected": "帮我代买",
+      "source": "5500",
+      "lookup_us": 11047,
+      "candidates": [
+        "帮我代买",
+        "帮我带脉",
+        "帮我带买",
+        "帮我带卖",
+        "帮我带埋",
+        "帮我大卖",
+        "帮我待买",
+        "帮我带麦",
+        "帮我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangwodaina",
+      "expected": "帮我代拿",
+      "source": "5500",
+      "lookup_us": 5482,
+      "candidates": [
+        "帮我代拿",
+        "帮我带那",
+        "帮我带哪",
+        "帮我带拿",
+        "帮我带娜",
+        "帮我带纳",
+        "帮我带呐",
+        "帮我大拿",
+        "帮我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangwodaipingniunai",
+      "expected": "帮我带瓶牛奶",
+      "source": "5500",
+      "lookup_us": 15216,
+      "candidates": [
+        "帮我带瓶牛奶",
+        "帮我大瓶牛奶",
+        "帮我带平牛奶",
+        "帮我带屏牛奶",
+        "帮我带评牛奶",
+        "帮我带凭牛奶",
+        "帮我带萍牛奶",
+        "帮我带坪牛奶",
+        "帮我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangwodaipingyinliao",
+      "expected": "帮我带瓶饮料",
+      "source": "5500",
+      "lookup_us": 18628,
+      "candidates": [
+        "帮我带瓶饮料",
+        "帮我大瓶饮料",
+        "帮我带平饮料",
+        "帮我带屏饮料",
+        "帮我带评饮料",
+        "帮我带凭饮料",
+        "帮我带萍饮料",
+        "帮我带坪饮料",
+        "帮我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangwodaiyixia",
+      "expected": "帮我带一下",
+      "source": "5500",
+      "lookup_us": 13852,
+      "candidates": [
+        "帮我带一下",
+        "帮我待一下",
+        "帮我带以下",
+        "帮我戴一下",
+        "帮我大一下",
+        "帮我带一夏",
+        "帮我呆一下",
+        "帮我带一吓",
+        "帮我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangwofenhaodai",
+      "expected": "帮我分好袋",
+      "source": "5500",
+      "lookup_us": 18093,
+      "candidates": [
+        "帮我分好大",
+        "帮我分好歹",
+        "帮我分号带",
+        "帮我分好袋",
+        "帮我分号戴",
+        "帮我分耗代",
+        "帮我分好带",
+        "帮我分号大",
+        "帮我"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "bangwomaidianshuiguo",
+      "expected": "帮我买点水果",
+      "source": "5500",
+      "lookup_us": 21424,
+      "candidates": [
+        "帮我买点水果",
+        "帮我卖点水果",
+        "帮我买点说过",
+        "帮我买点睡过",
+        "帮我买点水过",
+        "帮我买电水果",
+        "帮我买点水粿",
+        "帮我买点谁过",
+        "帮我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangwomaigedangao",
+      "expected": "帮我买个蛋糕",
+      "source": "5500",
+      "lookup_us": 19713,
+      "candidates": [
+        "帮我买个蛋糕",
+        "帮我卖个蛋糕",
+        "帮我买各蛋糕",
+        "帮我买格蛋糕",
+        "帮我买疙蛋糕",
+        "帮我买歌蛋糕",
+        "帮我买哥蛋糕",
+        "帮我买隔蛋糕",
+        "帮我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangwomaigefantuan",
+      "expected": "帮我买个饭团",
+      "source": "5500",
+      "lookup_us": 15047,
+      "candidates": [
+        "帮我买个饭团",
+        "帮我买个返图案",
+        "帮我买个范团",
+        "帮我买个饭图案",
+        "帮我买各饭团",
+        "帮我买个泛团",
+        "帮我买格饭团",
+        "帮我买隔饭团",
+        "帮我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangwomaipingshui",
+      "expected": "帮我买瓶水",
+      "source": "5500",
+      "lookup_us": 14220,
+      "candidates": [
+        "帮我买瓶水",
+        "帮我买瓶说",
+        "帮我买瓶谁",
+        "帮我买瓶睡",
+        "帮我买瓶税",
+        "帮我买平说",
+        "帮我买萍说",
+        "帮我买评说",
+        "帮我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangwomaishizhijin",
+      "expected": "帮我买湿纸巾",
+      "source": "5500",
+      "lookup_us": 18778,
+      "candidates": [
+        "帮我买湿纸巾",
+        "帮我买是至今",
+        "帮我买事至今",
+        "帮我买始至今",
+        "帮我买市值近",
+        "帮我买是只仅",
+        "帮我买施至今",
+        "帮我买市至今",
+        "帮我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangwomaixifashui",
+      "expected": "帮我买洗发水",
+      "source": "5500",
+      "lookup_us": 12168,
+      "candidates": [
+        "帮我买洗发水",
+        "帮我卖洗发水",
+        "帮我买洗发说",
+        "帮我买西法说",
+        "帮我买西发水",
+        "帮我买洗发睡",
+        "帮我买洗发谁",
+        "帮我买西发说",
+        "帮我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangwomaiyagao",
+      "expected": "帮我买牙膏",
+      "source": "5500",
+      "lookup_us": 10399,
+      "candidates": [
+        "帮我买牙膏",
+        "帮我买压高",
+        "帮我买鸭高",
+        "帮我卖牙膏",
+        "帮我买呀高",
+        "帮我买雅高",
+        "帮我买牙高",
+        "帮我卖压高",
+        "帮我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangwonaganmaoyao",
+      "expected": "帮我拿感冒药",
+      "source": "5500",
+      "lookup_us": 15079,
+      "candidates": [
+        "帮我拿感冒药",
+        "帮我那感冒药",
+        "帮我拿感冒要",
+        "帮我拿感冒腰",
+        "帮我拿感冒咬",
+        "帮我拿感冒妖",
+        "帮我拿感冒摇",
+        "帮我拿感冒瑶",
+        "帮我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangwonagezhijin",
+      "expected": "帮我拿个纸巾",
+      "source": "5500",
+      "lookup_us": 23766,
+      "candidates": [
+        "帮我拿个纸巾",
+        "帮我拿个至今",
+        "帮我那个至今",
+        "帮我那个纸巾",
+        "帮我拿个支今",
+        "帮我拿个至近",
+        "帮我拿个值近",
+        "帮我拿个至仅",
+        "帮我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangwonahuilai",
+      "expected": "帮我拿回来",
+      "source": "5500",
+      "lookup_us": 9768,
+      "candidates": [
+        "帮我拿回来",
+        "帮我那回来",
+        "帮我拿会来",
+        "帮我哪回来",
+        "帮我那会来",
+        "帮我纳回来",
+        "帮我娜回来",
+        "棒我拿回来",
+        "帮我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangwonapiao",
+      "expected": "帮我拿票",
+      "source": "5500",
+      "lookup_us": 8428,
+      "candidates": [
+        "帮我拿票",
+        "帮我拿嫖",
+        "帮我拿飘",
+        "帮我拿漂",
+        "帮我拿朴",
+        "帮我拿瓢",
+        "帮我那票",
+        "帮我拿瞟",
+        "帮我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangwonaxiayifu",
+      "expected": "帮我拿下衣服",
+      "source": "5500",
+      "lookup_us": 15478,
+      "candidates": [
+        "帮我拿下衣服",
+        "帮我拿下一幅",
+        "帮我拿下一副",
+        "帮我拿下依附",
+        "帮我拿下以负",
+        "帮我拿下一夫",
+        "帮我拿下一服",
+        "帮我拿下一负",
+        "帮我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangwonayaohuilai",
+      "expected": "帮我拿药回来",
+      "source": "5500",
+      "lookup_us": 34780,
+      "candidates": [
+        "帮我拿要回来",
+        "帮我那要回来",
+        "帮我拿药回来",
+        "帮我那幺回来",
+        "帮我拿咬回来",
+        "帮我拿遥回来",
+        "帮我拿钥回来",
+        "帮我那咬回来",
+        "帮我"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "bangwonayifu",
+      "expected": "帮我拿衣服",
+      "source": "5500",
+      "lookup_us": 8523,
+      "candidates": [
+        "帮我拿衣服",
+        "帮我拿一幅",
+        "帮我拿一副",
+        "帮我拿一夫",
+        "帮我那一副",
+        "帮我拿一负",
+        "帮我拿一付",
+        "帮我拿一服",
+        "帮我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangwopaoyitangba",
+      "expected": "帮我跑一趟吧",
+      "source": "5500",
+      "lookup_us": 16005,
+      "candidates": [
+        "帮我跑一趟吧",
+        "帮我跑一趟把",
+        "帮我跑一趟八",
+        "帮我跑一趟巴",
+        "帮我跑一趟罢",
+        "帮我泡一趟吧",
+        "帮我跑一趟爸",
+        "帮我跑一趟霸",
+        "帮我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangwoqugekuaidi",
+      "expected": "帮我取个快递",
+      "source": "5500",
+      "lookup_us": 16492,
+      "candidates": [
+        "帮我取个快递",
+        "帮我取個快递",
+        "帮我去个快递",
+        "帮我取个快的",
+        "帮我取個快的",
+        "帮我取個快地",
+        "帮我取個块地",
+        "帮我取各快递",
+        "帮我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangwoqupiao",
+      "expected": "帮我取票",
+      "source": "5500",
+      "lookup_us": 11989,
+      "candidates": [
+        "帮我取票",
+        "帮我去飘",
+        "帮我去票",
+        "帮我取漂",
+        "帮我取飘",
+        "帮我取朴",
+        "帮我取嫖",
+        "帮我去漂",
+        "帮我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangwoquxiayaolai",
+      "expected": "帮我取下药来",
+      "source": "5500",
+      "lookup_us": 34033,
+      "candidates": [
+        "帮我取下要来",
+        "帮我取下药来",
+        "帮我取下腰来",
+        "帮我去下要来",
+        "帮我取下药濑",
+        "帮我取下邀来",
+        "帮我取下遥来",
+        "帮我取下摇来",
+        "帮我"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "bangwoquyao",
+      "expected": "帮我取药",
+      "source": "5500",
+      "lookup_us": 8910,
+      "candidates": [
+        "帮我取药",
+        "帮我取要",
+        "帮我去要",
+        "帮我去药",
+        "帮我去藥",
+        "帮我取妖",
+        "帮我去咬",
+        "帮我取腰",
+        "帮我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangwoquyifu",
+      "expected": "帮我取衣服",
+      "source": "5500",
+      "lookup_us": 19534,
+      "candidates": [
+        "帮我去衣服",
+        "帮我取一副",
+        "帮我取衣服",
+        "帮我取一幅",
+        "帮我取一夫",
+        "帮我取一负",
+        "帮我取一付",
+        "帮我取一服",
+        "帮我"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "bangwoquyixia",
+      "expected": "帮我取一下",
+      "source": "5500",
+      "lookup_us": 12696,
+      "candidates": [
+        "帮我取一下",
+        "帮我去一下",
+        "帮我取以下",
+        "帮我去以下",
+        "帮我取一夏",
+        "帮我取一吓",
+        "帮我区一下",
+        "棒我去一下",
+        "帮我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangwoquzhangpiao",
+      "expected": "帮我取张票",
+      "source": "5500",
+      "lookup_us": 19281,
+      "candidates": [
+        "帮我取张票",
+        "帮我去张票",
+        "帮我区张票",
+        "帮我曲张漂",
+        "帮我取长朴",
+        "帮我取涨票",
+        "帮我区长朴",
+        "帮我取障票",
+        "帮我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bangwoshaodiandongxi",
+      "expected": "帮我捎点东西",
+      "source": "5500",
+      "lookup_us": 39305,
+      "candidates": [
+        "帮我少点东西",
+        "帮我捎点东西",
+        "帮我烧店东西",
+        "帮我少店东西",
+        "帮我少典东西",
+        "帮我少电东西",
+        "帮我烧电东西",
+        "帮我烧典东西",
+        "帮我"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "bangwoshaohuilai",
+      "expected": "帮我捎回来",
+      "source": "5500",
+      "lookup_us": 24225,
+      "candidates": [
+        "帮我召回来",
+        "帮我烧回来",
+        "帮我少回来",
+        "帮我稍回来",
+        "帮我绍回来",
+        "帮我捎回来",
+        "帮我烧会来",
+        "帮我邵回来",
+        "帮我"
+      ],
+      "expected_rank": 6
+    },
+    {
+      "pinyin": "bangwoshaomaiyidian",
+      "expected": "帮我少买一点",
+      "source": "5500",
+      "lookup_us": 23712,
+      "candidates": [
+        "帮我少买一点",
+        "帮我烧卖一点",
+        "帮我烧麦一点",
+        "帮我烧埋一点",
+        "帮我烧买一点",
+        "帮我少卖一点",
+        "帮我烧卖疑点",
+        "帮我烧麦疑点",
+        "帮我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "baohaozainazou",
+      "expected": "包好再拿走",
+      "source": "5500",
+      "lookup_us": 6540,
+      "candidates": [
+        "包好再拿走",
+        "包好在拿走",
+        "煲好再拿走",
+        "包好在哪走",
+        "包好在那走",
+        "爆豪在拿走",
+        "报号在哪走",
+        "包好仔拿走",
+        "包好"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "baozhiqikanyixia",
+      "expected": "保质期看一下",
+      "source": "5500",
+      "lookup_us": 13839,
+      "candidates": [
+        "保质期看一下",
+        "保质期看以下",
+        "保质期刊一下",
+        "报纸起看一下",
+        "保质期刊以下",
+        "报纸期刊一下",
+        "报纸期刊以下",
+        "保质期砍一下",
+        "保质期"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biedaoguolaina",
+      "expected": "别倒过来拿",
+      "source": "5500",
+      "lookup_us": 12861,
+      "candidates": [
+        "别倒过来拿",
+        "别倒过来那",
+        "别到过来拿",
+        "别到过来那",
+        "别倒过来哪",
+        "别到过莱纳",
+        "别倒过来纳",
+        "别倒过来娜",
+        "别打"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biemaicuoxinghao",
+      "expected": "别买错型号",
+      "source": "5500",
+      "lookup_us": 17469,
+      "candidates": [
+        "别买错型号",
+        "别买错型好",
+        "别买错性好",
+        "别卖错型号",
+        "别买错行好",
+        "别买错行号",
+        "别买错幸好",
+        "别买错型豪",
+        "别买"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biemainameduole",
+      "expected": "别买那么多了",
+      "source": "5500",
+      "lookup_us": 29832,
+      "candidates": [
+        "别买那么多了",
+        "别卖那么多了",
+        "别买那么多乐",
+        "别卖那么多乐",
+        "别卖那么躲了",
+        "别买那么躲了",
+        "别卖那么多勒",
+        "别买那么多勒",
+        "别买"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bienalinqide",
+      "expected": "别拿临期的",
+      "source": "5500",
+      "lookup_us": 24191,
+      "candidates": [
+        "别拿拎起的",
+        "别拿林奇的",
+        "别拿临期的",
+        "别拿林气的",
+        "别拿拎起底",
+        "别拿林齐的",
+        "别拿林起的",
+        "别拿林奇地",
+        "别拿"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "bienongdiujiuxing",
+      "expected": "别弄丢就行",
+      "source": "5500",
+      "lookup_us": 14020,
+      "candidates": [
+        "别弄丢就行",
+        "别弄丢救星",
+        "别弄丢酒醒",
+        "别弄丢九行",
+        "别弄丢就性",
+        "别弄丢九星",
+        "别弄丢酒行",
+        "别弄丢就醒",
+        "别"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bienongdiujiuxingle",
+      "expected": "别弄丢就行了",
+      "source": "5500",
+      "lookup_us": 9950,
+      "candidates": [
+        "别弄丢就行了",
+        "别弄丢就醒了",
+        "别弄丢酒醒了",
+        "别弄丢救醒了",
+        "别弄丢就行乐",
+        "别弄丢救星了",
+        "别弄丢九星了",
+        "别弄丢就行勒",
+        "别"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biewangdaihuizhi",
+      "expected": "别忘带回执",
+      "source": "5500",
+      "lookup_us": 12791,
+      "candidates": [
+        "别忘带回执",
+        "别忘带绘制",
+        "别忘带回至",
+        "别忘带回之",
+        "别往大辉指",
+        "别忘带回值",
+        "别忘带回指",
+        "别忘带回纸",
+        "别忘"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biewanglebangwoqu",
+      "expected": "别忘了帮我取",
+      "source": "5500",
+      "lookup_us": 20463,
+      "candidates": [
+        "别忘了帮我去",
+        "别忘了帮我区",
+        "别忘了帮我取",
+        "别忘了帮我娶",
+        "别忘了帮我曲",
+        "别忘了帮我屈",
+        "别忘了帮我渠",
+        "别忘了帮我趣",
+        "别忘了"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "biewanglegeixiaopiao",
+      "expected": "别忘了给小票",
+      "source": "5500",
+      "lookup_us": 19250,
+      "candidates": [
+        "别忘了给小票",
+        "别忘了给小瓢",
+        "别忘了给小漂",
+        "别忘了给小飘",
+        "别忘了给小朴",
+        "别忘了给肖票",
+        "别忘了给萧票",
+        "别忘了给销票",
+        "别忘了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biewanglehuanhuilai",
+      "expected": "别忘了还回来",
+      "source": "5500",
+      "lookup_us": 18923,
+      "candidates": [
+        "别忘了还回来",
+        "别忘了换回来",
+        "别忘了还会来",
+        "别忘了环回来",
+        "别忘了唤回来",
+        "别忘了欢回来",
+        "别忘了患回来",
+        "别忘了幻回来",
+        "别忘了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biexuantaitiande",
+      "expected": "别选太甜的",
+      "source": "5500",
+      "lookup_us": 15227,
+      "candidates": [
+        "别选太甜的",
+        "别炫太甜的",
+        "别选台提案的",
+        "别选太田地",
+        "别选台天的",
+        "别选太田的",
+        "别选台天地",
+        "别炫太田地",
+        "别"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bujidejiuwenwo",
+      "expected": "不记得就问我",
+      "source": "5500",
+      "lookup_us": 10061,
+      "candidates": [
+        "不记得就问我",
+        "不羁的就问我",
+        "不记得久问我",
+        "不记得救问我",
+        "不记得酒问我",
+        "不记得九问我",
+        "不羁的旧问我",
+        "不记得旧问我",
+        "不记得"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "bunengfangtaijiu",
+      "expected": "不能放太久",
+      "source": "5500",
+      "lookup_us": 13808,
+      "candidates": [
+        "不能放太久",
+        "不能方太久",
+        "不能访太久",
+        "不能防太久",
+        "不能房太久",
+        "不能访台酒",
+        "不能访台就",
+        "不能仿太久",
+        "不能"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "buyaoladea",
+      "expected": "不要辣的啊",
+      "source": "5500",
+      "lookup_us": 5016,
+      "candidates": [
+        "不要辣的啊",
+        "不要拉的啊",
+        "不要拉得啊",
+        "不要落地啊",
+        "不要拉德啊",
+        "不要拉的阿",
+        "不要啦的啊",
+        "不要落的啊",
+        "不要啦"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "buyongmaitaiduo",
+      "expected": "不用买太多",
+      "source": "5500",
+      "lookup_us": 11525,
+      "candidates": [
+        "不用买太多",
+        "不用脉太多",
+        "不用麦太多",
+        "不用买台多",
+        "不用卖太多",
+        "不用埋太多",
+        "不用迈太多",
+        "不用买台堕",
+        "不用"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "buyongtiaotaiduoyang",
+      "expected": "不用挑太多样",
+      "source": "5500",
+      "lookup_us": 34406,
+      "candidates": [
+        "不用跳台多样",
+        "不用跳太多样",
+        "不用调太多样",
+        "不用跳汰多样",
+        "不用调态多样",
+        "不用跳态多样",
+        "不用调台多样",
+        "不用挑太多样",
+        "不用"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "buyongzaimaiyifen",
+      "expected": "不用再买一份",
+      "source": "5500",
+      "lookup_us": 13030,
+      "candidates": [
+        "不用再买一份",
+        "不用再买一分",
+        "不用在买一份",
+        "不用再卖一份",
+        "不用再买异分",
+        "不用再买异粉",
+        "不用再卖一分",
+        "不用再买一粉",
+        "不用"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "buzhaojiyonga",
+      "expected": "不着急用啊",
+      "source": "5500",
+      "lookup_us": 7605,
+      "candidates": [
+        "不着急用啊",
+        "不着急用阿",
+        "不着急永啊",
+        "不着急勇啊",
+        "不着急泳啊",
+        "不着急涌啊",
+        "不着急拥啊",
+        "不着急雍啊",
+        "不着急"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "changwenfangzhejiuxing",
+      "expected": "常温放着就行",
+      "source": "5500",
+      "lookup_us": 14910,
+      "candidates": [
+        "常温放着就行",
+        "长文放着就行",
+        "常温放这就行",
+        "常温访者就行",
+        "长文房这就行",
+        "常温放着救星",
+        "长文房者就行",
+        "长文放着救星",
+        "常温"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chaoguoyusuanbiemai",
+      "expected": "超过预算别买",
+      "source": "5500",
+      "lookup_us": 19614,
+      "candidates": [
+        "超过预算别买",
+        "超过预算别卖",
+        "炒锅预算别买",
+        "超过预算别埋",
+        "超过预算别脉",
+        "超过预算别麦",
+        "超过预算别迈",
+        "超过与酸别买",
+        "超过"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "cheduobuduoa",
+      "expected": "车多不多啊",
+      "source": "5500",
+      "lookup_us": 6932,
+      "candidates": [
+        "车多不多啊",
+        "扯多不多啊",
+        "车多不多阿",
+        "车多部多啊",
+        "车多不多呵",
+        "车多布多啊",
+        "车多补多啊",
+        "车踱步多啊",
+        "车"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "cheliyougedaizi",
+      "expected": "车里有个袋子",
+      "source": "5500",
+      "lookup_us": 13068,
+      "candidates": [
+        "车里有个袋子",
+        "撤离有个袋子",
+        "车里有个大字",
+        "车里有个呆子",
+        "车里有个带子",
+        "撤离有个大字",
+        "车里有个大自",
+        "车里有个代子",
+        "车里"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chimaduiyixia",
+      "expected": "尺码对一下",
+      "source": "5500",
+      "lookup_us": 11480,
+      "candidates": [
+        "尺码对一下",
+        "尺码对以下",
+        "吃吗对一下",
+        "尺码队一下",
+        "吃吗对以下",
+        "尺码堆一下",
+        "尺码队以下",
+        "尺码兑一下",
+        "尺码"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chongdianqibangwona",
+      "expected": "充电器帮我拿",
+      "source": "5500",
+      "lookup_us": 13965,
+      "candidates": [
+        "充电器帮我拿",
+        "充电器帮我那",
+        "充电器帮我哪",
+        "充电器帮我纳",
+        "充电器帮我娜",
+        "充电其帮我拿",
+        "充电器帮我呐",
+        "充电器帮我钠",
+        "充电器"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "daibaozhijinhuilai",
+      "expected": "带包纸巾回来",
+      "source": "5500",
+      "lookup_us": 14051,
+      "candidates": [
+        "带包纸巾回来",
+        "带包纸巾会来",
+        "袋包纸巾回来",
+        "大苞至今回来",
+        "大宝至今回来",
+        "代报纸进回来",
+        "代报纸金回来",
+        "代报纸近回来",
+        "带包纸巾"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "daihuijiazaichuli",
+      "expected": "带回家再处理",
+      "source": "5500",
+      "lookup_us": 12962,
+      "candidates": [
+        "带回家再处理",
+        "带回家在处理",
+        "待回家再处理",
+        "带回家再出力",
+        "带回家在出力",
+        "大会夹在处理",
+        "带回家再出理",
+        "带回家在出理",
+        "带回家"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "daikouzhajindian",
+      "expected": "袋口扎紧点",
+      "source": "5500",
+      "lookup_us": 10642,
+      "candidates": [
+        "袋口扎紧点",
+        "带口扎紧点",
+        "袋口扎进店",
+        "袋口扎紧店",
+        "袋口扎进点",
+        "袋口扎紧电",
+        "袋口扎紧垫",
+        "袋口扎进电",
+        "袋口"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dainakuaidi",
+      "expected": "代拿快递",
+      "source": "5500",
+      "lookup_us": 8672,
+      "candidates": [
+        "代拿快递",
+        "大拿快递",
+        "带拿快递",
+        "待那块地",
+        "戴那块地",
+        "待那快递",
+        "大嗯啊快递",
+        "戴那快递",
+        "带"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "daiqukuaijian",
+      "expected": "代取快件",
+      "source": "5500",
+      "lookup_us": 12799,
+      "candidates": [
+        "代取快件",
+        "带去快件",
+        "带去会见",
+        "带去快检",
+        "大区快件",
+        "大区块建",
+        "大区块间",
+        "待取快件",
+        "带去"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "daizibienongdiule",
+      "expected": "袋子别弄丢了",
+      "source": "5500",
+      "lookup_us": 10579,
+      "candidates": [
+        "袋子别弄丢了",
+        "带子别弄丢了",
+        "袋子别弄丢乐",
+        "袋子别弄丢勒",
+        "带子別农丢了",
+        "带子別浓丢了",
+        "带子别弄丢乐",
+        "带子别弄丢勒",
+        "袋子"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "daodianbangwomai",
+      "expected": "到店帮我买",
+      "source": "5500",
+      "lookup_us": 18465,
+      "candidates": [
+        "到店帮我买",
+        "导电帮我买",
+        "到店帮我卖",
+        "导电帮我卖",
+        "到店帮我迈",
+        "到店帮我脉",
+        "导电帮我迈",
+        "导电帮我脉",
+        "导电"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "daodianquyixia",
+      "expected": "到店取一下",
+      "source": "5500",
+      "lookup_us": 31007,
+      "candidates": [
+        "到点去一下",
+        "到店取一下",
+        "导电去一下",
+        "导电取一下",
+        "导电区一下",
+        "到点去以下",
+        "导电去以下",
+        "到店取以下",
+        "导电"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "dengduojiunengmaidao",
+      "expected": "等多久能买到",
+      "source": "5500",
+      "lookup_us": 17460,
+      "candidates": [
+        "等多久能买到",
+        "等多久能卖到",
+        "等多就能买到",
+        "等多就能卖到",
+        "等多久能买刀",
+        "等多久能买道",
+        "等多久能卖道",
+        "等多久能埋到",
+        "等多久"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "denghuierwolaiqu",
+      "expected": "等会儿我来取",
+      "source": "5500",
+      "lookup_us": 20579,
+      "candidates": [
+        "等会儿我来去",
+        "等会儿我来取",
+        "等会儿我来区",
+        "等会儿我来娶",
+        "等会儿我来曲",
+        "等会儿我来驱",
+        "等会儿我来趣",
+        "等会儿我来渠",
+        "等会儿"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "dianlihaikaizhema",
+      "expected": "店里还开着吗",
+      "source": "5500",
+      "lookup_us": 10408,
+      "candidates": [
+        "店里还开着吗",
+        "电力还开着吗",
+        "店里还开着嘛",
+        "店里还开着马",
+        "电力还开着嘛",
+        "电力还开着马",
+        "店里还开着麻",
+        "店里还开着骂",
+        "电力"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dongxifangfujiashi",
+      "expected": "东西放副驾驶",
+      "source": "5500",
+      "lookup_us": 31582,
+      "candidates": [
+        "东西方副驾驶",
+        "东西仿佛驾驶",
+        "东西放副驾驶",
+        "东西方附加时",
+        "东西仿佛家事",
+        "东西仿佛加事",
+        "东西方复驾驶",
+        "东西放附加时",
+        "东西方"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "dongximaidaoleba",
+      "expected": "东西买到了吧",
+      "source": "5500",
+      "lookup_us": 20322,
+      "candidates": [
+        "东西买到了吧",
+        "东西卖到了吧",
+        "东西买到了把",
+        "东西卖到了把",
+        "东西卖到了罢",
+        "东西卖倒了吧",
+        "东西买到了罢",
+        "东西卖到了八",
+        "东西"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dongxixianbiechaikai",
+      "expected": "东西先别拆开",
+      "source": "5500",
+      "lookup_us": 17380,
+      "candidates": [
+        "东西先别拆开",
+        "洞悉先别拆开",
+        "东西先别差开",
+        "东西先别拆凯",
+        "东西先憋拆开",
+        "东西县憋拆开",
+        "东西先鳖拆开",
+        "东西先别拆楷",
+        "东西"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dongxixianfangcheli",
+      "expected": "东西先放车里",
+      "source": "5500",
+      "lookup_us": 17834,
+      "candidates": [
+        "东西先放车里",
+        "东西先放撤离",
+        "东西线放车里",
+        "东西现房车里",
+        "东西线方撤离",
+        "东西先方撤离",
+        "东西西安防撤离",
+        "东西现房撤离",
+        "东西"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "doumaiyidianshishi",
+      "expected": "都买一点试试",
+      "source": "5500",
+      "lookup_us": 29617,
+      "candidates": [
+        "都买一点实施",
+        "都买一点实事",
+        "都买一点事实",
+        "都卖一点实施",
+        "都卖一点实事",
+        "都买一点试试",
+        "都买一点实时",
+        "都买一点逝世",
+        "都"
+      ],
+      "expected_rank": 6
+    },
+    {
+      "pinyin": "duanhuojiusuanle",
+      "expected": "断货就算了",
+      "source": "5500",
+      "lookup_us": 14200,
+      "candidates": [
+        "断货就算了",
+        "断货就算勒",
+        "段或就算了",
+        "断货就酸了",
+        "端货就算勒",
+        "断货酒算了",
+        "断货旧算了",
+        "断货九算了",
+        "断货"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "duoshaoqianwofuni",
+      "expected": "多少钱我付你",
+      "source": "5500",
+      "lookup_us": 26986,
+      "candidates": [
+        "多少钱我扶你",
+        "多少钱我服你",
+        "多少钱我付你",
+        "多少钱我负你",
+        "多少钱我复你",
+        "多少钱我负呢",
+        "多少钱我夫尼",
+        "多少钱我服呢",
+        "多少钱"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "fagetupianguolai",
+      "expected": "发个图片过来",
+      "source": "5500",
+      "lookup_us": 13926,
+      "candidates": [
+        "发个图片过来",
+        "发哥图片过来",
+        "发个图便过来",
+        "发个图骗过来",
+        "发个图片国来",
+        "发个图片果来",
+        "发哥图便过来",
+        "发哥图骗过来",
+        "发个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangbianbangwomaibu",
+      "expected": "方便帮我买不",
+      "source": "5500",
+      "lookup_us": 28383,
+      "candidates": [
+        "方便帮我迈步",
+        "方便帮我买不",
+        "方便帮我买部",
+        "方便帮我买步",
+        "方便帮我买布",
+        "方便帮我买捕",
+        "方便帮我买补",
+        "方便帮我卖不",
+        "方便"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "fangnijialijitian",
+      "expected": "放你家里几天",
+      "source": "5500",
+      "lookup_us": 17128,
+      "candidates": [
+        "放你家里几天",
+        "方你家里几天",
+        "放你家里吉田",
+        "放你家离几天",
+        "放你家里及天",
+        "放你家里基天",
+        "方你家里吉田",
+        "放你家理几天",
+        "放"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangzaimenweinabian",
+      "expected": "放在门卫那边",
+      "source": "5500",
+      "lookup_us": 15843,
+      "candidates": [
+        "放在门卫那边",
+        "方在门卫那边",
+        "放在门卫那便",
+        "放在门卫那变",
+        "放在门卫那彼岸",
+        "放在门卫哪边",
+        "放在门卫那编",
+        "放在门卫那扁",
+        "放在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fangzhuozishangba",
+      "expected": "放桌子上吧",
+      "source": "5500",
+      "lookup_us": 11961,
+      "candidates": [
+        "放桌子上吧",
+        "放桌子上把",
+        "方桌子上吧",
+        "放桌子上巴",
+        "放桌子上八",
+        "放桌子上拔",
+        "放桌子上爸",
+        "放桌子上霸",
+        "房主"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fapiaoyenayixia",
+      "expected": "发票也拿一下",
+      "source": "5500",
+      "lookup_us": 29118,
+      "candidates": [
+        "发票也拿一下",
+        "发票也捺一下",
+        "发票耶拿一下",
+        "发票耶那一下",
+        "发票业那一下",
+        "发票也捺以下",
+        "发票耶纳一下",
+        "发票耶娜一下",
+        "发票"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "fawolianjiekanxia",
+      "expected": "发我链接看下",
+      "source": "5500",
+      "lookup_us": 40287,
+      "candidates": [
+        "发我连接看下",
+        "发我连接砍下",
+        "发我链接看下",
+        "法我连接砍下",
+        "发我连结砍下",
+        "发我连结看下",
+        "发我廉洁砍下",
+        "法我连截砍下",
+        "发我"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "fazhangzhaopiankankan",
+      "expected": "发张照片看看",
+      "source": "5500",
+      "lookup_us": 13146,
+      "candidates": [
+        "发张照片看看",
+        "法张照片看看",
+        "发张照片堪堪",
+        "法张照片堪堪",
+        "发张照片侃侃",
+        "法张照片侃侃",
+        "发长着便看看",
+        "发张照片砍砍",
+        "法杖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "feiyongwozhuangeini",
+      "expected": "费用我转给你",
+      "source": "5500",
+      "lookup_us": 18086,
+      "candidates": [
+        "费用我转给你",
+        "费用我传给你",
+        "费用我转给呢",
+        "费用我赚给你",
+        "费用我转给妮",
+        "费用我专给你",
+        "费用我转给尼",
+        "斐用我砖给你",
+        "费用"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gaiziningjinyidian",
+      "expected": "盖子拧紧一点",
+      "source": "5500",
+      "lookup_us": 16540,
+      "candidates": [
+        "盖子拧紧一点",
+        "盖兹拧紧一点",
+        "盖兹苧近一点",
+        "盖兹苧进一点",
+        "盖兹苧尽一点",
+        "盖子宁进一点",
+        "盖子拧紧疑点",
+        "盖兹苧仅一点",
+        "盖子"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "geinifangzaimenkou",
+      "expected": "给你放在门口",
+      "source": "5500",
+      "lookup_us": 11337,
+      "candidates": [
+        "给你放在门口",
+        "给你方在门口",
+        "给你防灾门口",
+        "给你放在门扣",
+        "给你方再门口",
+        "给你放再门口",
+        "给你放在们口",
+        "给你放灾门口",
+        "给你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "geiwodandufanghao",
+      "expected": "给我单独放好",
+      "source": "5500",
+      "lookup_us": 14714,
+      "candidates": [
+        "给我单独放好",
+        "给我单独放号",
+        "给我单独房号",
+        "给我单独房昊",
+        "给我单独放豪",
+        "给我单独方好",
+        "给我单独放浩",
+        "给我单独房好",
+        "给我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "geiwoshaofenjiaozi",
+      "expected": "给我捎份饺子",
+      "source": "5500",
+      "lookup_us": 32400,
+      "candidates": [
+        "给我烧粉饺子",
+        "给我烧分饺子",
+        "给我少分饺子",
+        "给我烧份饺子",
+        "给我苕粉饺子",
+        "给我烧芬饺子",
+        "给我烧纷饺子",
+        "给我捎份饺子",
+        "给我"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "geiwoshaoguolai",
+      "expected": "给我捎过来",
+      "source": "5500",
+      "lookup_us": 20375,
+      "candidates": [
+        "给我烧过来",
+        "给我少过来",
+        "给我绍过来",
+        "给我稍过来",
+        "给我筲过来",
+        "给我捎过来",
+        "给我邵过来",
+        "给我勺过来",
+        "给我"
+      ],
+      "expected_rank": 6
+    },
+    {
+      "pinyin": "gouwudaizaicheshang",
+      "expected": "购物袋在车上",
+      "source": "5500",
+      "lookup_us": 12260,
+      "candidates": [
+        "购物袋在车上",
+        "购物待在车上",
+        "购物袋再车上",
+        "购物待在车商",
+        "购物袋在车商",
+        "购物袋再扯上",
+        "购物袋载车上",
+        "购物袋在扯上",
+        "购物袋"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guidebuyongmai",
+      "expected": "贵的不用买",
+      "source": "5500",
+      "lookup_us": 19673,
+      "candidates": [
+        "贵的不用买",
+        "贵得不用买",
+        "贵得不用卖",
+        "贵的不用麦",
+        "贵得不用麦",
+        "贵的不用卖",
+        "贵得不用埋",
+        "贵的不用埋",
+        "贵的"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "guigebienongcuo",
+      "expected": "规格别弄错",
+      "source": "5500",
+      "lookup_us": 10558,
+      "candidates": [
+        "规格别弄错",
+        "贵个别弄错",
+        "规格憋弄错",
+        "规格别弄挫",
+        "规格别弄措",
+        "规格鳖弄错",
+        "规格别弄搓",
+        "规格别弄撮",
+        "规格"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haiwoshidailai",
+      "expected": "还我时带来",
+      "source": "5500",
+      "lookup_us": 20007,
+      "candidates": [
+        "还我是带来",
+        "还我市带来",
+        "还卧室带来",
+        "害我是带来",
+        "害我市带来",
+        "海卧室带来",
+        "害我时带来",
+        "还我时带来",
+        "害我"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "haizaidianlima",
+      "expected": "还在店里吗",
+      "source": "5500",
+      "lookup_us": 12045,
+      "candidates": [
+        "还在店里吗",
+        "还在电力吗",
+        "还在电力嘛",
+        "还在典礼吗",
+        "还在店里马",
+        "还在店里嘛",
+        "还在典礼嘛",
+        "还在店里玛",
+        "还在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haomawofanile",
+      "expected": "号码我发你了",
+      "source": "5500",
+      "lookup_us": 9604,
+      "candidates": [
+        "号码我发你了",
+        "好吗我发你了",
+        "号码我发你乐",
+        "好吗我发腻了",
+        "号码我发你勒",
+        "号码我发腻了",
+        "好吗我发泥了",
+        "好吗我法你了",
+        "号码"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "hezibangwonazhe",
+      "expected": "盒子帮我拿着",
+      "source": "5500",
+      "lookup_us": 10028,
+      "candidates": [
+        "盒子帮我拿着",
+        "合资帮我拿着",
+        "盒子帮我拿这",
+        "合资帮我拿这",
+        "盒子帮我那着",
+        "盒子帮我拿者",
+        "合资帮我那着",
+        "盒子帮我那这",
+        "盒子"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "houbeixiangnayixia",
+      "expected": "后备箱拿一下",
+      "source": "5500",
+      "lookup_us": 18248,
+      "candidates": [
+        "后备箱拿一下",
+        "后备厢拿一下",
+        "后备厢那一下",
+        "后备箱哪一下",
+        "后备箱那一下",
+        "后备厢哪一下",
+        "后备厢纳一下",
+        "后备箱纳一下",
+        "后备箱"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huijiadaiyixia",
+      "expected": "回家带一下",
+      "source": "5500",
+      "lookup_us": 29229,
+      "candidates": [
+        "回家待一下",
+        "回家带一下",
+        "回家大一下",
+        "回家戴一下",
+        "会夹带一下",
+        "回家代一下",
+        "回家呆一下",
+        "回家待以下",
+        "回家"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "huilaibangwodai",
+      "expected": "回来帮我带",
+      "source": "5500",
+      "lookup_us": 9463,
+      "candidates": [
+        "回来帮我带",
+        "回来帮我大",
+        "会来帮我带",
+        "回来帮我戴",
+        "回来帮我待",
+        "回来帮我代",
+        "回来帮我呆",
+        "回来帮我贷",
+        "回来吧"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huilainayixia",
+      "expected": "回来拿一下",
+      "source": "5500",
+      "lookup_us": 9708,
+      "candidates": [
+        "回来拿一下",
+        "回来那一下",
+        "会来拿一下",
+        "回来哪一下",
+        "回来那以下",
+        "回来拿以下",
+        "回来纳一下",
+        "会来那一下",
+        "回来"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huitouwoquna",
+      "expected": "回头我去拿",
+      "source": "5500",
+      "lookup_us": 12138,
+      "candidates": [
+        "回头我去哪",
+        "回头我去那",
+        "回头我去拿",
+        "回头我去纳",
+        "回头我区那",
+        "回头我去娜",
+        "回头我去呐",
+        "回头我群啊",
+        "回头"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "huiyuankabiewangdai",
+      "expected": "会员卡别忘带",
+      "source": "5500",
+      "lookup_us": 15514,
+      "candidates": [
+        "会员卡别忘带",
+        "会员卡别网带",
+        "会员卡别网贷",
+        "会员卡别网袋",
+        "会员卡别忘大",
+        "会员卡别忘袋",
+        "会员卡别忘代",
+        "会员卡憋网带",
+        "会员卡"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huojiashanghaiyouma",
+      "expected": "货架上还有吗",
+      "source": "5500",
+      "lookup_us": 14244,
+      "candidates": [
+        "货架上还有吗",
+        "或加上还有吗",
+        "货架上还有么",
+        "货架上海有吗",
+        "货架上还有马",
+        "货架上还有嘛",
+        "货架上还游吗",
+        "货架上还有麻",
+        "货架"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huojiashangpaiyixia",
+      "expected": "货架上拍一下",
+      "source": "5500",
+      "lookup_us": 14347,
+      "candidates": [
+        "货架上拍一下",
+        "货架上排一下",
+        "或加上拍一下",
+        "获加上派一下",
+        "货架上牌一下",
+        "或加上排一下",
+        "货架上派一下",
+        "货架上排以下",
+        "货架"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiageheshijiumai",
+      "expected": "价格合适就买",
+      "source": "5500",
+      "lookup_us": 17145,
+      "candidates": [
+        "价格合适就买",
+        "价格合适就卖",
+        "价格合适就埋",
+        "价格和市就买",
+        "价格合适就迈",
+        "价格和时就卖",
+        "价格合适就麦",
+        "价格合适就脉",
+        "价格合适"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jialihaiyouyixie",
+      "expected": "家里还有一些",
+      "source": "5500",
+      "lookup_us": 14890,
+      "candidates": [
+        "家里还有一些",
+        "加里还有一些",
+        "家里还有一泄",
+        "家里还有一写",
+        "家里还有意些",
+        "家里还有一歇",
+        "家里还有一泻",
+        "家里还有意写",
+        "家里"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiangyouhaiyouyiping",
+      "expected": "酱油还有一瓶",
+      "source": "5500",
+      "lookup_us": 13460,
+      "candidates": [
+        "酱油还有一瓶",
+        "将有还有一瓶",
+        "酱油还有一平",
+        "将有还有一平",
+        "酱油还有移平",
+        "酱油还有艺评",
+        "酱油还有一评",
+        "酱油还有益平",
+        "酱油"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiaqianheshijiuxing",
+      "expected": "价钱合适就行",
+      "source": "5500",
+      "lookup_us": 21568,
+      "candidates": [
+        "价钱合适就行",
+        "价钱和十九醒",
+        "加钱合适就行",
+        "价钱和室就行",
+        "价钱合适救星",
+        "价钱和时就行",
+        "价钱何时就行",
+        "价钱和事就行",
+        "价钱"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jidanfangshangmiandian",
+      "expected": "鸡蛋放上面点",
+      "source": "5500",
+      "lookup_us": 23469,
+      "candidates": [
+        "鸡蛋放上面点",
+        "鸡蛋放上面店",
+        "鸡蛋放上缅甸",
+        "鸡蛋放上面电",
+        "鸡蛋放上面垫",
+        "鸡蛋放上面殿",
+        "鸡蛋放上面典",
+        "鸡蛋放上面颠",
+        "鸡蛋"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jidedaihuilaia",
+      "expected": "记得带回来啊",
+      "source": "5500",
+      "lookup_us": 9746,
+      "candidates": [
+        "记得带回来啊",
+        "级的带回来啊",
+        "记得带回来阿",
+        "记得带回来呵",
+        "记得大会来啊",
+        "记得带会来啊",
+        "记得带回来吖",
+        "记得带回来腌",
+        "记得带回"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jidekanriqia",
+      "expected": "记得看日期啊",
+      "source": "5500",
+      "lookup_us": 5289,
+      "candidates": [
+        "记得看日期啊",
+        "记得看日恰",
+        "记得看日卡",
+        "记得看日洽",
+        "集的丬日期啊",
+        "记得看日起啊",
+        "集的丬日恰",
+        "集的丬日卡",
+        "记得"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jidenahuilaia",
+      "expected": "记得拿回来啊",
+      "source": "5500",
+      "lookup_us": 8312,
+      "candidates": [
+        "记得拿回来啊",
+        "记得那回来啊",
+        "记得那会来啊",
+        "记得那回来阿",
+        "记得拿回来阿",
+        "记得哪会来啊",
+        "记得那灰来啊",
+        "记得拿回来呵",
+        "记得"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiewoyongyixiaba",
+      "expected": "借我用一下吧",
+      "source": "5500",
+      "lookup_us": 14565,
+      "candidates": [
+        "借我用一下吧",
+        "接我用一下吧",
+        "借我用以下吧",
+        "借我用一下巴",
+        "借我用一下把",
+        "借我用以下巴",
+        "借我用一下八",
+        "借我用以下八",
+        "接"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jingguonijiamenkou",
+      "expected": "经过你家门口",
+      "source": "5500",
+      "lookup_us": 16293,
+      "candidates": [
+        "经过你家门口",
+        "经过呢家门口",
+        "经过你加门口",
+        "经过尼加门口",
+        "经过你假门口",
+        "经过你嫁门口",
+        "经过你价门口",
+        "经过你家门扣",
+        "经过"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jingguoshimaiyixia",
+      "expected": "经过时买一下",
+      "source": "5500",
+      "lookup_us": 36526,
+      "candidates": [
+        "经过是买一下",
+        "经过试买一下",
+        "经过试卖一下",
+        "经过是卖一下",
+        "经过是埋一下",
+        "经过是卖以下",
+        "经过试卖以下",
+        "经过时买一下",
+        "经过"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "jintianbufangbianmai",
+      "expected": "今天不方便买",
+      "source": "5500",
+      "lookup_us": 21325,
+      "candidates": [
+        "今天不方便买",
+        "今天不方便卖",
+        "今天不方便麦",
+        "今天不方便埋",
+        "今天不方便迈",
+        "今天不方便脉",
+        "今天不妨变卖",
+        "今天不妨便买",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jiumaizhegeba",
+      "expected": "就买这个吧",
+      "source": "5500",
+      "lookup_us": 9375,
+      "candidates": [
+        "就买这个吧",
+        "旧买这个吧",
+        "就买这个把",
+        "就买这个八",
+        "就买这个爸",
+        "就买这个巴",
+        "就买这个罢",
+        "就买这歌吧",
+        "就买"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kandaojiubangwomai",
+      "expected": "看到就帮我买",
+      "source": "5500",
+      "lookup_us": 17612,
+      "candidates": [
+        "看到就帮我买",
+        "看到救帮我买",
+        "看到就帮我卖",
+        "看到就帮我迈",
+        "看到就帮我脉",
+        "看到就帮我埋",
+        "看到就帮我麦",
+        "看到救帮我卖",
+        "看到"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kouweijiuyaoyuanwei",
+      "expected": "口味就要原味",
+      "source": "5500",
+      "lookup_us": 27558,
+      "candidates": [
+        "口味就要原味",
+        "口味就要原位",
+        "口味就要原委",
+        "口味就要原为",
+        "口味就要愿为",
+        "口味就要远为",
+        "口味就要鸢尾",
+        "口味就要远未",
+        "口味"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lianggerenyiqiban",
+      "expected": "两个人一起搬",
+      "source": "5500",
+      "lookup_us": 20844,
+      "candidates": [
+        "两个人一起办",
+        "两个人一起半",
+        "两个人一起班",
+        "两个人一起拌",
+        "两个人一起版",
+        "两个人一起搬",
+        "两个人一起板",
+        "两个人一起斑",
+        "两个人"
+      ],
+      "expected_rank": 6
+    },
+    {
+      "pinyin": "lingyifenninazhe",
+      "expected": "另一份你拿着",
+      "source": "5500",
+      "lookup_us": 7895,
+      "candidates": [
+        "另一份你拿着",
+        "另一分你拿着",
+        "另一份呢拿着",
+        "另一份你那着",
+        "另一份拟拿着",
+        "另一份妮拿着",
+        "另一份尼拿着",
+        "另一份你拿这",
+        "另一"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "luguocaishichangma",
+      "expected": "路过菜市场吗",
+      "source": "5500",
+      "lookup_us": 13351,
+      "candidates": [
+        "路过菜市场吗",
+        "路过采石场吗",
+        "路过菜市场马",
+        "路过菜市场嘛",
+        "鲁国采石场吗",
+        "路过材市场吗",
+        "路过菜市场麻",
+        "路过菜市场玛",
+        "路过"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "luguonayixia",
+      "expected": "路过拿一下",
+      "source": "5500",
+      "lookup_us": 29136,
+      "candidates": [
+        "路过那一下",
+        "路过哪一下",
+        "路过拿一下",
+        "鲁国那一下",
+        "路过那以下",
+        "鲁国拿一下",
+        "路过纳一下",
+        "鲁国哪一下",
+        "路过"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "lushangbangwomai",
+      "expected": "路上帮我买",
+      "source": "5500",
+      "lookup_us": 13863,
+      "candidates": [
+        "路上帮我买",
+        "陆上帮我买",
+        "路上帮我卖",
+        "路上榜我买",
+        "路上帮我迈",
+        "路上帮我脉",
+        "陆上帮我卖",
+        "路上榜我卖",
+        "路上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mafanshunshounaxia",
+      "expected": "麻烦顺手拿下",
+      "source": "5500",
+      "lookup_us": 12293,
+      "candidates": [
+        "麻烦顺手拿下",
+        "马凡顺手拿下",
+        "麻烦顺手拿夏",
+        "麻烦顺手拿峡",
+        "麻烦顺手拿虾",
+        "麻烦顺手拿霞",
+        "麻烦顺首拿下",
+        "麻烦顺手拿侠",
+        "麻烦"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "maibudaojiusuanle",
+      "expected": "买不到就算了",
+      "source": "5500",
+      "lookup_us": 14641,
+      "candidates": [
+        "买不到就算了",
+        "卖不到就算了",
+        "买不到就酸了",
+        "买不到九算了",
+        "买不到旧算了",
+        "买不到救算了",
+        "买不到就算乐",
+        "买不到就算勒",
+        "买不到"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "maidaojiuhuiwo",
+      "expected": "买到就回我",
+      "source": "5500",
+      "lookup_us": 12763,
+      "candidates": [
+        "买到就回我",
+        "买到就会我",
+        "买到就会喔",
+        "卖到就回我",
+        "买到酒会我",
+        "卖到就会我",
+        "买到救回我",
+        "买到就毁我",
+        "买到"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "maidaolegaosuwo",
+      "expected": "买到了告诉我",
+      "source": "5500",
+      "lookup_us": 8917,
+      "candidates": [
+        "买到了告诉我",
+        "卖到了告诉我",
+        "买到了告诉窝",
+        "买到了高速我",
+        "卖到了告诉窝",
+        "买到了告诉喔",
+        "买到了高速喔",
+        "卖到了高速我",
+        "买到了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "maigerehubaozi",
+      "expected": "买个热乎包子",
+      "source": "5500",
+      "lookup_us": 10366,
+      "candidates": [
+        "买个热乎包子",
+        "买个热乎豹子",
+        "买隔热乎包子",
+        "买个热乎孢子",
+        "买个热呼包子",
+        "买隔热呼包子",
+        "买个热虎豹子",
+        "买个热护包子",
+        "买个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "maigexiaocaipeifan",
+      "expected": "买个小菜配饭",
+      "source": "5500",
+      "lookup_us": 15334,
+      "candidates": [
+        "买个小菜配饭",
+        "买个小菜配番",
+        "买个小菜沛犯",
+        "买个小菜配范",
+        "买个小菜配反",
+        "麦格小踩配饭",
+        "买个小菜配翻",
+        "麦格小踩沛犯",
+        "买个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "maigoujintianjiuxing",
+      "expected": "买够今天就行",
+      "source": "5500",
+      "lookup_us": 18377,
+      "candidates": [
+        "买够今天就行",
+        "卖狗今天就行",
+        "买够今天救星",
+        "买够今天就性",
+        "买够今天就醒",
+        "卖狗今天救星",
+        "买够今天就形",
+        "买够今天酒醒",
+        "买"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "maihaolemeiyouya",
+      "expected": "买好了没有呀",
+      "source": "5500",
+      "lookup_us": 12164,
+      "candidates": [
+        "买好了没有呀",
+        "买好了没有雅",
+        "买好了没有亚",
+        "买好了没有压",
+        "买好了没有牙",
+        "买好了没有鸭",
+        "买好了没优雅",
+        "买好了美优雅",
+        "买好了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "maihesuannaihuilai",
+      "expected": "买盒酸奶回来",
+      "source": "5500",
+      "lookup_us": 25020,
+      "candidates": [
+        "买喝酸奶回来",
+        "卖喝酸奶回来",
+        "买喝酸奶会来",
+        "卖喝酸奶会来",
+        "买和酸萘回来",
+        "卖和酸萘回来",
+        "买核算乃回来",
+        "买盒酸奶回来",
+        "买"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "maijiedianchijiuxing",
+      "expected": "买节电池就行",
+      "source": "5500",
+      "lookup_us": 42294,
+      "candidates": [
+        "买节点吃就行",
+        "脉结电池就行",
+        "麦秸电池就行",
+        "买节点持久性",
+        "脉结点吃就行",
+        "脉结点持久性",
+        "脉结电池救星",
+        "买节电池就行",
+        "麦秸"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "mailiangfenba",
+      "expected": "买两份吧",
+      "source": "5500",
+      "lookup_us": 12236,
+      "candidates": [
+        "买两份吧",
+        "卖凉粉吧",
+        "卖两份吧",
+        "买两分吧",
+        "卖凉粉把",
+        "卖两分吧",
+        "卖凉粉巴",
+        "买辆分吧",
+        "买辆"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mainazhongdoukeyi",
+      "expected": "买哪种都可以",
+      "source": "5500",
+      "lookup_us": 21062,
+      "candidates": [
+        "买哪种都可以",
+        "买那种都可以",
+        "买那种豆可以",
+        "买哪种都可疑",
+        "买那种都可疑",
+        "买哪种豆可以",
+        "买哪种都课以",
+        "买那种都刻意",
+        "买"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "maipingshiyongyou",
+      "expected": "买瓶食用油",
+      "source": "5500",
+      "lookup_us": 27561,
+      "candidates": [
+        "卖平时拥有",
+        "买平时拥有",
+        "买瓶食用油",
+        "买瓶是拥有",
+        "卖平时用油",
+        "卖平食用油",
+        "买平时用油",
+        "卖平实拥有",
+        "买"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "maipingyaogaohuilai",
+      "expected": "买瓶药膏回来",
+      "source": "5500",
+      "lookup_us": 29973,
+      "candidates": [
+        "买瓶药膏回来",
+        "买瓶要搞回来",
+        "买瓶药搞回来",
+        "买瓶要高回来",
+        "买瓶窑高回来",
+        "买瓶药膏会来",
+        "卖平药膏回来",
+        "买瓶要告回来",
+        "买"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "maiwanmiandaihuilai",
+      "expected": "买碗面带回来",
+      "source": "5500",
+      "lookup_us": 31693,
+      "candidates": [
+        "买完面带回来",
+        "卖完面带回来",
+        "买完面带会来",
+        "买完面待回来",
+        "买完面大回来",
+        "卖完面待回来",
+        "买完面待会来",
+        "买碗面带回来",
+        "卖完"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "maiwanyaopaigeiwo",
+      "expected": "买完药拍给我",
+      "source": "5500",
+      "lookup_us": 27966,
+      "candidates": [
+        "买完要拍给我",
+        "买完要派给我",
+        "卖完要拍给我",
+        "买完腰牌给我",
+        "买完要排给我",
+        "卖完要排给我",
+        "买完要牌给我",
+        "买完药拍给我",
+        "卖完"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "maixiaodejiuxing",
+      "expected": "买小的就行",
+      "source": "5500",
+      "lookup_us": 18665,
+      "candidates": [
+        "买小的就行",
+        "卖小的就行",
+        "买晓得就行",
+        "卖笑得就行",
+        "买小的救星",
+        "卖小的救星",
+        "买小德就行",
+        "卖小德就行",
+        "买下"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "maixiaofenjiuxing",
+      "expected": "买小份就行",
+      "source": "5500",
+      "lookup_us": 16285,
+      "candidates": [
+        "买小份就行",
+        "卖小份就行",
+        "买小分就行",
+        "卖小分就行",
+        "麦消酚就行",
+        "买小粉就行",
+        "卖小粉就行",
+        "买小芬就行",
+        "买下"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "maixiedianxinhuilai",
+      "expected": "买些点心回来",
+      "source": "5500",
+      "lookup_us": 22796,
+      "candidates": [
+        "买些点心回来",
+        "买些电信回来",
+        "卖些点心回来",
+        "买鞋电信回来",
+        "买鞋垫新回来",
+        "买些点心会来",
+        "买鞋垫欣回来",
+        "买鞋垫芯回来",
+        "买些"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "maiyidaijiugoule",
+      "expected": "买一袋就够了",
+      "source": "5500",
+      "lookup_us": 24978,
+      "candidates": [
+        "买一代就够了",
+        "买一袋就够了",
+        "买一代就勾勒",
+        "买一袋就勾勒",
+        "买一代就狗了",
+        "买一代旧勾勒",
+        "买一袋就狗了",
+        "买一代酒勾勒",
+        "买一袋"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "maizuichangyongde",
+      "expected": "买最常用的",
+      "source": "5500",
+      "lookup_us": 10694,
+      "candidates": [
+        "买最常用的",
+        "卖最常用的",
+        "买最常用地",
+        "卖最常用地",
+        "买最长用的",
+        "买最常用得",
+        "卖最长用的",
+        "卖最常用得",
+        "买"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meikongjiubiepao",
+      "expected": "没空就别跑",
+      "source": "5500",
+      "lookup_us": 10722,
+      "candidates": [
+        "没空就别跑",
+        "没空就别泡",
+        "没空就别炮",
+        "没空久别跑",
+        "没空酒别跑",
+        "没空就别抛",
+        "美空就别跑",
+        "没空久别泡",
+        "没空"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meiyongjiuhuangeiwo",
+      "expected": "没用就还给我",
+      "source": "5500",
+      "lookup_us": 38468,
+      "candidates": [
+        "没用就换给我",
+        "没用就还给我",
+        "没用酒还给我",
+        "没永久换给我",
+        "没用九幻给我",
+        "没用就缓给我",
+        "没用就欢给我",
+        "没用就环给我",
+        "没用"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "menkashunludailai",
+      "expected": "门卡顺路带来",
+      "source": "5500",
+      "lookup_us": 9345,
+      "candidates": [
+        "门卡顺路带来",
+        "门咔顺路带来",
+        "门卡顺禄带来",
+        "门咔顺禄带来",
+        "门卡顺陆带来",
+        "门咔顺陆带来",
+        "门卡顺录带来",
+        "门咔顺路大来",
+        "门卡"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mijialihaiyouma",
+      "expected": "米家里还有吗",
+      "source": "5500",
+      "lookup_us": 11161,
+      "candidates": [
+        "米家里还有吗",
+        "密家里还有吗",
+        "米家里还有么",
+        "米家里还有马",
+        "米家里还有嘛",
+        "米家里还有麻",
+        "米家里还有玛",
+        "米家里还有码",
+        "密集"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mingtianwozaina",
+      "expected": "明天我再拿",
+      "source": "5500",
+      "lookup_us": 14757,
+      "candidates": [
+        "明天我在哪",
+        "明天我在那",
+        "明天我再拿",
+        "明天我在拿",
+        "明天我再那",
+        "明天我在纳",
+        "明天我再纳",
+        "明天我再哪",
+        "明天"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "mingtianzaibangwomai",
+      "expected": "明天再帮我买",
+      "source": "5500",
+      "lookup_us": 16403,
+      "candidates": [
+        "明天再帮我买",
+        "明天再帮我卖",
+        "明天在帮我买",
+        "明天再帮我迈",
+        "明天再帮我脉",
+        "明天再帮我埋",
+        "明天再帮我麦",
+        "明天在帮我卖",
+        "明天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nabianmeiyoumaima",
+      "expected": "那边没有卖吗",
+      "source": "5500",
+      "lookup_us": 17389,
+      "candidates": [
+        "那边没有卖吗",
+        "那便没有卖吗",
+        "那边没有买吗",
+        "那便没有买吗",
+        "那边没有买马",
+        "那便没有买马",
+        "那边没有买嘛",
+        "那便没有买嘛",
+        "那边"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nengbangmangdaima",
+      "expected": "能帮忙带吗",
+      "source": "5500",
+      "lookup_us": 21159,
+      "candidates": [
+        "能帮忙代码",
+        "能帮忙带吗",
+        "能帮忙大吗",
+        "能帮忙带马",
+        "能帮忙带嘛",
+        "能帮忙待吗",
+        "能帮忙代妈",
+        "能帮忙代吗",
+        "能帮"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "nengbangwomaixiama",
+      "expected": "能帮我买下吗",
+      "source": "5500",
+      "lookup_us": 18585,
+      "candidates": [
+        "能帮我买下吗",
+        "能帮我买下马",
+        "能帮我买下嘛",
+        "能帮我埋下吗",
+        "能帮我买虾吗",
+        "能帮我买下么",
+        "能帮我买峡吗",
+        "能帮我买虾蟆",
+        "能帮我吗"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nengbangwoshaoma",
+      "expected": "能帮我捎吗",
+      "source": "5500",
+      "lookup_us": 19413,
+      "candidates": [
+        "能帮我烧吗",
+        "能帮我少吗",
+        "能帮我少骂",
+        "能帮我烧嘛",
+        "能帮我稍吗",
+        "能帮我少嘛",
+        "能帮我绍吗",
+        "能帮我捎吗",
+        "能帮"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "nibangwobanxialai",
+      "expected": "你帮我搬下来",
+      "source": "5500",
+      "lookup_us": 27521,
+      "candidates": [
+        "你帮我办下来",
+        "你帮我搬下来",
+        "你帮我班下来",
+        "你帮我半下来",
+        "你帮我板下来",
+        "你帮我版下来",
+        "你帮我颁下来",
+        "你帮我般下来",
+        "你帮我"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "nibangwofenkaifang",
+      "expected": "你帮我分开放",
+      "source": "5500",
+      "lookup_us": 10863,
+      "candidates": [
+        "你帮我分开放",
+        "你帮我分开房",
+        "你帮我分开方",
+        "你帮我份开放",
+        "你帮我粉开放",
+        "你帮我分开防",
+        "你帮我分开芳",
+        "你帮我奋开放",
+        "你帮我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nibangwokanyixia",
+      "expected": "你帮我看一下",
+      "source": "5500",
+      "lookup_us": 13521,
+      "candidates": [
+        "你帮我看一下",
+        "你帮我看以下",
+        "呢帮我看一下",
+        "你帮我看一夏",
+        "你帮我看一吓",
+        "你帮我看亦下",
+        "你帮我看一匣",
+        "你帮我看一虾",
+        "你帮我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nibangwonazhongde",
+      "expected": "你帮我拿重的",
+      "source": "5500",
+      "lookup_us": 17167,
+      "candidates": [
+        "你帮我拿中的",
+        "你帮我那种的",
+        "你帮我哪种的",
+        "你帮我那种地",
+        "你帮我那中的",
+        "你帮我哪种地",
+        "你帮我拿中德",
+        "你帮我拿重的",
+        "你帮我"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "nibangwoshouhao",
+      "expected": "你帮我收好",
+      "source": "5500",
+      "lookup_us": 7028,
+      "candidates": [
+        "你帮我收好",
+        "你帮我守好",
+        "你帮我手好",
+        "你帮我受好",
+        "你帮我收号",
+        "你帮我守号",
+        "你帮我手号",
+        "你帮我熟好",
+        "你帮我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nibangwotiaotiao",
+      "expected": "你帮我挑挑",
+      "source": "5500",
+      "lookup_us": 14386,
+      "candidates": [
+        "你帮我挑挑",
+        "你帮我跳跳",
+        "你帮我调调",
+        "你帮我条条",
+        "你帮我挑条",
+        "你帮我挑跳",
+        "你帮我挑调",
+        "你帮我迢迢",
+        "你帮我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nicongnabianguoma",
+      "expected": "你从那边过吗",
+      "source": "5500",
+      "lookup_us": 13533,
+      "candidates": [
+        "你从那边过吗",
+        "你从哪边过吗",
+        "你从那边过嘛",
+        "你从那边国吗",
+        "你从那边果吗",
+        "你从那边过马",
+        "你从哪边国吗",
+        "你从哪边果吗",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nidaolezijina",
+      "expected": "你到了自己拿",
+      "source": "5500",
+      "lookup_us": 18203,
+      "candidates": [
+        "你到了自己那",
+        "你到了自己拿",
+        "你到了自己哪",
+        "你到了自己呐",
+        "你到了自己纳",
+        "你到了资金啊",
+        "你到了自己娜",
+        "你倒了自己那",
+        "你到"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "nidaomenkoujiaowo",
+      "expected": "你到门口叫我",
+      "source": "5500",
+      "lookup_us": 16026,
+      "candidates": [
+        "你到门口叫我",
+        "你到门口教我",
+        "你道门口叫我",
+        "你到门口交我",
+        "你到门口角我",
+        "你到门口交喔",
+        "你到门口交握",
+        "你到门口较我",
+        "你到"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nidaonaerlene",
+      "expected": "你到哪儿了呢",
+      "source": "5500",
+      "lookup_us": 9613,
+      "candidates": [
+        "你到哪儿了呢",
+        "你到那儿了呢",
+        "你到哪儿了讷",
+        "你到那儿了讷",
+        "你到哪儿了哪",
+        "你到哪儿了呐",
+        "你到那儿了哪",
+        "你到那儿了呐",
+        "你到"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nidengwodaiguolai",
+      "expected": "你等我带过来",
+      "source": "5500",
+      "lookup_us": 10989,
+      "candidates": [
+        "你等我带过来",
+        "你等我待过来",
+        "你等我戴过来",
+        "你等我呆过来",
+        "你等我大过来",
+        "你等我代过来",
+        "你等我袋过来",
+        "你等我贷过来",
+        "你的"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nihuijiajingguoma",
+      "expected": "你回家经过吗",
+      "source": "5500",
+      "lookup_us": 19753,
+      "candidates": [
+        "你回家经过吗",
+        "你回家经过嘛",
+        "你回家经过马",
+        "你会家经过吗",
+        "你回家经过么",
+        "你回家经过麻",
+        "你回家境过吗",
+        "你回家经过骂",
+        "你会"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nihuilaizaiquba",
+      "expected": "你回来再取吧",
+      "source": "5500",
+      "lookup_us": 24865,
+      "candidates": [
+        "你回来再去吧",
+        "你回来在去吧",
+        "你会来再去吧",
+        "你回来再取吧",
+        "你会来在去吧",
+        "你回来再去把",
+        "你回来再去罢",
+        "你回来灾区吧",
+        "你会"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "nikanzheheshima",
+      "expected": "你看着合适吗",
+      "source": "5500",
+      "lookup_us": 10388,
+      "candidates": [
+        "你看着合适吗",
+        "你看这合适吗",
+        "你看着合适么",
+        "你看着何时吗",
+        "你看着何事吗",
+        "你看这合适么",
+        "你看这何时吗",
+        "你看着和是吗",
+        "你看"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nikanzhemaijiuxing",
+      "expected": "你看着买就行",
+      "source": "5500",
+      "lookup_us": 17363,
+      "candidates": [
+        "你看着买就行",
+        "你看着卖就行",
+        "你看这买就行",
+        "你看这卖就行",
+        "你看着麦就行",
+        "你看着脉就行",
+        "你看着埋就行",
+        "你看这脉就行",
+        "你看"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niluguochaoshima",
+      "expected": "你路过超市吗",
+      "source": "5500",
+      "lookup_us": 12358,
+      "candidates": [
+        "你路过超市吗",
+        "你鲁国超市吗",
+        "你路过超时吗",
+        "你路过超市嘛",
+        "你路过潮湿吗",
+        "你路过超是吗",
+        "你路过超市马",
+        "你鲁国潮湿吗",
+        "妮露"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niluguonalima",
+      "expected": "你路过那里吗",
+      "source": "5500",
+      "lookup_us": 11329,
+      "candidates": [
+        "你路过那里吗",
+        "你路过哪里吗",
+        "泥路过那里吗",
+        "你路过哪里嘛",
+        "你鲁国哪里吗",
+        "你路过那里马",
+        "你路过那里嘛",
+        "你路过那里骂",
+        "妮露"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nilushangkanyixia",
+      "expected": "你路上看一下",
+      "source": "5500",
+      "lookup_us": 11557,
+      "candidates": [
+        "你路上看一下",
+        "泥路上看一下",
+        "你路上看以下",
+        "泥路上看以下",
+        "你路上砍一下",
+        "泥路上砍一下",
+        "你路上刊一下",
+        "泥路上刊一下",
+        "妮露"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nimaidaolema",
+      "expected": "你买到了吗",
+      "source": "5500",
+      "lookup_us": 12231,
+      "candidates": [
+        "你买到了吗",
+        "你卖到了吗",
+        "你买到了嘛",
+        "你买到了马",
+        "你买到了么",
+        "你买到了码",
+        "你买到了妈",
+        "你买倒了吗",
+        "你妈"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ninengshunluma",
+      "expected": "你能顺路吗",
+      "source": "5500",
+      "lookup_us": 10583,
+      "candidates": [
+        "你能顺路吗",
+        "你能顺路嘛",
+        "你能顺路马",
+        "你能顺路骂",
+        "你能顺路码",
+        "你能顺路妈",
+        "你能顺路麻",
+        "你能顺路玛",
+        "你能"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nipaigeiwokankan",
+      "expected": "你拍给我看看",
+      "source": "5500",
+      "lookup_us": 6793,
+      "candidates": [
+        "你拍给我看看",
+        "拟派给我看看",
+        "你拍给我侃侃",
+        "拟派给我侃侃",
+        "你拍给我砍砍",
+        "拟派给我砍砍",
+        "你拍给我堪堪",
+        "你拍给沃看看",
+        "你怕"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niqubianlidianma",
+      "expected": "你去便利店吗",
+      "source": "5500",
+      "lookup_us": 17041,
+      "candidates": [
+        "你去便利店吗",
+        "你去便利店么",
+        "你去便利店嘛",
+        "你去便利店马",
+        "你去便利店麻",
+        "你去便利店骂",
+        "你去便利店码",
+        "你去便利点吗",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niqucaishichangma",
+      "expected": "你去菜市场吗",
+      "source": "5500",
+      "lookup_us": 13691,
+      "candidates": [
+        "你去菜市场吗",
+        "你去菜市场马",
+        "你去菜市场嘛",
+        "你去采石场吗",
+        "你去菜市场麻",
+        "你去菜市场玛",
+        "你去菜市场妈",
+        "你去菜市场码",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niquchaoshima",
+      "expected": "你去超市吗",
+      "source": "5500",
+      "lookup_us": 8889,
+      "candidates": [
+        "你去超市吗",
+        "你去超市嘛",
+        "你去超市马",
+        "你去超市麻",
+        "你去超市妈",
+        "你去超市玛",
+        "你去超市骂",
+        "你去超市码",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niquyaodianma",
+      "expected": "你去药店吗",
+      "source": "5500",
+      "lookup_us": 12974,
+      "candidates": [
+        "你去药店吗",
+        "你去要点吗",
+        "你去药店么",
+        "你去药店嘛",
+        "你去要点嘛",
+        "你去药店马",
+        "你取药店吗",
+        "你去药典吗",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nishunbianquma",
+      "expected": "你顺便去吗",
+      "source": "5500",
+      "lookup_us": 10357,
+      "candidates": [
+        "你顺便去吗",
+        "你顺便去嘛",
+        "你顺便去么",
+        "你顺便去马",
+        "你顺便去骂",
+        "你顺便取吗",
+        "你顺便去玛",
+        "你顺便去麻",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nishunlubangwoma",
+      "expected": "你顺路帮我吗",
+      "source": "5500",
+      "lookup_us": 10886,
+      "candidates": [
+        "你顺路帮我吗",
+        "你顺路帮我妈",
+        "你顺路帮我嘛",
+        "你顺路帮我么",
+        "拟顺路帮我吗",
+        "你顺陆棒我吗",
+        "你顺路棒我吗",
+        "你顺路榜我吗",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niunaimaidiwende",
+      "expected": "牛奶买低温的",
+      "source": "5500",
+      "lookup_us": 26170,
+      "candidates": [
+        "牛奶麦迪文的",
+        "牛奶买低温的",
+        "牛奶卖低温的",
+        "牛奶麦迪文德",
+        "牛奶麦迪问的",
+        "牛奶卖地问的",
+        "牛奶麦迪文得",
+        "牛奶麦蒂问的",
+        "牛奶"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "niwenwenwozaimai",
+      "expected": "你问问我再买",
+      "source": "5500",
+      "lookup_us": 10023,
+      "candidates": [
+        "你问问我再买",
+        "你问问我在卖",
+        "你问问我在买",
+        "你问问我再卖",
+        "你问问我在麦",
+        "拟问问我再买",
+        "你问问我在迈",
+        "你问问我在埋",
+        "你问"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nixianbiezhaojimai",
+      "expected": "你先别着急买",
+      "source": "5500",
+      "lookup_us": 21979,
+      "candidates": [
+        "你先别着急买",
+        "你先别着急卖",
+        "你先别着急麦",
+        "你先别着急迈",
+        "你先别着急脉",
+        "你先别着急埋",
+        "你先别着急霾",
+        "你先别着急唛",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nixianfazhaopianlai",
+      "expected": "你先发照片来",
+      "source": "5500",
+      "lookup_us": 19074,
+      "candidates": [
+        "你先发照片来",
+        "你见筏照片来",
+        "你先发照片赖",
+        "你先发照片莱",
+        "你先发照骗来",
+        "你先发照片濑",
+        "你先发照片癞",
+        "你先发照片籁",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nixiangchidianshenme",
+      "expected": "你想吃点什么",
+      "source": "5500",
+      "lookup_us": 19950,
+      "candidates": [
+        "你想吃点什么",
+        "妮想吃点什么",
+        "你想吃店什么",
+        "你想吃电什么",
+        "你想吃殿什么",
+        "你想吃典什么",
+        "你想吃垫什么",
+        "你想吃点身么",
+        "你想"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nixiangyaonayizhong",
+      "expected": "你想要哪一种",
+      "source": "5500",
+      "lookup_us": 16784,
+      "candidates": [
+        "你想要哪一种",
+        "你想要那一种",
+        "你想要哪一中",
+        "你想要那一中",
+        "你想要哪一重",
+        "你想要拿一种",
+        "你想要哪一众",
+        "你想要拿一中",
+        "你想要"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nixiankanxiajiage",
+      "expected": "你先看下价格",
+      "source": "5500",
+      "lookup_us": 17227,
+      "candidates": [
+        "你先看下价格",
+        "你先看下加个",
+        "你先砍下价格",
+        "你先看夏价格",
+        "你先看虾价格",
+        "你先看吓价格",
+        "你先看下架个",
+        "你先看下嫁个",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nixianzaifangbianma",
+      "expected": "你现在方便吗",
+      "source": "5500",
+      "lookup_us": 18708,
+      "candidates": [
+        "你现在方便吗",
+        "你现在方便么",
+        "你现在方便嘛",
+        "你先在方便吗",
+        "你现在方便骂",
+        "你现在方便马",
+        "你现在方便妈",
+        "你现在方便码",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niyoushijianzaimai",
+      "expected": "你有时间再买",
+      "source": "5500",
+      "lookup_us": 21017,
+      "candidates": [
+        "你有时间再买",
+        "你有时间再卖",
+        "你有时间在卖",
+        "你有时间在买",
+        "你有时间再迈",
+        "你有时间再埋",
+        "你有时间再脉",
+        "你有时间在麦",
+        "你有"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "paiduihenchangma",
+      "expected": "排队很长吗",
+      "source": "5500",
+      "lookup_us": 9586,
+      "candidates": [
+        "排队很长吗",
+        "派对很长吗",
+        "排队很长么",
+        "排队很长嘛",
+        "派对很长么",
+        "排队很长马",
+        "派对很长嘛",
+        "排队很常吗",
+        "排队"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "paiduirenduobuduo",
+      "expected": "排队人多不多",
+      "source": "5500",
+      "lookup_us": 10920,
+      "candidates": [
+        "排队人多不多",
+        "派对人多不多",
+        "排队人躲不多",
+        "排队人夺不多",
+        "排队忍埵不多",
+        "排队人多部多",
+        "派对人躲不多",
+        "排队人朵不多",
+        "排队"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "paiduiyaoduojiua",
+      "expected": "排队要多久啊",
+      "source": "5500",
+      "lookup_us": 15754,
+      "candidates": [
+        "排队要多久啊",
+        "派对要多久啊",
+        "排队要多久阿",
+        "派对要多久阿",
+        "排队要多久呵",
+        "排队要多就啊",
+        "排队要多久吖",
+        "派对要多久呵",
+        "排队"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qianwohuitougeini",
+      "expected": "钱我回头给你",
+      "source": "5500",
+      "lookup_us": 13305,
+      "candidates": [
+        "钱我回头给你",
+        "前我回头给你",
+        "钱我会投给你",
+        "前我会投给你",
+        "钱我会偷给你",
+        "钱我回头给呢",
+        "钱我会投给呢",
+        "前我会偷给你",
+        "钱"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qujianmafageiwo",
+      "expected": "取件码发给我",
+      "source": "5500",
+      "lookup_us": 13205,
+      "candidates": [
+        "取件码发给我",
+        "区间吗发给我",
+        "取件码法给我",
+        "取件码发给喔",
+        "取件码发给沃",
+        "取件码发给窝",
+        "取件码伐给我",
+        "取件码罚给我",
+        "取件码"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "quwanfangmenkou",
+      "expected": "取完放门口",
+      "source": "5500",
+      "lookup_us": 25603,
+      "candidates": [
+        "去完房门口",
+        "去玩房门口",
+        "去玩放门口",
+        "去完放门口",
+        "去玩方门口",
+        "去万方门口",
+        "去玩防门口",
+        "取完放门口",
+        "去玩"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "quyaobiewangzhengjian",
+      "expected": "取药别忘证件",
+      "source": "5500",
+      "lookup_us": 44192,
+      "candidates": [
+        "去要别忘证件",
+        "去要别忘政见",
+        "去要别忘整件",
+        "去要别往证件",
+        "取药别忘证件",
+        "取药别忘政见",
+        "取药别忘整件",
+        "去要别网证件",
+        "取药"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "quyaoshiwenyixia",
+      "expected": "取药时问一下",
+      "source": "5500",
+      "lookup_us": 33095,
+      "candidates": [
+        "去要是问一下",
+        "取钥匙问一下",
+        "去要是闻一下",
+        "取钥匙问以下",
+        "取钥匙闻一下",
+        "去要是温一下",
+        "去钥匙问以下",
+        "取药时问一下",
+        "取药"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "sanbangwodaihuilai",
+      "expected": "伞帮我带回来",
+      "source": "5500",
+      "lookup_us": 32759,
+      "candidates": [
+        "三帮我带回来",
+        "散帮我带回来",
+        "三帮我待回来",
+        "三帮我戴回来",
+        "三帮我待会来",
+        "三帮我大回来",
+        "三帮我代回来",
+        "伞帮我带回来",
+        "三班"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "shaotangjiukeyi",
+      "expected": "少糖就可以",
+      "source": "5500",
+      "lookup_us": 12601,
+      "candidates": [
+        "少糖就可以",
+        "勺糖就可以",
+        "勺糖酒可以",
+        "少糖酒可以",
+        "少糖就可疑",
+        "勺糖就可疑",
+        "勺糖酒可疑",
+        "少唐舊可以",
+        "少糖"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shengchanriqikanxia",
+      "expected": "生产日期看下",
+      "source": "5500",
+      "lookup_us": 14315,
+      "candidates": [
+        "生产日期看下",
+        "生产日期砍下",
+        "生产日期刊下",
+        "生产日期看夏",
+        "生产日起看下",
+        "生产日起砍下",
+        "生产日期刊夏",
+        "生产日期刊虾",
+        "生产"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shoujunidaihuilai",
+      "expected": "收据你带回来",
+      "source": "5500",
+      "lookup_us": 14013,
+      "candidates": [
+        "收据你带回来",
+        "首句你带回来",
+        "收据你待会来",
+        "收据你待回来",
+        "收据你戴回来",
+        "收据你代回来",
+        "收据你大回来",
+        "收据你逮回来",
+        "守军"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shugeiwonayiben",
+      "expected": "书给我拿一本",
+      "source": "5500",
+      "lookup_us": 30702,
+      "candidates": [
+        "输给我拿一本",
+        "书给我拿一本",
+        "输给我那一本",
+        "输给我哪一本",
+        "书给我那一本",
+        "书给我哪一本",
+        "输给我那译本",
+        "输给我拿译本",
+        "输给"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "shuibeibangwodaishang",
+      "expected": "水杯帮我带上",
+      "source": "5500",
+      "lookup_us": 14706,
+      "candidates": [
+        "水杯帮我带上",
+        "水杯帮我戴上",
+        "水贝帮我带上",
+        "水贝帮我戴上",
+        "水杯帮我带伤",
+        "水贝帮我带伤",
+        "水杯帮我大赏",
+        "水杯帮我待上",
+        "水杯"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shunbianmaidaimi",
+      "expected": "顺便买袋米",
+      "source": "5500",
+      "lookup_us": 18532,
+      "candidates": [
+        "顺便买袋米",
+        "顺便买大米",
+        "顺便卖大米",
+        "顺便买黛咪",
+        "顺便卖袋米",
+        "顺便迈大米",
+        "顺便买戴米",
+        "顺便买代米",
+        "顺便买"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shunbianmaidiandianchi",
+      "expected": "顺便买点电池",
+      "source": "5500",
+      "lookup_us": 27656,
+      "candidates": [
+        "顺便买点电池",
+        "顺便买点点吃",
+        "顺便买点滇池",
+        "顺便卖点电池",
+        "顺便买电电池",
+        "顺便买点店吃",
+        "顺便卖电电池",
+        "顺便买点点痴",
+        "顺便买"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shunlumaicai",
+      "expected": "顺路买菜",
+      "source": "5500",
+      "lookup_us": 11341,
+      "candidates": [
+        "顺路买菜",
+        "顺路卖菜",
+        "顺路买才",
+        "顺路买彩",
+        "顺路买材",
+        "顺路买采",
+        "顺路买财",
+        "顺路霾蔡",
+        "顺路买"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shunlumaigemianbao",
+      "expected": "顺路买个面包",
+      "source": "5500",
+      "lookup_us": 19093,
+      "candidates": [
+        "顺路买个面包",
+        "顺录买个面包",
+        "顺路麦格面包",
+        "顺路买歌面包",
+        "顺路买个绵薄",
+        "顺路买格面包",
+        "顺路买各面包",
+        "顺路买个面报",
+        "顺路买"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shunlunayao",
+      "expected": "顺路拿药",
+      "source": "5500",
+      "lookup_us": 10350,
+      "candidates": [
+        "顺路拿药",
+        "顺路那要",
+        "顺路那幺",
+        "顺路那妖",
+        "顺路那药",
+        "顺路那腰",
+        "顺路那咬",
+        "顺路那耀",
+        "顺路"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shunshoubangwomai",
+      "expected": "顺手帮我买",
+      "source": "5500",
+      "lookup_us": 12551,
+      "candidates": [
+        "顺手帮我买",
+        "顺手帮我卖",
+        "顺手帮我迈",
+        "顺手帮我脉",
+        "顺手帮我埋",
+        "顺手帮我麦",
+        "顺手帮我霾",
+        "顺手榜我买",
+        "顺手"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shunshoudaifan",
+      "expected": "顺手带饭",
+      "source": "5500",
+      "lookup_us": 6719,
+      "candidates": [
+        "顺手带饭",
+        "顺手带返",
+        "顺手带反",
+        "顺手带翻",
+        "顺手带范",
+        "顺手带犯",
+        "顺手带烦",
+        "顺手带凡",
+        "顺手"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shunshoudaipingshui",
+      "expected": "顺手带瓶水",
+      "source": "5500",
+      "lookup_us": 10435,
+      "candidates": [
+        "顺手带瓶水",
+        "顺手带平说",
+        "顺手带萍说",
+        "顺手带评说",
+        "顺手大瓶水",
+        "顺手带平水",
+        "顺手袋瓶水",
+        "顺手带屏说",
+        "顺手"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shunshoumaikuaifeizao",
+      "expected": "顺手买块肥皂",
+      "source": "5500",
+      "lookup_us": 14867,
+      "candidates": [
+        "顺手买块肥皂",
+        "顺手麦块肥皂",
+        "顺手卖蒯肥皂",
+        "顺手买快肥皂",
+        "顺手卖快肥皂",
+        "顺手买会肥皂",
+        "顺手卖会肥皂",
+        "顺手卖蒯肺燥",
+        "顺手"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shunshoushaoshang",
+      "expected": "顺手捎上",
+      "source": "5500",
+      "lookup_us": 12483,
+      "candidates": [
+        "顺手捎上",
+        "顺手烧伤",
+        "顺手少上",
+        "顺手少商",
+        "顺手烧上",
+        "顺受烧伤",
+        "顺手勺上",
+        "吮手烧伤",
+        "顺手"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shunshoushaoyifen",
+      "expected": "顺手捎一份",
+      "source": "5500",
+      "lookup_us": 17121,
+      "candidates": [
+        "顺手少一分",
+        "顺手少一份",
+        "顺手烧一份",
+        "顺手烧一分",
+        "顺手稍一份",
+        "顺手稍一分",
+        "顺手绍一份",
+        "顺手捎一份",
+        "顺手"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "songguolaijiuxingle",
+      "expected": "送过来就行了",
+      "source": "5500",
+      "lookup_us": 13625,
+      "candidates": [
+        "送过来就行了",
+        "宋过来就行了",
+        "送过来就醒了",
+        "送过来酒醒了",
+        "宋过来就醒了",
+        "送过来救醒了",
+        "送过来就行乐",
+        "送过来救星了",
+        "送过来"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "suliaodaibuyongna",
+      "expected": "塑料袋不用拿",
+      "source": "5500",
+      "lookup_us": 13975,
+      "candidates": [
+        "塑料袋不用拿",
+        "塑料袋不用那",
+        "塑料袋不用哪",
+        "塑料袋不用纳",
+        "塑料袋不用娜",
+        "塑料袋不用呐",
+        "塑料袋不勇捺",
+        "塑料袋不用钠",
+        "塑料袋"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "taishulebiemai",
+      "expected": "太熟了别买",
+      "source": "5500",
+      "lookup_us": 11126,
+      "candidates": [
+        "太熟了别买",
+        "太输了别买",
+        "太熟了别卖",
+        "太输了别卖",
+        "太疏勒别买",
+        "太舒勒别买",
+        "太熟乐别买",
+        "太熟了别埋",
+        "太"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "tiaogeqingyidiande",
+      "expected": "挑个青一点的",
+      "source": "5500",
+      "lookup_us": 33900,
+      "candidates": [
+        "挑个轻一点的",
+        "跳个轻一点的",
+        "挑个轻易点的",
+        "挑个轻一点地",
+        "跳个轻一点地",
+        "跳个轻易点的",
+        "挑个轻一点德",
+        "挑个青一点的",
+        "条"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "tiaopianyidejiuxing",
+      "expected": "挑便宜的就行",
+      "source": "5500",
+      "lookup_us": 31728,
+      "candidates": [
+        "条便宜的就行",
+        "调便宜的就行",
+        "条便宜的救星",
+        "条便宜得就行",
+        "调便宜的救星",
+        "调便宜得就行",
+        "条便宜的酒醒",
+        "挑便宜的就行",
+        "调皮"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "wenjianbiezhele",
+      "expected": "文件别折了",
+      "source": "5500",
+      "lookup_us": 25462,
+      "candidates": [
+        "文件憋着了",
+        "文件别着了",
+        "文件别折了",
+        "文件别褶了",
+        "稳健憋着了",
+        "文件别这了",
+        "文件瘪着勒",
+        "文件瘪着了",
+        "文件"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "wobangnibaoguanxia",
+      "expected": "我帮你保管下",
+      "source": "5500",
+      "lookup_us": 37159,
+      "candidates": [
+        "我帮你保管辖",
+        "我帮你保管下",
+        "我帮你包管辖",
+        "我帮你报关下",
+        "我帮你抱管辖",
+        "我帮你报管辖",
+        "我帮你爆管辖",
+        "我帮你保管夏",
+        "我帮你"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "wobangnidaiguoqu",
+      "expected": "我帮你带过去",
+      "source": "5500",
+      "lookup_us": 13858,
+      "candidates": [
+        "我帮你带过去",
+        "我帮你代过去",
+        "我帮你待过去",
+        "我帮你戴过去",
+        "我帮你呆过去",
+        "我帮你大过去",
+        "我帮你贷过去",
+        "我帮你袋过去",
+        "我帮你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wodengnihuilaina",
+      "expected": "我等你回来拿",
+      "source": "5500",
+      "lookup_us": 10730,
+      "candidates": [
+        "我等你回来拿",
+        "我等你回来那",
+        "我等你回来哪",
+        "我等你回来纳",
+        "我等你回来娜",
+        "我等你回来嗯啊",
+        "我等你回来呐",
+        "我等你会来那",
+        "我等你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wofangqiantaigeini",
+      "expected": "我放前台给你",
+      "source": "5500",
+      "lookup_us": 15715,
+      "candidates": [
+        "我放前台给你",
+        "我方前台给你",
+        "我放前台给呢",
+        "我方前太给你",
+        "我方钱太给你",
+        "我放前台给妮",
+        "我方茜态给你",
+        "我放弃安泰给你",
+        "我方"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wogeinifazhaopian",
+      "expected": "我给你发照片",
+      "source": "5500",
+      "lookup_us": 13361,
+      "candidates": [
+        "我给你发照片",
+        "我给你法照片",
+        "我给你发照骗",
+        "我给你发招片",
+        "我给你发找片",
+        "我给你发招篇",
+        "我给你伐照片",
+        "我给你罚照片",
+        "我给你发"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wogeininaguoqu",
+      "expected": "我给你拿过去",
+      "source": "5500",
+      "lookup_us": 10958,
+      "candidates": [
+        "我给你拿过去",
+        "我给你那过去",
+        "我给你哪过去",
+        "我给你纳过去",
+        "我给你拿过曲",
+        "我给你拿过区",
+        "我给你哪国去",
+        "我给你娜过去",
+        "我给你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woguohuierlaiqu",
+      "expected": "我过会儿来取",
+      "source": "5500",
+      "lookup_us": 26372,
+      "candidates": [
+        "我国会儿来去",
+        "我国会儿来取",
+        "我过会儿来去",
+        "我过会儿来取",
+        "我国会而来去",
+        "我国会而来取",
+        "我国慧贰来曲",
+        "我国会二来去",
+        "我国"
+      ],
+      "expected_rank": 4
+    },
+    {
+      "pinyin": "wohuinizaijueding",
+      "expected": "我回你再决定",
+      "source": "5500",
+      "lookup_us": 48254,
+      "candidates": [
+        "我会你再决定",
+        "我会你在决定",
+        "我会怩再决定",
+        "我会怩在决定",
+        "我会怩哉决定",
+        "我会怩灾决定",
+        "我会怩载决定",
+        "我回你再决定",
+        "我"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "wohuiqushunbianna",
+      "expected": "我回去顺便拿",
+      "source": "5500",
+      "lookup_us": 17386,
+      "candidates": [
+        "我回去顺便拿",
+        "我回去顺便那",
+        "我会去顺便拿",
+        "我会去顺便那",
+        "我回去顺便纳",
+        "我回去顺便哪",
+        "我回去顺便娜",
+        "我回去顺便呐",
+        "我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wokankanzaijueding",
+      "expected": "我看看再决定",
+      "source": "5500",
+      "lookup_us": 31396,
+      "candidates": [
+        "我看看在决定",
+        "我看看再决定",
+        "我看看在绝顶",
+        "我看看哉决定",
+        "我看看灾决定",
+        "我看看仔决定",
+        "我看看载决定",
+        "我看看再绝顶",
+        "我看看"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "woluguojiusongni",
+      "expected": "我路过就送你",
+      "source": "5500",
+      "lookup_us": 14418,
+      "candidates": [
+        "我路过就送你",
+        "我露果就送你",
+        "我路过久送你",
+        "我路过酒送你",
+        "我路过九送你",
+        "我露果酒送你",
+        "我路过就送呢",
+        "我路过旧送你",
+        "我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "womingtiangeinidai",
+      "expected": "我明天给你带",
+      "source": "5500",
+      "lookup_us": 14158,
+      "candidates": [
+        "我明天给你带",
+        "我明天给你大",
+        "我明天给你代",
+        "我明天给你待",
+        "我明天给你戴",
+        "我明天给你呆",
+        "我明天给你贷",
+        "我明天给你袋",
+        "我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wonahuijiafanghao",
+      "expected": "我拿回家放好",
+      "source": "5500",
+      "lookup_us": 16623,
+      "candidates": [
+        "我拿回家放好",
+        "我拿回家房号",
+        "我拿回家放号",
+        "我那回家放好",
+        "我拿回家方好",
+        "我拿回家房好",
+        "我拿回家访好",
+        "我拿回家纺好",
+        "我那"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woqudeshihouna",
+      "expected": "我去的时候拿",
+      "source": "5500",
+      "lookup_us": 16470,
+      "candidates": [
+        "我去的时候那",
+        "我去的时候拿",
+        "我去的时候哪",
+        "我去的时候纳",
+        "我去的时候娜",
+        "我去的时候呐",
+        "我去的时候嗯啊",
+        "我区的时候那",
+        "我去"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "woshunbiansongguoqu",
+      "expected": "我顺便送过去",
+      "source": "5500",
+      "lookup_us": 13771,
+      "candidates": [
+        "我顺便送过去",
+        "我顺便松过去",
+        "我顺便宋过去",
+        "我顺便颂过去",
+        "沃顺便送过去",
+        "我顺便送过曲",
+        "我顺便讼过去",
+        "我顺便诵过去",
+        "我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woxiacigeinishao",
+      "expected": "我下次给你捎",
+      "source": "5500",
+      "lookup_us": 9792,
+      "candidates": [
+        "我下次给你捎",
+        "我下次给你少",
+        "我下次给你烧",
+        "我下次给你稍",
+        "我下次给你勺",
+        "我下次给你哨",
+        "我下次给你韶",
+        "我下次给你梢",
+        "我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiabandaigemianbao",
+      "expected": "下班带个面包",
+      "source": "5500",
+      "lookup_us": 16535,
+      "candidates": [
+        "下班带个面包",
+        "下班代个面包",
+        "下班带格面包",
+        "下班带哥面包",
+        "下班带割面包",
+        "下班代格面包",
+        "下班带各面包",
+        "下班带隔面包",
+        "下班"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiabandaixieshuiguo",
+      "expected": "下班带些水果",
+      "source": "5500",
+      "lookup_us": 18736,
+      "candidates": [
+        "下班带些水果",
+        "下班代谢水果",
+        "下班带血水果",
+        "下班带携水果",
+        "下班代写水果",
+        "下半带些水果",
+        "下半代谢水果",
+        "下班代谢说过",
+        "下班"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xialouquyixia",
+      "expected": "下楼取一下",
+      "source": "5500",
+      "lookup_us": 19508,
+      "candidates": [
+        "下楼去一下",
+        "下楼去以下",
+        "下楼取一下",
+        "下楼取以下",
+        "下楼区一下",
+        "下楼去已侠",
+        "下楼区以下",
+        "下楼屈一下",
+        "下楼去"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "xianbangwokanzhe",
+      "expected": "先帮我看着",
+      "source": "5500",
+      "lookup_us": 9193,
+      "candidates": [
+        "先帮我看着",
+        "先帮我看这",
+        "先帮我看者",
+        "西安帮我看着",
+        "先帮我看哲",
+        "先帮我看折",
+        "先帮我看浙",
+        "先帮我砍蔗",
+        "先把"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianfanglengcangshiba",
+      "expected": "先放冷藏室吧",
+      "source": "5500",
+      "lookup_us": 11261,
+      "candidates": [
+        "先放冷藏室吧",
+        "先放冷藏是吧",
+        "先放冷藏事吧",
+        "先放冷藏十八",
+        "先放冷藏是把",
+        "西安防冷藏是吧",
+        "西安防冷藏室吧",
+        "先放冷藏食吧",
+        "现房"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianfangninaerba",
+      "expected": "先放你那儿吧",
+      "source": "5500",
+      "lookup_us": 12046,
+      "candidates": [
+        "先放你那儿吧",
+        "西安防你那儿吧",
+        "西安防你哪儿吧",
+        "先放你哪儿吧",
+        "西安防你那儿把",
+        "西安防您阿尔芭",
+        "先放你那儿把",
+        "西安防你纳尔巴",
+        "现房"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianfangwozhebianba",
+      "expected": "先放我这边吧",
+      "source": "5500",
+      "lookup_us": 23709,
+      "candidates": [
+        "先放我这边吧",
+        "西安防我这边吧",
+        "先放我这边把",
+        "西安防我这边把",
+        "西安防我这边八",
+        "西安防我这边巴",
+        "西安防我这边罢",
+        "西安防我这边拔",
+        "现房"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianfenkaizhuanghao",
+      "expected": "先分开装好",
+      "source": "5500",
+      "lookup_us": 10845,
+      "candidates": [
+        "先分开装好",
+        "西安分开装好",
+        "先分开装号",
+        "西安分开装号",
+        "先分开装浩",
+        "先分开装豪",
+        "先分开装昊",
+        "先分开装耗",
+        "先"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiangchishenmewomai",
+      "expected": "想吃什么我买",
+      "source": "5500",
+      "lookup_us": 15833,
+      "candidates": [
+        "想吃什么我买",
+        "想吃什么我卖",
+        "想吃什么我迈",
+        "想吃什么我脉",
+        "想吃什么我埋",
+        "想吃什么我麦",
+        "想吃什么我霾",
+        "想吃什么我唛",
+        "想吃"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianmaiyifenshishi",
+      "expected": "先买一份试试",
+      "source": "5500",
+      "lookup_us": 29890,
+      "candidates": [
+        "先买一份试试",
+        "先买一份实施",
+        "先买一份事实",
+        "先买一份适时",
+        "先买一份逝世",
+        "先买一份实时",
+        "现买一份实施",
+        "现买一份事实",
+        "先买"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiantiwonazhe",
+      "expected": "先替我拿着",
+      "source": "5500",
+      "lookup_us": 9096,
+      "candidates": [
+        "先替我拿着",
+        "西安替我拿着",
+        "先替我拿这",
+        "西安替我那着",
+        "腺体我那着",
+        "西安替我那这",
+        "西安替我拿这",
+        "先替我那这",
+        "腺体"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiantiwoshouzheba",
+      "expected": "先替我收着吧",
+      "source": "5500",
+      "lookup_us": 29291,
+      "candidates": [
+        "先替我守着吧",
+        "先替我收着吧",
+        "西安替我守着吧",
+        "先替握手这把",
+        "限提握手这把",
+        "西安替我收着吧",
+        "西安替我守着把",
+        "先替我守着把",
+        "腺体"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "xianwenwenyoumeiyou",
+      "expected": "先问问有没有",
+      "source": "5500",
+      "lookup_us": 17554,
+      "candidates": [
+        "先问问有没有",
+        "西安问问有没有",
+        "先问问又没有",
+        "先问问有没油",
+        "先问问有没由",
+        "先问问由没有",
+        "先问问有没游",
+        "先问问有没优",
+        "先问"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianzuodegenghaochi",
+      "expected": "现做的更好吃",
+      "source": "5500",
+      "lookup_us": 24361,
+      "candidates": [
+        "先做得更好吃",
+        "先做的更好吃",
+        "先做得更好持",
+        "先做的更好持",
+        "先做得更好池",
+        "先做得更好赤",
+        "先做的更好池",
+        "现做的更好吃",
+        "先做"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "xiaoxinbiepenghuaile",
+      "expected": "小心别碰坏了",
+      "source": "5500",
+      "lookup_us": 19074,
+      "candidates": [
+        "小心别碰坏了",
+        "小心别碰怀了",
+        "小心别捧坏了",
+        "小心别彭坏了",
+        "小心别鹏坏了",
+        "小心别蓬坏了",
+        "小心别朋坏了",
+        "小心别棚坏了",
+        "小心"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xifashuikuaimeile",
+      "expected": "洗发水快没了",
+      "source": "5500",
+      "lookup_us": 17481,
+      "candidates": [
+        "洗发水快没了",
+        "洗发水会没了",
+        "洗发水块没了",
+        "洗发水快美了",
+        "洗发水会美了",
+        "洗发谁快没了",
+        "洗发水酷爱没了",
+        "洗发水快妹了",
+        "洗发水"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinghaopaigeiwokan",
+      "expected": "型号拍给我看",
+      "source": "5500",
+      "lookup_us": 21967,
+      "candidates": [
+        "型号牌给我看",
+        "幸好牌给我看",
+        "型号牌给我砍",
+        "幸好牌给我砍",
+        "型号牌给我刊",
+        "型号牌给我侃",
+        "型号牌给我坎",
+        "型号拍给我看",
+        "型号"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "xuanbuladenazhong",
+      "expected": "选不辣的那种",
+      "source": "5500",
+      "lookup_us": 28988,
+      "candidates": [
+        "宣布拉的那种",
+        "宣布拉德那种",
+        "宣布辣的那种",
+        "宣布拉得那种",
+        "宣布拉德哪种",
+        "宣布拉的哪种",
+        "宣布拉得哪种",
+        "选不辣的那种",
+        "宣布"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "xuangehaoyidiande",
+      "expected": "选个好一点的",
+      "source": "5500",
+      "lookup_us": 19584,
+      "candidates": [
+        "选个好一点的",
+        "选个好一点地",
+        "炫个好一点的",
+        "选个好一点德",
+        "选个好一点得",
+        "选个好易点的",
+        "选个好一点底",
+        "选个好易点地",
+        "选个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xuangeputongde",
+      "expected": "选个普通的",
+      "source": "5500",
+      "lookup_us": 14092,
+      "candidates": [
+        "选个普通的",
+        "炫个普通的",
+        "选个普通地",
+        "选个普通得",
+        "选个普通德",
+        "选个扑通的",
+        "选个普通底",
+        "选个噗通的",
+        "选个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xuanriqijinyidian",
+      "expected": "选日期近一点",
+      "source": "5500",
+      "lookup_us": 20808,
+      "candidates": [
+        "选日期近一点",
+        "选日期紧一点",
+        "选日期进一点",
+        "选日期尽一点",
+        "旋日期近一点",
+        "选日起进一点",
+        "选日期今一点",
+        "选日期仅一点",
+        "选"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yagaokuaiyongwanle",
+      "expected": "牙膏快用完了",
+      "source": "5500",
+      "lookup_us": 16010,
+      "candidates": [
+        "牙膏快用完了",
+        "雅高快用完了",
+        "牙膏快用完乐",
+        "牙膏快用玩了",
+        "牙膏快用完勒",
+        "牙膏快用晚了",
+        "牙膏快用玩乐",
+        "牙膏快用万了",
+        "牙膏"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yanjinghedaizheba",
+      "expected": "眼镜盒带着吧",
+      "source": "5500",
+      "lookup_us": 31828,
+      "candidates": [
+        "眼睛和带着吧",
+        "眼睛和戴着吧",
+        "眼镜和带着吧",
+        "眼睛和待着吧",
+        "眼睛和带着八",
+        "眼睛和带着把",
+        "眼睛和呆着吧",
+        "眼镜盒带着吧",
+        "眼镜盒"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "yansebuduibiemai",
+      "expected": "颜色不对别买",
+      "source": "5500",
+      "lookup_us": 15722,
+      "candidates": [
+        "颜色不对别买",
+        "颜色不对别卖",
+        "颜色部队别买",
+        "眼色不对别买",
+        "颜色不对别埋",
+        "颜色不对别脉",
+        "颜色不对别麦",
+        "颜色部队别卖",
+        "颜色"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yaobumailiangzhong",
+      "expected": "要不买两种",
+      "source": "5500",
+      "lookup_us": 19798,
+      "candidates": [
+        "要不买两种",
+        "要不卖两种",
+        "腰部买两种",
+        "腰部卖两种",
+        "要不买良种",
+        "要不买量中",
+        "要不迈两种",
+        "要不买辆中",
+        "要不"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yaodandaishanglema",
+      "expected": "药单带上了吗",
+      "source": "5500",
+      "lookup_us": 28583,
+      "candidates": [
+        "要单带上了吗",
+        "要担带上了吗",
+        "要单带上了嘛",
+        "要担带上了嘛",
+        "要担待伤了吗",
+        "要担带伤了吗",
+        "要单带上了么",
+        "药单带上了吗",
+        "要打"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "yaozaiyaodianqu",
+      "expected": "药在药店取",
+      "source": "5500",
+      "lookup_us": 22666,
+      "candidates": [
+        "要在药店去",
+        "要在药店区",
+        "要在要点去",
+        "要在药店取",
+        "要再要点去",
+        "要再药店去",
+        "要在药店渠",
+        "药在药店取",
+        "要在"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "yashuayedaiyizhi",
+      "expected": "牙刷也带一支",
+      "source": "5500",
+      "lookup_us": 20651,
+      "candidates": [
+        "牙刷也带一支",
+        "牙刷也带一致",
+        "牙刷也代遗址",
+        "牙刷葉带一致",
+        "牙刷葉代遗址",
+        "牙刷葉带一支",
+        "牙刷也带移至",
+        "牙刷也大遗址",
+        "牙刷"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yifunahuilaimei",
+      "expected": "衣服拿回来没",
+      "source": "5500",
+      "lookup_us": 13024,
+      "candidates": [
+        "衣服拿回来没",
+        "衣服拿回来美",
+        "衣服拿回来每",
+        "衣服拿回来梅",
+        "一副拿回来没",
+        "衣服拿回来妹",
+        "衣服拿回来眉",
+        "衣服拿回来煤",
+        "衣服"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yifusongxihaole",
+      "expected": "衣服送洗好了",
+      "source": "5500",
+      "lookup_us": 8172,
+      "candidates": [
+        "衣服送洗好了",
+        "衣服送喜好了",
+        "衣服送系好了",
+        "衣服送洗好嘞",
+        "依附送洗好了",
+        "衣服送西好了",
+        "衣服宋喜好了",
+        "衣服送戏好了",
+        "衣服"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yijingmaiwanleba",
+      "expected": "已经卖完了吧",
+      "source": "5500",
+      "lookup_us": 14179,
+      "candidates": [
+        "已经卖完了吧",
+        "已经卖完了把",
+        "已经卖完了罢",
+        "已经卖完了巴",
+        "已经卖完了八",
+        "已经买完了吧",
+        "已经卖完了霸",
+        "已经卖完了拔",
+        "已经"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yongwangeiwosonghui",
+      "expected": "用完给我送回",
+      "source": "5500",
+      "lookup_us": 13294,
+      "candidates": [
+        "用完给我送回",
+        "用万给我送回",
+        "用完给我送会",
+        "用完给我送辉",
+        "用完给我送灰",
+        "用完给我送汇",
+        "用完给我送慧",
+        "用完给我送惠",
+        "永旺"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yongwannidaihui",
+      "expected": "用完你带回",
+      "source": "5500",
+      "lookup_us": 11153,
+      "candidates": [
+        "用完你带回",
+        "用完你待会",
+        "用完你大会",
+        "用完你代会",
+        "用完呢大会",
+        "用完呢带回",
+        "用完你贷讳",
+        "用完呢代会",
+        "用完"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youkongzaidaiguolai",
+      "expected": "有空再带过来",
+      "source": "5500",
+      "lookup_us": 12459,
+      "candidates": [
+        "有空再带过来",
+        "有空在带过来",
+        "有空再待过来",
+        "有空再呆过来",
+        "有空再戴过来",
+        "有空再大过来",
+        "有空在待过来",
+        "有空再代过来",
+        "有空"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhaotupianmaijiuxing",
+      "expected": "照图片买就行",
+      "source": "5500",
+      "lookup_us": 19007,
+      "candidates": [
+        "照图片买就行",
+        "照图片卖就行",
+        "找图片买就行",
+        "找图片卖就行",
+        "照图片麦就行",
+        "照图片埋就行",
+        "照图片脉就行",
+        "找图片麦就行",
+        "找"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhefenbiegeibieren",
+      "expected": "这份别给别人",
+      "source": "5500",
+      "lookup_us": 30432,
+      "candidates": [
+        "这分别给别人",
+        "这份别给别人",
+        "这分别给比尔恩",
+        "这分别給别人",
+        "这份别给比尔恩",
+        "这份别給别人",
+        "这分别给别任",
+        "这分别给别认",
+        "这份"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zhegefangninaer",
+      "expected": "这个放你那儿",
+      "source": "5500",
+      "lookup_us": 14263,
+      "candidates": [
+        "这个放你那儿",
+        "这个方你那儿",
+        "这个放你哪儿",
+        "这个方你哪儿",
+        "这个房呢那儿",
+        "这个放呢那儿",
+        "这个房呢哪儿",
+        "这个放你纳尔",
+        "这个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhegeliugeijiali",
+      "expected": "这个留给家里",
+      "source": "5500",
+      "lookup_us": 14503,
+      "candidates": [
+        "这个留给家里",
+        "这个留给加里",
+        "这个留给佳丽",
+        "这个留给加利",
+        "这个留给加力",
+        "这个流给家里",
+        "这个留给家离",
+        "这个留给贾里",
+        "这个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhegeshijielaide",
+      "expected": "这个是借来的",
+      "source": "5500",
+      "lookup_us": 26406,
+      "candidates": [
+        "这个世界来的",
+        "这个是借来的",
+        "这个世界来得",
+        "这个时节来的",
+        "这歌是借来的",
+        "这个世界莱德",
+        "这个世界来地",
+        "这个世界来德",
+        "这个世界"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zhegeyansebiemai",
+      "expected": "这个颜色别买",
+      "source": "5500",
+      "lookup_us": 15613,
+      "candidates": [
+        "这个颜色别买",
+        "这个颜色别卖",
+        "这个眼色别买",
+        "这个颜色别埋",
+        "这个颜色别脉",
+        "这个颜色别麦",
+        "这个颜色别迈",
+        "这个颜色憋买",
+        "这个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhegeyaolengcang",
+      "expected": "这个要冷藏",
+      "source": "5500",
+      "lookup_us": 10865,
+      "candidates": [
+        "这个要冷藏",
+        "这个药冷藏",
+        "这个妖冷藏",
+        "这个摇冷藏",
+        "这个腰冷藏",
+        "这个谣冷藏",
+        "这个姚冷藏",
+        "这个遥冷藏",
+        "这个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhegeyaomailiangfen",
+      "expected": "这个要买两份",
+      "source": "5500",
+      "lookup_us": 32902,
+      "candidates": [
+        "这个要买两份",
+        "这个要买两分",
+        "这个要卖凉粉",
+        "这个要买凉粉",
+        "这个药卖凉粉",
+        "这个要卖两分",
+        "这个要卖两份",
+        "这个药买两分",
+        "这个"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhehuierrenduoma",
+      "expected": "这会儿人多吗",
+      "source": "5500",
+      "lookup_us": 15619,
+      "candidates": [
+        "这会儿人多吗",
+        "这会二人多吗",
+        "这会儿人多嘛",
+        "这会儿人多么",
+        "这会儿人堕马",
+        "这会儿人多马",
+        "这会儿认多吗",
+        "这会儿任多吗",
+        "这会儿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhidaiyiqidaishang",
+      "expected": "纸袋一起带上",
+      "source": "5500",
+      "lookup_us": 36515,
+      "candidates": [
+        "只待一起带上",
+        "指代一起带上",
+        "只待一起戴上",
+        "只带一起戴上",
+        "指代仪器带上",
+        "只待一起带伤",
+        "只带仪器带上",
+        "纸袋一起带上",
+        "纸袋"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zhijinmaidabaode",
+      "expected": "纸巾买大包的",
+      "source": "5500",
+      "lookup_us": 31385,
+      "candidates": [
+        "至今买打包的",
+        "至今卖打包的",
+        "至今买大包的",
+        "至今买大宝的",
+        "至今卖大宝的",
+        "至今卖大包的",
+        "至今买大宝地",
+        "纸巾买大包的",
+        "至今"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zhuangdaidaizoujiuxing",
+      "expected": "装袋带走就行",
+      "source": "5500",
+      "lookup_us": 33068,
+      "candidates": [
+        "装袋带走就行",
+        "撞待带走就行",
+        "装袋带走救星",
+        "撞待带走救星",
+        "撞待带走酒醒",
+        "装袋带走酒醒",
+        "撞待带走就性",
+        "撞待带走酒行",
+        "装袋"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhuanghaogeiwoba",
+      "expected": "装好给我吧",
+      "source": "5500",
+      "lookup_us": 8696,
+      "candidates": [
+        "装好给我吧",
+        "装好给我把",
+        "装好给我爸",
+        "桩号给我吧",
+        "装好给我罢",
+        "装好给我八",
+        "装好给我拔",
+        "装好给我霸",
+        "装好"
+      ],
+      "expected_rank": 1
+    }
+  ]
+}
