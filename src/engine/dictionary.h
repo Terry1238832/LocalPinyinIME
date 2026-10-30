@@ -69,6 +69,10 @@ public:
     [[nodiscard]] std::vector<Candidate> lookup_abbreviation(const std::wstring& initials) const;
     [[nodiscard]] std::vector<Candidate> lookup_completion(const std::wstring& prefix,
                                                           bool final_syllable_only = false) const;
+    // Builds the completion index of one more initial (it is otherwise built
+    // the first time a key starting with that letter is completed, which
+    // takes tens of milliseconds per letter). False once every letter is built.
+    bool warm_prediction_index_step() const;
     [[nodiscard]] bool reading_matches_boundaries(const std::wstring& pinyin, const std::wstring& word,
                                                   const std::vector<size_t>& boundaries) const;
     [[nodiscard]] static bool is_syllable(const std::wstring& pinyin);

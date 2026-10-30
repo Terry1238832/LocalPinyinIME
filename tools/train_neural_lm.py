@@ -127,6 +127,10 @@ def main() -> None:
             model.train()
             print(f"step {step}/{steps} loss {loss.item():.3f} valid perplexity {perplexity:.1f} "
                   f"{(step + 1) * SEQ * BATCH / (time.time() - started) / 1000:.0f}k tokens/s", flush=True)
+        if step and step % 5000 == 0:
+            # A partial model, in case the run is cut off.
+            torch.save({"state": model.state_dict(), "vocab": args.vocab, "embed": args.embed, "hidden": args.hidden,
+                        "chars": chars, "training": {"partial_step": step}}, args.output.with_suffix(".partial.pt"))
     training = {"tokens": int(len(stream)), "steps": steps, "sequence": SEQ, "batch": BATCH, "epochs": args.epochs,
                 "valid_perplexity": round(perplexity, 2),
                 "inputs": [{"file": path.name, "weight": weight, "clauses": count} for path, weight, count in manifest]}

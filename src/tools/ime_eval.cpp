@@ -32,7 +32,7 @@ std::string json_string(const std::string& value) {
 // choosing the expected text each time (as committing it does), starting from
 // an empty learning record.
 int wmain(int argc, wchar_t** argv) {
-    bool keystrokes = false, use_context = true, scores = false, learn = false, valid = argc >= 3;
+    bool keystrokes = false, use_context = true, scores = false, learn = false, warm = false, valid = argc >= 3;
     unsigned domains = 0;
     for (int index = 3; index < argc; ++index) {
         const std::wstring flag = argv[index];
@@ -40,12 +40,13 @@ int wmain(int argc, wchar_t** argv) {
         else if (flag == L"--no-context") use_context = false;
         else if (flag == L"--scores") scores = true;
         else if (flag == L"--learn") learn = true;
+        else if (flag == L"--warm") warm = true;
         else if (flag.starts_with(L"--weights=")) valid = valid && localpinyin::PinyinEngine::set_evaluation_weights(flag.substr(10));
         else if (flag.starts_with(L"--domains=")) domains = localpinyin::parse_usage_domains(flag.substr(10));
         else valid = false;
     }
     if (!valid) {
-        std::cerr << "Usage: LocalPinyinImeEval <directory containing dictionary/> <cases.tsv> [--keystrokes] [--no-context] [--scores] [--learn] [--domains=coding,daily]\n";
+        std::cerr << "Usage: LocalPinyinImeEval <directory containing dictionary/> <cases.tsv> [--keystrokes] [--no-context] [--scores] [--learn] [--warm] [--domains=coding,daily]\n";
         return 2;
     }
     localpinyin::PinyinEngine engine(localpinyin::DictionaryLoadMode::Empty);
@@ -58,6 +59,8 @@ int wmain(int argc, wchar_t** argv) {
     localpinyin::EngineInputOptions options;
     options.domains = domains;
     engine.set_input_options(options);
+    // --warm: prepare the indexes first, as the text service does after activation.
+    if (warm) while (engine.warm_up_step()) {}
     std::ifstream cases(std::filesystem::path(argv[2]), std::ios::binary);
     if (!cases) return 4;
     std::string line;

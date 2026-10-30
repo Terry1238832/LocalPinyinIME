@@ -64,6 +64,21 @@ int main() {
                       << (expected.empty() ? std::string() : localpinyin::wide_to_utf8(expected.front())) << ")\n";
         }
     }
+    // Warming the completion indexes (the text service does it after
+    // activation) ends after one step per initial and changes no result.
+    localpinyin::PinyinEngine warmed(localpinyin::DictionaryLoadMode::Empty);
+    REQUIRE_TRUE(warmed.load_dictionary_resource_directory(resources.wstring(), user));
+    int warm_steps = 0;
+    while (warmed.warm_up_step()) REQUIRE_TRUE(++warm_steps <= 26);
+    REQUIRE_TRUE(warm_steps > 0);
+    REQUIRE_TRUE(!warmed.warm_up_step());
+    for (const auto* input : {L"nihaos", L"woyijingk", L"zhongg", L"q"}) {
+        (void)fresh.lookup(L"qqqqqq", L"");
+        if (texts(warmed.lookup(input, L"")) != texts(fresh.lookup(input, L""))) {
+            passed = false;
+            std::cout << "differs after warming: " << localpinyin::wide_to_utf8(input) << "\n";
+        }
+    }
     std::filesystem::remove_all(root);
     return passed ? 0 : 1;
 }

@@ -50,6 +50,9 @@ public:
     [[nodiscard]] std::vector<Candidate> lookup(const std::wstring& typed,
                                                const std::wstring& preceding_text = L"") const;
     UserLexiconRefreshResult refresh_user_lexicon_if_needed(bool composition_active);
+    // One short step of preparing indexes that would otherwise stall the
+    // first keystroke of each initial; false once nothing is left to prepare.
+    bool warm_up_step() const;
     // Typed pinyin with syllable separators for display, e.g. nihaoshij ->
     // ni'hao'shi'j. Typed apostrophes are kept; unparseable text is unchanged.
     [[nodiscard]] static std::wstring display_pinyin(const std::wstring& typed);

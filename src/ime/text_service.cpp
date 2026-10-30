@@ -63,6 +63,11 @@ constexpr int kPanelTask = 1;
 constexpr int kSecretTask = 2;
 constexpr int kPasteTask = 3;
 constexpr int kSwitchCapsTask = 4;
+constexpr int kWarmUpTask = 5;
+// Delay before warming up after activation, and between letters.
+constexpr UINT kWarmUpStartMs = 400;
+constexpr UINT kWarmUpStepMs = 15;
+constexpr UINT kWarmUpWhileTypingMs = 300;
 // A copied record leaves the clipboard after this long, if still there.
 constexpr UINT kSecretClipboardMs = 45 * 1000;
 // WM_COPYDATA from the tool panel: the session token, a line break, the text.
@@ -678,6 +683,7 @@ HRESULT TextService::ActivateEx(ITfThreadMgr* thread_mgr, TfClientId client_id, 
                    std::wstring(L"event=activate_hook_install_result hook_installed=") +
                        bool_text(hook_installed));
         publish_runtime_input_mode_status(L"activate", true);
+        schedule_warm_up(kWarmUpStartMs);
     }
     log_status(L"ctrl-space",
                activation_lifecycle_message(L"activate_complete",
@@ -694,7 +700,19 @@ HRESULT TextService::ActivateEx(ITfThreadMgr* thread_mgr, TfClientId client_id, 
     return result;
 }
 
+void TextService::schedule_warm_up(UINT delay_ms) {
+    candidate_window_.schedule_task(kWarmUpTask, delay_ms, [this] {
+        // A keystroke being composed goes first; come back when it is done.
+        if (!composing_.empty()) {
+            schedule_warm_up(kWarmUpWhileTypingMs);
+            return;
+        }
+        if (engine_.warm_up_step()) schedule_warm_up(kWarmUpStepMs);
+    });
+}
+
 HRESULT TextService::Deactivate() {
+    candidate_window_.cancel_task(kWarmUpTask);
     hide_tool_panel();
     forget_committed_text();
     end_translation_run();
@@ -1864,7 +1882,7 @@ bool TextService::handle_chinese_key(ITfContext* context, WPARAM wparam, BOOL* e
         const bool literal = letter_is_literal();
         if (literal && composing_.empty()) return false;
         if (composing_.empty()) {
-            engine_.refresh_user_lexicon_if_needed(false);
+            if (engine_.refresh_user_lexicon_if_needed(false).reloaded) schedule_warm_up(kWarmUpStartMs);
             set_composition_context(context);
             preceding_committed_text_.clear();
             if (!secure_mode_) {
@@ -1996,7 +2014,7 @@ void TextService::refresh_candidates() {
         refresh_english_candidates();
         return;
     }
-    engine_.refresh_user_lexicon_if_needed(!composing_.empty());
+    if (engine_.refresh_user_lexicon_if_needed(!composing_.empty()).reloaded) schedule_warm_up(kWarmUpStartMs);
     // Fuzzy pinyin, corrections, mixed input and double pinyin follow the
     // saved options on every key, like the candidate window's appearance.
     const auto options = settings_store_.load_input_mode_options().engine;
