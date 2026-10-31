@@ -7,6 +7,7 @@
 #include "context_model.h"
 #include "word_model.h"
 #include "neural_model.h"
+#include "phrase_counts.h"
 #include "custom_phrases.h"
 #include "continuation_model.h"
 #include "domain_lexicon.h"
@@ -14,6 +15,7 @@
 #include "input_options.h"
 
 #include <memory>
+#include <unordered_map>
 #include <string>
 #include <vector>
 
@@ -90,6 +92,7 @@ private:
     [[nodiscard]] std::vector<Candidate> lookup_pinyin(const std::wstring& pinyin, const std::wstring& preceding_text,
                                                       const EngineInputOptions& options) const;
     // Dictionary words for a complete key, with the chosen scenes applied.
+    [[nodiscard]] const std::vector<Candidate>& characters_for_initial(const std::wstring& initial) const;
     [[nodiscard]] std::vector<Candidate> words_for(const std::wstring& pinyin) const;
     // The typed keys as full pinyin (the same text unless double pinyin is on).
     [[nodiscard]] std::wstring full_pinyin(const std::wstring& typed) const;
@@ -101,6 +104,9 @@ private:
     mutable ContextModel context_model_;
     WordModel word_model_;
     NeuralModel neural_model_;
+    PhraseCounts phrase_counts_;
+    // Common characters by initial (w, zh), for sentences typed as initials.
+    mutable std::unordered_map<std::wstring, std::vector<Candidate>> initial_characters_;
     mutable ContinuationModel continuation_model_;
     mutable size_t learning_revision_ = static_cast<size_t>(-1);
     // The previous keystroke's sentence lattice: typing one more letter

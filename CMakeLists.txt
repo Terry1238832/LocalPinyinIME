@@ -51,7 +51,7 @@ endif()
 string(APPEND localpinyin_dictionary_output_dir "/dictionary")
 set(localpinyin_dictionary_sources)
 set(localpinyin_dictionary_outputs)
-foreach(name IN ITEMS core_zh_pinyin.tsv local_core_zh_pinyin.tsv context_zh.tsv context_zh.lm word_zh.lm neural_zh.lm standard_zh_pinyin.tsv continuations_zh.tsv english_terms.tsv
+foreach(name IN ITEMS core_zh_pinyin.tsv local_core_zh_pinyin.tsv context_zh.tsv context_zh.lm word_zh.lm neural_zh.lm phrase_zh.lm standard_zh_pinyin.tsv continuations_zh.tsv english_terms.tsv
     english_words.tsv)
     list(APPEND localpinyin_dictionary_sources "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/${name}")
     list(APPEND localpinyin_dictionary_outputs "${localpinyin_dictionary_output_dir}/${name}")
@@ -93,7 +93,7 @@ add_library(pinyin_common STATIC src/common/logging.cpp src/common/utf_utils.cpp
     src/common/json_lite.cpp src/engine/input_options.cpp)
 target_link_libraries(pinyin_common PUBLIC user32 gdi32 shell32 shlwapi ole32 advapi32)
 add_library(pinyin_engine STATIC src/engine/pinyin_engine.cpp src/engine/dictionary.cpp
-    src/engine/user_lexicon.cpp src/engine/candidate_ranker.cpp src/engine/user_learning.cpp src/engine/context_model.cpp src/engine/word_model.cpp src/engine/neural_model.cpp src/engine/continuation_model.cpp
+    src/engine/user_lexicon.cpp src/engine/candidate_ranker.cpp src/engine/user_learning.cpp src/engine/context_model.cpp src/engine/word_model.cpp src/engine/phrase_counts.cpp src/engine/neural_model.cpp src/engine/continuation_model.cpp
     src/engine/double_pinyin.cpp src/engine/fuzzy_pinyin.cpp src/engine/english_terms.cpp src/engine/typo_correction.cpp
     src/engine/domain_lexicon.cpp src/engine/custom_phrases.cpp src/engine/input_tools.cpp src/engine/english_speller.cpp)
 target_link_libraries(pinyin_engine PUBLIC pinyin_common)
@@ -169,7 +169,7 @@ if(BUILD_TESTING)
     endfunction()
     foreach(name IN ITEMS test_dictionary test_pinyin_engine test_candidate_ranker test_user_learning
         test_candidate_selection test_dictionary_resource_layout test_dictionary_layers test_user_lexicon test_sentence_input_baseline test_contextual_engine test_continuation_engine test_personal_phrases
-        test_context_language_model test_word_model test_neural_model test_incremental_decoding test_learning_promotion
+        test_context_language_model test_word_model test_phrase_counts test_neural_model test_incremental_decoding test_learning_promotion
         test_input_features)
         pinyin_test(${name} pinyin_engine)
     endforeach()
@@ -250,7 +250,7 @@ if(BUILD_TESTING)
         ENVIRONMENT "TEMP=${CMAKE_BINARY_DIR}/test-tmp;TMP=${CMAKE_BINARY_DIR}/test-tmp;LOCALPINYINIME_LOCALAPPDATA=${CMAKE_BINARY_DIR}/test-data")
 endif()
 install(TARGETS LocalPinyinIME LocalPinyinSettingsBridge LocalPinyinClipboard LocalPinyinImeSetup RUNTIME DESTINATION .)
-install(FILES resources/dictionary/core_zh_pinyin.tsv resources/dictionary/local_core_zh_pinyin.tsv resources/dictionary/context_zh.tsv resources/dictionary/context_zh.lm resources/dictionary/word_zh.lm resources/dictionary/neural_zh.lm resources/dictionary/standard_zh_pinyin.tsv resources/dictionary/continuations_zh.tsv resources/dictionary/english_terms.tsv
+install(FILES resources/dictionary/core_zh_pinyin.tsv resources/dictionary/local_core_zh_pinyin.tsv resources/dictionary/context_zh.tsv resources/dictionary/context_zh.lm resources/dictionary/word_zh.lm resources/dictionary/neural_zh.lm resources/dictionary/phrase_zh.lm resources/dictionary/standard_zh_pinyin.tsv resources/dictionary/continuations_zh.tsv resources/dictionary/english_terms.tsv
     resources/dictionary/english_words.tsv DESTINATION dictionary)
 install(FILES ${localpinyin_domain_sources} DESTINATION dictionary/domains)
 install(FILES ${localpinyin_panel_sources} DESTINATION dictionary/panel)

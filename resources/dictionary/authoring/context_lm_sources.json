@@ -125,5 +125,14 @@
       "1.2 passes over 487.3M characters, sequences of 128, AdamW with a one-cycle schedule; held-out stream perplexity 24.3."
     ],
     "build_command": "python tools/train_neural_lm.py --work <work> --output model.pt && python tools/export_neural_lm.py model.pt resources/dictionary/neural_zh.lm"
+  },
+  "phrase_counts": {
+    "artifact": "../phrase_zh.lm",
+    "content": "Hashes and rounded counts of 2-6 character clauses of LCCC-base training text; no text is packaged.",
+    "authoring_script": "tools/build_phrase_counts.py",
+    "processing": [
+      "Clauses seen at least five times; phrases containing an evaluation sentence or an unwanted word are dropped."
+    ],
+    "build_command": "python tools/build_phrase_counts.py --input <work>/train/lccc.txt --exclude tests/data/typing_holdout.tsv tests/data/typing_fresh.tsv tests/data/typing_independent.tsv tests/data/scenario_replay_076.tsv tests/data/common_word_order_079.tsv tests/data/heldout_sentences.tsv tests/data/heldout_dialogue_sentences.tsv tests/data/heldout_context.tsv tests/data/heldout_dialogue_context.tsv tests/data/colloquial_dev.tsv tests/data/colloquial_test.tsv --output resources/dictionary/phrase_zh.lm"
   }
 }

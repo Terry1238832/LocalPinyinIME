@@ -6,6 +6,7 @@
 #include "typo_correction.h"
 
 #include <algorithm>
+#include <functional>
 #include <limits>
 #include <iterator>
 #include <filesystem>
@@ -20,8 +21,13 @@ namespace {
 constexpr int kExactMatchBonus = 100000;
 constexpr int kCompleteSegmentationBonus = 2000;
 constexpr int kFallbackScore = 1;
-constexpr int kStandaloneTieBreakDivisor = 10;
 constexpr size_t kSentenceBeamWidth = 32;
+constexpr size_t kLongestInitialsInput = 12;
+constexpr size_t kLongestInitialsWord = 6;
+constexpr size_t kInitialsWordsPerSpan = 12;
+constexpr size_t kCharactersPerInitial = 32;
+// What a composed phrase counts for beside lexicon frequencies (the lowest band).
+constexpr int kComposedPhraseFrequency = 5500;
 constexpr size_t kMaxInputLength = 256;
 constexpr size_t kLongestSyllable = 6;
 constexpr size_t kNeuralCandidates = 5;
@@ -86,6 +92,14 @@ struct ScoreWeights {
     // Neural rescoring of whole-input sentences (1.6.0): nats of the
     // character GRU per milli-nat of the decoder, in thousandths.
     double neural = 0.4;
+    // Clause-start language model share of a word typed on its own.
+    double standalone_language_model = 0.1;
+    // A short phrase typed on its own (phrase_zh.lm): frequency points per
+    // tenfold of its chat count, what it must win by, and its longest length.
+    bool initials = true;
+    double chat_phrase = 800.0;
+    double chat_phrase_margin = 500.0;
+    size_t chat_phrase_length = 4;
 };
 
 // Fixed in the IME; the evaluation tool may replace them to calibrate on the
@@ -406,6 +420,64 @@ bool all_han(const std::wstring& text) {
     return !text.empty() && std::all_of(text.begin(), text.end(), [](wchar_t ch) { return ch >= 0x3400 && ch <= 0x9FFF; });
 }
 
+// Sentences typed as initials (wkdlxl, 我快到楼下了). Each letter may begin one
+// character, and a run of letters may spell a word's initials; the language
+// models then read it like any other sentence.
+std::vector<std::vector<SegmentPath>> decode_initials(const Dictionary& dictionary, const ContextModel& context, const std::wstring& input,
+                                                      const std::wstring& preceding, const DecodeOptions& options,
+                                                      const std::function<const std::vector<Candidate>&(const std::wstring&)>& characters) {
+    std::vector<std::vector<SegmentPath>> dp(input.size() + 1);
+    dp[0].assign(1, SegmentPath{});
+    if (options.words) {
+        auto& start = dp[0].back();
+        start.last_word = options.words->previous_word(preceding);
+        if (!start.last_word.empty())
+            start.word_before_last = options.words->previous_word(std::wstring_view(preceding).substr(0, preceding.size() - start.last_word.size()));
+    }
+    for (size_t offset = 0; offset < input.size(); ++offset) {
+        if (dp[offset].empty()) continue;
+        prune_paths(dp[offset]);
+        const auto extend = [&](const Candidate& word, size_t next) {
+            auto& paths = dp[next];
+            std::unordered_map<std::wstring, size_t> indices;
+            indices.reserve(paths.size() + dp[offset].size());
+            for (size_t index = 0; index < paths.size(); ++index) indices.emplace(paths[index].text, index);
+            for (const auto& path : dp[offset]) {
+                const auto history = transition_history(preceding, path.text);
+                const int score = path.score + static_cast<int>(weights().lexical * lexical_score(word)) - weights().segment_penalty +
+                                  static_cast<int>(weights().language_model * context.extend_score(history, word.text)) +
+                                  word_bonus(options, path, word.text, next == input.size());
+                add_path(paths, indices, SegmentPath{score, path.segment_count + 1, join_text(path.text, word.text, path.english_end, false),
+                                                     false, word.text, path.last_word});
+            }
+            if (paths.size() > weights().beam * 2) prune_paths(paths);
+        };
+        for (const auto& word : characters(input.substr(offset, 1))) extend(word, offset + 1);
+        if (offset + 1 < input.size() && input[offset + 1] == L'h' && std::wstring_view(L"zcs").find(input[offset]) != std::wstring_view::npos)
+            for (const auto& word : characters(input.substr(offset, 2))) extend(word, offset + 2);
+        for (size_t length = 2; length <= kLongestInitialsWord && offset + length <= input.size(); ++length) {
+            size_t added = 0;
+            for (const auto& word : dictionary.lookup_abbreviation(input.substr(offset, length))) {
+                if (!all_han(word.text)) continue;
+                extend(word, offset + length);
+                if (++added == kInitialsWordsPerSpan) break;
+            }
+        }
+    }
+    prune_paths(dp.back());
+    return dp;
+}
+
+// Letters that no reading explains and that look like initials: consonants
+// only, since with a vowel it is more likely a syllable being typed (wok, for
+// 我看) or a slip in one (hsao), which completion and correction handle. So is
+// a lone zh, ch or sh, which lists the common characters (这, 吃, 是).
+bool looks_like_initials(const std::wstring& input) {
+    return input != L"zh" && input != L"ch" && input != L"sh" && input.size() >= 2 && input.size() <= kLongestInitialsInput && std::none_of(input.begin(), input.end(), [](wchar_t letter) {
+        return letter < L'a' || letter > L'z' || std::wstring_view(L"aeiouv").find(letter) != std::wstring_view::npos;
+    });
+}
+
 // Reorders the candidates that read the whole input by their decoder score
 // plus the neural model's probability of the sentence after the preceding
 // clause. A first choice the decoder did not rank first (placed there by
@@ -436,6 +508,63 @@ void rescore_with_neural(const NeuralModel& model, std::vector<Candidate>& ranke
         scored.emplace_back(ranked[slots[i]].total_score() + weights().neural * 1000.0 * probabilities[i], ranked[slots[i]]);
     std::stable_sort(scored.begin(), scored.end(), [](const auto& left, const auto& right) { return left.first > right.first; });
     for (size_t i = 0; i < slots.size(); ++i) ranked[slots[i]] = std::move(scored[i].second);
+}
+
+// Whether every character of `text` has a lexicon reading that together spell
+// `pinyin` exactly: fuzzy readings and corrections are not what was typed.
+template <typename Words>
+bool reads_exactly(const std::wstring& pinyin, const std::wstring& text, const Words& words_for) {
+    std::vector<std::vector<bool>> reachable(text.size() + 1, std::vector<bool>(pinyin.size() + 1, false));
+    reachable[0][0] = true;
+    for (size_t chars = 0; chars < text.size(); ++chars) {
+        for (size_t letters = 0; letters < pinyin.size(); ++letters) {
+            if (!reachable[chars][letters]) continue;
+            for (size_t length = 1; length <= kLongestSyllable && letters + length <= pinyin.size(); ++length) {
+                const auto syllable = pinyin.substr(letters, length);
+                if (!Dictionary::is_syllable(syllable)) continue;
+                const auto found = words_for(syllable);
+                if (std::any_of(found.begin(), found.end(), [&](const auto& word) { return word.text.size() == 1 && word.text[0] == text[chars]; }))
+                    reachable[chars + 1][letters + length] = true;
+            }
+        }
+    }
+    return reachable[text.size()][pinyin.size()];
+}
+
+// A short phrase typed on its own: the reading people actually send moves to
+// first when its chat count outweighs the lexicon's preference. Anything the
+// user has chosen stays where it is, and single characters keep their order
+// (a character sent alone says little about the character in general).
+template <typename Words>
+void promote_chat_phrase(std::vector<Candidate>& ranked, const std::vector<Candidate>& exact, const PhraseCounts& counts,
+                         const Words& words_for, const std::wstring& pinyin, bool initials) {
+    if (counts.empty() || weights().chat_phrase == 0.0 || ranked.size() < 2) return;
+    const auto& first = ranked.front();
+    const size_t characters = character_count(first.text);
+    if (first.consumed_pinyin != 0 || characters < 2 || characters > weights().chat_phrase_length || first.user_frequency > 0 || first.is_user_lexicon_entry ||
+        first.correction || !all_han(first.text)) return;
+    // A sentence the decoder composed and the table has never seen is no
+    // evidence against it.
+    if (!initials && counts.level(first.text) == 0 && std::none_of(exact.begin(), exact.end(), [&](const auto& word) { return word.text == first.text; })) return;
+    const auto score = [&](const std::wstring& text) {
+        int frequency = kComposedPhraseFrequency;
+        for (const auto& word : exact) if (word.text == text) frequency = std::max(word.is_user_lexicon_entry ? 0 : word.base_score, frequency);
+        return frequency + weights().chat_phrase * counts.level(text) / PhraseCounts::kLevelsPerDecade;
+    };
+    size_t best = 0;
+    double highest = score(first.text) + weights().chat_phrase_margin;
+    for (size_t index = 1; index < ranked.size(); ++index) {
+        const auto& candidate = ranked[index];
+        if (candidate.consumed_pinyin != 0 || candidate.correction || candidate.user_frequency > 0 || character_count(candidate.text) != characters ||
+            !all_han(candidate.text) || counts.level(candidate.text) == 0) continue;
+        const double value = score(candidate.text);
+        if (value > highest) {
+            highest = value;
+            best = index;
+        }
+    }
+    if (best == 0 || (!initials && !reads_exactly(pinyin, ranked[best].text, words_for))) return;
+    std::rotate(ranked.begin(), ranked.begin() + static_cast<std::ptrdiff_t>(best), ranked.begin() + static_cast<std::ptrdiff_t>(best) + 1);
 }
 
 Candidate candidate_from_path(const SegmentPath& path, const ContextModel& context) {
@@ -525,6 +654,9 @@ void PinyinEngine::rebuild_context_model(const std::wstring& context_path) {
     if (!context_path.empty()) word_model_.load((std::filesystem::path(context_path).parent_path() / L"word_zh.lm").wstring());
     neural_model_.reset();
     if (!context_path.empty()) neural_model_.load((std::filesystem::path(context_path).parent_path() / L"neural_zh.lm").wstring());
+    initial_characters_.clear();
+    phrase_counts_.reset();
+    if (!context_path.empty()) phrase_counts_.load((std::filesystem::path(context_path).parent_path() / L"phrase_zh.lm").wstring());
     continuation_model_.reset(dictionary_);
     if (!context_path.empty()) continuation_model_.load((std::filesystem::path(context_path).parent_path() / L"continuations_zh.tsv").wstring());
     learning_revision_ = static_cast<size_t>(-1);
@@ -636,6 +768,32 @@ bool PinyinEngine::load_dictionary_resource_directory(const std::wstring& direct
     return loaded;
 }
 
+const std::vector<Candidate>& PinyinEngine::characters_for_initial(const std::wstring& initial) const {
+    const auto found = initial_characters_.find(initial);
+    if (found != initial_characters_.end()) return found->second;
+    static constexpr const wchar_t* kFinals[] = {L"", L"a", L"o", L"e", L"i", L"u", L"v", L"ai", L"ei", L"ao", L"ou", L"an", L"en", L"ang", L"eng", L"ong", L"ia", L"ie", L"iu", L"in", L"ing", L"ian",
+                                                 L"iao", L"iang", L"iong", L"ua", L"uo", L"ui", L"un", L"uai", L"uan", L"uang", L"ue", L"ve", L"er", L"r"};
+    std::vector<Candidate> characters;
+    const auto add = [&](const std::wstring& start) {
+        for (const wchar_t* final_part : kFinals) {
+            const std::wstring syllable = start + final_part;
+            if (!Dictionary::is_syllable(syllable)) continue;
+            for (const auto& word : dictionary_.lookup(syllable)) {
+                if (word.text.size() != 1 || !all_han(word.text)) continue;
+                const auto same = std::find_if(characters.begin(), characters.end(), [&](const auto& item) { return item.text == word.text; });
+                if (same == characters.end()) characters.push_back(word);
+                else if (same->base_score < word.base_score) *same = word;
+            }
+        }
+    };
+    add(initial);
+    // z, c and s also begin zh, ch and sh syllables.
+    if (initial == L"z" || initial == L"c" || initial == L"s") add(initial + L"h");
+    std::stable_sort(characters.begin(), characters.end(), [](const auto& left, const auto& right) { return left.base_score > right.base_score; });
+    if (characters.size() > kCharactersPerInitial) characters.resize(kCharactersPerInitial);
+    return initial_characters_.emplace(initial, std::move(characters)).first->second;
+}
+
 std::vector<Candidate> PinyinEngine::words_for(const std::wstring& pinyin) const {
     auto words = dictionary_.lookup(pinyin);
     domains_.apply(pinyin, words);
@@ -682,6 +840,11 @@ bool PinyinEngine::set_evaluation_weights(const std::wstring& spec) {
         else if (key == L"wm") next.word_model = value;
         else if (key == L"wm3") next.word_triples = value;
         else if (key == L"nn") next.neural = value;
+        else if (key == L"stand") next.standalone_language_model = value;
+        else if (key == L"phrase") next.chat_phrase = value;
+        else if (key == L"initials") next.initials = value != 0.0;
+        else if (key == L"pmargin") next.chat_phrase_margin = value;
+        else if (key == L"plen") next.chat_phrase_length = static_cast<size_t>(value);
         else return false;
         if (comma == std::wstring::npos) break;
         start = comma + 1;
@@ -807,6 +970,15 @@ std::vector<Candidate> PinyinEngine::lookup_pinyin(const std::wstring& pinyin, c
             decoding.english = nullptr;
         }
     }
+    bool initials = false;
+    if (weights().initials && dp.back().empty() && !mixed && parsed.boundaries.empty() && looks_like_initials(normalized)) {
+        auto read = decode_initials(dictionary_, context_model_, normalized, context, decoding,
+                                    [this](const std::wstring& initial) -> const std::vector<Candidate>& { return characters_for_initial(initial); });
+        if (!read.back().empty()) {
+            dp = std::move(read);
+            initials = true;
+        }
+    }
     // The furthest point the input reads to, for corrections inside a sentence.
     size_t reach = 0;
     for (size_t offset = 0; offset < dp.size(); ++offset) if (!dp[offset].empty()) reach = offset;
@@ -829,7 +1001,7 @@ std::vector<Candidate> PinyinEngine::lookup_pinyin(const std::wstring& pinyin, c
         // value). A tenth of the clause-start language model score breaks such
         // near ties without overriding deliberate frequency priorities.
         if (standalone_word && !candidate.is_user_lexicon_entry)
-            candidate.base_score += context_model_.extend_score(L"", candidate.text) / kStandaloneTieBreakDivisor;
+            candidate.base_score += static_cast<int>(weights().standalone_language_model * context_model_.extend_score(L"", candidate.text));
         candidates.push_back(std::move(candidate));
     }
 
@@ -900,6 +1072,7 @@ std::vector<Candidate> PinyinEngine::lookup_pinyin(const std::wstring& pinyin, c
         const auto exact = words_for(normalized);
         const bool first_is_word = std::any_of(exact.begin(), exact.end(), [&](const auto& word) { return word.text == ranked.front().text; });
         rescore_with_neural(neural_model_, ranked, context, first_is_word);
+        if (context.empty()) promote_chat_phrase(ranked, exact, phrase_counts_, [&](const std::wstring& key) { return words_for(key); }, normalized, initials);
     }
 
     // Keep complete long-word alternatives beside sentence decoding. A rescue
