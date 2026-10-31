@@ -5,14 +5,14 @@
   "embed": 256,
   "hidden": 768,
   "parameters": 4616768,
-  "source_checkpoint_sha256": "c4228b5925e8ae8c4399ad9bc37f573003fe04d37629d39a0b3a4e082420eaf1",
+  "source_checkpoint_sha256": "45349080d7720c0a36ee605e612372528418bb7978e29fbc75ed28ec9d0eb185",
   "training": {
-    "tokens": 250649581,
-    "steps": 30352,
+    "tokens": 487269756,
+    "steps": 35542,
     "sequence": 128,
     "batch": 128,
-    "epochs": 2.0,
-    "valid_perplexity": 32.51,
+    "epochs": 1.2,
+    "valid_perplexity": 24.31,
     "inputs": [
       {
         "file": "daily_chat.txt",
@@ -163,8 +163,13 @@
         "file": "fineweb_extra2.txt",
         "weight": 1,
         "clauses": 8765733
+      },
+      {
+        "file": "lccc.txt",
+        "weight": 1,
+        "clauses": 27158776
       }
     ]
   },
-  "sha256": "a6f666c1310e0c11a8e544a01131e2d14a1bc6612c13a0f25d610da54ad42efd"
+  "sha256": "6d22eff98f508fd9e481d8b8824ff30932aded81cce8c8493ebf98ed7dc3f4c2"
 }

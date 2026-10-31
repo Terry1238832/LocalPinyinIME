@@ -10,6 +10,10 @@ Sources (see resources/dictionary/authoring/context_lm_sources.json):
     trains the character model; it and every 8th row group of the first
     training shard (read with HTTP range requests, two interleaved sets)
     train the word model.
+  * LCCC-base real chat text (Weibo, thu-coai; the Hugging Face copy is labelled
+    MIT); all of it trains the word and neural models, every 4th line the
+    character model. Whole dialogues are held out, and its evaluation cases
+    stay out of the repository because they are other people's posts.
 
 Every line is converted to simplified Chinese. One line in forty (chosen by a
 hash of its text) is held out of training; held-out Tatoeba and Common Voice
@@ -21,14 +25,17 @@ Authoring-time requirements: opencc and pyarrow, plus pypinyin and jieba for --w
 
   python tools/fetch_context_corpus.py --work <dir> [--write-eval tests/data]
                                         [--write-dialogue-eval tests/data]
+                                        [--write-chat-eval <dir>]
 """
 from __future__ import annotations
 
 import argparse
 import bz2
+import gzip
 import hashlib
 import io
 import json
+import random
 import re
 import urllib.request
 import xml.etree.ElementTree as ET
@@ -96,6 +103,14 @@ FINEWEB_TRAIN_SHARD = (
     4841624662, "3e43fefabc3ee500f9874655ece1776f96b81568cf33e0a6376835425ce42598")
 FINEWEB_TRAIN_STRIDE = 16
 FINEWEB_TRAIN_SETS = {0: "fineweb2_cmn_Hani_train_000_every16.parquet", 8: "fineweb2_cmn_Hani_train_000_every16_from8.parquet"}
+# Real chat text, pinned to a revision of the dataset repository.
+LCCC_DOWNLOADS = {
+    "lccc_base_train.jsonl.gz": (
+        "https://huggingface.co/datasets/silver/lccc/resolve/5bd582fa28cd7143f2f9c852e08e23089d677c44/lccc_base_train.jsonl.gz",
+        "2162e0ed923fba62329cabf7e1493fbe59248afc94a62508e4abdea61e624627"),
+}
+LCCC_CHARACTER_STRIDE = 4
+CHAT_EVAL_CASES = 6000
 # Gambling and adult spam, whose generated pages splice unrelated sentences.
 WEB_SPAM = re.compile(r"博彩|娱乐城|六合彩|时时彩|赌场|赌博|百家乐|彩票|开奖|真人视讯|老虎机|棋牌|色情|成人电影|av女优|威尼斯人|葡京|"
                       r"皇冠体育|投注")
@@ -366,7 +381,63 @@ def fineweb_lines(paths: list[Path]) -> list[str]:
     return lines
 
 
-def unseen(clauses: set[str], training: list[str]) -> set[str]:
+def write_lccc(path: Path, train: Path) -> list[str]:
+    """Writes lccc.txt and the character model's lccc_q.txt; returns the held-out lines."""
+    held, long_seen, written = [], set(), 0
+    with gzip.open(path, "rt", encoding="utf-8") as source, \
+            (train / "lccc.txt").open("w", encoding="utf-8", newline="\n") as everything, \
+            (train / "lccc_q.txt").open("w", encoding="utf-8", newline="\n") as sample:
+        for row in source:
+            # The text is word-segmented with spaces.
+            dialogue = ["".join(utterance.split()) for utterance in json.loads(row)]
+            hold = held_out(dialogue[0])
+            for line in dialogue:
+                han = HAN_CLAUSE.findall(line)
+                count = sum(map(len, han))
+                if count < 2 or count < 0.5 * len(line) or WEB_SPAM.search(line):
+                    continue
+                if any(ch in TRADITIONAL_ONLY for run in han for ch in run):
+                    continue
+                # Short replies repeat because people say them; long repeats are copy-paste.
+                if count >= 12:
+                    digest = hashlib.blake2b(line.encode("utf-8"), digest_size=8).digest()
+                    if digest in long_seen:
+                        continue
+                    long_seen.add(digest)
+                if hold:
+                    held.append(line)
+                    continue
+                everything.write(line + "\n")
+                written += 1
+                if written % LCCC_CHARACTER_STRIDE == 0:
+                    sample.write(line + "\n")
+    print("lccc", written, "training lines;", len(held), "held out")
+    return held
+
+
+def write_chat_eval(held: list[str], training: Path, directory: Path) -> None:
+    """chat_natural: clauses as they occur, repeats included. chat_novel: clauses in no training text."""
+    from pypinyin import Style, lazy_pinyin
+
+    clauses = [clause for line in held for clause in HAN_CLAUSE.findall(line) if 4 <= len(clause) <= 24]
+    picker = random.Random(20261030)
+    natural = picker.sample(clauses, min(CHAT_EVAL_CASES, len(clauses)))
+    distinct = sorted(set(clauses))
+    pool = picker.sample(distinct, min(CHAT_EVAL_CASES * 4, len(distinct)))
+    with training.open(encoding="utf-8") as lines:
+        novel = unseen(set(pool), lines)
+    for name, items in (("chat_natural", natural), ("chat_novel", [clause for clause in pool if clause in novel][:CHAT_EVAL_CASES])):
+        rows = []
+        for index, clause in enumerate(items):
+            syllables = lazy_pinyin(clause, style=Style.NORMAL, errors="ignore")
+            if len(syllables) == len(clause) and all(s.isascii() and s.isalpha() for s in syllables):
+                rows.append(f"{''.join(syllables)}\t{clause}\t{name}:{index}")
+        (directory / f"{name}.tsv").write_text("# LCCC-base held-out dialogues; not for the repository\n# pinyin\texpected\tsource\n" +
+                                               "\n".join(rows) + "\n", encoding="utf-8", newline="\n")
+        print(name, len(rows), "cases")
+
+
+def unseen(clauses: set[str], training) -> set[str]:
     """The clauses that occur nowhere in the training text."""
     by_first: dict[str, list[str]] = {}
     for clause in clauses:
@@ -431,6 +502,7 @@ def main() -> int:
     parser.add_argument("--work", type=Path, required=True, help="download and output directory")
     parser.add_argument("--write-eval", type=Path, help="directory for heldout_*.tsv evaluation cases")
     parser.add_argument("--write-dialogue-eval", type=Path, help="directory for heldout_dialogue_*.tsv evaluation cases")
+    parser.add_argument("--write-chat-eval", type=Path, help="directory for chat_*.tsv evaluation cases (not for the repository)")
     args = parser.parse_args()
     downloads = args.work / "downloads"
     download(downloads)
@@ -440,6 +512,8 @@ def main() -> int:
     download(web, FINEWEB_DOWNLOADS)
     for first, name in FINEWEB_TRAIN_SETS.items():
         download_row_groups(web, first, name)
+    chat = args.work / "chat"
+    download(chat, LCCC_DOWNLOADS)
     sources = {
         "tatoeba": tatoeba_lines(downloads / "cmn_sentences.tsv.bz2"),
         "cv": common_voice_lines(downloads),
@@ -459,6 +533,9 @@ def main() -> int:
         training.extend(kept)
         (train / f"{name}.txt").write_text("\n".join(kept) + "\n", encoding="utf-8", newline="\n")
         print(name, len(kept), "training lines;", len(held[name]), "held out")
+    chat_held = write_lccc(chat / "lccc_base_train.jsonl.gz", train)
+    if args.write_chat_eval:
+        write_chat_eval(chat_held, train / "lccc.txt", args.write_chat_eval)
     if args.write_eval:
         write_eval({name: held[name] for name in ("tatoeba", "cv")}, args.write_eval)
     if args.write_dialogue_eval:

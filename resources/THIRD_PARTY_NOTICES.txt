@@ -241,6 +241,10 @@ The 4-gram language model used to rank candidates by the preceding text contains
   (https://opendatacommons.org/licenses/by/1-0/); the underlying pages were collected by Common Crawl
   and are also subject to the Common Crawl terms of use (https://commoncrawl.org/terms-of-use);
   only n-gram statistics are included, no web text;
+- LCCC-base real chat text (https://huggingface.co/datasets/silver/lccc, revision 5bd582fa28cd7143f2f9c852e08e23089d677c44,
+  labelled MIT there; upstream https://github.com/thu-coai/CDial-GPT), from Wang et al., A Large-Scale Chinese Short-Text
+  Conversation Dataset, NLPCC 2020 (arXiv:2008.03946); the underlying posts were collected from Weibo;
+  only statistics and network weights derived from it are included, no text;
 - internal n-grams of the bundled dictionary words.
 The word association model (word_zh.lm) contains only association scores of adjacent lexicon word pairs and runs of
 three words, estimated from the same sources. The neural character model (neural_zh.lm) contains only network

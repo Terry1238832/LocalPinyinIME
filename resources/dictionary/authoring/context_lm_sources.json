@@ -74,6 +74,15 @@
       "weight": 1
     },
     {
+      "name": "LCCC-base real chat text (Weibo conversations; all lines for the word and neural models, every 4th line for the character model)",
+      "url": "https://huggingface.co/datasets/silver/lccc/resolve/5bd582fa28cd7143f2f9c852e08e23089d677c44/lccc_base_train.jsonl.gz",
+      "sha256": "2162e0ed923fba62329cabf7e1493fbe59248afc94a62508e4abdea61e624627",
+      "retrieved": "2026-10-30",
+      "license": "The Hugging Face copy is labelled MIT. The upstream project (https://github.com/thu-coai/CDial-GPT) names no licence for the data and says it aims to facilitate conversation-generation research; the underlying posts were crawled from Weibo.",
+      "attribution": "Wang, Ke, Zheng, Huang, Jiang, Zhu, Huang, A Large-Scale Chinese Short-Text Conversation Dataset, NLPCC 2020, arXiv:2008.03946",
+      "weight": 1
+    },
+    {
       "name": "Bundled dictionary words (internal n-grams only, no clause boundaries)",
       "files": "core_zh_pinyin.tsv, local_core_zh_pinyin.tsv, standard_zh_pinyin.tsv",
       "weight": 2
@@ -87,9 +96,10 @@
     "Clauses containing any evaluation sentence of four or more characters are excluded.",
     "Interpolated modified Kneser-Ney estimation; count cutoffs 1/1/2/4 for orders 1-4 (1.3.0; 1/2/3/4 before); pruned rows renormalized.",
     "Dialogue lines are held out by the same one-in-forty hash; held-out dialogue clauses that occur in no training text form tests/data/heldout_dialogue_*.tsv (dialogue repeats set phrases, so a clause also seen in training would only test recall). Clauses containing an evaluation sentence are excluded from training as before.",
-    "FineWeb-2 web pages from generated spam host names or with gambling/adult keywords are dropped, as are pages whose Han text has more than 1% Traditional-only characters; lines with fewer than six Han characters or less than half Han text are dropped and lines are deduplicated. The same one-in-forty hash holds lines out; evaluation sentences are excluded from training as for every source."
+    "FineWeb-2 web pages from generated spam host names or with gambling/adult keywords are dropped, as are pages whose Han text has more than 1% Traditional-only characters; lines with fewer than six Han characters or less than half Han text are dropped and lines are deduplicated. The same one-in-forty hash holds lines out; evaluation sentences are excluded from training as for every source.",
+    "LCCC text has its segmentation spaces removed. Lines with fewer than two Han characters, less than half Han text, spam keywords or Traditional-only characters are dropped, and repeats of lines of twelve or more Han characters are dropped. Whole dialogues are held out by the hash of their first line; held-out clauses form the chat_natural and chat_novel evaluation sets, which are not in the repository because they are other people's posts."
   ],
-  "build_command": "python tools/build_context_lm.py --input resources/dictionary/authoring/daily_*.txt:8 <other authoring .txt>:1 <work>/train/wikinews.txt:2 <work>/train/tatoeba.txt:3 <work>/train/cv.txt:3 <work>/train/kdconv.txt:2 <work>/train/crosswoz.txt:2 <work>/train/fineweb.txt:1 --fragments resources/dictionary/local_core_zh_pinyin.tsv:2 resources/dictionary/standard_zh_pinyin.tsv:2 resources/dictionary/core_zh_pinyin.tsv:2 --exclude tests/data/typing_holdout.tsv tests/data/typing_fresh.tsv tests/data/typing_independent.tsv tests/data/scenario_replay_076.tsv tests/data/common_word_order_079.tsv tests/data/heldout_sentences.tsv tests/data/heldout_dialogue_sentences.tsv --min-count 1 1 2 4 --output resources/dictionary/context_zh.lm",
+  "build_command": "python tools/build_context_lm.py --input resources/dictionary/authoring/daily_*.txt:8 <other authoring .txt>:1 <work>/train/wikinews.txt:2 <work>/train/tatoeba.txt:3 <work>/train/cv.txt:3 <work>/train/kdconv.txt:2 <work>/train/crosswoz.txt:2 <work>/train/fineweb.txt:1 <work>/train/lccc_q.txt:1 --fragments resources/dictionary/local_core_zh_pinyin.tsv:2 resources/dictionary/standard_zh_pinyin.tsv:2 resources/dictionary/core_zh_pinyin.tsv:2 --exclude tests/data/typing_holdout.tsv tests/data/typing_fresh.tsv tests/data/typing_independent.tsv tests/data/scenario_replay_076.tsv tests/data/common_word_order_079.tsv tests/data/heldout_sentences.tsv tests/data/heldout_dialogue_sentences.tsv --min-count 1 1 2 4 --output resources/dictionary/context_zh.lm",
   "word_model": {
     "artifact": "../word_zh.lm",
     "content": "Association scores of adjacent lexicon word pairs and runs of three only; no sentence text is packaged.",
@@ -100,7 +110,7 @@
       "Runs of three words seen at least 3 times keep ln((count(abc) - 0.5) * count(b) / (count(ab) * count(bc))) on the same terms (1.5.0).",
       "Clauses containing any evaluation sentence are excluded, as for the character model."
     ],
-    "build_command": "python tools/build_word_model.py --input resources/dictionary/authoring/daily_*.txt:8 <other authoring .txt>:1 <work>/train/wikinews.txt:3 <work>/train/tatoeba.txt:3 <work>/train/cv.txt:3 <work>/train/kdconv.txt:3 <work>/train/crosswoz.txt:3 <work>/train/fineweb.txt:1 <work>/train/fineweb_extra.txt:1 <work>/train/fineweb_extra2.txt:1 --lexicon resources/dictionary/core_zh_pinyin.tsv resources/dictionary/local_core_zh_pinyin.tsv resources/dictionary/standard_zh_pinyin.tsv --exclude tests/data/typing_holdout.tsv tests/data/typing_fresh.tsv tests/data/typing_independent.tsv tests/data/scenario_replay_076.tsv tests/data/common_word_order_079.tsv tests/data/heldout_sentences.tsv tests/data/heldout_dialogue_sentences.tsv --output resources/dictionary/word_zh.lm"
+    "build_command": "python tools/build_word_model.py --input resources/dictionary/authoring/daily_*.txt:8 <other authoring .txt>:1 <work>/train/wikinews.txt:2 <work>/train/tatoeba.txt:3 <work>/train/cv.txt:3 <work>/train/kdconv.txt:2 <work>/train/crosswoz.txt:2 <work>/train/fineweb.txt:1 <work>/train/lccc.txt:1 <work>/train/fineweb_extra.txt:1 <work>/train/fineweb_extra2.txt:1 --lexicon resources/dictionary/core_zh_pinyin.tsv resources/dictionary/local_core_zh_pinyin.tsv resources/dictionary/standard_zh_pinyin.tsv --exclude tests/data/typing_holdout.tsv tests/data/typing_fresh.tsv tests/data/typing_independent.tsv tests/data/scenario_replay_076.tsv tests/data/common_word_order_079.tsv tests/data/heldout_sentences.tsv tests/data/heldout_dialogue_sentences.tsv --output resources/dictionary/word_zh.lm"
   },
   "neural_model": {
     "artifact": "../neural_zh.lm",
@@ -110,9 +120,9 @@
       "tools/export_neural_lm.py"
     ],
     "processing": [
-      "Same training text and weights as the word model (authoring prose, Wikinews, Tatoeba, Common Voice, KdConv, CrossWOZ, the three FineWeb-2 files).",
+      "Same training text as the word model (authoring prose, Wikinews, Tatoeba, Common Voice, KdConv, CrossWOZ, the three FineWeb-2 files, LCCC-base), with KdConv and CrossWOZ at weight 3.",
       "Clauses containing any evaluation sentence of four or more characters are skipped, including the word-level and everyday-chat evaluation files.",
-      "Two passes over 250.6M characters, sequences of 128, AdamW with a one-cycle schedule; held-out stream perplexity 32.5."
+      "1.2 passes over 487.3M characters, sequences of 128, AdamW with a one-cycle schedule; held-out stream perplexity 24.3."
     ],
     "build_command": "python tools/train_neural_lm.py --work <work> --output model.pt && python tools/export_neural_lm.py model.pt resources/dictionary/neural_zh.lm"
   }

@@ -9,7 +9,7 @@ word-level and everyday-chat evaluation files. Only weights are packaged
 Authoring-time requirements: PyTorch with CUDA, numpy.
 
   python tools/train_neural_lm.py --work <dir> --output model.pt [--hidden 768] [--embed 256]
-                                  [--vocab 8000] [--epochs 2]
+                                  [--vocab 8000] [--epochs 1.2]
   python tools/export_neural_lm.py model.pt resources/dictionary/neural_zh.lm
 """
 from __future__ import annotations
@@ -34,7 +34,7 @@ SEQ, BATCH = 128, 128
 EXCLUDE = ["typing_holdout.tsv", "typing_fresh.tsv", "typing_independent.tsv", "scenario_replay_076.tsv",
            "common_word_order_079.tsv", "heldout_sentences.tsv", "heldout_dialogue_sentences.tsv",
            "heldout_context.tsv", "heldout_dialogue_context.tsv", "colloquial_dev.tsv", "colloquial_test.tsv"]
-WEIGHTS = {"wikinews": 2, "tatoeba": 3, "cv": 3, "kdconv": 3, "crosswoz": 3, "fineweb": 1, "fineweb_extra": 1, "fineweb_extra2": 1}
+WEIGHTS = {"wikinews": 2, "tatoeba": 3, "cv": 3, "kdconv": 3, "crosswoz": 3, "fineweb": 1, "fineweb_extra": 1, "fineweb_extra2": 1, "lccc": 1}
 
 
 class CharLM(nn.Module):
@@ -78,7 +78,7 @@ def main() -> None:
     parser.add_argument("--hidden", type=int, default=768)
     parser.add_argument("--embed", type=int, default=256)
     parser.add_argument("--vocab", type=int, default=8000)
-    parser.add_argument("--epochs", type=float, default=2.0)
+    parser.add_argument("--epochs", type=float, default=1.2)
     parser.add_argument("--weights", default="", help="source=weight overrides, e.g. kdconv=8,crosswoz=8")
     parser.add_argument("--daily-weight", type=int, default=8, help="weight of the authoring daily_* chat text")
     args = parser.parse_args()
