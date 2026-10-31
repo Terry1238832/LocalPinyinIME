@@ -1,0 +1,671 @@
+{
+  "round": 67,
+  "direction": "A",
+  "continuation_stop_threshold": null,
+  "batch_min": 624,
+  "batch_max": 629,
+  "base_commit": "667e9c54d48eb973cd769c241bc7432f8a38e642",
+  "engine_version": "1.8.3",
+  "audit": {
+    "before": 274495,
+    "after": 275752,
+    "added": 1257,
+    "existing_rows_preserved": true,
+    "all_layers_and_domains_surface_dedup": true,
+    "hashes_reviews_weights_formats_passed": true,
+    "batches": {
+      "624": {
+        "scope": "日常物品遗落、寻找、招领与归还聊天",
+        "entries": 471,
+        "weights": {
+          "5500": 471
+        },
+        "reviews": 427,
+        "overrides": {
+          "放在行李架": "fangzaixinglijia",
+          "下次见面还你": "xiacijianmianhuanni",
+          "你的是长柄伞": "nideshichangbingsan"
+        },
+        "sha256": "c6ed2fa089a8a69f89e0eff0c657e92a93e43e721069c4a36434cb727cb2cdbe"
+      },
+      "625": {
+        "scope": "亲友到家做客、短住与离开时的日常协调",
+        "entries": 376,
+        "weights": {
+          "5500": 376
+        },
+        "reviews": 332,
+        "overrides": {
+          "空调你自己调": "kongtiaonizijitiao",
+          "床头灯能调暗": "chuangtoudengnengtiaoan",
+          "空调调低一点": "kongtiaotiaodiyidian"
+        },
+        "sha256": "5b7b8f02b997afeb3ee34de4994c4c125b3429557aa1c1b716f0fab21caa72fc"
+      },
+      "626": {
+        "scope": "亲友普通感冒恢复期间的问候、探望与日常照应",
+        "entries": 365,
+        "weights": {
+          "5500": 365
+        },
+        "reviews": 336,
+        "overrides": {
+          "等候时间长吗": "denghoushijianchangma"
+        },
+        "sha256": "0e7ccd987d4984d977336c01c0cf8227e6f6afd1033feade279227ba52612bd2"
+      },
+      "627": {
+        "scope": "日常物品遗落、寻找、招领与归还的长句",
+        "entries": 15,
+        "weights": {
+          "5500": 15
+        },
+        "reviews": 15,
+        "overrides": {},
+        "sha256": "3591c2bbc013c6a654977194e1914515c3a0b0bf69f72d7411c89b2013fef1b6"
+      },
+      "628": {
+        "scope": "亲友到家做客、留宿与临走前确认的长句",
+        "entries": 15,
+        "weights": {
+          "5500": 15
+        },
+        "reviews": 15,
+        "overrides": {
+          "你晚上睡得还习惯吗空调温度不合适的话自己调一下柜子里还有一床薄被可以加上": "niwanshangshuidehaixiguanmakongtiaowendubuheshidehuazijitiaoyixiaguizilihaiyouyichuangbaobeikeyijiashang"
+        },
+        "sha256": "84ed59d9baefb1521cfd06753e979da0d831674b9ccf204239bb9ce2eab4fa75"
+      },
+      "629": {
+        "scope": "亲友感冒恢复期间问候、探望与日常照应的长句",
+        "entries": 15,
+        "weights": {
+          "5500": 15
+        },
+        "reviews": 15,
+        "overrides": {},
+        "sha256": "473599be6c74e3206f68aac23d135078586b85ce86d5d55060e58862667abbc7"
+      }
+    },
+    "local_core_sha256": "19dde401c50a8639cc9ca262a874d12b7988cb19da0b12ac856689bcdf3691f4"
+  },
+  "probes": {
+    "624": {
+      "cases": 471,
+      "top1": 71.34,
+      "top9": 100.0,
+      "two_to_four_cases": 12,
+      "two_to_four_top9": 12,
+      "two_to_four_missing": [],
+      "other_missing": [],
+      "probe_sha256": "19fdbf3ce197eb3ef0e9752289c9b8969633336e186690f5dee211a777d88d1a",
+      "raw_sha256": "6f0ea99757ebf9b0864b358671ec108bda1faeb83cd384ce334636f552f1b701"
+    },
+    "625": {
+      "cases": 376,
+      "top1": 80.32,
+      "top9": 100.0,
+      "two_to_four_cases": 2,
+      "two_to_four_top9": 2,
+      "two_to_four_missing": [],
+      "other_missing": [],
+      "probe_sha256": "d8ce98a811a233db926a4d422ce3954259483fdd806da6b072dd2745b7769e51",
+      "raw_sha256": "ca225cae8d6a537fc07f13a0c22c2ca48abd0d724bfe08c69cf26b0b3b137717"
+    },
+    "626": {
+      "cases": 365,
+      "top1": 79.45,
+      "top9": 100.0,
+      "two_to_four_cases": 2,
+      "two_to_four_top9": 2,
+      "two_to_four_missing": [],
+      "other_missing": [],
+      "probe_sha256": "3fb5d756627747ec31b98d16170a6c4ebab3ae2f271018f82bf4e7fb538bf9d3",
+      "raw_sha256": "64728a21c2382f150d6123306c19992394065960d085dcc13e92868f48d3d275"
+    },
+    "627": {
+      "cases": 15,
+      "top1": 73.33,
+      "top9": 73.33,
+      "two_to_four_cases": 0,
+      "two_to_four_top9": 0,
+      "two_to_four_missing": [],
+      "other_missing": [
+        {
+          "word": "包里和外套口袋都翻过了还是没找到可能是下车时掉在座位旁边我再联系司机确认一下",
+          "pinyin": "baolihewaitaokoudaidoufanguolehaishimeizhaodaokenengshixiacheshidiaozaizuoweipangbianwozailianxisijiquerenyixia"
+        },
+        {
+          "word": "刚才离开咖啡店的时候好像把雨伞忘在桌边了我现在回去问问店员麻烦你先在门口等我一下",
+          "pinyin": "gangcailikaikafeidiandeshihouhaoxiangbayusanwangzaizhuobianlewoxianzaihuiquwenwendianyuanmafannixianzaimenkoudengwoyixia"
+        },
+        {
+          "word": "你别着急我记得刚才把眼镜放在沙发扶手上了我们先看看坐过的地方和旁边的小桌子",
+          "pinyin": "nibiezhaojiwojidegangcaibayanjingfangzaishafafushoushanglewomenxiankankanzuoguodedifanghepangbiandexiaozhuozi"
+        },
+        {
+          "word": "我在车后排找到一个黑色耳机盒不确定是不是你的你说下外壳上有没有那道白色划痕",
+          "pinyin": "wozaichehoupaizhaodaoyigeheiseerjihebuquedingshibushinidenishuoxiawaikeshangyoumeiyounadaobaisehuahen"
+        }
+      ],
+      "probe_sha256": "0c292d468648d3e9d3daa69cd7228756f06ed6008a852a566c2899d461c9f5d9",
+      "raw_sha256": "208e08dc9dd075999ed6bfd36741af1758271bba3086d99917741b841fc187ad"
+    },
+    "628": {
+      "cases": 15,
+      "top1": 80.0,
+      "top9": 93.33,
+      "two_to_four_cases": 0,
+      "two_to_four_top9": 0,
+      "two_to_four_missing": [],
+      "other_missing": [
+        {
+          "word": "你先别忙着收拾我来把桌子和杯子收一下昨天你一路过来挺累的坐着休息一会儿吧",
+          "pinyin": "nixianbiemangzheshoushiwolaibazhuozihebeizishouyixiazuotianniyiluguolaitingleidezuozhexiuxiyihuierba"
+        }
+      ],
+      "probe_sha256": "35e9fbd2e2fbbe51739db4bb07a18300578a8c5ec5ce541827deff11d0f34355",
+      "raw_sha256": "48ec73a5c1b0284f2f7a0c36b57148a96347368efb5259bc89b2fe4e49c76790"
+    },
+    "629": {
+      "cases": 15,
+      "top1": 46.67,
+      "top9": 60.0,
+      "two_to_four_cases": 0,
+      "two_to_four_top9": 0,
+      "two_to_four_missing": [],
+      "other_missing": [
+        {
+          "word": "今天我就不进去坐了怕影响你休息东西放下我就走明天再发消息问问你怎么样",
+          "pinyin": "jintianwojiubujinquzuolepayingxiangnixiuxidongxifangxiawojiuzoumingtianzaifaxiaoxiwenwennizenmeyang"
+        },
+        {
+          "word": "明天复查的时间是上午十点医保卡和证件记得带好如果你觉得累我可以陪你一起去",
+          "pinyin": "mingtianfuchadeshijianshishangwushidianyibaokahezhengjianjidedaihaoruguonijuedeleiwokeyipeiniyiqiqu"
+        },
+        {
+          "word": "你别觉得麻烦我顺路买点东西真的没什么等你完全恢复了我们再一起出去吃饭",
+          "pinyin": "nibiejuedemafanwoshunlumaidiandongxizhendemeishenmedengniwanquanhuifulewomenzaiyiqichuquchifan"
+        },
+        {
+          "word": "你不用担心今天的聚会我已经跟大家说过了等身体舒服一些我们再另外约时间见面",
+          "pinyin": "nibuyongdanxinjintiandejuhuiwoyijinggendajiashuoguoledengshentishufuyixiewomenzailingwaiyueshijianjianmian"
+        },
+        {
+          "word": "药盒我已经放在桌子上了先按医生交代的方式吃不确定的地方就打电话问诊所",
+          "pinyin": "yaohewoyijingfangzaizhuozishanglexiananyishengjiaodaidefangshichibuquedingdedifangjiudadianhuawenzhensuo"
+        },
+        {
+          "word": "昨晚睡得怎么样咳嗽有没有少一点今天先别聊太久手机放在旁边有事随时叫我",
+          "pinyin": "zuowanshuidezenmeyangkesouyoumeiyoushaoyidianjintianxianbieliaotaijiushoujifangzaipangbianyoushisuishijiaowo"
+        }
+      ],
+      "probe_sha256": "c8378a8a6ef44c10a48444a9deafd0c9a43f4a68c6a86b85f897371cb43a6fef",
+      "raw_sha256": "23f046cf23e8a38c8d70d2b9fd06f242be28c87641cb4c65f16c4af6cc90ea65"
+    }
+  },
+  "accuracy_before": {
+    "逐词输入·参考前文": {
+      "cases": 20626,
+      "top1": 88.25,
+      "top9": 98.7
+    },
+    "逐词输入·无前文": {
+      "cases": 20626,
+      "top1": 79.65,
+      "top9": 97.56
+    },
+    "留出整句": {
+      "cases": 4126,
+      "top1": 64.49,
+      "top9": 77.61
+    },
+    "口语对话·整句": {
+      "cases": 3368,
+      "top1": 85.36,
+      "top9": 94.69
+    },
+    "口语对话·逐词": {
+      "cases": 19504,
+      "top1": 95.58,
+      "top9": 99.72
+    },
+    "项目留出": {
+      "cases": 138,
+      "top1": 84.78,
+      "top9": 89.13
+    },
+    "新增用例": {
+      "cases": 67,
+      "top1": 71.64,
+      "top9": 83.58
+    },
+    "独立用例": {
+      "cases": 62,
+      "top1": 53.23,
+      "top9": 79.03
+    },
+    "日常口语·开发": {
+      "cases": 149,
+      "top1": 97.32,
+      "top9": 99.33
+    },
+    "日常口语·留出": {
+      "cases": 150,
+      "top1": 90.0,
+      "top9": 96.67
+    }
+  },
+  "accuracy_after": {
+    "逐词输入·参考前文": {
+      "cases": 20626,
+      "top1": 88.25,
+      "top9": 98.7
+    },
+    "逐词输入·无前文": {
+      "cases": 20626,
+      "top1": 79.65,
+      "top9": 97.56
+    },
+    "留出整句": {
+      "cases": 4126,
+      "top1": 64.49,
+      "top9": 77.61
+    },
+    "口语对话·整句": {
+      "cases": 3368,
+      "top1": 85.36,
+      "top9": 94.69
+    },
+    "口语对话·逐词": {
+      "cases": 19504,
+      "top1": 95.58,
+      "top9": 99.72
+    },
+    "项目留出": {
+      "cases": 138,
+      "top1": 84.78,
+      "top9": 89.13
+    },
+    "新增用例": {
+      "cases": 67,
+      "top1": 71.64,
+      "top9": 83.58
+    },
+    "独立用例": {
+      "cases": 62,
+      "top1": 53.23,
+      "top9": 79.03
+    },
+    "日常口语·开发": {
+      "cases": 149,
+      "top1": 97.32,
+      "top9": 99.33
+    },
+    "日常口语·留出": {
+      "cases": 150,
+      "top1": 90.0,
+      "top9": 96.67
+    }
+  },
+  "native_tests": {
+    "x64": {
+      "passed": 47,
+      "total": 47,
+      "log_sha256": "f7eb61f523465f525351d39c857bca0baa4a69ecb67b41b85ef9a4224ed8e664"
+    },
+    "x86": {
+      "passed": 47,
+      "total": 47,
+      "log_sha256": "7989f5b5b47c7b53d813c71e64b1503c6c0e3c981a91f812447bbb4589af2603"
+    }
+  },
+  "max_entries": 281456,
+  "commits": {
+    "624": "ac692f5e2c6f4831274736934fd1f29a9e2fc751",
+    "625": "c8ef3bdc7300cf231b74d99ba42076ddf2b4c754",
+    "626": "9618141c8906e189b62c39d646ddbec3ceaa5539",
+    "627": "784f7a3c58c0ba577e24dcde54cbee76d7f7b16b",
+    "628": "ffe10cbe9da81de1f894f63e7768ea896d27826e",
+    "629": "3e88f5c2aa0dcefaba0effcf8ff99dc65e1564be"
+  },
+  "rejections": {
+    "duplicate:local_core_zh_pinyin.tsv": 122,
+    "表达不自然；改用‘问问失物招领’": 1,
+    "表达不自然；改用‘有人来认领’": 1,
+    "表达不完整；改用‘最后在哪见过’": 1,
+    "表达不完整；改用‘最后用在哪儿’": 1,
+    "表达残缺；改用‘走时拿了没’": 1,
+    "表达残缺；改用‘试衣间找过没’": 1,
+    "表达残缺；改用‘地上找找吧’": 1,
+    "outside_batch_length_scope": 293,
+    "表达残缺；改用‘可能顺手收了’": 1,
+    "搭配不自然；改用‘塞到别的袋里’": 1,
+    "指代不清；改用‘问下司机吧’": 1,
+    "表达不完整；改用‘我给你倒杯水’": 1,
+    "搭配不自然；改用‘换了新床单’": 1,
+    "表达残缺；改用‘洗好了拿出来’": 1,
+    "表达不自然；改用‘我家楼层不高’": 1,
+    "duplicate:batch625": 2,
+    "表达不自然；改用‘厨房你随便用’": 1,
+    "duplicate:batch626": 2,
+    "表达不完整；改用‘我替你说一声’": 1,
+    "表达生硬；改用‘慢慢多活动’": 1,
+    "语意不清；改用‘排队还有几人’": 1,
+    "搭配不自然；改用‘眼睛有神了’": 1
+  },
+  "whole_batch_withdrawals": [],
+  "status": "passed",
+  "native_runtime_canonical_sha256": {
+    "x64": "19dde401c50a8639cc9ca262a874d12b7988cb19da0b12ac856689bcdf3691f4",
+    "x86": "19dde401c50a8639cc9ca262a874d12b7988cb19da0b12ac856689bcdf3691f4"
+  },
+  "protected_model_and_test_files_unchanged": {
+    "resources/dictionary/word_zh.lm": "bcfdff3c333750f2a07041fc7e4fec7f29aaad5e67ff83015da77bb839005c4d",
+    "resources/dictionary/neural_zh.lm": "a6f666c1310e0c11a8e544a01131e2d14a1bc6612c13a0f25d610da54ad42efd",
+    "tests/test_word_model.cpp": "938ea4d9c5852c55745c8420f9947ac8236f625e5dd18c8823a5beda3681cb10",
+    "tests/test_neural_model.cpp": "ec943a49d2ef26e097b6cbefc6067d4abd67685a8857ed4644e5164587c1ceea"
+  },
+  "accuracy_before_runtime_evidence": {
+    "engine_sha256": "207a471abe08c00695be58e22719d9375c100cbfec24e092e4b0c0cad012cba4",
+    "dictionary_files": {
+      "dictionary\\context_zh.lm": "fbc541b277f140c64d217a37dc3fe7a4ea1abd24e599910160eed8bb6cf82581",
+      "dictionary\\context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+      "dictionary\\continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e",
+      "dictionary\\core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+      "dictionary\\english_terms.tsv": "fb33a275b9b4057aba8e6632912ed995c586b89fc191182ab93b2ee2721ba453",
+      "dictionary\\english_words.tsv": "28d7afee035fadf5cab977ec452bc2aa3edbdbe69448dfbd91695cc22c07ac61",
+      "dictionary\\local_core_zh_pinyin.metadata.json": "9fce26d17e2af065dfd14c0f8720737985a4ebf772caffe415a7f9c55bc836a7",
+      "dictionary\\local_core_zh_pinyin.tsv": "3c1eef2b5f82477403716b8248afd7c9b83f02e2231f65cbd8a02606e29d5793",
+      "dictionary\\neural_zh.lm": "a6f666c1310e0c11a8e544a01131e2d14a1bc6612c13a0f25d610da54ad42efd",
+      "dictionary\\standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+      "dictionary\\word_zh.lm": "bcfdff3c333750f2a07041fc7e4fec7f29aaad5e67ff83015da77bb839005c4d",
+      "dictionary\\domains\\coding.tsv": "8ed3e2e2aaddab952983bd4c070273ffc9dc018d8eb39bb1aa96c29a767e85f3",
+      "dictionary\\domains\\daily.tsv": "a30b3d4250e69e6b6acee49e114d262255d8314a3676c69e8290bd4238d6054e",
+      "dictionary\\domains\\games.tsv": "b0b9930107b27fc1342f10a9020b703b5da4c0cb1cfc3b33b9790ba9fbf80aaf",
+      "dictionary\\domains\\math.tsv": "863121f6ef89785dec628dfb7ab41de2ae1adf5066efbc714092343b62124a57",
+      "dictionary\\domains\\study.tsv": "bec679bc57c125c654c6a5191812e99121431c42e512f6fc3b84b5a01c1a87f2",
+      "dictionary\\domains\\work.tsv": "b7b8718ca54d6774be178c3bea5bf3f5c4d6c66a64942e7bb76490ebff2a1586",
+      "dictionary\\panel\\emoji.tsv": "f37e5435d9bc49ff1b85de701a547b859d7136c1c3478158e4376060d1755799",
+      "dictionary\\panel\\kaomoji.tsv": "ca8f6f24bf59551b34b4ed0e4546680b582814b28eb8aacf1f8f8a87abb97444",
+      "dictionary\\panel\\symbols.tsv": "b7ea522ba80cd96c1f69b24afe093dabd1d55a367ef046e4bb38511f4e9de6b8",
+      "dictionary\\sources\\lexicon_sources.json": "5a21e1ca955acd822cc66d17b0c82e883ceb55acfac91426f053be68a3073059"
+    },
+    "canonical_sha256": "3c1eef2b5f82477403716b8248afd7c9b83f02e2231f65cbd8a02606e29d5793",
+    "note": "Immutable isolated resources captured before any round entries are applied; official accuracy_snapshot.py runs against this copy, so simultaneous native builds and candidate measurement cannot contaminate baseline."
+  },
+  "accuracy_after_runtime_evidence": {
+    "engine_sha256": "f794e5b32dae42341baeadbade1a8767c238d8768d134573e9e700fdda6ec99c",
+    "dictionary_files": {
+      "dictionary\\context_zh.lm": "fbc541b277f140c64d217a37dc3fe7a4ea1abd24e599910160eed8bb6cf82581",
+      "dictionary\\context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+      "dictionary\\continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e",
+      "dictionary\\core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+      "dictionary\\english_terms.tsv": "fb33a275b9b4057aba8e6632912ed995c586b89fc191182ab93b2ee2721ba453",
+      "dictionary\\english_words.tsv": "28d7afee035fadf5cab977ec452bc2aa3edbdbe69448dfbd91695cc22c07ac61",
+      "dictionary\\local_core_zh_pinyin.metadata.json": "9fce26d17e2af065dfd14c0f8720737985a4ebf772caffe415a7f9c55bc836a7",
+      "dictionary\\local_core_zh_pinyin.tsv": "19dde401c50a8639cc9ca262a874d12b7988cb19da0b12ac856689bcdf3691f4",
+      "dictionary\\neural_zh.lm": "a6f666c1310e0c11a8e544a01131e2d14a1bc6612c13a0f25d610da54ad42efd",
+      "dictionary\\standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+      "dictionary\\word_zh.lm": "bcfdff3c333750f2a07041fc7e4fec7f29aaad5e67ff83015da77bb839005c4d",
+      "dictionary\\domains\\coding.tsv": "8ed3e2e2aaddab952983bd4c070273ffc9dc018d8eb39bb1aa96c29a767e85f3",
+      "dictionary\\domains\\daily.tsv": "a30b3d4250e69e6b6acee49e114d262255d8314a3676c69e8290bd4238d6054e",
+      "dictionary\\domains\\games.tsv": "b0b9930107b27fc1342f10a9020b703b5da4c0cb1cfc3b33b9790ba9fbf80aaf",
+      "dictionary\\domains\\math.tsv": "863121f6ef89785dec628dfb7ab41de2ae1adf5066efbc714092343b62124a57",
+      "dictionary\\domains\\study.tsv": "bec679bc57c125c654c6a5191812e99121431c42e512f6fc3b84b5a01c1a87f2",
+      "dictionary\\domains\\work.tsv": "b7b8718ca54d6774be178c3bea5bf3f5c4d6c66a64942e7bb76490ebff2a1586",
+      "dictionary\\panel\\emoji.tsv": "f37e5435d9bc49ff1b85de701a547b859d7136c1c3478158e4376060d1755799",
+      "dictionary\\panel\\kaomoji.tsv": "ca8f6f24bf59551b34b4ed0e4546680b582814b28eb8aacf1f8f8a87abb97444",
+      "dictionary\\panel\\symbols.tsv": "b7ea522ba80cd96c1f69b24afe093dabd1d55a367ef046e4bb38511f4e9de6b8",
+      "dictionary\\sources\\lexicon_sources.json": "5a21e1ca955acd822cc66d17b0c82e883ceb55acfac91426f053be68a3073059"
+    },
+    "note": "Full isolated runtime copy, with final authored canonical lexicon; native code and model assets unchanged. Compare all runtime file hashes after native build before accepting measured aggregates."
+  },
+  "coverage": {
+    "lexicon": {
+      "entries": 323667,
+      "distinct_words": 323169
+    },
+    "standard_characters": {
+      "一级 (1-3500)": {
+        "characters": 3500,
+        "typeable_by_standard_reading": 3500,
+        "percent": 100.0,
+        "single_entry_any_reading": 3500
+      },
+      "二级 (3501-6500)": {
+        "characters": 3000,
+        "typeable_by_standard_reading": 2997,
+        "percent": 99.9,
+        "single_entry_any_reading": 2997
+      },
+      "三级 (6501-8105)": {
+        "characters": 1605,
+        "typeable_by_standard_reading": 261,
+        "percent": 16.26,
+        "single_entry_any_reading": 267
+      }
+    },
+    "standard_characters_missing_examples": {
+      "一级 (1-3500)": [],
+      "二级 (3501-6500)": [
+        "𬉼(ou)",
+        "𠳐(bang)",
+        "𥻗(cha)"
+      ],
+      "三级 (6501-8105)": [
+        "尢(wang)",
+        "卬(ang)",
+        "𠙶(ou)",
+        "毌(guan)",
+        "邘(yu)",
+        "圢(ting)",
+        "伋(ji)",
+        "冮(gang)",
+        "氿(jiu)",
+        "汈(diao)",
+        "宄(gui)",
+        "𬣙(xu)",
+        "讱(ren)",
+        "扞(han)",
+        "圲(qian)",
+        "圫(tuo)",
+        "芏(du)",
+        "朳(ba)",
+        "朸(li)",
+        "𨙸(qi)",
+        "辿(chan)",
+        "伣(qian)",
+        "癿(bie)",
+        "犴(an/han)",
+        "冱(hu)",
+        "𬇕(wan)",
+        "汋(zhuo)",
+        "䜣(xin)",
+        "讻(xiong)",
+        "𬣞(zhu)",
+        "𬘓(xun)",
+        "纩(kuang)",
+        "玒(hong)",
+        "玓(di)",
+        "玘(qi)",
+        "玚(yang)",
+        "刬(chan)",
+        "𫭟(ou/qu)",
+        "坉(tun)",
+        "𫭢(lun)"
+      ]
+    },
+    "common_words": {
+      "top 1000": {
+        "words": 1000,
+        "in_lexicon": 999,
+        "percent": 99.9
+      },
+      "top 5000": {
+        "words": 5000,
+        "in_lexicon": 4900,
+        "percent": 98.0
+      },
+      "top 10000": {
+        "words": 10000,
+        "in_lexicon": 9567,
+        "percent": 95.67
+      },
+      "top 30000": {
+        "words": 30000,
+        "in_lexicon": 23390,
+        "percent": 77.97
+      },
+      "top 50000": {
+        "words": 50000,
+        "in_lexicon": 32430,
+        "percent": 64.86
+      },
+      "top 100000": {
+        "words": 100000,
+        "in_lexicon": 43891,
+        "percent": 43.89
+      }
+    },
+    "common_words_missing_examples": [
+      "甚么",
+      "洪山区",
+      "江夏区",
+      "本行政区域",
+      "袁承志",
+      "礼部",
+      "万公顷",
+      "胡秉宸",
+      "武昌区",
+      "李高成",
+      "鄂西",
+      "千步",
+      "郧阳",
+      "刑部",
+      "官军",
+      "陈家洛",
+      "职司",
+      "王琦瑶",
+      "万平方米",
+      "李莫愁",
+      "亲兵",
+      "江夏",
+      "十八年",
+      "马朝旭",
+      "大学士",
+      "行省",
+      "十五年",
+      "工部",
+      "万平方公里",
+      "适才",
+      "怎地",
+      "人口数",
+      "贡献者",
+      "王公",
+      "屈家岭",
+      "节度使",
+      "天鹅洲",
+      "亿立方米",
+      "欧阳锋",
+      "金殿",
+      "周伯通",
+      "明永乐",
+      "首辅",
+      "户部",
+      "解放区",
+      "中纺",
+      "义军",
+      "立法权",
+      "刘宗敏",
+      "琉璃瓦",
+      "清兵",
+      "湖广",
+      "福临",
+      "兵部",
+      "三藏",
+      "黄陂",
+      "极了",
+      "笔架山",
+      "文理学院",
+      "须弥座",
+      "池河",
+      "吏部",
+      "军马",
+      "丁能通",
+      "官家",
+      "二十年",
+      "老营",
+      "宋献策",
+      "国师",
+      "我会",
+      "起义军",
+      "子口",
+      "荆江",
+      "如果说",
+      "苏维埃政府",
+      "六部",
+      "黄依依",
+      "国徽",
+      "音乐堂",
+      "白嘉轩"
+    ],
+    "common_words_missing_but_typed": {
+      "words": 433,
+      "first_candidate": 172,
+      "within_nine": 330,
+      "percent_within_nine": 76.21
+    },
+    "running_text": {
+      "heldout_sentences.tsv": {
+        "lines": 4126,
+        "word_tokens": 13800,
+        "word_types": 7161,
+        "token_coverage_percent": 84.15,
+        "type_coverage_percent": 71.75,
+        "frequent_missing": [
+          "我会×11",
+          "萨米×8",
+          "教区×6",
+          "穿著×5",
+          "兰科×5",
+          "回家吧×4",
+          "和玛丽×4",
+          "乡试×4",
+          "神社×4",
+          "曾祖父×4",
+          "悬钩子×4",
+          "小檗×3",
+          "米纳斯吉拉斯州×3",
+          "登进士×3",
+          "瓷蟹×3",
+          "花为×3",
+          "鳗鲡×3",
+          "亚科×3",
+          "维耶×3",
+          "这药×2",
+          "受够了×2",
+          "前有×2",
+          "二十年×2",
+          "我快×2",
+          "空房间×2",
+          "信神×2",
+          "谢谢您×2",
+          "无法形容×2",
+          "通晓×2",
+          "蓝线×2",
+          "他用×2",
+          "随著×2",
+          "十二个×2",
+          "非常高兴×2",
+          "玛莉×2",
+          "待在家里×2",
+          "神户×2",
+          "昨天上午×2",
+          "见证人×2",
+          "更常×2"
+        ]
+      }
+    }
+  }
+}
