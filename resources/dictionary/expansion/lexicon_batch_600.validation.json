@@ -1,0 +1,6224 @@
+{
+  "batch": "lexicon_batch_600",
+  "evaluation": "native_engine_candidate_coverage",
+  "evaluated_at_utc": "2026-10-30T20:50:34.384720+00:00",
+  "engine_sha256": "207a471abe08c00695be58e22719d9375c100cbfec24e092e4b0c0cad012cba4",
+  "resource_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "8cfd7e81f04a9d9a51ad905d4a6cfa5d6a1c29920db166519aa1d0491513156c",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+    "context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+    "continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e"
+  },
+  "frozen_batch_sha256": "728307013987f6238da95fd1e644d990d605d00230bca64b23d4303b6c5dc9b3",
+  "personal_data_isolated": true,
+  "expected_answers_learned": false,
+  "summary": {
+    "cases": 344,
+    "top1_correct": 301,
+    "top9_present": 344,
+    "top1_percent": 87.5,
+    "top9_percent": 100.0,
+    "character_error_rate": 0.0338,
+    "p50_lookup_ms": 22.42,
+    "p95_lookup_ms": 45.888,
+    "max_lookup_ms": 386.488,
+    "missing_from_top9_count": 0,
+    "missing_from_top9": [],
+    "max_returned_candidate_count": 9
+  },
+  "rows": [
+    {
+      "pinyin": "biekongfuhekafei",
+      "expected": "别空腹喝咖啡",
+      "source": "5500",
+      "lookup_us": 386488,
+      "candidates": [
+        "别空腹喝咖啡",
+        "瘪空腹喝咖啡",
+        "别空负荷咖啡",
+        "瘪空负荷咖啡",
+        "别空腹和咖啡",
+        "别空符合咖啡",
+        "别控符合咖啡",
+        "瘪空腹和咖啡",
+        "别"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biemangwangchifan",
+      "expected": "别忙忘吃饭",
+      "source": "5500",
+      "lookup_us": 117601,
+      "candidates": [
+        "别忙往吃饭",
+        "别忙望吃饭",
+        "别忙网吃饭",
+        "别忙王吃饭",
+        "别蟒王吃饭",
+        "别忙忘吃饭",
+        "别忙旺吃饭",
+        "别忙汪吃饭",
+        "别"
+      ],
+      "expected_rank": 6
+    },
+    {
+      "pinyin": "biewangjiheshuia",
+      "expected": "别忘记喝水啊",
+      "source": "5500",
+      "lookup_us": 87656,
+      "candidates": [
+        "别忘记和谁啊",
+        "别忘记喝水啊",
+        "别忘记河水啊",
+        "别忘记合谁啊",
+        "别忘记和水啊",
+        "别忘记何谁啊",
+        "别忘记和睡啊",
+        "别忘记河谁啊",
+        "别忘"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "biewangledaisan",
+      "expected": "别忘了带伞",
+      "source": "5500",
+      "lookup_us": 27483,
+      "candidates": [
+        "别忘了带伞",
+        "别忘了带三",
+        "别忘了带散",
+        "别忘了带叁",
+        "别忘了大三",
+        "别忘了带彡",
+        "别忘了戴三",
+        "别忘了代三",
+        "别忘了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biewanglewuxiu",
+      "expected": "别忘了午休",
+      "source": "5500",
+      "lookup_us": 22952,
+      "candidates": [
+        "别忘了午休",
+        "别忘了无休",
+        "别忘了舞秀",
+        "别忘了吴秀",
+        "别忘了无袖",
+        "别忘了无修",
+        "别忘了武修",
+        "别忘了吴修",
+        "别忘了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "biewanglezaocan",
+      "expected": "别忘了早餐",
+      "source": "5500",
+      "lookup_us": 16723,
+      "candidates": [
+        "别忘了早餐",
+        "别忘了早参",
+        "别往了早餐",
+        "别忘了造餐",
+        "别忘了造灿",
+        "别忘了早惨",
+        "别忘了造惨",
+        "别忘了造参",
+        "别忘了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chiwanzaichumenba",
+      "expected": "吃完再出门吧",
+      "source": "5500",
+      "lookup_us": 33396,
+      "candidates": [
+        "吃完再出门吧",
+        "吃完再出门把",
+        "吃完在出门吧",
+        "吃完再出门巴",
+        "吃完再出门八",
+        "吃完在出门把",
+        "吃完再出门爸",
+        "吃完再出门拔",
+        "吃完"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chiwanzaiqumangba",
+      "expected": "吃完再去忙吧",
+      "source": "5500",
+      "lookup_us": 25743,
+      "candidates": [
+        "吃完再去忙吧",
+        "吃完在去忙吧",
+        "吃完再去忙把",
+        "吃完再取忙吧",
+        "吃完灾区忙吧",
+        "吃完再去芒吧",
+        "吃完再去茫吧",
+        "吃完再去盲吧",
+        "吃完"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chizaofanmei",
+      "expected": "吃早饭没",
+      "source": "5500",
+      "lookup_us": 18085,
+      "candidates": [
+        "吃早饭没",
+        "吃早饭美",
+        "吃早饭每",
+        "吃早饭梅",
+        "吃早饭眉",
+        "吃早饭煤",
+        "吃早饭媒",
+        "吃早饭妹",
+        "迟早"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chumendaisanma",
+      "expected": "出门带伞吗",
+      "source": "5500",
+      "lookup_us": 17115,
+      "candidates": [
+        "出门带伞吗",
+        "出门带伞嘛",
+        "楚门带伞吗",
+        "出门带伞马",
+        "出门带散码",
+        "出门带三吗",
+        "出门带伞骂",
+        "出门大三吗",
+        "出门带伞"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chumenlemei",
+      "expected": "出门了没",
+      "source": "5500",
+      "lookup_us": 13175,
+      "candidates": [
+        "出门了没",
+        "出门了美",
+        "出门了每",
+        "出门了梅",
+        "出门了眉",
+        "出门了煤",
+        "出门了枚",
+        "出门了妹",
+        "出门了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chumenqianchidian",
+      "expected": "出门前吃点",
+      "source": "5500",
+      "lookup_us": 37751,
+      "candidates": [
+        "出门前吃点",
+        "出门前池碘",
+        "出门前持点",
+        "出门钱吃点",
+        "出门前吃店",
+        "出门前迟点",
+        "出门前吃电",
+        "出门前持电",
+        "出门"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chumenqianshoushixia",
+      "expected": "出门前收拾下",
+      "source": "5500",
+      "lookup_us": 37232,
+      "candidates": [
+        "出门前收拾下",
+        "出门前收市下",
+        "出门前收视下",
+        "出门前手势下",
+        "出门欠收拾下",
+        "出门前首饰下",
+        "出门牵手时下",
+        "出门前收拾夏",
+        "出门"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "chumenzhuyianquan",
+      "expected": "出门注意安全",
+      "source": "5500",
+      "lookup_us": 30188,
+      "candidates": [
+        "出门注意安全",
+        "楚门注意安全",
+        "出门主义安全",
+        "出门逐一安全",
+        "出门主以安全",
+        "出门主已安全",
+        "出门柱以安全",
+        "出门驻伊安全",
+        "出门"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "daobangongshimei",
+      "expected": "到办公室没",
+      "source": "5500",
+      "lookup_us": 41355,
+      "candidates": [
+        "到办公室每",
+        "到办公室没",
+        "到办公室美",
+        "到办公室梅",
+        "到办公室妹",
+        "到办公室媒",
+        "到办公室眉",
+        "到办公室煤",
+        "盗版"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "daodifanglema",
+      "expected": "到地方了吗",
+      "source": "5500",
+      "lookup_us": 22407,
+      "candidates": [
+        "到地方了吗",
+        "到底放了吗",
+        "到地方了嘛",
+        "到底房了吗",
+        "到敌方了吗",
+        "到地方了马",
+        "到底放了嘛",
+        "到地方了么",
+        "到底"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "daogongsimei",
+      "expected": "到公司没",
+      "source": "5500",
+      "lookup_us": 13447,
+      "candidates": [
+        "到公司没",
+        "到公司每",
+        "到公司美",
+        "到公司梅",
+        "到公司煤",
+        "到公司妹",
+        "到公司媒",
+        "到公司眉",
+        "到公司"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "daolegeiwoxiaoxi",
+      "expected": "到了给我消息",
+      "source": "5500",
+      "lookup_us": 24868,
+      "candidates": [
+        "到了给我消息",
+        "到了给我小溪",
+        "到了给我小西",
+        "到了给我小希",
+        "到了给我小戏",
+        "到了给我小夕",
+        "到了给我小细",
+        "到了给我小熙",
+        "到了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "daoleshuoyixiaa",
+      "expected": "到了说一下啊",
+      "source": "5500",
+      "lookup_us": 22711,
+      "candidates": [
+        "到了说一下啊",
+        "到了数一下啊",
+        "到了说一下阿",
+        "到了说一下呵",
+        "到了数以下啊",
+        "到了说以下啊",
+        "到了说一下吖",
+        "到了数一下阿",
+        "到了说"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "daonaerqule",
+      "expected": "到哪儿去了",
+      "source": "5500",
+      "lookup_us": 16275,
+      "candidates": [
+        "到哪儿去了",
+        "到那儿去了",
+        "到哪儿取了",
+        "到那儿取了",
+        "到哪儿去乐",
+        "到哪儿去牞",
+        "到哪儿去勒",
+        "到哪儿取乐",
+        "到哪"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "daoxuexiaomei",
+      "expected": "到学校没",
+      "source": "5500",
+      "lookup_us": 25021,
+      "candidates": [
+        "到学校没",
+        "到学校美",
+        "到学校每",
+        "到学校妹",
+        "到学校梅",
+        "到学校媒",
+        "到学校眉",
+        "到学校煤",
+        "到学校"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "daqingzaojiuxingle",
+      "expected": "大清早就醒了",
+      "source": "5500",
+      "lookup_us": 37813,
+      "candidates": [
+        "大清早就行了",
+        "大清早就醒了",
+        "大庆早就醒了",
+        "大庆早就行了",
+        "大清早酒醒了",
+        "大清早就性了",
+        "大清早就形了",
+        "大清早就兴了",
+        "大清早"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "dengnimangwanzaishuo",
+      "expected": "等你忙完再说",
+      "source": "5500",
+      "lookup_us": 22158,
+      "candidates": [
+        "等你忙完再说",
+        "灯你忙完再说",
+        "等你忙完在说",
+        "等你忙玩再说",
+        "等你忙晚再说",
+        "等你忙万再说",
+        "等你忙完仔说",
+        "等你忙湾仔说",
+        "等你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "dengwohuanjianyifu",
+      "expected": "等我换件衣服",
+      "source": "5500",
+      "lookup_us": 35437,
+      "candidates": [
+        "等我换件衣服",
+        "等我缓减衣服",
+        "等我还见衣服",
+        "等我还建议服",
+        "等我换肩衣服",
+        "等我还建议夫",
+        "等我还建议复",
+        "等我还建议副",
+        "等我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "doujianghaishiniunai",
+      "expected": "豆浆还是牛奶",
+      "source": "5500",
+      "lookup_us": 21557,
+      "candidates": [
+        "豆浆还是牛奶",
+        "都将还是牛奶",
+        "都将海事牛奶",
+        "豆浆海事牛奶",
+        "都将还石牛奶",
+        "都将海市牛奶",
+        "都将嗨氏牛奶",
+        "豆浆海市牛奶",
+        "都将"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangchiwanzaocan",
+      "expected": "刚吃完早餐",
+      "source": "5500",
+      "lookup_us": 10505,
+      "candidates": [
+        "刚吃完早餐",
+        "钢吃完早餐",
+        "刚吃完早参",
+        "刚吃晚早餐",
+        "刚吃完早惨",
+        "刚吃完早残",
+        "刚吃完早灿",
+        "刚吃完早蚕",
+        "刚吃完"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangdaodifangle",
+      "expected": "刚到地方了",
+      "source": "5500",
+      "lookup_us": 13199,
+      "candidates": [
+        "刚到地方了",
+        "港到地方了",
+        "刚到敌方了",
+        "刚到底放了",
+        "刚到地方乐",
+        "刚到地放了",
+        "刚到底房了",
+        "刚到地方勒",
+        "刚到"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganggangcaixing",
+      "expected": "刚刚才醒",
+      "source": "5500",
+      "lookup_us": 11951,
+      "candidates": [
+        "刚刚才醒",
+        "刚刚才行",
+        "刚刚才性",
+        "刚刚采行",
+        "刚刚才形",
+        "刚刚才型",
+        "刚刚才兴",
+        "刚刚才星",
+        "刚刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangjinbangongshi",
+      "expected": "刚进办公室",
+      "source": "5500",
+      "lookup_us": 18723,
+      "candidates": [
+        "刚进办公室",
+        "钢筋办公室",
+        "刚进办公时",
+        "钢筋办公时",
+        "刚进办公事",
+        "钢筋办公事",
+        "刚进办公式",
+        "刚进办公使",
+        "钢筋"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangjinbangongshima",
+      "expected": "刚进办公室吗",
+      "source": "5500",
+      "lookup_us": 8581,
+      "candidates": [
+        "刚进办公室吗",
+        "钢筋办公室吗",
+        "刚进办公室嘛",
+        "刚进办公室么",
+        "刚进办公室马",
+        "钢筋办公室嘛",
+        "刚进办公室码",
+        "刚进办公事吗",
+        "钢筋"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangqichuangbujiu",
+      "expected": "刚起床不久",
+      "source": "5500",
+      "lookup_us": 14848,
+      "candidates": [
+        "刚起床不久",
+        "刚起床不就",
+        "刚起床补救",
+        "刚起床不救",
+        "刚起床布就",
+        "刚起床不酒",
+        "刚起床不咎",
+        "刚起床部就",
+        "刚起床"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangxiwanlianne",
+      "expected": "刚洗完脸呢",
+      "source": "5500",
+      "lookup_us": 21075,
+      "candidates": [
+        "刚洗完脸呢",
+        "港洗完脸呢",
+        "刚洗完练呢",
+        "刚洗完连呢",
+        "刚洗完联呢",
+        "刚洗完脸呐",
+        "刚洗完链呢",
+        "刚洗完脸哪",
+        "刚洗完"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "gangzuoxiagongzuoma",
+      "expected": "刚坐下工作吗",
+      "source": "5500",
+      "lookup_us": 15634,
+      "candidates": [
+        "刚坐下工作吗",
+        "刚坐下工作嘛",
+        "刚坐下工作马",
+        "刚坐下工作么",
+        "刚做下工作吗",
+        "刚坐下工作麻",
+        "刚坐下工作玛",
+        "刚坐下工作妈",
+        "刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "ganjinqilaila",
+      "expected": "赶紧起来啦",
+      "source": "5500",
+      "lookup_us": 12941,
+      "candidates": [
+        "赶紧起来啦",
+        "赶紧起来拉",
+        "赶紧起来辣",
+        "赶紧起来落",
+        "赶紧骑来啦",
+        "赶紧起来喇",
+        "赶紧起来蜡",
+        "干劲起来啦",
+        "赶紧"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeichizaocanne",
+      "expected": "还没吃早餐呢",
+      "source": "5500",
+      "lookup_us": 15096,
+      "candidates": [
+        "还没吃早餐呢",
+        "还没吃早餐哪",
+        "还没吃早餐呐",
+        "还没吃早餐讷",
+        "海没吃早餐呢",
+        "还没吃早餐嗯哦",
+        "还没吃早参呢",
+        "海没吃早餐哪",
+        "还没吃"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haimeichizaofanne",
+      "expected": "还没吃早饭呢",
+      "source": "5500",
+      "lookup_us": 11282,
+      "candidates": [
+        "还没吃早饭呢",
+        "还没吃早饭哪",
+        "还没吃早饭呐",
+        "海没吃早饭呢",
+        "还没吃早饭讷",
+        "还没吃早饭嗯哦",
+        "还没吃造反呢",
+        "还没吃早返呢",
+        "还没吃"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haishiqichuangle",
+      "expected": "还是起床了",
+      "source": "5500",
+      "lookup_us": 16257,
+      "candidates": [
+        "还是起床了",
+        "还时起床了",
+        "还是其床了",
+        "还是其窗了",
+        "还是其创了",
+        "还是气窗了",
+        "还十七窗了",
+        "还是七床了",
+        "还是"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haizaichuangshangma",
+      "expected": "还在床上吗",
+      "source": "5500",
+      "lookup_us": 18495,
+      "candidates": [
+        "还在床上吗",
+        "还在床上马",
+        "还在床上嘛",
+        "还在床上骂",
+        "还在床上么",
+        "还在床上码",
+        "还在床上麻",
+        "还在床上玛",
+        "还在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "haizaizhunbeizhong",
+      "expected": "还在准备中",
+      "source": "5500",
+      "lookup_us": 7939,
+      "candidates": [
+        "还在准备中",
+        "还在准备重",
+        "还在准备终",
+        "还在准备种",
+        "还在准备忠",
+        "还在准备众",
+        "还在准备钟",
+        "还在准备仲",
+        "还在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "hebeichatitishen",
+      "expected": "喝杯茶提提神",
+      "source": "5500",
+      "lookup_us": 12623,
+      "candidates": [
+        "喝杯茶提提神",
+        "喝杯茶体替身",
+        "喝杯茶体提神",
+        "喝杯茶提替身",
+        "喝杯茶题替身",
+        "喝杯茶题提神",
+        "喝杯茶替替身",
+        "喝杯茶踢替身",
+        "河北"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "huiyikaidaojidian",
+      "expected": "会议开到几点",
+      "source": "5500",
+      "lookup_us": 19631,
+      "candidates": [
+        "会议开到几点",
+        "会议开到极点",
+        "回忆开到几点",
+        "会议开到机电",
+        "回忆开到极点",
+        "会议开到积淀",
+        "会议开到基点",
+        "会议开到祭奠",
+        "会议"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jidechoukongxiuxi",
+      "expected": "记得抽空休息",
+      "source": "5500",
+      "lookup_us": 12078,
+      "candidates": [
+        "记得抽空休息",
+        "级的抽空休息",
+        "记得抽空修习",
+        "级的抽空修习",
+        "记得丑控休息",
+        "记得抽控休息",
+        "记得丑孔休息",
+        "记得抽孔休息",
+        "记得"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jidenayaoshia",
+      "expected": "记得拿钥匙啊",
+      "source": "5500",
+      "lookup_us": 14180,
+      "candidates": [
+        "记得拿钥匙啊",
+        "记得那幺事啊",
+        "记得那要是啊",
+        "记得那幺是啊",
+        "记得那钥匙啊",
+        "记得那幺使啊",
+        "记得那要使啊",
+        "记得那妖是啊",
+        "记得"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jidiandaodanwei",
+      "expected": "几点到单位",
+      "source": "5500",
+      "lookup_us": 17188,
+      "candidates": [
+        "几点到单位",
+        "基点到单位",
+        "几点导单位",
+        "机电导单位",
+        "几点道单位",
+        "几点倒单位",
+        "几点到但未",
+        "几点导弹为",
+        "几点到"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jidiandaogongsiya",
+      "expected": "几点到公司呀",
+      "source": "5500",
+      "lookup_us": 15337,
+      "candidates": [
+        "几点到公司呀",
+        "基点到公司呀",
+        "几点到公司亚",
+        "几点到公司压",
+        "几点到公司雅",
+        "几点到公司牙",
+        "几点到公司鸭",
+        "几点到公司芽",
+        "几点到"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jidiankaishikaihui",
+      "expected": "几点开始开会",
+      "source": "5500",
+      "lookup_us": 18698,
+      "candidates": [
+        "几点开始开会",
+        "几点开始开回",
+        "基点开始开会",
+        "几点开始开慧",
+        "几点开始楷灰",
+        "几点开始开辉",
+        "几点开始开灰",
+        "几点开始开汇",
+        "几点"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jidianqushangban",
+      "expected": "几点去上班",
+      "source": "5500",
+      "lookup_us": 17373,
+      "candidates": [
+        "几点去上班",
+        "基点去上班",
+        "几点区上班",
+        "机电区上班",
+        "几点取上班",
+        "几点去上办",
+        "几点去上半",
+        "几点去商办",
+        "几点"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jinmengenwoshuo",
+      "expected": "进门跟我说",
+      "source": "5500",
+      "lookup_us": 32644,
+      "candidates": [
+        "金门跟我说",
+        "进门跟我说",
+        "金门跟我数",
+        "金门根我说",
+        "进门根我说",
+        "金门跟我硕",
+        "金门跟我朔",
+        "进门跟我数",
+        "金礞"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "jinrikaishila",
+      "expected": "今日开始啦",
+      "source": "5500",
+      "lookup_us": 7691,
+      "candidates": [
+        "今日开始啦",
+        "近日开始啦",
+        "今日开始拉",
+        "今日开始落",
+        "近日开始拉",
+        "今日开市啦",
+        "今日开始辣",
+        "今日开始喇",
+        "今日"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianchadianchidao",
+      "expected": "今天差点迟到",
+      "source": "5500",
+      "lookup_us": 21634,
+      "candidates": [
+        "今天差点迟到",
+        "今天差点吃到",
+        "今天差点赤道",
+        "金田差点迟到",
+        "今天差点持刀",
+        "今天差点斥道",
+        "今天插电池盗",
+        "今天插电迟到",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianchizaofan",
+      "expected": "今天吃早饭",
+      "source": "5500",
+      "lookup_us": 14773,
+      "candidates": [
+        "今天吃早饭",
+        "今天迟早饭",
+        "金田吃早饭",
+        "今天吃造反",
+        "今天迟早返",
+        "今天迟造反",
+        "今天迟早翻",
+        "今天迟早反",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintiandaizaijiama",
+      "expected": "今天待在家吗",
+      "source": "5500",
+      "lookup_us": 19890,
+      "candidates": [
+        "今天待在家吗",
+        "今天呆在家吗",
+        "今天待在家嘛",
+        "今天待在加码",
+        "今天待在家马",
+        "今天带再加码",
+        "今天呆在家嘛",
+        "今天待在家麻",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintiandiyichanghui",
+      "expected": "今天第一场会",
+      "source": "5500",
+      "lookup_us": 37703,
+      "candidates": [
+        "今天的一场会",
+        "今天第一场会",
+        "今天的一场回",
+        "今天的一场汇",
+        "今天的一场毁",
+        "今天的一场灰",
+        "今天的异常会",
+        "今天第一场回",
+        "今天"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "jintianduohedianshui",
+      "expected": "今天多喝点水",
+      "source": "5500",
+      "lookup_us": 21532,
+      "candidates": [
+        "今天多喝点水",
+        "今天多喝点睡",
+        "近天多喝点水",
+        "今天多喝点说",
+        "今天多喝点谁",
+        "今天多喝点税",
+        "今天多和点水",
+        "今天多盒点水",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintiangongzuoduoma",
+      "expected": "今天工作多吗",
+      "source": "5500",
+      "lookup_us": 15893,
+      "candidates": [
+        "今天工作多吗",
+        "今天工作多么",
+        "今天工作多嘛",
+        "今天工作多玛",
+        "今天工作多马",
+        "今天工作堕马",
+        "今天工作多妈",
+        "今天工作多码",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianguoderuhe",
+      "expected": "今天过得如何",
+      "source": "5500",
+      "lookup_us": 15364,
+      "candidates": [
+        "今天过得如何",
+        "今天过的如何",
+        "今天国的如何",
+        "今天国得如何",
+        "今天过得如和",
+        "今天过得入和",
+        "今天过得如喝",
+        "今天过得入河",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianhaishunlima",
+      "expected": "今天还顺利吗",
+      "source": "5500",
+      "lookup_us": 16530,
+      "candidates": [
+        "今天还顺利吗",
+        "今天海顺利吗",
+        "今天还顺利马",
+        "今天还顺利嘛",
+        "今天海顺利马",
+        "今天还顺利玛",
+        "今天还顺利码",
+        "今天还顺利骂",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianhedoujiangma",
+      "expected": "今天喝豆浆吗",
+      "source": "5500",
+      "lookup_us": 25346,
+      "candidates": [
+        "今天喝豆浆吗",
+        "今天和豆浆吗",
+        "今天喝豆浆嘛",
+        "今天喝豆浆马",
+        "今天喝豆浆麻",
+        "今天喝豆浆骂",
+        "今天喝豆浆玛",
+        "今天喝豆浆妈",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianhekafeima",
+      "expected": "今天喝咖啡吗",
+      "source": "5500",
+      "lookup_us": 12734,
+      "candidates": [
+        "今天喝咖啡吗",
+        "今天和咖啡吗",
+        "今天喝咖啡嘛",
+        "今天喝咖啡马",
+        "今天喝咖啡麻",
+        "今天喝咖啡玛",
+        "今天喝咖啡妈",
+        "今天喝咖啡骂",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianheniunaima",
+      "expected": "今天喝牛奶吗",
+      "source": "5500",
+      "lookup_us": 16149,
+      "candidates": [
+        "今天喝牛奶吗",
+        "今天喝牛奶妈",
+        "今天和牛奶吗",
+        "今天喝牛奶嘛",
+        "今天喝牛奶马",
+        "今天喝牛奶麻",
+        "今天喝牛奶玛",
+        "今天喝牛奶骂",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianhuihenduoma",
+      "expected": "今天会很多吗",
+      "source": "5500",
+      "lookup_us": 20407,
+      "candidates": [
+        "今天会很多吗",
+        "今天会很多嘛",
+        "今天会很多么",
+        "今天回很多吗",
+        "今天会很多妈",
+        "今天会很多马",
+        "今天会很多玛",
+        "今天会很多码",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianhuijiabanma",
+      "expected": "今天会加班吗",
+      "source": "5500",
+      "lookup_us": 30767,
+      "candidates": [
+        "今天回家班吗",
+        "今天回家斑马",
+        "今天回家半马",
+        "今天回家版吗",
+        "今天回家办么",
+        "今天回家搬吗",
+        "今天会加班吗",
+        "今天回家办吗",
+        "今天"
+      ],
+      "expected_rank": 7
+    },
+    {
+      "pinyin": "jintianjianmianma",
+      "expected": "今天见面吗",
+      "source": "5500",
+      "lookup_us": 28812,
+      "candidates": [
+        "今天见面吗",
+        "今天见面嘛",
+        "今天见面骂",
+        "今天见面马",
+        "今天见面么",
+        "今天减免吗",
+        "今天见面码",
+        "今天见面玛",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianjidianqide",
+      "expected": "今天几点起的",
+      "source": "5500",
+      "lookup_us": 23137,
+      "candidates": [
+        "今天几点起的",
+        "今天几点起底",
+        "今天继电器的",
+        "今天几点起地",
+        "今天几点起得",
+        "今天几点起德",
+        "今天及电气的",
+        "今天几点气的",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianjidianshangban",
+      "expected": "今天几点上班",
+      "source": "5500",
+      "lookup_us": 21858,
+      "candidates": [
+        "今天几点上班",
+        "今天极点上班",
+        "今天几点上办",
+        "今天几点上半",
+        "今天几点上版",
+        "今天几点上板",
+        "今天几点上坂",
+        "今天几点商办",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintiankaishimangle",
+      "expected": "今天开始忙了",
+      "source": "5500",
+      "lookup_us": 18914,
+      "candidates": [
+        "今天开始忙了",
+        "今天开始盲了",
+        "今天开始莽了",
+        "今天开始忙乐",
+        "今天开始忙勒",
+        "今天开始茫了",
+        "今天开始忙肋",
+        "今天开始芒了",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintiankaishishangban",
+      "expected": "今天开始上班",
+      "source": "5500",
+      "lookup_us": 15581,
+      "candidates": [
+        "今天开始上班",
+        "今天开始上办",
+        "今天开始商办",
+        "今天开始上半",
+        "今天开始上版",
+        "今天开市上班",
+        "今天开始上板",
+        "今天开始尚版",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianlengbuleng",
+      "expected": "今天冷不冷",
+      "source": "5500",
+      "lookup_us": 10454,
+      "candidates": [
+        "今天冷不冷",
+        "近天冷不冷",
+        "今天愣不冷",
+        "今天棱不冷",
+        "今天楞不冷",
+        "今天冷卜楞",
+        "今天冷补冷",
+        "今天冷不棱",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianlushangduma",
+      "expected": "今天路上堵吗",
+      "source": "5500",
+      "lookup_us": 16859,
+      "candidates": [
+        "今天路上堵吗",
+        "今天路上堵嘛",
+        "今天路上读吗",
+        "今天路上都吗",
+        "今天路上毒吗",
+        "今天路上度吗",
+        "今天路上赌吗",
+        "今天路上独吗",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianlushangshunma",
+      "expected": "今天路上顺吗",
+      "source": "5500",
+      "lookup_us": 16988,
+      "candidates": [
+        "今天路上顺吗",
+        "今天陆上瞬妈",
+        "今天路上顺嘛",
+        "今天陆上顺吗",
+        "今天潞商顺吗",
+        "今天路上瞬吗",
+        "今天路上顺马",
+        "今天路上舜吗",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianlushangxiaoxin",
+      "expected": "今天路上小心",
+      "source": "5500",
+      "lookup_us": 26102,
+      "candidates": [
+        "今天路上小心",
+        "金田路上小心",
+        "今天路上小新",
+        "今天路上孝心",
+        "今天陆上小新",
+        "今天路上小欣",
+        "今天陆上孝心",
+        "今天路商小心",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianmangbumang",
+      "expected": "今天忙不忙",
+      "source": "5500",
+      "lookup_us": 21393,
+      "candidates": [
+        "今天忙不忙",
+        "近天忙不忙",
+        "津田盲不忙",
+        "今天盲不忙",
+        "今天芒不忙",
+        "今天忙补盲",
+        "今天忙不盲",
+        "今天莽不忙",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianmangdaojidian",
+      "expected": "今天忙到几点",
+      "source": "5500",
+      "lookup_us": 33393,
+      "candidates": [
+        "今天忙到几点",
+        "今天忙到极点",
+        "今天芒到几点",
+        "今天芒到极点",
+        "今天忙道几点",
+        "今天忙到机电",
+        "今天忙道积淀",
+        "今天忙叨几点",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianmeilaichuang",
+      "expected": "今天没赖床",
+      "source": "5500",
+      "lookup_us": 28225,
+      "candidates": [
+        "今天没赖床",
+        "今天没来床",
+        "今天没来闯",
+        "今天没来创",
+        "今天没来窗",
+        "今天美赖床",
+        "今天每赖床",
+        "今天没来疮",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianqichuanglemei",
+      "expected": "今天起床了没",
+      "source": "5500",
+      "lookup_us": 29504,
+      "candidates": [
+        "今天起床了没",
+        "今天起床了美",
+        "今天起床了每",
+        "今天起床了梅",
+        "今天起床了眉",
+        "今天起床了煤",
+        "今天起床了枚",
+        "今天起床了妹",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianqingsongma",
+      "expected": "今天轻松吗",
+      "source": "5500",
+      "lookup_us": 21161,
+      "candidates": [
+        "今天轻松吗",
+        "今天轻松嘛",
+        "今天青松吗",
+        "今天轻松马",
+        "今天轻松骂",
+        "今天轻松码",
+        "今天轻松妈",
+        "今天轻松麻",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianqiwanle",
+      "expected": "今天起晚了",
+      "source": "5500",
+      "lookup_us": 21331,
+      "candidates": [
+        "今天起晚了",
+        "今天起完了",
+        "今天起玩了",
+        "今天其完了",
+        "今天气完了",
+        "今天期完了",
+        "今天骑完了",
+        "今天起万了",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianshangbanma",
+      "expected": "今天上班吗",
+      "source": "5500",
+      "lookup_us": 25754,
+      "candidates": [
+        "今天上班吗",
+        "今天上班嘛",
+        "今天上班马",
+        "今天上班么",
+        "今天上班麻",
+        "今天上班玛",
+        "今天上班妈",
+        "今天上斑马",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintiantaiyangbucuo",
+      "expected": "今天太阳不错",
+      "source": "5500",
+      "lookup_us": 29544,
+      "candidates": [
+        "今天太阳不错",
+        "今天台阳不错",
+        "今天太痒不错",
+        "今天太养不错",
+        "今天台养不错",
+        "今天台样不错",
+        "今天太样不错",
+        "今天太扬不错",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianwaimianliangma",
+      "expected": "今天外面凉吗",
+      "source": "5500",
+      "lookup_us": 47807,
+      "candidates": [
+        "今天外面两码",
+        "今天外面亮吗",
+        "今天外面两吗",
+        "今天外面良马",
+        "今天外面量吗",
+        "今天外面良吗",
+        "今天外面两马",
+        "今天外面凉吗",
+        "今天"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "jintianxianliejihua",
+      "expected": "今天先列计划",
+      "source": "5500",
+      "lookup_us": 63222,
+      "candidates": [
+        "今天先烈计划",
+        "今天先列计划",
+        "今天先烈激化",
+        "今天先烈计画",
+        "今天先裂计划",
+        "今天先烈极化",
+        "今天先猎计划",
+        "今天先列激化",
+        "今天"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "jintianxianmangnajian",
+      "expected": "今天先忙哪件",
+      "source": "5500",
+      "lookup_us": 55499,
+      "candidates": [
+        "今天先忙那间",
+        "今天先忙那件",
+        "今天先忙那见",
+        "今天先忙那剑",
+        "今天先忙那贱",
+        "今天先忙那建",
+        "今天显忙拿茧",
+        "今天先忙哪件",
+        "今天"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "jintianxianmangnaxiang",
+      "expected": "今天先忙哪项",
+      "source": "5500",
+      "lookup_us": 35801,
+      "candidates": [
+        "今天先忙那项",
+        "今天先忙那香",
+        "今天先忙那想",
+        "今天先忙那箱",
+        "今天先忙那乡",
+        "今天先忙那向",
+        "今天先忙那相",
+        "今天先忙哪项",
+        "今天"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "jintianxianzuoshenme",
+      "expected": "今天先做什么",
+      "source": "5500",
+      "lookup_us": 33956,
+      "candidates": [
+        "今天先做什么",
+        "今天先作什么",
+        "今天现做什么",
+        "今天先坐什么",
+        "今天线作什么",
+        "今天先座什么",
+        "今天先左什么",
+        "今天西安坐什么",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianxiayumei",
+      "expected": "今天下雨没",
+      "source": "5500",
+      "lookup_us": 38877,
+      "candidates": [
+        "今天下雨没",
+        "今天下雨美",
+        "今天下雨每",
+        "今天下雨梅",
+        "今天下雨眉",
+        "今天下雨煤",
+        "今天下雨媒",
+        "今天下雨妹",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianxingchengmanma",
+      "expected": "今天行程满吗",
+      "source": "5500",
+      "lookup_us": 50837,
+      "candidates": [
+        "今天形成谩骂",
+        "今天行程谩骂",
+        "今天行程满吗",
+        "今天行程慢吗",
+        "今天行程曼吗",
+        "今天行程漫骂",
+        "今天性成谩骂",
+        "今天形成满吗",
+        "津田信"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "jintianxinqinghaoma",
+      "expected": "今天心情好吗",
+      "source": "5500",
+      "lookup_us": 33515,
+      "candidates": [
+        "今天心情好吗",
+        "今天心情好嘛",
+        "今天心情好么",
+        "今天心情好马",
+        "今天心情号码",
+        "今天心情好骂",
+        "今天心情好麻",
+        "今天心情好玛",
+        "津田信"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianxiuxima",
+      "expected": "今天休息吗",
+      "source": "5500",
+      "lookup_us": 20965,
+      "candidates": [
+        "今天休息吗",
+        "今天休息嘛",
+        "今天休息马",
+        "今天休息么",
+        "今天休息麻",
+        "今天休息玛",
+        "今天休息妈",
+        "今天休息骂",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianyalidama",
+      "expected": "今天压力大吗",
+      "source": "5500",
+      "lookup_us": 22861,
+      "candidates": [
+        "今天压力大吗",
+        "今天压力大麻",
+        "今天压力大妈",
+        "今天压力大骂",
+        "今天压力大马",
+        "今天压力打骂",
+        "今天压力打吗",
+        "今天鸭梨大吗",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianyaochumenma",
+      "expected": "今天要出门吗",
+      "source": "5500",
+      "lookup_us": 29585,
+      "candidates": [
+        "今天要出门吗",
+        "今天要出门马",
+        "今天要出门嘛",
+        "今天要出门麻",
+        "今天要出门玛",
+        "今天要出门妈",
+        "今天要出门么",
+        "今天要出门码",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianyaoqunaer",
+      "expected": "今天要去哪儿",
+      "source": "5500",
+      "lookup_us": 30240,
+      "candidates": [
+        "今天要去哪儿",
+        "今天要去那儿",
+        "今天要去哪而",
+        "今天要去纳尔",
+        "今天要去哪二",
+        "今天耀去哪儿",
+        "今天要去那二",
+        "今天要去拿二",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianyouanpaima",
+      "expected": "今天有安排吗",
+      "source": "5500",
+      "lookup_us": 19099,
+      "candidates": [
+        "今天有安排吗",
+        "今天又安排吗",
+        "今天有安排馬",
+        "今天有安排嘛",
+        "今天有安排马",
+        "今天有安排麻",
+        "今天有安排玛",
+        "今天有安排妈",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianyoudiankunba",
+      "expected": "今天有点困吧",
+      "source": "5500",
+      "lookup_us": 29427,
+      "candidates": [
+        "今天有点困吧",
+        "今天有点坤吧",
+        "今天有点困把",
+        "今天有点昆吧",
+        "今天有点捆吧",
+        "今天有点困罢",
+        "今天有点困八",
+        "今天有点困巴",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianyoukongma",
+      "expected": "今天有空吗",
+      "source": "5500",
+      "lookup_us": 17605,
+      "candidates": [
+        "今天有空吗",
+        "今天有空嘛",
+        "今天有恐吗",
+        "今天有空马",
+        "今天有孔吗",
+        "今天有空麻",
+        "今天有空玛",
+        "今天有空妈",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianzaijiaxiuxi",
+      "expected": "今天在家休息",
+      "source": "5500",
+      "lookup_us": 31862,
+      "candidates": [
+        "今天在家休息",
+        "今天在家修习",
+        "今天在假休息",
+        "今天再加休息",
+        "金田在家休息",
+        "今天在加休息",
+        "今天再假休息",
+        "今天在佳休息",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianzaiwaimianma",
+      "expected": "今天在外面吗",
+      "source": "5500",
+      "lookup_us": 21788,
+      "candidates": [
+        "今天在外面吗",
+        "今天在外面嘛",
+        "今天在外面马",
+        "今天在外面骂",
+        "今天在外面么",
+        "今天在外面码",
+        "今天在外面玛",
+        "今天在外面麻",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianzaocanchisha",
+      "expected": "今天早餐吃啥",
+      "source": "5500",
+      "lookup_us": 20444,
+      "candidates": [
+        "今天早餐吃啥",
+        "今天早餐吃杀",
+        "今天早餐吃砂",
+        "今天早餐吃沙",
+        "今天早餐痴傻",
+        "今天早餐吃傻",
+        "今天早餐吃莎",
+        "今天早餐吃煞",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianzaodianshuiba",
+      "expected": "今天早点睡吧",
+      "source": "5500",
+      "lookup_us": 34254,
+      "candidates": [
+        "今天早点睡吧",
+        "今天早点睡把",
+        "今天早点睡巴",
+        "今天早点睡八",
+        "今天早点水吧",
+        "今天早点睡爸",
+        "今天早点睡罢",
+        "今天早点说吧",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianzaoqi",
+      "expected": "今天早起",
+      "source": "5500",
+      "lookup_us": 15617,
+      "candidates": [
+        "今天早起",
+        "今天早期",
+        "今天早七",
+        "今天早气",
+        "今天早其",
+        "今天早器",
+        "今天早齐",
+        "今天早奇",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianzaozaoxiuxi",
+      "expected": "今天早早休息",
+      "source": "5500",
+      "lookup_us": 23918,
+      "candidates": [
+        "今天早早休息",
+        "今天早早修习",
+        "金田早早休息",
+        "今天造造休息",
+        "今天早遭休息",
+        "今天早造休息",
+        "今天早早休系",
+        "今天早早休洗",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianzenmeanpai",
+      "expected": "今天怎么安排",
+      "source": "5500",
+      "lookup_us": 20592,
+      "candidates": [
+        "今天怎么安排",
+        "金田怎么安排",
+        "今天怎么暗拍",
+        "今天怎么按排",
+        "今天怎么暗牌",
+        "今天怎么按牌",
+        "今天怎么按拍",
+        "今天怎么按派",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianzhemezaoya",
+      "expected": "今天这么早呀",
+      "source": "5500",
+      "lookup_us": 22230,
+      "candidates": [
+        "今天这么早呀",
+        "今天这么糟呀",
+        "今天这么早压",
+        "今天这么造呀",
+        "今天这么早雅",
+        "今天这么早亚",
+        "今天这么早牙",
+        "今天这么早鸭",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianzhengshikaigong",
+      "expected": "今天正式开工",
+      "source": "5500",
+      "lookup_us": 25831,
+      "candidates": [
+        "今天正式开工",
+        "今天正式开弓",
+        "今天正式开宫",
+        "今天正式开公",
+        "今天正式开共",
+        "今天正式开功",
+        "今天正式开攻",
+        "金田正式开工",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianzhongyuxingle",
+      "expected": "今天终于醒了",
+      "source": "5500",
+      "lookup_us": 27154,
+      "candidates": [
+        "今天终于醒了",
+        "今天终于性了",
+        "今天终于星了",
+        "今天终于行了",
+        "今天终于形了",
+        "今天终于兴了",
+        "今天终于型了",
+        "今天终于幸了",
+        "今天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianzhuangtairuhe",
+      "expected": "今天状态如何",
+      "source": "5500",
+      "lookup_us": 26852,
+      "candidates": [
+        "今天状态如何",
+        "今天状态如和",
+        "今天状态入和",
+        "今天状态入河",
+        "今天状态汝河",
+        "金田状态如何",
+        "今天状态如喝",
+        "今天状态如河",
+        "金天柱"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianzhunbeizuosha",
+      "expected": "今天准备做啥",
+      "source": "5500",
+      "lookup_us": 19390,
+      "candidates": [
+        "今天准备做啥",
+        "今天准备做傻",
+        "今天准备做杀",
+        "今天准备做沙",
+        "今天准备做砂",
+        "今天准备坐啥",
+        "今天准备作杀",
+        "今天准备做莎",
+        "金天柱"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jintianzhunshixiaban",
+      "expected": "今天准时下班",
+      "source": "5500",
+      "lookup_us": 31733,
+      "candidates": [
+        "今天准时下班",
+        "今天准时下半",
+        "金田准时下班",
+        "今天准是下班",
+        "今天准时下版",
+        "今天准时下办",
+        "今天准时下板",
+        "今天准时吸啊办",
+        "金天柱"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jinwanbieaoyele",
+      "expected": "今晚别熬夜了",
+      "source": "5500",
+      "lookup_us": 23895,
+      "candidates": [
+        "今晚别熬夜了",
+        "近万别熬夜了",
+        "今晚别熬夜乐",
+        "今晚别熬夜勒",
+        "近万别敖夜了",
+        "今晚别熬夜肋",
+        "今晚别翱叶了",
+        "近万别敖野了",
+        "今晚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jinwanyoukongzailiao",
+      "expected": "今晚有空再聊",
+      "source": "5500",
+      "lookup_us": 21619,
+      "candidates": [
+        "今晚有空再聊",
+        "今晚有空在了",
+        "今晚有空再了",
+        "今晚有空载了",
+        "今晚有空在聊",
+        "今晚有空再料",
+        "今晚有空宰了",
+        "今晚有空栽了",
+        "今晚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jinzaohaishunlima",
+      "expected": "今早还顺利吗",
+      "source": "5500",
+      "lookup_us": 17479,
+      "candidates": [
+        "今早还顺利吗",
+        "尽早还顺利吗",
+        "今早还顺利马",
+        "尽早还顺利马",
+        "今早还顺利嘛",
+        "尽早还顺利嘛",
+        "今早还顺利玛",
+        "尽早还顺利玛",
+        "今早"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jinzaohaoya",
+      "expected": "今早好呀",
+      "source": "5500",
+      "lookup_us": 9375,
+      "candidates": [
+        "今早好呀",
+        "尽早好呀",
+        "今早号呀",
+        "今早好压",
+        "尽早昊呀",
+        "仅造好呀",
+        "尽早号呀",
+        "今早昊呀",
+        "今早"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jinzaoqilaimei",
+      "expected": "今早起来没",
+      "source": "5500",
+      "lookup_us": 17536,
+      "candidates": [
+        "今早起来没",
+        "尽早起来没",
+        "今早起来美",
+        "尽早起来美",
+        "今早起来每",
+        "尽早起来每",
+        "今早起来梅",
+        "尽早起来梅",
+        "今早"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jinzaoshuigoumei",
+      "expected": "今早睡够没",
+      "source": "5500",
+      "lookup_us": 19940,
+      "candidates": [
+        "今早睡够没",
+        "尽早睡够美",
+        "今早睡够美",
+        "尽早睡够没",
+        "今早水垢没",
+        "尽早水垢没",
+        "尽早睡够每",
+        "今早睡够每",
+        "今早"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jinzaotianqitinghao",
+      "expected": "今早天气挺好",
+      "source": "5500",
+      "lookup_us": 26238,
+      "candidates": [
+        "今早天气挺好",
+        "尽早天气挺好",
+        "今早天气听好",
+        "今早天气停好",
+        "尽早天气听好",
+        "尽早天气停好",
+        "今早天启挺好",
+        "今早天齐挺好",
+        "今早"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "jinzaozenmeyang",
+      "expected": "今早怎么样",
+      "source": "5500",
+      "lookup_us": 33704,
+      "candidates": [
+        "今早怎么样",
+        "尽早怎么样",
+        "尽早怎么养",
+        "今早怎么养",
+        "尽早怎么阳",
+        "尽早怎么羊",
+        "尽早怎么扬",
+        "今早怎么阳",
+        "今早"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kafeibiehetaiduo",
+      "expected": "咖啡别喝太多",
+      "source": "5500",
+      "lookup_us": 26142,
+      "candidates": [
+        "咖啡别喝太多",
+        "咖啡别和太多",
+        "咖啡憋喝太多",
+        "咖啡别合太多",
+        "咖啡别何太多",
+        "咖啡憋和太多",
+        "咖啡别河太多",
+        "咖啡别荷太多",
+        "咖啡"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kaichemandiankai",
+      "expected": "开车慢点开",
+      "source": "5500",
+      "lookup_us": 22519,
+      "candidates": [
+        "开车慢点开",
+        "开车慢点凯",
+        "开车慢点楷",
+        "开车慢点铠",
+        "开车慢点揩",
+        "开车慢点恺",
+        "凯车慢点开",
+        "开车慢点慨",
+        "开车"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "kaishishangbanlemei",
+      "expected": "开始上班了没",
+      "source": "5500",
+      "lookup_us": 24721,
+      "candidates": [
+        "开始上班了没",
+        "开始上班了美",
+        "开始上班了每",
+        "开始上班了梅",
+        "开始上班了眉",
+        "开始上班了煤",
+        "开始上班了枚",
+        "开始上班了妹",
+        "开始"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "laifenxiaolongbaoba",
+      "expected": "来份小笼包吧",
+      "source": "5500",
+      "lookup_us": 48594,
+      "candidates": [
+        "来分小笼包吧",
+        "来粉小笼包吧",
+        "来分小龙堡吧",
+        "来分小笼包把",
+        "来粉小笼包把",
+        "来分小龙宝吧",
+        "来分销龙宝吧",
+        "来份小笼包吧",
+        "徕芬"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "lushangcheduobuduo",
+      "expected": "路上车多不多",
+      "source": "5500",
+      "lookup_us": 21316,
+      "candidates": [
+        "路上车多不多",
+        "陆上车多不多",
+        "路上车躲不多",
+        "路上车多部多",
+        "路上车朵不多",
+        "路上车夺不多",
+        "路上车堕不多",
+        "路上车多不剁",
+        "路上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lushangmaidianchide",
+      "expected": "路上买点吃的",
+      "source": "5500",
+      "lookup_us": 28130,
+      "candidates": [
+        "路上买点吃的",
+        "陆上买点吃的",
+        "路上买电池的",
+        "路上买点吃得",
+        "路上卖电池的",
+        "路上买点吃地",
+        "路上买点吃德",
+        "路上买点痴的",
+        "路上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lushangmaizaocanba",
+      "expected": "路上买早餐吧",
+      "source": "5500",
+      "lookup_us": 20194,
+      "candidates": [
+        "路上买早餐吧",
+        "路上卖早餐吧",
+        "路上买早餐八",
+        "路上买早餐把",
+        "路上买早餐罢",
+        "路上买早餐巴",
+        "路上买早餐霸",
+        "路上买早餐拔",
+        "路上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lushangmaizaocanma",
+      "expected": "路上买早餐吗",
+      "source": "5500",
+      "lookup_us": 6837,
+      "candidates": [
+        "路上买早餐吗",
+        "路上卖早餐吗",
+        "路上买早餐嘛",
+        "路上买早餐马",
+        "路上买早餐码",
+        "路上买早餐麻",
+        "路上买早餐骂",
+        "路上买早餐妈",
+        "路上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "lushangshunlima",
+      "expected": "路上顺利吗",
+      "source": "5500",
+      "lookup_us": 20360,
+      "candidates": [
+        "路上顺利吗",
+        "陆上顺利吗",
+        "路上顺利马",
+        "路上顺利嘛",
+        "陆上顺利马",
+        "路上顺利玛",
+        "路上顺利码",
+        "路上顺利骂",
+        "路上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "maibeirekafei",
+      "expected": "买杯热咖啡",
+      "source": "5500",
+      "lookup_us": 7025,
+      "candidates": [
+        "买杯热咖啡",
+        "卖杯热咖啡",
+        "买被惹咖啡",
+        "卖被惹咖啡",
+        "买杯热喀飞",
+        "卖杯热喀飞",
+        "买杯热咖飞",
+        "买杯热咖费",
+        "买"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "maidiandoujiangba",
+      "expected": "买点豆浆吧",
+      "source": "5500",
+      "lookup_us": 32663,
+      "candidates": [
+        "买点豆浆吧",
+        "卖点豆浆吧",
+        "卖点都将把",
+        "卖点都将吧",
+        "买点豆浆把",
+        "卖点豆浆把",
+        "卖点都讲吧",
+        "买点都将把",
+        "买点"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mandianchizaocan",
+      "expected": "慢点吃早餐",
+      "source": "5500",
+      "lookup_us": 16096,
+      "candidates": [
+        "慢点吃早餐",
+        "满点吃早餐",
+        "满电池早餐",
+        "慢点迟早餐",
+        "慢点吃早参",
+        "曼电池早餐",
+        "慢点持早餐",
+        "慢点迟早参",
+        "慢点"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mangleyeyaochifan",
+      "expected": "忙了也要吃饭",
+      "source": "5500",
+      "lookup_us": 21647,
+      "candidates": [
+        "忙了也要吃饭",
+        "盲了也要吃饭",
+        "忙了也药吃饭",
+        "忙了叶药吃饭",
+        "忙了液瑶吃饭",
+        "忙了叶耀吃饭",
+        "忙了也要吃番",
+        "忙了叶曜吃饭",
+        "忙"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "meishuigouba",
+      "expected": "没睡够吧",
+      "source": "5500",
+      "lookup_us": 10339,
+      "candidates": [
+        "没睡够吧",
+        "没睡够把",
+        "没睡够八",
+        "没水垢吧",
+        "没水沟吧",
+        "没睡够罢",
+        "没睡够拔",
+        "没睡够巴",
+        "没睡"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mingzaohaiyaozaoqi",
+      "expected": "明早还要早起",
+      "source": "5500",
+      "lookup_us": 20406,
+      "candidates": [
+        "明早还要早起",
+        "明早还要早期",
+        "名早还要早起",
+        "明早还要糟期",
+        "明早还要糟鳍",
+        "名早还要早期",
+        "明早还要早其",
+        "明早还要早七",
+        "明早"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "mingzaojidianqichuang",
+      "expected": "明早几点起床",
+      "source": "5500",
+      "lookup_us": 31265,
+      "candidates": [
+        "明早几点起床",
+        "名早几点起床",
+        "明早继电器创",
+        "明早积淀起床",
+        "明早继电器窗",
+        "明早机电起床",
+        "明早继电器床",
+        "明早祭奠起床",
+        "明早"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "naozhongdingzaoyidian",
+      "expected": "闹钟定早一点",
+      "source": "5500",
+      "lookup_us": 26274,
+      "candidates": [
+        "闹钟定早一点",
+        "脑中定早一点",
+        "闹钟定造一点",
+        "闹钟订造一点",
+        "闹钟定遭一点",
+        "闹钟定早已点",
+        "闹钟定造一钿",
+        "闹钟定造疑点",
+        "闹钟"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "naozhongxianglema",
+      "expected": "闹钟响了吗",
+      "source": "5500",
+      "lookup_us": 37174,
+      "candidates": [
+        "闹钟响了吗",
+        "闹钟响了码",
+        "闹钟响了嘛",
+        "闹钟响了么",
+        "闹钟响了马",
+        "闹钟响了妈",
+        "闹钟响了骂",
+        "闹钟响了麻",
+        "闹钟"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nibangwodaizaocan",
+      "expected": "你帮我带早餐",
+      "source": "5500",
+      "lookup_us": 12733,
+      "candidates": [
+        "你帮我带早餐",
+        "你帮我代早餐",
+        "你帮我大早餐",
+        "你帮我呆早餐",
+        "你帮我待早餐",
+        "你帮我戴早餐",
+        "你帮我贷早餐",
+        "你帮我袋早餐",
+        "你帮我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nibiezhaojichumen",
+      "expected": "你别着急出门",
+      "source": "5500",
+      "lookup_us": 31239,
+      "candidates": [
+        "你别着急出门",
+        "你别召集出门",
+        "你憋着急出门",
+        "你别着挤出门",
+        "你别着急楚门",
+        "你别着急出们",
+        "你别找寄出门",
+        "你别着急除门",
+        "你比"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nichibuchijidan",
+      "expected": "你吃不吃鸡蛋",
+      "source": "5500",
+      "lookup_us": 19871,
+      "candidates": [
+        "你吃不吃鸡蛋",
+        "你持不吃鸡蛋",
+        "你吃不迟鸡蛋",
+        "你吃不吃即耽",
+        "你吃不持鸡蛋",
+        "你吃不吃几单",
+        "你吃不齿鸡蛋",
+        "你吃不吃鸡但",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nichidezhenzao",
+      "expected": "你吃得真早",
+      "source": "5500",
+      "lookup_us": 15992,
+      "candidates": [
+        "你吃得真早",
+        "你吃得真糟",
+        "你吃得蓁早",
+        "你吃得真造",
+        "你吃的真早",
+        "你吃得蓁造",
+        "你吃得真遭",
+        "你吃得诊早",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nichiledianshenme",
+      "expected": "你吃了点什么",
+      "source": "5500",
+      "lookup_us": 25529,
+      "candidates": [
+        "你吃了点什么",
+        "你迟了点什么",
+        "你吃了电什么",
+        "你吃了店什么",
+        "你吃了殿什么",
+        "你吃了垫什么",
+        "你吃了典什么",
+        "你吃了颠什么",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nichizaocanle",
+      "expected": "你吃早餐了",
+      "source": "5500",
+      "lookup_us": 9129,
+      "candidates": [
+        "你吃早餐了",
+        "你迟早餐了",
+        "你吃早餐乐",
+        "你吃早餐勒",
+        "你迟早惨了",
+        "你迟早残了",
+        "你吃早餐肋",
+        "你迟早参了",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nichumenmei",
+      "expected": "你出门没",
+      "source": "5500",
+      "lookup_us": 14231,
+      "candidates": [
+        "你出门没",
+        "你出门楣",
+        "你出门美",
+        "你出门每",
+        "你出门妹",
+        "你出门梅",
+        "你出门煤",
+        "你出门眉",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nidaogongweileba",
+      "expected": "你到工位了吧",
+      "source": "5500",
+      "lookup_us": 30148,
+      "candidates": [
+        "你到公为了吧",
+        "你到工为了吧",
+        "你到工位了吧",
+        "你到工委了吧",
+        "你到公为了把",
+        "你到公卫了吧",
+        "你到公围了吧",
+        "你到恭维了吧",
+        "你到"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "nidinghaonaozhongmei",
+      "expected": "你定好闹钟没",
+      "source": "5500",
+      "lookup_us": 42506,
+      "candidates": [
+        "拟定好闹钟没",
+        "你定好闹钟没",
+        "拟定好闹钟美",
+        "拟定好脑中美",
+        "拟定好闹钟每",
+        "拟定好挠中美",
+        "拟定好闹钟梅",
+        "拟定好闹中美",
+        "拟定"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "nihaimeixingba",
+      "expected": "你还没醒吧",
+      "source": "5500",
+      "lookup_us": 25690,
+      "candidates": [
+        "你还没醒吧",
+        "你还没行吧",
+        "你还没性吧",
+        "你还没型吧",
+        "你还没醒把",
+        "你还没兴吧",
+        "你还没杏吧",
+        "你还没星吧",
+        "你还"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nihaizaishuima",
+      "expected": "你还在睡吗",
+      "source": "5500",
+      "lookup_us": 13105,
+      "candidates": [
+        "你还在睡吗",
+        "你还在谁吗",
+        "你还在水吗",
+        "你还在说吗",
+        "你还在说嘛",
+        "你还在睡嘛",
+        "你还在谁嘛",
+        "你还在税吗",
+        "你还"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niheshuilema",
+      "expected": "你喝水了吗",
+      "source": "5500",
+      "lookup_us": 12682,
+      "candidates": [
+        "你喝水了吗",
+        "你和谁了吗",
+        "你喝水了嘛",
+        "你和水了吗",
+        "你和睡了吗",
+        "你和谁了嘛",
+        "你喝水了么",
+        "你喝睡了吗",
+        "你和"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nihuanhaoyifumei",
+      "expected": "你换好衣服没",
+      "source": "5500",
+      "lookup_us": 30795,
+      "candidates": [
+        "你换好衣服没",
+        "你还好衣服没",
+        "你换好衣服美",
+        "你换好衣服每",
+        "你还好衣服美",
+        "你换好衣服妹",
+        "你还好意赴美",
+        "你换好衣服梅",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nijidianchumen",
+      "expected": "你几点出门",
+      "source": "5500",
+      "lookup_us": 28112,
+      "candidates": [
+        "你几点出门",
+        "你记点出门",
+        "你几点出们",
+        "你几点出闷",
+        "你几点处门",
+        "你基甸出门",
+        "你几点楚门",
+        "你几点橱门",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nijidianchumena",
+      "expected": "你几点出门啊",
+      "source": "5500",
+      "lookup_us": 13420,
+      "candidates": [
+        "你几点出门啊",
+        "你几点出门阿",
+        "你几点出门呵",
+        "你几点出门吖",
+        "你几点出门腌",
+        "你几点出门嗄",
+        "你几点出们啊",
+        "你几点出闷啊",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nijintianmangsha",
+      "expected": "你今天忙啥",
+      "source": "5500",
+      "lookup_us": 25520,
+      "candidates": [
+        "你今天忙啥",
+        "你今天忙杀",
+        "你今天忙沙",
+        "你今天忙傻",
+        "你今天忙砂",
+        "你今天忙莎",
+        "你今天忙煞",
+        "你今天忙刹",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nijintianquna",
+      "expected": "你今天去哪",
+      "source": "5500",
+      "lookup_us": 19095,
+      "candidates": [
+        "你今天去哪",
+        "你今天去那",
+        "你今天去拿",
+        "你今天去纳",
+        "你今天去娜",
+        "你今天去呐",
+        "你今天群啊",
+        "你今天去钠",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nijintianshuidezao",
+      "expected": "你今天睡得早",
+      "source": "5500",
+      "lookup_us": 22614,
+      "candidates": [
+        "你今天睡得早",
+        "你今天说得早",
+        "你今天说的早",
+        "你今天说的造",
+        "你今天睡的早",
+        "你今天谁的早",
+        "你今天水的早",
+        "你今天说的枣",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nijintianzaobanma",
+      "expected": "你今天早班吗",
+      "source": "5500",
+      "lookup_us": 26430,
+      "candidates": [
+        "你今天早班吗",
+        "你今天早斑马",
+        "你今天早班嘛",
+        "你今天早半马",
+        "你今天早班马",
+        "你今天早版吗",
+        "你今天早班么",
+        "你今天早办吗",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nimangdaoxianzaiya",
+      "expected": "你忙到现在呀",
+      "source": "5500",
+      "lookup_us": 32154,
+      "candidates": [
+        "你忙到现在呀",
+        "你忙到现在压",
+        "你忙到现在押",
+        "你忙到现在亚",
+        "你忙到现在雅",
+        "你忙到现在牙",
+        "你忙到现在鸭",
+        "你忙道现在呀",
+        "你妈"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niqidezhenzao",
+      "expected": "你起得真早",
+      "source": "5500",
+      "lookup_us": 13815,
+      "candidates": [
+        "你起得真早",
+        "你气得真早",
+        "你起的真早",
+        "你骑的榛早",
+        "你起地震早",
+        "你起地震造",
+        "你骑的真早",
+        "你起的诊早",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niqilaimei",
+      "expected": "你起来没",
+      "source": "5500",
+      "lookup_us": 11276,
+      "candidates": [
+        "你起来没",
+        "你起来美",
+        "你起来每",
+        "匿起来没",
+        "你起来梅",
+        "你起来妹",
+        "你起来眉",
+        "你起来煤",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niquwuxiuba",
+      "expected": "你去午休吧",
+      "source": "5500",
+      "lookup_us": 18282,
+      "candidates": [
+        "你去午休吧",
+        "你去无休吧",
+        "你去午休把",
+        "你去武修吧",
+        "你去无修吧",
+        "你去无袖吧",
+        "你去污修吧",
+        "你去吴秀吧",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nishejigenaozhong",
+      "expected": "你设几个闹钟",
+      "source": "5500",
+      "lookup_us": 37739,
+      "candidates": [
+        "你设计个闹钟",
+        "你涉及个闹钟",
+        "你设计个脑中",
+        "你设计各闹钟",
+        "你设计葛闹钟",
+        "你涉及各闹钟",
+        "你涉及格闹钟",
+        "你设几个闹钟",
+        "你"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "nishuixingle",
+      "expected": "你睡醒了",
+      "source": "5500",
+      "lookup_us": 15741,
+      "candidates": [
+        "你睡醒了",
+        "拟睡醒了",
+        "你说醒了",
+        "溺水醒了",
+        "你谁醒了",
+        "你说性了",
+        "溺水性了",
+        "泥水醒了",
+        "溺水"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niwuxiulema",
+      "expected": "你午休了吗",
+      "source": "5500",
+      "lookup_us": 15567,
+      "candidates": [
+        "你午休了吗",
+        "你无休了吗",
+        "你无修了吗",
+        "你午休了嘛",
+        "你无袖了吗",
+        "你无嗅了吗",
+        "你无锈了吗",
+        "你无休了嘛",
+        "拟物"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nixianchifanba",
+      "expected": "你先吃饭吧",
+      "source": "5500",
+      "lookup_us": 20730,
+      "candidates": [
+        "你先吃饭吧",
+        "你现吃饭吧",
+        "你先吃饭把",
+        "你先吃饭巴",
+        "你先吃饭罢",
+        "你先吃饭八",
+        "你先彳饭吧",
+        "你先吃饭爸",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nixianmanggongzuoba",
+      "expected": "你先忙工作吧",
+      "source": "5500",
+      "lookup_us": 23012,
+      "candidates": [
+        "你先忙工作吧",
+        "你先忙工作把",
+        "你先忙工作罢",
+        "你先忙工作巴",
+        "你先忙工作八",
+        "你先忙工作爸",
+        "你先忙工做吧",
+        "你先忙工作霸",
+        "你先忙"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nixianmangyihuier",
+      "expected": "你先忙一会儿",
+      "source": "5500",
+      "lookup_us": 32621,
+      "candidates": [
+        "你先忙一会儿",
+        "你先芒一会儿",
+        "你先忙一会二",
+        "你先忙一挥而",
+        "你先忙一会而",
+        "你先忙一回儿",
+        "你先忙一会耳",
+        "你先忙一回而",
+        "你先忙"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nixianzaizainaer",
+      "expected": "你现在在哪儿",
+      "source": "5500",
+      "lookup_us": 24160,
+      "candidates": [
+        "你现在在哪儿",
+        "你现在在那儿",
+        "你现在在哪而",
+        "你现在在纳尔",
+        "你现在在哪二",
+        "拟现在在哪儿",
+        "你现在在那二",
+        "你现在在哪耳",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nixinglemei",
+      "expected": "你醒了没",
+      "source": "5500",
+      "lookup_us": 14488,
+      "candidates": [
+        "你醒了没",
+        "你醒了美",
+        "你醒了每",
+        "你醒了眉",
+        "你醒了梅",
+        "你醒了煤",
+        "逆行了没",
+        "你醒了妹",
+        "逆行了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niyaodaishenme",
+      "expected": "你要带什么",
+      "source": "5500",
+      "lookup_us": 22282,
+      "candidates": [
+        "你要带什么",
+        "你要待什么",
+        "你要戴什么",
+        "你要代什么",
+        "你要大什么",
+        "你腰带什么",
+        "你要呆什么",
+        "你要贷什么",
+        "你要"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "niyaoheshenmema",
+      "expected": "你要喝什么吗",
+      "source": "5500",
+      "lookup_us": 26423,
+      "candidates": [
+        "你要喝什么吗",
+        "你要喝什么嘛",
+        "你要和什么吗",
+        "你要喝什么么",
+        "你要和什么嘛",
+        "你要喝什么马",
+        "你要喝什么骂",
+        "你要喝什么麻",
+        "你要"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "nizhongyuqilaile",
+      "expected": "你终于起来了",
+      "source": "5500",
+      "lookup_us": 15760,
+      "candidates": [
+        "你终于起来了",
+        "你重于起来了",
+        "你重预期来了",
+        "你重语气来了",
+        "你重逾期来了",
+        "你终于气来了",
+        "你终于其来了",
+        "你重于其来了",
+        "你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qilaichizaofan",
+      "expected": "起来吃早饭",
+      "source": "5500",
+      "lookup_us": 14706,
+      "candidates": [
+        "起来吃早饭",
+        "其来吃早饭",
+        "起来迟早饭",
+        "起来吃造反",
+        "起来迟造反",
+        "其来迟早饭",
+        "起来持早饭",
+        "起来持造反",
+        "起来"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qilaihaimihuma",
+      "expected": "起来还迷糊吗",
+      "source": "5500",
+      "lookup_us": 15576,
+      "candidates": [
+        "起来还迷糊吗",
+        "起来还迷糊嘛",
+        "起来还迷糊马",
+        "起来海迷糊吗",
+        "起来还迷糊骂",
+        "起来还迷糊抹",
+        "起来还米糊吗",
+        "起来还迷糊码",
+        "起来"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qilaihuodonghuodong",
+      "expected": "起来活动活动",
+      "source": "5500",
+      "lookup_us": 22095,
+      "candidates": [
+        "起来活动活动",
+        "其来活动活动",
+        "起来活动或动",
+        "起来活动或东",
+        "起来活动活冻",
+        "起来活动活东",
+        "起来活动活洞",
+        "起来活动或洞",
+        "起来"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qilaimei",
+      "expected": "起来没",
+      "source": "5500",
+      "lookup_us": 9821,
+      "candidates": [
+        "起来没",
+        "起来美",
+        "起来每",
+        "起来梅",
+        "七濑美",
+        "起来煤",
+        "起来妹",
+        "起来眉",
+        "起来"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "qiwanleyidiandian",
+      "expected": "起晚了一点点",
+      "source": "5500",
+      "lookup_us": 49966,
+      "candidates": [
+        "起晚了一点点",
+        "其完了一点点",
+        "其完了一点电",
+        "起晚了亿点点",
+        "其完了亿点点",
+        "起晚了一点电",
+        "其完了仪点点",
+        "其完了一点店",
+        "起晚了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "reniunaiyaobuyao",
+      "expected": "热牛奶要不要",
+      "source": "5500",
+      "lookup_us": 29193,
+      "candidates": [
+        "热牛奶要不要",
+        "热牛奶咬不要",
+        "热牛奶药不要",
+        "惹牛奶要不要",
+        "热牛奶要补药",
+        "热牛奶摇不要",
+        "热牛奶瑶不要",
+        "热牛奶遥不要",
+        "热牛奶"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangbanlushangne",
+      "expected": "上班路上呢",
+      "source": "5500",
+      "lookup_us": 27003,
+      "candidates": [
+        "上班路上呢",
+        "上半路上呢",
+        "上班路上哪",
+        "上班路上呐",
+        "上班路上讷",
+        "上班陆上呢",
+        "上班路商呢",
+        "上半路上哪",
+        "上班"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangwuanpaimanma",
+      "expected": "上午安排满吗",
+      "source": "5500",
+      "lookup_us": 17394,
+      "candidates": [
+        "上午安排满吗",
+        "上午安排谩骂",
+        "上午安排满马",
+        "上午安排满嘛",
+        "商务安排谩骂",
+        "上午安排满骂",
+        "上午安排满码",
+        "上午安排满妈",
+        "上午安排"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangwuguodekuaima",
+      "expected": "上午过得快吗",
+      "source": "5500",
+      "lookup_us": 24756,
+      "candidates": [
+        "上午过得快吗",
+        "商务过得快吗",
+        "商务过的快吗",
+        "上午过的快吗",
+        "商务过得快马",
+        "上午过得快马",
+        "商务过的快马",
+        "上午过的快马",
+        "上午"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangwuhaihaoba",
+      "expected": "上午还好吧",
+      "source": "5500",
+      "lookup_us": 13074,
+      "candidates": [
+        "上午还好吧",
+        "商务还好吧",
+        "上午海好吧",
+        "上午还好罢",
+        "上午孩好吧",
+        "上午还好把",
+        "商务海好吧",
+        "尚无害好吧",
+        "上午"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangwumangma",
+      "expected": "上午忙吗",
+      "source": "5500",
+      "lookup_us": 16681,
+      "candidates": [
+        "上午忙吗",
+        "商务忙吗",
+        "上午忙嘛",
+        "商务忙嘛",
+        "尚无忙吗",
+        "上午盲吗",
+        "晌午忙吗",
+        "商务盲吗",
+        "上午"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangwumangwanzhaowo",
+      "expected": "上午忙完找我",
+      "source": "5500",
+      "lookup_us": 29861,
+      "candidates": [
+        "上午忙完找我",
+        "商务忙完找我",
+        "商务芒碗找我",
+        "上午忙完着我",
+        "上午忙完找喔",
+        "上午忙挽着我",
+        "商务忙完着我",
+        "上午忙玩着我",
+        "上午"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangwushiqingbushao",
+      "expected": "上午事情不少",
+      "source": "5500",
+      "lookup_us": 29201,
+      "candidates": [
+        "上午事情不少",
+        "商务事情不少",
+        "上午时请不少",
+        "上午事情不烧",
+        "商务事情不烧",
+        "上午是轻不少",
+        "商务时请不少",
+        "上午时轻不少",
+        "上午"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangwushiqingduoma",
+      "expected": "上午事情多吗",
+      "source": "5500",
+      "lookup_us": 29402,
+      "candidates": [
+        "上午事情多吗",
+        "上午事情多么",
+        "上午事情多嘛",
+        "上午事情多玛",
+        "上午事情多马",
+        "商务事情多吗",
+        "商务事情多么",
+        "上午事情多妈",
+        "上午"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangwuxianchuliwan",
+      "expected": "上午先处理完",
+      "source": "5500",
+      "lookup_us": 39997,
+      "candidates": [
+        "上午先处理完",
+        "商务先处理完",
+        "上午先处理万",
+        "上午先处理玩",
+        "商务先处理万",
+        "上午先处理晚",
+        "商务先处理玩",
+        "上午先处理弯",
+        "上午"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shangwuyoudiangan",
+      "expected": "上午有点赶",
+      "source": "5500",
+      "lookup_us": 42232,
+      "candidates": [
+        "上午有点干",
+        "上午有点感",
+        "上午有电感",
+        "商务有点干",
+        "上午由电感",
+        "上午有点赶",
+        "上午有电杆",
+        "商务由电感",
+        "上午"
+      ],
+      "expected_rank": 6
+    },
+    {
+      "pinyin": "shangwuyouhuima",
+      "expected": "上午有会吗",
+      "source": "5500",
+      "lookup_us": 35300,
+      "candidates": [
+        "上午优惠码",
+        "商务优惠吗",
+        "商务优惠码",
+        "上午优惠吗",
+        "上午有会吗",
+        "上午又会吗",
+        "商务又会吗",
+        "上午优惠嘛",
+        "上午"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "shangwuzenmeanpai",
+      "expected": "上午怎么安排",
+      "source": "5500",
+      "lookup_us": 16005,
+      "candidates": [
+        "上午怎么安排",
+        "商务怎么安排",
+        "上午怎么暗拍",
+        "商务怎么暗拍",
+        "上午怎么按排",
+        "上午怎么暗牌",
+        "上午怎么按牌",
+        "商务怎么按排",
+        "上午"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shoujidaihaolemei",
+      "expected": "手机带好了没",
+      "source": "5500",
+      "lookup_us": 23471,
+      "candidates": [
+        "手机带好了没",
+        "手机戴好了没",
+        "手机袋好了每",
+        "手机带好了美",
+        "手机带好了每",
+        "手机带好了眉",
+        "手机带好了梅",
+        "手机戴好了美",
+        "手机"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shoushihaolemei",
+      "expected": "收拾好了没",
+      "source": "5500",
+      "lookup_us": 13370,
+      "candidates": [
+        "收拾好了没",
+        "收拾好了美",
+        "收拾好了每",
+        "收拾好了梅",
+        "首饰好了没",
+        "收拾好了眉",
+        "收拾好了煤",
+        "收拾好了枚",
+        "收拾好"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shoushiwanyaochumen",
+      "expected": "收拾完要出门",
+      "source": "5500",
+      "lookup_us": 22466,
+      "candidates": [
+        "收拾完要出门",
+        "收拾碗要出门",
+        "收拾弯腰出门",
+        "手势弯腰出门",
+        "收拾完药出门",
+        "收拾完咬出门",
+        "收拾完邀出门",
+        "收拾完摇出门",
+        "收拾"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuibeidaishangmei",
+      "expected": "水杯带上没",
+      "source": "5500",
+      "lookup_us": 36820,
+      "candidates": [
+        "水杯带上寐",
+        "水杯带上没",
+        "水杯带上每",
+        "水杯带上美",
+        "谁杯带上寐",
+        "水杯带上梅",
+        "水被带上没",
+        "水杯带上眉",
+        "水杯"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "shuidehaixingma",
+      "expected": "睡得还行吗",
+      "source": "5500",
+      "lookup_us": 14551,
+      "candidates": [
+        "睡得还行吗",
+        "谁的还行吗",
+        "谁的海星吗",
+        "睡得还行马",
+        "谁的海行吗",
+        "水的海星吗",
+        "睡得还行么",
+        "睡得还行嘛",
+        "睡得"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuidehaoma",
+      "expected": "睡得好吗",
+      "source": "5500",
+      "lookup_us": 6549,
+      "candidates": [
+        "睡得好吗",
+        "说得好吗",
+        "谁的号码",
+        "说的好吗",
+        "谁的好吗",
+        "水的号码",
+        "睡得好嘛",
+        "睡得好么",
+        "睡得好"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuiqianshuoyishengba",
+      "expected": "睡前说一声吧",
+      "source": "5500",
+      "lookup_us": 25014,
+      "candidates": [
+        "睡前说一声吧",
+        "税前说一声吧",
+        "睡前说一声把",
+        "睡前说一声巴",
+        "睡前说一声八",
+        "睡前说一声爸",
+        "税前说一声把",
+        "睡前说一声罢",
+        "睡前"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuixingmei",
+      "expected": "睡醒没",
+      "source": "5500",
+      "lookup_us": 9979,
+      "candidates": [
+        "睡醒没",
+        "水性美",
+        "水星美",
+        "水性酶",
+        "水星每",
+        "水星没",
+        "水性没",
+        "水星梅",
+        "水星"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "shuixingzaishuoba",
+      "expected": "睡醒再说吧",
+      "source": "5500",
+      "lookup_us": 12207,
+      "candidates": [
+        "睡醒再说吧",
+        "水星再说吧",
+        "水星在说吧",
+        "睡醒再说把",
+        "睡醒再说罢",
+        "水性在说吧",
+        "水星在说罢",
+        "水星仔说吧",
+        "水星"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waitaochuanlema",
+      "expected": "外套穿了吗",
+      "source": "5500",
+      "lookup_us": 10946,
+      "candidates": [
+        "外套穿了吗",
+        "外套穿了嘛",
+        "外套传了吗",
+        "外套穿了么",
+        "外套穿了马",
+        "外套穿了妈",
+        "外套串了吗",
+        "外逃传了吗",
+        "外套"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "waitaodaishangmei",
+      "expected": "外套带上没",
+      "source": "5500",
+      "lookup_us": 20411,
+      "candidates": [
+        "外套带上没",
+        "外套带上每",
+        "外套带上美",
+        "外套带上梅",
+        "外套带上眉",
+        "外套戴上没",
+        "外套带上妹",
+        "外套戴上每",
+        "外套"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wandianzaijianba",
+      "expected": "晚点再见吧",
+      "source": "5500",
+      "lookup_us": 24957,
+      "candidates": [
+        "晚点再见吧",
+        "万点再见吧",
+        "晚点在建叭",
+        "晚点再见把",
+        "晚点再减吧",
+        "晚点再建吧",
+        "晚点再间吧",
+        "晚点再见罢",
+        "晚点"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wanshanghaizaixianma",
+      "expected": "晚上还在线吗",
+      "source": "5500",
+      "lookup_us": 30935,
+      "candidates": [
+        "晚上还在线吗",
+        "晚上咳再现吗",
+        "晚上还在线嘛",
+        "晚上还在现吗",
+        "晚上还再现吗",
+        "晚上还在西安吗",
+        "晚上海在线吗",
+        "晚上还在闲吗",
+        "晚上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wanshangyaomangma",
+      "expected": "晚上要忙吗",
+      "source": "5500",
+      "lookup_us": 29776,
+      "candidates": [
+        "晚上要忙吗",
+        "晚上要忙嘛",
+        "晚上要盲吗",
+        "晚上要忙么",
+        "晚上邀盲吗",
+        "晚上药忙吗",
+        "晚上姚忙吗",
+        "晚上邀盲妈",
+        "晚上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wanshangzenmeanpai",
+      "expected": "晚上怎么安排",
+      "source": "5500",
+      "lookup_us": 17391,
+      "candidates": [
+        "晚上怎么安排",
+        "玩上怎么安排",
+        "晚上怎么暗拍",
+        "晚上怎么按排",
+        "晚上怎么暗牌",
+        "晚上怎么按牌",
+        "晚上怎么按拍",
+        "晚上怎么按派",
+        "晚上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wodehuanyihuier",
+      "expected": "我得缓一会儿",
+      "source": "5500",
+      "lookup_us": 32215,
+      "candidates": [
+        "我得缓一会儿",
+        "我得换一会儿",
+        "我得缓一会二",
+        "我的换衣会儿",
+        "我得换一挥而",
+        "我得缓一会而",
+        "我的还一挥而",
+        "我得换一会二",
+        "我的"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wodengnikongxialai",
+      "expected": "我等你空下来",
+      "source": "5500",
+      "lookup_us": 15148,
+      "candidates": [
+        "我等你空下来",
+        "我等你孔下来",
+        "我等你控下来",
+        "我等你恐下来",
+        "沃等你空下来",
+        "我等你倥下来",
+        "我等你控下癞",
+        "我等你空下莱",
+        "我等你"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wogangchiwanzaofan",
+      "expected": "我刚吃完早饭",
+      "source": "5500",
+      "lookup_us": 22420,
+      "candidates": [
+        "我刚吃完早饭",
+        "我刚吃完造反",
+        "我港吃完早饭",
+        "我刚吃完造饭",
+        "我刚吃完早返",
+        "我刚吃完早翻",
+        "我刚吃完早反",
+        "我刚吃完早烦",
+        "我刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wogangdaogongsi",
+      "expected": "我刚到公司",
+      "source": "5500",
+      "lookup_us": 16685,
+      "candidates": [
+        "我刚到公司",
+        "我刚道公司",
+        "我刚到公私",
+        "我刚导公司",
+        "沃刚到公司",
+        "我刚岛公司",
+        "我刚倒公司",
+        "我刚悼公司",
+        "我刚到"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wogangxingguolai",
+      "expected": "我刚醒过来",
+      "source": "5500",
+      "lookup_us": 27395,
+      "candidates": [
+        "我刚醒过来",
+        "我刚性过来",
+        "我刚行过来",
+        "我刚型过来",
+        "我刚兴过来",
+        "我刚形过来",
+        "我刚星过来",
+        "我刚刑过来",
+        "我刚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wogeinidaikafei",
+      "expected": "我给你带咖啡",
+      "source": "5500",
+      "lookup_us": 14322,
+      "candidates": [
+        "我给你带咖啡",
+        "我给你大咖啡",
+        "我给你戴咖啡",
+        "我给你待咖啡",
+        "我给你代咖啡",
+        "我给你袋咖啡",
+        "我给你呆咖啡",
+        "我给你贷咖啡",
+        "我给你打"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wohaimeiqingxing",
+      "expected": "我还没清醒",
+      "source": "5500",
+      "lookup_us": 34046,
+      "candidates": [
+        "我还没清醒",
+        "我还没情形",
+        "我还没庆幸",
+        "我还没轻型",
+        "我还美情形",
+        "我还美清醒",
+        "我还没晴行",
+        "我还没清性",
+        "我还"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "womashangjiuchumen",
+      "expected": "我马上就出门",
+      "source": "5500",
+      "lookup_us": 29151,
+      "candidates": [
+        "我马上就出门",
+        "我马上就出们",
+        "我马上就出闷",
+        "我马上救出门",
+        "沃马上就出门",
+        "我马上揪出门",
+        "我马上就出焖",
+        "我马上就处门",
+        "我妈"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wonaozhongmeitingjian",
+      "expected": "我闹钟没听见",
+      "source": "5500",
+      "lookup_us": 53686,
+      "candidates": [
+        "我脑中没听见",
+        "我闹钟没听见",
+        "我脑中美听见",
+        "我脑中没听奸",
+        "我闹钟没听奸",
+        "我脑中每听见",
+        "我脑中妹听见",
+        "我脑中煤听见",
+        "我那"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "woqumaizaocan",
+      "expected": "我去买早餐",
+      "source": "5500",
+      "lookup_us": 13721,
+      "candidates": [
+        "我去买早餐",
+        "我去卖早餐",
+        "我区买早餐",
+        "我去买早参",
+        "我去麦早餐",
+        "我区卖早餐",
+        "我去迈早餐",
+        "我去脉早餐",
+        "我去"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woshunlumaizaocan",
+      "expected": "我顺路买早餐",
+      "source": "5500",
+      "lookup_us": 18619,
+      "candidates": [
+        "我顺路买早餐",
+        "我顺路卖早餐",
+        "我顺路脉早餐",
+        "我顺路埋早餐",
+        "我顺路麦早餐",
+        "我顺路迈早餐",
+        "我顺路买早参",
+        "我顺路霾早餐",
+        "我"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woxianshoushiyixia",
+      "expected": "我先收拾一下",
+      "source": "5500",
+      "lookup_us": 32115,
+      "candidates": [
+        "我先收拾一下",
+        "我县收拾一下",
+        "我先收视一下",
+        "我先受试一下",
+        "我先首饰一下",
+        "我县首饰一下",
+        "我先手势一下",
+        "我县收视一下",
+        "我先"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woyequchifan",
+      "expected": "我也去吃饭",
+      "source": "5500",
+      "lookup_us": 15144,
+      "candidates": [
+        "我也去吃饭",
+        "我夜去吃饭",
+        "我也区吃饭",
+        "我也取吃饭",
+        "我也去吃番",
+        "我也去吃反",
+        "我也曲吃饭",
+        "我也去吃翻",
+        "我也"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woyijingchiguola",
+      "expected": "我已经吃过啦",
+      "source": "5500",
+      "lookup_us": 31430,
+      "candidates": [
+        "我已经吃过啦",
+        "我已经吃过拉",
+        "我已经吃过辣",
+        "我已经吃过喇",
+        "我已经吃过落",
+        "我已经吃过蜡",
+        "我已经吃过腊",
+        "我已经吃过垃",
+        "我一"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "woyoulaichuangle",
+      "expected": "我又赖床了",
+      "source": "5500",
+      "lookup_us": 34184,
+      "candidates": [
+        "我有赖床了",
+        "我又来床了",
+        "我又赖床了",
+        "我又来创了",
+        "我又来窗了",
+        "我有来床了",
+        "我又来闯了",
+        "我有赖床乐",
+        "我有"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "wozaishuayane",
+      "expected": "我在刷牙呢",
+      "source": "5500",
+      "lookup_us": 19952,
+      "candidates": [
+        "我在刷牙呢",
+        "我再刷牙呢",
+        "我在刷牙哪",
+        "我再刷偃哦",
+        "我在刷宴饿",
+        "我在刷牙呐",
+        "我再刷牙哪",
+        "我在刷厌恶",
+        "我在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wozhunbeixishu",
+      "expected": "我准备洗漱",
+      "source": "5500",
+      "lookup_us": 14948,
+      "candidates": [
+        "我准备洗漱",
+        "我准备系数",
+        "我准备悉数",
+        "我准备稀疏",
+        "我准备细数",
+        "我准备吸术",
+        "我准备洗数",
+        "我准备洗树",
+        "握住"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wufanhoulianxini",
+      "expected": "午饭后联系你",
+      "source": "5500",
+      "lookup_us": 27115,
+      "candidates": [
+        "午饭后联系你",
+        "午饭后联系呢",
+        "乌饭后联系你",
+        "午饭后练习呢",
+        "午饭后连细腻",
+        "午饭后练习你",
+        "午饭后练细腻",
+        "午饭后链细腻",
+        "午饭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wufanhouzailianxi",
+      "expected": "午饭后再联系",
+      "source": "5500",
+      "lookup_us": 21959,
+      "candidates": [
+        "午饭后再联系",
+        "午饭后在联系",
+        "午饭后在练习",
+        "乌饭后再联系",
+        "午饭后再练习",
+        "午饭后再连系",
+        "午饭后再怜惜",
+        "午饭后载联系",
+        "午饭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wufanjidianchi",
+      "expected": "午饭几点吃",
+      "source": "5500",
+      "lookup_us": 49233,
+      "candidates": [
+        "午饭机电池",
+        "午饭及电池",
+        "无反击电池",
+        "五反击电池",
+        "悟饭及电池",
+        "午饭几点吃",
+        "午饭级电池",
+        "午饭集电池",
+        "午饭"
+      ],
+      "expected_rank": 6
+    },
+    {
+      "pinyin": "wufanxianghaomei",
+      "expected": "午饭想好没",
+      "source": "5500",
+      "lookup_us": 47008,
+      "candidates": [
+        "午饭想好美",
+        "午饭想好没",
+        "午饭想好每",
+        "无反向好美",
+        "无反响好美",
+        "五反向好美",
+        "午饭香好美",
+        "五反响好美",
+        "午饭"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "wufanzhunbeihaomei",
+      "expected": "午饭准备好没",
+      "source": "5500",
+      "lookup_us": 28812,
+      "candidates": [
+        "午饭准备好美",
+        "午饭准备好每",
+        "午饭准备好没",
+        "午饭准备好妹",
+        "午饭准备好梅",
+        "午饭准备好煤",
+        "乌饭准备好美",
+        "午饭准备好眉",
+        "午饭"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "wuxiushijiandaole",
+      "expected": "午休时间到了",
+      "source": "5500",
+      "lookup_us": 41768,
+      "candidates": [
+        "午休时间到了",
+        "午休时间倒了",
+        "午休时见到了",
+        "无修时间到了",
+        "午休时间道了",
+        "午休时间导了",
+        "午休时间刀了",
+        "午休时捡到了",
+        "午休"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "wuxiuxinglezhaowo",
+      "expected": "午休醒了找我",
+      "source": "5500",
+      "lookup_us": 43636,
+      "candidates": [
+        "无修行了找我",
+        "午休醒了找我",
+        "无修行了着我",
+        "午休醒了着我",
+        "无修行乐找我",
+        "无修行勒找我",
+        "无修行了朝倭",
+        "无袖性肋找我",
+        "午休"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "wuxiuyoukongma",
+      "expected": "午休有空吗",
+      "source": "5500",
+      "lookup_us": 13553,
+      "candidates": [
+        "午休有空吗",
+        "无袖有空吗",
+        "午休有孔吗",
+        "无袖有孔吗",
+        "午休有空嘛",
+        "午休又空吗",
+        "无袖有空嘛",
+        "午休又恐吗",
+        "午休"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiabanhouyoushima",
+      "expected": "下班后有事吗",
+      "source": "5500",
+      "lookup_us": 21503,
+      "candidates": [
+        "下班后有事吗",
+        "下班后又是吗",
+        "下班后优势吗",
+        "下班后有什么",
+        "下班后又是马",
+        "下班后又是嘛",
+        "下班后有是吗",
+        "下班后由是吗",
+        "下班后"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiabanlushangxiaoxin",
+      "expected": "下班路上小心",
+      "source": "5500",
+      "lookup_us": 42841,
+      "candidates": [
+        "下班路上小心",
+        "下半路上小心",
+        "下班路上小新",
+        "下班路上孝心",
+        "下班路上小欣",
+        "下班路上小信",
+        "下班路上小辛",
+        "下班路上小芯",
+        "下班"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianbadiannaodakai",
+      "expected": "先把电脑打开",
+      "source": "5500",
+      "lookup_us": 21442,
+      "candidates": [
+        "先把电脑打开",
+        "现把电脑打开",
+        "先把电脑大开",
+        "先把电脑打凯",
+        "现把电脑大开",
+        "先把电脑大楷",
+        "先把电脑达开",
+        "先把电脑搭开",
+        "先把"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianbashuihewan",
+      "expected": "先把水喝完",
+      "source": "5500",
+      "lookup_us": 19472,
+      "candidates": [
+        "先把水喝完",
+        "先把水和玩",
+        "现把水喝完",
+        "先把水河湾",
+        "先把谁喝完",
+        "先把水喝碗",
+        "先把水和万",
+        "先把水和晚",
+        "先把"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianchidianbaozi",
+      "expected": "先吃点包子",
+      "source": "5500",
+      "lookup_us": 26488,
+      "candidates": [
+        "先吃点包子",
+        "先吃点豹子",
+        "先吃点孢子",
+        "西安吃点包子",
+        "先吃点煲仔",
+        "先吃店包子",
+        "先吃点包自",
+        "先吃点报自",
+        "先吃"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianchijikouzaizou",
+      "expected": "先吃几口再走",
+      "source": "5500",
+      "lookup_us": 15554,
+      "candidates": [
+        "先吃几口再走",
+        "现吃几口再走",
+        "先吃几口在走",
+        "现吃几口在走",
+        "先吃几口在奏",
+        "先吃几口再奏",
+        "先吃几口载走",
+        "先吃鸡扣再走",
+        "先吃"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianchulishoutoushi",
+      "expected": "先处理手头事",
+      "source": "5500",
+      "lookup_us": 36812,
+      "candidates": [
+        "先处理手头时",
+        "先处理手头是",
+        "先处理手头饰",
+        "先处理手头市",
+        "现处理手头时",
+        "先处理手头十",
+        "先处理手头式",
+        "先处理手头事",
+        "先处理"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "xianchuliyoujian",
+      "expected": "先处理邮件",
+      "source": "5500",
+      "lookup_us": 33316,
+      "candidates": [
+        "先处理邮件",
+        "先处理右键",
+        "现处理邮件",
+        "先处理幽涧",
+        "先处理有见",
+        "先处理有剑",
+        "先处理有减",
+        "先处理有间",
+        "先处理"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiandianyixiaduzi",
+      "expected": "先垫一下肚子",
+      "source": "5500",
+      "lookup_us": 31673,
+      "candidates": [
+        "先垫一下肚子",
+        "先点一下肚子",
+        "先垫一下独自",
+        "先点一下独自",
+        "先垫一下独资",
+        "先垫一下独子",
+        "先垫一下毒资",
+        "先点一下独资",
+        "先"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiangchishenmezaofan",
+      "expected": "想吃什么早饭",
+      "source": "5500",
+      "lookup_us": 41350,
+      "candidates": [
+        "想吃什么早饭",
+        "想吃什么造反",
+        "想吃什么造饭",
+        "想吃什么遭反",
+        "想吃什么早返",
+        "想吃什么造犯",
+        "想吃什么遭饭",
+        "想吃什么造凡",
+        "想吃"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianhekouwenshui",
+      "expected": "先喝口温水",
+      "source": "5500",
+      "lookup_us": 13436,
+      "candidates": [
+        "先喝口温水",
+        "弦和口吻说",
+        "县河口温水",
+        "先河口吻说",
+        "县河口问谁",
+        "县河口文说",
+        "先河口问谁",
+        "先河口文说",
+        "先河"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiankankanrichengbiao",
+      "expected": "先看看日程表",
+      "source": "5500",
+      "lookup_us": 18359,
+      "candidates": [
+        "先看看日程表",
+        "西安看看日程表",
+        "先看看日程标",
+        "先看看日程彪",
+        "先看看日成表",
+        "西安看看日程标",
+        "先看看日程膘",
+        "先看看日程飙",
+        "先看"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiankanyixiaricheng",
+      "expected": "先看一下日程",
+      "source": "5500",
+      "lookup_us": 23049,
+      "candidates": [
+        "先看一下日程",
+        "先看一下日盛",
+        "先看一下日称",
+        "西安看一下日程",
+        "先看一下日成",
+        "先看一下日乘",
+        "先看一下日城",
+        "先看一下日呈",
+        "先看一下"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianmangnideba",
+      "expected": "先忙你的吧",
+      "source": "5500",
+      "lookup_us": 16474,
+      "candidates": [
+        "先忙你的吧",
+        "闲忙你的吧",
+        "先忙你的把",
+        "先忙你的巴",
+        "先忙你得吧",
+        "先忙你的罢",
+        "先忙你的八",
+        "闲忙你的把",
+        "先忙"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianpaobeichaba",
+      "expected": "先泡杯茶吧",
+      "source": "5500",
+      "lookup_us": 13399,
+      "candidates": [
+        "先泡杯茶吧",
+        "腺泡杯茶吧",
+        "先泡杯茶把",
+        "先泡杯茶罢",
+        "先泡杯茶八",
+        "先泡杯茶巴",
+        "先泡杯茶霸",
+        "先泡杯茶拔",
+        "先"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianquchifanba",
+      "expected": "先去吃饭吧",
+      "source": "5500",
+      "lookup_us": 16350,
+      "candidates": [
+        "先去吃饭吧",
+        "线去吃饭吧",
+        "先去吃饭把",
+        "先去吃饭巴",
+        "先去吃饭八",
+        "先去吃饭爸",
+        "先去吃饭罢",
+        "先去吃饭霸",
+        "先去"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianqumaibeikafei",
+      "expected": "先去买杯咖啡",
+      "source": "5500",
+      "lookup_us": 18677,
+      "candidates": [
+        "先去买杯咖啡",
+        "先去卖杯咖啡",
+        "先去买被咖啡",
+        "先去买北咖啡",
+        "先去买悲喀飞",
+        "先去买贝咖啡",
+        "先去卖北咖啡",
+        "先去买备咖啡",
+        "先去"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianqumanggongzuo",
+      "expected": "先去忙工作",
+      "source": "5500",
+      "lookup_us": 20154,
+      "candidates": [
+        "先去忙工作",
+        "咁佢忙工作",
+        "先去芒工作",
+        "先去盲工作",
+        "先去蟒工作",
+        "先去忙工做",
+        "先去茫工作",
+        "先去莽工作",
+        "先去"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianzaichumenma",
+      "expected": "现在出门吗",
+      "source": "5500",
+      "lookup_us": 19828,
+      "candidates": [
+        "现在出门吗",
+        "现在出门嘛",
+        "现在出门马",
+        "现在出门么",
+        "现在出门码",
+        "现在出门麻",
+        "现在出门玛",
+        "现在出门妈",
+        "现在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianzaidubudu",
+      "expected": "现在堵不堵",
+      "source": "5500",
+      "lookup_us": 22478,
+      "candidates": [
+        "现在都不都",
+        "现在都不读",
+        "现在都不独",
+        "现在都不堵",
+        "现在都不赌",
+        "现在都不度",
+        "现在都不睹",
+        "现在堵不堵",
+        "现在"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "xianzaihaiduchema",
+      "expected": "现在还堵车吗",
+      "source": "5500",
+      "lookup_us": 10301,
+      "candidates": [
+        "现在还堵车吗",
+        "现在还堵车嘛",
+        "现在还都车吗",
+        "现在海堵车吗",
+        "现在还读车吗",
+        "现在还堵车马",
+        "现在还度车吗",
+        "现在还堵车么",
+        "现在"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xianzaimangwanmeiya",
+      "expected": "现在忙完没呀",
+      "source": "5500",
+      "lookup_us": 40182,
+      "candidates": [
+        "现在忙完美呀",
+        "现在忙完美亚",
+        "现在忙完美牙",
+        "现在忙完美雅",
+        "现在忙完美压",
+        "现在忙完没呀",
+        "现在忙完美鸭",
+        "现在忙万美呀",
+        "现在吗"
+      ],
+      "expected_rank": 6
+    },
+    {
+      "pinyin": "xianzaixingtoulema",
+      "expected": "现在醒透了吗",
+      "source": "5500",
+      "lookup_us": 37145,
+      "candidates": [
+        "现在行头了吗",
+        "现在兴头了吗",
+        "现在姓偷了吗",
+        "现在姓偷了嘛",
+        "现在兴头了嘛",
+        "现在行透了吗",
+        "现在性投了吗",
+        "现在醒透了吗",
+        "现在"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "xianzhunbeichumen",
+      "expected": "先准备出门",
+      "source": "5500",
+      "lookup_us": 20366,
+      "candidates": [
+        "先准备出门",
+        "西安准备出门",
+        "仙准备橱门",
+        "先准备出们",
+        "先准备楚门",
+        "先准备橱门",
+        "先准备处门",
+        "先准备出闷",
+        "显著"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiawuchumenbuchu",
+      "expected": "下午出门不出",
+      "source": "5500",
+      "lookup_us": 23019,
+      "candidates": [
+        "下午出门不出",
+        "下午出门不除",
+        "下午出门不怵",
+        "下午出门不处",
+        "下午出门步出",
+        "下午出门不楚",
+        "下午楚门不出",
+        "下午出门不触",
+        "下午出门"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiawuhaidemangma",
+      "expected": "下午还得忙吗",
+      "source": "5500",
+      "lookup_us": 19992,
+      "candidates": [
+        "下午还得忙吗",
+        "下午还得忙嘛",
+        "下午还的忙吗",
+        "下午海的忙吗",
+        "下午海德忙吗",
+        "下午海地忙吗",
+        "下午害得忙吗",
+        "下午还得盲吗",
+        "下午"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiawuhaikunma",
+      "expected": "下午还困吗",
+      "source": "5500",
+      "lookup_us": 13401,
+      "candidates": [
+        "下午还困吗",
+        "下午海困吗",
+        "下午还坤吗",
+        "下午海昆吗",
+        "下午海坤吗",
+        "下午孩困吗",
+        "下午还昆吗",
+        "下午咳困吗",
+        "下午"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiawumangdaojidian",
+      "expected": "下午忙到几点",
+      "source": "5500",
+      "lookup_us": 34239,
+      "candidates": [
+        "下午忙到几点",
+        "下午忙到极点",
+        "下午芒到几点",
+        "下午芒到极点",
+        "下午忙到机电",
+        "下午忙到积淀",
+        "下午忙道几点",
+        "下午忙到基点",
+        "下午"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiawuqilailema",
+      "expected": "下午起来了吗",
+      "source": "5500",
+      "lookup_us": 16127,
+      "candidates": [
+        "下午起来了吗",
+        "下午起来了嘛",
+        "下午起来了么",
+        "下午其来了吗",
+        "下午起来了马",
+        "下午起来了妈",
+        "下午起来了码",
+        "下午其来了么",
+        "下午"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiawuyouanpaima",
+      "expected": "下午有安排吗",
+      "source": "5500",
+      "lookup_us": 19371,
+      "candidates": [
+        "下午有安排吗",
+        "下午又安排吗",
+        "下午有安排馬",
+        "下午有安排嘛",
+        "下午有安排马",
+        "下午有安排麻",
+        "下午有安排玛",
+        "下午有安排妈",
+        "下午"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiawuyoudianfankun",
+      "expected": "下午有点犯困",
+      "source": "5500",
+      "lookup_us": 30414,
+      "candidates": [
+        "下午有点犯困",
+        "下午又癜犯困",
+        "下午优点犯困",
+        "下午有点烦困",
+        "下午有点烦坤",
+        "下午有点反捆",
+        "下午有点烦昆",
+        "下午又典犯困",
+        "下午"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xiawuzailianxiba",
+      "expected": "下午再联系吧",
+      "source": "5500",
+      "lookup_us": 25541,
+      "candidates": [
+        "下午再联系吧",
+        "下午在联系吧",
+        "下午在练习吧",
+        "下午再练习吧",
+        "下午再联系把",
+        "下午在练习把",
+        "下午再联系巴",
+        "下午再联系八",
+        "下午"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xindeyitianjiayou",
+      "expected": "新的一天加油",
+      "source": "5500",
+      "lookup_us": 27128,
+      "candidates": [
+        "新的一天加油",
+        "新的一天假由",
+        "新的一天假有",
+        "新的一天家有",
+        "新的一天价由",
+        "新的一天甲油",
+        "新的一天价有",
+        "新的一天假游",
+        "新的"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xindeyitiankaishi",
+      "expected": "新的一天开始",
+      "source": "5500",
+      "lookup_us": 16695,
+      "candidates": [
+        "新的一天开始",
+        "心得一天开始",
+        "新的一天开市",
+        "新的一天开示",
+        "新的一天开释",
+        "新的一天凯时",
+        "新的一天开时",
+        "新的一天凯什",
+        "新的"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xindeyitiano",
+      "expected": "新的一天哦",
+      "source": "5500",
+      "lookup_us": 13277,
+      "candidates": [
+        "新的一天哦",
+        "新的一天喔",
+        "新的一天噢",
+        "心得一天哦",
+        "心得一天喔",
+        "新的倚天哦",
+        "新的易天哦",
+        "新的倚天喔",
+        "新的"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinglema",
+      "expected": "醒了吗",
+      "source": "5500",
+      "lookup_us": 4854,
+      "candidates": [
+        "醒了吗",
+        "行了吗",
+        "兴了吗",
+        "星了吗",
+        "省了吗",
+        "醒了嘛",
+        "型了吗",
+        "性了吗",
+        "醒了"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xinyitiankaishila",
+      "expected": "新一天开始啦",
+      "source": "5500",
+      "lookup_us": 20301,
+      "candidates": [
+        "新一天开始啦",
+        "心一天开始啦",
+        "新一天开始拉",
+        "新一天开始落",
+        "心一天开始拉",
+        "新一天开始辣",
+        "新一天开始喇",
+        "新一天开始蜡",
+        "心意"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xishuhaolema",
+      "expected": "洗漱好了吗",
+      "source": "5500",
+      "lookup_us": 12000,
+      "candidates": [
+        "洗漱好了吗",
+        "系数好了吗",
+        "洗漱好了嘛",
+        "洗漱号了吗",
+        "系数好了嘛",
+        "洗漱好了么",
+        "系数号了吗",
+        "洗漱好了马",
+        "系数"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xishuhaolemei",
+      "expected": "洗漱好了没",
+      "source": "5500",
+      "lookup_us": 11620,
+      "candidates": [
+        "洗漱好了没",
+        "系数好了没",
+        "洗漱好了美",
+        "洗漱好了每",
+        "洗漱好了眉",
+        "洗漱好了梅",
+        "洗漱好了煤",
+        "系数好了美",
+        "系数"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "xishuwanmei",
+      "expected": "洗漱完没",
+      "source": "5500",
+      "lookup_us": 16696,
+      "candidates": [
+        "洗漱完没",
+        "洗漱完美",
+        "悉数完美",
+        "系数完美",
+        "洗漱完每",
+        "稀疏完美",
+        "洗漱完眉",
+        "洗漱完梅",
+        "系数"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yaoqushangbanma",
+      "expected": "要去上班吗",
+      "source": "5500",
+      "lookup_us": 19650,
+      "candidates": [
+        "要去上班吗",
+        "要去上班马",
+        "要去上班嘛",
+        "要去上班麻",
+        "要去上班玛",
+        "要去上班妈",
+        "要去上班么",
+        "药去上班吗",
+        "要去"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yihuiereleshuo",
+      "expected": "一会儿饿了说",
+      "source": "5500",
+      "lookup_us": 45888,
+      "candidates": [
+        "一会儿阿勒说",
+        "一会儿饿了说",
+        "一会儿俄勒说",
+        "一会儿厄勒说",
+        "一会儿额勒说",
+        "一会儿哦了说",
+        "一会儿俄了说",
+        "一会儿额了说",
+        "一会儿"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "yihuijidechifan",
+      "expected": "一会记得吃饭",
+      "source": "5500",
+      "lookup_us": 21017,
+      "candidates": [
+        "一会记得吃饭",
+        "议会记得吃饭",
+        "一会计的吃饭",
+        "以汇集的吃饭",
+        "议会及地吃饭",
+        "以回击地吃饭",
+        "一会记得吃番",
+        "一会记得吃反",
+        "一会"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yihuiyaochumen",
+      "expected": "一会要出门",
+      "source": "5500",
+      "lookup_us": 24689,
+      "candidates": [
+        "一会要出门",
+        "议会要出门",
+        "以回腰出门",
+        "一会咬出门",
+        "一会腰出门",
+        "一会邀出门",
+        "议会咬出门",
+        "一会摇出门",
+        "一会"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yijingdaogongwei",
+      "expected": "已经到工位",
+      "source": "5500",
+      "lookup_us": 22165,
+      "candidates": [
+        "已经到工位",
+        "已经到恭维",
+        "已经到工委",
+        "已经到公卫",
+        "已经到公为",
+        "已经到共为",
+        "已经到宫位",
+        "已经到供圩",
+        "已经"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yijingqichuangla",
+      "expected": "已经起床啦",
+      "source": "5500",
+      "lookup_us": 28014,
+      "candidates": [
+        "已经起床啦",
+        "一经起床啦",
+        "已经起床拉",
+        "已经起床辣",
+        "已经起床喇",
+        "已经起床蜡",
+        "已经起床落",
+        "已经起床垃",
+        "已经"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yijingzuoxiale",
+      "expected": "已经坐下了",
+      "source": "5500",
+      "lookup_us": 25249,
+      "candidates": [
+        "已经坐下了",
+        "已经做下了",
+        "以静坐下了",
+        "已经作下了",
+        "已经做瞎了",
+        "已经坐瞎了",
+        "已经左下了",
+        "已经作瞎了",
+        "已经"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yilushunshunlili",
+      "expected": "一路顺顺利利",
+      "source": "5500",
+      "lookup_us": 24493,
+      "candidates": [
+        "一路顺顺利利",
+        "意鏀顺顺利利",
+        "一路顺顺利里",
+        "一路顺顺利离",
+        "一路顺顺莉莉",
+        "一路顺顺利立",
+        "一路顺顺丽丽",
+        "一路顺顺利力",
+        "一路"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "yizaoshangdouzaipao",
+      "expected": "一早上都在跑",
+      "source": "5500",
+      "lookup_us": 18622,
+      "candidates": [
+        "一早上都在跑",
+        "以早上都在跑",
+        "一早上都在泡",
+        "一早上都在炮",
+        "以早上都在泡",
+        "一早上都在抛",
+        "以早上都在炮",
+        "以早上都在抛",
+        "一早上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youkonghuiwoxiaoxi",
+      "expected": "有空回我消息",
+      "source": "5500",
+      "lookup_us": 48061,
+      "candidates": [
+        "有空会我消息",
+        "有空回我消息",
+        "有空会握消息",
+        "有空会喔消息",
+        "有空会我小溪",
+        "有空会喔小熙",
+        "有空会窝消息",
+        "有空会沃消息",
+        "有空回我"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "youkongzaishuoyisheng",
+      "expected": "有空再说一声",
+      "source": "5500",
+      "lookup_us": 24531,
+      "candidates": [
+        "有空再说一声",
+        "有空再说医生",
+        "有空在说一声",
+        "有空再说一生",
+        "有空再说一升",
+        "有空在说一生",
+        "有空再说一胜",
+        "有空在说医生",
+        "有空"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "youshenmejihuama",
+      "expected": "有什么计划吗",
+      "source": "5500",
+      "lookup_us": 25109,
+      "candidates": [
+        "有什么计划吗",
+        "有什么计划马",
+        "有什么计划嘛",
+        "有什么计划麻",
+        "有什么计划玛",
+        "有什么计划妈",
+        "有什么计划码",
+        "有什么计划骂",
+        "有什么"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaoa",
+      "expected": "早啊",
+      "source": "5500",
+      "lookup_us": 1625,
+      "candidates": [
+        "早啊",
+        "遭啊",
+        "造啊",
+        "遭阿",
+        "早阿",
+        "造阿",
+        "枣啊",
+        "凿啊",
+        "早"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaoana",
+      "expected": "早安啊",
+      "source": "5500",
+      "lookup_us": 4607,
+      "candidates": [
+        "早安啊",
+        "早安阿",
+        "早啊那",
+        "早啊哪",
+        "早安呵",
+        "早啊拿",
+        "早啊纳",
+        "遭阿钠",
+        "早安"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaoandageka",
+      "expected": "早安打个卡",
+      "source": "5500",
+      "lookup_us": 10559,
+      "candidates": [
+        "早安打个卡",
+        "早安大哥卡",
+        "早安搭哥卡",
+        "早安打嗝卡",
+        "早安大个卡",
+        "早安大哥咖",
+        "遭安打个卡",
+        "早安打个咖",
+        "早安"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaoangeinidaka",
+      "expected": "早安给你打卡",
+      "source": "5500",
+      "lookup_us": 16064,
+      "candidates": [
+        "早安给你打卡",
+        "早安给你大咖",
+        "早安给你大卡",
+        "遭案给你打卡",
+        "早安给你达卡",
+        "早安给你答卡",
+        "早安给尼打卡",
+        "早安给妮打卡",
+        "早安"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaoanya",
+      "expected": "早安呀",
+      "source": "5500",
+      "lookup_us": 6457,
+      "candidates": [
+        "早安呀",
+        "早安雅",
+        "早安亚",
+        "早安压",
+        "早安鸭",
+        "早安牙",
+        "早按压",
+        "造按压",
+        "早安"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaocanbiechitaikuai",
+      "expected": "早餐别吃太快",
+      "source": "5500",
+      "lookup_us": 28029,
+      "candidates": [
+        "早餐别吃太快",
+        "早餐别迟太快",
+        "早餐别持太快",
+        "早餐鳖吃太快",
+        "早餐别吃太会",
+        "早餐别吃太块",
+        "早餐别池太快",
+        "早餐别齿太快",
+        "早餐"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaocanbiewangle",
+      "expected": "早餐别忘了",
+      "source": "5500",
+      "lookup_us": 19949,
+      "candidates": [
+        "早餐别忘了",
+        "造餐别忘了",
+        "早餐别往了",
+        "早餐别忘乐",
+        "早餐别望了",
+        "早餐别忘勒",
+        "早餐别网了",
+        "早餐别王了",
+        "早餐"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaocanchidebaoma",
+      "expected": "早餐吃得饱吗",
+      "source": "5500",
+      "lookup_us": 30990,
+      "candidates": [
+        "早餐吃的宝马",
+        "早餐吃得宝马",
+        "早餐吃得饱吗",
+        "早餐吃的宝妈",
+        "早餐吃得宝妈",
+        "早餐吃的饱吗",
+        "早餐吃的寶吗",
+        "早餐吃得包吗",
+        "早餐"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "zaocanchilemei",
+      "expected": "早餐吃了没",
+      "source": "5500",
+      "lookup_us": 13697,
+      "candidates": [
+        "早餐吃了没",
+        "早餐吃了美",
+        "早餐吃了妹",
+        "早餐吃了每",
+        "早餐吃了眉",
+        "早餐吃了梅",
+        "早餐吃了煤",
+        "早餐吃了镁",
+        "早餐"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaochenhaoya",
+      "expected": "早晨好呀",
+      "source": "5500",
+      "lookup_us": 11196,
+      "candidates": [
+        "早晨好呀",
+        "早晨号呀",
+        "早晨昊呀",
+        "早晨好压",
+        "早晨浩呀",
+        "早晨好牙",
+        "早晨好吖",
+        "早晨好鸭",
+        "早晨"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaofanbieshengle",
+      "expected": "早饭别省了",
+      "source": "5500",
+      "lookup_us": 42547,
+      "candidates": [
+        "早饭别生了",
+        "早饭别省了",
+        "早饭别胜了",
+        "早饭别声了",
+        "早饭别盛了",
+        "造反别生了",
+        "早饭别升了",
+        "造反别声了",
+        "早饭"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zaofanchilemei",
+      "expected": "早饭吃了没",
+      "source": "5500",
+      "lookup_us": 18274,
+      "candidates": [
+        "早饭吃了没",
+        "早饭吃了美",
+        "早饭吃了妹",
+        "早饭吃了每",
+        "早饭吃了眉",
+        "早饭吃了梅",
+        "早饭吃了煤",
+        "早饭吃了镁",
+        "早饭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaofanchiwanmei",
+      "expected": "早饭吃完没",
+      "source": "5500",
+      "lookup_us": 34066,
+      "candidates": [
+        "早饭吃完美",
+        "早饭吃完没",
+        "早饭吃完每",
+        "早饭吃完眉",
+        "早饭吃万枚",
+        "造反吃完美",
+        "早饭持完美",
+        "早饭吃完梅",
+        "早饭"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zaofanyoumeiyouchi",
+      "expected": "早饭有没有吃",
+      "source": "5500",
+      "lookup_us": 38484,
+      "candidates": [
+        "早饭有没有吃",
+        "造反有没有吃",
+        "造反有没有持",
+        "造反有没有迟",
+        "造反有没有赤",
+        "造反有没有池",
+        "造反有没有翅",
+        "造反有没有耻",
+        "早饭"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaogaofengdubudu",
+      "expected": "早高峰堵不堵",
+      "source": "5500",
+      "lookup_us": 18505,
+      "candidates": [
+        "早高峰堵不堵",
+        "早高峰都不读",
+        "早高峰都不都",
+        "早高峰都不独",
+        "早高峰都不堵",
+        "早高峰堵不读",
+        "糟糕封堵不堵",
+        "早高峰度不读",
+        "早高峰"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaogaofenglaile",
+      "expected": "早高峰来了",
+      "source": "5500",
+      "lookup_us": 11465,
+      "candidates": [
+        "早高峰来了",
+        "糟糕风来了",
+        "早高峰赖了",
+        "造高峰来了",
+        "枣糕风来了",
+        "糟糕封来了",
+        "糟糕锋来了",
+        "糟糕丰来了",
+        "早高峰"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaohuikaiwanmei",
+      "expected": "早会开完没",
+      "source": "5500",
+      "lookup_us": 43985,
+      "candidates": [
+        "早会开完美",
+        "早回开完美",
+        "早会开完没",
+        "遭灰慨完美",
+        "早慧凯完美",
+        "早会凯完美",
+        "早会开完每",
+        "造会开完没",
+        "早会"
+      ],
+      "expected_rank": 3
+    },
+    {
+      "pinyin": "zaoqihedianshui",
+      "expected": "早起喝点水",
+      "source": "5500",
+      "lookup_us": 42774,
+      "candidates": [
+        "早期喝点水",
+        "早起喝点水",
+        "早期和点水",
+        "早期喝点睡",
+        "早期合点水",
+        "早期和点睡",
+        "早期喝点说",
+        "早期核电水",
+        "早期"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zaoqiyoudiankun",
+      "expected": "早起有点困",
+      "source": "5500",
+      "lookup_us": 37515,
+      "candidates": [
+        "早期有点困",
+        "早起有点困",
+        "早期有点坤",
+        "早期优点困",
+        "早期有钿困",
+        "早期有点昆",
+        "早期有钿坤",
+        "早期有点捆",
+        "早期"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zaoqizhenbuxiguan",
+      "expected": "早起真不习惯",
+      "source": "5500",
+      "lookup_us": 57804,
+      "candidates": [
+        "早期真不习惯",
+        "早期诊不习惯",
+        "早期诊补习惯",
+        "早期震补习惯",
+        "早期真不吸管",
+        "早期诊部习惯",
+        "早期诊不吸管",
+        "早起真不习惯",
+        "早期"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zaoshangchibaolema",
+      "expected": "早上吃饱了吗",
+      "source": "5500",
+      "lookup_us": 20864,
+      "candidates": [
+        "早上吃饱了吗",
+        "早上吃饱了嘛",
+        "早上匙包了吗",
+        "早上匙剥了吗",
+        "早上吃饱了么",
+        "早上匙报了吗",
+        "早上匙爆了吗",
+        "早上匙抱了吗",
+        "早上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaoshangfengtingdade",
+      "expected": "早上风挺大的",
+      "source": "5500",
+      "lookup_us": 23441,
+      "candidates": [
+        "早上风挺大的",
+        "早上丰挺大的",
+        "早上风挺大地",
+        "早上风挺大德",
+        "早上风听大的",
+        "早上封停打的",
+        "早上封停大的",
+        "早上风挺大底",
+        "早上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaoshanghaoyapengyou",
+      "expected": "早上好呀朋友",
+      "source": "5500",
+      "lookup_us": 22323,
+      "candidates": [
+        "早上好呀朋友",
+        "早上好亚朋友",
+        "早上好牙朋友",
+        "早上好雅朋友",
+        "早上好压朋友",
+        "早上好鸭朋友",
+        "早上好呀烹油",
+        "早上好呀彭有",
+        "早上好"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaoshanghebeishui",
+      "expected": "早上喝杯水",
+      "source": "5500",
+      "lookup_us": 23274,
+      "candidates": [
+        "早上喝杯水",
+        "早上和杯水",
+        "早上喝杯谁",
+        "早上喝杯说",
+        "早上河北水",
+        "早上和被水",
+        "早上喝杯睡",
+        "早上和北水",
+        "早上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaoshanghekafeima",
+      "expected": "早上喝咖啡吗",
+      "source": "5500",
+      "lookup_us": 20354,
+      "candidates": [
+        "早上喝咖啡吗",
+        "早上和咖啡吗",
+        "早上喝咖啡嘛",
+        "早上喝咖啡马",
+        "早上喝咖啡麻",
+        "早上喝咖啡玛",
+        "早上喝咖啡妈",
+        "早上喝咖啡骂",
+        "早上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaoshangjiana",
+      "expected": "早上见啊",
+      "source": "5500",
+      "lookup_us": 25758,
+      "candidates": [
+        "早上见啊",
+        "早上加纳",
+        "早上戛纳",
+        "早上加拿",
+        "早上鉴啊",
+        "早上架那",
+        "早上建啊",
+        "早上加那",
+        "早上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaoshangjingshenhaoma",
+      "expected": "早上精神好吗",
+      "source": "5500",
+      "lookup_us": 29712,
+      "candidates": [
+        "早上精神好吗",
+        "早上精神号码",
+        "早上精神好嘛",
+        "早上精神号吗",
+        "早上精神好么",
+        "早上经审好吗",
+        "早上精深好吗",
+        "早上景深好吗",
+        "早上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaoshangkongqizhenhao",
+      "expected": "早上空气真好",
+      "source": "5500",
+      "lookup_us": 25554,
+      "candidates": [
+        "早上空气真好",
+        "早上空其真好",
+        "早上空气枕镐",
+        "遭上空气真好",
+        "早上恐岐真好",
+        "早上空器真好",
+        "早上空奇真好",
+        "早上空气真号",
+        "早上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaoshangkundebuxing",
+      "expected": "早上困得不行",
+      "source": "5500",
+      "lookup_us": 25368,
+      "candidates": [
+        "早上困得不行",
+        "早上困的不行",
+        "早上捆得不行",
+        "早上坤的不行",
+        "早上困的不幸",
+        "早上坤的不幸",
+        "早上困得不幸",
+        "早上困的步行",
+        "早上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaoshanglengbuleng",
+      "expected": "早上冷不冷",
+      "source": "5500",
+      "lookup_us": 14876,
+      "candidates": [
+        "早上冷不冷",
+        "遭上冷不冷",
+        "早上愣不冷",
+        "早上冷不棱",
+        "早上冷不楞",
+        "早上冷卜楞",
+        "早上冷不愣",
+        "早上棱不冷",
+        "早上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaoshangmeishuigouya",
+      "expected": "早上没睡够呀",
+      "source": "5500",
+      "lookup_us": 26779,
+      "candidates": [
+        "早上没睡够呀",
+        "早上没睡够压",
+        "早上没睡够雅",
+        "早上没睡够亚",
+        "早上没睡够牙",
+        "早上没睡够鸭",
+        "早上没睡够芽",
+        "早上没睡够押",
+        "早上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaoshangnaozhongmeixiang",
+      "expected": "早上闹钟没响",
+      "source": "5500",
+      "lookup_us": 40326,
+      "candidates": [
+        "早上闹钟没响",
+        "早上闹钟没想",
+        "遭上闹钟没响",
+        "早上脑中每项",
+        "早上闹钟每项",
+        "早上脑中没想",
+        "早上脑中每箱",
+        "早上闹钟没向",
+        "早上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaoshangshiqingduo",
+      "expected": "早上事情多",
+      "source": "5500",
+      "lookup_us": 32754,
+      "candidates": [
+        "早上事情多",
+        "早上匙请多",
+        "早上匙清多",
+        "早上匙情多",
+        "早上是请多",
+        "早上事情夺",
+        "早上事情躲",
+        "早上实情多",
+        "早上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaoshangshunshoudaisha",
+      "expected": "早上顺手带啥",
+      "source": "5500",
+      "lookup_us": 32129,
+      "candidates": [
+        "早上顺手带沙",
+        "早上顺手大厦",
+        "早上顺手带杀",
+        "早上顺手带刹",
+        "早上顺手带啥",
+        "早上顺手带傻",
+        "早上顺手带煞",
+        "早上顺手带砂",
+        "早上"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "zaoshangxianbudarao",
+      "expected": "早上先不打扰",
+      "source": "5500",
+      "lookup_us": 25635,
+      "candidates": [
+        "早上先不打扰",
+        "早上限不打扰",
+        "早上先补打扰",
+        "早上线部打扰",
+        "早上线布打扰",
+        "早上闲步打扰",
+        "早上先布打扰",
+        "早上线补打扰",
+        "早上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaoshangxiankaihuima",
+      "expected": "早上先开会吗",
+      "source": "5500",
+      "lookup_us": 53681,
+      "candidates": [
+        "早上先开会吗",
+        "早上线开会吗",
+        "早上先开回吗",
+        "早上掀开回吗",
+        "早上限开辉吗",
+        "早上线开会嘛",
+        "早上线开会骂",
+        "早上先开会嘛",
+        "早上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaoshangxianliyixia",
+      "expected": "早上先理一下",
+      "source": "5500",
+      "lookup_us": 47435,
+      "candidates": [
+        "早上先理一下",
+        "早上先例一下",
+        "早上线理一下",
+        "早上献礼一下",
+        "早上县里一下",
+        "早上仙力一下",
+        "早上先例以下",
+        "早上线里一下",
+        "早上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaoshangxinglema",
+      "expected": "早上醒了吗",
+      "source": "5500",
+      "lookup_us": 23346,
+      "candidates": [
+        "早上醒了吗",
+        "早上醒了嘛",
+        "早上行了吗",
+        "早上醒了么",
+        "早上醒了马",
+        "早上兴了吗",
+        "早上醒了妈",
+        "早上星了吗",
+        "早上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaoshangxinqingzenyang",
+      "expected": "早上心情怎样",
+      "source": "5500",
+      "lookup_us": 39590,
+      "candidates": [
+        "早上心情怎样",
+        "遭上心情怎样",
+        "早上心晴怎样",
+        "早上新请怎样",
+        "早上心请怎样",
+        "早上新清怎样",
+        "早上新青怎样",
+        "早上心清怎样",
+        "早上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaoshangyaopengmianma",
+      "expected": "早上要碰面吗",
+      "source": "5500",
+      "lookup_us": 32303,
+      "candidates": [
+        "早上要碰面吗",
+        "早上要碰面嘛",
+        "早上要碰面骂",
+        "早上要碰面马",
+        "早上要碰面么",
+        "早上要碰面码",
+        "早上要碰面玛",
+        "早上要碰面麻",
+        "早上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaoshangyaoxiankaihui",
+      "expected": "早上要先开会",
+      "source": "5500",
+      "lookup_us": 44964,
+      "candidates": [
+        "早上要先开会",
+        "早上要掀开会",
+        "早上要线开会",
+        "早上要现开会",
+        "早上要见开会",
+        "早上要嫌开会",
+        "早上要限开会",
+        "早上要县开会",
+        "早上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaoshangzaimangshenme",
+      "expected": "早上在忙什么",
+      "source": "5500",
+      "lookup_us": 24913,
+      "candidates": [
+        "早上在忙什么",
+        "早上再忙什么",
+        "早上在芒什么",
+        "早上在盲什么",
+        "早上再盲什么",
+        "早上在茫什么",
+        "早上再芒什么",
+        "早上在莽什么",
+        "早上"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zaoshuizaoqizuihao",
+      "expected": "早睡早起最好",
+      "source": "5500",
+      "lookup_us": 15372,
+      "candidates": [
+        "早睡早起最好",
+        "早睡早期最好",
+        "早睡早起蕞好",
+        "早睡早起嘴好",
+        "早睡早起最号",
+        "早睡早起最豪",
+        "早睡早起最浩",
+        "早睡早起嘴号",
+        "早睡早起"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhehuierjingshenma",
+      "expected": "这会儿精神吗",
+      "source": "5500",
+      "lookup_us": 30000,
+      "candidates": [
+        "这会儿精神吗",
+        "这会儿精神马",
+        "这会儿精神嘛",
+        "这会儿精神码",
+        "这会儿精神骂",
+        "这会儿景肾吗",
+        "这会儿精神麻",
+        "这会儿精神妈",
+        "这会儿"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhengyaoquchifanne",
+      "expected": "正要去吃饭呢",
+      "source": "5500",
+      "lookup_us": 24782,
+      "candidates": [
+        "正要去吃饭呢",
+        "政要去吃饭呢",
+        "正要去吃饭哪",
+        "正要去吃饭呐",
+        "政要去吃饭哪",
+        "正要去吃饭讷",
+        "正要去吃范呢",
+        "正要去吃烦呢",
+        "正要"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhengzhunbeikaigong",
+      "expected": "正准备开工",
+      "source": "5500",
+      "lookup_us": 13007,
+      "candidates": [
+        "正准备开工",
+        "正准备开弓",
+        "郑准备开工",
+        "正准悖开工",
+        "正准备开宫",
+        "正准备开公",
+        "正准备开共",
+        "正准备开功",
+        "正准备"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhengzhunbeikaishimang",
+      "expected": "正准备开始忙",
+      "source": "5500",
+      "lookup_us": 20341,
+      "candidates": [
+        "正准备开始忙",
+        "正准备开始芒",
+        "正准备开始盲",
+        "正准备开始茫",
+        "正准备开始蟒",
+        "正准备开始莽",
+        "郑准备开始忙",
+        "正准备开始氓",
+        "正准备"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhengzhunbeixilian",
+      "expected": "正准备洗脸",
+      "source": "5500",
+      "lookup_us": 28309,
+      "candidates": [
+        "正准备洗脸",
+        "正准备洗练",
+        "正准备洗炼",
+        "郑准备洗脸",
+        "正准备昔涟",
+        "正准备习练",
+        "正准备西联",
+        "正准备袭濂",
+        "正准备"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zheshangwuhaomangya",
+      "expected": "这上午好忙呀",
+      "source": "5500",
+      "lookup_us": 23656,
+      "candidates": [
+        "这上午好忙呀",
+        "浙商务好忙呀",
+        "浙商务号忙呀",
+        "浙商务号茫崖",
+        "这商务号忙呀",
+        "这商务号茫崖",
+        "浙商务好忙压",
+        "浙商务豪忙呀",
+        "浙商"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhongwuchidianshenme",
+      "expected": "中午吃点什么",
+      "source": "5500",
+      "lookup_us": 28982,
+      "candidates": [
+        "中午吃点什么",
+        "重物吃点什么",
+        "中午吃店什么",
+        "中午吃电什么",
+        "中午吃殿什么",
+        "中午吃典什么",
+        "中午吃垫什么",
+        "中午吃碘什么",
+        "中午"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhongwuchishenmeya",
+      "expected": "中午吃什么呀",
+      "source": "5500",
+      "lookup_us": 21487,
+      "candidates": [
+        "中午吃什么呀",
+        "中午吃什么亚",
+        "中午吃什么牙",
+        "中午吃什么压",
+        "中午吃什么雅",
+        "中午吃什么鸭",
+        "中午吃什么哑",
+        "中午吃什么押",
+        "中午"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhongwujianyimianma",
+      "expected": "中午见一面吗",
+      "source": "5500",
+      "lookup_us": 38591,
+      "candidates": [
+        "中午见一面吗",
+        "中午间一面吗",
+        "中午见一面嘛",
+        "中午见一面骂",
+        "中午间以免吗",
+        "中午见一面马",
+        "中午间意面吗",
+        "中午建议面吗",
+        "中午"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhongwuliaoliangjuba",
+      "expected": "中午聊两句吧",
+      "source": "5500",
+      "lookup_us": 52747,
+      "candidates": [
+        "中午了两句吧",
+        "中无聊两句吧",
+        "中午了两句罢",
+        "中午了两句把",
+        "中午聊两句罢",
+        "中午嘹亮剧吧",
+        "中午聊两句把",
+        "中午聊两句吧",
+        "中午"
+      ],
+      "expected_rank": 8
+    },
+    {
+      "pinyin": "zhongwuyiqichifan",
+      "expected": "中午一起吃饭",
+      "source": "5500",
+      "lookup_us": 26869,
+      "candidates": [
+        "中午一起吃饭",
+        "重物一起吃饭",
+        "中午一期吃饭",
+        "中午以其吃饭",
+        "中午以期吃饭",
+        "中午一齐吃饭",
+        "中午仪器吃饭",
+        "中午一汽吃饭",
+        "中午"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhongwuyiqichima",
+      "expected": "中午一起吃吗",
+      "source": "5500",
+      "lookup_us": 21047,
+      "candidates": [
+        "中午一起吃吗",
+        "重物一起吃吗",
+        "中午一起吃嘛",
+        "中午一起尺码",
+        "中午以其尺码",
+        "中午一期吃吗",
+        "中午一起吃麻",
+        "中午以其吃吗",
+        "中午"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhongwuzaimanmanliao",
+      "expected": "中午再慢慢聊",
+      "source": "5500",
+      "lookup_us": 44354,
+      "candidates": [
+        "中午在慢慢了",
+        "中午在慢慢聊",
+        "中午再慢慢了",
+        "中午在漫漫了",
+        "中午再慢慢聊",
+        "中午在满满了",
+        "中午在慢慢料",
+        "中午在漫漫聊",
+        "中午"
+      ],
+      "expected_rank": 5
+    },
+    {
+      "pinyin": "zhongwuzenmeanpai",
+      "expected": "中午怎么安排",
+      "source": "5500",
+      "lookup_us": 13081,
+      "candidates": [
+        "中午怎么安排",
+        "重物怎么安排",
+        "中午怎么暗拍",
+        "中午怎么按排",
+        "中午怎么暗牌",
+        "中午怎么按牌",
+        "中午怎嚜安排",
+        "中午怎么按拍",
+        "中午"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhunbeichizaofanle",
+      "expected": "准备吃早饭了",
+      "source": "5500",
+      "lookup_us": 21570,
+      "candidates": [
+        "准备吃早饭了",
+        "准备吃早饭乐",
+        "准备吃早饭勒",
+        "准备吃造反了",
+        "准备迟早饭了",
+        "准备吃早饭肋",
+        "准备持造反了",
+        "准备吃早翻了",
+        "准备"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zhunbeichumenma",
+      "expected": "准备出门吗",
+      "source": "5500",
+      "lookup_us": 18213,
+      "candidates": [
+        "准备出门吗",
+        "准备出门嘛",
+        "准备出门马",
+        "准备出门么",
+        "准备出门麻",
+        "准备出门玛",
+        "准备出门妈",
+        "准备出门码",
+        "准备"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zuotianshuidehenwan",
+      "expected": "昨天睡得很晚",
+      "source": "5500",
+      "lookup_us": 28673,
+      "candidates": [
+        "昨天睡得很晚",
+        "昨天睡的很晚",
+        "昨天睡得很完",
+        "昨天睡得很玩",
+        "昨天睡得很万",
+        "昨天说的很晚",
+        "昨天睡得很惋",
+        "昨天睡得很丸",
+        "昨天"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zuowanhenwanshuima",
+      "expected": "昨晚很晚睡吗",
+      "source": "5500",
+      "lookup_us": 27122,
+      "candidates": [
+        "昨晚很晚睡吗",
+        "昨晚很晚谁吗",
+        "昨晚很晚水吗",
+        "昨晚很晚说吗",
+        "昨晚很晚睡嘛",
+        "昨晚很晚说嘛",
+        "昨晚很晚谁嘛",
+        "昨晚很晚税吗",
+        "昨晚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zuowanjidianshuide",
+      "expected": "昨晚几点睡的",
+      "source": "5500",
+      "lookup_us": 30830,
+      "candidates": [
+        "昨晚几点睡的",
+        "昨晚几点睡得",
+        "昨晚几点睡地",
+        "昨晚几点睡德",
+        "做晚几点睡的",
+        "昨晚几点睡底",
+        "昨晚几点说的",
+        "昨晚几点水的",
+        "昨晚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zuowanshuidewanma",
+      "expected": "昨晚睡得晚吗",
+      "source": "5500",
+      "lookup_us": 21727,
+      "candidates": [
+        "昨晚睡得晚吗",
+        "昨晚睡得晚嘛",
+        "昨晚睡得玩吗",
+        "昨晚睡得晚马",
+        "昨晚睡得玩嘛",
+        "昨晚睡得晚麻",
+        "昨晚睡得完嘛",
+        "昨晚睡得晚玛",
+        "昨晚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zuowanshuihao",
+      "expected": "昨晚睡好",
+      "source": "5500",
+      "lookup_us": 15469,
+      "candidates": [
+        "昨晚睡好",
+        "昨晚睡号",
+        "昨晚谁好",
+        "昨晚水好",
+        "昨晚睡浩",
+        "昨晚说好",
+        "昨晚睡豪",
+        "做完税号",
+        "昨晚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zuowanshuihaomei",
+      "expected": "昨晚睡好没",
+      "source": "5500",
+      "lookup_us": 28180,
+      "candidates": [
+        "昨晚睡好美",
+        "昨晚睡好没",
+        "昨晚睡好每",
+        "昨晚睡好妹",
+        "昨晚睡好梅",
+        "昨晚睡好煤",
+        "昨晚睡好眉",
+        "昨晚睡好媒",
+        "昨晚"
+      ],
+      "expected_rank": 2
+    },
+    {
+      "pinyin": "zuowanshuizhaomei",
+      "expected": "昨晚睡着没",
+      "source": "5500",
+      "lookup_us": 24450,
+      "candidates": [
+        "昨晚睡着没",
+        "昨晚睡着美",
+        "昨晚睡着眉",
+        "昨晚睡着每",
+        "昨晚睡着梅",
+        "昨晚睡着煤",
+        "昨晚睡着妹",
+        "昨晚睡着媚",
+        "昨晚"
+      ],
+      "expected_rank": 1
+    },
+    {
+      "pinyin": "zuowanxiuxidehao",
+      "expected": "昨晚休息得好",
+      "source": "5500",
+      "lookup_us": 36542,
+      "candidates": [
+        "昨晚休息的好",
+        "做完休息的好",
+        "昨晚休息得好",
+        "昨晚休息的号",
+        "昨晚修习的好",
+        "昨晚休息地好",
+        "做完修习的好",
+        "昨晚修习得好",
+        "昨晚"
+      ],
+      "expected_rank": 3
+    }
+  ]
+}

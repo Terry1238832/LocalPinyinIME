@@ -1,0 +1,614 @@
+{
+  "round": 55,
+  "direction": "聊天口语",
+  "continuation_stop_threshold": null,
+  "batch_min": 550,
+  "batch_max": 555,
+  "base_commit": "47c0e1ee21c2365bc4bf8bcaf89e13b5cbce7323",
+  "engine_version": "1.8.2",
+  "audit": {
+    "before": 260270,
+    "after": 261305,
+    "added": 1035,
+    "existing_rows_preserved": true,
+    "all_layers_and_domains_surface_dedup": true,
+    "hashes_reviews_weights_formats_passed": true,
+    "batches": {
+      "550": {
+        "scope": "亲友赠礼与收下心意聊天",
+        "entries": 344,
+        "weights": {
+          "5500": 344
+        },
+        "reviews": 318,
+        "overrides": {},
+        "sha256": "8a6a6e658a932ee62da14201409732ab94a7a4fece60c854611c7e6668f58c44"
+      },
+      "551": {
+        "scope": "联系长辈报平安与日常照应聊天",
+        "entries": 343,
+        "weights": {
+          "5500": 343
+        },
+        "reviews": 318,
+        "overrides": {
+          "别吹着风了": "biechuizhefengle",
+          "电视调好了没": "dianshitiaohaolemei"
+        },
+        "sha256": "3358e7c7a0e6bf5b061b952237e79afef9c0163a70c685193f9c4c29885c148b"
+      },
+      "552": {
+        "scope": "顺路代买与托人带物聊天",
+        "entries": 318,
+        "weights": {
+          "5500": 318
+        },
+        "reviews": 245,
+        "overrides": {
+          "别忘了还回来": "biewanglehuanhuilai",
+          "排队很长吗": "paiduihenchangma"
+        },
+        "sha256": "1ff2debdb5d86593c79b36b56051f74846f29ff410c56ae6a7b2499463c480e2"
+      },
+      "553": {
+        "scope": "亲友赠礼与收下心意较长说法",
+        "entries": 10,
+        "weights": {
+          "5500": 10
+        },
+        "reviews": 10,
+        "overrides": {},
+        "sha256": "abb464bc08147edd83491504119729aff31b2240690bdf0a12358ce2670d5fb2"
+      },
+      "554": {
+        "scope": "联系长辈报平安与日常照应较长说法",
+        "entries": 10,
+        "weights": {
+          "5500": 10
+        },
+        "reviews": 10,
+        "overrides": {},
+        "sha256": "ef981b2e790f2421b812472b1b883aca71b671c8e074bb99e9f67443cd981012"
+      },
+      "555": {
+        "scope": "顺路代买与托人带物较长说法",
+        "entries": 10,
+        "weights": {
+          "5500": 10
+        },
+        "reviews": 10,
+        "overrides": {},
+        "sha256": "14f7873fd8e3b04274aec096f8ce58d14d017e16e7a2824235431224ce9579a8"
+      }
+    },
+    "local_core_sha256": "db4c63bdad7904ff27414e2817ef621052f280b8bf4740a9a8b0e6abd1b058a2"
+  },
+  "probes": {
+    "550": {
+      "cases": 344,
+      "top1": 84.01,
+      "top9": 100.0,
+      "two_to_four_cases": 54,
+      "two_to_four_top9": 54,
+      "two_to_four_missing": [],
+      "other_missing": [],
+      "probe_sha256": "cc2c6217a70ec744f16b2c6e5f947a77d826b99eb7c9f360e2431fa322aed3aa",
+      "raw_sha256": "45aa82172342e808c2e809fe24dacdc3c9d0000e4bf5b2c0407ebc055833854f"
+    },
+    "551": {
+      "cases": 343,
+      "top1": 81.05,
+      "top9": 100.0,
+      "two_to_four_cases": 3,
+      "two_to_four_top9": 3,
+      "two_to_four_missing": [],
+      "other_missing": [],
+      "probe_sha256": "da5e1f8cd72ad043ebce80872aa1340d183fa729022e692d885f502b9ac5a4ba",
+      "raw_sha256": "2aa89e570158afd6e167d4e2fbd40bd7a39f29058801be3c3adb5cfb557b51b0"
+    },
+    "552": {
+      "cases": 318,
+      "top1": 78.62,
+      "top9": 100.0,
+      "two_to_four_cases": 27,
+      "two_to_four_top9": 27,
+      "two_to_four_missing": [],
+      "other_missing": [],
+      "probe_sha256": "f004ec152b611f20d35be49bce7a03ac8dd6f0a0440cb0f01edf0ae2944e9d71",
+      "raw_sha256": "4e763ed71e4f59ca5896a69e2f20791d3edec6d1ffa713a6a230e685e6b9433c"
+    },
+    "553": {
+      "cases": 10,
+      "top1": 80.0,
+      "top9": 90.0,
+      "two_to_four_cases": 0,
+      "two_to_four_top9": 0,
+      "two_to_four_missing": [],
+      "other_missing": [
+        {
+          "word": "下次我们见面再互相带东西这次先一起吃饭就行了",
+          "pinyin": "xiaciwomenjianmianzaihuxiangdaidongxizhecixianyiqichifanjiuxingle"
+        }
+      ],
+      "probe_sha256": "3ed80220392a216305890733def5bb1e03ce5df4c29e74386ce2e5e2cbafa611",
+      "raw_sha256": "e138d40c48c416e401a28cf48ffd840028b7f64e3b4759341c2f6340c3644667"
+    },
+    "554": {
+      "cases": 10,
+      "top1": 60.0,
+      "top9": 80.0,
+      "two_to_four_cases": 0,
+      "two_to_four_top9": 0,
+      "two_to_four_missing": [],
+      "other_missing": [
+        {
+          "word": "早饭记得按时吃晚上早点休息别总惦记家里的事情",
+          "pinyin": "zaofanjideanshichiwanshangzaodianxiuxibiezongdianjijialideshiqing"
+        },
+        {
+          "word": "最近身体怎么样药有没有按时吃家里需要什么就告诉我",
+          "pinyin": "zuijinshentizenmeyangyaoyoumeiyouanshichijialixuyaoshenmejiugaosuwo"
+        }
+      ],
+      "probe_sha256": "14afc59e17805e7a56d33c737cfa6646e34c3cd17910518ea0a02da59498cb38",
+      "raw_sha256": "7108cfdfbaddeb010ee7579d1d636710007e99a27c1e54fa9210cab2eec5e158"
+    },
+    "555": {
+      "cases": 10,
+      "top1": 90.0,
+      "top9": 100.0,
+      "two_to_four_cases": 0,
+      "two_to_four_top9": 0,
+      "two_to_four_missing": [],
+      "other_missing": [],
+      "probe_sha256": "54085b28eaa356df691603aec7b657998aa7961c081816c070114392c90b2b0a",
+      "raw_sha256": "e3a29636c7416add51620db4db07ebe62c2164e5be96700d805ce63d85f4e5e4"
+    }
+  },
+  "accuracy_before": {
+    "逐词输入·参考前文": {
+      "cases": 20626,
+      "top1": 88.21,
+      "top9": 98.63
+    },
+    "逐词输入·无前文": {
+      "cases": 20626,
+      "top1": 79.64,
+      "top9": 97.53
+    },
+    "留出整句": {
+      "cases": 4126,
+      "top1": 64.49,
+      "top9": 77.58
+    },
+    "口语对话·整句": {
+      "cases": 3368,
+      "top1": 84.8,
+      "top9": 94.12
+    },
+    "口语对话·逐词": {
+      "cases": 19504,
+      "top1": 95.49,
+      "top9": 99.62
+    },
+    "项目留出": {
+      "cases": 138,
+      "top1": 84.78,
+      "top9": 89.13
+    },
+    "新增用例": {
+      "cases": 67,
+      "top1": 71.64,
+      "top9": 83.58
+    },
+    "独立用例": {
+      "cases": 62,
+      "top1": 53.23,
+      "top9": 79.03
+    },
+    "日常口语·开发": {
+      "cases": 149,
+      "top1": 97.32,
+      "top9": 99.33
+    },
+    "日常口语·留出": {
+      "cases": 150,
+      "top1": 90.0,
+      "top9": 96.67
+    }
+  },
+  "accuracy_after": {
+    "逐词输入·参考前文": {
+      "cases": 20626,
+      "top1": 88.21,
+      "top9": 98.63
+    },
+    "逐词输入·无前文": {
+      "cases": 20626,
+      "top1": 79.64,
+      "top9": 97.53
+    },
+    "留出整句": {
+      "cases": 4126,
+      "top1": 64.49,
+      "top9": 77.58
+    },
+    "口语对话·整句": {
+      "cases": 3368,
+      "top1": 84.8,
+      "top9": 94.12
+    },
+    "口语对话·逐词": {
+      "cases": 19504,
+      "top1": 95.49,
+      "top9": 99.62
+    },
+    "项目留出": {
+      "cases": 138,
+      "top1": 84.78,
+      "top9": 89.13
+    },
+    "新增用例": {
+      "cases": 67,
+      "top1": 71.64,
+      "top9": 83.58
+    },
+    "独立用例": {
+      "cases": 62,
+      "top1": 53.23,
+      "top9": 79.03
+    },
+    "日常口语·开发": {
+      "cases": 149,
+      "top1": 97.32,
+      "top9": 99.33
+    },
+    "日常口语·留出": {
+      "cases": 150,
+      "top1": 90.0,
+      "top9": 96.67
+    }
+  },
+  "native_tests": {
+    "x64": {
+      "passed": 47,
+      "total": 47,
+      "log_sha256": "9ebebd5539551661acb0756a36b8690e61cd9bff726ba27ee4623055bea6b6d7"
+    },
+    "x86": {
+      "passed": 47,
+      "total": 47,
+      "log_sha256": "480b27c6a2cb0da1cbfccc12c3af9f4a7022c88fbc2bf9eaf3d8da40bd1a4912"
+    }
+  },
+  "max_entries": 281456,
+  "commits": {
+    "550": "a3da8947d167e89d1fee92816a75dbbcc69c1655",
+    "551": "143856d2c0ec4e2f543351efd5b3394e74aaba2e",
+    "552": "357c3211bf17fa51e5cfd46fd381f276427c6eac",
+    "553": "e9da1abb2f80d796a6917c527b1d513d67b93104",
+    "554": "4e8bc9bf41df54c0901a526cdbfe94c26e020f43",
+    "555": "2c045ba718478ed121e02121830578183ccdaf19"
+  },
+  "rejections": {
+    "duplicate:local_core_zh_pinyin.tsv": 93,
+    "quality: clipped without context": 2,
+    "outside_batch_length_scope": 192,
+    "duplicate:standard_zh_pinyin.tsv": 1,
+    "duplicate:batch550": 2,
+    "duplicate:batch551": 1,
+    "quality: ungrammatical wording": 1,
+    "quality: clipped wording": 1,
+    "quality: unnatural wording": 1
+  },
+  "whole_batch_withdrawals": [],
+  "status": "passed",
+  "native_runtime_canonical_sha256": {
+    "x64": "db4c63bdad7904ff27414e2817ef621052f280b8bf4740a9a8b0e6abd1b058a2",
+    "x86": "db4c63bdad7904ff27414e2817ef621052f280b8bf4740a9a8b0e6abd1b058a2"
+  },
+  "protected_model_and_test_files_unchanged": {
+    "resources/dictionary/word_zh.lm": "bcfdff3c333750f2a07041fc7e4fec7f29aaad5e67ff83015da77bb839005c4d",
+    "resources/dictionary/neural_zh.lm": "a6f666c1310e0c11a8e544a01131e2d14a1bc6612c13a0f25d610da54ad42efd",
+    "tests/test_word_model.cpp": "938ea4d9c5852c55745c8420f9947ac8236f625e5dd18c8823a5beda3681cb10",
+    "tests/test_neural_model.cpp": "ec943a49d2ef26e097b6cbefc6067d4abd67685a8857ed4644e5164587c1ceea"
+  },
+  "accuracy_before_runtime_evidence": {
+    "engine_sha256": "4c34816a68c601b793c32ce6f25ab64209e5e4d7270ae13d45ab3887da78a4ff",
+    "dictionary_files": {
+      "dictionary\\context_zh.lm": "fbc541b277f140c64d217a37dc3fe7a4ea1abd24e599910160eed8bb6cf82581",
+      "dictionary\\context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+      "dictionary\\continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e",
+      "dictionary\\core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+      "dictionary\\english_terms.tsv": "fb33a275b9b4057aba8e6632912ed995c586b89fc191182ab93b2ee2721ba453",
+      "dictionary\\english_words.tsv": "28d7afee035fadf5cab977ec452bc2aa3edbdbe69448dfbd91695cc22c07ac61",
+      "dictionary\\local_core_zh_pinyin.tsv": "e6f62d9f17cb67867a880b09a33be76c8cbac37fcfd36e26b26ae0e907cc185d",
+      "dictionary\\neural_zh.lm": "a6f666c1310e0c11a8e544a01131e2d14a1bc6612c13a0f25d610da54ad42efd",
+      "dictionary\\standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+      "dictionary\\word_zh.lm": "bcfdff3c333750f2a07041fc7e4fec7f29aaad5e67ff83015da77bb839005c4d",
+      "dictionary\\domains\\coding.tsv": "8ed3e2e2aaddab952983bd4c070273ffc9dc018d8eb39bb1aa96c29a767e85f3",
+      "dictionary\\domains\\daily.tsv": "a30b3d4250e69e6b6acee49e114d262255d8314a3676c69e8290bd4238d6054e",
+      "dictionary\\domains\\games.tsv": "b0b9930107b27fc1342f10a9020b703b5da4c0cb1cfc3b33b9790ba9fbf80aaf",
+      "dictionary\\domains\\math.tsv": "863121f6ef89785dec628dfb7ab41de2ae1adf5066efbc714092343b62124a57",
+      "dictionary\\domains\\study.tsv": "bec679bc57c125c654c6a5191812e99121431c42e512f6fc3b84b5a01c1a87f2",
+      "dictionary\\domains\\work.tsv": "b7b8718ca54d6774be178c3bea5bf3f5c4d6c66a64942e7bb76490ebff2a1586",
+      "dictionary\\panel\\emoji.tsv": "f37e5435d9bc49ff1b85de701a547b859d7136c1c3478158e4376060d1755799",
+      "dictionary\\panel\\kaomoji.tsv": "ca8f6f24bf59551b34b4ed0e4546680b582814b28eb8aacf1f8f8a87abb97444",
+      "dictionary\\panel\\symbols.tsv": "b7ea522ba80cd96c1f69b24afe093dabd1d55a367ef046e4bb38511f4e9de6b8"
+    },
+    "canonical_sha256": "e6f62d9f17cb67867a880b09a33be76c8cbac37fcfd36e26b26ae0e907cc185d",
+    "note": "Immutable isolated resources captured before any round entries are applied; official accuracy_snapshot.py runs against this copy, so simultaneous native builds and candidate measurement cannot contaminate baseline."
+  },
+  "accuracy_after_runtime_evidence": {
+    "engine_sha256": "4c34816a68c601b793c32ce6f25ab64209e5e4d7270ae13d45ab3887da78a4ff",
+    "dictionary_files": {
+      "dictionary\\context_zh.lm": "fbc541b277f140c64d217a37dc3fe7a4ea1abd24e599910160eed8bb6cf82581",
+      "dictionary\\context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+      "dictionary\\continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e",
+      "dictionary\\core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+      "dictionary\\english_terms.tsv": "fb33a275b9b4057aba8e6632912ed995c586b89fc191182ab93b2ee2721ba453",
+      "dictionary\\english_words.tsv": "28d7afee035fadf5cab977ec452bc2aa3edbdbe69448dfbd91695cc22c07ac61",
+      "dictionary\\local_core_zh_pinyin.tsv": "db4c63bdad7904ff27414e2817ef621052f280b8bf4740a9a8b0e6abd1b058a2",
+      "dictionary\\neural_zh.lm": "a6f666c1310e0c11a8e544a01131e2d14a1bc6612c13a0f25d610da54ad42efd",
+      "dictionary\\standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+      "dictionary\\word_zh.lm": "bcfdff3c333750f2a07041fc7e4fec7f29aaad5e67ff83015da77bb839005c4d",
+      "dictionary\\domains\\coding.tsv": "8ed3e2e2aaddab952983bd4c070273ffc9dc018d8eb39bb1aa96c29a767e85f3",
+      "dictionary\\domains\\daily.tsv": "a30b3d4250e69e6b6acee49e114d262255d8314a3676c69e8290bd4238d6054e",
+      "dictionary\\domains\\games.tsv": "b0b9930107b27fc1342f10a9020b703b5da4c0cb1cfc3b33b9790ba9fbf80aaf",
+      "dictionary\\domains\\math.tsv": "863121f6ef89785dec628dfb7ab41de2ae1adf5066efbc714092343b62124a57",
+      "dictionary\\domains\\study.tsv": "bec679bc57c125c654c6a5191812e99121431c42e512f6fc3b84b5a01c1a87f2",
+      "dictionary\\domains\\work.tsv": "b7b8718ca54d6774be178c3bea5bf3f5c4d6c66a64942e7bb76490ebff2a1586",
+      "dictionary\\panel\\emoji.tsv": "f37e5435d9bc49ff1b85de701a547b859d7136c1c3478158e4376060d1755799",
+      "dictionary\\panel\\kaomoji.tsv": "ca8f6f24bf59551b34b4ed0e4546680b582814b28eb8aacf1f8f8a87abb97444",
+      "dictionary\\panel\\symbols.tsv": "b7ea522ba80cd96c1f69b24afe093dabd1d55a367ef046e4bb38511f4e9de6b8"
+    },
+    "note": "Full isolated runtime copy, with final authored canonical lexicon; native code and model assets unchanged. Compare all runtime file hashes after native build before accepting measured aggregates."
+  },
+  "coverage": {
+    "lexicon": {
+      "entries": 309219,
+      "distinct_words": 308721
+    },
+    "standard_characters": {
+      "一级 (1-3500)": {
+        "characters": 3500,
+        "typeable_by_standard_reading": 3500,
+        "percent": 100.0,
+        "single_entry_any_reading": 3500
+      },
+      "二级 (3501-6500)": {
+        "characters": 3000,
+        "typeable_by_standard_reading": 2997,
+        "percent": 99.9,
+        "single_entry_any_reading": 2997
+      },
+      "三级 (6501-8105)": {
+        "characters": 1605,
+        "typeable_by_standard_reading": 261,
+        "percent": 16.26,
+        "single_entry_any_reading": 267
+      }
+    },
+    "standard_characters_missing_examples": {
+      "一级 (1-3500)": [],
+      "二级 (3501-6500)": [
+        "𬉼(ou)",
+        "𠳐(bang)",
+        "𥻗(cha)"
+      ],
+      "三级 (6501-8105)": [
+        "尢(wang)",
+        "卬(ang)",
+        "𠙶(ou)",
+        "毌(guan)",
+        "邘(yu)",
+        "圢(ting)",
+        "伋(ji)",
+        "冮(gang)",
+        "氿(jiu)",
+        "汈(diao)",
+        "宄(gui)",
+        "𬣙(xu)",
+        "讱(ren)",
+        "扞(han)",
+        "圲(qian)",
+        "圫(tuo)",
+        "芏(du)",
+        "朳(ba)",
+        "朸(li)",
+        "𨙸(qi)",
+        "辿(chan)",
+        "伣(qian)",
+        "癿(bie)",
+        "犴(an/han)",
+        "冱(hu)",
+        "𬇕(wan)",
+        "汋(zhuo)",
+        "䜣(xin)",
+        "讻(xiong)",
+        "𬣞(zhu)",
+        "𬘓(xun)",
+        "纩(kuang)",
+        "玒(hong)",
+        "玓(di)",
+        "玘(qi)",
+        "玚(yang)",
+        "刬(chan)",
+        "𫭟(ou/qu)",
+        "坉(tun)",
+        "𫭢(lun)"
+      ]
+    },
+    "common_words": {
+      "top 1000": {
+        "words": 1000,
+        "in_lexicon": 999,
+        "percent": 99.9
+      },
+      "top 5000": {
+        "words": 5000,
+        "in_lexicon": 4900,
+        "percent": 98.0
+      },
+      "top 10000": {
+        "words": 10000,
+        "in_lexicon": 9567,
+        "percent": 95.67
+      },
+      "top 30000": {
+        "words": 30000,
+        "in_lexicon": 23390,
+        "percent": 77.97
+      },
+      "top 50000": {
+        "words": 50000,
+        "in_lexicon": 32430,
+        "percent": 64.86
+      },
+      "top 100000": {
+        "words": 100000,
+        "in_lexicon": 43891,
+        "percent": 43.89
+      }
+    },
+    "common_words_missing_examples": [
+      "甚么",
+      "洪山区",
+      "江夏区",
+      "本行政区域",
+      "袁承志",
+      "礼部",
+      "万公顷",
+      "胡秉宸",
+      "武昌区",
+      "李高成",
+      "鄂西",
+      "千步",
+      "郧阳",
+      "刑部",
+      "官军",
+      "陈家洛",
+      "职司",
+      "王琦瑶",
+      "万平方米",
+      "李莫愁",
+      "亲兵",
+      "江夏",
+      "十八年",
+      "马朝旭",
+      "大学士",
+      "行省",
+      "十五年",
+      "工部",
+      "万平方公里",
+      "适才",
+      "怎地",
+      "人口数",
+      "贡献者",
+      "王公",
+      "屈家岭",
+      "节度使",
+      "天鹅洲",
+      "亿立方米",
+      "欧阳锋",
+      "金殿",
+      "周伯通",
+      "明永乐",
+      "首辅",
+      "户部",
+      "解放区",
+      "中纺",
+      "义军",
+      "立法权",
+      "刘宗敏",
+      "琉璃瓦",
+      "清兵",
+      "湖广",
+      "福临",
+      "兵部",
+      "三藏",
+      "黄陂",
+      "极了",
+      "笔架山",
+      "文理学院",
+      "须弥座",
+      "池河",
+      "吏部",
+      "军马",
+      "丁能通",
+      "官家",
+      "二十年",
+      "老营",
+      "宋献策",
+      "国师",
+      "我会",
+      "起义军",
+      "子口",
+      "荆江",
+      "如果说",
+      "苏维埃政府",
+      "六部",
+      "黄依依",
+      "国徽",
+      "音乐堂",
+      "白嘉轩"
+    ],
+    "common_words_missing_but_typed": {
+      "words": 433,
+      "first_candidate": 173,
+      "within_nine": 330,
+      "percent_within_nine": 76.21
+    },
+    "running_text": {
+      "heldout_sentences.tsv": {
+        "lines": 4126,
+        "word_tokens": 13800,
+        "word_types": 7161,
+        "token_coverage_percent": 84.15,
+        "type_coverage_percent": 71.75,
+        "frequent_missing": [
+          "我会×11",
+          "萨米×8",
+          "教区×6",
+          "穿著×5",
+          "兰科×5",
+          "回家吧×4",
+          "和玛丽×4",
+          "乡试×4",
+          "神社×4",
+          "曾祖父×4",
+          "悬钩子×4",
+          "小檗×3",
+          "米纳斯吉拉斯州×3",
+          "登进士×3",
+          "瓷蟹×3",
+          "花为×3",
+          "鳗鲡×3",
+          "亚科×3",
+          "维耶×3",
+          "这药×2",
+          "受够了×2",
+          "前有×2",
+          "二十年×2",
+          "我快×2",
+          "空房间×2",
+          "信神×2",
+          "谢谢您×2",
+          "无法形容×2",
+          "通晓×2",
+          "蓝线×2",
+          "他用×2",
+          "随著×2",
+          "十二个×2",
+          "非常高兴×2",
+          "玛莉×2",
+          "待在家里×2",
+          "神户×2",
+          "昨天上午×2",
+          "见证人×2",
+          "更常×2"
+        ]
+      }
+    }
+  }
+}

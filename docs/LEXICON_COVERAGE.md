@@ -1,5 +1,77 @@
 # 词库覆盖率评估
 
+## 第67轮重测（批次 624–629）
+
+使用原生引擎、Unicode 官方 Unihan 17.0.0 与 jieba 0.42.1，在本轮全部词冻结后测量；没有依据测量缺词补词。三层词库共 323667 个拼音词面组合，323169 个不同词面。完整结果见 [lexicon-coverage.json](lexicon-coverage.json)；候选与准确率见 [本轮报告](lexicon-keep-adding-round67.md)。仓库外 Tatoeba 日常句子和中文维基新闻未重测。
+
+## 第66轮重测（批次 618–623）
+
+使用原生引擎、Unicode 官方 Unihan 17.0.0 与 jieba 0.42.1，在本轮全部词冻结后测量；没有依据测量缺词补词。三层词库共 322409 个拼音词面组合，321911 个不同词面。完整结果见 [lexicon-coverage.json](lexicon-coverage.json)；候选与准确率见 [本轮报告](lexicon-keep-adding-round66.md)。仓库外 Tatoeba 日常句子和中文维基新闻未重测。
+
+## 第65轮重测（批次 612–617）
+
+使用原生引擎、Unicode 官方 Unihan 17.0.0 与 jieba 0.42.1，在本轮全部词冻结后测量；没有依据测量缺词补词。三层词库共 321268 个拼音词面组合，320770 个不同词面。完整结果见 [lexicon-coverage.json](lexicon-coverage.json)；候选与准确率见 [本轮报告](lexicon-keep-adding-round65.md)。仓库外 Tatoeba 日常句子和中文维基新闻未重测。
+
+## 第64轮重测（批次 606–611）
+
+使用原生引擎、Unicode 官方 Unihan 17.0.0 与 jieba 0.42.1，在本轮全部词冻结后测量；没有依据测量缺词补词。三层词库共 319868 个拼音词面组合，319370 个不同词面。完整结果见 [lexicon-coverage.json](lexicon-coverage.json)；候选与准确率见 [本轮报告](lexicon-keep-adding-round64.md)。仓库外 Tatoeba 日常句子和中文维基新闻未重测。
+
+## 第63轮重测（批次 600–605）
+
+使用原生引擎、Unicode 官方 Unihan 17.0.0 与 jieba 0.42.1，在本轮全部词冻结后测量；没有依据测量缺词补词。三层词库共 318809 个拼音词面组合，318311 个不同词面。完整结果见 [lexicon-coverage.json](lexicon-coverage.json)；候选与准确率见 [本轮报告](lexicon-keep-adding-round63.md)。仓库外 Tatoeba 日常句子和中文维基新闻未重测。
+
+## 第62轮重测（批次 594–599）
+
+使用原生引擎、Unicode 官方 Unihan 17.0.0 与 jieba 0.42.1，在本轮全部词冻结后测量；没有依据测量缺词补词。三层词库共 317655 个拼音词面组合，317157 个不同词面。完整结果见 [lexicon-coverage.json](lexicon-coverage.json)；候选与准确率见 [本轮报告](lexicon-keep-adding-round62.md)。仓库外 Tatoeba 日常句子和中文维基新闻未重测。
+
+## 第61轮重测（批次 586–593）
+
+使用原生引擎、Unicode 官方 Unihan 17.0.0 与 jieba 0.42.1，在本轮全部词冻结后测量；没有依据测量缺词补词。三层词库共 316211 个拼音词面组合，315713 个不同词面。完整结果见 [lexicon-coverage.json](lexicon-coverage.json)；候选与准确率见 [本轮报告](lexicon-keep-adding-round61.md)。仓库外 Tatoeba 日常句子和中文维基新闻未重测。
+
+## 第60轮重测（批次 580–585）
+
+使用原生引擎、Unicode 官方 Unihan 17.0.0 与 jieba 0.42.1，在本轮全部词冻结后测量；没有依据测量缺词补词。三层词库共 314679 个拼音词面组合，314181 个不同词面。完整结果见 [lexicon-coverage.json](lexicon-coverage.json)；候选与准确率见 [本轮报告](lexicon-keep-adding-round60.md)。仓库外 Tatoeba 日常句子和中文维基新闻未重测。
+
+## 第59轮重测（批次 574–579）
+
+使用原生引擎、Unicode 官方 Unihan 17.0.0 与 jieba 0.42.1，在本轮全部词冻结后测量；没有依据测量缺词补词。三层词库共 313608 个拼音词面组合，313110 个不同词面。完整结果见 [lexicon-coverage.json](lexicon-coverage.json)；候选与准确率见 [本轮报告](lexicon-keep-adding-round59.md)。仓库外 Tatoeba 日常句子和中文维基新闻未重测。
+
+## 第58轮重测（批次 568–573）
+
+使用原生引擎、Unicode 官方 Unihan 17.0.0 与 jieba 0.42.1，在本轮全部词冻结后测量；没有依据测量缺词补词。三层词库共 312547 个拼音词面组合，312049 个不同词面。完整结果见 [lexicon-coverage.json](lexicon-coverage.json)；候选与准确率见 [本轮报告](lexicon-keep-adding-round58.md)。仓库外 Tatoeba 日常句子和中文维基新闻未重测。
+
+## 第57轮重测（批次 562–567）
+
+使用原生引擎、Unicode 官方 Unihan 17.0.0 与 jieba 0.42.1，在本轮全部词冻结后测量；没有依据测量缺词补词。三层词库共 311597 个拼音词面组合，311099 个不同词面。完整结果见 [lexicon-coverage.json](lexicon-coverage.json)；候选与准确率见 [本轮报告](lexicon-keep-adding-round57.md)。仓库外 Tatoeba 日常句子和中文维基新闻未重测。
+
+## 第56轮重测（批次 556–561）
+
+使用原生引擎、Unicode 官方 Unihan 17.0.0 与 jieba 0.42.1，在本轮全部词冻结后测量；没有依据测量缺词补词。三层词库共 310389 个拼音词面组合，309891 个不同词面。完整结果见 [lexicon-coverage.json](lexicon-coverage.json)；候选与准确率见 [本轮报告](lexicon-keep-adding-round56.md)。仓库外 Tatoeba 日常句子和中文维基新闻未重测。
+
+## 第55轮重测（批次 550–555）
+
+使用原生引擎、Unicode 官方 Unihan 17.0.0 与 jieba 0.42.1，在本轮全部词冻结后测量；没有依据测量缺词补词。三层词库共 309219 个拼音词面组合，308721 个不同词面。完整结果见 [lexicon-coverage.json](lexicon-coverage.json)；候选与准确率见 [本轮报告](lexicon-keep-adding-round55.md)。仓库外 Tatoeba 日常句子和中文维基新闻未重测。
+
+## 第54轮重测（批次 544–549）
+
+使用原生引擎、Unicode 官方 Unihan 17.0.0 与 jieba 0.42.1，在本轮全部词冻结后测量；没有依据测量缺词补词。三层词库共 308184 个拼音词面组合，307686 个不同词面。完整结果见 [lexicon-coverage.json](lexicon-coverage.json)；候选与准确率见 [本轮报告](lexicon-keep-adding-round54.md)。仓库外 Tatoeba 日常句子和中文维基新闻未重测。
+
+## 第53轮重测（批次 538–543）
+
+使用原生引擎、Unicode 官方 Unihan 17.0.0 与 jieba 0.42.1，在本轮全部词冻结后测量；没有依据测量缺词补词。三层词库共 307021 个拼音词面组合，306523 个不同词面。完整结果见 [lexicon-coverage.json](lexicon-coverage.json)；候选与准确率见 [本轮报告](lexicon-keep-adding-round53.md)。仓库外 Tatoeba 日常句子和中文维基新闻未重测。
+
+## 第52轮重测（批次 532–537）
+
+使用原生引擎、Unicode 官方 Unihan 17.0.0 与 jieba 0.42.1，在本轮全部词冻结后测量；没有依据测量缺词补词。三层词库共 305836 个拼音词面组合，305338 个不同词面。完整结果见 [lexicon-coverage.json](lexicon-coverage.json)；候选与准确率见 [本轮报告](lexicon-keep-adding-round52.md)。仓库外 Tatoeba 日常句子和中文维基新闻未重测。
+
+## 第51轮重测（批次 526–531）
+
+使用原生引擎、Unicode 官方 Unihan 17.0.0 与 jieba 0.42.1，在本轮全部词冻结后测量；没有依据测量缺词补词。三层词库共 304802 个拼音词面组合，304304 个不同词面。完整结果见 [lexicon-coverage.json](lexicon-coverage.json)；候选与准确率见 [本轮报告](lexicon-keep-adding-round51.md)。仓库外 Tatoeba 日常句子和中文维基新闻未重测。
+
+## 第50轮重测（批次 520–525）
+
+使用原生引擎、Unicode 官方 Unihan 17.0.0 与 jieba 0.42.1，在本轮全部词冻结后测量；没有依据测量缺词补词。三层词库共 303783 个拼音词面组合，303285 个不同词面。完整结果见 [lexicon-coverage.json](lexicon-coverage.json)；候选与准确率见 [本轮报告](lexicon-keep-adding-round50.md)。仓库外 Tatoeba 日常句子和中文维基新闻未重测。
+
 ## 第49轮重测（批次 514–519）
 
 使用原生引擎、Unicode 官方 Unihan 17.0.0 与 jieba 0.42.1，在本轮全部词冻结后测量；没有依据测量缺词补词。三层词库共 302737 个拼音词面组合，302239 个不同词面。完整结果见 [lexicon-coverage.json](lexicon-coverage.json)；候选与准确率见 [本轮报告](lexicon-keep-adding-round49.md)。仓库外 Tatoeba 日常句子和中文维基新闻未重测。

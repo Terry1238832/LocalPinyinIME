@@ -1,0 +1,59 @@
+{
+  "batch": "lexicon_batch_625",
+  "license": "MIT",
+  "authoring_source": "first_party_individually_authored",
+  "external_lexicon_import": false,
+  "scope": "亲友到家做客、短住与离开时的日常协调",
+  "author": "continuous-lexicon-author",
+  "review_scope": "One AI author reads every selected expression and full-pinyin key in context, then records positional character choices. Structural reconstruction is not an independent linguistic editor. Individually authored common vocabulary; no third-party lexicon or test-derived words.",
+  "pronunciation_dependency": "pypinyin0.55.0 authoring-only; default agreement is not a review decision",
+  "new_entries": 376,
+  "sha256": "5b7b8f02b997afeb3ee34de4994c4c125b3429557aa1c1b716f0fab21caa72fc",
+  "authoring_files_sha256": {
+    "lexicon_batch_625.authoring.json": "86406e9e4728008c78deb56008fe6b572fd8992fe2c5d5d402621b55d01e606e",
+    "batch625_authored_draft.txt": "e6501f4a11c4bece868fbc705ca74e1e68f538be86719ae4139b3ef54f737dce",
+    "batch625_pronunciation_review.tsv": "ffa7f0fcacb9b53b3cfc6cc1eb91e8ff2c75c12185a93ddb3f9eb9d8c6a74609"
+  },
+  "authoring_tool_sha256": "afcb6462d9eaed3531de6cb3d9be80dd977a6e0e903887eb0d802dab7c346c8f",
+  "supporting_tools_sha256": {
+    "tools/merge_lexicon_batch.py": "64af2ce36282fa9e975efe6124e0d48c8a5351aa2cd1ea27a52e6d9b361c065f",
+    "tools/evaluate_typing.py": "27d1ea58588367a7b96b74ac965b8e5ae5ecedde21a66574c247d13103bafe06"
+  },
+  "dedup_baseline_sha256": {
+    "core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+    "local_core_zh_pinyin.tsv": "49851a2d349f63ac274e9d3b34789a12894233c7c517a265d11c63e10a936ca5",
+    "standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593"
+  },
+  "benchmark_sha256": {
+    "typing_fresh.tsv": "d073ec4b490a3175a8e931133f698ef384a3bd88660a35b9ba6ab41719cd120b",
+    "typing_holdout.tsv": "9c6415e4555cab6683ed4e6343f0b96f28906d2a81cbb71df0315ed48dc55443",
+    "typing_independent.tsv": "1e92081aa2086498dd9bdc16c0266ddc036a31879f77aeb705e7d76b26bafd98"
+  },
+  "benchmark_unique_full_answers": 267,
+  "benchmark_full_answers_added": 0,
+  "preset_category_weights": {
+    "b625_6000": 6000,
+    "b625_5500": 5500,
+    "b625_5000": 5000
+  },
+  "frequency_policy": "Fixed coarse project-relative category bands before native evaluation; no measured corpus frequencies or tuning to public answer ranks.",
+  "category_counts": {
+    "b625_5500": 376
+  },
+  "length_distribution": {
+    "6": 241,
+    "5": 133,
+    "4": 2
+  },
+  "authoring_rejections": [],
+  "mandatory_polyphone_reviews": 332,
+  "manual_pronunciation_overrides": {
+    "空调你自己调": "kongtiaonizijitiao",
+    "床头灯能调暗": "chuangtoudengnengtiaoan",
+    "空调调低一点": "kongtiaotiaodiyidian"
+  },
+  "reading_variant_choices": {},
+  "semantic_pronunciation_corrections": 3,
+  "line_endings": "UTF-8 LF",
+  "source_policy": "No external lexicon or source-page text imported; prior upstream provenance remains separately recorded."
+}
