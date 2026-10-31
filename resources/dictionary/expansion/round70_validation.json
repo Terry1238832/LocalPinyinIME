@@ -1,0 +1,492 @@
+{
+  "round": 70,
+  "direction": "A",
+  "continuation_stop_threshold": null,
+  "batch_min": 646,
+  "batch_max": 653,
+  "base_commit": "dabc3c14994f56d496cce71856f2a11c204331a9",
+  "engine_version": "1.8.3",
+  "audit": {
+    "before": 278596,
+    "after": 280356,
+    "added": 1760,
+    "existing_rows_preserved": true,
+    "all_layers_and_domains_surface_dedup": true,
+    "hashes_reviews_weights_formats_passed": true,
+    "batches": {
+      "646": {
+        "scope": "日常聊天：宠物近况、照看托付与日常互动",
+        "entries": 376,
+        "weights": {
+          "5500": 376
+        },
+        "reviews": 333,
+        "overrides": {
+          "指甲有点长": "zhijiayoudianchang",
+          "别吓着它了": "biexiazhaotale",
+          "项圈调松点": "xiangquantiaosongdian"
+        },
+        "sha256": "d7dda647fecf9727b71a2b36f99db02b4e5801b2971db2bb62345ae8f3a538ed"
+      },
+      "647": {
+        "scope": "日常聊天：打球约场、运动训练与赛后交流",
+        "entries": 409,
+        "weights": {
+          "5500": 409
+        },
+        "reviews": 344,
+        "overrides": {
+          "发球重来吧": "faqiuchonglaiba",
+          "脚下得快点": "jiaoxiadeikuaidian",
+          "这个动作得改": "zhegedongzuodeigai",
+          "坡度调低点": "podutiaodidian",
+          "线磅调低点": "xianbangtiaodidian"
+        },
+        "sha256": "449315b7c4c24447d77e16786b26cce0c2e6295df9959221b66b44480d3f7f24"
+      },
+      "648": {
+        "scope": "日常聊天：阳台花草、日常养护与交换枝苗",
+        "entries": 396,
+        "weights": {
+          "5500": 396
+        },
+        "reviews": 353,
+        "overrides": {
+          "先用薄肥水": "xianyongbofeishui",
+          "花期挺长的": "huaqitingchangde"
+        },
+        "sha256": "df85e22ac16037118c63a8b56465d7fc3db3b66275fb61d49aaa6284d37f4bda"
+      },
+      "649": {
+        "scope": "日常聊天：天气变化、穿衣提醒与出门安排",
+        "entries": 539,
+        "weights": {
+          "5500": 539
+        },
+        "reviews": 465,
+        "overrides": {
+          "还伞不着急": "huansanbuzhaoji",
+          "楼下有薄冰": "louxiayoubobing",
+          "别让手冻着": "bierangshoudongzhao",
+          "湿度调低些": "shidutiaodixie",
+          "把风向往上调": "bafengxiangwangshangtiao",
+          "睡前调低温": "shuiqiantiaodiwen"
+        },
+        "sha256": "3804a50e0273c3b9d10f9c04594a1fdbfd69f4e7a3e6f257215047ece3dd9827"
+      },
+      "650": {
+        "scope": "日常聊天：宠物近况、临时照看与交接安排的长句",
+        "entries": 10,
+        "weights": {
+          "5500": 10
+        },
+        "reviews": 10,
+        "overrides": {},
+        "sha256": "f3a9ad520be97a15359857cb32200b116a4e5b1ad61f5daa88dc594f39136c3d"
+      },
+      "651": {
+        "scope": "日常聊天：约球、分队与赛后交流的长句",
+        "entries": 10,
+        "weights": {
+          "5500": 10
+        },
+        "reviews": 10,
+        "overrides": {},
+        "sha256": "2e42d4c4cd6d928708e742ca13204236c2f79469cbbc37782c081d38345478b1"
+      },
+      "652": {
+        "scope": "日常聊天：阳台花草、养护经验与交换枝苗的长句",
+        "entries": 10,
+        "weights": {
+          "5500": 10
+        },
+        "reviews": 10,
+        "overrides": {},
+        "sha256": "a0b71413d411fd20895e128bff517a847db8722bfb5f86f59022b0f09f4298c0"
+      },
+      "653": {
+        "scope": "日常聊天：天气变化、穿衣出门与到家提醒的长句",
+        "entries": 10,
+        "weights": {
+          "5500": 10
+        },
+        "reviews": 10,
+        "overrides": {
+          "楼下台阶结了一层薄冰下楼的时候扶着栏杆慢慢走不要着急": "louxiataijiejieleyicengbobingxialoudeshihoufuzhelanganmanmanzoubuyaozhaoji"
+        },
+        "sha256": "6e2c706cdccaa731b83198e003b8cc9e0338ac8705ba0e64a8ed5054a8d53ebc"
+      }
+    },
+    "local_core_sha256": "4f7d098c0e831b5706229761cc85b256e9cd1a2f3feb094187a6a3fd81da3e08"
+  },
+  "probes": {
+    "646": {
+      "cases": 376,
+      "top1": 48.14,
+      "top9": 100.0,
+      "two_to_four_cases": 2,
+      "two_to_four_top9": 2,
+      "two_to_four_missing": [],
+      "other_missing": [],
+      "probe_sha256": "9f155669cd3b66b89420369fb85db4fc50f64053adb40834afbe743fc4d02e01",
+      "raw_sha256": "eabbedfb8a603a55041cb7243ec942d1671e1aca4a6b0de2c9bf2da61d0d20a1"
+    },
+    "647": {
+      "cases": 409,
+      "top1": 68.46,
+      "top9": 100.0,
+      "two_to_four_cases": 8,
+      "two_to_four_top9": 8,
+      "two_to_four_missing": [],
+      "other_missing": [],
+      "probe_sha256": "15de7830654ea47b3cd0e29e0ad3fbdb0f8c457b78407a7f7e1661b716dd9faf",
+      "raw_sha256": "30c8feed1710e1587cf2dc921de64a5753f5dc6858c3bf993c965bbe89a39dd3"
+    },
+    "648": {
+      "cases": 396,
+      "top1": 59.6,
+      "top9": 100.0,
+      "two_to_four_cases": 7,
+      "two_to_four_top9": 7,
+      "two_to_four_missing": [],
+      "other_missing": [],
+      "probe_sha256": "1dc2dadd478ab9a989ed029728774b790bf86f6c47d0f4d33798a8bea61fc093",
+      "raw_sha256": "9f6eb8966a20dd894cf4bb4536a1da6b05cbd6f5eb363b36da973792f39e966d"
+    },
+    "649": {
+      "cases": 539,
+      "top1": 69.2,
+      "top9": 100.0,
+      "two_to_four_cases": 7,
+      "two_to_four_top9": 7,
+      "two_to_four_missing": [],
+      "other_missing": [],
+      "probe_sha256": "d7e44007184628bfb36ff600ebbb7158eab88895b80bd8e4e44be2216631f0cb",
+      "raw_sha256": "2cafa68916e6626a6ae25602da79cc7f23f20362f60dff5d553c07f040240bd2"
+    },
+    "650": {
+      "cases": 10,
+      "top1": 40.0,
+      "top9": 50.0,
+      "two_to_four_cases": 0,
+      "two_to_four_top9": 0,
+      "two_to_four_missing": [],
+      "other_missing": [
+        {
+          "word": "今天遛狗回来记得给它擦一下脚爪外面路上有不少泥",
+          "pinyin": "jintianliugouhuilaijidegeitacayixiajiaozhaowaimianlushangyoubushaoni"
+        },
+        {
+          "word": "猫粮和药量都写在纸上了你按上面的时间喂就可以",
+          "pinyin": "maolianghuoyaoliangdouxiezaizhishanglenianshangmiandeshijianweijiukeyi"
+        },
+        {
+          "word": "如果它不肯吃药就先别硬塞给它可以拌一点湿粮试试",
+          "pinyin": "ruguotabukenchiyaojiuxianbieyingsaigeitakeyibanyidianshiliangshishi"
+        },
+        {
+          "word": "它刚到新地方可能有点怕先让它自己待一会儿再说",
+          "pinyin": "tagangdaoxindifangkenengyoudianpaxianrangtazijidaiyihuierzaishuo"
+        },
+        {
+          "word": "它这两天吃饭和睡觉都挺正常我晚点再发几张照片给你",
+          "pinyin": "tazheliangtianchifanheshuijiaodoutingzhengchangwowandianzaifajizhangzhaopiangeini"
+        }
+      ],
+      "probe_sha256": "b75487c34fb76a737133180792fa9198b13c9546a94118c9ebe93bee94a19832",
+      "raw_sha256": "c3b2162e9293f58edcce68d2237368fb6fd32a365dff638fe2475879dbcca0d1"
+    },
+    "651": {
+      "cases": 10,
+      "top1": 80.0,
+      "top9": 80.0,
+      "two_to_four_cases": 0,
+      "two_to_four_top9": 0,
+      "two_to_four_missing": [],
+      "other_missing": [
+        {
+          "word": "场地费我先垫了打完以后大家再平摊你不用现在转给我",
+          "pinyin": "changdifeiwoxiandianledawanyihoudajiazaipingtannibuyongxianzaizhuangeiwo"
+        },
+        {
+          "word": "刚才那个球落在线里面算好球不用为了这一分争半天",
+          "pinyin": "gangcainageqiuluozaixianlimiansuanhaoqiubuyongweilezheyifenzhengbantian"
+        }
+      ],
+      "probe_sha256": "91c07f07a2c8195d392ee8ab03e4b70fbb51a5bf8bfd52f3aa8ab8dfb0d53a30",
+      "raw_sha256": "29ec414bae144bb5264ce5c1503bba00e0fdb365b3ff58154b8bab4bf4d610ca"
+    },
+    "652": {
+      "cases": 10,
+      "top1": 60.0,
+      "top9": 60.0,
+      "two_to_four_cases": 0,
+      "two_to_four_top9": 0,
+      "two_to_four_missing": [],
+      "other_missing": [
+        {
+          "word": "花盆底下的托盘有积水记得倒掉不然根部容易一直泡着",
+          "pinyin": "huapendixiadetuopanyoujishuijidedaodiaoburangenburongyiyizhipaozhe"
+        },
+        {
+          "word": "喷壶和营养土都放在柜子下面你需要的话可以拿一点回去",
+          "pinyin": "penhuheyingyangtudoufangzaiguizixiamiannixuyaodehuakeyinayidianhuiqu"
+        },
+        {
+          "word": "这几天风大阳台的架子记得靠墙摆稳重一点的盆放在下层",
+          "pinyin": "zhejitianfengdayangtaidejiazijidekaoqiangbaiwenzhongyidiandepenfangzaixiaceng"
+        },
+        {
+          "word": "这盆绿萝最近长了不少新叶我下次给你剪两枝回去水培",
+          "pinyin": "zhepenlvluozuijinzhanglebushaoxinyewoxiacigeinijianliangzhihuiqushuipei"
+        }
+      ],
+      "probe_sha256": "34ab1c377f329550d8bd15756ebceaeef4e6db3c57ff637479cd360a9b574478",
+      "raw_sha256": "12161aa0f9c53ccbcce894506ff239747e036a5f299a651eebab074ad1940523"
+    },
+    "653": {
+      "cases": 10,
+      "top1": 90.0,
+      "top9": 90.0,
+      "two_to_four_cases": 0,
+      "two_to_four_top9": 0,
+      "two_to_four_missing": [],
+      "other_missing": [
+        {
+          "word": "你如果到得太晚就直接打车回家不用为了省几分钟冒雨赶路",
+          "pinyin": "niruguodaodetaiwanjiuzhijiedachehuijiabuyongweileshengjifenzhongmaoyuganlu"
+        }
+      ],
+      "probe_sha256": "d1267729c680fe8960133b2ba58e795d54896072c624a703f28d0dd428f65d06",
+      "raw_sha256": "03b3d33ff7574d0a6cdce0289ba7be1c458ab39636477f2ed0de19325ea1f54e"
+    }
+  },
+  "accuracy_before": {
+    "逐词输入·参考前文": {
+      "cases": 20626,
+      "top1": 88.25,
+      "top9": 98.7
+    },
+    "逐词输入·无前文": {
+      "cases": 20626,
+      "top1": 79.65,
+      "top9": 97.56
+    },
+    "留出整句": {
+      "cases": 4126,
+      "top1": 64.49,
+      "top9": 77.61
+    },
+    "口语对话·整句": {
+      "cases": 3368,
+      "top1": 85.36,
+      "top9": 94.69
+    },
+    "口语对话·逐词": {
+      "cases": 19504,
+      "top1": 95.58,
+      "top9": 99.72
+    },
+    "项目留出": {
+      "cases": 138,
+      "top1": 84.78,
+      "top9": 89.13
+    },
+    "新增用例": {
+      "cases": 67,
+      "top1": 71.64,
+      "top9": 83.58
+    },
+    "独立用例": {
+      "cases": 62,
+      "top1": 53.23,
+      "top9": 79.03
+    },
+    "日常口语·开发": {
+      "cases": 149,
+      "top1": 97.32,
+      "top9": 99.33
+    },
+    "日常口语·留出": {
+      "cases": 150,
+      "top1": 90.0,
+      "top9": 96.67
+    }
+  },
+  "accuracy_after": {
+    "逐词输入·参考前文": {
+      "cases": 20626,
+      "top1": 88.25,
+      "top9": 98.7
+    },
+    "逐词输入·无前文": {
+      "cases": 20626,
+      "top1": 79.65,
+      "top9": 97.56
+    },
+    "留出整句": {
+      "cases": 4126,
+      "top1": 64.49,
+      "top9": 77.61
+    },
+    "口语对话·整句": {
+      "cases": 3368,
+      "top1": 85.36,
+      "top9": 94.69
+    },
+    "口语对话·逐词": {
+      "cases": 19504,
+      "top1": 95.58,
+      "top9": 99.72
+    },
+    "项目留出": {
+      "cases": 138,
+      "top1": 84.78,
+      "top9": 89.13
+    },
+    "新增用例": {
+      "cases": 67,
+      "top1": 71.64,
+      "top9": 83.58
+    },
+    "独立用例": {
+      "cases": 62,
+      "top1": 53.23,
+      "top9": 79.03
+    },
+    "日常口语·开发": {
+      "cases": 149,
+      "top1": 97.32,
+      "top9": 99.33
+    },
+    "日常口语·留出": {
+      "cases": 150,
+      "top1": 90.0,
+      "top9": 96.67
+    }
+  },
+  "native_tests": {
+    "x64": {
+      "passed": 47,
+      "total": 47,
+      "log_sha256": "5ea8b4793c681e0d28444fe67cb3c2e881d223ac8bbdbc34009fd105f37c307e"
+    },
+    "x86": {
+      "passed": 47,
+      "total": 47,
+      "log_sha256": "98c2b3971daa98280bdbcbc8b96f7bd7c31dcd088a244a849e12a586a8d0297c"
+    }
+  },
+  "max_entries": 281456,
+  "commits": {
+    "646": "e2199892479b1bdca04cf7759e1995feb5ae0b3d",
+    "647": "793e192d313ff0a06f0b4cf3bfe3fdb3c7a7d77a",
+    "648": "5676897d7a252879f090f14d27b9d65e04bbb92f",
+    "649": "9201dab85006c6433a6fe1f51e64236e8f9ea160",
+    "650": "0e068399244c8131fef27170f5c7f9026c28d9cc",
+    "651": "f0a23105e56fcc388ec0fda9e157b5a481170aa8",
+    "652": "250234b0f8abf1c3f64598e748e8d41f9da8cd53",
+    "653": "83759ed204d8d49cc9311c7f487d94c58b9ee4b3"
+  },
+  "rejections": {
+    "duplicate:local_core_zh_pinyin.tsv": 105,
+    "表达不完整，改为猫咪爱躲起来": 1,
+    "语序不自然，改为它掉毛不少": 1,
+    "主语不清，改为它今天挺温顺": 1,
+    "表达不完整，改为外驱滴在后颈": 1,
+    "表达不完整，改为按体重喂药": 1,
+    "缺少结构助词，改为听到你的声音": 1,
+    "表达不完整，改为猫咪挤在中间": 1,
+    "量词后缺少中心语，改为小狗真活泼": 1,
+    "搭配生硬，改为有熟悉的味道": 1,
+    "术语使用不自然，删除": 1,
+    "outside_batch_length_scope": 32,
+    "表达不自然，改为轮流打一局": 1,
+    "表达不完整，改为再来一个好球": 1,
+    "搭配不自然，改为谁接先喊一声": 1,
+    "表达不完整，改为会员有折扣": 1,
+    "时间单位缺失，删除": 1,
+    "搭配不完整，改为今天练得轻松": 1,
+    "说法不自然，改为黄色粘虫板": 1,
+    "表达不完整，改为花盆别摔坏": 1,
+    "duplicate:batch648": 2,
+    "表达不自然，改为上午能晒到": 1,
+    "duplicate:batch646": 1,
+    "表达生硬，删除": 1,
+    "搭配不自然，改为这枝状态不错": 1,
+    "表达不完整，改为出门加件衣服": 1,
+    "口语搭配不自然，改为我这儿多一把": 1,
+    "表达不完整，改为阳台东西收好": 1,
+    "语义不当，改为老人慢点走": 1,
+    "说法不自然，改为里面加件外套": 1,
+    "表达不完整，改为早晚出门冷": 1,
+    "duplicate:batch649": 1
+  },
+  "whole_batch_withdrawals": [],
+  "status": "passed",
+  "native_runtime_canonical_sha256": {
+    "x64": "4f7d098c0e831b5706229761cc85b256e9cd1a2f3feb094187a6a3fd81da3e08",
+    "x86": "4f7d098c0e831b5706229761cc85b256e9cd1a2f3feb094187a6a3fd81da3e08"
+  },
+  "protected_model_and_test_files_unchanged": {
+    "resources/dictionary/word_zh.lm": "bcfdff3c333750f2a07041fc7e4fec7f29aaad5e67ff83015da77bb839005c4d",
+    "resources/dictionary/neural_zh.lm": "a6f666c1310e0c11a8e544a01131e2d14a1bc6612c13a0f25d610da54ad42efd",
+    "tests/test_word_model.cpp": "938ea4d9c5852c55745c8420f9947ac8236f625e5dd18c8823a5beda3681cb10",
+    "tests/test_neural_model.cpp": "ec943a49d2ef26e097b6cbefc6067d4abd67685a8857ed4644e5164587c1ceea"
+  },
+  "accuracy_before_runtime_evidence": {
+    "engine_sha256": "f794e5b32dae42341baeadbade1a8767c238d8768d134573e9e700fdda6ec99c",
+    "dictionary_files": {
+      "dictionary\\context_zh.lm": "fbc541b277f140c64d217a37dc3fe7a4ea1abd24e599910160eed8bb6cf82581",
+      "dictionary\\context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+      "dictionary\\continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e",
+      "dictionary\\core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+      "dictionary\\english_terms.tsv": "fb33a275b9b4057aba8e6632912ed995c586b89fc191182ab93b2ee2721ba453",
+      "dictionary\\english_words.tsv": "28d7afee035fadf5cab977ec452bc2aa3edbdbe69448dfbd91695cc22c07ac61",
+      "dictionary\\local_core_zh_pinyin.metadata.json": "9fce26d17e2af065dfd14c0f8720737985a4ebf772caffe415a7f9c55bc836a7",
+      "dictionary\\local_core_zh_pinyin.tsv": "3a932f3b8f90d15622c76e96ed9a5a525c7a073f831b985896f4277dc9846770",
+      "dictionary\\neural_zh.lm": "a6f666c1310e0c11a8e544a01131e2d14a1bc6612c13a0f25d610da54ad42efd",
+      "dictionary\\standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+      "dictionary\\word_zh.lm": "bcfdff3c333750f2a07041fc7e4fec7f29aaad5e67ff83015da77bb839005c4d",
+      "dictionary\\domains\\coding.tsv": "8ed3e2e2aaddab952983bd4c070273ffc9dc018d8eb39bb1aa96c29a767e85f3",
+      "dictionary\\domains\\daily.tsv": "a30b3d4250e69e6b6acee49e114d262255d8314a3676c69e8290bd4238d6054e",
+      "dictionary\\domains\\games.tsv": "b0b9930107b27fc1342f10a9020b703b5da4c0cb1cfc3b33b9790ba9fbf80aaf",
+      "dictionary\\domains\\math.tsv": "863121f6ef89785dec628dfb7ab41de2ae1adf5066efbc714092343b62124a57",
+      "dictionary\\domains\\study.tsv": "bec679bc57c125c654c6a5191812e99121431c42e512f6fc3b84b5a01c1a87f2",
+      "dictionary\\domains\\work.tsv": "b7b8718ca54d6774be178c3bea5bf3f5c4d6c66a64942e7bb76490ebff2a1586",
+      "dictionary\\panel\\emoji.tsv": "f37e5435d9bc49ff1b85de701a547b859d7136c1c3478158e4376060d1755799",
+      "dictionary\\panel\\kaomoji.tsv": "ca8f6f24bf59551b34b4ed0e4546680b582814b28eb8aacf1f8f8a87abb97444",
+      "dictionary\\panel\\symbols.tsv": "b7ea522ba80cd96c1f69b24afe093dabd1d55a367ef046e4bb38511f4e9de6b8",
+      "dictionary\\sources\\lexicon_sources.json": "5a21e1ca955acd822cc66d17b0c82e883ceb55acfac91426f053be68a3073059"
+    },
+    "canonical_sha256": "3a932f3b8f90d15622c76e96ed9a5a525c7a073f831b985896f4277dc9846770",
+    "note": "Immutable isolated resources captured before any round entries are applied; official accuracy_snapshot.py runs against this copy, so simultaneous native builds and candidate measurement cannot contaminate baseline."
+  },
+  "accuracy_after_runtime_evidence": {
+    "engine_sha256": "f794e5b32dae42341baeadbade1a8767c238d8768d134573e9e700fdda6ec99c",
+    "dictionary_files": {
+      "dictionary\\context_zh.lm": "fbc541b277f140c64d217a37dc3fe7a4ea1abd24e599910160eed8bb6cf82581",
+      "dictionary\\context_zh.tsv": "6b0e0188189a964dba6767bf01d60f64c1498266ced1e3f7555e702c0645811d",
+      "dictionary\\continuations_zh.tsv": "9ae609ce8dec158fd13f8ff73b459d134140e31501189e3f1da652730ad3164e",
+      "dictionary\\core_zh_pinyin.tsv": "44247dbcba2f2621e4d88851c8da0622e0c081f0fa99dd3fac0f33f5ead5398a",
+      "dictionary\\english_terms.tsv": "fb33a275b9b4057aba8e6632912ed995c586b89fc191182ab93b2ee2721ba453",
+      "dictionary\\english_words.tsv": "28d7afee035fadf5cab977ec452bc2aa3edbdbe69448dfbd91695cc22c07ac61",
+      "dictionary\\local_core_zh_pinyin.metadata.json": "9fce26d17e2af065dfd14c0f8720737985a4ebf772caffe415a7f9c55bc836a7",
+      "dictionary\\local_core_zh_pinyin.tsv": "4f7d098c0e831b5706229761cc85b256e9cd1a2f3feb094187a6a3fd81da3e08",
+      "dictionary\\neural_zh.lm": "a6f666c1310e0c11a8e544a01131e2d14a1bc6612c13a0f25d610da54ad42efd",
+      "dictionary\\standard_zh_pinyin.tsv": "facc51bacc1e012248d3f20698b025542cefa275f77cfa91a79b12944a5b5593",
+      "dictionary\\word_zh.lm": "bcfdff3c333750f2a07041fc7e4fec7f29aaad5e67ff83015da77bb839005c4d",
+      "dictionary\\domains\\coding.tsv": "8ed3e2e2aaddab952983bd4c070273ffc9dc018d8eb39bb1aa96c29a767e85f3",
+      "dictionary\\domains\\daily.tsv": "a30b3d4250e69e6b6acee49e114d262255d8314a3676c69e8290bd4238d6054e",
+      "dictionary\\domains\\games.tsv": "b0b9930107b27fc1342f10a9020b703b5da4c0cb1cfc3b33b9790ba9fbf80aaf",
+      "dictionary\\domains\\math.tsv": "863121f6ef89785dec628dfb7ab41de2ae1adf5066efbc714092343b62124a57",
+      "dictionary\\domains\\study.tsv": "bec679bc57c125c654c6a5191812e99121431c42e512f6fc3b84b5a01c1a87f2",
+      "dictionary\\domains\\work.tsv": "b7b8718ca54d6774be178c3bea5bf3f5c4d6c66a64942e7bb76490ebff2a1586",
+      "dictionary\\panel\\emoji.tsv": "f37e5435d9bc49ff1b85de701a547b859d7136c1c3478158e4376060d1755799",
+      "dictionary\\panel\\kaomoji.tsv": "ca8f6f24bf59551b34b4ed0e4546680b582814b28eb8aacf1f8f8a87abb97444",
+      "dictionary\\panel\\symbols.tsv": "b7ea522ba80cd96c1f69b24afe093dabd1d55a367ef046e4bb38511f4e9de6b8",
+      "dictionary\\sources\\lexicon_sources.json": "5a21e1ca955acd822cc66d17b0c82e883ceb55acfac91426f053be68a3073059"
+    },
+    "note": "Full isolated runtime copy, with final authored canonical lexicon; native code and model assets unchanged. Compare all runtime file hashes after native build before accepting measured aggregates."
+  }
+}
