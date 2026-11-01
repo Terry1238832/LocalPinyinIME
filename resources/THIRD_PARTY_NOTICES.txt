@@ -244,12 +244,13 @@ The 4-gram language model used to rank candidates by the preceding text contains
 - LCCC-base real chat text (https://huggingface.co/datasets/silver/lccc, revision 5bd582fa28cd7143f2f9c852e08e23089d677c44,
   labelled MIT there; upstream https://github.com/thu-coai/CDial-GPT), from Wang et al., A Large-Scale Chinese Short-Text
   Conversation Dataset, NLPCC 2020 (arXiv:2008.03946); the underlying posts were collected from Weibo;
-  only statistics and network weights derived from it are included, no text;
+  statistics and network weights derived from it are included, and frequent short clauses (see below), no conversations;
 - internal n-grams of the bundled dictionary words.
 The word association model (word_zh.lm) contains only association scores of adjacent lexicon word pairs and runs of
 three words, estimated from the same sources. The neural character model (neural_zh.lm) contains only network
 weights trained on the same sources; no text is included. The chat phrase counts (phrase_zh.lm) contain only hashes and
-rounded counts of short clauses of the LCCC-base text; no text is included.
+rounded counts of short clauses of the LCCC-base text. phrase_initials_zh.tsv contains the text of LCCC-base clauses of two
+to ten characters seen at least 20 times, listed by their initials.
 Text was converted to simplified Chinese with OpenCC (Apache-2.0), which is used at authoring time only.
 Sources, downloads and checksums: resources/dictionary/authoring/context_lm_sources.json and resources/dictionary/context_zh.lm.metadata.json in the source repository.
 One line in forty and all evaluation sentences are held out of training.

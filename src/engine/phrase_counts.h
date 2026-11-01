@@ -4,6 +4,7 @@
 #include <memory>
 #include <string>
 #include <string_view>
+#include <vector>
 
 namespace localpinyin {
 
@@ -26,6 +27,21 @@ private:
     const std::uint32_t* keys_ = nullptr;
     const std::uint8_t* levels_ = nullptr;
     size_t count_ = 0;
+    std::shared_ptr<const Storage> storage_;
+};
+
+// The most frequent chat clauses for a string of consonant initials
+// (phrase_initials_zh.tsv): ndlm is 你到了吗. Memory mapped and searched in place.
+class InitialPhrases {
+public:
+    bool load(const std::wstring& path);
+    void reset() noexcept;
+    // Best first; empty for an unknown key.
+    [[nodiscard]] std::vector<std::wstring> lookup(std::wstring_view initials) const;
+
+private:
+    struct Storage;
+    std::string_view text_;
     std::shared_ptr<const Storage> storage_;
 };
 

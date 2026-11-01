@@ -24,8 +24,7 @@ constexpr int kFallbackScore = 1;
 constexpr size_t kSentenceBeamWidth = 32;
 constexpr size_t kLongestInitialsInput = 12;
 constexpr size_t kLongestInitialsWord = 6;
-constexpr size_t kInitialsWordsPerSpan = 12;
-constexpr size_t kCharactersPerInitial = 32;
+constexpr size_t kCharactersPerInitial = 96;
 // What a composed phrase counts for beside lexicon frequencies (the lowest band).
 constexpr int kComposedPhraseFrequency = 5500;
 constexpr size_t kMaxInputLength = 256;
@@ -97,6 +96,19 @@ struct ScoreWeights {
     // A short phrase typed on its own (phrase_zh.lm): frequency points per
     // tenfold of its chat count, what it must win by, and its longest length.
     bool initials = true;
+    bool initial_phrases = true;
+    // Sentences typed as initials: their own balance, since the letters say
+    // much less than syllables do.
+    double initials_lexical = 0.5;
+    bool initials_reuse = true;
+    int initials_word = 0;
+    int initials_segment = -1;
+    double initials_neural = 0.4;
+    size_t initials_neural_candidates = 5;
+    size_t initials_ranked = kMaxCandidateCount;
+    size_t initials_phrase_length = 4;
+    size_t initials_characters = 64;
+    size_t initials_words = 48;
     double chat_phrase = 800.0;
     double chat_phrase_margin = 500.0;
     size_t chat_phrase_length = 4;
@@ -425,10 +437,15 @@ bool all_han(const std::wstring& text) {
 // models then read it like any other sentence.
 std::vector<std::vector<SegmentPath>> decode_initials(const Dictionary& dictionary, const ContextModel& context, const std::wstring& input,
                                                       const std::wstring& preceding, const DecodeOptions& options,
-                                                      const std::function<const std::vector<Candidate>&(const std::wstring&)>& characters) {
+                                                      const std::function<const std::vector<Candidate>&(const std::wstring&)>& characters,
+                                                      const DecodeReuse& reuse = {}) {
     std::vector<std::vector<SegmentPath>> dp(input.size() + 1);
-    dp[0].assign(1, SegmentPath{});
-    if (options.words) {
+    // The positions an earlier input shares are final; only what ends after
+    // them is new (the last one scored its words as ending the input).
+    const size_t stable = reuse.lattice ? std::min(reuse.stable, input.size()) : 0;
+    for (size_t position = 0; position <= stable && reuse.lattice && position < reuse.lattice->size(); ++position) dp[position] = (*reuse.lattice)[position];
+    if (stable == 0) dp[0].assign(1, SegmentPath{});
+    if (options.words && stable == 0) {
         auto& start = dp[0].back();
         start.last_word = options.words->previous_word(preceding);
         if (!start.last_word.empty())
@@ -436,7 +453,8 @@ std::vector<std::vector<SegmentPath>> decode_initials(const Dictionary& dictiona
     }
     for (size_t offset = 0; offset < input.size(); ++offset) {
         if (dp[offset].empty()) continue;
-        prune_paths(dp[offset]);
+        if (offset >= stable) prune_paths(dp[offset]);
+        const size_t first_new_end = offset < stable ? stable + 1 : 0;
         const auto extend = [&](const Candidate& word, size_t next) {
             auto& paths = dp[next];
             std::unordered_map<std::wstring, size_t> indices;
@@ -444,7 +462,9 @@ std::vector<std::vector<SegmentPath>> decode_initials(const Dictionary& dictiona
             for (size_t index = 0; index < paths.size(); ++index) indices.emplace(paths[index].text, index);
             for (const auto& path : dp[offset]) {
                 const auto history = transition_history(preceding, path.text);
-                const int score = path.score + static_cast<int>(weights().lexical * lexical_score(word)) - weights().segment_penalty +
+                const double lexical = weights().initials_lexical < 0 ? weights().lexical : weights().initials_lexical;
+                const int segment = weights().initials_segment < 0 ? weights().segment_penalty : weights().initials_segment;
+                const int score = path.score + static_cast<int>(lexical * lexical_score(word)) - segment + (word.text.size() > 1 ? weights().initials_word : 0) +
                                   static_cast<int>(weights().language_model * context.extend_score(history, word.text)) +
                                   word_bonus(options, path, word.text, next == input.size());
                 add_path(paths, indices, SegmentPath{score, path.segment_count + 1, join_text(path.text, word.text, path.english_end, false),
@@ -452,15 +472,19 @@ std::vector<std::vector<SegmentPath>> decode_initials(const Dictionary& dictiona
             }
             if (paths.size() > weights().beam * 2) prune_paths(paths);
         };
-        for (const auto& word : characters(input.substr(offset, 1))) extend(word, offset + 1);
-        if (offset + 1 < input.size() && input[offset + 1] == L'h' && std::wstring_view(L"zcs").find(input[offset]) != std::wstring_view::npos)
+        if (offset + 1 >= first_new_end) {
+            const auto& list = characters(input.substr(offset, 1));
+            for (size_t index = 0; index < std::min(list.size(), weights().initials_characters); ++index) extend(list[index], offset + 1);
+        }
+        if (offset + 2 >= first_new_end && offset + 1 < input.size() && input[offset + 1] == L'h' && std::wstring_view(L"zcs").find(input[offset]) != std::wstring_view::npos)
             for (const auto& word : characters(input.substr(offset, 2))) extend(word, offset + 2);
         for (size_t length = 2; length <= kLongestInitialsWord && offset + length <= input.size(); ++length) {
+            if (offset + length < first_new_end) continue;
             size_t added = 0;
             for (const auto& word : dictionary.lookup_abbreviation(input.substr(offset, length))) {
                 if (!all_han(word.text)) continue;
                 extend(word, offset + length);
-                if (++added == kInitialsWordsPerSpan) break;
+                if (++added == weights().initials_words) break;
             }
         }
     }
@@ -484,15 +508,17 @@ bool looks_like_initials(const std::wstring& input) {
 // learning or kept as a whole word) keeps its place, as does every other kind
 // of candidate.
 void rescore_with_neural(const NeuralModel& model, std::vector<Candidate>& ranked, const std::wstring& preceding,
-                         bool first_is_word) {
-    if (model.empty() || weights().neural == 0.0 || ranked.size() < 2 || ranked.front().consumed_pinyin != 0) return;
+                         bool first_is_word, bool initials = false) {
+    const double weight = initials ? weights().initials_neural : weights().neural;
+    if (model.empty() || weight == 0.0 || ranked.size() < 2 || ranked.front().consumed_pinyin != 0) return;
     // A word typed on its own keeps the lexicon order: a short one, or one
     // the lexicon has for exactly this input (二项式定理, not 而像是定理).
-    if (preceding.empty() && (character_count(ranked.front().text) <= 2 || first_is_word)) return;
+    if (!initials && preceding.empty() && (character_count(ranked.front().text) <= 2 || first_is_word)) return;
     std::vector<size_t> slots;
     // The first five sentences: further down the model rarely changes the
     // first choice, and each one costs scoring on every keystroke.
-    for (size_t index = 0; index < ranked.size() && slots.size() < kNeuralCandidates; ++index)
+    const size_t scored_candidates = initials ? weights().initials_neural_candidates : kNeuralCandidates;
+    for (size_t index = 0; index < ranked.size() && slots.size() < scored_candidates; ++index)
         if (ranked[index].consumed_pinyin == 0 && all_han(ranked[index].text)) slots.push_back(index);
     if (slots.size() < 2 || slots.front() != 0) return;
     int highest = std::numeric_limits<int>::min();
@@ -505,7 +531,7 @@ void rescore_with_neural(const NeuralModel& model, std::vector<Candidate>& ranke
     const auto probabilities = model.score(std::wstring_view(preceding).substr(start), texts);
     std::vector<std::pair<double, Candidate>> scored;
     for (size_t i = 0; i < slots.size(); ++i)
-        scored.emplace_back(ranked[slots[i]].total_score() + weights().neural * 1000.0 * probabilities[i], ranked[slots[i]]);
+        scored.emplace_back(ranked[slots[i]].total_score() + weight * 1000.0 * probabilities[i], ranked[slots[i]]);
     std::stable_sort(scored.begin(), scored.end(), [](const auto& left, const auto& right) { return left.first > right.first; });
     for (size_t i = 0; i < slots.size(); ++i) ranked[slots[i]] = std::move(scored[i].second);
 }
@@ -541,7 +567,7 @@ void promote_chat_phrase(std::vector<Candidate>& ranked, const std::vector<Candi
     if (counts.empty() || weights().chat_phrase == 0.0 || ranked.size() < 2) return;
     const auto& first = ranked.front();
     const size_t characters = character_count(first.text);
-    if (first.consumed_pinyin != 0 || characters < 2 || characters > weights().chat_phrase_length || first.user_frequency > 0 || first.is_user_lexicon_entry ||
+    if (first.consumed_pinyin != 0 || characters < 2 || characters > (initials ? weights().initials_phrase_length : weights().chat_phrase_length) || first.user_frequency > 0 || first.is_user_lexicon_entry ||
         first.correction || !all_han(first.text)) return;
     // A sentence the decoder composed and the table has never seen is no
     // evidence against it.
@@ -603,7 +629,7 @@ int top_frequency(const std::vector<Candidate>& words) {
     return best;
 }
 
-std::vector<Candidate> deduplicate_and_limit(std::vector<Candidate> ranked) {
+std::vector<Candidate> deduplicate_and_limit(std::vector<Candidate> ranked, size_t limit = kMaxCandidateCount) {
     std::vector<Candidate> result;
     std::unordered_set<std::wstring> seen;
     for (const auto& candidate : ranked) {
@@ -614,7 +640,7 @@ std::vector<Candidate> deduplicate_and_limit(std::vector<Candidate> ranked) {
             continue;
         }
         result.push_back(candidate);
-        if (result.size() >= kMaxCandidateCount) {
+        if (result.size() >= limit) {
             break;
         }
     }
@@ -657,6 +683,8 @@ void PinyinEngine::rebuild_context_model(const std::wstring& context_path) {
     initial_characters_.clear();
     phrase_counts_.reset();
     if (!context_path.empty()) phrase_counts_.load((std::filesystem::path(context_path).parent_path() / L"phrase_zh.lm").wstring());
+    initial_phrases_.reset();
+    if (!context_path.empty()) initial_phrases_.load((std::filesystem::path(context_path).parent_path() / L"phrase_initials_zh.tsv").wstring());
     continuation_model_.reset(dictionary_);
     if (!context_path.empty()) continuation_model_.load((std::filesystem::path(context_path).parent_path() / L"continuations_zh.tsv").wstring());
     learning_revision_ = static_cast<size_t>(-1);
@@ -843,6 +871,17 @@ bool PinyinEngine::set_evaluation_weights(const std::wstring& spec) {
         else if (key == L"stand") next.standalone_language_model = value;
         else if (key == L"phrase") next.chat_phrase = value;
         else if (key == L"initials") next.initials = value != 0.0;
+        else if (key == L"itable") next.initial_phrases = value != 0.0;
+        else if (key == L"ilex") next.initials_lexical = value;
+        else if (key == L"ireuse") next.initials_reuse = value != 0.0;
+        else if (key == L"iword") next.initials_word = static_cast<int>(value);
+        else if (key == L"iseg") next.initials_segment = static_cast<int>(value);
+        else if (key == L"inn") next.initials_neural = value;
+        else if (key == L"innk") next.initials_neural_candidates = static_cast<size_t>(value);
+        else if (key == L"iranked") next.initials_ranked = static_cast<size_t>(value);
+        else if (key == L"iplen") next.initials_phrase_length = static_cast<size_t>(value);
+        else if (key == L"ichars") next.initials_characters = static_cast<size_t>(value);
+        else if (key == L"iwords") next.initials_words = static_cast<size_t>(value);
         else if (key == L"pmargin") next.chat_phrase_margin = value;
         else if (key == L"plen") next.chat_phrase_length = static_cast<size_t>(value);
         else return false;
@@ -972,8 +1011,18 @@ std::vector<Candidate> PinyinEngine::lookup_pinyin(const std::wstring& pinyin, c
     }
     bool initials = false;
     if (weights().initials && dp.back().empty() && !mixed && parsed.boundaries.empty() && looks_like_initials(normalized)) {
+        DecodeReuse shared;
+        if (initials_cache_ && weights().initials_reuse && initials_cache_->context == context && initials_cache_->epoch == decode_epoch_) {
+            size_t common = 0;
+            const auto& previous = initials_cache_->pinyin;
+            while (common < previous.size() && common < normalized.size() && previous[common] == normalized[common]) ++common;
+            // Words spanning the end of the shared part are scored again.
+            if (common > 0) shared = DecodeReuse{&initials_cache_->lattice, common - 1};
+        }
         auto read = decode_initials(dictionary_, context_model_, normalized, context, decoding,
-                                    [this](const std::wstring& initial) -> const std::vector<Candidate>& { return characters_for_initial(initial); });
+                                    [this](const std::wstring& initial) -> const std::vector<Candidate>& { return characters_for_initial(initial); }, shared);
+        if (!initials_cache_) initials_cache_ = std::make_shared<DecodeCache>();
+        *initials_cache_ = DecodeCache{normalized, parsed.boundaries, context, options.fuzzy, learning_.revision(), decode_epoch_, read};
         if (!read.back().empty()) {
             dp = std::move(read);
             initials = true;
@@ -1067,12 +1116,31 @@ std::vector<Candidate> PinyinEngine::lookup_pinyin(const std::wstring& pinyin, c
     }
     const wchar_t before = !context.empty() && context.back() >= 0x3400 && context.back() <= 0x9FFF ? context.back() : 0;
     auto ranked = deduplicate_and_limit(ranker_.rank(normalized, std::move(candidates), &learning_,
-                                                     before ? before : (context.empty() ? 0 : L' ')));
+                                                     before ? before : (context.empty() ? 0 : L' ')),
+                                        initials ? weights().initials_ranked : kMaxCandidateCount);
     if (!mixed && !ranked.empty()) {
         const auto exact = words_for(normalized);
         const bool first_is_word = std::any_of(exact.begin(), exact.end(), [&](const auto& word) { return word.text == ranked.front().text; });
-        rescore_with_neural(neural_model_, ranked, context, first_is_word);
+        rescore_with_neural(neural_model_, ranked, context, first_is_word, initials);
         if (context.empty()) promote_chat_phrase(ranked, exact, phrase_counts_, [&](const std::wstring& key) { return words_for(key); }, normalized, initials);
+        if (initials && weights().initial_phrases) {
+            // Clauses people send with these initials come ahead of what the
+            // decoder composed, behind anything the user has chosen here.
+            size_t at = 0;
+            while (at < ranked.size() && ranked[at].user_frequency > 0) ++at;
+            for (const auto& phrase : initial_phrases_.lookup(normalized)) {
+                const auto same = std::find_if(ranked.begin(), ranked.end(), [&](const auto& item) { return item.text == phrase; });
+                if (same != ranked.end()) {
+                    if (static_cast<size_t>(same - ranked.begin()) < at) continue;
+                    ranked.erase(same);
+                }
+                Candidate candidate;
+                candidate.text = phrase;
+                candidate.complete_segmentation_bonus = kCompleteSegmentationBonus;
+                ranked.insert(ranked.begin() + static_cast<std::ptrdiff_t>(at++), std::move(candidate));
+            }
+        }
+        if (ranked.size() > kMaxCandidateCount) ranked.resize(kMaxCandidateCount);
     }
 
     // Keep complete long-word alternatives beside sentence decoding. A rescue

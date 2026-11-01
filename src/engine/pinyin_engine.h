@@ -105,6 +105,7 @@ private:
     WordModel word_model_;
     NeuralModel neural_model_;
     PhraseCounts phrase_counts_;
+    InitialPhrases initial_phrases_;
     // Common characters by initial (w, zh), for sentences typed as initials.
     mutable std::unordered_map<std::wstring, std::vector<Candidate>> initial_characters_;
     mutable ContinuationModel continuation_model_;
@@ -115,6 +116,7 @@ private:
     // reads bumps the epoch and discards it.
     struct DecodeCache;
     mutable std::shared_ptr<DecodeCache> decode_cache_;
+    mutable std::shared_ptr<DecodeCache> initials_cache_;
     size_t decode_epoch_ = 0;
     std::wstring context_path_;
     EnglishTerms english_;

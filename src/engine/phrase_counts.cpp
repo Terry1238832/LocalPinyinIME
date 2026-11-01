@@ -1,5 +1,7 @@
 #include "phrase_counts.h"
 
+#include "../common/utf_utils.h"
+
 #include <windows.h>
 
 #include <algorithm>
@@ -60,6 +62,83 @@ bool PhraseCounts::load(const std::wstring& path) {
     count_ = count;
     storage_ = std::move(storage);
     return true;
+}
+
+struct InitialPhrases::Storage {
+    HANDLE file = INVALID_HANDLE_VALUE;
+    HANDLE mapping = nullptr;
+    const void* view = nullptr;
+
+    Storage() = default;
+    Storage(const Storage&) = delete;
+    Storage& operator=(const Storage&) = delete;
+    ~Storage() {
+        if (view) UnmapViewOfFile(view);
+        if (mapping) CloseHandle(mapping);
+        if (file != INVALID_HANDLE_VALUE) CloseHandle(file);
+    }
+};
+
+void InitialPhrases::reset() noexcept {
+    text_ = {};
+    storage_.reset();
+}
+
+bool InitialPhrases::load(const std::wstring& path) {
+    reset();
+    auto storage = std::make_shared<Storage>();
+    storage->file = CreateFileW(path.c_str(), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_DELETE, nullptr,
+                                OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+    if (storage->file == INVALID_HANDLE_VALUE) return false;
+    LARGE_INTEGER size{};
+    if (!GetFileSizeEx(storage->file, &size) || size.QuadPart == 0 || size.QuadPart > 256LL * 1024 * 1024) return false;
+    storage->mapping = CreateFileMappingW(storage->file, nullptr, PAGE_READONLY, 0, 0, nullptr);
+    if (!storage->mapping) return false;
+    storage->view = MapViewOfFile(storage->mapping, FILE_MAP_READ, 0, 0, 0);
+    if (!storage->view) return false;
+    text_ = std::string_view(static_cast<const char*>(storage->view), static_cast<size_t>(size.QuadPart));
+    storage_ = std::move(storage);
+    return true;
+}
+
+std::vector<std::wstring> InitialPhrases::lookup(std::wstring_view initials) const {
+    std::vector<std::wstring> phrases;
+    if (text_.empty() || initials.empty()) return phrases;
+    std::string wanted;
+    for (const wchar_t letter : initials) {
+        if (letter < L'a' || letter > L'z') return phrases;
+        wanted.push_back(static_cast<char>(letter));
+    }
+    // Binary search over byte positions, each moved back to its line's start.
+    size_t low = 0;
+    size_t high = text_.size();
+    while (low < high) {
+        const size_t middle = low + (high - low) / 2;
+        const size_t previous = middle == 0 ? std::string_view::npos : text_.rfind('\n', middle - 1);
+        const size_t start = previous == std::string_view::npos ? 0 : previous + 1;
+        const size_t tab = text_.find('\t', start);
+        if (tab == std::string_view::npos) return phrases;
+        const auto key = text_.substr(start, tab - start);
+        if (key == wanted) {
+            const size_t end = std::min(text_.find('\n', tab), text_.size());
+            auto rest = text_.substr(tab + 1, end - tab - 1);
+            while (!rest.empty()) {
+                const size_t bar = rest.find('|');
+                phrases.push_back(utf8_to_wide(std::string(rest.substr(0, bar))));
+                if (bar == std::string_view::npos) break;
+                rest.remove_prefix(bar + 1);
+            }
+            return phrases;
+        }
+        if (key < wanted) {
+            const size_t end = text_.find('\n', tab);
+            if (end == std::string_view::npos) return phrases;
+            low = end + 1;
+        } else {
+            high = start;
+        }
+    }
+    return phrases;
 }
 
 int PhraseCounts::level(std::wstring_view phrase) const noexcept {

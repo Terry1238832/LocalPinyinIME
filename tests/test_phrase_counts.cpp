@@ -32,6 +32,12 @@ int main() {
     REQUIRE_TRUE(!missing.load((root / L"absent_phrase_zh.lm").wstring()));
     REQUIRE_EQ(missing.level(L"你猜"), 0);
 
+    localpinyin::InitialPhrases phrases;
+    REQUIRE_TRUE(phrases.load((resources / L"dictionary" / L"phrase_initials_zh.tsv").wstring()));
+    REQUIRE_TRUE(!phrases.lookup(L"hd").empty());
+    REQUIRE_TRUE(phrases.lookup(L"zzzzzzzzzzzz").empty());
+    REQUIRE_TRUE(phrases.lookup(L"aaaa").empty());
+
     localpinyin::PinyinEngine engine(localpinyin::DictionaryLoadMode::Empty);
     REQUIRE_TRUE(engine.load_dictionary_resource_directory(resources.wstring(), (root / L"user_lexicon.tsv").wstring()));
     REQUIRE_EQ(engine.lookup(L"nicai", L"").front().text, std::wstring(L"你猜"));
@@ -46,6 +52,19 @@ int main() {
     REQUIRE_EQ(engine.lookup(L"wok", L"").front().text, std::wstring(L"我看"));
     REQUIRE_EQ(engine.lookup(L"zh", L"").front().text, std::wstring(L"这"));
     REQUIRE_EQ(engine.lookup(L"ppt", L"").front().text, std::wstring(L"PPT"));
+    REQUIRE_EQ(engine.lookup(L"tlpl", L"").front().text, std::wstring(L"太离谱了"));
+    // 吗 is far commoner than 么 in chat.
+    REQUIRE_EQ(engine.lookup(L"nichilema", L"").front().text, std::wstring(L"你吃了吗"));
+
+    // Typed key by key, initials read the same as decoded from scratch.
+    localpinyin::PinyinEngine typed(localpinyin::DictionaryLoadMode::Empty);
+    REQUIRE_TRUE(typed.load_dictionary_resource_directory(resources.wstring(), (root / L"user_lexicon.tsv").wstring()));
+    const std::wstring sentence = L"mthyskbx";
+    for (size_t length = 1; length < sentence.size(); ++length) typed.lookup(sentence.substr(0, length), L"");
+    const auto stepped = typed.lookup(sentence, L"");
+    const auto fresh = engine.lookup(sentence, L"");
+    REQUIRE_TRUE(!fresh.empty() && stepped.size() == fresh.size());
+    for (size_t index = 0; index < fresh.size(); ++index) REQUIRE_EQ(stepped[index].text, fresh[index].text);
 
     std::filesystem::remove_all(root);
     return 0;

@@ -51,7 +51,7 @@ endif()
 string(APPEND localpinyin_dictionary_output_dir "/dictionary")
 set(localpinyin_dictionary_sources)
 set(localpinyin_dictionary_outputs)
-foreach(name IN ITEMS core_zh_pinyin.tsv local_core_zh_pinyin.tsv context_zh.tsv context_zh.lm word_zh.lm neural_zh.lm phrase_zh.lm standard_zh_pinyin.tsv continuations_zh.tsv english_terms.tsv
+foreach(name IN ITEMS core_zh_pinyin.tsv local_core_zh_pinyin.tsv context_zh.tsv context_zh.lm word_zh.lm neural_zh.lm phrase_zh.lm phrase_initials_zh.tsv standard_zh_pinyin.tsv continuations_zh.tsv english_terms.tsv
     english_words.tsv)
     list(APPEND localpinyin_dictionary_sources "${CMAKE_CURRENT_SOURCE_DIR}/resources/dictionary/${name}")
     list(APPEND localpinyin_dictionary_outputs "${localpinyin_dictionary_output_dir}/${name}")
@@ -250,7 +250,7 @@ if(BUILD_TESTING)
         ENVIRONMENT "TEMP=${CMAKE_BINARY_DIR}/test-tmp;TMP=${CMAKE_BINARY_DIR}/test-tmp;LOCALPINYINIME_LOCALAPPDATA=${CMAKE_BINARY_DIR}/test-data")
 endif()
 install(TARGETS LocalPinyinIME LocalPinyinSettingsBridge LocalPinyinClipboard LocalPinyinImeSetup RUNTIME DESTINATION .)
-install(FILES resources/dictionary/core_zh_pinyin.tsv resources/dictionary/local_core_zh_pinyin.tsv resources/dictionary/context_zh.tsv resources/dictionary/context_zh.lm resources/dictionary/word_zh.lm resources/dictionary/neural_zh.lm resources/dictionary/phrase_zh.lm resources/dictionary/standard_zh_pinyin.tsv resources/dictionary/continuations_zh.tsv resources/dictionary/english_terms.tsv
+install(FILES resources/dictionary/core_zh_pinyin.tsv resources/dictionary/local_core_zh_pinyin.tsv resources/dictionary/context_zh.tsv resources/dictionary/context_zh.lm resources/dictionary/word_zh.lm resources/dictionary/neural_zh.lm resources/dictionary/phrase_zh.lm resources/dictionary/phrase_initials_zh.tsv resources/dictionary/standard_zh_pinyin.tsv resources/dictionary/continuations_zh.tsv resources/dictionary/english_terms.tsv
     resources/dictionary/english_words.tsv DESTINATION dictionary)
 install(FILES ${localpinyin_domain_sources} DESTINATION dictionary/domains)
 install(FILES ${localpinyin_panel_sources} DESTINATION dictionary/panel)

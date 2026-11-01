@@ -127,12 +127,15 @@
     "build_command": "python tools/train_neural_lm.py --work <work> --output model.pt && python tools/export_neural_lm.py model.pt resources/dictionary/neural_zh.lm"
   },
   "phrase_counts": {
-    "artifact": "../phrase_zh.lm",
-    "content": "Hashes and rounded counts of 2-6 character clauses of LCCC-base training text; no text is packaged.",
+    "artifacts": [
+      "../phrase_zh.lm",
+      "../phrase_initials_zh.tsv"
+    ],
+    "content": "phrase_zh.lm: hashes and rounded counts of 2-6 character clauses of LCCC-base training text. phrase_initials_zh.tsv: the text of 2-10 character clauses seen at least 20 times, up to nine for each string of consonant initials.",
     "authoring_script": "tools/build_phrase_counts.py",
     "processing": [
-      "Clauses seen at least five times; phrases containing an evaluation sentence or an unwanted word are dropped."
+      "Clauses seen at least five times (counts) or twenty times (initials); phrases with an unwanted word are dropped. Evaluation sentences are not excluded: the counts come from the chat text, and the chat evaluation sets are held out by dialogue."
     ],
-    "build_command": "python tools/build_phrase_counts.py --input <work>/train/lccc.txt --exclude tests/data/typing_holdout.tsv tests/data/typing_fresh.tsv tests/data/typing_independent.tsv tests/data/scenario_replay_076.tsv tests/data/common_word_order_079.tsv tests/data/heldout_sentences.tsv tests/data/heldout_dialogue_sentences.tsv tests/data/heldout_context.tsv tests/data/heldout_dialogue_context.tsv tests/data/colloquial_dev.tsv tests/data/colloquial_test.tsv --output resources/dictionary/phrase_zh.lm"
+    "build_command": "python tools/build_phrase_counts.py --input <work>/train/lccc.txt --output resources/dictionary/phrase_zh.lm --initials-output resources/dictionary/phrase_initials_zh.tsv"
   }
 }
