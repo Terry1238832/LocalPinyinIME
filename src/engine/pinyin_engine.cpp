@@ -97,6 +97,9 @@ struct ScoreWeights {
     // tenfold of its chat count, what it must win by, and its longest length.
     bool initials = true;
     bool initial_phrases = true;
+    double initials_known = 3000.0;
+    size_t initials_known_length = 2;
+    int initials_short_word = 10000;
     // Sentences typed as initials: their own balance, since the letters say
     // much less than syllables do.
     double initials_lexical = 0.5;
@@ -872,6 +875,9 @@ bool PinyinEngine::set_evaluation_weights(const std::wstring& spec) {
         else if (key == L"phrase") next.chat_phrase = value;
         else if (key == L"initials") next.initials = value != 0.0;
         else if (key == L"itable") next.initial_phrases = value != 0.0;
+        else if (key == L"iknown") next.initials_known = value;
+        else if (key == L"iklen") next.initials_known_length = static_cast<size_t>(value);
+        else if (key == L"ikf") next.initials_short_word = static_cast<int>(value);
         else if (key == L"ilex") next.initials_lexical = value;
         else if (key == L"ireuse") next.initials_reuse = value != 0.0;
         else if (key == L"iword") next.initials_word = static_cast<int>(value);
@@ -1128,7 +1134,24 @@ std::vector<Candidate> PinyinEngine::lookup_pinyin(const std::wstring& pinyin, c
             // decoder composed, behind anything the user has chosen here.
             size_t at = 0;
             while (at < ranked.size() && ranked[at].user_frequency > 0) ++at;
-            for (const auto& phrase : initial_phrases_.lookup(normalized)) {
+            // Everything known whole for these initials, the lexicon's phrases
+            // beside the chat table's, by frequency and chat count together:
+            // sy is 所以, though 是呀 is sent alone more often.
+            std::vector<std::pair<double, std::wstring>> known;
+            const auto score = [&](const std::wstring& phrase, int frequency) {
+                return std::max(frequency, kComposedPhraseFrequency) + weights().initials_known * phrase_counts_.level(phrase) / PhraseCounts::kLevelsPerDecade;
+            };
+            std::unordered_map<std::wstring, int> frequencies;
+            for (const auto& word : dictionary_.lookup_abbreviation(normalized))
+                if (all_han(word.text) && character_count(word.text) >= weights().initials_known_length &&
+                    (character_count(word.text) >= 4 || word.base_score >= weights().initials_short_word)) frequencies[word.text] = std::max(frequencies[word.text], word.base_score);
+            for (const auto& phrase : initial_phrases_.lookup(normalized)) frequencies.emplace(phrase, 0);
+            for (const auto& [phrase, frequency] : frequencies) known.emplace_back(score(phrase, frequency), phrase);
+            std::sort(known.begin(), known.end(), [](const auto& left, const auto& right) {
+                return left.first != right.first ? left.first > right.first : left.second < right.second;
+            });
+            if (known.size() > kMaxCandidateCount) known.resize(kMaxCandidateCount);
+            for (const auto& [value, phrase] : known) {
                 const auto same = std::find_if(ranked.begin(), ranked.end(), [&](const auto& item) { return item.text == phrase; });
                 if (same != ranked.end()) {
                     if (static_cast<size_t>(same - ranked.begin()) < at) continue;

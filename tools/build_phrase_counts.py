@@ -11,7 +11,7 @@ half of FNV-1a over UTF-16 units), n u8 levels (log10(count) * 32).
 phrase_initials_zh.tsv: the most frequent whole clauses for each string of
 consonant initials (ndlm: 你到了吗), which no decoding can rank as well as simply
 having seen them. This one holds text: clauses of two to ten characters seen at
-least 20 times, so everyday expressions rather than anyone's own words. One
+least ten times, so everyday expressions rather than anyone's own words. One
 line for each key, sorted by UTF-8 bytes: key, a tab, phrases best first
 separated by |.
 
@@ -40,10 +40,10 @@ sys.path.insert(0, str(Path(__file__).parent))
 from build_context_lm import HAN_RUN  # noqa: E402
 from pypinyin import Style, lazy_pinyin  # noqa: E402
 
-COUNT_LENGTHS = 2, 6
+COUNT_LENGTHS = 2, 10
 COUNT_MINIMUM = 5
 INITIALS_LENGTHS = 2, 10
-INITIALS_MINIMUM = 20
+INITIALS_MINIMUM = 10
 INITIALS_LONGEST_KEY = 12
 PHRASES_PER_KEY = 9
 # A phrase with one of these is never preferred or offered from these tables.
@@ -68,6 +68,7 @@ def main() -> int:
     parser.add_argument("--input", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--initials-output", type=Path, required=True)
+    parser.add_argument("--initials-minimum", type=int, default=INITIALS_MINIMUM)
     args = parser.parse_args()
     counts: Counter[str] = Counter()
     with args.input.open(encoding="utf-8") as lines:
@@ -75,7 +76,7 @@ def main() -> int:
             for clause in HAN_RUN.findall(line):
                 if min(COUNT_LENGTHS[0], INITIALS_LENGTHS[0]) <= len(clause) <= max(COUNT_LENGTHS[1], INITIALS_LENGTHS[1]):
                     counts[clause] += 1
-    wanted = {phrase: count for phrase, count in counts.items() if count >= min(COUNT_MINIMUM, INITIALS_MINIMUM) and not any(word in phrase for word in UNWANTED)}
+    wanted = {phrase: count for phrase, count in counts.items() if count >= min(COUNT_MINIMUM, args.initials_minimum) and not any(word in phrase for word in UNWANTED)}
 
     kept: dict[int, int] = {}
     for phrase, count in wanted.items():
@@ -91,7 +92,7 @@ def main() -> int:
 
     by_initials: dict[str, list[tuple[int, str]]] = defaultdict(list)
     for phrase, count in wanted.items():
-        if not INITIALS_LENGTHS[0] <= len(phrase) <= INITIALS_LENGTHS[1] or count < INITIALS_MINIMUM:
+        if not INITIALS_LENGTHS[0] <= len(phrase) <= INITIALS_LENGTHS[1] or count < args.initials_minimum:
             continue
         typed = initials(phrase)
         if len(typed) == len(phrase) and len(typed) <= INITIALS_LONGEST_KEY and typed.isascii() and typed.isalpha() and not set(typed) & set("aeiouv"):
@@ -102,7 +103,7 @@ def main() -> int:
             out.write((typed + "\t" + "|".join(phrases) + "\n").encode("utf-8"))
 
     metadata = {"format": "LPPC", "format_version": 1, "phrases": len(keys), "minimum_count": COUNT_MINIMUM, "lengths": list(COUNT_LENGTHS),
-                "initials_keys": len(by_initials), "initials_minimum_count": INITIALS_MINIMUM, "initials_lengths": list(INITIALS_LENGTHS),
+                "initials_keys": len(by_initials), "initials_minimum_count": args.initials_minimum, "initials_lengths": list(INITIALS_LENGTHS),
                 "phrases_per_key": PHRASES_PER_KEY, "input": args.input.name, "input_sha256": hashlib.sha256(args.input.read_bytes()).hexdigest()}
     Path(str(args.output) + ".metadata.json").write_text(json.dumps(metadata, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps(metadata))
